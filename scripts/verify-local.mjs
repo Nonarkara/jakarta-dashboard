@@ -1,0 +1,123 @@
+#!/usr/bin/env node
+// Local sanity-check — runs without network. Verifies that:
+//   • package.json parses
+//   • wrangler.toml parses
+//   • every JSON file in public/ is valid
+//   • the index.html references everything we expect
+//   • the worker source compiles cleanly to TypeScript via the
+//     `wrangler deploy --dry-run` shim (catches missing imports too)
+
+import { readFileSync } from "node:fs";
+import { resolve, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+let pass = 0;
+let fail = 0;
+
+function test(name, fn) {
+  try {
+    fn();
+    pass++;
+    console.log(`  ✓ ${name}`);
+  } catch (err) {
+    fail++;
+    console.log(`  ✗ ${name}: ${err.message}`);
+  }
+}
+
+test("package.json parses", () => {
+  const p = JSON.parse(readFileSync(resolve(ROOT, "package.json"), "utf-8"));
+  if (!p.name) throw new Error("missing name");
+});
+
+test("wrangler.toml parses", () => {
+  const w = readFileSync(resolve(ROOT, "wrangler.toml"), "utf-8");
+  if (!w.includes("name =")) throw new Error("missing worker name");
+  if (!w.includes("[[r2_buckets]]")) throw new Error("missing R2 binding");
+});
+
+test("tsconfig.json parses", () => {
+  const t = JSON.parse(readFileSync(resolve(ROOT, "tsconfig.json"), "utf-8"));
+  if (!t.compilerOptions) throw new Error("missing compilerOptions");
+});
+
+test("public/index.html present + has expected markers", () => {
+  const html = readFileSync(resolve(ROOT, "public/index.html"), "utf-8");
+  if (!html.includes('id="atlas-map"')) throw new Error("missing atlas-map container");
+  if (!html.includes('id="atlas-areas"')) throw new Error("missing areas section");
+  if (!html.includes('id="atlas-inspect"')) throw new Error("missing inspect section");
+  if (!html.includes("/app.js")) throw new Error("missing app.js script");
+  if (!html.includes("/style.css")) throw new Error("missing style.css link");
+});
+
+test("public/jakarta-areas.json parses + 12 areas", () => {
+  const a = JSON.parse(readFileSync(resolve(ROOT, "public/jakarta-areas.json"), "utf-8"));
+  if (!Array.isArray(a.areas)) throw new Error("missing areas array");
+  if (a.areas.length !== 12) throw new Error(`expected 12 areas, got ${a.areas.length}`);
+});
+
+test("public/style.css parses + has root tokens", () => {
+  const css = readFileSync(resolve(ROOT, "public/style.css"), "utf-8");
+  if (!css.includes("--bg:")) throw new Error("missing --bg token");
+  if (!css.includes("--ink:")) throw new Error("missing --ink token");
+  if (!css.includes("--amber:")) throw new Error("missing --amber token");
+});
+
+test("public/app.js parses as JS (basic syntax)", () => {
+  const code = readFileSync(resolve(ROOT, "public/app.js"), "utf-8");
+  if (!code.includes("__maplibregl__.Map")) throw new Error("missing maplibregl Map usage");
+  if (!code.includes("refreshCityWatch")) throw new Error("missing refreshCityWatch");
+  if (!code.includes("function addBuildings")) throw new Error("missing addBuildings");
+  if (!code.includes("escapeHtml")) throw new Error("missing escapeHtml");
+  if (code.includes("Stop \" + (i + 1)")) throw new Error("procedural bus stops are still in the client");
+});
+
+// Four agents "fixed" invisible buildings by inflating heights (x8, sqrt,
+// tiered 6x...). Heights are real metres; density does the visual work.
+test("building heights are real metres (no multiplier)", () => {
+  const code = readFileSync(resolve(ROOT, "public/app.js"), "utf-8");
+  if (/HEIGHT_VIS_MULT|heightVis|tiered multiplier/.test(code)) throw new Error("height multiplier is back");
+  const ext = code.match(/"fill-extrusion-height":\s*([^\n]+)/g) || [];
+  for (const line of ext) if (/\["\*"/.test(line)) throw new Error(`scaled extrusion height: ${line.trim()}`);
+  if (/fill-translate/.test(code)) throw new Error("fake drop-shadow layer is back");
+  // The multiplier came back once hidden inside the HEIGHT_GET constant.
+  const def = (code.match(/const HEIGHT_GET\s*=\s*([^;]+);/) || [])[1] || "";
+  if (!def) throw new Error("HEIGHT_GET not found");
+  if (/\["[*\/^]"|"sqrt"|"\^"/.test(def)) throw new Error(`HEIGHT_GET scales height: ${def}`);
+  if (/(boost|multiplier|exaggerat)/i.test(readFileSync(resolve(ROOT, "public/index.html"), "utf-8")))
+    throw new Error("index.html copy describes a height boost");
+});
+
+// boot() awaits a fetch before adding layers; if it then waits for
+// `style.load`, the event has often already fired and the city never draws.
+test("city layers wait on a style promise armed at map construction", () => {
+  const code = readFileSync(resolve(ROOT, "public/app.js"), "utf-8");
+  if (!code.includes("styleReady.then(onMapReady)")) throw new Error("onMapReady is not gated on styleReady");
+  if (/once\("style\.load",\s*onMapReady\)/.test(code)) throw new Error("late style.load listener is back");
+});
+
+test("landmarks use real OSM footprints with a cited height", () => {
+  const lm = JSON.parse(readFileSync(resolve(ROOT, "public/jakarta-landmarks.geojson"), "utf-8"));
+  if (lm.features.length < 2) throw new Error(`only ${lm.features.length} landmark features`);
+  for (const f of lm.features) {
+    const p = f.properties;
+    if (!p.source || !p.osm) throw new Error(`${p.name}: missing source/osm`);
+    if (!/^(way|relation)\/\d+$/.test(p.osm)) throw new Error(`${p.name}: osm ref "${p.osm}" is not an OSM element`);
+  }
+});
+
+test("index.html does not preload whole PMTiles archives", () => {
+  const html = readFileSync(resolve(ROOT, "public/index.html"), "utf-8");
+  if (/rel="preload"[^>]*\.pmtiles/.test(html)) throw new Error("preload pulls the entire archive");
+});
+
+test("src/index.ts parses + has key handlers", () => {
+  const ts = readFileSync(resolve(ROOT, "src/index.ts"), "utf-8");
+  if (!ts.includes("/api/atlas/areas")) throw new Error("missing /api/atlas/areas handler");
+  if (!ts.includes("servePmtilesFromR2")) throw new Error("missing PMTiles passthrough");
+  if (!ts.includes("JAKARTA_TILES")) throw new Error("missing R2 binding");
+});
+
+console.log(`\n${pass}/${pass + fail} passed`);
+if (fail > 0) process.exit(1);

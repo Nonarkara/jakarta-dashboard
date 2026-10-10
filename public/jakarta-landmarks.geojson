@@ -1,0 +1,1229 @@
+{
+ "type": "FeatureCollection",
+ "name": "jakarta-landmarks",
+ "description": "Jakarta hero landmarks. Footprints: OpenStreetMap (ODbL). Heights: published figures, cited per feature. Built by scripts/curate-landmarks.py.",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8274953,
+       -6.1750426
+      ],
+      [
+       106.8274025,
+       -6.1751307
+      ],
+      [
+       106.8269436,
+       -6.1751226
+      ],
+      [
+       106.8268554,
+       -6.17503
+      ],
+      [
+       106.8274953,
+       -6.1750426
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 6.0,
+    "base_height": 0.0,
+    "source": "published monument height",
+    "osm": "way/1158462164",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8268443,
+       -6.1757694
+      ],
+      [
+       106.8269312,
+       -6.1756844
+      ],
+      [
+       106.8273847,
+       -6.1756874
+      ],
+      [
+       106.8274636,
+       -6.1757731
+      ],
+      [
+       106.8268443,
+       -6.1757694
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 6.0,
+    "base_height": 0.0,
+    "source": "published monument height",
+    "osm": "way/1158713744",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8275331,
+       -6.175736
+      ],
+      [
+       106.8274406,
+       -6.1756385
+      ],
+      [
+       106.827453,
+       -6.1751833
+      ],
+      [
+       106.8275476,
+       -6.1750935
+      ],
+      [
+       106.8275331,
+       -6.175736
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 6.0,
+    "base_height": 0.0,
+    "source": "published monument height",
+    "osm": "way/1158713745",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8268022,
+       -6.1750788
+      ],
+      [
+       106.826891,
+       -6.1751721
+      ],
+      [
+       106.8268783,
+       -6.1756323
+      ],
+      [
+       106.8267925,
+       -6.1757153
+      ],
+      [
+       106.8268022,
+       -6.1750788
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 6.0,
+    "base_height": 0.0,
+    "source": "published monument height",
+    "osm": "way/1158713746",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8270123,
+       -6.1752456
+      ],
+      [
+       106.8273287,
+       -6.1752528
+      ],
+      [
+       106.8273216,
+       -6.1755636
+      ],
+      [
+       106.827005,
+       -6.1755563
+      ],
+      [
+       106.8270123,
+       -6.1752456
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 17.0,
+    "base_height": 16.0,
+    "source": "published monument height",
+    "osm": "way/1158713749",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8271106,
+       -6.1753458
+      ],
+      [
+       106.8272272,
+       -6.1753481
+      ],
+      [
+       106.8272249,
+       -6.1754649
+      ],
+      [
+       106.8271084,
+       -6.1754627
+      ],
+      [
+       106.8271106,
+       -6.1753458
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 115.0,
+    "base_height": 108.0,
+    "source": "published monument height",
+    "osm": "way/1158713753",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8269894,
+       -6.1752235
+      ],
+      [
+       106.8273491,
+       -6.1752307
+      ],
+      [
+       106.827342,
+       -6.1755843
+      ],
+      [
+       106.8269823,
+       -6.1755771
+      ],
+      [
+       106.8269894,
+       -6.1752235
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 21.0,
+    "base_height": 17.0,
+    "source": "published monument height",
+    "osm": "way/1158713757",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.826891,
+       -6.1751721
+      ],
+      [
+       106.8269436,
+       -6.1751226
+      ],
+      [
+       106.8274025,
+       -6.1751307
+      ],
+      [
+       106.827453,
+       -6.1751833
+      ],
+      [
+       106.8274406,
+       -6.1756385
+      ],
+      [
+       106.8273847,
+       -6.1756874
+      ],
+      [
+       106.8269312,
+       -6.1756844
+      ],
+      [
+       106.8268783,
+       -6.1756323
+      ],
+      [
+       106.826891,
+       -6.1751721
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 6.0,
+    "base_height": 0.0,
+    "source": "published monument height",
+    "osm": "way/1158719601",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8270369,
+       -6.175273
+      ],
+      [
+       106.8273001,
+       -6.1752774
+      ],
+      [
+       106.8272957,
+       -6.1755369
+      ],
+      [
+       106.8270325,
+       -6.1755325
+      ],
+      [
+       106.8270369,
+       -6.175273
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 16.0,
+    "base_height": 15.0,
+    "source": "published monument height",
+    "osm": "way/1158725232",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8270631,
+       -6.1752959
+      ],
+      [
+       106.8272767,
+       -6.1752994
+      ],
+      [
+       106.8272732,
+       -6.175513
+      ],
+      [
+       106.8270596,
+       -6.1755096
+      ],
+      [
+       106.8270631,
+       -6.1752959
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 14.0,
+    "base_height": 6.6,
+    "source": "published monument height",
+    "osm": "way/1158742010",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8271106,
+       -6.1753458
+      ],
+      [
+       106.8272272,
+       -6.1753481
+      ],
+      [
+       106.8272249,
+       -6.1754649
+      ],
+      [
+       106.8271084,
+       -6.1754627
+      ],
+      [
+       106.8271106,
+       -6.1753458
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 108.0,
+    "base_height": 23.0,
+    "source": "published monument height",
+    "osm": "way/1158742900",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8271371,
+       -6.1753726
+      ],
+      [
+       106.8272009,
+       -6.1753739
+      ],
+      [
+       106.8271996,
+       -6.1754372
+      ],
+      [
+       106.8271358,
+       -6.1754359
+      ],
+      [
+       106.8271371,
+       -6.1753726
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 108.0,
+    "base_height": 23.0,
+    "source": "published monument height",
+    "osm": "way/1158893328",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8271266,
+       -6.1753621
+      ],
+      [
+       106.8272109,
+       -6.1753638
+      ],
+      [
+       106.8272092,
+       -6.1754473
+      ],
+      [
+       106.827125,
+       -6.1754455
+      ],
+      [
+       106.8271266,
+       -6.1753621
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 115.0,
+    "base_height": 114.0,
+    "source": "published monument height",
+    "osm": "way/1158893330",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8270482,
+       -6.1752833
+      ],
+      [
+       106.8272892,
+       -6.1752881
+      ],
+      [
+       106.8272843,
+       -6.1755271
+      ],
+      [
+       106.8270433,
+       -6.1755222
+      ],
+      [
+       106.8270482,
+       -6.1752833
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 15.0,
+    "base_height": 14.0,
+    "source": "published monument height",
+    "osm": "way/1159010963",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8274406,
+       -6.1756385
+      ],
+      [
+       106.8273847,
+       -6.1756874
+      ],
+      [
+       106.8275057,
+       -6.1758189
+      ],
+      [
+       106.8275613,
+       -6.1757669
+      ],
+      [
+       106.8274406,
+       -6.1756385
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 6.0,
+    "base_height": 0.0,
+    "source": "published monument height",
+    "osm": "way/1159018071",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8268783,
+       -6.1756323
+      ],
+      [
+       106.8269312,
+       -6.1756844
+      ],
+      [
+       106.8268074,
+       -6.1758054
+      ],
+      [
+       106.8267545,
+       -6.1757519
+      ],
+      [
+       106.8268783,
+       -6.1756323
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 6.0,
+    "base_height": 0.0,
+    "source": "published monument height",
+    "osm": "way/1159018073",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8275303,
+       -6.1750093
+      ],
+      [
+       106.8275801,
+       -6.1750626
+      ],
+      [
+       106.827453,
+       -6.1751833
+      ],
+      [
+       106.8274025,
+       -6.1751307
+      ],
+      [
+       106.8275303,
+       -6.1750093
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 6.0,
+    "base_height": 0.0,
+    "source": "published monument height",
+    "osm": "way/1159018076",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8268244,
+       -6.1749973
+      ],
+      [
+       106.8267728,
+       -6.1750479
+      ],
+      [
+       106.826891,
+       -6.1751721
+      ],
+      [
+       106.8269436,
+       -6.1751226
+      ],
+      [
+       106.8268244,
+       -6.1749973
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 6.0,
+    "base_height": 0.0,
+    "source": "published monument height",
+    "osm": "way/1159018079",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8272593,
+       -6.1756865
+      ],
+      [
+       106.8272573,
+       -6.1757719
+      ],
+      [
+       106.8272659,
+       -6.1757719
+      ],
+      [
+       106.827268,
+       -6.1756866
+      ],
+      [
+       106.8272593,
+       -6.1756865
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 7.0,
+    "base_height": 0.0,
+    "source": "published monument height",
+    "osm": "way/1159084249",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8270655,
+       -6.1756853
+      ],
+      [
+       106.8270636,
+       -6.1757707
+      ],
+      [
+       106.8270716,
+       -6.1757708
+      ],
+      [
+       106.8270736,
+       -6.1756853
+      ],
+      [
+       106.8270655,
+       -6.1756853
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 7.0,
+    "base_height": 0.0,
+    "source": "published monument height",
+    "osm": "way/1159084250",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.826797,
+       -6.1754444
+      ],
+      [
+       106.8268835,
+       -6.1754459
+      ],
+      [
+       106.8268837,
+       -6.1754386
+      ],
+      [
+       106.8267972,
+       -6.175437
+      ],
+      [
+       106.826797,
+       -6.1754444
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 7.0,
+    "base_height": 0.0,
+    "source": "published monument height",
+    "osm": "way/1159084251",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8268042,
+       -6.1753612
+      ],
+      [
+       106.8267984,
+       -6.1753611
+      ],
+      [
+       106.8267986,
+       -6.1753531
+      ],
+      [
+       106.826886,
+       -6.175354
+      ],
+      [
+       106.8268858,
+       -6.175362
+      ],
+      [
+       106.8268042,
+       -6.1753612
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 7.0,
+    "base_height": 0.0,
+    "source": "published monument height",
+    "osm": "way/1159084252",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8270806,
+       -6.1750436
+      ],
+      [
+       106.8270809,
+       -6.1750351
+      ],
+      [
+       106.8270886,
+       -6.1750352
+      ],
+      [
+       106.8270859,
+       -6.1751251
+      ],
+      [
+       106.8270781,
+       -6.175125
+      ],
+      [
+       106.8270806,
+       -6.1750436
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 7.0,
+    "base_height": 0.0,
+    "source": "published monument height",
+    "osm": "way/1159084253",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.82727,
+       -6.1750462
+      ],
+      [
+       106.8272702,
+       -6.1750393
+      ],
+      [
+       106.8272779,
+       -6.1750395
+      ],
+      [
+       106.8272747,
+       -6.1751284
+      ],
+      [
+       106.8272671,
+       -6.1751283
+      ],
+      [
+       106.82727,
+       -6.1750462
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 7.0,
+    "base_height": 0.0,
+    "source": "published monument height",
+    "osm": "way/1159084254",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8274507,
+       -6.1753745
+      ],
+      [
+       106.827448,
+       -6.1753659
+      ],
+      [
+       106.8275413,
+       -6.1753674
+      ],
+      [
+       106.8275411,
+       -6.1753759
+      ],
+      [
+       106.8274507,
+       -6.1753745
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 7.0,
+    "base_height": 0.0,
+    "source": "published monument height",
+    "osm": "way/1159084255",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8274457,
+       -6.1754502
+      ],
+      [
+       106.8275394,
+       -6.175452
+      ],
+      [
+       106.8275392,
+       -6.1754605
+      ],
+      [
+       106.8274455,
+       -6.1754588
+      ],
+      [
+       106.8274457,
+       -6.1754502
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 7.0,
+    "base_height": 0.0,
+    "source": "published monument height",
+    "osm": "way/1159084256",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8270856,
+       -6.1753192
+      ],
+      [
+       106.8272532,
+       -6.175322
+      ],
+      [
+       106.8272504,
+       -6.1754912
+      ],
+      [
+       106.8270828,
+       -6.1754885
+      ],
+      [
+       106.8270856,
+       -6.1753192
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 23.0,
+    "base_height": 21.0,
+    "source": "published monument height",
+    "osm": "way/1159630799",
+    "part": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8271975,
+       -6.1754017
+      ],
+      [
+       106.8271915,
+       -6.1753771
+      ],
+      [
+       106.8271857,
+       -6.1753817
+      ],
+      [
+       106.8271748,
+       -6.1753769
+      ],
+      [
+       106.8271699,
+       -6.1753681
+      ],
+      [
+       106.8271669,
+       -6.1753763
+      ],
+      [
+       106.8271405,
+       -6.175381
+      ],
+      [
+       106.8271462,
+       -6.1753871
+      ],
+      [
+       106.8271333,
+       -6.1754081
+      ],
+      [
+       106.8271402,
+       -6.1754095
+      ],
+      [
+       106.827146,
+       -6.1754226
+      ],
+      [
+       106.8271441,
+       -6.1754319
+      ],
+      [
+       106.8271505,
+       -6.1754273
+      ],
+      [
+       106.8271653,
+       -6.1754335
+      ],
+      [
+       106.8271701,
+       -6.1754413
+      ],
+      [
+       106.8271719,
+       -6.1754336
+      ],
+      [
+       106.8271977,
+       -6.1754267
+      ],
+      [
+       106.8271916,
+       -6.1754229
+      ],
+      [
+       106.8271975,
+       -6.1754082
+      ],
+      [
+       106.8272043,
+       -6.1754037
+      ],
+      [
+       106.8271975,
+       -6.1754017
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Monumen Nasional",
+    "category": "civic",
+    "height": 132.0,
+    "base_height": 115.0,
+    "source": "published monument height",
+    "osm": "way/1174760263"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       106.8210497,
+       -6.1987835
+      ],
+      [
+       106.8215071,
+       -6.1988316
+      ],
+      [
+       106.8214568,
+       -6.1993033
+      ],
+      [
+       106.8209994,
+       -6.1992551
+      ],
+      [
+       106.8210497,
+       -6.1987835
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "name": "Autograph Tower",
+    "category": "tower",
+    "height": 382.9,
+    "base_height": 0,
+    "source": "CTBUH Skyscraper Center",
+    "osm": "way/851599141"
+   }
+  }
+ ],
+ "missing": []
+}

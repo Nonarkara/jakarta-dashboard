@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JKTx 3D Atlas -- Jakarta block by block</title>
+  <meta name="description" content="Explore Jakarta in 3D: every building footprint with a measured or satellite-estimated height, OpenStreetMap rail and waterways, and source-labeled rain, water and air layers." />
+  <script src="/theme.js?v=dev"></script>
+  <script src="/translations.js?v=dev"></script>
+  <script src="/i18n.js?v=dev"></script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link href="/vendor/maplibre-6.4.1/maplibre-gl.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css?v=dev" />
+</head>
+<body data-surface="jakarta-atlas">
+  <a class="atlas-skip" href="#atlas-environment">Skip to map controls</a>
+  <main class="atlas-page">
+    <header class="atlas-header">
+      <div class="atlas-header-meta">
+        <span class="atlas-eyebrow" id="atlas-eyebrow">3D Atlas -- Jakarta -- 3.4 M buildings</span>
+        <h1 class="atlas-title">
+          <span class="atlas-title-desk">Jakarta, block by block</span>
+          <span class="atlas-title-phone">Jakarta -- 3D atlas</span>
+        </h1>
+        <p class="atlas-maturity">Public demo · reference map with modeled feeds</p>
+      </div>
+      <nav class="atlas-header-nav" aria-label="Atlas navigation">
+        <label class="atlas-theme-control">Map view <select id="atlas-view" aria-label="Map view"><option value="2d">2D map</option><option value="3d" selected>3D city</option></select></label>
+        <label class="atlas-theme-control">Basemap <select id="atlas-basemap" aria-label="Basemap"><option value="osm">OpenStreetMap streets</option><option value="esri" selected>Esri satellite</option></select></label>
+        <label class="atlas-theme-control" for="atlas-language">Language
+          <select id="atlas-language" aria-label="Language"><option value="id">Bahasa Indonesia</option><option value="en">English</option></select>
+        </label>
+        <details class="atlas-menu" id="atlas-menu"><summary>Tools &amp; appearance</summary><div class="atlas-menu-body">
+        <details class="atlas-about"><summary>About this atlas</summary><div class="atlas-about-body"><p class="atlas-kicker">
+          3 380 317 building features from Overture Maps, each with a tagged height, a satellite estimate for that building, or an area estimate. Explore the skyline on Esri imagery with OpenStreetMap rail and waterways and source-labeled data overlays. Lighting follows the calculated sun position over Jakarta; night lighting is illustrative.
+          Click any building to see its height and where that number came from.
+        </p></div></details>
+        <a href="#atlas-areas">Quick jump</a>
+        <a href="#atlas-environment">Rain &amp; water</a>
+        <a href="#atlas-data">Data &amp; sources</a>
+        <a href="https://github.com/Nonarkara/jakarta-3d-atlas" target="_blank" rel="noopener" title="Access requires repository permission">Private repository</a>
+        <label class="atlas-theme-control" for="atlas-theme">Appearance
+          <select id="atlas-theme" aria-label="Appearance">
+            <option value="dark">Dark · batik indigo</option>
+            <option value="light">Light · limestone paper</option>
+            <option value="contrast">High contrast</option>
+          </select>
+        </label>
+
+        </div></details>
+      </nav>
+    </header>
+
+    <nav class="atlas-lenses" aria-label="Explore city conditions">
+      <button data-lens="city" aria-pressed="true">City in 3D</button>
+      <button data-lens="rain" aria-pressed="false">Rain · next 24 h</button>
+      <button data-lens="radar" aria-pressed="false">Rain radar</button>
+      <button data-lens="cloud" aria-pressed="false">Himawari clouds</button>
+      <button data-lens="water" aria-pressed="false">Observed water</button>
+      <button data-lens="recurring" aria-pressed="false">Recurring water</button>
+      <button data-lens="air" aria-pressed="false">Aerosol</button>
+    </nav>
+    <section class="atlas-lens-story" aria-live="polite"><strong id="atlas-lens-title">Read the city, from skyline to street</strong><span id="atlas-lens-description">Choose a map lens. Sources and valid times stay with the evidence.</span><details id="atlas-lens-evidence"><summary>Explore evidence</summary><div id="atlas-lens-body"></div></details></section>
+    <div class="atlas-map-wrap">
+      <div id="atlas-map" class="atlas-map" aria-label="3D map of Jakarta"></div>
+      <section class="atlas-watch" id="atlas-watch" aria-label="City watch">
+        <details class="atlas-watch-shell" id="atlas-watch-shell" open><summary>City watch</summary>
+        <div class="atlas-watch-grid">
+          <button type="button" id="atlas-watch-flood" data-watch="flood"><small>Flood and rain</small><strong id="atlas-watch-flood-value">Checking open data</strong></button>
+          <button type="button" id="atlas-watch-air" data-watch="air"><small>Air particles</small><strong id="atlas-watch-air-value">Checking open data</strong></button>
+          <button type="button" id="atlas-watch-wind" data-watch="wind"><small>Wind and storms</small><strong id="atlas-watch-wind-value">Checking open data</strong></button>
+          <button type="button" id="atlas-watch-traffic" data-watch="traffic"><small>Traffic</small><strong id="atlas-watch-traffic-value">Checking open data</strong></button>
+        </div>
+        <details class="atlas-watch-notices" id="atlas-watch-notices"><summary>Guidance &amp; limits</summary><div class="atlas-watch-notice-body">
+        <p id="atlas-watch-action" class="atlas-watch-action" hidden></p>
+        <p>These are research screening rules, not official warnings. For warnings follow BMKG and BPBD DKI Jakarta. Check the source and observation time before acting.</p>
+        </div></details></details>
+      </section>
+
+      <div id="atlas-map-loading" class="atlas-map-loading">
+        <div class="atlas-map-loading-inner">
+          <span class="atlas-map-loading-glyph">Jx</span>
+          <p class="atlas-map-loading-line">JKTx 3D atlas loading</p>
+          <p class="atlas-map-loading-sub">3.4 M buildings - MRT, LRT and KRL - rivers and canals</p>
+        </div>
+      </div>
+
+      <aside class="atlas-observation-hud" id="atlas-observation-hud" hidden aria-label="Selected environmental observation"></aside>
+
+      <!-- Layer toggle rail (top-left, inside map) -->
+      <aside class="atlas-layers" aria-label="Map layers">
+        <details>
+        <summary class="atlas-panel-summary"><span class="atlas-eyebrow">Layers</span></summary>
+        <button type="button" class="atlas-toggle atlas-toggle--on" aria-pressed="true" data-layer-toggle="jkt-buildings">
+          <span class="atlas-toggle-swatch atlas-toggle-swatch--buildings"></span>
+          <span>3D buildings</span>
+        </button>
+        <button type="button" class="atlas-toggle atlas-toggle--on" aria-pressed="true" data-layer-toggle="waterways-line">
+          <span class="atlas-toggle-swatch atlas-toggle-swatch--water"></span>
+          <span>Rivers and canals</span>
+        </button>
+        <button type="button" class="atlas-toggle atlas-toggle--on" aria-pressed="true" data-layer-toggle="rail-line">
+          <span class="atlas-toggle-swatch atlas-toggle-swatch--metro"></span>
+          <span>Rail lines</span>
+        </button>
+        <button type="button" class="atlas-toggle atlas-toggle--on" aria-pressed="true" data-layer-toggle="rail-stations">
+          <span class="atlas-toggle-swatch atlas-toggle-swatch--station"></span>
+          <span>Rail stations</span>
+        </button>
+        <button type="button" class="atlas-toggle atlas-toggle--on" aria-pressed="true" data-layer-toggle="jkt-landmarks-3d">
+          <span class="atlas-toggle-swatch atlas-toggle-swatch--poi"></span>
+          <span>Hero landmarks</span>
+        </button>
+        <button type="button" class="atlas-toggle atlas-toggle--on" aria-pressed="true" data-layer-toggle="aqi-points">
+          <span class="atlas-toggle-swatch atlas-toggle-swatch--aqi"></span>
+          <span id="atlas-aqi-label">Air quality · checking</span>
+        </button>
+        <button type="button" class="atlas-toggle atlas-toggle--on" aria-pressed="true" data-layer-toggle="rain-model-samples"><span class="atlas-toggle-swatch atlas-toggle-swatch--poi"></span><span>Weather model sample points</span></button>
+        <button type="button" id="atlas-orbit-btn" aria-pressed="false" class="atlas-flyover-btn">Enable orbit</button>
+        <p class="atlas-eyebrow atlas-eyebrow--mt">Basemap</p>
+        <button type="button" aria-pressed="true" class="atlas-basemap-btn atlas-basemap-btn--active" data-bas="esri">
+          Esri satellite
+        </button>
+        <button type="button" aria-pressed="false" class="atlas-basemap-btn" data-bas="osm">OpenStreetMap streets</button>
+        </details>
+      </aside>
+
+      <!-- Inspect card (right) -->
+      <aside class="atlas-inspect" id="atlas-inspect" aria-live="polite" hidden>
+        <button type="button" id="atlas-inspect-close" class="atlas-inspect-close">Close inspect</button>
+        <p class="atlas-eyebrow">Inspect</p>
+        <h2 class="atlas-data-heading">Click any building</h2>
+        <p class="atlas-inspect-blurb" id="atlas-inspect-hint">
+          Click locks the building and shows its height, where the height came from, and who mapped the footprint.
+        </p>
+        <div class="atlas-inspect-card" id="atlas-inspect-card" hidden>
+          <p class="atlas-inspect-coords" id="atlas-inspect-coords"></p>
+          <div class="atlas-inspect-props" id="atlas-inspect-props"></div>
+        </div>
+      </aside>
+
+      <!-- Quick-jump area grid (bottom of map) -->
+      <section class="atlas-quick" id="atlas-areas">
+        <details class="atlas-quick-details">
+          <summary class="atlas-panel-summary">
+            <span class="atlas-eyebrow">Quick jump</span>
+            <span class="atlas-quick-heading">12 places</span>
+          </summary>
+          <div id="atlas-area-grid" class="atlas-area-grid" role="group" aria-label="Jakarta key areas"></div>
+        </details>
+        <button type="button" id="atlas-flyover-btn" aria-pressed="false" class="atlas-flyover-btn">Start flyover</button>
+      </section>
+    </div>
+
+    <section class="atlas-data atlas-environment" id="atlas-environment" tabindex="-1" aria-labelledby="atlas-environment-heading">
+      <div class="atlas-environment-topline"><h2 id="atlas-environment-heading">Rain, water &amp; atmosphere</h2>
+      <p id="atlas-environment-status" role="status">Checking environmental sources…</p></div>
+      <div class="atlas-environment-controls">
+        <label>Environmental layer <select id="atlas-environment-layer" aria-label="Environmental layer">
+          <option value="none">No environmental overlay</option><option value="radar">Rain radar</option>
+          <option value="himawari">Himawari infrared clouds</option><option value="surface-water">Satellite surface water / flood</option><option value="aerosol">Satellite aerosol optical depth</option><option value="satellite-rain">Satellite rainfall estimate</option>
+        </select></label>
+        <details class="atlas-extra-controls" id="atlas-extra-controls"><summary>Layer settings</summary><div class="atlas-extra-controls-body">
+        <label id="atlas-satellite-date-control" hidden><span id="atlas-satellite-date-label">Satellite day</span> <select id="atlas-satellite-date" aria-label="Satellite day"></select></label>
+        <label id="atlas-radar-frame-control" hidden>Radar frame <select id="atlas-radar-frame" aria-label="Radar frame"></select></label>
+        <label id="atlas-radar-coverage-control" hidden><input type="checkbox" id="atlas-radar-coverage" />Radar coverage mask</label>
+        <label>Display opacity <input type="range" id="atlas-environment-opacity" aria-label="Display opacity" min="10" max="100" value="75" /></label>
+        </div></details>
+        <button type="button" id="atlas-environment-overview">Regional overview</button>
+        <button type="button" id="atlas-environment-refresh">Refresh data</button>
+      </div>
+      <details class="atlas-environment-details">
+      <summary>Evidence &amp; rainfall forecast</summary>
+      <div class="atlas-environment-detail-body">
+      <p>Regional data layers support situational awareness. They are not official flood warnings, surveyed inundation boundaries, or safe-route guidance.</p>
+      <button type="button" id="atlas-environment-export">Export source metadata</button>
+      <div id="atlas-environment-evidence"></div>
+      <div id="atlas-environment-legend"></div>
+      <p>Named map points are weather-model sample locations, not rain gauges. Their readings and valid times appear in the table below.</p>
+      <h3>Current model precipitation and next 24 hours</h3>
+      <p>Precipitation estimates are weather-model output, not rain-gauge measurements. Sample points are planning locations, one per kota, not district averages. A rainfall forecast alone is not an inundation forecast. The 24-hour window starts at the next full hour; its start and end are shown per location.</p>
+      <p id="atlas-rainfall-status" role="status">Checking environmental sources…</p>
+      <div class="atlas-table-wrap"><table><caption>Current model precipitation and next 24 hours</caption><thead><tr><th scope="col">Location</th><th scope="col">Current interval</th><th scope="col">Next 24 h</th><th scope="col">Valid time (WIB)</th></tr></thead><tbody id="atlas-rainfall-rows"></tbody></table></div>
+      <button type="button" id="atlas-rainfall-export">Export rainfall CSV</button>
+      </div></details>
+    </section>
+
+    <section class="atlas-data" id="atlas-data" aria-labelledby="atlas-data-heading">
+      <h2 id="atlas-data-heading">Data &amp; sources</h2>
+      <p id="atlas-map-status" role="status">Map loading. The text data below remains available if tiles fail.</p>
+      <p>Buildings appear from zoom 12 and are simplified at wider views. Heights are in metres; most are satellite estimates. This demo supports exploration; it does not show verified street-level flood conditions.</p>
+      <details>
+        <summary>Air quality</summary>
+        <p id="atlas-aqi-status" role="status">Checking air-quality data…</p>
+        <p>Open-Meteo / CAMS values are model estimates sampled at five points, not monitoring-station measurements.</p>
+        <div class="atlas-table-wrap"><table><caption>Air-quality estimates and valid time</caption><thead><tr><th scope="col">Location</th><th scope="col">Reading</th><th scope="col">Source, tier &amp; age</th></tr></thead><tbody id="atlas-aqi-rows"></tbody></table></div>
+      </details>
+      <details>
+        <summary>Reference features &amp; map limits</summary>
+        <p>Rail lines and stations are OpenStreetMap route relations for MRT Jakarta, LRT Jakarta, LRT Jabodebek and KRL Commuter Line, as mapped; they are not an operator network map. TransJakarta, street congestion, flood sensors and land subsidence are not in this atlas: no open live source is wired in.</p>
+        <div id="atlas-reference-list">Loading reference features…</div>
+      </details>
+      <noscript><p>JavaScript diperlukan untuk peta dan tabel yang diperbarui. JavaScript is required for the map and refreshed tables. Read the <a href="/jakarta-landmarks.geojson">landmark records</a>, <a href="/jakarta-rail.geojson">rail records</a>, <a href="/jakarta-areas.json">area records</a> or the <a href="/api/atlas/watch">city watch feed</a> directly.</p></noscript>
+    </section>
+
+    <footer class="atlas-footer">
+      <p>
+        Footprints: <strong>Overture Maps</strong> 2026-09-23 -- OpenStreetMap 2 237 918, Microsoft ML Buildings 432 048, Google Open Buildings 710 351.
+        Heights in real metres, never scaled: 4 814 tagged heights (OSM / survey); 28 807 estimates from floor count × 3.3 m; 3 072 454 per building from <strong>Google Open Buildings 2.5D Temporal</strong> (2023, the 75th-percentile satellite height inside each footprint); 265 275 from <strong>GHSL</strong> built-up height (EU JRC, 2018, 100 m area average) where Google has none; 8 967 at a type default with no satellite signal. Satellite heights are capped at max(6 m, four times the square root of footprint area). Counts describe the baked dataset; tile simplification omits some small features.
+        The satellite model under-reads the tallest towers (it saturates near 100 m); in Jakarta most towers carry a height tagged in OpenStreetMap, which takes precedence. Autograph Tower and Monas are drawn from OSM outlines and parts at published heights.
+      </p>
+      <p>
+        Rail and waterways: <strong>OpenStreetMap</strong> as mapped. Basemap <strong>Esri World Imagery</strong>; air quality <strong>Open-Meteo / CAMS</strong>; rain <strong>Open-Meteo</strong> and <strong>RainViewer</strong>; satellite layers <strong>NASA GIBS</strong> and <strong>JMA Himawari</strong>; storms <strong>GDACS</strong>. Tiles streamed from R2 by Range request. Data keeps its source terms: <a href="https://docs.overturemaps.org/attribution/">Overture attribution</a>, <a href="https://www.openstreetmap.org/copyright">OpenStreetMap / ODbL</a>, <a href="https://sites.research.google/open-buildings/">Google Open Buildings</a>, <a href="https://human-settlement.emergency.copernicus.eu/">GHSL</a>, <a href="https://open-meteo.com/en/docs/air-quality-api">Open-Meteo / CAMS</a>.
+      </p>
+      <p class="atlas-footer-meta">
+        JKTx 3D Atlas -- jakarta.nonarkara.org -- <span>Source-specific data terms</span>
+        · Colour: batik indigo and soga brown, chosen for screen contrast.
+      </p>
+    </footer>
+  </main>
+
+  <script src="https://unpkg.com/pmtiles@4.4.1/dist/pmtiles.js" integrity="sha384-iS2/cbFYol4NsEeda4mW6N/8wPMOT6pv2eY+GNYSJRqVC4nbJECP1+mg6D2T8wT/" crossorigin="anonymous" defer></script>
+  <script src="/loader.js?v=dev" data-app="/app.js?v=dev" defer></script>
+</body>
+</html>
