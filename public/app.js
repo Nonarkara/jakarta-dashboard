@@ -43,7 +43,7 @@ let mapInstance = null;
 // Build tag sent to an embedding page in the `jakarta-atlas` ready
 // postMessage. `scripts/stamp-build-id.mjs` rewrites this on every
 // deploy so the dashboard can detect a stale iframe bundle.
-const ATLAS_BUILD_TAG = "jakarta-atlas-20261010-1791650998-6bd7192";
+const ATLAS_BUILD_TAG = "jakarta-atlas-20261010-1791651090-235c3a7";
 // Append a build-tag query string to the PMTiles URLs so every deploy
 // busts Cloudflare's edge cache. Without this, the first GET (which the
 // protocol handler makes without a Range header) gets cached as 200 OK
@@ -628,8 +628,35 @@ function observationLabel(stamp) {
 function evidenceCell(source, tier, stamp) {
   return escapeHtml(source || "Source unknown") + " · " + escapeHtml(tier || "unverified") + "<small>" + escapeHtml(observationLabel(stamp)) + "</small>";
 }
+// Open-Meteo throttles shared Cloudflare egress, so the Worker route can 503
+// while the provider still answers a visitor's browser. Same gates as the
+// Worker: matching coordinates, fresh UTC time, declared units, no zero-fill.
+async function fetchBrowserAirQuality() {
+  const points = [
+    { label: "Central Jakarta", label_id: "Jakarta Pusat", lat: -6.18, lng: 106.83 },
+    { label: "North Jakarta", label_id: "Jakarta Utara", lat: -6.12, lng: 106.88 },
+    { label: "West Jakarta", label_id: "Jakarta Barat", lat: -6.17, lng: 106.75 },
+    { label: "South Jakarta", label_id: "Jakarta Selatan", lat: -6.27, lng: 106.81 },
+    { label: "East Jakarta", label_id: "Jakarta Timur", lat: -6.23, lng: 106.90 },
+  ];
+  try {
+    const response = await fetch("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=" + points.map(p => p.lat).join(",") + "&longitude=" + points.map(p => p.lng).join(",") + "&current=pm2_5,us_aqi&timezone=UTC", { signal: AbortSignal.timeout(8000) });
+    if (!response.ok) return null;
+    const rows = await response.json();
+    if (!Array.isArray(rows) || rows.length !== points.length) return null;
+    const category = aqi => aqi <= 50 ? "Good" : aqi <= 100 ? "Moderate" : aqi <= 150 ? "Unhealthy for Sensitive Groups" : aqi <= 200 ? "Unhealthy" : aqi <= 300 ? "Very Unhealthy" : "Hazardous";
+    const out = points.flatMap((p, i) => {
+      const row = rows[i], stamp = freshStamp(row?.current?.time), units = row?.current_units || {};
+      const near = !!stamp && Math.abs(row?.latitude - p.lat) <= 0.5 && Math.abs(row?.longitude - p.lng) <= 0.5;
+      const aqi = near && units.us_aqi === "USAQI" ? boundedReading(row.current?.us_aqi, 0, 500) : null;
+      const pm25 = near && (units.pm2_5 === "μg/m³" || units.pm2_5 === "µg/m³") ? boundedReading(row.current?.pm2_5, 0, 1000) : null;
+      return aqi == null ? [] : [{ ...p, aqi, pm25, category: category(aqi), observedAt: stamp, provenance: { source: "Open-Meteo / CAMS", tier: "model-estimate" } }];
+    });
+    return out.length ? out : null;
+  } catch (e) { return null; }
+}
 async function refreshAirQuality() {
-  const data = await fetchLive("/api/atlas/air-quality", 300);
+  const data = await fetchLive("/api/atlas/air-quality", 300) || await fetchBrowserAirQuality();
   const available = Array.isArray(data);
   if (available) lastAirQuality = data.filter(function (p) {
     return p && Number.isFinite(p.lng) && Number.isFinite(p.lat) && Number.isFinite(p.aqi) && p.aqi >= 0;
