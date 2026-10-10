@@ -43,7 +43,7 @@ let mapInstance = null;
 // Build tag sent to an embedding page in the `jakarta-atlas` ready
 // postMessage. `scripts/stamp-build-id.mjs` rewrites this on every
 // deploy so the dashboard can detect a stale iframe bundle.
-const ATLAS_BUILD_TAG = "jakarta-atlas-20261010-1791651090-235c3a7";
+const ATLAS_BUILD_TAG = "jakarta-atlas-20261010-1791651343-f5650ce";
 // Append a build-tag query string to the PMTiles URLs so every deploy
 // busts Cloudflare's edge cache. Without this, the first GET (which the
 // protocol handler makes without a Range header) gets cached as 200 OK
@@ -1191,6 +1191,7 @@ async function refreshRainfall(force) {
   try { rainfallData = await Promise.any([fetchLive('/api/atlas/rainfall', 600).then(usable), fetchBrowserRainfall().then(usable)]); }
   catch { rainfallData = null; }
   renderRainfall();
+  renderCityWatch();
 }
 function applyMapLanguage() {
   if (!mapInstance) return;
@@ -1229,7 +1230,11 @@ function renderCityWatch() {
     return;
   }
   const water = environmentData?.products?.find(p => p.id === "surface-water");
-  const wettest = watchPlace("flood");
+  // The Worker's model call can be throttled while the browser fallback in
+  // refreshRainfall succeeded; use whichever carries a complete 24 h total.
+  const browserWettest = (rainfallData?.points || []).filter(p => Number.isFinite(p.next24hMm)).sort((a, b) => b.next24hMm - a.next24hMm)[0];
+  const workerWettest = watchPlace("flood");
+  const wettest = workerWettest && Number.isFinite(workerWettest.next24hMm) ? workerWettest : browserWettest || workerWettest;
   const rainBit = wettest && Number.isFinite(wettest.next24hMm) ? fmtNum(wettest.next24hMm, 1) + " mm / 24 h" : "Rain unavailable";
   const satBit = water?.available && water.date ? water.date : "Satellite day unavailable";
   watchValue("atlas-watch-flood-value", satBit + " · " + rainBit);
@@ -1545,9 +1550,9 @@ async function selectCityLens(lens) {
     await refreshRainfall(false);
     if (request !== lensRequest) return;
     setLayerVisible('rain-model-samples', true);
-    mapInstance.flyTo({center:[106.83,-6.20], zoom:10.6, pitch:currentView === '2d' ? 0 : 45});
+    mapInstance.flyTo({center:[106.83,-6.20], zoom:10.6, pitch:currentView === '2d' ? 0 : 45, bearing:0});
   } else if (['radar','cloud','water','recurring','air'].includes(lens)) {
-    mapInstance.flyTo({center:[106.83,-6.20], zoom:9.3, pitch:currentView === '2d' ? 0 : 35});
+    mapInstance.flyTo({center:[106.83,-6.20], zoom:9.3, pitch:currentView === '2d' ? 0 : 35, bearing:0});
   } else flyToArea('sudirman-thamrin', {updateHash:false});
   renderLensEvidence();
 }
