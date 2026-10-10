@@ -52,3 +52,13 @@ sample points (one per kota).
 Public demo (T0/T1). Buildings are an Overture snapshot with mixed height
 sources; rail is OSM as mapped; weather and air are model estimates. Not an
 official warning surface: the watch strip points to BMKG and BPBD DKI Jakarta.
+
+## Known upstream limit (2026-10-10)
+
+Open-Meteo answers 503 to the Worker (shared Cloudflare egress is throttled;
+HCMC's Worker sees the same). `/api/atlas/rainfall`, `/api/atlas/air-quality`
+and the watch's place values therefore read "unavailable" server-side. The
+client fetches the same provider from the visitor's browser with the same
+gates (rain table, rain lens, watch strip, AQI layer), so the page shows
+values. `scripts/smoke-atlas-api.mjs` reports this as a warning, not a
+failure. A keyed Open-Meteo plan would remove it; none has been bought.
