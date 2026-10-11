@@ -5,7 +5,11 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 ROOT=Path(__file__).resolve().parent.parent;RAW=ROOT/'data/source-evidence/official-2026-10-11';OUT=ROOT/'public/data/jakarta-v1'
 NOW=datetime.datetime.now(datetime.timezone.utc).isoformat()
-def retrieved(name):return datetime.datetime.fromtimestamp((RAW/name).stat().st_mtime,datetime.timezone.utc).isoformat()
+RECEIPTS=json.loads((RAW/'source-receipts.json').read_text())
+def retrieved(name):
+ receipt=RECEIPTS[name]
+ if hashlib.sha256((RAW/name).read_bytes()).hexdigest()!=receipt['sha256']:raise ValueError('Refresh the source receipt after replacing '+name)
+ return receipt['retrievedAt']
 def save(name,d):(OUT/name).write_text(json.dumps(d,ensure_ascii=False,separators=(',',':'))+'\n')
 raw=(RAW/'flood-prone.json').read_bytes();d=json.loads(raw.decode('utf-8-sig'));rows=d['data']
 assert len(rows)==d['total_file'] and d['message']=='success'
