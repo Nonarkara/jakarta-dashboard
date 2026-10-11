@@ -531,6 +531,9 @@ async function addHeroLandmarks() {
     return;
   }
 
+  const tallest = new Map();
+  features.forEach(f => tallest.set(f.properties.name, Math.max(tallest.get(f.properties.name) || 0, Number(f.properties.height) || 0)));
+  features.forEach(f => { f.properties.exploreHeight = tallest.get(f.properties.name); f.properties.exploreKind = 'landmark'; f.properties.exploreSource = 'landmark'; });
   mapInstance.addSource("jkt-landmarks-src", {
     type: "geojson",
     data: { type: "FeatureCollection", features: features },
@@ -595,6 +598,7 @@ async function addHeroLandmarks() {
   applyMapTheme();
   setLayerVisible("jkt-landmarks-3d", layerVisibility["jkt-landmarks-3d"] !== false);
   applyMapLanguage();
+  applyBuildingFilter(buildingFilterState);
   window.__cityHeroLandmarks = features.map(function (f) {
     return Object.assign({}, f.properties, { geometry: f.geometry });
   });
@@ -1067,6 +1071,59 @@ function applyDashboardOverlay(data) {
     postMsg('selection', {featureCount:data.features.length});
   });
 }
+// Building filters compare source metres; they never alter extrusion heights.
+const BUILDING_TYPE_GROUPS = {
+ housing: ['house','apartments','residential','detached','terrace','semidetached_house'],
+ work: ['office','commercial','retail','shop','hotel'],
+ industrial: ['industrial','warehouse','factory'],
+ civic: ['school','university','hospital','civic','public','government','church','mosque','temple'],
+ landmark: ['landmark']
+};
+let buildingFilterState = {min:0,max:500,kind:'all',source:'all',unknown:true};
+const originalBuildingFilters = new Map();
+function normalizeBuildingFilter(input) {
+ if (!input || !Number.isFinite(input.min) || !Number.isFinite(input.max) || input.min<0 || input.max>500 || input.min>input.max || typeof input.unknown!=='boolean') return null;
+ if (input.kind!=='all' && !Object.hasOwn(BUILDING_TYPE_GROUPS,input.kind)) return null;
+ if (!['all','measured','floors','google','ghsl','estimated','landmark'].includes(input.source)) return null;
+ return {min:input.min,max:input.max,kind:input.kind,source:input.source,unknown:input.unknown};
+}
+function buildingFilterExpression(filter) {
+ const h=['to-number',['coalesce',['get','exploreHeight'],['get','h'],['get','render_height'],['get','height']],0];
+ const tests=['all'];
+ if(filter.min!==0 || filter.max!==500 || !filter.unknown) {
+  const range=['all',['>',h,0],['>=',h,filter.min],['<=',h,filter.max]];
+  tests.push(filter.unknown?['any',['<=',h,0],range]:range);
+ }
+ if(filter.kind!=='all') tests.push(['in',['coalesce',['get','exploreKind'],['get','cls'],['get','building'],''],['literal',BUILDING_TYPE_GROUPS[filter.kind]]]);
+ if(filter.source!=='all') tests.push(['in',['coalesce',['get','exploreSource'],['get','hs'],''],['literal',filter.source==='ghsl'?['ghsl','satellite']:[filter.source]]]);
+ return tests.length===1?null:tests;
+}
+function reportBuildingView() {
+ if (!mapInstance) return;
+ const visible=currentView==='3d' && mapInstance.getLayer('jkt-buildings') && mapInstance.getLayoutProperty('jkt-buildings','visibility')!=='none';
+ const failed=!!mapInstance.__atlasTileError;
+ const ready=mapInstance.areTilesLoaded()&&!failed;
+ const rows=visible&&ready?mapInstance.queryRenderedFeatures(undefined,{layers:['jkt-buildings']}):[];
+ const ids=new Set(rows.filter(f=>f.id!=null).map(f=>String(f.id)));
+ postMsg('building-view',{filter:buildingFilterState,count:visible&&ready?ids.size:null,state:failed?'unavailable':!visible?'hidden':ready?'ready':'loading',colors:mapTheme().buildings,scope:'rendered-footprints',tier:'rendered-snapshot',source:'Overture / OSM / Microsoft / Google',datasetDate:'2026-09-23',checkedAt:new Date().toISOString(),zoom:mapInstance.getZoom()});
+}
+function applyBuildingFilter(input) {
+ const config=normalizeBuildingFilter(input);
+ if (!config) { postMsg('building-filter-error',{reason:'invalid_filter'});return; }
+ buildingFilterState=config;
+ styleReady.then(()=>{
+  const expression=buildingFilterExpression(config);
+  for(const id of ['jkt-buildings','jkt-buildings-outline','jkt-landmarks-3d','jkt-landmarks-outline','jkt-landmarks-label']){
+   if(!mapInstance.getLayer(id))continue;
+   if(!originalBuildingFilters.has(id))originalBuildingFilters.set(id,mapInstance.getFilter(id)||null);
+   const base=originalBuildingFilters.get(id);
+   mapInstance.setFilter(id,expression&&base?['all',base,expression]:expression||base);
+  }
+  closeInspect();reportBuildingView();
+ });
+}
+if(mapInstance){mapInstance.on('idle',reportBuildingView);mapInstance.on('moveend',reportBuildingView);}
+window.addEventListener('atlas:theme',reportBuildingView);
 if (window.parent !== window) {
   document.body.classList.add('atlas-embedded');
   document.documentElement.classList.add('atlas-embedded-root');
@@ -1099,6 +1156,9 @@ window.addEventListener("message", function (e) {
     return;
   }
   if (!mapInstance) return;
+  if(m.type==='atlas:setBuildingFilter'){applyBuildingFilter(m.filter);return;}
+  if(m.type==='atlas:requestBuildingView'){reportBuildingView();return;}
+  if(m.type==='atlas:resetCityView'){stopFlyover();orbitEnabled=false;mapInstance.stop();setMapView('3d');flyToArea('sudirman-thamrin',{instant:true,updateHash:true});return;}
   if (m.type === 'atlas:dashboardOverlay') { applyDashboardOverlay(m.data); return; }
   if (m.type === "atlas:flyTo" && m.areaId) flyToArea(m.areaId, { updateHash: false });
   else if (m.type === "atlas:flyover") (m.start ? startFlyover : stopFlyover)();

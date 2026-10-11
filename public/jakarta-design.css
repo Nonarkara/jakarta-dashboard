@@ -273,3 +273,15 @@ body[data-surface="jakarta-dashboard"] .modal-content > .panel { height: auto; m
   body[data-surface="jakarta-dashboard"] footer > #clock { display: block; }
 }
 @media(pointer:coarse) { .modal-toolbar button { min-height: 44px; } }
+
+.explore-layout { display: grid; grid-template-columns: minmax(220px, 1fr) minmax(300px, 1.35fr); gap: 20px; padding: 16px; }
+.explore-layout h2 { margin-bottom: 10px; }
+.explore-layout label { margin-block: 8px; }
+.explore-range { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.explore-check { display: flex; align-items: center; gap: 8px; }
+.explore-check input { min-height: auto; }
+.explore-layout .result-list { max-height: 280px; margin: 12px 0; }
+#explore-height-legend { display: flex; flex-wrap: wrap; gap: 12px; padding-block: 8px; }
+#explore-height-legend span { display: flex; align-items: center; gap: 5px; }
+#explore-height-legend i { width: 20px; height: 12px; border: 1px solid var(--line); }
+@media(max-width:700px) { .explore-layout { grid-template-columns: minmax(0,1fr); } }

@@ -19,6 +19,7 @@ class FakeMap {
   constructor(options) { this.style = { _loaded: true }; this.sources = { ...options.style.sources }; this.layers = Object.fromEntries(options.style.layers.map(l => [l.id, { ...l, layout: {} }])); this.handlers = []; this.states = []; }
   getPitch() { return 60; } getBearing() { return -18; } setMaxPitch(value) { this.maxPitch = value; }
   dragRotate = { enable() {}, disable() {} }; easeTo(options) { this.camera = options; }
+  getZoom(){return 14;} areTilesLoaded(){return true;} getFilter(id){return this.layers[id]?.filter;} setFilter(id,value){this.layers[id].filter=value;}
   resize() {} addControl() {} setLight() {} moveLayer() {} stop() {}
   addSource(id, source) { this.sources[id] = { ...source, setData(data) { this.data = data; } }; }
   addLayer(layer) { this.layers[layer.id] = { ...layer, layout: { ...layer.layout } }; }

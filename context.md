@@ -96,3 +96,8 @@ The user's rejection of the type and nested hero scrolling supersedes the earlie
 ## Bounded hero and detail popups · 11 October 2026
 
 The user's explicit request to stop page bleed replaces the long scrolling dashboard. Default shell occupies one viewport: header, map/desktop readings, slim footer. Weather detail, transit, civic facilities, CRM and Sources are native modal dialogs opened by nav buttons. Original content and IDs remain. Close/Escape restore focus; selecting a map overlay closes a popup to expose the map. At phone/tablet width, weather observations and warnings move into their accessible dialogs, never disappear. Map drawing and its source drawer are unchanged.
+
+
+## Jakarta Satu 3D patterns · 11 October 2026
+
+Observed public source: https://jakartasatu.jakarta.go.id/geoportal/peta/3d. Adopted place search, height/type filters, legend and reset-view jobs in a bounded Explore popup. Improve with explicit source-tag grouping, height-provenance filtering and checked viewport counts (rendered simplified footprints, not a census). Loading/failing map data produce no numeric count. Keep height geometries unchanged. Landmark parts filter using the tallest published part per name. No official land-use attributes, meshes, RDTR geometry or proprietary scene assets were copied; official 3D/RDTR links remain available for comparison.
