@@ -56,3 +56,8 @@ Source commit `bfcd3fe` is pushed to the private repository. Cloudflare Worker v
 Live browser evidence: buildings rendered; Indonesian and English controls worked; the official CRM monthly report rendered with publisher filters and update cadence. Close removed its URL and restored keyboard focus. Page width matched the 375, 768 and 1280 viewport widths without document overflow. All three appearance modes have tested text contrast, including green fields. Enlarged-text and an uninstructed human walkthrough were not independently verified in this release.
 
 Screenshots: `JAKARTA-LOCAL-DESIGN-2026-10-11.jpg` (daylight city view), `JAKARTA-LOCAL-PHONE-2026-10-11.jpg` (Indonesian phone map), and `JAKARTA-CRM-2026-10-11.jpg` (publisher monthly viewer). CRM screenshot totals reflect the publisher's default filters at capture time; they are not dashboard observations.
+
+
+## Compact header follow-up
+
+Source `f9b6178`, Worker version `ee36b94b-91c4-4bbd-848f-3e62ef9c09c5`, build `jakarta-atlas-20261011-1791704246-f9b6178`. Header measured in the browser at 1280px: 133.79px before, 62px after. At 375px: 309.13px before, 92.59px after. The phone map iframe begins at 263.17px instead of 503.40px, with no document overflow. All three utility controls retain 44px height and accessible labels. Description moved into the existing method disclosure; clock moved to the footer. All eight suites and the canonical production smoke checks passed. Live screenshots: `JAKARTA-COMPACT-HEADER-2026-10-11.jpg` and `JAKARTA-COMPACT-PHONE-2026-10-11.jpg`; buildings rendered, language switching worked, viewport override reset.
