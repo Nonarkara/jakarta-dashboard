@@ -91,3 +91,8 @@ CRM monthly viewer URL is taken from the first-party monthly page. Viewer loads 
 ## Dense map workbench revision · 11 October 2026
 
 The user's rejection of the type and nested hero scrolling supersedes the earlier Plus Jakarta Sans choice. Use self-hosted Adobe Source Sans 3 (SIL OFL), 13px body / 11px metadata on desktop and 14px / 12px on phones. The embedded atlas is a bounded viewport, not a second page: lenses, evidence entry and map form a fixed grid. Tools, environment, data and attribution remain inside an explicit evidence drawer. Standalone atlas keeps its page. Desktop map action strip uses 30px controls; coarse pointers retain 44px targets. Preserve every provider tier and date; density is spacing and hierarchy, never dropping provenance.
+
+
+## Bounded hero and detail popups · 11 October 2026
+
+The user's explicit request to stop page bleed replaces the long scrolling dashboard. Default shell occupies one viewport: header, map/desktop readings, slim footer. Weather detail, transit, civic facilities, CRM and Sources are native modal dialogs opened by nav buttons. Original content and IDs remain. Close/Escape restore focus; selecting a map overlay closes a popup to expose the map. At phone/tablet width, weather observations and warnings move into their accessible dialogs, never disappear. Map drawing and its source drawer are unchanged.

@@ -14,7 +14,7 @@ const stale=(v,age)=>!v||!Number.isFinite(Date.parse(v))||Date.now()-Date.parse(
 const unavailable=()=>'<p class="note">'+t('Data tidak tersedia atau tidak lolos pemeriksaan.','Data unavailable or did not pass validation.')+'</p>';
 const evidence=(source,tier,stamp,label)=>'<p class="meta">'+esc(source)+' · '+esc(tier)+'<br>'+esc(label||t('Berlaku','Valid'))+': '+esc(date(stamp))+'</p>';
 function send(message){$('city-map').contentWindow?.postMessage(message,location.origin);}
-function showOverlay(data,label){selectedOverlay={data,label};$('selection-status').textContent=label;send({type:'atlas:dashboardOverlay',data});}
+function showOverlay(data,label){document.querySelector('dialog[open]')?.close();selectedOverlay={data,label};$('selection-status').textContent=label;send({type:'atlas:dashboardOverlay',data});}
 async function get(path){
  try{const r=await fetch(path,{signal:AbortSignal.timeout(25000)});const d=await r.json();return d;}catch{return null;}
 }
@@ -147,5 +147,43 @@ $('clear-overlay').addEventListener('click',()=>{showOverlay({type:'FeatureColle
 window.addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==$('city-map').contentWindow)return;const d=e.data;if(d?.type==='jakarta-atlas'&&d.event==='ready'||d?.type==='atlas:ready'){mapReady=true;$('map-status').textContent=t('Atlas siap','Atlas ready');send({type:'atlas:setLanguage',language:lang});send({type:'atlas:setTheme',theme:document.documentElement.dataset.theme});if(selectedOverlay)showOverlay(selectedOverlay.data,selectedOverlay.label);}});
 window.addEventListener('atlas:theme',e=>send({type:'atlas:setTheme',theme:e.detail}));
 $('export').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({build:DASHBOARD_BUILD,exportedAt:new Date().toISOString(),weather:weatherData,air:airData,alerts:alertsData,earthquake:quakeData,floodReports:floodData,transit:transit?{...transit,routes:undefined}:null,selectedRoute:routeDetail,civic,selectedOverlay,crm:{sourceUrl:'https://crm.jakarta.go.id/data-bulanan',viewerUrl:CRM_MONTHLY_URL,tier:'publisher-hosted-report',dataImported:false}},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='jakarta-evidence-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+
+// Detailed content is opened deliberately; the hero never grows into a long page.
+function initDetailDialogs() {
+ const returnFocus = new WeakMap();
+ document.querySelectorAll('.dashboard-modal').forEach(dialog=>{
+  dialog.addEventListener('close',()=>{
+   if(dialog.id==='crm-dialog' && crmViewerOpened) $('crm-close').click();
+   dockPanels();returnFocus.get(dialog)?.focus();
+  });
+ });
+ document.addEventListener('click',event=>{
+  const trigger=event.target.closest('[data-open],a[href^="#"]');
+  if(!trigger) return;
+  const target=trigger.dataset.open || trigger.getAttribute('href').slice(1)+'-dialog';
+  const dialog=$(target);
+  if(!dialog || dialog.tagName!=='DIALOG') return;
+  event.preventDefault();
+  document.querySelector('.city-controls').open=false;
+  returnFocus.set(dialog,trigger);
+  if(dialog.id==='warnings-dialog') dialog.querySelector('.modal-content').append($('alerts-panel'));
+  dialog.showModal();
+ });
+ const phone=matchMedia('(max-width:1199px)');
+ const observations=document.querySelector('.observations');
+ const warnings=$('alerts-panel');
+ const workspace=$('workspace');
+ const weather=$('weather-detail-dialog').querySelector('.modal-content');
+ const warningBody=$('warnings-dialog').querySelector('.modal-content');
+ function dockPanels(){
+  if(phone.matches){weather.prepend(observations);warningBody.append(warnings);}
+  else {workspace.prepend(observations);if($('warnings-dialog').open) warningBody.append(warnings);else workspace.append(warnings);}
+ }
+ dockPanels();phone.addEventListener('change',dockPanels);
+ const deepLink=location.hash.slice(1);
+ const initial=$(deepLink+'-dialog');
+ if(initial?.tagName==='DIALOG') initial.showModal();
+}
+initDetailDialogs();
 applyLanguage();refresh();setInterval(refresh,5*60000);setInterval(clock,60000);
 get('/data/jakarta-v1/transit.json?v='+DASHBOARD_BUILD).then(d=>{transit=d;renderTransit();});get('/data/jakarta-v1/civic.json?v='+DASHBOARD_BUILD).then(d=>{civic=d;});loadCivic();

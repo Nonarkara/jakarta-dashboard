@@ -235,3 +235,41 @@ body.atlas-embedded .atlas-embedded-evidence a { color: var(--accent); }
   body.atlas-embedded .atlas-lenses button { min-height: 44px; }
   body.atlas-embedded #atlas-lens-evidence > summary { min-height: 32px; }
 }
+
+/* Detailed sections belong to native modals, never the hero document flow. */
+body[data-surface="jakarta-dashboard"] {
+  height: 100svh; overflow: hidden; display: flex; flex-direction: column;
+}
+body[data-surface="jakarta-dashboard"] > .masthead { flex: none; }
+body[data-surface="jakarta-dashboard"] > main { flex: 1; min-height: 0; }
+body[data-surface="jakarta-dashboard"] .workspace { height: 100%; min-height: 0; align-items: stretch; }
+body[data-surface="jakarta-dashboard"] .map-panel {
+  height: 100%; min-height: 0; display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+}
+body[data-surface="jakarta-dashboard"] #city-map { height: 100%; min-height: 0; }
+body[data-surface="jakarta-dashboard"] .workspace > .panel { height: 100%; min-height: 0; overflow: auto; }
+body[data-surface="jakarta-dashboard"] footer { flex: none; padding: 3px 10px; line-height: 1.2; }
+body[data-surface="jakarta-dashboard"] .sections button {
+  flex: none; min-height: 44px; padding: 8px; border: 0; background: transparent;
+  font-size: var(--type-note); color: var(--ink); white-space: nowrap;
+}
+body[data-surface="jakarta-dashboard"] .sections button:hover { color: var(--accent); }
+.dashboard-modal {
+  width: min(1100px, calc(100vw - 24px)); max-height: calc(100svh - 32px);
+  padding: 0; border: 1px solid var(--line); border-radius: 0;
+  background: var(--bg); color: var(--ink);
+}
+.dashboard-modal[open] { display: flex; flex-direction: column; }
+.dashboard-modal::backdrop { background: rgb(0 0 0 / .65); }
+.modal-toolbar { flex: none; display: flex; align-items: center; justify-content: space-between; padding: 4px 12px; gap: 12px; border-bottom: 1px solid var(--line); margin: 0; font-weight: 650; }
+.modal-toolbar button { min-height: 36px; padding: 4px 12px; }
+.modal-content { overflow: auto; min-height: 0; overscroll-behavior: contain; }
+.dashboard-modal .detail-section { border: 0; }
+body[data-surface="jakarta-dashboard"] .modal-content > .panel { height: auto; max-height: none; overflow: visible; }
+@media(max-width:1199px) {
+  body[data-surface="jakarta-dashboard"] .workspace { grid-template-columns: minmax(0, 1fr); }
+  body[data-surface="jakarta-dashboard"] footer > span { display: none; }
+  body[data-surface="jakarta-dashboard"] footer > #clock { display: block; }
+}
+@media(pointer:coarse) { .modal-toolbar button { min-height: 44px; } }
