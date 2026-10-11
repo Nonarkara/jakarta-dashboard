@@ -107,3 +107,53 @@ button:disabled { opacity: .65; cursor: wait; }
   #crm-viewer { height: 640px; }
   .crm-intro { padding: 16px; }
 }
+
+/* Compact city toolbar: retain every control and give the model the first screen. */
+body[data-surface="jakarta-dashboard"] .masthead {
+  padding: 8px 16px;
+  gap: 6px 16px;
+  align-items: center;
+}
+body[data-surface="jakarta-dashboard"] .masthead > div:first-child {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+body[data-surface="jakarta-dashboard"] .masthead h1 { font-size: 22px; }
+body[data-surface="jakarta-dashboard"] .utilities { gap: 6px; align-items: center; }
+body[data-surface="jakarta-dashboard"] .utilities label { gap: 0; }
+/* Accessible select names stay in the DOM without reserving a label row. */
+body[data-surface="jakarta-dashboard"] .utilities label > span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+body[data-surface="jakarta-dashboard"] .sections a { padding-block: 10px; }
+body[data-surface="jakarta-dashboard"] .status-strip { padding: 4px 16px; }
+body[data-surface="jakarta-dashboard"] .map-heading { padding: 6px 12px; }
+@media (max-width: 600px) {
+  body[data-surface="jakarta-dashboard"] .masthead { padding: 6px 12px; }
+  body[data-surface="jakarta-dashboard"] .utilities {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) auto;
+    width: 100%;
+  }
+  body[data-surface="jakarta-dashboard"] .utilities label { min-width: 0; }
+  body[data-surface="jakarta-dashboard"] .utilities select {
+    width: 100%;
+    min-width: 0;
+    padding-inline: 6px;
+    font-size: var(--type-note);
+  }
+  body[data-surface="jakarta-dashboard"] .utilities button {
+    width: auto;
+    padding-inline: 8px;
+    font-size: var(--type-note);
+  }
+  body[data-surface="jakarta-dashboard"] .status-strip { padding-inline: 12px; align-items: center; }
+}
