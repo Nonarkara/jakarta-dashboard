@@ -22,3 +22,15 @@ ATLAS_BASE="$ATLAS_URL" npm run smoke
 ATLAS_URL="$ATLAS_URL" npm run smoke:api
 
 npm run smoke:dashboard
+
+# The stamp rewrites the asset cache-busters, so the tree is dirty by design once
+# a deploy runs. Commit exactly those four stamped files, never `git add -A`, so
+# work another agent left in the tree is not swept into the stamp commit. This
+# leaves a clean tree for the next release.
+STAMPED=(public/app.js public/index.html public/dashboard.html public/dashboard.js)
+if ! git diff --quiet -- "${STAMPED[@]}"; then
+  git add -- "${STAMPED[@]}"
+  git commit -q -m "chore: stamp build ${EXPECTED_BUILD}" -m "Agent: opencode-space-bunny-free"
+  echo "stamped ${EXPECTED_BUILD} committed"
+fi
+git status --short
