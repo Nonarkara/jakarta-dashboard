@@ -55,3 +55,6 @@ CRM: official hosted monthly report by Jakarta Smart City/CRM; the Google report
 
 
 Logo artwork: supplied by the project owner as “Jakarta Civic Dashboard Logo Explorations.png” on 11 October 2026. The original raster is retained in `public/brand/jakarta-logo-set.png`; CSS frames its app icon and wordmark, and the favicon uses the same app-icon region. No external license or official Jakarta government endorsement is asserted.
+
+
+Logo production correction: `jktx-symbol-v2.png` is an AI-assisted transparent reconstruction of the red Monas/blue-layer symbol from the owner-supplied sheet. It replaces presentation-sheet cropping on the live surfaces. The JKTx wordmark is native text in the licensed Plus Jakarta Sans family. Original sheet retained as source evidence; no official government endorsement asserted.

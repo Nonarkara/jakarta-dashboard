@@ -108,7 +108,7 @@ button:disabled { opacity: .65; cursor: wait; }
   .crm-intro { padding: 16px; }
 }
 
-/* One city bar. Original supplied artwork is framed in CSS, not redrawn. */
+/* One city bar with a transparent mark and a native, theme-aware wordmark. */
 .visually-hidden {
   position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden;
   clip-path: inset(50%); white-space: nowrap;
@@ -119,16 +119,14 @@ body[data-surface="jakarta-dashboard"] .masthead {
 }
 .city-brand { display: flex; align-items: center; gap: 6px; height: 44px; }
 .city-brand-icon {
-  width: 32px; height: 30px; flex: none;
-  background: url('/brand/jakarta-logo-set.png') -125.12px -18.56px / 166.08px 109.76px no-repeat;
+  display: inline-block; width: 32px; height: 36px; flex: none;
+  background: url('/brand/jktx-symbol-v2.png') center / auto 44px no-repeat;
 }
 .city-brand-wordmark {
-  width: 72px; height: 19px; flex: none;
-  background: url('/brand/jakarta-logo-set.png') -38.88px -72.72px / 186.84px 123.48px no-repeat;
-  mix-blend-mode: screen;
-  filter: invert(1);
+  flex: none; font: 800 26px/1 var(--font-sans);
+  letter-spacing: -.055em; color: var(--ink);
 }
-:root[data-theme="light"] .city-brand-wordmark { filter: none; mix-blend-mode: multiply; }
+.city-brand { text-decoration: none; }
 body[data-surface="jakarta-dashboard"] .sections { border: 0; padding: 0; min-width: 0; }
 body[data-surface="jakarta-dashboard"] .sections a { padding: 8px; font-size: var(--type-note); display: flex; align-items: center; }
 .city-controls { position: relative; margin: 0; padding: 0; border: 0; }
@@ -159,6 +157,6 @@ body[data-surface="jakarta-dashboard"] .map-heading h2 { margin: 0; }
 body[data-surface="jakarta-atlas"] .atlas-title::before {
   content: ''; display: inline-block; vertical-align: middle; margin-right: 8px;
   width: 32px; height: 30px;
-  background: url('/brand/jakarta-logo-set.png') -125.12px -18.56px / 166.08px 109.76px no-repeat;
+  background: url('/brand/jktx-symbol-v2.png') center / contain no-repeat;
 }
 body[data-surface="jakarta-atlas"] .atlas-map-loading-glyph { border: 0; background: transparent; }
