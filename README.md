@@ -8,6 +8,8 @@ The Bahasa Indonesia / English dashboard follows the HCMC observation–map–bu
 
 Search a route and select it to draw the scheduled alignment. Select a stop or civic facility to locate its reference point. Language/theme changes retain the same map instance. The forecast chart has a complete text table. Export evidence JSON for source payloads and selected geometry. The complete atlas retains all building, environment, inspection and navigation controls.
 
+The Banjir / Flood desk popup couples those live signals with the dated Jakarta Satu monitoring network: AWLR water-level stations with official SIAGA 1–4 alert thresholds grouped by river, ARR rain gauges, pumps, floodgates and reservoirs, flood-risk reference polygons joined to 2023 kelurahan population, and the situ inventory. No live water level is shown anywhere; stations publish thresholds, not readings, and unavailable feeds stay explicit states with official links.
+
 ## Local design and citizen services
 
 Palette/Wada plate 267 supplies a documented warm/cool relationship, adapted into dark coastal, city-daylight and high-contrast modes. Plus Jakarta Sans is the city-commissioned Tokotype family, self-hosted under OFL 1.1. The font, actual tokens, contrast proof and local source evidence are recorded in `docs/JAKARTA-DESIGN-AND-CRM.md`. Source/period text is larger; scientific layer legends keep their own semantic colours.
@@ -23,7 +25,8 @@ The citizen-services section links to CRM's official daily, monthly, kelurahan a
 - `/api/jakarta/flood-reports`: one-hour report count only. An empty result does not establish dry streets. PetaBencana's non-commercial/commercial distinction applies.
 - Existing `/api/atlas/*`, building tiles and waterways remain available.
 
-`npm run deploy:live` runs all eight suites, stamps dashboard/atlas assets, deploys the existing Worker with its R2 binding and custom domain, and checks the exact deployed bytes plus provider envelopes. Do not deploy from the old atlas repo to this Worker.
+- `npm run prepare:flood`: bake the Jakarta Satu flood-desk network — AWLR/ARR stations with SIAGA thresholds, pumps/floodgates/reservoirs, situ, risk polygons and kelurahan population — into versioned assets under `public/data/jakarta-v1`, with DKI-bbox quarantine and access-state records for unreachable sources.
+- `npm run deploy:live` runs the full local gate (typecheck, verify, every test suite), stamps dashboard/atlas assets, deploys the existing Worker with its R2 binding and custom domain, and checks the exact deployed bytes plus provider envelopes. Do not deploy from the old atlas repo to this Worker.
 
 Civic datasets publish no observation epoch or explicit dataset license in the inspected service metadata; the ledger labels their attribution/access limitation. GTFS is CC BY 4.0, normalized/simplified here; service calendars and selected representative trips are scheduled records. DLH measured-air, BPS statistical baselines, tides, subsidence, live vehicles and congestion remain unconnected.
 

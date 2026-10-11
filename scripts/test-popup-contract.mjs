@@ -18,7 +18,7 @@ const nodes=new Map(),get=id=>nodes.get(id);
 for(const id of ['workspace','alerts-panel','observations','controls'])nodes.set(id,new Node(id));
 const shell=new Node('crm-viewer-shell');shell.hidden=true;nodes.set(shell.id,shell);
 const closeReport=new Node('crm-close');let stoppedReports=0;closeReport.click=()=>{shell.hidden=true;stoppedReports++;};nodes.set(closeReport.id,closeReport);
-const dialogs=['weather-detail','mobility','civic','crm','sources','warnings'].map(id=>{
+const dialogs=['weather-detail','mobility','civic','crm','sources','warnings','flood'].map(id=>{
  const d=new Node(id+'-dialog','DIALOG');d.content=new Node(id+'-content');nodes.set(d.id,d);return d;
 });
 const workspace=get('workspace');workspace.append(get('observations'),get('alerts-panel'));
@@ -27,7 +27,7 @@ const document={querySelectorAll:()=>dialogs,querySelector:s=>s==='.city-control
 const context=vm.createContext({document,$:get,matchMedia:()=>media,location:{hash:''},crmViewerOpened:false});
 const start=js.indexOf('function initDetailDialogs()');const end=js.indexOf('initDetailDialogs();',start);
 vm.runInContext(js.slice(start,end)+'initDetailDialogs();',context);
-for(const id of ['weather-detail','mobility','civic','crm','sources']){
+for(const id of ['weather-detail','mobility','civic','crm','sources','flood']){
  const d=get(id+'-dialog');const trigger=new Node('trigger');trigger.dataset.open=d.id;
  let prevented=false;document.click({target:{closest:()=>trigger},preventDefault(){prevented=true;}});
  assert.equal(prevented,true);assert.equal(d.open,true,'button opens '+id);if(id==='crm')shell.hidden=false;d.close();assert.equal(trigger.focused,true,'closing restores focus');

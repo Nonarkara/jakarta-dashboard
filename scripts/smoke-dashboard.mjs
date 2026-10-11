@@ -11,10 +11,11 @@ assert.match(html,/id="crm-viewer"/);assert.match(deployed,/d7d87175-bfa2-4067-b
 assert.match(r.headers.get('content-security-policy'),/frame-src 'self' https:\/\/datastudio.google.com https:\/\/lookerstudio.google.com/);
 const officialScript=html.match(/src="(\/official-data.js\?v=[^"]+)"/)[1];assert.ok(officialScript.includes(tag));
 const referenceScript=html.match(/src="(\/reference-language.js\?v=[^"]+)"/)[1];assert.ok(referenceScript.includes(tag));
-for(const path of [officialScript, referenceScript, '/i18n.js', '/translations.js', '/dashboard.css', '/data/jakarta-v1/projects.json', '/data/jakarta-v1/flood-reference.json', '/data/jakarta-v1/city-context.json', '/data/jakarta-v1/green.geojson']){
+const floodScript=html.match(/src="(\/flood-data.js\?v=[^"]+)"/)[1];assert.ok(floodScript.includes(tag));
+for(const path of [officialScript, referenceScript, floodScript, '/i18n.js', '/translations.js', '/dashboard.css', '/data/jakarta-v1/projects.json', '/data/jakarta-v1/flood-reference.json', '/data/jakarta-v1/city-context.json', '/data/jakarta-v1/green.geojson', '/data/jakarta-v1/flood-network.json', '/data/jakarta-v1/risk.geojson', '/data/jakarta-v1/population.json', '/data/jakarta-v1/awlr.geojson', '/data/jakarta-v1/arr.geojson', '/data/jakarta-v1/pumps.geojson', '/data/jakarta-v1/situ.geojson']){
  const res=await fetch(base+path);assert.equal(res.status,200,path);assert.equal(await res.text(),readFileSync(new URL('../public'+path.split('?')[0],import.meta.url),'utf8'),'exact official data/client/CSS deployed: '+path);
 }
-assert.match(html,/id="official-dialog"/);console.log('PASS exact official data snapshots and popup client/CSS');
+assert.match(html,/id="official-dialog"/);assert.match(html,/id="flood-dialog"/);console.log('PASS exact official data snapshots and popup client/CSS');
 for(const path of ['/data/jakarta-v1/transit.json','/data/jakarta-v1/civic.json']){const res=await fetch(base+path);assert.equal(res.status,200);assert.ok((await res.json()).retrievedAt);}
 for(const path of ['/api/jakarta/weather','/api/jakarta/alerts','/api/jakarta/earthquake','/api/jakarta/flood-reports']){
  const res=await fetch(base+path);assert.ok([200,503].includes(res.status),path+' must return a bounded data envelope');const d=await res.json();assert.ok(d.source&&d.tier&&d.fetchedAt,path+' source/tier/time');if(res.status===503)console.log('WARN upstream unavailable:',path);else console.log('PASS',path);
