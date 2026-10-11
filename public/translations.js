@@ -64,7 +64,7 @@ window.ATLAS_ID = {
   "Appearance": "Tampilan",
   "Dark · coastal night": "Gelap · malam pesisir",
   "Light · city daylight": "Terang · siang kota",
-  "· Colour: Palette 267, adapted for Jakarta; type: Plus Jakarta Sans.": "· Warna: Palette 267, diadaptasi untuk Jakarta; huruf: Plus Jakarta Sans.",
+  "· Colour: Palette 267, adapted for Jakarta; type: Source Sans 3.": "· Warna: Palette 267, diadaptasi untuk Jakarta; huruf: Source Sans 3.",
   "Dark · batik indigo": "Gelap · nila batik",
   "Light · limestone paper": "Terang · kertas batu kapur",
   "High contrast": "Kontras tinggi",

@@ -1,10 +1,10 @@
 /* Jakarta's local warm/cool relation, reconstructed from Palette plate 267.
    Digital shades are our UI adaptation, not official city brand specifications. */
 @font-face {
-  font-family: "Plus Jakarta Sans";
-  src: url("/fonts/PlusJakartaSans-variable.woff2") format("woff2");
+  font-family: "Source Sans 3";
+  src: url("/fonts/SourceSans3-variable.woff2") format("woff2");
   font-style: normal;
-  font-weight: 200 800;
+  font-weight: 200 900;
   font-display: swap;
 }
 :root {
@@ -20,12 +20,12 @@
   --accent-ink: #081c2d;
   --accent-hover: #edf7f5;
   --companion: #0c4544;
-  --font-sans: "Plus Jakarta Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-sans: "Source Sans 3", "Segoe UI", Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --mono: var(--font-mono);
-  --type-body: 14px;
-  --type-note: 12px;
-  --type-title: 28px;
+  --type-body: 13px;
+  --type-note: 11px;
+  --type-title: 20px;
 }
 :root[data-theme="light"] {
   --bg: #f5f8f6;
@@ -57,9 +57,9 @@
 }
 body { font-family: var(--font-sans); font-size: var(--type-body); font-synthesis: none; }
 button, input, select, summary { font-family: var(--font-sans); }
-body[data-surface="jakarta-dashboard"] h1 { font-size: var(--type-title); font-weight: 750; letter-spacing: -.025em; }
+body[data-surface="jakarta-dashboard"] h1 { font-size: var(--type-title); font-weight: 650; letter-spacing: -.025em; }
 body[data-surface="jakarta-dashboard"] h2,
-body[data-surface="jakarta-dashboard"] h3 { font-size: var(--type-body); font-weight: 750; }
+body[data-surface="jakarta-dashboard"] h3 { font-size: var(--type-body); font-weight: 650; }
 body[data-surface="jakarta-dashboard"] .masthead { background: var(--companion); }
 body[data-surface="jakarta-dashboard"] .eyebrow { font: 600 var(--type-note)/1.5 var(--font-sans); letter-spacing: .025em; color: var(--dim); }
 body[data-surface="jakarta-dashboard"] .meta,
@@ -72,14 +72,14 @@ body[data-surface="jakarta-dashboard"] caption,
 body[data-surface="jakarta-dashboard"] .chart-title,
 body[data-surface="jakarta-dashboard"] footer { font-size: var(--type-note); }
 body[data-surface="jakarta-dashboard"] .meta { font-family: var(--font-sans); line-height: 1.65; }
-body[data-surface="jakarta-dashboard"] .reading strong { font-family: var(--font-sans); font-weight: 750; font-variant-numeric: tabular-nums; }
+body[data-surface="jakarta-dashboard"] .reading strong { font-family: var(--font-sans); font-weight: 650; font-variant-numeric: tabular-nums; }
 body[data-surface="jakarta-dashboard"] .reading p,
 body[data-surface="jakarta-dashboard"] .result span { font-size: var(--type-note); line-height: 1.65; }
 body[data-surface="jakarta-dashboard"] table { font-size: var(--type-body); font-variant-numeric: tabular-nums; }
 body[data-surface="jakarta-dashboard"] .forecast-bar { font: var(--type-note)/1.4 var(--font-sans); font-variant-numeric: tabular-nums; }
 body[data-surface="jakarta-dashboard"] .warning p,
 body[data-surface="jakarta-dashboard"] .method p { max-width: 70ch; }
-body[data-surface="jakarta-atlas"] .atlas-title { font-size: var(--type-title); font-weight: 750; }
+body[data-surface="jakarta-atlas"] .atlas-title { font-size: var(--type-title); font-weight: 650; }
 body[data-surface="jakarta-atlas"] .atlas-kicker,
 body[data-surface="jakarta-atlas"] .atlas-theme-control,
 body[data-surface="jakarta-atlas"] .atlas-data { font-size: var(--type-body); }
@@ -160,3 +160,78 @@ body[data-surface="jakarta-atlas"] .atlas-title::before {
   background: url('/brand/jktx-symbol-v2.png') center / contain no-repeat;
 }
 body[data-surface="jakarta-atlas"] .atlas-map-loading-glyph { border: 0; background: transparent; }
+
+/* The hero is a viewport, not an embedded scrolling document. */
+html.atlas-embedded-root { height: 100%; overflow: hidden; }
+body.atlas-embedded { height: 100%; overflow: hidden; }
+body.atlas-embedded .atlas-page {
+  height: 100%; min-height: 0; display: grid;
+  grid-template-rows: 36px 28px minmax(0, 1fr);
+}
+body.atlas-embedded.atlas-showcase .atlas-page > .atlas-map-wrap {
+  height: auto; min-height: 0; min-width: 0;
+}
+body.atlas-embedded .atlas-lenses { min-height: 0; }
+body.atlas-embedded .atlas-lenses button { min-height: 32px; padding: 4px 10px; font-size: 12px; }
+body.atlas-embedded .atlas-lens-story { display: block; padding: 0 8px; min-height: 0; }
+body.atlas-embedded #atlas-lens-evidence { position: relative; width: fit-content; }
+body.atlas-embedded #atlas-lens-evidence > summary { min-height: 26px; padding: 3px 0; font-size: 11px; }
+body.atlas-embedded .atlas-lens-context { display: none; }
+body.atlas-embedded #atlas-lens-evidence[open] .atlas-lens-context {
+  display: block; position: absolute; top: 28px; left: 0;
+  width: min(480px, calc(100vw - 24px)); background: var(--bg-raised);
+  border: 1px solid var(--line); padding: 8px; z-index: 46;
+}
+body.atlas-embedded .atlas-lens-context > * { display: block; font-size: 12px; }
+body.atlas-embedded #atlas-lens-body { top: 90px; left: 0; right: auto; padding: 10px; }
+.atlas-embedded-drawer { position: absolute; z-index: 40; top: 8px; right: 48px; max-width: calc(100% - 64px); margin: 0; }
+.atlas-embedded-drawer > summary { min-height: 32px; padding: 6px 10px; cursor: pointer; border: 1px solid var(--line); background: var(--bg); font-size: 12px; }
+.atlas-embedded-drawer[open] { left: 8px; right: 48px; }
+.atlas-embedded-evidence { background: var(--bg); border: 1px solid var(--line); max-height: calc(100vh - 130px); overflow: auto; padding: 8px; }
+body.atlas-embedded .atlas-embedded-evidence .atlas-menu-body { position: static; width: auto; max-height: none; display: block; border: 0; padding: 0; }
+body.atlas-embedded .atlas-embedded-evidence .atlas-environment,
+body.atlas-embedded .atlas-embedded-evidence .atlas-data,
+body.atlas-embedded .atlas-embedded-evidence .atlas-footer { padding: 8px; }
+body.atlas-embedded .atlas-areas { bottom: 26px; }
+body.atlas-embedded .atlas-panel-summary { min-height: 32px; padding: 6px 10px; }
+body.atlas-embedded #atlas-flyover-btn { min-height: 32px; padding: 6px 10px; font-size: 11px; }
+/* Dense readings retain every source, tier and date. */
+body[data-surface="jakarta-dashboard"] { line-height: 1.35; }
+body[data-surface="jakarta-dashboard"] .panel { padding: 10px; }
+body[data-surface="jakarta-dashboard"] .panel-heading { margin-bottom: 6px; }
+body[data-surface="jakarta-dashboard"] .feed-body { padding-top: 0; }
+body[data-surface="jakarta-dashboard"] .reading { padding: 6px 0; }
+body[data-surface="jakarta-dashboard"] .reading p,
+body[data-surface="jakarta-dashboard"] .meta { margin-block: 2px; line-height: 1.35; }
+body[data-surface="jakarta-dashboard"] .subheading { padding-top: 8px; margin-top: 10px; }
+body[data-surface="jakarta-dashboard"] .warning { padding: 6px 8px; margin: 6px 0; }
+body[data-surface="jakarta-dashboard"] .warning p { line-height: 1.4; }
+body[data-surface="jakarta-dashboard"] .map-actions { padding: 3px 8px; gap: 4px 8px; }
+body[data-surface="jakarta-dashboard"] .map-actions label { display: flex; align-items: center; gap: 6px; }
+body[data-surface="jakarta-dashboard"] .map-actions button,
+body[data-surface="jakarta-dashboard"] .map-actions select { min-height: 30px; padding: 3px 8px; font-size: 12px; }
+body[data-surface="jakarta-dashboard"] .map-panel > .note { padding: 2px 8px 4px; margin: 0; font-size: 11px; }
+body[data-surface="jakarta-dashboard"] .detail-section { padding: 14px; }
+body[data-surface="jakarta-dashboard"] .workspace { align-items: start; }
+body[data-surface="jakarta-dashboard"] #city-map { height: clamp(420px, calc(100svh - 140px), 820px); }
+@media (min-width: 1200px) {
+  body[data-surface="jakarta-dashboard"] .workspace { grid-template-columns: 220px minmax(0, 1fr) 270px; }
+  body[data-surface="jakarta-dashboard"] .panel { max-height: none; overflow: visible; }
+}
+@media (pointer: coarse) {
+  body[data-surface="jakarta-dashboard"] .map-actions button,
+  body[data-surface="jakarta-dashboard"] .map-actions select,
+  body.atlas-embedded .atlas-panel-summary,
+  body.atlas-embedded #atlas-flyover-btn,
+  .atlas-embedded-drawer > summary { min-height: 44px; }
+}
+
+body.atlas-embedded .atlas-embedded-evidence a { color: var(--accent); }
+@media (max-width: 600px) {
+  :root { --type-body: 14px; --type-note: 12px; }
+}
+@media (pointer: coarse) {
+  body.atlas-embedded .atlas-page { grid-template-rows: 44px 32px minmax(0, 1fr); }
+  body.atlas-embedded .atlas-lenses button { min-height: 44px; }
+  body.atlas-embedded #atlas-lens-evidence > summary { min-height: 32px; }
+}

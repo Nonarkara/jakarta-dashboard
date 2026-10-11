@@ -11,7 +11,7 @@ for(const theme of ['dark','light','contrast']){
  const tokens={...base,...Object.fromEntries([...block.matchAll(/(--[a-z-]+): (#[0-9a-f]{6});/g)].map(m=>[m[1],m[2]]))};
  for(const surface of ['--bg','--bg-raised','--bg-strong','--companion'])for(const ink of ['--ink','--dim','--accent'])assert.ok(ratio(tokens[ink],tokens[surface])>=4.5,theme+' '+ink+'/'+surface);
 }
-const font=readFileSync(new URL('../public/fonts/PlusJakartaSans-variable.woff2',import.meta.url));assert.equal(font.subarray(0,4).toString(),'wOF2');assert.match(read('public/fonts/PlusJakartaSans-OFL.txt'),/SIL OPEN FONT LICENSE/);
+const font=readFileSync(new URL('../public/fonts/SourceSans3-variable.woff2',import.meta.url));assert.equal(font.subarray(0,4).toString(),'wOF2');assert.match(read('public/fonts/SourceSans3-OFL.txt'),/SIL OPEN FONT LICENSE/);
 for(const f of ['public/dashboard.html','public/index.html'])assert.match(read(f),/\/jakarta-design\.css\?v=/);
 const app=read('public/app.js');const theme=app.slice(app.indexOf('function applyMapTheme'),app.indexOf('window.addEventListener("atlas:theme"'));assert.doesNotMatch(theme,/rain-model-samples/,'brand theme changes may not replace the rain classification colours');
 const js=read('public/dashboard.js');const source=js.slice(js.indexOf('function renderCrmViewerStatus()'),js.indexOf('const ledger=['));

@@ -6,7 +6,7 @@ const script=html.match(/src="(\/dashboard.js\?v=[^"]+)"/)[1];const deployed=awa
 const tag=local.match(/const DASHBOARD_BUILD = '([^']+)'/)[1];assert.ok(script.includes(tag));
 const design=html.match(/href="(\/jakarta-design.css\?v=[^"]+)"/)[1];assert.ok(design.includes(tag));
 const css=await fetch(base+design);assert.equal(css.status,200);assert.equal(await css.text(),readFileSync(new URL('../public/jakarta-design.css',import.meta.url),'utf8'),'exact shared design deployed');
-const font=await fetch(base+'/fonts/PlusJakartaSans-variable.woff2');assert.equal(font.status,200);assert.deepEqual(Buffer.from(await font.arrayBuffer()),readFileSync(new URL('../public/fonts/PlusJakartaSans-variable.woff2',import.meta.url)),'exact licensed font deployed');
+const font=await fetch(base+'/fonts/SourceSans3-variable.woff2');assert.equal(font.status,200);assert.deepEqual(Buffer.from(await font.arrayBuffer()),readFileSync(new URL('../public/fonts/SourceSans3-variable.woff2',import.meta.url)),'exact licensed font deployed');
 assert.match(html,/id="crm-viewer"/);assert.match(deployed,/d7d87175-bfa2-4067-bf4d-42e8b996da11/);
 assert.match(r.headers.get('content-security-policy'),/frame-src 'self' https:\/\/datastudio.google.com https:\/\/lookerstudio.google.com/);
 for(const path of ['/data/jakarta-v1/transit.json','/data/jakarta-v1/civic.json']){const res=await fetch(base+path);assert.equal(res.status,200);assert.ok((await res.json()).retrievedAt);}

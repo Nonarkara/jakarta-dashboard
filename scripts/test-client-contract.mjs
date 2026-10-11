@@ -13,7 +13,7 @@ const feeds = {
 function element() {
   return { dataset: {}, hidden: false, style: {}, textContent: '', innerHTML: '', listeners: {}, attrs: {}, children: [],
     classList: { toggle() {}, add() {}, remove() {} },
-    scrollIntoView() {}, setAttribute(k, v) { this.attrs[k] = v; }, addEventListener(k, cb) { this.listeners[k] = cb; }, appendChild(el) { this.children.push(el); } };
+    scrollIntoView() {}, setAttribute(k, v) { this.attrs[k] = v; }, addEventListener(k, cb) { this.listeners[k] = cb; }, appendChild(el) { this.children.push(el); }, append(...nodes) { this.children.push(...nodes); } };
 }
 class FakeMap {
   constructor(options) { this.style = { _loaded: true }; this.sources = { ...options.style.sources }; this.layers = Object.fromEntries(options.style.layers.map(l => [l.id, { ...l, layout: {} }])); this.handlers = []; this.states = []; }
@@ -45,13 +45,17 @@ async function scenario(mode) {
     window.maplibregl = { Map: mode === 'webgl-failure' ? class { constructor() { throw new Error('No WebGL'); } } : FakeMap, addProtocol() {}, NavigationControl: class {}, ScaleControl: class {} };
     window.pmtiles = { Protocol: class {} };
   }
-  const context = vm.createContext({ window, document: { documentElement: { dataset: { theme: "dark" } }, referrer: '', body: element(), getElementById: get,
-    createElement: element, querySelectorAll: selector => selector === '[data-layer-toggle]' ? toggles : [], querySelector: () => null, addEventListener() {} },
+  const context = vm.createContext({ window, document: { documentElement: { ...element(), dataset: { theme: "dark" } }, referrer: '', body: element(), getElementById: get,
+    createElement: element, querySelectorAll: selector => selector === '[data-layer-toggle]' ? toggles : [], querySelector: selector => ['.atlas-map-wrap','.atlas-menu-body','#atlas-environment','#atlas-data','.atlas-footer'].includes(selector) ? get(selector) : null, addEventListener() {} },
     console: { error() {}, warn() {} }, history: { replaceState() {} }, URL, URLSearchParams, AbortSignal,
     fetch: async path => Response.json(feeds[path]), requestAnimationFrame: cb => cb(),
     setTimeout: () => 1, clearTimeout() {}, setInterval: () => 1, clearInterval() {},
   });
   vm.runInContext(app, context);
+  const drawer = get('.atlas-map-wrap').children.find(el => el.className === 'atlas-embedded-drawer');
+  assert.ok(drawer, 'embedded evidence stays inside an explicit drawer, not below the map');
+  assert.equal(drawer.children[1].children.length, 4, 'tools, environment, data and attribution are retained');
+
   for (let i = 0; i < 10; i++) await new Promise(resolve => setImmediate(resolve));
   if (mode !== 'missing-libraries' && mode !== 'webgl-failure') {
     vm.runInContext('setMapView("2d")', context);

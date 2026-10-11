@@ -1067,7 +1067,26 @@ function applyDashboardOverlay(data) {
     postMsg('selection', {featureCount:data.features.length});
   });
 }
-if (window.parent !== window) document.body.classList.add('atlas-embedded');
+if (window.parent !== window) {
+  document.body.classList.add('atlas-embedded');
+  document.documentElement.classList.add('atlas-embedded-root');
+  const drawer = document.createElement('details');
+  drawer.className = 'atlas-embedded-drawer';
+  const summary = document.createElement('summary');
+  summary.textContent = 'Data & sources';
+  const body = document.createElement('div');
+  body.className = 'atlas-embedded-evidence';
+  for (const selector of ['.atlas-menu-body', '#atlas-environment', '#atlas-data', '.atlas-footer']) {
+    const node = document.querySelector(selector);
+    if (node) body.append(node);
+  }
+  drawer.append(summary, body);
+  document.querySelector('.atlas-map-wrap').append(drawer);
+  const context = document.createElement('div');
+  context.className = 'atlas-lens-context';
+  context.append(document.getElementById('atlas-lens-title'), document.getElementById('atlas-lens-description'));
+  document.getElementById('atlas-lens-evidence').append(context);
+}
 window.addEventListener("message", function (e) {
   if (PARENT_ORIGINS.indexOf(e.origin) === -1 && e.origin !== window.location.origin) return;
   if (e.source !== window.parent) return;

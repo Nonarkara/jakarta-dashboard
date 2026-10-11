@@ -58,3 +58,6 @@ Logo artwork: supplied by the project owner as “Jakarta Civic Dashboard Logo E
 
 
 Logo production correction: `jktx-symbol-v2.png` is an AI-assisted transparent reconstruction of the red Monas/blue-layer symbol from the owner-supplied sheet. It replaces presentation-sheet cropping on the live surfaces. The JKTx wordmark is native text in the licensed Plus Jakarta Sans family. Original sheet retained as source evidence; no official government endorsement asserted.
+
+
+Source Sans 3 variable upright: Adobe Source Sans, copyright 2010–2024 Adobe, SIL OFL 1.1. Original WOFF2 from https://github.com/adobe-fonts/source-sans, release branch `WOFF2/VF/SourceSans3VF-Upright.ttf.woff2`; full license retained in `public/fonts/SourceSans3-OFL.txt`. Now used for interface text; prior Plus Jakarta font assets remain as historical source.
