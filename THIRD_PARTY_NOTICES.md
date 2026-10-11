@@ -44,3 +44,11 @@ Himawari AHI Band 13 clean infrared imagery is served by NASA GIBS with JMA attr
 - Jakarta Satu © Pemprov DKI Jakarta. Public health/school reference fields and WGS84 geometry selected from published ArcGIS services. Retrieval date and source URLs are retained; observation epoch and an explicit dataset open license were not published in inspected metadata. Facility records are not a live-capacity system.
 - PetaBencana aggregate reports: CC BY-NC 4.0 for non-commercial use; commercial use requires the publisher's agreement. https://docs.petabencana.id/informasi-lisensi-data. This public research demo displays aggregate recent report counts; no resident text, photos or household coordinates are redistributed.
 - fast-xml-parser: MIT license, npm package pinned in package-lock.json.
+
+## Jakarta typography and Palette adaptation · 11 October 2026
+
+Plus Jakarta Sans: Copyright 2020 The Plus Jakarta Sans Project Authors, https://github.com/tokotype/PlusJakartaSans. SIL Open Font License 1.1, full license included at `public/fonts/PlusJakartaSans-OFL.txt`. The unmodified variable webfont is self-hosted from upstream commit 18d1cd2f7ea10481919d2f05c1f7064b7307fc26.
+
+Palette plate 267: Sanzo Wada's relationship, via Matt DesLauriers' MIT-licensed digital conversion data (Copyright (c) 2020 Matt DesLauriers), which credits Dain M. Blodorn Kim. Production shades and role assignments are our own adaptation. Values are digital conversions, not exact printed inks. Palette reference: https://colors.nonarkara.org/#plate-267. The dataset notice and MIT permission/disclaimer are available at https://github.com/mattdesl/dictionary-of-colour-combinations; no source book scans are distributed.
+
+CRM: official hosted monthly report by Jakarta Smart City/CRM; the Google report URL comes from https://crm.jakarta.go.id/data-bulanan. The report is displayed on demand as the publisher's own iframe. No private complaint data or copied report metrics are stored. Links, periods and data access remain publisher-controlled; no official affiliation is claimed by this research dashboard.

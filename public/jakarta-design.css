@@ -1,0 +1,109 @@
+/* Jakarta's local warm/cool relation, reconstructed from Palette plate 267.
+   Digital shades are our UI adaptation, not official city brand specifications. */
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/fonts/PlusJakartaSans-variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+}
+:root {
+  --bg: #081c2d;
+  --bg-raised: #0d2b3f;
+  --bg-strong: #143d51;
+  --raised: #0d2b3f;
+  --ink: #edf7f5;
+  --dim: #accdd0;
+  --line: #82abb8;
+  --line-bright: #b4d8df;
+  --accent: #fdbf68;
+  --accent-ink: #081c2d;
+  --accent-hover: #edf7f5;
+  --companion: #0c4544;
+  --font-sans: "Plus Jakarta Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --mono: var(--font-mono);
+  --type-body: 14px;
+  --type-note: 12px;
+  --type-title: 28px;
+}
+:root[data-theme="light"] {
+  --bg: #f5f8f6;
+  --bg-raised: #fffdf5;
+  --bg-strong: #e6f0ec;
+  --raised: #fffdf5;
+  --ink: #123747;
+  --dim: #365861;
+  --line: #647f83;
+  --line-bright: #365861;
+  --accent: #985200;
+  --accent-ink: #fffdf5;
+  --accent-hover: #713c00;
+  --companion: #ddf0e8;
+}
+:root[data-theme="contrast"] {
+  --bg: #05131d;
+  --bg-raised: #05131d;
+  --bg-strong: #102c3a;
+  --raised: #05131d;
+  --ink: #f6fff9;
+  --dim: #d8eee7;
+  --line: #c5eee6;
+  --line-bright: #f6fff9;
+  --accent: #ffcf7d;
+  --accent-ink: #05131d;
+  --accent-hover: #f6fff9;
+  --companion: #102c3a;
+}
+body { font-family: var(--font-sans); font-size: var(--type-body); font-synthesis: none; }
+button, input, select, summary { font-family: var(--font-sans); }
+body[data-surface="jakarta-dashboard"] h1 { font-size: var(--type-title); font-weight: 750; letter-spacing: -.025em; }
+body[data-surface="jakarta-dashboard"] h2,
+body[data-surface="jakarta-dashboard"] h3 { font-size: var(--type-body); font-weight: 750; }
+body[data-surface="jakarta-dashboard"] .masthead { background: var(--companion); }
+body[data-surface="jakarta-dashboard"] .eyebrow { font: 600 var(--type-note)/1.5 var(--font-sans); letter-spacing: .025em; color: var(--dim); }
+body[data-surface="jakarta-dashboard"] .meta,
+body[data-surface="jakarta-dashboard"] .note,
+body[data-surface="jakarta-dashboard"] .utilities label,
+body[data-surface="jakarta-dashboard"] .status-strip,
+body[data-surface="jakarta-dashboard"] .status-strip button,
+body[data-surface="jakarta-dashboard"] th,
+body[data-surface="jakarta-dashboard"] caption,
+body[data-surface="jakarta-dashboard"] .chart-title,
+body[data-surface="jakarta-dashboard"] footer { font-size: var(--type-note); }
+body[data-surface="jakarta-dashboard"] .meta { font-family: var(--font-sans); line-height: 1.65; }
+body[data-surface="jakarta-dashboard"] .reading strong { font-family: var(--font-sans); font-weight: 750; font-variant-numeric: tabular-nums; }
+body[data-surface="jakarta-dashboard"] .reading p,
+body[data-surface="jakarta-dashboard"] .result span { font-size: var(--type-note); line-height: 1.65; }
+body[data-surface="jakarta-dashboard"] table { font-size: var(--type-body); font-variant-numeric: tabular-nums; }
+body[data-surface="jakarta-dashboard"] .forecast-bar { font: var(--type-note)/1.4 var(--font-sans); font-variant-numeric: tabular-nums; }
+body[data-surface="jakarta-dashboard"] .warning p,
+body[data-surface="jakarta-dashboard"] .method p { max-width: 70ch; }
+body[data-surface="jakarta-atlas"] .atlas-title { font-size: var(--type-title); font-weight: 750; }
+body[data-surface="jakarta-atlas"] .atlas-kicker,
+body[data-surface="jakarta-atlas"] .atlas-theme-control,
+body[data-surface="jakarta-atlas"] .atlas-data { font-size: var(--type-body); }
+body[data-surface="jakarta-atlas"] .atlas-eyebrow,
+body[data-surface="jakarta-atlas"] .atlas-maturity,
+body[data-surface="jakarta-atlas"] .atlas-footer,
+body[data-surface="jakarta-atlas"] .atlas-inspect-row { font-size: var(--type-note); }
+/* The hosted CRM report keeps the publisher's own colours and timestamp labels. */
+.crm-intro { background: var(--companion); padding: 20px; border-left: 4px solid var(--line-bright); }
+.crm-layout { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(250px, 1fr); gap: 24px; margin-top: 20px; }
+.crm-intro p { max-width: 65ch; margin-bottom: 14px; }
+.crm-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.crm-actions a { display: inline-flex; align-items: center; padding: 10px 12px; border: 1px solid var(--line); min-height: 44px; }
+.crm-process { margin: 0; padding-left: 24px; }
+.crm-process li { padding: 8px 0; border-bottom: 1px solid var(--line); }
+.crm-process p { font-size: var(--type-note); color: var(--dim); }
+.crm-destinations { display: flex; flex-wrap: wrap; gap: 0; margin-top: 16px; border-block: 1px solid var(--line); }
+.crm-destinations a { padding: 12px 16px; min-height: 44px; border-right: 1px solid var(--line); }
+#crm-viewer-shell { margin-top: 20px; }
+#crm-viewer { height: 760px; border: 1px solid var(--line); }
+.crm-source { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+button:disabled { opacity: .65; cursor: wait; }
+@media (max-width: 800px) {
+  .crm-layout { grid-template-columns: 1fr; }
+  #crm-viewer { height: 640px; }
+  .crm-intro { padding: 16px; }
+}

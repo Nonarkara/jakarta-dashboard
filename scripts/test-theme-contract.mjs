@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 const code=readFileSync(new URL('../public/theme.js',import.meta.url),'utf8');
-const css=readFileSync(new URL('../public/style.css',import.meta.url),'utf8');
+const css=readFileSync(new URL('../public/jakarta-design.css',import.meta.url),'utf8');
 const base=Object.fromEntries([...css.matchAll(/^  (--[a-z-]+): (#[0-9a-f]{6});/gm)].slice(0,20).map(m=>[m[1],m[2]]));
 function tokens(theme){
  const root=css.slice(css.indexOf(':root {'),css.indexOf(':root[data-theme="light"]'));

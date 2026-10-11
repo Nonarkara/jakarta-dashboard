@@ -30,7 +30,7 @@ const nextHtml = html
   .replace(/src="\/theme\.js\?v=[^"]*"/g, `src="/theme.js?v=${stamp}"`)
   .replace(/data-app="\/app\.js\?v=[^"]*"/g, `data-app="/app.js?v=${stamp}"`);
 
-writeFileSync(indexHtml, nextHtml, "utf8");
+writeFileSync(indexHtml, nextHtml.replace(/href="\/jakarta-design\.css\?v=[^"]*"/g, `href="/jakarta-design.css?v=${stamp}"`), "utf8");
 
 const js = readFileSync(appJs, "utf8");
 const nextJs = js.replace(
@@ -42,5 +42,5 @@ writeFileSync(appJs, nextJs, "utf8");
 console.log(`[stamp-build-id] wrote ${stamp} into index.html and app.js`);
 const dashboardHtml = join(__dirname, '..', 'public', 'dashboard.html');
 const dashboardJs = join(__dirname, '..', 'public', 'dashboard.js');
-writeFileSync(dashboardHtml, readFileSync(dashboardHtml, 'utf8').replace(/(dashboard\.css|dashboard\.js|theme\.js)\?v=[^" ]*/g, '$1?v=' + stamp));
+writeFileSync(dashboardHtml, readFileSync(dashboardHtml, 'utf8').replace(/(dashboard\.css|dashboard\.js|theme\.js|jakarta-design\.css)\?v=[^" ]*/g, '$1?v=' + stamp));
 writeFileSync(dashboardJs, readFileSync(dashboardJs, 'utf8').replace(/const DASHBOARD_BUILD = '[^']*';/, "const DASHBOARD_BUILD = '" + stamp + "';"));

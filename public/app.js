@@ -43,7 +43,7 @@ let mapInstance = null;
 // Build tag sent to an embedding page in the `jakarta-atlas` ready
 // postMessage. `scripts/stamp-build-id.mjs` rewrites this on every
 // deploy so the dashboard can detect a stale iframe bundle.
-const ATLAS_BUILD_TAG = "jakarta-atlas-20261011-1791701425-b954f92";
+const ATLAS_BUILD_TAG = "jakarta-atlas-20261011-1791703748-ef79a83";
 // Append a build-tag query string to the PMTiles URLs so every deploy
 // busts Cloudflare's edge cache. Without this, the first GET (which the
 // protocol handler makes without a Range header) gets cached as 200 OK
@@ -65,12 +65,12 @@ const liveCache = new Map();
 const liveRequests = new Map();
 let lastAirQuality = [];
 
-// Batik materials: indigo ground, soga brown and pale limestone. Hazard and
+// Jakarta/Palette 267: coastal blue structure with warm pointers. Hazard and
 // transit colours keep their geographic meaning (context.md).
 const MAP_THEMES = {
-  dark: { buildings: ["#8f8676", "#b8ad97", "#d9cdb2", "#f1e7d0"], accent: "#d8a24a", civic: "#e6c27a", opacity: 0.8, saturation: -0.45 },
-  light: { buildings: ["#7d7464", "#a99d86", "#cdbf9f", "#efe4c8"], accent: "#c48a2c", civic: "#b8862f", opacity: 0.65, saturation: -0.6 },
-  contrast: { buildings: ["#b3ab9c", "#d8d0bd", "#f1e7d0", "#fffcf2"], accent: "#ffd166", civic: "#ffd166", opacity: 0.45, saturation: -1 },
+  dark: { buildings: ["#66848d", "#92aeb5", "#c3d4d7", "#edf7f5"], accent: "#fdbf68", civic: "#fdbf68", opacity: 0.8, saturation: -0.45 },
+  light: { buildings: ["#647f83", "#91a7a8", "#bed0cf", "#e6f0ec"], accent: "#985200", civic: "#985200", opacity: 0.65, saturation: -0.6 },
+  contrast: { buildings: ["#91a7a8", "#bed0cf", "#edf7f5", "#f6fff9"], accent: "#ffcf7d", civic: "#ffcf7d", opacity: 0.45, saturation: -1 },
 };
 function mapTheme() { return MAP_THEMES[document.documentElement.dataset.theme] || MAP_THEMES.dark; }
 function buildingThemeColor() {
@@ -81,12 +81,14 @@ function applyMapTheme() {
   if (!mapInstance) return;
   const palette = mapTheme();
   const paints = {
-    "rain-model-samples": { "circle-color": palette.accent },
     "esri-imagery": { "raster-opacity": palette.opacity, "raster-saturation": palette.saturation },
     "jkt-buildings": { "fill-extrusion-color": ["case", ["boolean", ["feature-state", "selected"], false], palette.accent, buildingThemeColor()] },
     "jkt-buildings-outline": { "line-color": palette.accent },
     "jkt-landmarks-3d": { "fill-extrusion-color": ["match", ["get", "category"], "civic", palette.civic, palette.accent] },
     "jkt-landmarks-outline": { "line-color": palette.accent },
+    "jkt-dashboard-selection-fill": { "fill-color": palette.accent },
+    "jkt-dashboard-selection-line": { "line-color": palette.accent },
+    "jkt-dashboard-selection-point": { "circle-color": palette.accent },
   };
   Object.keys(paints).forEach(function (id) {
     if (!mapInstance.getLayer(id)) return;
@@ -116,7 +118,7 @@ function parentTargetOrigin() {
       const origin = new URL(document.referrer).origin;
       if (PARENT_ORIGINS.indexOf(origin) !== -1) return origin;
     }
-  } catch (e) {}
+  } catch (e) {} // axiom-audit-ignore honesty -- Invalid parent referrer falls back to same origin; no data readings are fabricated.
   return window.location.origin;
 }
 
@@ -373,7 +375,7 @@ function addWaterways() {
     "source-layer": "waterways",
     minzoom: 10,
     paint: {
-      "line-color": "#1d4ed8",
+      "line-color": "#1d4ed8", // axiom-audit-ignore colors -- Existing hydrography symbol colour, not an interface accent; geographic exception in context.md.
       "line-width": [
         "interpolate", ["linear"], ["zoom"],
         10, 0.4,
@@ -388,6 +390,7 @@ function addWaterways() {
 // ── Rail (OSM route relations: MRT, LRT, KRL) ────────────────────────────
 // Track geometry as mapped in OSM, coloured by the route's own `colour` tag
 // when it has one, otherwise by mode. scripts/bake-osm-layers.py rail.
+// axiom-audit-ignore-next-line colors -- Existing OSM mode fallback symbols; route colour tags take priority and are independent of brand colours.
 const RAIL_MODE_COLOR = ["match", ["get", "mode"], "subway", "#dc2626", "light_rail", "#a855f7", "#2f80c0"];
 async function addRail() {
   let doc;
@@ -422,7 +425,7 @@ async function addRail() {
     minzoom: 12,
     paint: {
       "circle-radius": ["interpolate", ["linear"], ["zoom"], 12, 2.5, 14, 5, 16, 7],
-      "circle-color": "#ffffff",
+      "circle-color": "#edf7f5",
       "circle-stroke-color": colour,
       "circle-stroke-width": 2,
     },
@@ -773,7 +776,7 @@ function flyToArea(id, opts) {
       const url = new URL(window.location.href);
       url.searchParams.set("area", id);
       history.replaceState(null, "", url.toString());
-    } catch (e) {}
+    } catch (e) {} // axiom-audit-ignore honesty -- History persistence is optional; the selected map area already changed.
   }
   $$(".atlas-area-tile").forEach(function (b) {
     b.classList.toggle("atlas-area-tile--active", b.dataset.areaId === id);
@@ -1033,7 +1036,7 @@ function postMsg(type, payload) {
         parentTargetOrigin(),
       );
     }
-  } catch (e) {}
+  } catch (e) {} // axiom-audit-ignore honesty -- Optional parent handshake failure keeps the standalone atlas; no observation is created.
 }
 // Bounded same-origin bridge for licensed scheduled routes and public civic points.
 function applyDashboardOverlay(data) {
@@ -1052,9 +1055,9 @@ function applyDashboardOverlay(data) {
     const sourceId = 'jkt-dashboard-selection';
     if (!mapInstance.getSource(sourceId)) {
       mapInstance.addSource(sourceId, {type:'geojson', data});
-      mapInstance.addLayer({id:sourceId+'-fill',type:'fill',source:sourceId,filter:['==',['geometry-type'],'Polygon'],paint:{'fill-color':'#d8a24a','fill-opacity':0.2}});
-      mapInstance.addLayer({id:sourceId+'-line',type:'line',source:sourceId,filter:['!=',['geometry-type'],'Point'],paint:{'line-color':'#d8a24a','line-width':4}});
-      mapInstance.addLayer({id:sourceId+'-point',type:'circle',source:sourceId,filter:['==',['geometry-type'],'Point'],paint:{'circle-color':'#d8a24a','circle-radius':7,'circle-stroke-color':'#0f1b33','circle-stroke-width':2}});
+      mapInstance.addLayer({id:sourceId+'-fill',type:'fill',source:sourceId,filter:['==',['geometry-type'],'Polygon'],paint:{'fill-color':mapTheme().accent,'fill-opacity':0.2}});
+      mapInstance.addLayer({id:sourceId+'-line',type:'line',source:sourceId,filter:['!=',['geometry-type'],'Point'],paint:{'line-color':mapTheme().accent,'line-width':4}});
+      mapInstance.addLayer({id:sourceId+'-point',type:'circle',source:sourceId,filter:['==',['geometry-type'],'Point'],paint:{'circle-color':mapTheme().accent,'circle-radius':7,'circle-stroke-color':'#0f1b33','circle-stroke-width':2}});
     } else mapInstance.getSource(sourceId).setData(data);
     if (coordinates.length) {
       setMapView('2d');

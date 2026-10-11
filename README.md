@@ -4,9 +4,15 @@ Live: **https://jakarta.nonarkara.org** · complete atlas: **https://jakarta.non
 
 Private repository: https://github.com/Nonarkara/jakarta-dashboard. The original atlas history and documentation below are retained. Deploy this repository for the main domain; the separate atlas repository remains a source archive and should not overwrite the dashboard Worker.
 
-The Bahasa Indonesia / English dashboard follows the HCMC observation–map–bulletin arrangement, with Jakarta's batik themes. It adds five official BMKG kelurahan forecasts, dated weather warnings for DKI/Jawa Barat/Banten, the latest Indonesia earthquake, PetaBencana report counts, searchable official TransJakarta scheduled routes and stops, and dated Jakarta Satu health/school reference points. Source, tier and time remain visible; missing inputs never become a safety claim.
+The Bahasa Indonesia / English dashboard follows the HCMC observation–map–bulletin arrangement, with Jakarta's Palette 267 coastal/green/yellow relationship and self-hosted Plus Jakarta Sans. It adds five official BMKG kelurahan forecasts, dated weather warnings for DKI/Jawa Barat/Banten, the latest Indonesia earthquake, PetaBencana report counts, searchable official TransJakarta scheduled routes and stops, and dated Jakarta Satu health/school reference points. Source, tier and time remain visible; missing inputs never become a safety claim.
 
 Search a route and select it to draw the scheduled alignment. Select a stop or civic facility to locate its reference point. Language/theme changes retain the same map instance. The forecast chart has a complete text table. Export evidence JSON for source payloads and selected geometry. The complete atlas retains all building, environment, inspection and navigation controls.
+
+## Local design and citizen services
+
+Palette/Wada plate 267 supplies a documented warm/cool relationship, adapted into dark coastal, city-daylight and high-contrast modes. Plus Jakarta Sans is the city-commissioned Tokotype family, self-hosted under OFL 1.1. The font, actual tokens, contrast proof and local source evidence are recorded in `docs/JAKARTA-DESIGN-AND-CRM.md`. Source/period text is larger; scientific layer legends keep their own semantic colours.
+
+The citizen-services section links to CRM's official daily, monthly, kelurahan and map destinations. Its monthly Looker viewer loads only when selected, keeps the publisher's period/filter controls and can be closed without remounting the city map. A direct report link is available above the viewer. No report submission or citizen identity/photo collection occurs here, and no CRM totals are converted into local live readings.
 
 ## New dashboard data
 
@@ -17,7 +23,7 @@ Search a route and select it to draw the scheduled alignment. Select a stop or c
 - `/api/jakarta/flood-reports`: one-hour report count only. An empty result does not establish dry streets. PetaBencana's non-commercial/commercial distinction applies.
 - Existing `/api/atlas/*`, building tiles and waterways remain available.
 
-`npm run deploy:live` runs all seven suites, stamps dashboard/atlas assets, deploys the existing Worker with its R2 binding and custom domain, and checks the exact deployed bytes plus provider envelopes. Do not deploy from the old atlas repo to this Worker.
+`npm run deploy:live` runs all eight suites, stamps dashboard/atlas assets, deploys the existing Worker with its R2 binding and custom domain, and checks the exact deployed bytes plus provider envelopes. Do not deploy from the old atlas repo to this Worker.
 
 Civic datasets publish no observation epoch or explicit dataset license in the inspected service metadata; the ledger labels their attribution/access limitation. GTFS is CC BY 4.0, normalized/simplified here; service calendars and selected representative trips are scheduled records. DLH measured-air, BPS statistical baselines, tides, subsidence, live vehicles and congestion remain unconnected.
 

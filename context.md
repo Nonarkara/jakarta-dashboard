@@ -76,3 +76,13 @@ client fetches the same provider from the visitor's browser with the same
 gates (rain table, rain lens, watch strip, AQI layer), so the page shows
 values. `scripts/smoke-atlas-api.mjs` reports this as a warning, not a
 failure. A keyed Open-Meteo plan would remove it; none has been bought.
+
+## Jakarta local identity and CRM · 11 October 2026
+
+This supersedes the earlier batik colour interpretation. The user explicitly requested Palette Design Core, a more local colour/type combination, and CRM Jakarta integration. Read `docs/JAKARTA-DESIGN-AND-CRM.md` for source evidence, the full type brief and access limits.
+
+Palette/Wada plate 267 is source-verified in the local Palette catalog: Cream Yellow #fdbf68, Yellow Orange #f99d1b, Benzol Green #00978d, Blue #006eb8. Production tokens adapt the relationship, not the exact book inks or official Jakarta brand swatches. Blue-derived neutral carrier 80%, bounded green masthead/CRM field 15%, warm yellow/orange action pointer 5%. Jakarta's official MENOR colour meanings supply the local interpretation. Semantic rain/AQI and provider legend colours stay independent of the brand. The accent exception is named, load-bearing and approved by the user's palette request.
+
+Type: self-hosted Plus Jakarta Sans (Tokotype, city identity commission; OFL 1.1), body/controls 14px, supporting text 12px, main heading 28px; real variable weights and tabular figures. The font-role exception replaces system UI/mono body with a script-appropriate city family. No decorative textures, rounded corners, gradients or shadows. Design read: a Jakarta civic observation desk with one dominant map and clear paths into city reporting. References: +Jakarta, TransJakarta and CRM; Palette's Bauhaus/Bringhurst interpretation. Dials 4/2/6. Existing features and map instance remain.
+
+CRM monthly viewer URL is taken from the first-party monthly page. Viewer loads only on user action, has a close control and direct official fallback. Official daily/monthly/kelurahan/map links and reporting guidance are provided. No citizen identity/text/photo collection and no private API/report replication. CRM counts are not presented as locally fetched or live. The homepage/other pages timed out during investigation; no uptime claim is made. CSP allows only the two Google report hosts in addition to same-origin frames.

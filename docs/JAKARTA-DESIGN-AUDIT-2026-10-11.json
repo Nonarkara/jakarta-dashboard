@@ -1,0 +1,714 @@
+{
+  "files": 11,
+  "findings": [
+    {
+      "file": "app.js",
+      "line": 71,
+      "col": 23,
+      "match": "\"#66848d\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 71,
+      "col": 34,
+      "match": "\"#92aeb5\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 71,
+      "col": 45,
+      "match": "\"#c3d4d7\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 71,
+      "col": 56,
+      "match": "\"#edf7f5\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 71,
+      "col": 76,
+      "match": "\"#fdbf68\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 71,
+      "col": 94,
+      "match": "\"#fdbf68\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 72,
+      "col": 24,
+      "match": "\"#647f83\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 72,
+      "col": 35,
+      "match": "\"#91a7a8\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 72,
+      "col": 46,
+      "match": "\"#bed0cf\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 72,
+      "col": 57,
+      "match": "\"#e6f0ec\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 72,
+      "col": 77,
+      "match": "\"#985200\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 72,
+      "col": 95,
+      "match": "\"#985200\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 73,
+      "col": 27,
+      "match": "\"#91a7a8\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 73,
+      "col": 38,
+      "match": "\"#bed0cf\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 73,
+      "col": 49,
+      "match": "\"#edf7f5\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 73,
+      "col": 60,
+      "match": "\"#f6fff9\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 73,
+      "col": 80,
+      "match": "\"#ffcf7d\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 73,
+      "col": 98,
+      "match": "\"#ffcf7d\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 184,
+      "col": 62,
+      "match": "\"#fff4e0\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 290,
+      "col": 8,
+      "match": "\"#b9b2a4\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 291,
+      "col": 8,
+      "match": "\"#d6cfbf\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 292,
+      "col": 8,
+      "match": "\"#e8e2d4\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 293,
+      "col": 8,
+      "match": "\"#f4f0e6\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 331,
+      "col": 60,
+      "match": "\"#f59e0b\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 348,
+      "col": 21,
+      "match": "\"#f59e0b\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 428,
+      "col": 23,
+      "match": "\"#edf7f5\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 447,
+      "col": 28,
+      "match": "\"#f1e7d0\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 447,
+      "col": 58,
+      "match": "\"#0f1b33\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 477,
+      "col": 17,
+      "match": "\"#22c55e\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 478,
+      "col": 21,
+      "match": "\"#facc15\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 479,
+      "col": 36,
+      "match": "\"#f97316\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 480,
+      "col": 43,
+      "match": "\"#f97316\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 481,
+      "col": 22,
+      "match": "\"#ef4444\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 482,
+      "col": 27,
+      "match": "\"#a21caf\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 483,
+      "col": 22,
+      "match": "\"#7f1d1d\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 484,
+      "col": 9,
+      "match": "\"#9ca3af\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 487,
+      "col": 30,
+      "match": "\"#0a0a0a\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 504,
+      "col": 21,
+      "match": "\"#fde68a\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 505,
+      "col": 26,
+      "match": "\"#0a0a0a\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 549,
+      "col": 71,
+      "match": "\"#e0a33a\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 549,
+      "col": 82,
+      "match": "\"#f59e0b\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 563,
+      "col": 21,
+      "match": "\"#f59e0b\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 589,
+      "col": 21,
+      "match": "\"#fef9c3\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 590,
+      "col": 26,
+      "match": "\"#0a0a0a\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 659,
+      "col": 5,
+      "match": "catch (e) { return null; }",
+      "msg": "Catch returns an empty payload with no signal. Say WHY it is empty — set a source/status field the client can read.",
+      "severity": "warn",
+      "layer": "back",
+      "rule": "honesty"
+    },
+    {
+      "file": "app.js",
+      "line": 718,
+      "col": 7,
+      "match": "catch (e) { return null; }",
+      "msg": "Catch returns an empty payload with no signal. Say WHY it is empty — set a source/status field the client can read.",
+      "severity": "warn",
+      "layer": "back",
+      "rule": "honesty"
+    },
+    {
+      "file": "app.js",
+      "line": 844,
+      "col": 39,
+      "match": "\"#ffd9a8\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 844,
+      "col": 51,
+      "match": "\"#fff4e0\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 844,
+      "col": 64,
+      "match": "\"#9fb4d8\"",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 1060,
+      "col": 200,
+      "match": "'#0f1b33'",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 1144,
+      "col": 41,
+      "match": "'#32d2f5'",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 1144,
+      "col": 73,
+      "match": "'#ffff00'",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 1144,
+      "col": 104,
+      "match": "'#fa1e24'",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 1144,
+      "col": 138,
+      "match": "'#afafaf'",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 1147,
+      "col": 184,
+      "match": "'#88ddee'",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 1147,
+      "col": 207,
+      "match": "'#0077aa'",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 1147,
+      "col": 230,
+      "match": "'#ffee00'",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 1147,
+      "col": 253,
+      "match": "'#ff4400'",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 1147,
+      "col": 276,
+      "match": "'#ffaaff'",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 1216,
+      "col": 237,
+      "match": "'#afafaf'",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 1216,
+      "col": 251,
+      "match": "'#32bf82'",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 1216,
+      "col": 266,
+      "match": "'#d8a24a'",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 1216,
+      "col": 281,
+      "match": "'#da525d'",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 1216,
+      "col": 316,
+      "match": "'#0f1b33'",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 1217,
+      "col": 246,
+      "match": "'#f1e7d0'",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 1217,
+      "col": 276,
+      "match": "'#0f1b33'",
+      "msg": "Hardcoded hex color. Use --paper / --ink / --blue / --red / trunk tokens.",
+      "severity": "warn",
+      "layer": "front",
+      "rule": "colors"
+    },
+    {
+      "file": "app.js",
+      "line": 1645,
+      "col": 5,
+      "match": "catch { return null; }",
+      "msg": "Catch returns an empty payload with no signal. Say WHY it is empty — set a source/status field the client can read.",
+      "severity": "warn",
+      "layer": "back",
+      "rule": "honesty"
+    },
+    {
+      "file": "dashboard.js",
+      "line": 19,
+      "col": 101,
+      "match": "catch{return null;}",
+      "msg": "Catch returns an empty payload with no signal. Say WHY it is empty — set a source/status field the client can read.",
+      "severity": "warn",
+      "layer": "back",
+      "rule": "honesty"
+    },
+    {
+      "file": "(project)",
+      "line": 0,
+      "col": 0,
+      "match": "",
+      "rule": "eyebrow-ratio",
+      "severity": "warn",
+      "msg": "dashboard.html: 9 eyebrow/kicker labels across 8 sections (ceiling 3 = ceil(sections/3)). An eyebrow on every section is scaffolding, not information (§14.1.6).",
+      "layer": "seam"
+    },
+    {
+      "file": "(project)",
+      "line": 0,
+      "col": 0,
+      "match": "",
+      "rule": "eyebrow-ratio",
+      "severity": "warn",
+      "msg": "index.html: 8 eyebrow/kicker labels across 5 sections (ceiling 2 = ceil(sections/3)). An eyebrow on every section is scaffolding, not information (§14.1.6).",
+      "layer": "seam"
+    }
+  ],
+  "errors": 0,
+  "warnings": 70,
+  "byLayer": {
+    "front": 64,
+    "back": 4,
+    "seam": 2
+  },
+  "scope": "Authored public assets; unmodified MapLibre vendor code excluded because its renderer internals are not UI choices.",
+  "tool": "@axiom-design/audit 0.1.0, local Axiom core package"
+}

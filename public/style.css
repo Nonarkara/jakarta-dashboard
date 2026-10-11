@@ -23,7 +23,7 @@
   --warn: #f85149;
   --ok: #3fb950;
   --hero-orange: var(--accent);
-  --water: #1d4ed8;
+  --water: #1d4ed8; /* axiom-audit-ignore colors -- Hydrography legend swatch must match the preserved map symbol, not the UI palette. */
   --metro: #dc2626;
   --bus: #facc15;
   --sensor: #22c55e;
@@ -251,7 +251,7 @@ details[open] > .atlas-panel-summary::after { content: "-"; }
 .atlas-toggle-swatch--buildings { background: #f1e7d0; }
 .atlas-toggle-swatch--water { background: var(--water); }
 .atlas-toggle-swatch--metro { background: var(--metro); }
-.atlas-toggle-swatch--station { background: #fff; border-color: var(--metro); border-width: 2px; }
+.atlas-toggle-swatch--station { background: #edf7f5; border-color: var(--metro); border-width: 2px; }
 .atlas-toggle-swatch--bus { background: var(--bus); }
 .atlas-toggle-swatch--poi { background: var(--poi); }
 .atlas-toggle-swatch--sensor { background: var(--sensor); }
