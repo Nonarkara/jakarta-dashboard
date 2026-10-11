@@ -38,6 +38,34 @@ try {
   data=await (await request('/api/atlas/environment')).json();
   assert.equal(data.products[0].dates.length,2,'unpublished days must not be guessed');
   assert.equal(data.products[0].date,new Date(now-2*86400000).toISOString().slice(0,10));
+  {
+    const today=new Date().toISOString().slice(0,10), tomorrow=new Date(now+86400000).toISOString().slice(0,10);
+    const weekAgo=new Date(now-7*86400000).toISOString().slice(0,10), saved=capabilities;
+    capabilities='<Capabilities><Layer><ows:Identifier>MODIS_Terra_Aerosol</ows:Identifier><Dimension><Default>'+tomorrow+'</Default><Value>'+weekAgo+'/'+tomorrow+'/P1D</Value></Dimension><TileMatrixSet>GoogleMapsCompatible_Level6</TileMatrixSet></Layer></Capabilities>';
+    data=await (await request('/api/atlas/environment')).json();
+    const aerosol=data.products.find(p=>p.id==='aerosol');
+    assert.equal(aerosol.available,true,'a staged <Default> ahead of today is not an outage');
+    assert.ok(aerosol.date && aerosol.date<=today,'a future date is never served as current');
+    assert.ok(aerosol.tiles[0].includes('/'+aerosol.date+'/GoogleMapsCompatible_Level6/'),'the tile carries the resolved past date');
+    assert.equal(aerosol.latestAvailableDate,tomorrow,'the staged default is still reported honestly');
+    capabilities=saved;
+  }
+  {
+    // GIBS serves some Cloudflare egresses a caps variant whose daily dates
+    // carry a T00:00:00Z suffix; the day must still resolve.
+    const saved=capabilities;
+    const weekAgo=new Date(now-7*86400000).toISOString().slice(0,10);
+    capabilities='<Capabilities><Layer><ows:Identifier>MODIS_Terra_Aerosol</ows:Identifier><Dimension><Default>'+date+'T00:00:00Z</Default><Value>'+weekAgo+'T00:00:00Z/'+date+'T00:00:00Z/P1D</Value></Dimension><TileMatrixSet>GoogleMapsCompatible_Level6</TileMatrixSet></Layer></Capabilities>';
+    data=await (await request('/api/atlas/environment')).json();
+    const aerosol=data.products.find(p=>p.id==='aerosol');
+    assert.equal(aerosol.available,true,'time-suffixed daily caps dates still resolve the product');
+    assert.ok(aerosol.date && aerosol.date<=date,'the resolved date is a bare day, never ahead of today');
+    assert.ok(/^\d{4}-\d{2}-\d{2}$/.test(aerosol.date),'the served day carries no time suffix');
+    assert.ok(aerosol.tiles[0].includes('/'+aerosol.date+'/GoogleMapsCompatible_Level6/'),'the tile carries the resolved day');
+    assert.equal(aerosol.latestAvailableDate,date,'the staged default keeps its day form');
+    capabilities=saved;
+  }
+
   const frame = new Date(Math.floor(now / 600000) * 600000).toISOString().replace('.000Z','Z');
   capabilities += `<Layer><ows:Identifier>Himawari_AHI_Band13_Clean_Infrared</ows:Identifier><Dimension><Default>${frame}</Default><Value>${frame}</Value></Dimension><TileMatrixSet>GoogleMapsCompatible_Level6</TileMatrixSet></Layer>`;
   data=await (await request('/api/atlas/environment')).json();

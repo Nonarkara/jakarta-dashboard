@@ -29,7 +29,7 @@ const PMTILES_R2_KEY = "buildings/jakarta-v1.pmtiles"; // Overture footprints + 
 const WATERWAYS_PMTILES_PATH = "/jakarta-waterways.pmtiles";
 const WATERWAYS_PMTILES_R2_KEY = "buildings/jakarta-waterways.pmtiles"; // scripts/bake-osm-layers.py waterways
 
-const ATLAS_VERSION = "0.1.0";
+const ATLAS_VERSION = "1.0.0";
 
 // DKI Jakarta mainland and its immediate edge. Kepulauan Seribu is outside.
 const CITY_BBOX = {
@@ -411,14 +411,24 @@ async function handleEnvironment(): Promise<Response> {
         tiles: dates.length ? [`${GIBS_BASE}/${product.layer}/default/${dates[0]}/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png`] : [],
         legendUrl: `${GIBS_BASE.replace('/wmts/epsg3857/best', '')}/legends/${product.legend}_H.svg`, sourceUrl: "https://www.jma.go.jp/jma/jma-eng/jma-center/nowcasting/index.html" };
     }
-    const date = layer?.match(/<Default>(\d{4}-\d{2}-\d{2})<\/Default>/)?.[1];
+    const today = new Date().toISOString().slice(0, 10);
+    // GIBS emits daily layer dates either bare (2026-10-11) or with a time
+    // suffix (2026-10-11T00:00:00Z) depending on the caps variant served;
+    // both forms describe the same day.
+    const defaultDate = layer?.match(/<Default>(\d{4}-\d{2}-\d{2})[^<]*<\/Default>/)?.[1] || null;
     const matrix = `GoogleMapsCompatible_Level${product.maxzoom}`;
-    const available = !!date && date <= new Date().toISOString().slice(0, 10) && !!layer?.includes(`<TileMatrixSet>${matrix}</TileMatrixSet>`);
-    const ranges = [...(layer || "").matchAll(/<Value>(\d{4}-\d{2}-\d{2})(?:\/(\d{4}-\d{2}-\d{2})\/P1D)?<\/Value>/g)];
-    const dates = available ? Array.from({ length: 7 }, (_, i) => new Date(Date.parse(date!) - i * 86400000).toISOString().slice(0, 10))
-      .filter(day => ranges.length ? ranges.some(r => day >= r[1] && day <= (r[2] || r[1])) : day === date) : [];
-    const selectedDate = dates.find(day => day < new Date().toISOString().slice(0, 10)) || date;
-    return { ...product, available, source: "NASA GIBS / LANCE", date: available ? selectedDate : null, latestAvailableDate: available ? date : null, dates,
+    const ranges = [...(layer || "").matchAll(/<Value>(\d{4}-\d{2}-\d{2})(?:[^/<]*)?(?:\/(\d{4}-\d{2}-\d{2})(?:[^/<]*)?\/P1D)?[^<]*<\/Value>/g)];
+    const published = (day: string) => (ranges.length ? ranges.some(r => day >= r[1] && day <= (r[2] || r[1])) : day === defaultDate);
+    // GIBS stages some products' next day before UTC midnight: MODIS_Terra_Aerosol
+    // carries a <Default> one day ahead, which is not an outage. Anchor the day
+    // list at the default when it is not ahead of today, otherwise at today, then
+    // serve the newest published day that is not in the future. A future date is
+    // never presented as current.
+    const listDate = defaultDate && defaultDate <= today ? defaultDate : today;
+    const dates = Array.from({ length: 7 }, (_, i) => new Date(Date.parse(listDate) - i * 86400000).toISOString().slice(0, 10)).filter(published);
+    const selectedDate = dates.find(day => day < today) || dates[0] || null;
+    const available = !!selectedDate && !!layer?.includes(`<TileMatrixSet>${matrix}</TileMatrixSet>`);
+    return { ...product, available, source: "NASA GIBS / LANCE", date: available ? selectedDate : null, latestAvailableDate: defaultDate || null, dates,
       fetchedAt: capabilities?.fetchedAt ?? null, timePrecision: "day", windowDays: product.id === "surface-water" ? 3 : 1,
       tiles: available ? [`${GIBS_BASE}/${product.layer}/default/${selectedDate}/${matrix}/{z}/{y}/{x}.png`] : [],
       legendUrl: `https://gibs.earthdata.nasa.gov/legends/${product.legend}_H.svg`,

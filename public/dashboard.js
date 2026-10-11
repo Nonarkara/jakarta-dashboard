@@ -1,5 +1,6 @@
 'use strict';
-const DASHBOARD_BUILD = 'jakarta-atlas-20261011-1791744125-13fb9e4';
+const DASHBOARD_BUILD = 'jakarta-atlas-20261011-1791745856-25aa53f';
+const DASHBOARD_VERSION = '1.0.0';
 const CRM_MONTHLY_URL = 'https://datastudio.google.com/embed/reporting/d7d87175-bfa2-4067-bf4d-42e8b996da11/page/27A2C';
 let crmViewerOpened = false;
 const $ = id => document.getElementById(id);
@@ -42,7 +43,7 @@ function applyLanguage(){
  $('city-map').title=t('Atlas 3D Jakarta','Jakarta 3D atlas');
  document.querySelector('.sections').setAttribute('aria-label',t('Navigasi bagian','Section navigation'));
  send({type:'atlas:setLanguage',language:lang});renderWeather();renderAir();renderAlerts();renderQuake();renderFlood();renderTransit();renderCivic();renderSources();renderCrmViewerStatus();renderExplorePlaces();renderBuildingView();clock();document.dispatchEvent(new Event('dashboard:language'));
- $('release').textContent=DASHBOARD_BUILD;
+ $('release').textContent='v'+DASHBOARD_VERSION+' · '+DASHBOARD_BUILD;
 }
 function renderWeather(){
  const points=weatherData?.points?.filter(p=>p.available)||[];
