@@ -61,3 +61,10 @@ Screenshots: `JAKARTA-LOCAL-DESIGN-2026-10-11.jpg` (daylight city view), `JAKART
 ## Compact header follow-up
 
 Source `f9b6178`, Worker version `ee36b94b-91c4-4bbd-848f-3e62ef9c09c5`, build `jakarta-atlas-20261011-1791704246-f9b6178`. Header measured in the browser at 1280px: 133.79px before, 62px after. At 375px: 309.13px before, 92.59px after. The phone map iframe begins at 263.17px instead of 503.40px, with no document overflow. All three utility controls retain 44px height and accessible labels. Description moved into the existing method disclosure; clock moved to the footer. All eight suites and the canonical production smoke checks passed. Live screenshots: `JAKARTA-COMPACT-HEADER-2026-10-11.jpg` and `JAKARTA-COMPACT-PHONE-2026-10-11.jpg`; buildings rendered, language switching worked, viewport override reset.
+
+
+## Logo and single-bar follow-up
+
+Source `0280306` (layout `cec387a`), build `jakarta-atlas-20261011-1791704746-0280306`, Worker version `64faad08-6374-4589-a565-286489af17ca`. The owner-supplied logo sheet is stored unmodified; CSS frames the icon and wordmark, with a dark-surface monochrome treatment for wordmark legibility. The favicon frames the supplied app icon. Desktop chrome is one 50px row, with the map iframe beginning at 79.70px. Phone chrome is two rows totaling 94px, with the map iframe beginning at 123.70px instead of 263.17px in the previous release. Feed status and evidence export remain available in Sources; utilities are in a keyboard-operable native Controls disclosure. All live city and data tools are retained.
+
+Verified: exact source logo bytes on production; TypeScript, 12 local checks, all eight test suites, atlas asset/Range smoke, 14 API checks and dashboard exact-asset smoke passed. The bilingual scanner initially rejected the language-independent JKTx brand; the explicit brand allowlist now includes it. Browser proof shows buildings rendered, Controls opened, language/theme switching worked and no phone page overflow. Viewport restored. Screenshots: `JAKARTA-LOGO-DESKTOP-2026-10-11.jpg`, `JAKARTA-LOGO-PHONE-2026-10-11.jpg`.
