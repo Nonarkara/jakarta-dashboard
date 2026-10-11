@@ -1,5 +1,5 @@
 'use strict';
-const DASHBOARD_BUILD = 'jakarta-atlas-20261011-1791701394-7d08ada';
+const DASHBOARD_BUILD = 'jakarta-atlas-20261011-1791701425-b954f92';
 const $ = id => document.getElementById(id);
 let lang = 'id', weatherData=null, airData=null, alertsData=null, quakeData=null, floodData=null, transit=null, civic=null;
 let chosenRoute=null, routeDetail=null, civicData={}, selectedOverlay=null, mapReady=false, refreshId=0;
