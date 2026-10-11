@@ -1,5 +1,5 @@
 'use strict';
-const DASHBOARD_BUILD = 'jakarta-atlas-20261011-1791701279-c3db1ba';
+const DASHBOARD_BUILD = 'jakarta-atlas-20261011-1791701394-7d08ada';
 const $ = id => document.getElementById(id);
 let lang = 'id', weatherData=null, airData=null, alertsData=null, quakeData=null, floodData=null, transit=null, civic=null;
 let chosenRoute=null, routeDetail=null, civicData={}, selectedOverlay=null, mapReady=false, refreshId=0;
@@ -114,6 +114,7 @@ async function refresh(){
  $('feed-status').textContent=t('Sumber tersedia','Sources available')+' '+count+'/5 · '+t('diperiksa','checked')+' '+date(new Date().toISOString());$('refresh').disabled=false;
 }
 $('language').addEventListener('change',()=>{lang=$('language').value;try{localStorage.setItem('jakarta-dashboard-lang',lang);}catch{}const u=new URL(location.href);u.searchParams.set('lang',lang);history.replaceState(null,'',u);applyLanguage();refresh();});
+$('basemap').addEventListener('change',()=>send({type:'atlas:setBasemap',bas:$('basemap').value}));
 $('refresh').addEventListener('click',refresh);$('forecast-location').addEventListener('change',renderForecast);$('route-search').addEventListener('input',renderTransit);$('civic-search').addEventListener('input',renderCivic);$('civic-kind').addEventListener('change',loadCivic);
 $('route-results').addEventListener('click',e=>{const b=e.target.closest('[data-route]');if(b)selectRoute(b.dataset.route);});
 function locate(e){const b=e.target.closest('[data-lng]');if(!b)return;showOverlay({type:'FeatureCollection',features:[{type:'Feature',properties:{name:b.dataset.name},geometry:{type:'Point',coordinates:[Number(b.dataset.lng),Number(b.dataset.lat)]}}]},b.dataset.name+' · '+t('titik referensi','reference point'));}
@@ -121,7 +122,7 @@ $('civic-results').addEventListener('click',locate);$('route-detail').addEventLi
 $('alerts').addEventListener('click',e=>{const b=e.target.closest('[data-alert]');const a=alertsData?.alerts?.find(a=>a.id===b?.dataset.alert);if(a)showOverlay(a.geometry,'BMKG · '+a.headline);});
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-view]').forEach(el=>el.setAttribute('aria-pressed',String(el===b)));send({type:'atlas:setView',view:b.dataset.view});}));
 $('clear-overlay').addEventListener('click',()=>{showOverlay({type:'FeatureCollection',features:[]},t('Lapisan pilihan dihapus.','Selected overlay cleared.'));});
-window.addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==$('city-map').contentWindow)return;const d=e.data;if(d?.type==='jakarta-atlas'&&d.event==='ready'||d?.type==='atlas:ready'){mapReady=true;$('map-status').textContent=t('Atlas siap','Atlas ready');send({type:'atlas:setLanguage',language:lang});if(selectedOverlay)showOverlay(selectedOverlay.data,selectedOverlay.label);}});
+window.addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==$('city-map').contentWindow)return;const d=e.data;if(d?.type==='jakarta-atlas'&&d.event==='ready'||d?.type==='atlas:ready'){mapReady=true;$('map-status').textContent=t('Atlas siap','Atlas ready');send({type:'atlas:setLanguage',language:lang});send({type:'atlas:setTheme',theme:document.documentElement.dataset.theme});if(selectedOverlay)showOverlay(selectedOverlay.data,selectedOverlay.label);}});
 window.addEventListener('atlas:theme',e=>send({type:'atlas:setTheme',theme:e.detail}));
 $('export').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({build:DASHBOARD_BUILD,exportedAt:new Date().toISOString(),weather:weatherData,air:airData,alerts:alertsData,earthquake:quakeData,floodReports:floodData,transit:transit?{...transit,routes:undefined}:null,selectedRoute:routeDetail,civic,selectedOverlay},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='jakarta-evidence-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 applyLanguage();refresh();setInterval(refresh,5*60000);setInterval(clock,60000);

@@ -754,3 +754,9 @@ button:disabled { opacity: 0.55; cursor: not-allowed; }
 /* City watch now lives in Tools; it must not reserve space in the map HUD. */
 .atlas-showcase { --atlas-watch-height:0px; }
 .atlas-showcase .atlas-layers { top:12px; }
+
+/* The dashboard supplies view, basemap, language and appearance controls.
+   The standalone /atlas keeps its full header. Embedded map tools/lenses stay visible. */
+.atlas-embedded .atlas-header { display: none; }
+.atlas-embedded .atlas-showcase .atlas-map-wrap { min-height: 360px; }
+.atlas-embedded .atlas-lens-story { padding: 8px 12px; }
