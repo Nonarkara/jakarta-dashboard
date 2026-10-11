@@ -48,7 +48,7 @@ assert.equal(window.AtlasLanguage.translate('Private repository'), 'Repositori p
 vm.runInContext(fs.readFileSync(new URL('../public/reference-language.js',import.meta.url),'utf8'),context);
 const native=window.CivicLanguage;
 assert.equal(native.cost('IDR 7.80 Trillion','id'),'Rp 7,80 triliun');assert.equal(native.cost('IDR 7.80 Trillion','en'),'IDR 7.80 trillion');
-assert.equal(native.text('Upon completion of FS','id'),'Setelah studi kelayakan selesai');assert.equal(native.text('Upon completion of FS','en'),'Upon completion of FS');
+assert.equal(native.text('Upon completion of FS','id'),'Setelah studi kelayakan selesai');assert.equal(native.text('Upon completion of FS','en'),'After the feasibility study is complete');
 assert.equal(native.text('Masterplan Book 3: Executive Summary','id'),'Buku 3: Ringkasan eksekutif');
 assert.equal(native.text('Development Area: 4,590 ha Total Pipe Length: 686.71 km','id'),'Luas pengembangan: 4.590 ha Panjang pipa keseluruhan: 686,71 km');
 assert.equal(native.kind('Hutan Kota','en'),'Urban forest');assert.equal(native.kind('Hutan Kota','id'),'Hutan Kota');assert.equal(native.kind('Unknown source code','en'),'Unknown source code');
