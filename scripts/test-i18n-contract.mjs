@@ -21,7 +21,7 @@ window.AtlasLanguage.set('en');assert.equal(node.nodeValue,'Data & sources');ass
 window.AtlasLanguage.set('id');dynamic.nodeValue='Air-quality feed unavailable or invalid. Retained values, if any, are marked last retrieved.';mutation([{type:'characterData',target:dynamic}]);
 assert.match(dynamic.nodeValue,/tidak tersedia/);window.AtlasLanguage.set('en');assert.equal(dynamic.nodeValue,'Air-quality feed unavailable or invalid. Retained values, if any, are marked last retrieved.');
 const html=fs.readFileSync(new URL('../public/index.html',import.meta.url),'utf8').replace(/<!--[^]*?-->|<script[^]*?<\/script>|<noscript[^]*?<\/noscript>/g,'');
-const brands=new Set(['Jx','Overture Maps','Google Open Buildings 2.5D Temporal','Google Open Buildings','GHSL','Esri World Imagery','OpenStreetMap','Open-Meteo / CAMS','Open-Meteo','RainViewer','NASA GIBS','JMA Himawari','GDACS','and','OpenStreetMap / ODbL','JKTx 3D Atlas -- jakarta.nonarkara.org --','Bahasa Indonesia','English']);
+const brands=new Set(['Jx','JKTx','Overture Maps','Google Open Buildings 2.5D Temporal','Google Open Buildings','GHSL','Esri World Imagery','OpenStreetMap','Open-Meteo / CAMS','Open-Meteo','RainViewer','NASA GIBS','JMA Himawari','GDACS','and','OpenStreetMap / ODbL','JKTx 3D Atlas -- jakarta.nonarkara.org --','Bahasa Indonesia','English']);
 const missing=[];
 for(const match of html.matchAll(/>([^<>]+)</g)){const s=match[1].replace(/\s+/g,' ').trim().replaceAll('&amp;','&');if(/[A-Za-z]/.test(s)&&!brands.has(s)&&!(s in window.ATLAS_ID))missing.push(s);}
 assert.deepEqual(missing,[],'every static English interface string must have Indonesian');
