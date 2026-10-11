@@ -18,3 +18,12 @@ runInNewContext(dashboard.slice(dashboard.indexOf('async function loadCivic()'),
 const pending=ctx.loadCivic();ctx.renderCivic();assert.match(node('civic-results-status').textContent,/Loading/);await ctx.loadCivic();assert.equal(calls,1,'No duplicate request while a layer is loading');settle(null);await pending;assert.match(node('civic-results-status').textContent,/unavailable/);assert.equal(node('civic-evidence').textContent,'');
 const retry=ctx.loadCivic();settle({publisher:'Jakarta Satu',retrievedAt:'2026-10-11',count:0,sourceRecordCount:0,excludedOutOfRegion:0,excludedMissingGeometry:0,features:[]});await retry;assert.match(node('civic-results-status').textContent,/0 matching records/);assert.doesNotMatch(node('civic-results-status').textContent,/unavailable/);
 console.log('PASS civic loading: search during pending fetch, request deduplication, failed response and successful empty reference');
+// Actual bridge execution must accept the imported multipart green geometry,
+// rather than only updating the parent's selected-label text.
+const atlas=readFileSync(new URL('../public/app.js',import.meta.url),'utf8');let added=null,fit=null,view=null;const sourceUpdates=[];
+class Bounds{constructor(a,b){this.points=[a,b];}extend(c){this.points.push(c);return this;}}
+const bridge={styleReady:Promise.resolve(),mapInstance:{getSource:()=>added?{setData:d=>sourceUpdates.push(d)}:null,addSource:(id,source)=>{added=source;},addLayer:()=>{},fitBounds:b=>{fit=b;}},mapTheme:()=>({accent:'#a66f00'}),setMapView:v=>{view=v;},maplibregl:{LngLatBounds:Bounds},window:{matchMedia:()=>({matches:true})},postMsg:()=>{}};
+runInNewContext(atlas.slice(atlas.indexOf('function applyDashboardOverlay(data)'),atlas.indexOf('// Building filters compare')),bridge);
+const multipart=g.features.find(f=>f.geometry.type==='MultiPolygon');assert.ok(multipart);bridge.applyDashboardOverlay({type:'FeatureCollection',features:[multipart]});await Promise.resolve();assert.equal(added.data.features[0].geometry.type,'MultiPolygon');assert.equal(view,'2d');assert.ok(fit.points.length>2);
+bridge.applyDashboardOverlay({type:'FeatureCollection',features:[{type:'Feature',geometry:{type:'MultiPolygon',coordinates:[[[[112,-7],[113,-7],[112,-6],[112,-7]]]]}}]});await Promise.resolve();assert.equal(sourceUpdates.length,0,'Reject out-of-region multipart polygons');
+console.log('PASS live-overlay bridge: imported MultiPolygon reaches source/camera; out-of-region multipart geometry rejected');
