@@ -1,5 +1,5 @@
 'use strict';
-const DASHBOARD_BUILD = 'jakarta-atlas-20261011-1791705932-edf1078';
+const DASHBOARD_BUILD = 'jakarta-atlas-20261011-1791706476-3b492d1';
 const CRM_MONTHLY_URL = 'https://datastudio.google.com/embed/reporting/d7d87175-bfa2-4067-bf4d-42e8b996da11/page/27A2C';
 let crmViewerOpened = false;
 const $ = id => document.getElementById(id);
@@ -153,7 +153,7 @@ function initDetailDialogs() {
  const returnFocus = new WeakMap();
  document.querySelectorAll('.dashboard-modal').forEach(dialog=>{
   dialog.addEventListener('close',()=>{
-   if(dialog.id==='crm-dialog' && crmViewerOpened) $('crm-close').click();
+   if(dialog.id==='crm-dialog' && !$('crm-viewer-shell').hidden) $('crm-close').click();
    dockPanels();returnFocus.get(dialog)?.focus();
   });
  });

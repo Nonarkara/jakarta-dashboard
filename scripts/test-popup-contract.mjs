@@ -16,6 +16,8 @@ class Node {
 }
 const nodes=new Map(),get=id=>nodes.get(id);
 for(const id of ['workspace','alerts-panel','observations','controls'])nodes.set(id,new Node(id));
+const shell=new Node('crm-viewer-shell');shell.hidden=true;nodes.set(shell.id,shell);
+const closeReport=new Node('crm-close');let stoppedReports=0;closeReport.click=()=>{shell.hidden=true;stoppedReports++;};nodes.set(closeReport.id,closeReport);
 const dialogs=['weather-detail','mobility','civic','crm','sources','warnings'].map(id=>{
  const d=new Node(id+'-dialog','DIALOG');d.content=new Node(id+'-content');nodes.set(d.id,d);return d;
 });
@@ -28,9 +30,10 @@ vm.runInContext(js.slice(start,end)+'initDetailDialogs();',context);
 for(const id of ['weather-detail','mobility','civic','crm','sources']){
  const d=get(id+'-dialog');const trigger=new Node('trigger');trigger.dataset.open=d.id;
  let prevented=false;document.click({target:{closest:()=>trigger},preventDefault(){prevented=true;}});
- assert.equal(prevented,true);assert.equal(d.open,true,'button opens '+id);d.close();assert.equal(trigger.focused,true,'closing restores focus');
+ assert.equal(prevented,true);assert.equal(d.open,true,'button opens '+id);if(id==='crm')shell.hidden=false;d.close();assert.equal(trigger.focused,true,'closing restores focus');
  assert.match(html,new RegExp('<dialog id="'+id+'-dialog"[^]*?<section id="'+id+'"'),'original '+id+' content stays inside its dialog');
 }
+assert.equal(stoppedReports,1,'closing CRM stops even an unloaded report');
 media.matches=true;media.change();assert.equal(get('observations').parent,get('weather-detail-dialog').content);assert.equal(get('alerts-panel').parent,get('warnings-dialog').content);
 media.matches=false;media.change();assert.equal(get('observations').parent,workspace);assert.equal(get('alerts-panel').parent,workspace);
 console.log('PASS popup contract: explicit opening, closing/focus, preserved sections and responsive panel docking');
