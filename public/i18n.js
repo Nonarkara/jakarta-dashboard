@@ -4,9 +4,10 @@
   const catalog = window.ATLAS_ID || {};
   const originals = new WeakMap();
   let language = 'id';
-  try { language = localStorage.getItem('jakarta-atlas-language') || 'id'; } catch {} // axiom-audit-ignore honesty -- Optional local preference persistence; current controls and source values remain available with explicit defaults.
+  try { language = localStorage.getItem('jakarta-atlas-language') || localStorage.getItem('jakarta-dashboard-lang') || 'id'; } catch {} // axiom-audit-ignore honesty -- Optional local preference persistence; current controls and source values remain available with explicit defaults.
   const query = new URLSearchParams(window.location.search).get('lang');
   if (query === 'en' || query === 'id') language = query;
+  try {if(window.parent&&window.parent!==window&&['id','en'].includes(window.parent.document.documentElement.lang))language=window.parent.document.documentElement.lang;}catch {} // Same-origin host language; standalone and external embeds retain their own preference.
   if (!['id', 'en'].includes(language)) language = 'id';
   const phrases = Object.keys(catalog).sort((a, b) => b.length - a.length);
   const escape = text => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -39,6 +40,8 @@
     document.documentElement.lang = language;
     const select = document.getElementById('atlas-language');
     if (select) select.value = language;
+    const dashboardLink=document.getElementById('atlas-dashboard-link');
+    if(dashboardLink)dashboardLink.href='/?lang='+language;
     visit(document.body); visit(document.querySelector('title'));
     const description = document.querySelector('meta[name="description"]');
     if (description) update(description, 'content');
@@ -46,7 +49,7 @@
   function set(value) {
     if (!['id', 'en'].includes(value)) return;
     language = value;
-    try { localStorage.setItem('jakarta-atlas-language', value); } catch {} // axiom-audit-ignore honesty -- Optional local preference persistence; current controls and source values remain available with explicit defaults.
+    try { localStorage.setItem('jakarta-atlas-language', value); localStorage.setItem('jakarta-dashboard-lang', value); } catch {} // axiom-audit-ignore honesty -- Optional local preference persistence; current controls and source values remain available with explicit defaults.
     if (window.history?.replaceState) {
       const url = new URL(window.location.href); url.searchParams.set('lang', value);
       window.history.replaceState(null, '', url.toString());

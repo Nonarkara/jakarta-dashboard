@@ -43,3 +43,18 @@ window.AtlasLanguage.set('id');
 assert.equal(window.AtlasLanguage.translate('US AQI 165, PM2.5 45 µg/m³'), 'AQI AS 165, PM2.5 45 µg/m³');
 assert.equal(window.AtlasLanguage.translate('Open-Meteo / CAMS · model-estimate'), 'Open-Meteo / CAMS · perkiraan model');
 assert.equal(window.AtlasLanguage.translate('Private repository'), 'Repositori privat');
+
+// Research translations are explicit presentation views; the source stays exact.
+vm.runInContext(fs.readFileSync(new URL('../public/reference-language.js',import.meta.url),'utf8'),context);
+const native=window.CivicLanguage;
+assert.equal(native.cost('IDR 7.80 Trillion','id'),'Rp 7,80 triliun');assert.equal(native.cost('IDR 7.80 Trillion','en'),'IDR 7.80 trillion');
+assert.equal(native.text('Upon completion of FS','id'),'Setelah studi kelayakan selesai');assert.equal(native.text('Upon completion of FS','en'),'Upon completion of FS');
+assert.equal(native.text('Masterplan Book 3: Executive Summary','id'),'Buku 3: Ringkasan eksekutif');
+assert.equal(native.text('Development Area: 4,590 ha Total Pipe Length: 686.71 km','id'),'Luas pengembangan: 4.590 ha Panjang pipa keseluruhan: 686,71 km');
+assert.equal(native.kind('Hutan Kota','en'),'Urban forest');assert.equal(native.kind('Hutan Kota','id'),'Hutan Kota');assert.equal(native.kind('Unknown source code','en'),'Unknown source code');
+assert.equal(native.admin('Kota Adm. Jakarta Selatan','en'),'South Jakarta');assert.equal(native.alert('Observed','id'),'Teramati');
+assert.equal(native.status('Monas · titik referensi','en'),'Monas · reference point');assert.equal(native.status('Monas · reference point','id'),'Monas · titik referensi');
+const dashboardHtml=fs.readFileSync(new URL('../public/dashboard.html',import.meta.url),'utf8');assert.match(dashboardHtml,/id="language-toggle"/);assert.match(dashboardHtml,/data-en="Research">Riset/);assert.match(dashboardHtml,/data-en-placeholder="Gambir · hospital"/);
+const dashboardSource=fs.readFileSync(new URL('../public/dashboard.js',import.meta.url),'utf8');assert.match(dashboardSource,/d\.language!==lang/,'Map acknowledgement must not create a language loop');assert.match(dashboardSource,/data-en-.*attribute/,'Accessible attributes switch with visible labels');
+assert.match(fs.readFileSync(new URL('../public/official-data.js',import.meta.url),'utf8'),/expanded\.has\(p\.id\)/,'Expanded research rows survive a language change');
+console.log('PASS native research: bilingual costs/documents/status/types, unchanged unknown values, visible switch, accessible attributes and state preservation');

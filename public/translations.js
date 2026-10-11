@@ -2,6 +2,7 @@
 // Ported from the hcmc-3d-atlas Vietnamese catalog. Keep keys identical to the
 // English strings in index.html, app.js and the Worker's watch statements.
 window.ATLAS_ID = {
+  "and": "dan", "City dashboard": "Dasbor kota",
   "Himawari clouds": "Awan Himawari",
   "Aerosol": "Aerosol",
   "Explore city conditions": "Jelajahi kondisi kota",
@@ -77,8 +78,8 @@ window.ATLAS_ID = {
   "Hero landmarks": "Ikon kota",
   "Landmarks": "Penanda kota",
   "Air quality · checking": "Kualitas udara · memeriksa",
-  "Enable orbit": "Aktifkan orbit",
-  "Pause orbit": "Jeda orbit",
+  "Enable orbit": "Putar peta otomatis",
+  "Pause orbit": "Jeda putaran",
   "Basemap": "Peta dasar",
   "Esri satellite": "Satelit Esri",
   "Close inspect": "Tutup inspeksi",
@@ -86,8 +87,8 @@ window.ATLAS_ID = {
   "Click any building": "Klik bangunan mana pun",
   "Click locks the building and shows its height, where the height came from, and who mapped the footprint.": "Klik untuk memilih bangunan dan melihat tingginya, asal angka tinggi itu, dan siapa yang memetakan tapaknya.",
   "12 places": "12 tempat",
-  "Start flyover": "Mulai terbang lintas",
-  "Stop flyover": "Hentikan terbang lintas",
+  "Start flyover": "Mulai tur kota",
+  "Stop flyover": "Hentikan tur kota",
   "Map loading. The text data below remains available if tiles fail.": "Peta sedang dimuat. Data teks di bawah tetap tersedia jika ubin peta gagal.",
   "Buildings appear from zoom 12 and are simplified at wider views. Heights are in metres; most are satellite estimates. This demo supports exploration; it does not show verified street-level flood conditions.": "Bangunan muncul mulai zoom 12 dan disederhanakan pada tampilan lebih luas. Tinggi dalam meter; sebagian besar adalah perkiraan satelit. Demo ini untuk penjelajahan; tidak menunjukkan kondisi banjir tingkat jalan yang terverifikasi.",
   "Location": "Lokasi",
@@ -255,7 +256,7 @@ window.ATLAS_ID = {
   "Orbit paused for reduced motion.": "Orbit dijeda karena pengaturan kurangi gerakan.",
   "Flyover started": "Terbang lintas dimulai",
   "stops": "perhentian",
-  "Fly to": "Terbang ke",
+  "Fly to": "Lihat kawasan",
   "Source:": "Sumber:",
   "highest modeled part": "bagian tertinggi yang dimodelkan",
   "curated model; reference date unverified": "model kurasi; tanggal referensi belum terverifikasi",

@@ -285,3 +285,6 @@ body[data-surface="jakarta-dashboard"] .modal-content > .panel { height: auto; m
 #explore-height-legend span { display: flex; align-items: center; gap: 5px; }
 #explore-height-legend i { width: 20px; height: 12px; border: 1px solid var(--line); }
 @media(max-width:700px) { .explore-layout { grid-template-columns: minmax(0,1fr); } }
+/* A visible language action shares the existing compact toolbar footprint. */
+.city-preferences{display:flex;align-items:center;gap:6px;min-width:0}.city-preferences .language-toggle{font-size:var(--type-note);padding:6px 8px;white-space:nowrap;min-height:36px}.city-preferences .city-controls{grid-column:auto;grid-row:auto}@media(max-width:1000px){.city-preferences{grid-column:2;grid-row:1}}
+.modal-toolbar [data-language-switch]{margin-inline-start:auto;font-size:var(--type-note);white-space:nowrap}.modal-toolbar{gap:8px}
