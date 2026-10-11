@@ -8,3 +8,13 @@ const g=data('green.geojson');assert.equal(g.count,g.features.length);assert.equ
 for(const r of g.features){assert.deepEqual(Object.keys(r.properties).sort(),['name','kind','kelurahan','kecamatan','kota'].sort());assert.equal(typeof r.properties.kind,'string');const rings=r.geometry.type==='Polygon'?r.geometry.coordinates:r.geometry.coordinates.flat();assert.ok(rings.length);for(const ring of rings){assert.ok(ring.length>=4);assert.deepEqual(ring[0],ring.at(-1));for(const [x,y]of ring)assert.ok(x>105&&x<108&&y> -8&&y< -5);}}
 const c=data('city-context.json');assert.equal(c.documents.length,6);assert.equal(c.vision.tier,'planning-target');assert.equal(c.vision.targetYear,2045);assert.equal(c.floodAccess.state,'unavailable');assert.equal(c.facts.find(f=>f.id==='flood-network').period,'2023');assert.equal(c.facts.find(f=>f.id==='jaki-services').qualifier,'>');
 console.log('PASS official data: proposal identity/units/coordinate quarantine, annual-period totals, geometry/field allowlist, historical facts and future targets');
+// Exercise the actual async civic UI functions: typing during fetch remains loading,
+// and a failed fetch clears the old layer's count and provenance.
+const {runInNewContext}=await import('node:vm');
+const dashboard=readFileSync(new URL('../public/dashboard.js',import.meta.url),'utf8');
+const nodes=new Map();const node=id=>{if(!nodes.has(id))nodes.set(id,{value:'',textContent:'',innerHTML:''});return nodes.get(id);};node('civic-kind').value='green';node('civic-search').value='Jagakarsa';
+let settle,calls=0;const ctx={$:node,t:(id,en)=>en,civicData:{},civicLoading:new Set(),DASHBOARD_BUILD:'test',get:()=>{calls++;return new Promise(r=>settle=r);},unavailable:()=>'<p>Unavailable</p>',num:n=>String(n),esc:v=>String(v??''),date:v=>v};
+runInNewContext(dashboard.slice(dashboard.indexOf('async function loadCivic()'),dashboard.indexOf('function renderCrmViewerStatus()')),ctx);
+const pending=ctx.loadCivic();ctx.renderCivic();assert.match(node('civic-results-status').textContent,/Loading/);await ctx.loadCivic();assert.equal(calls,1,'No duplicate request while a layer is loading');settle(null);await pending;assert.match(node('civic-results-status').textContent,/unavailable/);assert.equal(node('civic-evidence').textContent,'');
+const retry=ctx.loadCivic();settle({publisher:'Jakarta Satu',retrievedAt:'2026-10-11',count:0,sourceRecordCount:0,excludedOutOfRegion:0,excludedMissingGeometry:0,features:[]});await retry;assert.match(node('civic-results-status').textContent,/0 matching records/);assert.doesNotMatch(node('civic-results-status').textContent,/unavailable/);
+console.log('PASS civic loading: search during pending fetch, request deduplication, failed response and successful empty reference');

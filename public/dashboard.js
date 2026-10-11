@@ -1,11 +1,11 @@
 'use strict';
-const DASHBOARD_BUILD = 'jakarta-atlas-20261011-1791708198-d98a91b';
+const DASHBOARD_BUILD = 'jakarta-atlas-20261011-1791709793-1bf4da4';
 const CRM_MONTHLY_URL = 'https://datastudio.google.com/embed/reporting/d7d87175-bfa2-4067-bf4d-42e8b996da11/page/27A2C';
 let crmViewerOpened = false;
 const $ = id => document.getElementById(id);
 let lang = 'id', weatherData=null, airData=null, alertsData=null, quakeData=null, floodData=null, transit=null, civic=null;
 let exploreAreas=[], exploreAreasState='loading', buildingView=null, requestedBuildingFilter=null;
-let chosenRoute=null, routeDetail=null, civicData={}, selectedOverlay=null, mapReady=false, refreshId=0;
+let chosenRoute=null, routeDetail=null, civicData={}, civicLoading=new Set(), selectedOverlay=null, mapReady=false, refreshId=0;
 try {const q=new URLSearchParams(location.search).get('lang');lang=['id','en'].includes(q)?q:localStorage.getItem('jakarta-dashboard-lang')==='en'?'en':'id';}catch{} // axiom-audit-ignore honesty -- Optional local preference persistence; current controls and source values remain available with explicit defaults.
 const t=(id,en)=>lang==='id'?id:en;
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -95,12 +95,12 @@ async function selectRoute(id){
 }
 async function loadCivic(){
  const kind=$('civic-kind').value;
- if(!civicData[kind]){$('civic-results').innerHTML='<p>'+t('Memuat referensi…','Loading reference…')+'</p>';$('civic-results-status').textContent=t('Memuat lapisan terpilih…','Loading selected layer…');$('civic-evidence').textContent='';civicData[kind]=await get('/data/jakarta-v1/'+kind+'.geojson?v='+DASHBOARD_BUILD);}
+ if(!civicData[kind]){if(civicLoading.has(kind)){renderCivic();return;}civicLoading.add(kind);renderCivic();civicData[kind]=await get('/data/jakarta-v1/'+kind+'.geojson?v='+DASHBOARD_BUILD);civicLoading.delete(kind);}
  renderCivic();
 }
 function renderCivic(){
  const kind=$('civic-kind').value,d=civicData[kind];
- if(!d?.features){$('civic-results').innerHTML=unavailable();$('civic-results-status').textContent=t('Lapisan tidak tersedia.','Layer unavailable.');$('civic-evidence').textContent='';return;}
+ if(!d?.features){const pending=civicLoading.has(kind);$('civic-results').innerHTML=pending?'<p>'+t('Memuat referensi…','Loading reference…')+'</p>':unavailable();$('civic-results-status').textContent=pending?t('Memuat lapisan terpilih…','Loading selected layer…'):t('Lapisan tidak tersedia.','Layer unavailable.');$('civic-evidence').textContent='';return;}
  const q=$('civic-search').value.toLocaleLowerCase().trim();
  const rows=d.features.filter(f=>[f.properties.name,f.properties.kelurahan,f.properties.kecamatan,f.properties.kota].join(' ').toLocaleLowerCase().includes(q));
  $('civic-results-status').textContent=num(rows.length)+' '+t('rekaman cocok; menampilkan hingga 30','matching records; showing up to 30');
