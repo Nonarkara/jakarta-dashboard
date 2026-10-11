@@ -1,5 +1,15 @@
 # Jakarta dashboard release · 11 October 2026
 
+Dedicated to Kiki Yunita of the Jakarta Investment Agency. The dedication is stated in the dashboard footer, the atlas footer and the README; `scripts/test-release-contract.mjs` fails if it is removed from any of them.
+
+## Version 1.0.0 · 11 October 2026
+
+Released as `v1.0.0` on `main`. Version is one value stated the same way in four places — `package.json`, `ATLAS_VERSION` in `src/index.ts` (`/api/health` and five `/api/atlas/*` payloads), `DASHBOARD_VERSION` in `public/dashboard.js` (the footer shows `v1.0.0 · <build tag>`), and the release contract test that fails when any of them drifts.
+
+Maturity tier: **Pilot**. It is live at a public domain, bilingual, with automated gates on every release and {source, tier, date} on every number. It is not Production and not Contract, because: Open-Meteo throttles the Worker (the client refetches from the visitor's browser), no measured air network or live transit/congestion source is wired, flood stations publish official thresholds rather than readings, and the building archive is an Overture snapshot with mixed height sources. The gate that would move it up is a keyed weather plan or a measured source, not more code.
+
+Release order is fixed: `npm run release` runs typecheck, verify, every test suite, deploy, and then all three live smokes against the deployed bytes before the tag is written. A tag is never written on a red gate.
+
 Active source repo: `Nonarkara/jakarta-dashboard` (private). Local checkout: `/Users/nonarkara/Projects/dashboards/Jakarta-dashboard`. The original atlas repo was forked with its full history; all atlas interactive content is preserved.
 
 Dashboard `/`, full atlas `/atlas`. The deployed Worker deliberately retains `jakarta-3d-atlas`, its account, custom domain and R2 archives. Only this new dashboard repo should deploy to that Worker now. Asset HTML canonicalization is disabled because the Worker routes root/atlas to different HTML files; otherwise `/atlas` redirects to root and embeds the dashboard recursively.

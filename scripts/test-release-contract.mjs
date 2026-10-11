@@ -71,4 +71,21 @@ try {
   assert.match(response.headers.get('content-security-policy'), /frame-ancestors 'self'/);
   assert.equal((await request('/api/atlas/areas', { method: 'POST' })).status, 405);
 } finally { globalThis.fetch = originalFetch; globalThis.caches = originalCaches; }
-console.log('PASS release contract: input validation, bbox, air-quality truth, nearest-sample honesty, retired feeds, HEAD, Range, health and headers');
+
+// Release identity: one version, stated the same way everywhere it is shown.
+{
+  const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
+  assert.match(pkg.version, /^\d+\.\d+\.\d+$/, 'package.json carries a release version');
+  assert.equal(source.match(/const ATLAS_VERSION = "([^"]+)"/)[1], pkg.version, 'the Worker reports the released version');
+  globalThis.caches = { default: { match: async () => null, put: async () => {} } };
+  const health = await worker.fetch(new Request('https://atlas.test/api/health'), { JAKARTA_TILES: { head: async () => null } });
+  assert.equal((await health.json()).version, pkg.version, '/api/health reports the released version');
+  globalThis.caches = originalCaches;
+  const dashboard = readFileSync(new URL('../public/dashboard.js', import.meta.url), 'utf8');
+  assert.equal(dashboard.match(/const DASHBOARD_VERSION = '([^']+)'/)[1], pkg.version, 'the footer shows the released version');
+  assert.match(dashboard, /'v'\s*\+\s*DASHBOARD_VERSION\s*\+\s*' · '\s*\+\s*DASHBOARD_BUILD/, 'the footer keeps the build tag beside the version');
+  for (const [file, marker] of [['../public/dashboard.html', 'For Kiki Yunita · Jakarta Investment Agency'], ['../public/index.html', 'For Kiki Yunita · Jakarta Investment Agency'], ['../public/translations.js', '"For Kiki Yunita · Jakarta Investment Agency": "Untuk Kiki Yunita · Badan Investment Jakarta"'], ['../README.md', 'Dedicated to **Kiki Yunita**']])
+    assert.ok(readFileSync(new URL(file, import.meta.url), 'utf8').includes(marker), 'dedication present in ' + file);
+}
+
+console.log('PASS release contract: input validation, bbox, air-quality truth, nearest-sample honesty, retired feeds, HEAD, Range, health, headers, release identity and dedication');

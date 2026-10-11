@@ -1,5 +1,7 @@
 # Jakarta city dashboard
 
+Dedicated to **Kiki Yunita** of the Jakarta Investment Agency.
+
 Live: **https://jakarta.nonarkara.org** · complete atlas: **https://jakarta.nonarkara.org/atlas**
 
 Private repository: https://github.com/Nonarkara/jakarta-dashboard. The original atlas history and documentation below are retained. Deploy this repository for the main domain; the separate atlas repository remains a source archive and should not overwrite the dashboard Worker.
@@ -26,7 +28,7 @@ The citizen-services section links to CRM's official daily, monthly, kelurahan a
 - Existing `/api/atlas/*`, building tiles and waterways remain available.
 
 - `npm run prepare:flood`: bake the Jakarta Satu flood-desk network — AWLR/ARR stations with SIAGA thresholds, pumps/floodgates/reservoirs, situ, risk polygons and kelurahan population — into versioned assets under `public/data/jakarta-v1`, with DKI-bbox quarantine and access-state records for unreachable sources.
-- `npm run deploy:live` runs the full local gate (typecheck, verify, every test suite), stamps dashboard/atlas assets, deploys the existing Worker with its R2 binding and custom domain, and checks the exact deployed bytes plus provider envelopes. Do not deploy from the old atlas repo to this Worker.
+- `npm run release` runs the full local gate (typecheck, verify, every test suite), stamps dashboard/atlas assets, deploys the existing Worker with its R2 binding and custom domain, and checks the exact deployed bytes plus provider envelopes. It refuses to deploy an uncommitted tree, so deployed bytes always trace to a commit. Do not deploy from the old atlas repo to this Worker.
 
 Civic datasets publish no observation epoch or explicit dataset license in the inspected service metadata; the ledger labels their attribution/access limitation. GTFS is CC BY 4.0, normalized/simplified here; service calendars and selected representative trips are scheduled records. DLH measured-air, BPS statistical baselines, tides, subsidence, live vehicles and congestion remain unconnected.
 

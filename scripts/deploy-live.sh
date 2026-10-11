@@ -1,7 +1,14 @@
 #!/bin/bash
 # Verify locally, stamp and deploy, then verify the exact deployed build.
+# A release deploys only committed work: an uncommitted tree means the bytes on
+# the edge cannot be traced back to a commit.
 set -euo pipefail
 cd "$(dirname "$0")/.."
+if ! git diff --quiet || ! git diff --cached --quiet; then
+  echo "release refused: uncommitted changes. Commit, then deploy." >&2
+  git diff --stat >&2
+  exit 1
+fi
 npm run typecheck
 npm run verify
 npm test
