@@ -52,3 +52,17 @@ No new external embed hosts or authentication permissions. Existing CRM viewer i
 ## Validation
 
 Dataset contract tests check unique project IDs, source URLs, proposed-currency units, coordinate bounds and duplicate quarantine; flood total/period consistency and absent coordinates; green geometry bounds, ring closure, source-count reconciliation and field allowlist; historical versus planning tiers. Live release smoke additionally compares the exact official client, dashboard CSS and four data assets against local bytes.
+
+## Final live release evidence
+
+- Source fixes: `4fe94d5` (imports `28ef54b`, stable receipts `1bf4da4`, pending civic search `5637d65`).
+- Build: `jakarta-atlas-20261011-1791710995-4fe94d5`.
+- Worker version: `109d725c-4d88-4d2e-b0eb-dc8dd3c9967e`.
+- Private repository verified with GitHub `isPrivate=true`; source commits pushed.
+- Canonical `npm run deploy:live` completed: typecheck, 12 local checks, all 11 test suites, atlas asset/Range checks, 14/14 API checks, exact official-client/CSS/data bytes and all four Jakarta provider envelopes.
+- Live browser: 37 project rows; Sportainment Tendean publisher point selected and visible on map; Hutan Kota Jagakarsa multipart boundary selected, camera moved and boundary visibly rendered. The existing bridge initially rejected MultiPolygon while the parent label updated: repaired allowed geometry type, retaining coordinate/feature limits. Test executes actual bridge and verifies source/camera update plus rejection of an out-of-region multipart polygon.
+- Bendungan Hilir search returns six of 154 annual reference rows in one 2024 group. Reports view shows historical 178 / >60 facts and explicit future 2045 target. Both UI languages checked locally.
+- Phone live: document width/scrollWidth 375/375, height/scrollHeight 812/812; dialog 339/339. Desktop 1280/1280, 720/720. No hero page bleed. Viewport restored after checks.
+- Pending civic search fix: typing before a download finishes remains loading; repeated requests are deduplicated; failed response clears old count/evidence; an empty successful reference is zero matching records, not an outage.
+- Screenshots: `OFFICIAL-CITY-DATA-2026-10-11.jpg`, `OFFICIAL-CITY-DATA-PHONE-2026-10-11.jpg`, `OFFICIAL-GREEN-MAP-2026-10-11.jpg`.
+- Remaining access limit: current Pantau Banjir sensors/pumps not imported. Ambiguous Satpol PP coordinates and duplicate JIC points remain withheld, never inferred.
