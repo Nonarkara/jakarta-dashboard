@@ -1,0 +1,2396 @@
+
+PAGE 1
+1
+Annual Report Jakarta Smart City 2023
+Annual Report
+Jakarta
+Smart City
+2023
+www.smartcity.jakarta.go.id
+
+PAGE 2
+2
+Annual Report Jakarta Smart City 2023
+Daftar Isi
+Kata Pengantar
+Short Brief
+5
+6
+Menuju Kota Cerdas Berskala Global      7
+Peran Jakarta Smart City
+Menuju Jakarta Kota Global
+Sepuluh Inovasi Jakarta Smart City
+pada 2023 Menuju Kota Cerdas Berskala Global
+7
+9
+Jejak Langkah     12
+Sorotan        13
+Merawat Kepercayaan Warga dalam 
+Penanganan Pengaduan Publik
+Integrasi dan Personalisasi Pelayanan Publik
+Menyelesaikan Permasalahan Kota dengan 
+Intuisi Telah Usang
+       Perkembangan Teknologi Terkini dan 
+       Relevansi Kecerdasan Buatan dalam 
+       Pengambilan Keputusan
+Sinergi, Kunci Penting Masa Depan Jakarta 
+sebagai Kota Global
+       Menggaungkan Jakarta Kota Global lewat 
+       Sinergi bersama Media 
+       Membuka Ruang untuk Bersinergi 
+       Menyelesaikan Permasalahan Kota
+       Menuju Kota Cerdas Berskala Global melalui 
+       Jakarta Smart City Forum 2023
+Aktivasi Literasi Digital bagi Masyarakat
+       Data Science Trainee
+       Kompetisi Student Science Research
+       Kelas bersama Pakar (JSCLab Sharing)
+       
+Talkshow Terkait Isu Jakarta Terkini (JSC Talks)
+       JSC Goes to School dan JSC Goes to Society
+       JSC Community
+       Pengenalan JSC dan Produknya
+       melalui Pameran
+       Memaksimalkan Aktivasi Literasi
+       melalui Media Sosial
+14
+17
+20
+22
+24
+26
+28
+30
+31
+31
+32
+33
+34
+34
+36
+37
+38
+Laporan Layanan BLUD                   40
+Publikasi Penelitian                   42
+Award                     47
+
+
+PAGE 3
+3
+Annual Report Jakarta Smart City 2023
+
+
+PAGE 4
+4
+Annual Report Jakarta Smart City 2023
+
+PAGE 5
+5
+Annual Report Jakarta Smart City 2023
+Jakarta Smart City telah berkembang menjadi pusat inovasi yang krusial, memainkan peran 
+sentral dalam transformasi Jakarta menjadi Kota Global. Tahun ini, kami dengan bangga 
+menyajikan serangkaian pencapaian dan inisiatif strategis yang telah kami lakukan untuk 
+mewujudkan visi ini. Buku tahunan ini menguraikan berbagai upaya dan prestasi dari Jakarta 
+Smart City sepanjang tahun 2023, yang semuanya berkontribusi terhadap pencapaian 
+status Jakarta sebagai Kota Global, sebagaimana diuraikan oleh Badan Perencanaan 
+Pembangunan Daerah (Bappeda) Provinsi DKI Jakarta.
+Di sektor ekonomi, Jakarta Smart City telah bersinergi erat dalam pengembangan 
+ekosistem 
+startup digital yang dinamis, menarik perhatian investor global. Kami juga telah 
+melaksanakan program-program talenta digital, seperti JSC Hands on Workshop dan Data 
+Science Trainee, yang berfokus pada peningkatan keterampilan tenaga kerja di bidang jasa.
+Dalam bidang riset dan inovasi, kami telah mencapai kemajuan signifikan. Publikasi di 
+jurnal-jurnal terindeks Q1 dan keikutsertaan kami dalam konferensi bergengsi seperti IEEE 
+International Smart Cities Conference telah menarik perhatian dari komunitas penelitian 
+global, berkontribusi pada penyelesaian permasalahan Jakarta dengan pendekatan 
+sains dan teknologi. Kami juga telah menjadi tuan rumah kunjungan internasional dan aktif 
+berpartisipasi dalam pameran internasional, sambil menyediakan fasilitas R&D melalui 
+dashboard  data terbuka.
+Kenyamanan hunian di Jakarta meningkat pesat, dengan tersedianya layanan dan informasi 
+publik berkaitan dengan fasilitas kesehatan, pendidikan, perumahan, dan layanan publik 
+lainnya yang dapat diakses melalui aplikasi super Jakarta Kini (JAKI). Kami bertekad 
+menjadikan Jakarta kota yang nyaman bagi semua warga dan pengunjung.
+Dalam hal nilai budaya, Jakarta Smart City bekerja sama erat dengan Dinas Pariwisata dan 
+Ekonomi Kreatif Provinsi DKI Jakarta untuk mempromosikan berbagai event, atraksi turis, 
+dan kegiatan budaya, mendukung upaya Jakarta menuju kota global. Melalui layanan dan 
+informasi publik, kami juga bertujuan menjadikan Jakarta kota yang bersih, nyaman, dan 
+berkelanjutan.
+Pengimplementasian visi ini memerlukan sinergi 
+pentahelix antara pemerintah, 
+swasta, akademisi, lembaga swadaya masyarakat, dan media massa. Oleh karena 
+itu, Jakarta Smart City terus mengembangkan ekosistem dalam transformasi 
+digital, seperti melalui Future City Hub. Program literasi digital seperti JSC Goes 
+to School juga telah dipopulerkan, serta Jakarta Smart City Forum 2023 digelar 
+untuk membahas dan mendengarkan masukan dari berbagai pemangku 
+kepentingan.
+Laporan tahunan ini disusun sebagai dokumentasi perjalanan Jakarta Smart 
+City selama tahun 2023. Kami berharap laporan ini bermanfaat sebagai bahan 
+evaluasi dan perbaikan pada masa depan, serta sebagai refleksi perubahan 
+wajah Jakarta setelah tidak lagi menjadi ibu kota negara pada 2024, menuju 
+kota global yang menjadi pusat ekonomi dan bisnis internasional.
+Jakarta, 21 Desember 2023
+Yudhistira Nugraha, S.T., MICT Adv., D. Phil.
+Kepala Unit Pengelola Jakarta Smart City
+Kata Pengantar
+
+
+PAGE 6
+6
+Annual Report Jakarta Smart City 2023
+Short Brief
+Sebagai Pelaksana Teknis Dinas Komunikasi, Informatika dan Statistik
+Jakarta Smart City merupakan Unit Pengelola (UP) di bawah Dinas Komunikasi, 
+Informatika dan Statistik. Pemerintah Provinsi DKI Jakarta dan memiliki kewenangan 
+untuk menyelenggarakan pengembangan ekosistem demi terwujud provinsi dan kota 
+cerdas di wilayah Pemerintahan Provinsi DKI Jakarta melalui pemanfaatan teknologi 
+informasi.
+Jakarta Smart City juga berperan dalam memfasilitasi penyampaian aspirasi/opini publik 
+terhadap pemerintah daerah mengenai informasi pemerintahan, ekonomi, lingkungan, 
+pendidikan, serta informasi lainnya.
+Sebagai Badan Layanan Umum Daerah (BLUD) 
+Berdasarkan  Peraturan Gubernur Nomor 44 Tahun 2021, Jakarta Smart City telah 
+menerapkan Pola Pengelolaan Keuangan Badan Layanan Umum Daerah (PPK-BLUD). 
+Jakarta Smart City dapat mengembangkan dan mensinergikan seluruh potensi serta 
+sumber daya yang dimiliki dengan memanfaatkan teknologi dan informasi untuk 
+pengembangan kerja sama serta kemitraan dalam rangka pengelolaan kota Jakarta 
+yang bersih dan transparan.
+Struktur Organisasi 
+Pembina Teknis
+Diskominfotik
+Kepala
+Unit Pengelola
+Pembina
+Keuangan BPKD
+Satuan Pengawas
+Internal Kepala Subbagian
+Tata Usaha
+Bendahara
+Pengeluaran
+Bendahara
+Pendapatan
+Jabatan
+Fungsional
+Kepala Satuan
+Pelaksana Manajemen
+dan Kajian
+Kepala Satuan
+Pelaksana Komunikasi
+dan Pemasaran
+Kepala Satuan
+Pelaksana Kemitraan
+dan Ekosistem Digital
+Kepala Satuan
+Pelaksana Perangkat
+dan Jaringan 
+Teknologi Informasi
+Informasi Informasi
+Kepala Satuan
+Pelaksana
+Pengembangan Produk
+dan Layanan
+
+PAGE 7
+7
+Annual Report Jakarta Smart City 2023
+Menuju Kota Cerdas
+Berskala Global
+Setelah 60 tahun lebih menjadi pusat pemerintahan, 
+berdasarkan Undang-Undang Nomor 3 Tahun 2022 
+tentang Pemindahan Ibu Kota Negara, 2023 menjadi 
+tahun terakhir Jakarta menyandang status ibu kota. 
+Selama ini, tak hanya menjadi pusat pemerintahan, 
+Jakarta juga telah menjadi pusat perekonomian, bisnis, 
+peleburan budaya, serta perkembangan teknologi di 
+Indonesia. Selepas tak lagi menjadi ibu kota negara, 
+Jakarta akan melanjutkan statusnya sebagai pusat 
+ekonomi dan bisnis, serta bertransformasi menjadi 
+kota cerdas berskala global.
+Berdasarkan Global City Index 2022 yang diterbitkan 
+oleh Kearney, saat ini Jakarta menempati urutan ke-69 
+dari 156 kota di dunia. Untuk meningkatkan peringkat 
+Jakarta dan mewujudkan Jakarta sebagai kota cerdas 
+berskala global yang diakui dunia, Pemprov DKI Jakarta 
+melalui Jakarta Smart City telah menyiapkan sejumlah 
+langkah.
+Peran Jakarta Smart City
+Menuju Jakarta Kota Global
+Sektor  Ekonomi yang Mapan dan Terkoneksi Secara Global
+•  Memiliki Top 500 Perusahaan Dunia dengan mengembangkan ekosistem startup 
+digital untuk meningkatkan investasi.
+•  Memiliki tenaga yang terampil di bidang jasa dengan mengadakan JSC Hands on 
+Workshop, Data Science Trainee, JSC Goes to School, dan  mengintegrasikan fitur 
+Karier di Jakarta untuk 
+upskilling ke dalam aplikasi super Jakarta.
+Berdasarkan Karakteristik Kota Global - Badan Perencanaan Pembangunan Daerah (Bappeda) 
+Provinsi DKI Jakarta 2023
+Kapasitas Riset dan Inovasi yang Baik dan Terus-menerus
+•  Unggul dalam performa akademis dengan mempublikasikan beragam tulisan 
+ilmiah dalam jurnal dan konferensi bergengsi, seperti jurnal-jurnal terindeks Q1 dan 
+IEEE International Smart Cities Conference (ISC2). 
+•  Memiliki daya tarik bagi international students  dan researchers melalui publikasi 
+tulisan ilmiah JSC dalam jurnal internasional, penerimaan kunjungan dari negara 
+lain ke Jakarta Smart City dan Future City Hub untuk belajar tentang ekosistem 
+smart city di Jakarta beserta produknya, serta partisipasi dalam pameran berskala 
+internasional seperti Tech in Asia dan Indonesia International Smart City Expo & 
+Forum.
+•  Menawarkan kemudahan bagi kegiatan research and development (R&D) dengan 
+menyediakan dashboard  berupa data terbuka terkait banjir, mitigasi kemiskinan, 
+kewilayahan/kelurahan, stunting, Cepat Respons Masyarakat (CRM), Peta Jakarta 
+Kini, Kelas Bersama, dan City Data.
+Nyaman untuk Dihuni
+•  Fasilitas kesehatan yang mumpuni dan mudah diakses melalui penyediaan  fitur 
+Jakarta Sehat di aplikasi super Jakarta Kita (JAKI) dan 
+dashboard  stunting. 
+•  Fasilitas pendidikan yang memadai dengan kualitas baik melalui pengadaan Wi-
+Fi gratis untuk mendukung kegiatan belajar mengajar daring dan pengembangan 
+diri pelajar serta mengadakan JSC Goes to School untuk mengedukasi pelajar di 
+Jakarta tentang teknologi dan industri digital.
+
+PAGE 8
+8
+Annual Report Jakarta Smart City 2023
+•  Hunian layak dan terjangkau, pasokan air bersih, serta listrik dengan 
+mengintegrasikan aplikasi Sirukim ke aplikasi super Jakarta Kini (JAKI). 
+•  Keamanan kota yang terjamin dengan menyediakan fitur Kontak Darurat dan 
+mengintegrasikan fitur Jakarta Aman ke aplikasi super Jakarta Kini (JAKI).
+•  Kemudahan dalam mengakses dan mendapatkan informasi  lewat aplikasi super 
+yang menyediakan layanan publik digital terintegrasi, contohnya fitur Berita dan 
+push notification untuk informasi seputar Jakarta dan fitur Peta Jakarta Kini untuk 
+membantu warga mengeksplorasi kota.
+Cultural Value  yang Menarik untuk Pengunjung
+•  Memiliki banyak pilihan tourist attraction  berkualitas internasional yang menarik 
+bagi wisatawan internasional dengan mengintegrasikan fitur Jakcation dan 
+Panduan Keliling Jakarta dalam aplikasi super Jakarta Kini (JAKI), termasuk dengan 
+tampilan Bahasa Inggris.
+•  Mampu menyelenggarakan event internasional yang aman dan nyaman melalui 
+Future City Hub serta menjalin kerja sama sister city  dengan kota Berlin dan 
+Bangkok.
+•  Memiliki ekosistem yang mendukung perkembangan seni dan budaya dengan 
+mempromosikan kegiatan budaya di lingkup Provinsi DKI Jakarta seperti Jakarta 
+Hajatan.
+Lingkungan yang Bersih, Nyaman, dan Berkelanjutan
+•  Kondisi kualitas lingkungan perkotaan (udara, air, tanah) yang baik dengan 
+menghadirkan fitur terkait lingkungan seperti Kualitas Udara, Pantau Banjir, Daftar, 
+Cek Lokasi, dan hasil uji emisi di aplikasi super Jakarta Kini (JAKI), menyediakan 
+Sistem Pengendalian Banjir, serta sistem  pengelola aduan warga  untuk melaporkan 
+isu terkait
+Terkoneksi secara Intra dan Inter-Kota
+•  Moda share public transport  > 50% dengan mensosialisasikan fitur Transportasi 
+Publik dan menggelar Reading Group  mengenai Transit Oriented Development 
+untuk meningkatkan partisipasi warga dalam menggunakan transportasi umum 
+•  ICT Readiness Score tinggi dengan mengimplementasikan serta memanfaatkan 
+teknologi informasi dan komunikasi berdasarkan komponen berikut: 
+•  Akses infrastruktur: menyediakan layanan Wi-Fi gratis di ruang-ruang publik 
+Jakarta yang bisa diakses lewat aplikasi super;
+•  Aksesibilitas digital: menyediakan layanan Wi-Fi gratis dan platform layanan 
+digital publik terintegrasi lewat aplikasi super, agar warga dapat mengakses 
+teknologi digital dengan mudah;
+•  Kompetensi pengguna: menyelenggarakan kegiatan literasi digital seperti 
+JSC Hands on Workshop, Reading Group, A Cup of Tea, JSCLab Sharing, JSC 
+Community Talkshow, JSC Hackathon, dan lain-lain yang bertujuan untuk 
+meningkatkan literasi serta keterampilan ICT (Information Communication 
+Technology)  masyarakat;
+•  Penggunaan ICT: mengadakan program JSC Goes to School untuk mengukur 
+seberapa luas penggunaan teknologi informasi dan komunikasi di berbagai 
+sektor, terutama pendidikan;
+•  Inovasi Teknologi: mendirikan Future City Hub sebagai laboratorium inovasi 
+dan kolaborasi antara  pemerintah, industri, 
+startup,  akademisi, serta individu 
+kreatif dalam menciptakan kota berkelanjutan nan inklusif, untuk meningkatkan 
+kemajuan dan adopsi inovasi teknologi di Jakarta.
+
+PAGE 9
+9
+Annual Report Jakarta Smart City 2023
+Sepuluh Inovasi
+Jakarta Smart City pada 2023
+Menuju Kota Cerdas
+Berskala Global
+Sebagai langkah konkret dalam mendukung visi Jakarta sebagai kota cerdas berskala global yang 
+memanfaatkan kemajuan teknologi, Jakarta Smart City berhasil melahirkan sepuluh inovasi unggulan 
+pada 2023 yang berdampak positif bagi kehidupan sehari-hari warganya.
+Platform Kelas Warga
+Platform berbasis web yang menjadi wadah bagi masyarakat untuk 
+belajar dan berbagi ilmu secara gratis. Kelas diadakan di ruang 
+publik sekitar Jakarta, seperti Ruang Publik Terpadu Ramah Anak 
+(RPTRA) dan taman kota, serta ruang virtual yang disediakan oleh 
+Jakarta Smart City. 
+Link: https://kelaswarga.jsclab.id/
+Platform City Data
+Platform City Data adalah platform yang memberikan layanan 
+konsolidasi data. Berisi kumpulan data dan informasi berbagai 
+aspek kehidupan perkotaan, mencakup informasi demografi, 
+infrastruktur, ekonomi, lingkungan, kesehatan, keamanan, berbagai 
+dimensi lain, serta berbagai usaha riset/kajian yang dilakukan baik 
+oleh tim Jakarta Smart City, peserta program Data Science Trainee, 
+atau sinergi dengan peneliti dari berbagai organisasi. 
+Link: https://citydata.jsclab.id/
+Dashboard  Cepat Respon Masyarakat
+Platform dan Dashboard  Cepat Respon Masyarakat memberikan 
+informasi terkini dan sistematis mengenai berbagai dimensi 
+aduan masyarakat, baik dari sisi rekap jumlah aduan, pola aduan 
+dalam rentang waktu tertentu, instansi penanggung jawab, status 
+laporan, dan sebagainya. Penyajian data di platform Cepat Respon 
+Masyarakat dapat dilihat berdasarkan rentang waktu harian atau 
+bulanan, dan diperbarui secara otomatis setiap 15 menit sekali.
+Link: https://crm.jakarta.go.id/
+Dashboard  Profil Warga
+Dasboard yang dapat menggambarkan kondisi sosial ekonomi 
+wilayah kelurahan di DKI Jakarta, agar pemerintah setempat dapat 
+mengetahui statistik warga dan mengambil kebijakan berbasis 
+data.
+Link: https://smartcity.jakarta.go.id/admin/login 
+Dashboard Pantau Banjir
+Dashboard untuk memantau informasi seputar banjir. Bertujuan 
+untuk membantu warga mengantisipasi banjir dan menganalisis 
+kondisi, potensi, serta prediksi terkait banjir di Jakarta. Selain itu, 
+menyajikan informasi sensor rata-rata tinggi air, sensor rata-rata 
+debit air, dan sensor rata-rata curah hujan dari 178 titik pemantauan. 
+Link: https://pantaubanjir.jakarta.go.id/ 
+1
+2
+3
+4
+5
+
+PAGE 10
+10
+Annual Report Jakarta Smart City 2023
+Peta Jakarta Kini
+Peta yang memudahkan warga dan pendatang untuk menemukan 
+berbagai lokasi fasilitas serta destinasi di Jakarta. Menyajikan 
+informasi fasilitas umum, transportasi, fasilitas kesehatan, destinasi 
+wisata, dan lain-lain. 
+Link : https://jaki.jakarta.go.id/peta 
+Dashboard  Mitigasi Kemiskinan
+Terdiri atas Dashboard  Data Sasaran Bansos, Dashboard Alokasi 
+dan Realisasi Bantuan Sosial, serta Dashboard  Profil Bantuan 
+Sosial. Dashboard Data Sasaran Bansos DKI Jakarta merupakan 
+dashboard yang dibangun menggunakan irisan data Pensasaran 
+Percepatan Penghapusan Kemiskinan Ekstrem (P3KE), Carik, dan 
+Data Terpadu Kesejahteraan Sosial (DTKS) yang bertujuan untuk 
+mencari populasi data sasaran penerima bantuan sosial (bansos) 
+yang layak. Dashboard Alokasi dan Realisasi Bantuan Sosial DKI 
+Jakarta merupakan dashboard   yang menampilkan informasi terkait 
+perbandingan antara data alokasi penyaluran program bantuan 
+dari Perangkat Daerah dengan data transaksi penyaluran dari Bank 
+DKI. 
+Dashboard  Profil Bansos DKI Jakarta merupakan dashboard 
+untuk melihat informasi hasil penyaluran program bantuan sosial 
+kepada masyarakat. Dashboard  ini berfungsi untuk pemantauan 
+dan evaluasi Program Bantuan Sosial Provinsi DKI Jakarta.
+Dashboard  Stunting
+Bersinergi dengan Biro Kesejahteraan Sosial Provinsi DKI Jakarta, 
+menyediakan informasi terkait kondisi balita dengan permasalahan 
+gizi dan posyandu dalam menangani permasalahan gizi. 
+Link : https://stunting.jakarta.go.id/ 
+Super Aplikasi Jakarta Kini Generasi Ketiga
+JAKI mengintegrasikan lebih dari 60 layanan publik digital dari 
+Perangkat Daerah (PD). Melalui 
+update terakhir, JAKI hadir dengan 
+layanan personalisasi dan Akun Warga. Dilengkapi dengan 
+pengkategorisasian layanan, 
+search bar, serta fungsi dwibahasa.
+Jakarta Smart City Forum
+Merupakan forum smart city  tahunan yang mempertemukan 
+berbagai kontributor smart city  di Jakarta, guna menguatkan sinergi 
+dan merayakan inovasi Jakarta sebagai kota cerdas berskala global
+Langkah-langkah inovatif ini menjadi bukti kesiapan Jakarta Smart City dalam mendukung Jakarta sebagai 
+kota cerdas berskala global. Jakarta Smart City berkomitmen untuk terus berinovasi untuk Jakarta.
+6
+7
+8
+9
+10
+
+PAGE 11
+11
+Annual Report Jakarta Smart City 2023
+
+
+PAGE 12
+12
+Annual Report Jakarta Smart City 2023
+Jejak Langkah
+Mei
+- Town Hall Jakarta Smart City 2023
+- Penambahan submenu Laporan 
+Tahunan pada website 
+smartcity.jakarta.go.id
+Juni
+- JAKI, JakLapor dan Data Science Trainee 
+memenangkan penghargaan dalam 7th Annual 
+Indonesia OpenGov Leadership Forum
+- Penyelenggaraan #Hack4ID, Gerakan 
+Nasional 1000 Startup Digital Jakarta Smart City
+- Peluncuran JAKI 3.0
+- Pengembangan City Data
+Juli
+- Sosialisasi tampilan dan ﬁtur baru JAKI 3.0
+- Penambahan Menu Produk  pad
+    website smartcity.jakarta.go.id
+     beserta dengan Submenu JAKI, CRM, 
+    Pantau Banjir, dan Peta Jakarta Kini
+- Peluncuran landing page City Hub pada 
+    website smartcity.jakarta.go.id
+- Peluncuran website stunting.jakarta.go.id
+Januari
+- Peluncuran Smart Employee
+- Peluncuran tampilan baru 
+    crm.jakarta.go.id
+- Peluncuran landing page Digitalisasi 
+    pada website smartcity.jakarta.go.id
+Februari
+- Pengembangan CRM (penyesuaian SK 
+    Sekda no. 99 tahun 2022)
+- Pengembangan JAKI untuk vaksin ke-4
+- Pembuatan dashboard bansos data 
+    Pensasaran Percepatan Penghapusan 
+    Kemiskinan Ekstrem (P3KE)
+Maret
+- JakLapor memenangkan 
+    penghargaan WSIS Prizes 2023
+- Pemprov DKI Jakarta memenangkan 
+    penghargaan dalam SPBE Summit 
+    2023
+- Data Science Trainee batch 6
+April
+- Peluncuran tampilan baru 
+website corona.jakarta.go.id
+Agustus
+- FGD dan penyusunan policy brief 
+    sebagai rangkaian Future City Hub 
+    Event 2023
+- Peluncuran Journal Future Cities pada 
+    website smartcity.jakarta.go.id
+September
+- Future City Hub Event 2023
+- Penyelenggaraan #Hack4ID, Gerakan 
+    Nasional 1000 Startup Digital 
+    Pengembangan JAKI
+- Digital Leader of the Y ear, IndoSec 
+    Summit 2023
+- Data Science Trainee batch 7
+Desember
+- Provinsi DKI Jakarta memenangkan 
+penghargaan dalam Innovative 
+Government Awards 2023
+- Seminar riset dan inovasi terkait MABI 
+(Mitigasi dan Adaptasi Bencana Iklim)
+- 9 Tahun Anniversary Jakarta Smart City
+November
+- Jakarta Smart City Forum 
+2023 diselenggarakan
+- Peluncuran website 
+citydata.jsclab.id
+Oktober
+- Student Science Research 
+Competition diadakan
+
+PAGE 13
+13
+Annual Report Jakarta Smart City 2023
+35 sharing session 
+Sorotan
+dilakukan baik dengan 
+kementerian/lembaga, 
+swasta, maupun start-up, 
+dan universitas
+7 batch pelatihan data 
+science dilakukan dengan total 
+peserta
+berhasil menjadi juara, di antaranya 
+dalam kompetisi di tingkat nasional 
+dan internasional seperti SPBE 
+Summit, 7th Annual Indonesia 
+OpenGov Leadership Forum, 
+IndoSec Summit 2023,  Innovative 
+Government Awards, hingga
+WSIS Prisez
+dihasilkan berupa perjanjian kerja 
+sama, MoU (Memorandum of 
+Understanding), NDA (Non-Disclosure 
+Agreement), Surat Tugas, dan Surat 
+Pencatatan Ciptaan
+dikembangkan dengan 
+pemanfaatan data 
+pengaduan publik, master 
+data management, dan 
+pengendalian banjir
+dilakukan dengan jumlah peserta lebih 
+dari 500 berkaitan dengan data science, 
+isu pembangunan perkotaan, 
+pengembangan produk, dan sebagainya
+mengenai produk dan 
+program JSC serta program 
+dan kebijakan pemerintah 
+terkait produk dan 
+layanan JSC yang 
+terpublikasi di 
+media-media 
+bertaraf nasional 
+116 publikasi artikel dalam 
+Medium dan blog Jakarta Smart City 
+188 berita
+dan informasi penting 
+dan resmi yang 
+disebarluaskan melalui 
+super aplikasi JAKI
+Penanganan cepat 
+terhadap 1.200 serangan digital 
+kepada Jakarta Smart City.
+14 kegiatan pameran 
+dilakukan baik skala regional, 
+nasional, maupun internasional 
+dengan total 1.874 pengunjung
+57 event
+yang diselenggarakan JSC 
+baik secara daring, luring, 
+ataupun hibrid selama 2023 
+dengan total 6.265 peserta
+55 jejaring
+komunitas yang berkaitan dengan 
+isu smart city dan isu jakarta terkini 
+berhasil dibangun
+200 instansi 
+berkunjung ke Jakarta 
+Smart City dengan total 
+8.558 peserta
+6 mahasiswa magang 
+dan 45 penelitian difasilitasi
+359 lokasi sosialisasi 
+baik sekolah maupun wilayah dengan lebih 
+dari 21.230 peserta
+384 review 
+pengguna aplikasi JAKI 
+diberikan respons baik di App 
+Store maupun Play Store
+132
+pengembangan
+ﬁtur dan modul baru dilakukan 
+baik dalam aplikasi JAKI, sistem 
+CRM, maupun website dengan 
+domain jakarta.go.id
+30 ﬁtur baru
+terintegrasi dengan 
+aplikasi JAKI74 sistem
+yang dikembangkan 
+meliputi aplikasi JAKI, 
+CRM, maupun
+website dengan 
+domain jakarta.go.id
+49 instansi pemerintahan, 
+non-pemerintahan, dan swasta yang telah 
+terintegrasi dalam aplikasi JAKI
+> 6,8 juta
+serangan ditangkal
+selama  2023 dari berbagai tipe,
+seperti information leakages,
+forceful browsing, path traversal, abuse of 
+functionality, http parser attack, server-side 
+request forgery, cross site scripting, detection 
+evasion, sql injection, dan injection attempt
+4.625 CCTV
+dikelola dan dipantau
+467 server beroperasi dikelola baik
+yang berbentuk ﬁsik maupun virtual
+78.092 ID Digital warga dilakukan veriﬁkasi
+terkait aduan masyarakat, 
+tata kota, kualitas udara, 
+transportasi, data science, 
+image processing
+12 kajian dan penelitian 
+terkait sosial kemasyarakatan, 
+produk, kebijakan dan teknologi
+30 kajian dan penelitian 
+34
+sinergi 51 mahasiswa
+27 dokumen hukum
+8 proposal
+inovasi
+49
+dashboard
+2.692 konten
+publikasi
+dan sosialisasi
+333 artikel 
+
+PAGE 14
+14
+Annual Report Jakarta Smart City 2023
+Merawat Kepercayaan 
+Warga dalam Penanganan 
+Pengaduan Publik 
+Pelayanan publik yang berkualitas dapat diwujudkan 
+dengan keterlibatan masyarakat. Mengacu pada 
+Undang-Undang No. 25 Tahun 2009 Tentang Pelayanan 
+Publik, masyarakat dapat terlibat dalam menjaga 
+dan meningkatkan kualitas pelayanan publik melalui 
+pengaduan masyarakat. Penanganan pengaduan 
+masyarakat membutuhkan manajemen yang baik 
+sebagai upaya pemerintah untuk meningkatkan kualitas 
+pelayanan publik. Manajemen pengaduan publik 
+menjadi penting untuk membangun kepercayaan dan 
+integritas pemerintah.
+Sejalan dengan hal tersebut, Pemerintah Provinsi DKI 
+Jakarta telah memiliki sistem penanganan pengaduan 
+masyarakat yang disebut Cepat Respons Masyarakat 
+(CRM).  Berlandaskan Pergub No. 128 Tahun 2017 
+tentang penyelenggaraan penanganan pengaduan 
+masyarakat melalui aplikasi Citizen Relation 
+Management atau CRM, sebagai platform 
+online untuk 
+mengelola pengaduan warga,  mengintegrasikan 
+seluruh kanal pengaduan resmi Pemprov DKI Jakarta, 
+sekaligus mensinergikan prosedur, sistem, sarana,  
+serta kewenangan PD (Perangkat Daerah)/UKPD 
+(Unit Kerja Perangkat Daerah) dan/atau BUMD (Badan 
+Usaha Milik Daerah) dalam menindaklanjuti pengaduan 
+masyarakat secara lebih responsif dan efisien.
+Kini, telah tersedia 13 kanal pengaduan Pemprov DKI Jakarta berbasis geotagging dan non-geotagging, yakni:
+1. JAKI
+2. Twitter @dkijakarta
+3. Facebook Pemprov DKI Jakarta
+4. E-mail dki@jakarta.go.id
+5. Media Sosial Gubernur
+6. Pesan Elektronik (WhatsApp/SMS) 08111272206
+7. Kantor Kelurahan
+8. Kantor Kecamatan
+9. Kantor Wali Kota
+10. Pendopo Balai Kota
+11. Kantor Inspektorat
+12. LAPOR 1708
+13. Aspirasi Publik Media Massa
+Sedangkan 118 kategori permasalahan dapat dilaporkan. 
+Menjunjung transparansi sebagai bagian dari visi smart 
+governance, warga dapat melakukan monitoring 
+laporan secara online untuk melihat status tindak lanjut 
+laporan secara detail dan terstruktur. Mendukung 
+sistem meritokrasi, CRM menilai kinerja Perangkat 
+Daerah (PD) berdasarkan kemampuan penyelesaian 
+laporan, yang kemudian menjadi dasar perhitungan 
+Tunjangan Kinerja Daerah (TKD). Terbukti, CRM berhasil 
+meningkatkan efektivitas kerja Pemprov DKI Jakarta 
+dalam menyelesaikan aduan warga.
+
+PAGE 15
+15
+Annual Report Jakarta Smart City 2023
+• Pelaporan SKPD yang terpisah.
+• Performa kinerja  Rencana Pembangunan 
+Daerah (RPD) tidak terukur.
+• Rata-rata waktu laporan selesai dalam lebih 
+dari 14 hari.
+• Persentase laporan selesai 55%.
+Sebelum ada CRM
+• Pelaporan terpusat lewat satu sistem.
+• Performa kinerja  rencana pembangunan daerah 
+(RPD) terukur berdasarkan data dan menjadi dasar 
+perhitungan Tunjangan Kinerja Daerah (TKD).
+• Rata-rata waktu laporan selesai kurang lebih dua hari.
+• Persentase laporan selesai lebih dari 90%.
+Sesudah ada CRM
+Cepat Respon Masyarakat
+Kinerja CRM Sepanjang 2023
+Capaian penyelesaian 
+pengaduan publik 
+mencapai lebih dari 97.7%.
+Hal ini menunjukkan kinerja 
+optimal dari seluruh aspek dan 
+stakeholder di Pemerintah 
+Provinsi DKI Jakarta.  
+Total terdapat
+ 173.327 laporan 
+yang masuk ke dalam sistem dan 
+berasal dari 35.531 pelapor. 
+Laporan terbanyak terjadi pada 
+November 2023 dengan
+total 17.278 laporan. 
+Lima kanal aduan yang paling 
+banyak digunakan adalah: 
+- Fitur Laporan Warga 
+    dalam aplikasi JAKI
+- Twitter @dkijakarta 
+- Email dki@jakarta.go.id
+- WhatsApp 0811272206
+- Pendopo Balai Kota
+Lima kategori 
+laporan yang paling 
+sering diadukan: 
+Jalan
+(19.602 Laporan)
+Pohon
+(15.140 Laporan)
+Parkir Liar
+(15.041 Laporan)
+Sampah
+(11.663 Laporan)
+Keluhan Fasilitas
+Gedung Pemda
+(sekolah,kantor)
+(9.839 Laporan)
+*cut off 31 Desember 2023
+“Sejauh ini sih puas ya, karena tadi penjelasannya 
+lengkap. Jadi enggak cuma ngasih tau proyeknya 
+apa, tapi kita dapat detail juga siapa dinas yang 
+bertanggung jawab, Terus mereka bilang juga 
+estimasinya kapan, terus selesainya. Sama mereka 
+juga bilang diprosesnya sudah melibatkan warga 
+sekitar, pokoknya sama yang berkepentinganlah di 
+daerah situ.”
+Daniel Giovanni
+Konsultan Asuransi
+“Kalau dari laporan saya itu, saya 
+ngelapor pagi. Nggak sampai 2–3 
+jam, itu sudah di-follow up. Dan 
+seperti laporan birokrasi umumnya, 
+kita tahu jenjangnya sudah sampai 
+mana.”
+Goldy Dharmawan
+Analis Kebijakan
+“Hanya perlu foto dari kejadian tersebut. 
+Dan pelaporan tersebut bisa dilakukan 
+secara anonim. Nah, untuk proses 
+pengerjaannya, menurut kami tuh relatif 
+sangat cepat ya.”
+Naila Fadhilah
+Ibu Rumah Tangga
+“Saya ke Pendopo Balai Kota. Kemudian dari 
+Pendopo itu, enggak butuh waktu lama. Saya 
+merasa positif jadinya, ya. Kemudian saya 
+kembali ke rumah. Saya pas buka HP, kemudian 
+saya dapat itu WA (WhatsApp) dari Biro 
+Pemerintah. Jadi, WA itu menunjukkan 
+bagaimana proses komunikasi antara Biro 
+Pemerintah dengan PDAM.”
+Sri Lasmidjah Diponegoro
+Pensiunan
+
+PAGE 16
+16
+Annual Report Jakarta Smart City 2023
+Pada akhir tahun, setiap program dan kebijakan dilakukan evaluasi. 
+Begitu pula penanganan pengaduan publik yang dilakukan melalui 
+Survei Kepuasan Masyarakat (SKM). Hal ini sudah sesuai dengan 
+Peraturan Menteri Pendayagunaan Aparatur Negara dan Reformasi 
+Birokrasi Republik Indonesia No. 14 Tahun 2017 tentang Pedoman 
+Penyusunan Survei Kepuasan Masyarakat Unit Penyelenggara Pelayanan 
+Publik. Pelaksanaan Survei Kepuasan Masyarakat 2023 dilakukan pada 
+1-10 November 2023. Sebanyak 2.258 responden mengikuti survei 
+yang menghasilkan 918 responden yang memiliki pengalaman dalam 
+menggunakan kanal aduan selama 2023 dan 1.340 responden tidak 
+pernah menggunakan kanal aduan selama 2023. Untuk hasil survei 
+kepuasan masyarakat dapat dilihat sebagai berikut: 
+Mayoritas responden menggunakan kanal aduan sebagai berikut: Laporan Warga JAKI (710 responden), Kantor 
+Lurah (201 responden), Twitter @dkijakarta (61 responden), Email dki@jakarta.go.id (49 responden), dan Facebook 
+Pemprov DKI Jakarta (35 responden).
+Berdasarkan perhitungan Indeks Kepuasan Masyarakat (IKM) 2023 sebesar 81,25 dalam Kategori Baik.
+Unsur IKM Nilai Interval Konversi Mutu Pelayanan
+Persyaratan 3.22 80.6 Baik
+Biaya/Tarif 3.41 85.32 Baik
+Waktu Penyelesaian 3.15 78.64 Baik
+Kompetensi Pelaksana 3.25 81.13 Baik
+Penanganan Pengaduan, Saran dan 
+Masukan 3.18 79.43 Baik
+Perilaku Pelaksana 3.26 81.49 Baik
+Sistem, Mekanisme, dan Prosedur 3.27 81.7 4 Baik
+Sarana dan Prasarana 3.26 81.47 Baik
+Produk Spesifikasi Jenis Pelayanan 3.26 81.45 Baik
+Total IKM 3.25 81.25 Baik
+Kanal Aduan
+yang Digunakan
+2023
+JakLapor
+Kantor Lurah
+Twitter @dkijakarta
+Email  dki@jakarta.go.id
+Facebook Pemprov DKI Jakarta
+Kantor Camat
+Aspirasi Publik Media Massa
+SMS 0811272206
+Kantor Walikota
+Lapor 1708
+Pendopo Balaikota
+Media Sosial Pribadi Gubernur/Wakil Gubernur
+Kantor Inspektorat
+08 00600400200
+
+PAGE 17
+17
+Annual Report Jakarta Smart City 2023
+Integrasi dan Personalisasi
+Pelayanan Publik
+Era teknologi informasi mendorong perubahan perilaku masyarakat dalam berinteraksi dan bertransaksi. Dewasa 
+ini, penggunaan teknologi bagi masyarakat DKI Jakarta mencapai 96% dari populasi penduduk (Sofa, et.al, 2020). 
+Hal ini menjadi tantangan sekaligus peluang bagi pemerintah untuk mampu menyediakan layanan publik dengan 
+pemanfaatan teknologi digital. Sejak 2019, Pemerintah Provinsi DKI Jakarta mengembangkan aplikasi JAKI (Jakarta 
+Kini) sebagai 
+super-app pemerintah untuk pelayanan publik.
+JAKI merupakan aplikasi super yang mengintegrasikan berbagai layanan Pemprov DKI Jakarta. Hadir sejak 2019, 
+sebagai platform informasi, interaksi, transaksi elektronik, dan kolaborasi berbasis elektronik, JAKI memenuhi 
+kebutuhan warga Jakarta dalam genggaman tangan. Hingga saat ini, telah terdapat lebih 60 fitur di JAKI, termasuk 
+layanan informasi, kesehatan, pendidikan, transportasi, pariwisata, pajak, dan layanan lainnya, yang diselenggarakan 
+Pemerintah Provinsi DKI Jakarta. JAKI mendorong pelayanan publik menjadi lebih efektif dan efisien. 
+Selama 2023, JAKI terus melakukan pengembangan demi memenuhi kebutuhan warga Jakarta, juga meningkatkan 
+kenyamanan pengguna.
+Melalui 
+update terakhir, kini JAKI semakin sesuai dengan kebutuhan masyarakat 
+melalui layanan personalisasi. Dengan Akun Warga, pengguna dapat mengakses 
+beragam layanan pribadi di Jakarta, dari bantuan sosial, kesehatan, hingga 
+pendidikan. Menyesuaikan kebutuhan masing-masing, kini pengguna juga dapat 
+melihat rekomendasi fitur untuk pelajar/mahasiswa, pekerja kantoran, pencari, 
+wirausahawan, hingga pengelola rumah tangga.
+Februari 2023
+Penambahan Informasi Status Vaksin 
+Booster kedua (Vaksin keempat) 
+Pengguna, pada Fitur Digital ID 
+Kategori Kesehatan
+September 2023
+• Penambahan Banner Uji Emisi
+• Migrasi JAKI dari OnPremise ke Cloud
+Juli 2023
+• Penyempurnaan tampilan JAKI 3.0
+• Implementasi Dwibahasa di Halaman 
+Login dan Registrasi JAKI
+Maret 2023
+• Perubahan layout JakWarta beserta 
+penambahan segmen Berita Jakarta dan 
+Majalah JaKita
+• Penambahan menu Peringatan DBD 
+Berbasis Iklim pada Fitur Jakarta Sehat
+Oktober 2023
+• Penambahan Fitur Laporan Saya ke 
+dalam Fitur Laporan Warga
+• Implementasi Dwibahasa di Fitur Wiﬁ 
+Gratis dan Fitur Pajak
+• Penambahan Lacak Permohonan 
+Pajak di Fitur Pajak
+Agustus 2023
+Implementasi Dwibahasa di Halaman 
+Aktivitas, Notiﬁkasi, Statistik Laporan, 
+Fitur Peta, Fitur Berita, Fitur Ambulans, 
+Fitur Kontak Darurat, Fitur Harga 
+Pangan, Fitur Kualitas Udara, Fitur 
+Pantau Banjir, dan Fitur Transportasi
+Juni 2023
+• JAKI 3.0 | Penyegaran tampilan, 
+perubahan layout, penambahan ﬁtur 
+personalisasi dan kolom pencarian, 
+serta perubahan nama ﬁtur 
+• Implementasi Fitur Dwibahasa 
+bagian beranda
+Desember 2023
+• Optimalisasi security pada bagian 
+aplikasi: Penambahan batasan resend 
+aktivasi, lupa password dan validasi 
+pada akun warga
+
+
+PAGE 18
+18
+Annual Report Jakarta Smart City 2023
+Lebih dari itu, pengembangan JAKI meluas untuk target wisatawan internasional melalui fitur dwibahasa. Tersedia 
+pilihan penggunaan Bahasa Inggris di JAKI yang dapat diatur dengan mudah. Langkah ini merupakan upaya Jakarta 
+Smart City dalam mewujudkan salah satu indikator Kota Global, yakni cultural value, yang menarik untuk pengunjung.
+Sebelum ada
+•  56 Organisasi Perangkat Daerah dengan lebih dari 150 aplikasi tersendiri 
+dan tidak terintegrasi.
+•  Data tersebar dan tidak terstandarisasi.
+•  Sulit mengakses informasi serta layanan publik.
+•  Sistem pelaporan tradisional  yang memakan waktu lebih dari 1 hari.
+  - Proses submit perizinan dapat memakan waktu lebih dari 14 hari.
+  - Proses persetujuan perizinan dapa t memakan waktu lebih dari 30 hari.
+•  Sistem monitoring berbasis berkas fisik.
+•  Cek pajak secara offline.
+•  Antrean yang panjang saat pendaftaran vaksinasi.
+•  Pendaftaran fasilitas kesehatan (faskes) secara langsung dan memakan 
+waktu.
+•  Sulit memantau harga pangan di pasar.
+•  Sulit mendapatkan jaringan internet.
+•  Sulit mendapatkan informasi resmi.
+•  Informasi rute dan jadwal kendaraan umum yang tersebar.
+Sesudah ada
+•  Akses berbagai layanan publik dalam satu aplikasi.
+•  Integrasi data yang terstandarisasi.
+•  Sistem pelaporan online dan geo-tagging yang lebih mudah dan instan.
+ - Proses submit laporan hanya memakan waktu lebih dari 2–3 menit.
+ - Proses submit perizinan memakan waktu kurang dari 1 hari.
+ - Proses submit perizinan memakan waktu kurang dari 3 hari.
+•  Sistem monitoring berbasis online.
+•  Cek pajak secara online.
+•  Pendaftaran vaksinasi secara online.
+•  Pendaftaran faskes secara online dan cepat.
+•  Cek harga pangan di pasar secara online.
+•  Pindai Wi-Fi publik gratis.
+•  Mudah mendapatkan informasi resmi. 
+•  Informasi rute dan jadwal kendaraan umum yang terintegrasi. 
+Cut off 14 Desember 2023
+
+PAGE 19
+19
+Annual Report Jakarta Smart City 2023
+JAKI sebagai super-app DKI Jakarta 
+menyediakan akses ke banyak 
+orang, sehingga meningkatkan 
+partisipasi masyarakat.
+Widyastuti
+Kepala Dinas Kesehatan
+Provinsi DKI Jakarta
+Sering pakai JakLapor di JAKI 
+untuk banyak hal, sampah, 
+jalan, dan lain-lain. Kita bisa 
+lihat respons dan prosesnya 
+dengan mudah.
+Daniel Giovanni
+Konsultan Asuransi
+Aplikasi JAKI komprehensif 
+dalam menyelesaikan banyak 
+persoalan di sektor publik. 
+Banyak layanan jadi lebih efektif 
+dan eﬁsien, sehingga 
+memudahkan warga tanpa harus 
+mengunduh banyak aplikasi.
+Shita Laksmi
+Juri IdenTIK 2021
+
+
+PAGE 20
+20
+Annual Report Jakarta Smart City 2023
+Menyelesaikan Permasalahan 
+Kota dengan Intuisi Telah Usang
+Dashboard  Bantuan Sosial (Data Sasaran)
+Dashboard Bantuan Sosial merupakan dashboard 
+yang terdiri dari 26 modul dan divisualisasikan 
+menggunakan tools SAS, berfungsi memberikan 
+informasi kepada  internal PD Pemprov DKI Jakarta 
+terkait pembuatan kebijakan bantuan sosial terkait 
+data sasaran berdasarkan Kartu Keluarga (KK), Nomor 
+Induk Kependudukan (NIK), Wilayah, Status, Hasil 
+Musyawarah, Kelayakan, dan lain-lain.
+Secara prinsip, penggunaan data akan bermanfaat untuk mengambil keputusan dan kebijakan secara lebih 
+baik. Dibandingkan dengan berdasarkan intuisi, bila melalui pertimbangan data akan ada basis historis yang 
+lebih bisa dipertanggungjawabkan, juga pemahaman pola-pola dalam memahami suatu permasalahan. Dengan 
+menggunakan data, kebijakan yang diambil akan lebih matang, terukur, dan dapat dipertanggungjawabkan. 
+Salah satu hasil dari pemanfaatan data adalah 
+dashboard yang digunakan oleh berbagai pihak dalam mengambil 
+keputusan. Keputusan ini bisa dari yang level strategis dan makro, sampai ke detail operasional atau sehari-hari.
+Selama tahun 2023, 49 dashboard yang dikembangkan untuk mengatasi, memberikan rekomendasi, serta analisa 
+eksploratif terkait  permasalahan di Jakarta. Beberapa di antaranya sinergi dengan misi Jakarta dalam menangani 
+permasalahan stunting dan kemiskinan ekstrem.
+Dashboard  Stunting
+Adalah 1 modul dashboard yang divisualisasikan 
+menggunakan tools SAS, dikembangkan untuk 
+memberikan informasi kepada masyarakat terkait 
+sebaran data balita 
+stunting di DKI Jakarta dan 
+beberapa informasi data stunting lainnya, serta dapat 
+memberikan informasi ke internal PD Pemprov DKI 
+Jakarta yang memiliki izin akses untuk mengetahui 
+informasi dashboard  di dalamnya.
+Dashboard  Kader Stunting
+Merupakan dashboard yang terdiri dari dua modul, 
+dan divisualisasikan menggunakan tools SAS, yang 
+berfungsi memberikan informasi kepada  internal PD 
+Pemprov DKI Jakarta terkait penggunaan anggaran 
+untuk Kader 
+Stunting, mendapatkan informasi dalam 
+satu keluarga terdapat berapa banyak Kader Stunting, 
+mengetahui jenis kader stunting, dan memiliki izin akses 
+untuk mengetahui informasi dashboard di dalamnya.
+Dashboard  Satu Data Pembangunan
+Dashboard Satu Data Pembangunan terdiri dari tiga 
+modul yang divisualisasikan menggunakan tools SAS.  
+Dashboard ini berfungsi memberikan informasi kepada 
+internal PD Pemprov DKI Jakarta terkait pembuatan 
+kebijakan bantuan sosial pada tahun berikutnya, 
+kebutuhan anggaran yang diperlukan untuk bantuan 
+sosial pada tahun berikutnya, dan mendapatkan 
+informasi dalam satu keluarga terdapat berapa banyak 
+jenis bantuan sosial yang diterima.
+
+
+PAGE 21
+21
+Annual Report Jakarta Smart City 2023
+Selain dashboard di atas, selama 2023 JSC juga mengembangkan dashboard lainya. Berikut seluruh rekap 
+dashboard  yang telah dikembangkan dan digunakan pada 2023:
+No Dashboard Jumlah Modul Tools Visualisasi
+1 Bantuan Sosial (Data Sasaran) 26 SAS
+2 Stunting 1 SAS
+3 Kader Stunting 2 SAS
+4 Satu Data Pembangunan 3 SAS
+5 Analisis Aduan Masyarakat (CRM) terkait Sampah dan 
+Banjir Tahun 2022 1 Tableau
+6 Analisis Kondisi Banjir di DKI Jakarta Tahun 2013-2022 1 Tableau
+7 Analisa RW Kumuh 1 Tableau
+8 Analisis Ticketing  CRM Bulan Januari - Juli Tahun 2022 1 Tableau
+9 Capaian Penataan Kawasan Wilayah DKI Jakarta 1 Tableau
+10 Penduduk Miskin Ekstrem 1 Tableau
+11 Pola Data Transaksional Bank DKI (2021-2022) 1 Tableau
+12 Harga Tanah di Sekitar Stasiun MRT 1 ArcGis
+13 Usulan Mekanisme Monitor Kualitas Laporan dan  
+Tindak Lanjut Laporan CRM 1 Looker Studio
+14 Analisis Ulasan Laporan CRM JAKI Tahun 2022 1 Looker Studio
+15 Capaian Penataan Kawasan Wilayah DKI Jakarta 1 Looker Studio
+16 CRM Bidang Komunikasi Publik 1 Looker Studio
+17 CRM Kinerja Kelurahan 1 Looker Studio
+18 Jakarta Beraksi (Bergerak Atasi Stunting) 2023 1 Looker Studio
+19 Draft Dashboard  Manajemen Proyek /Capaian 
+Kinerja JSC 2 Looker Studio
+20 CRM Kinerja Kecamatan dan  Wali Kota 1 Looker Studio
+
+PAGE 22
+22
+Annual Report Jakarta Smart City 2023
+Perkembangan Teknologi Terkini 
+dan Relevansi Kecerdasan Buatan 
+dalam Pengambilan Keputusan
+Pada 2023, perkembangan kecerdasan buatan ( artificial intelligence ) mengalami kemajuan pesat. Momentum 
+perkembangan ini sangat terasa, terutama setelah Open AI meluncurkan produk ChatGPT.  Lebih dari itu, kecerdasan 
+buatan juga memiliki potensi besar dalam membantu proses pengambilan keputusan, termasuk pengembangan 
+kota cerdas. Jakarta Smart City pun memperhatikan perkembangan teknologi terkini dan melihat potensinya untuk 
+diimplementasikan lebih jauh dalam konteks kota Jakarta.
+Seiring dengan perkembangan teknologi tahun ini, eksplorasi AI untuk kota cerdas menjadi semakin penting dalam 
+upaya meningkatkan efisiensi, layanan publik, dan integrasi teknologi untuk keberlanjutan. Berikut contoh eksplorasi 
+yang pernah dilakukan Jakarta Smart City:
+
+
+PAGE 23
+23
+Annual Report Jakarta Smart City 2023
+Rekap Tren Teknologi untuk Kota Cerdas pada 2024: Analisis tentang potensi Generative AI, Blockchain, 
+Metaverse, dan implementasi 5G untuk mendukung perkembangan kota cerdas.
+Poin Eksplorasi:
+•  Generative AI: Potensinya dalam menciptakan konten, desain, dan simulasi untuk kota cerdas.
+•  Blockchain: Penggunaan teknologi ini untuk meningkatkan keamanan dan transparansi dalam layanan 
+kota cerdas.
+•  5G dan IoT: Pengembangan infrastruktur yang lebih cepat dan responsif untuk mendukung jaringan 
+kota cerdas.
+Hasil Eksplorasi:
+•  Potensi AI di Kota Cerdas: AI dapat memperkuat aspek generatif, keamanan, konektivitas, dan 
+responsivitas infrastruktur kota cerdas.
+•  Tantangan: Pengimplementasian AI membutuhkan keamanan data yang kuat, integrasi teknologi 
+yang kompleks, dan investasi yang substansial.
+•  Solusi: Fokus pada pengembangan alat AI yang cocok dengan kebutuhan kota, regulasi yang lebih 
+baik, serta investasi dalam infrastruktur teknologi yang mendukung.
+1
+Penerapan Kebijakan AI di Sektor Publik Indonesia: Menyoroti manfaat AI, tantangan, dan rekomendasi 
+kebijakan dalam menerapkan kecerdasan buatan di sektor publik Indonesia.
+2
+Poin Eksplorasi:
+•  Manfaat AI di Sektor Publik: Potensi untuk meningkatkan layanan, efisiensi, dan pengambilan 
+keputusan yang lebih baik.
+•  Tantangan Penerapan AI: Masalah hukum, kekurangan investasi, kurangnya keterampilan, resistensi 
+budaya, dan birokrasi organisasi.
+•  Rekomendasi Kebijakan: Kesadaran yang ditingkatkan, pengembangan solusi AI yang spesifik, serta 
+penegakan standar etika dan keamanan.
+Hasil Eksplorasi:
+•  Potensi AI di Sektor Publik Indonesia: Meningkatkan efisiensi administratif, layanan publik yang lebih 
+baik, dan dukungan untuk pembangunan berkelanjutan.
+•  Tantangan dan Solusi: Perlu investasi yang lebih besar, fokus pada pengembangan keterampilan, 
+serta kesadaran terhadap standar etika dan keamanan yang penting dalam penggunaan AI.
+Eksplorasi Kecerdasan Buatan untuk Kota Cerdas:
+
+PAGE 24
+24
+Annual Report Jakarta Smart City 2023
+Sinergi, Kunci Penting Masa Depan 
+Jakarta sebagai Kota Global
+Pada 2023, Jakarta Smart City melanjutkan semangat untuk terus bersinergi dengan menambahkan formasi tim 
+melalui penambahan Divisi Kemitraan dan Ekosistem Digital. Melihat sepak terjang Jakarta Smart City bersama 
+dengan para kolaborator, divisi ini diharapkan dapat menjalin komunikasi yang lebih baik dengan mitra, terutama 
+startup dan komunitas, serta membina kerja sama yang lestari untuk kemajuan Jakarta menjadi kota global.
+Selama tahun 2023, Jakarta Smart City menjalin berbagai sinergi dengan pemilik startup, penggiat organisasi dan 
+komunitas, akademisi, serta media, di antaranya:
+Sinergik dalam sister city  antara Jakarta, 
+Berlin, dan Bangkok dalam empowering 
+Smart City dan Urban Innovation. Dalam 
+sinergi ini dihasilkan Future City Hub.
+Sinergi dalam penyusunan Policy Brief: 
+Masa Depan Jakarta sebagai Fasilitator 
+FGD. Terlibat juga sebagai Narasumber, 
+Moderator dan Sprint Master dalam 
+rangkaian kegiatan “Open House Future 
+City Hub: Jakarta Digital Outlook dan 
+Business Matchmaking”. 
+Kerja sama program dalam Roadshow 
+1000 Startup Digital DKI Jakarta dan 
+program #Hack4ID untuk tema Smart City 
+dan Fitur JAKI. 
+Sinergi dalam kegiatan Open House Future 
+City Hub berupa showcase inovasi yang 
+sudah dikembangkan bersama Jakarta 
+Smart City.
+Sinergi dalam kegiatan Open House Future 
+City Hub berupa showcase inovasi yang 
+sudah dikembangkan bersama Jakarta 
+Smart City. Selain itu juga bersinergi dalam 
+kegiatan JSC Goes to School.
+Sinergi dalam aktivasi kegiatan di Future 
+City Hub, dengan mengangkat isu hunian 
+layak. 
+Sinergi dalam kegiatan Open House Future 
+City Hub berupa showcase inovasi yang 
+sudah dikembangkan bersama Jakarta 
+Smart City.
+Sinergi dalam aktivasi kegiatan di Future 
+City Hub, dengan mengangkat isu 
+Dialogue AI dan Digital Hub Network.
+Pelaksanaan kegiatan workshop untuk 
+training Tim Tenaga Ahli Jakarta Smart City 
+dalam mengembangkan Future City Hub. 
+Sinergi dalam aktivasi kegiatan di Future 
+City Hub, dengan mengangkat Digital 
+Hub Network dan menjadi mentor dalam 
+kegiatan #Hack4ID x JAKI 
+Sinergi dalam pelaksanaan Focus Group 
+Discussion (FGD) Penyusunan “Policy 
+Brief Masa Depan Jakarta” terkait Jakarta 
+Tenggelam, Jakarta Sejuk, dan Jakarta 
+Global City. Selain itu, berpartisipasi 
+sebagai narasumber pada pelaksanaan 
+Jakarta Digital Outlook dan sebagai 
+Sprint Master pada kegiatan Business 
+Matchmaking. 
+Partisipasi dalam program #Hack4ID x 
+Jakarta Smart City dan #Hack4ID x JAKI 
+sebagai Juri.
+Partisipasi dalam program #Hack4ID x 
+Jakarta Smart City dan #Hack4ID x JAKI 
+sebagai Mentor.
+Partisipasi dalam program #Hack4ID x 
+Jakarta Smart City sebagai Juri dan sebagai 
+Mentor #Hack4ID x JAKI.
+Partisipasi dalam program #Hack4ID x 
+Jakarta Smart City sebagai Juri dan sebagai 
+Mentor #Hack4ID x JAKI.
+Partisipasi dalam program #Hack4ID x 
+Jakarta Smart City sebagai Mentor.
+Partisipasi dalam program #Hack4ID x JAKI 
+sebagai Mentor.
+Partisipasi dalam program #Hack4ID x JAKI 
+sebagai Mentor.
+Partisipasi dalam program #Hack4ID x JAKI 
+sebagai Mentor.
+Sinergi dukungan showcasing di booth 
+JSC dan berpartisipasi sebagai Pembicara 
+dalam Panel Diskusi 1: “Transformasi Digital 
+menuju Smart City: Pengalaman dan 
+Pembelajaran dari Jakarta.” pada acara 
+Jakarta Smart City Forum 2023.
+Sinergi dukungan showcasing di booth 
+JSC dalam acara Jakarta Smart City Forum 
+2023.
+Sinergi dukungan showcasing di booth 
+JSC dalam acara Jakarta Smart City Forum 
+2023.
+
+
+PAGE 25
+25
+Annual Report Jakarta Smart City 2023
+Partisipasi sebagai Pembicara dalam 
+kegiatan-kegiatan JSC seperti JSCLab 
+Sharing dan Digital Talent Training serta 
+bersinergi dalam aktivasi kegiatan di 
+Future City Hub. 
+Partisipasi GIS and Remote Sensing 
+Enthusiast sebagai Moderator pada 
+kegiatan 
+pre-event Jakarta Smart City 
+Forum 2023: JSCLab Sharing Batch #15 
+dengan tema “Masa Depan bersama 
+Artificial Intelligence”
+Partisipasi sebagai Moderator dalam Panel 
+Diskusi 1: “Transformasi Digital menuju 
+Smart City: Pengalaman dan Pembelajaran 
+dari Jakarta.” pada acara Jakarta Smart 
+City Forum 2023.
+Partisipasi sebagai Pembicara dalam Panel 
+Diskusi 1: “Transformasi Digital menuju 
+Smart City: Pengalaman dan Pembelajaran 
+dari Jakarta.” pada acara Jakarta Smart 
+City Forum 2023.
+Partisipasi sebagai Pembicara pada 
+kegiatan-kegiatan JSC. Dalam Panel 
+Diskusi 1: “Transformasi Digital menuju 
+Smart City: Pengalaman dan Pembelajaran 
+dari Jakarta.” pada acara Jakarta Smart 
+City Forum 2023, serta sebagai Pembicara 
+dalam kegiatan Jakarta Digital Outlook. 
+Partisipasi sebagai Moderator dalam Panel 
+Diskusi 2: “Food Waste Framework untuk 
+Ketahanan Pangan dalam Mengurangi 
+Emisi Karbon.” pada acara Jakarta Smart 
+City Forum 2023.
+Partisipasi sebagai Pembicara dalam Panel 
+Diskusi 2: “Food Waste Framework untuk 
+Ketahanan Pangan dalam Mengurangi 
+Emisi Karbon.” pada acara Jakarta Smart 
+City Forum 2023.
+Partisipasi sebagai Pembicara pada sesi 
+Presentasi Peneliti Terkait Jakarta Smart 
+City dalam acara Jakarta Smart City Forum 
+2023.
+Partisipasi sebagai Narasumber pada 
+kegiatan pre-event Jakarta Smart City 
+Forum 2023: JSCLab Sharing Batch #15 
+dengan tema “Masa Depan bersama 
+Artificial Intelligence”.
+Sinergi dalam aktivasi kegiatan di Future 
+City Hub: Dialog Kegiatan Tukar Belajar 
+Kawasan Industri Ekonomi Restoratif 
+(KIER). Selain itu berpartisipasi sebagai 
+Pembicara JSC Talks dengan tema 
+Transformasi Jakarta menjadi Kota Global.
+Partisipasi sebagai pembicara pada 
+kegiatan pre-event Jakarta Smart City 
+Forum 2023: JSC Talks dengan topik 
+“Transformasi Jakarta Menjadi Pusat Bisnis, 
+Ekonomi, dan Teknologi”.
+Kerja sama dalam bidang Penelitian dan 
+Inovasi, Pengembangan Sumber Daya 
+Manusia, dan Kolaborasi Penyelenggaraan 
+Program JSC. 
+
+
+PAGE 26
+26
+Annual Report Jakarta Smart City 2023
+Menggaungkan
+Jakarta Kota Global
+lewat Sinergi Bersama Media
+Upaya pengembangan Jakarta sebagai kota global pada 2023 tak lepas dari membangun relasi dan bersinergi 
+dengan media, khususnya media elektronik. Sinergi ini dilakukan dengan beberapa media elektronik seperti 
+Beritajakarta.id, AntaraNews.com, Kompas.com, Detik.com, Tribunnews.com, Tempo.co, Liputan6.com, Republika.
+co.id, Kompas.id, dan media-media nasional atau lokal lainnya. 
+Sepanjang 2023, tercatat 343 berita telah meliput kegiatan Jakarta Smart City. Dari 343 berita, 259 di antaranya 
+merekam kegiatan dan pencapaian Jakarta Smart City serta produk-produknya, seperti JAKI, CRM, dan lain-lain 
+dengan sentimen positif. Adapun kata-kata kunci yang paling banyak dibahas oleh media yakni “JAKI” sebanyak 119 
+kali, “Laporan JAKI” 56 kali, “Polusi Udara” 47 kali, “Jakarta Smart City” 34 kali, serta “Parkir”, “CRM”, dan kata kunci 
+lainnya sebanyak masing-masing 19 kali. 
+Berikut sepuluh pemberitaan paling masif yang menyoroti gebrakan dan pencapaian Jakarta Smart City selama 
+2023. 
+Hebat! Jakarta Smart City Jadi Tolak Ukur Kota Pintar di Vietnam - Detik
+Pada 3 Desember 2023, media Detik meliput partisipasi 
+Jakarta Smart City dalam Vietnam - Asia Smart City 
+Summit 2023 “Data Exploitation, Building Smart 
+Sustainable Development Cities” yang diselenggarakan 
+di Hanoi, Vietnam pada 29-30 November 2023. 
+Lewat beritanya, Detik merangkum pemaparan Yudhistira 
+Nugraha, Kepala Unit Pengelola Jakarta Smart City, 
+yang juga berkesempatan menjadi Keynote Speaker 
+sekaligus Panelis pada acara Vietnam - Asia Smart City 
+Summit 2023. Disebutkan, Jakarta menjadi satu-satunya 
+pemerintah kota dari negara utama di Asia Tenggara 
+yang diundang untuk membagikan pengalaman dalam 
+mengembangkan kota cerdas. Dengan ekosistem kota 
+cerdas yang dikembangkan melalui Cepat Respon 
+Masyarakat (CRM), fitur Laporan Warga atau yang dulu 
+dikenal sebagai JakLapor di aplikasi super JAKI, serta 
+pengambilan keputusan berbasis data statistik, fakta, 
+hingga tren yang relevan, Jakarta menjadi tolk ukur dan 
+inspirasi bagi pengembangan kota pintar di Vietnam.
+Baca berita selengkapnya di https://inet.detik.com/cyberlife/d-7070107/
+hebat-jakarta-smart-city-jadi-tolak-ukur-kota-pintar-di-vietnam
+Jumlah Pemberitaan
+343
+Sentimen Positif
+259
+Sentimen Netral
+67
+Sentimen Negatif
+17
+
+PAGE 27
+27
+Annual Report Jakarta Smart City 2023
+Sementara itu, tujuh artikel di bawah ini melengkapi sepuluh besar pemberitaan tentang Jakarta Smart City atau 
+berita yang mencantumkan program dari Jakarta Smart City dengan jangkauan audiens terluas, antara lain: 
+•  “Tebet Eco Park, Rasakan Sensasi Healing Gratis di Ibu Kota” - Detik
+•  “BPBD Sebut Puncak Musim Hujan di DKI Jakarta Februari 2023” - Detik 
+•  “Cara Lapor Bila Lihat Mobil Parkir di Jalan Umum” - Detik 
+•  “Dishub DKI Minta Warga Laporkan Tetangga yang Parkir Liar lewat Situs CRM” - Kompas
+•  “Sepanjang 2023, Pemprov DKI Terima 68.909 Aduan dari Warga, 93,5 Persen Sudah Diatasi” - Kompas
+•  “Ragam Aktivitas Pengunjung Tebet Eco Park di Momen Libur Idul Adha” - Kompas 
+•  “Cara Daftar Faskes Terdekat di Jakarta Pakai Aplikasi JAKI” - Tirto 
+•  “Dapat Aduan dari JAKI, Pemprov DKI Musnahkan Susu Kedaluwarsa Berbagai Merek di Pulogadung” - Kompas
+Melalui sinergi bersama media-media nasional, Jakarta Smart City membuka pintu bagi Jakarta untuk memperlihatkan 
+kemampuannya bersaing di kancah global. Semangat ini lah yang akan terus dilanjutkan di tahun-tahun mendatang. 
+Mengamplifikasi sinergi bersama media, Jakarta Smart City mengadakan 
+Media Briefing  atau Press Conference  
+dengan tema “Paparan Kinerja JSC Tahun 2022 dan Triwulan I Tahun 2023”. Kegiatan ini bertujuan untuk menjalin 
+silaturahmi serta membangun hubungan baik dengan berbagai media, khususnya yang memiliki fokus terhadap isu-
+isu teknologi dan smart city.
+Kegiatan ini juga bertujuan untuk memperkenalkan program dan capaian, serta produk dan layanan JSC untuk bisa 
+diangkat menjadi pemberitaan terbaru dalam masyarakat. Kegiatan ini mengundang lebih dari 20 media teknologi 
+di Indonesia untuk menghadiri kegiatan ini.
+Jakarta Smart City Perbarui Aplikasi JAKI, Apa Saja Keunggulannya? - Detik
+Masih dari media Detik, berita ini mengupas tentang 
+perilisan aplikasi JAKI versi terbaru yakni 3.0 sebagai kado 
+ulang tahun kota Jakarta ke-496. Melalui berita ini, Plt 
+Kepala Dinas Komunikasi, Informatika dan Statistik, Sigit 
+Wijatmoko menyampaikan bahwa faktor kenyamanan dan 
+kemudahan pengguna menjadi fokus pengembangan 
+aplikasi JAKI. 
+Selain itu, Yudhistira Nugraha selaku Kepala Jakarta Smart 
+City, juga menyampaikan tiga pembaruan utama di aplikasi 
+JAKI versi terbaru. Pertama, penambahan laman aplikasi 
+JAKI dalam bahasa Inggris untuk menyasar pengguna 
+dari kalangan ekspatriat atau turis mancanegara, serta 
+beradaptasi dengan arah perkembangan kota global. 
+Kedua, personalisasi informasi dan layanan untuk 
+berbagai profil warga yaitu Pelajar/Mahasiswa, Pekerja 
+Kantoran, Pencari Kerja, Wirausaha, dan Pengelola Rumah 
+Tangga. Ketiga, kategorisasi layanan agar warga dapat 
+mencari layanan yang sesuai dengan ketertarikannya.
+Baca berita selengkapnya di https://inet.detik.com/mobile-
+apps/d-6791638/jakarta-smart-city-perbarui-aplikasi-jaki-apa-saja-
+keunggulannya
+Detik menerbitkan sebuah artikel tentang tingkatan siaga 
+banjir yang dikutip dari Jakarta Smart City. Dalam artikel ini, 
+dibahas definisi dari keempat tingkatan siaga banjir serta 
+hal-hal yang perlu dilakukan warga jika tinggi permukaan 
+air mencapai tingkat tertentu. Harapannya, informasi 
+dari Jakarta Smart City yang dikutip oleh Detik ini dapat 
+mengedukasi warga agar siaga banjir. 
+Baca berita selengkapnya di https://news.detik.com/berita/d-
+6570385/4-tingkatan-siaga-banjir-beserta-pengertiannya-cek-di-sini
+4 Tingkatan Siaga Banjir Beserta Pengertiannya, Cek di Sini - Detik
+
+PAGE 28
+28
+Annual Report Jakarta Smart City 2023
+Membuka Ruang untuk Bersinergi 
+Menyelesaikan Permasalahan Kota
+Indonesia adalah rumah bagi lebih dari 270 juta orang. 
+Sebagai salah satu negara dengan jumlah penduduk 
+terbesar keempat di dunia, negara di Asia Tenggara 
+ini mengalami proses urbanisasi yang cepat, seperti 
+banyak negara berkembang pesat lain. Jakarta 
+merupakan contoh dari perkembangan ini. Dengan 
+populasi lebih dari sepuluh juta jiwa, Jakarta merupakan 
+salah satu kota terpadat di Asia. Proses urbanisasi yang 
+pesat ini disertai dengan sejumlah tantangan, terutama 
+penciptaan lapangan kerja. Jaminan kesejahteraan 
+dan kehidupan yang baik bagi penduduk kota 
+secara berkelanjutan menjadi tantangan, mengingat 
+keterbatasan sumber daya.
+Namun, kota ini juga mempunyai posisi yang unik untuk 
+menjadi pusat 
+startup berikutnya di ASEAN (Association 
+of South-East Asian Nations). Dengan pasar domestik 
+yang sangat besar dan semakin banyak wirausahawan 
+muda, Jakarta merupakan pusat potensial bagi 
+startup 
+dan inovasi, di mana generasi muda Indonesia berupaya 
+menciptakan solusi bagi komunitas mereka.
+Dalam edisi perdana 
+“empower” , (laporan kolaboratif 
+enpact, AsiaBerlin dan Redhill), Jakarta menempati 
+peringkat ke-12 dari 57 kota yang diukur berdasarkan 
+Startup Friendliness Index (SFI). Dengan banyak talenta 
+dalam negeri, laporan ini juga menemukan bahwa 
+keunggulan utama Jakarta terletak pada kemudahan 
+untuk memulai bisnis, akses terhadap pendanaan, 
+dan gaji rendah bagi lulusan baru serta pengembang 
+perangkat lunak. Jakarta menjadi tempat yang menarik 
+bagi 
+startup untuk berkembang.
+Namun, kota ini juga menghadapi tantangan besar, 
+yaitu kualitas hidup 
+(quality of life) . Mulai dari lalu lintas 
+yang padat, tingkat polusi yang tinggi, hingga biaya 
+hidup yang meningkat. Semua faktor ini membuat 
+banyak orang Indonesia yang terampil mencari 
+peluang di luar negeri dan menjadi penghalang dalam 
+menarik talenta asing untuk memulai bisnis di Jakarta. 
+Untuk mengatasi tantangan ini, Jakarta Smart City 
+(JSC), sebuah inisiatif dari Pemerintah Provinsi Jakarta, 
+berupaya memanfaatkan data dan teknologi baru 
+untuk menghasilkan solusi bagi layanan publik yang 
+lebih baik.
+Kota Jakarta dan Kota Berlin melalui proyek Smart 
+Change yang didanai Uni Eropa mendukung upaya 
+ini melalui Future City Hub. Ini merupakan ruang temu 
+sinergi dan inovasi antara Pemprov Jakarta sebagai 
+problem owner  dan mitra seperti startup, akademisi, 
+organisasi masyarakat, maupun komunitas sebagai 
+problem solvers  untuk bersama-sama menyelesaikan 
+permasalahan kota Jakarta. Dengan mentransformasi 
+masukan dari masyarakat menjadi solusi nyata bagi 
+masyarakat, 
+hub ini bertujuan untuk memposisikan 
+dirinya sebagai one-stop shop  bagi wirausahawan 
+yang berorientasi untuk meningkatkan taraf hidup 
+masyarakat Jakarta.
+“Ini adalah tempat yang telah dibangun bersama oleh Berlin 
+dan Jakarta, untuk meningkatkan pengembangan kota cerdas, 
+untuk mendukung pelaku 
+startup di kedua negara, dan untuk 
+meningkatkan kerja sama internasional, untuk membuat 
+tantangan-tantangan yang kami hadapi lebih mudah ditangani.”
+Franziska Giffey
+Mayor Senator for Economic Affairs, Energy and Enterprise, 
+State of Berlin
+“Ini sebuah platform yang tepat untuk membuka Kota 
+Jakarta ini untuk menjadi lebih kolaboratif dan open  untuk 
+bekerja sama dengan berbagai macam stakeholder.”
+Alvin Tjitrowirjo
+Shape of Thoughts
+
+PAGE 29
+29
+Annual Report Jakarta Smart City 2023
+Selama 2023 melalui Future City Hub, Pemprov Jakarta telah bersinergi dengan berbagai mitra lewat 33 kegiatan 
+dengan lebih dari 600 jumlah peserta. Beberapa di antaranya adalah kegiatan yang bersifat terbuka dan dapat 
+diikuti oleh umum, seperti:
+Hack4ID merupakan kegiatan sinergi Jakarta Smart 
+City dengan Gerakan 1000 Startup Digital berbentuk 
+hackathon yang bertujuan untuk membantu peserta 
+menciptakan ide solusi yang sesuai dengan kebutuhan 
+industri selama dua hari dengan menggunakan dasar-
+dasar metode 
+design sprint . Kegiatan ini dilaksanakan 
+dua kali selama 2023, diikuti 88 peserta yang membahas 
+Jakarta Smart City dan JAKI. Kegiatan ini menghasilkan 
+banyak inovasi yang dapat dikembangkan Jakarta Smart 
+City maupun para Inovator.
+#Hack4ID 
+Salah satu kegiatan yang berhasil diselenggarakan di 
+Future City Hub di antaranya adalah rangkaian pre-event 
+Jakarta Smart City Forum 2023. Yaitu JSC Talks yang 
+membahas transformasi Jakarta menjadi kota global, 
+Reading Group bersama Prof. Mohammed Ali Berawi yang 
+membahas peran TOD (Transit Oriented Development) 
+dalam mengatasi permasalahan perkotaan, Digital 
+Talent Training yaitu pelatihan mengenai 
+smart city  dan 
+transformasi digital ASN dan non ASN pemerintah daerah, 
+serta JSCLab Sharing dengan tema masa depan bersama 
+AI.
+Semua kegiatan ini merupakan bagian dari rangkaian 
+pre-event Jakarta Smart City Forum 2023 dengan tema 
+“Transformasi Jakarta Menjadi Kota Cerdas Berskala 
+Global”. Mereka semua berkontribusi dalam visi untuk 
+mewujudkan Jakarta sebagai kota global.
+Rangkaian Pre-event Jakarta 
+Smart City Forum
+Selain kegiatan di atas, Future City Hub juga menjadi tempat kegiatan lain seperti JSCLab Sharing mingguan, 
+Community Talkshow, dan Jakarta Community Forum bersama Smart Change, serta berbagai kegiatan 
+private 
+seperti Focus Group Discussion Bappeda, Kick Off dan Internal Cluster Meeting GIZ, serta berbagai pertemuan 
+penting lainnya.
+“Harapannya memang ini bisa membangun jejaring yang 
+lebih luas, membuat ekosistem yang lebih kuat untuk 
+penemuan-penemuan dan inovasi-inovasi yang lebih 
+baik untuk kota dan masyarakat kota.”
+Felencia
+Tutur Daya Creative Consultancy
+
+
+PAGE 30
+30
+Annual Report Jakarta Smart City 2023
+Menuju Kota Cerdas Berskala 
+Global melalui Jakarta Smart City 
+Forum 2023
+Sebagai salah satu capaian pada 2023, Jakarta Smart 
+City telah menggelar forum
+ smart city  pertama di 
+Jakarta dengan tajuk Jakarta Smart City Forum 2023, 
+yang diadakan di Ayana Midplaza Hotel, pada 14 
+November 2023. Acara ini dibuka dengan sambutan 
+Penjabat Gubernur DKI Jakarta Heru Budi Hartono 
+melalui video, yang dilanjutkan Sigit Wijatmoko selaku 
+Asisten Pemerintahan Sekretaris Daerah Provinsi DKI 
+Jakarta.
+Jakarta Smart City Forum 2023 merupakan kegiatan 
+untuk merayakan inovasi serta menguatkan jejaring 
+sinergi Jakarta. Mengundang para pemangku 
+kepentingan dan mitra yang terdiri atas 
+founders, 
+innovators, startup owners,  komunitas, akademisi, 
+serta jaringan kota cerdas di Indonesia dan dunia, 
+Jakarta Smart  City Forum 2023 menjadi wadah 
+selebrasi sinergi dan inovasi kota cerdas Jakarta, serta 
+menjembatani para pemangku kepentingan untuk 
+menciptakan jejaring kota cerdas berskala global.
+Sebagai ruang temu dan diskusi, Jakarta Smart City 
+Forum 2023 diisi dengan berbagai kegiatan. Dalam 
+acara ini, Jakarta Smart City mengadakan dua kegiatan 
+panel diskusi bertema “Transformasi Digital menuju 
+Smart City: Pengalaman dan Pembelajaran dari Jakarta” 
+dan “ Food Waste Framework untuk Ketahanan Pangan 
+dalam Mengurangi Emisi Karbon’’ dengan mengundang 
+berbagai narasumber. Kemudian beragam paparan 
+penelitian, yang terdiri atas pemaparan dari pemenang 
+kompetisi Student Science Research tingkat SMA, 
+pemaparan Data Science Trainee tingkat universitas, 
+pemaparan penelitian dari tim internal Jakarta Smart 
+City, serta presentasi peneliti eksternal terkait Jakarta 
+Smart City. Terdapat pula arena 
+expo dan showcase 
+kota cerdas serta kolaboratornya.
+Berhasil dilaksanakan dengan sukses, Jakarta Smart 
+City Forum 2023 dihadiri 485 peserta.
+
+
+PAGE 31
+31
+Annual Report Jakarta Smart City 2023
+Aktivasi Literasi Digital
+bagi Masyarakat
+Data Science Trainee
+Jakarta Smart City (JSC) sebagai agen akselerator 
+transformasi digital menghadirkan berbagai program 
+pengembangan potensi digital bagi masyarakat. 
+Program-program tersebut ditujukan untuk 
+meningkatkan keterampilan dan wawasan terkait 
+digitalisasi. Hal ini sejalan dengan salah satu pilar kota 
+cerdas, yakni 
+smart people . Tercantum pula dalam 
+Rencana Pembangunan Jangka Menengah Daerah 
+(RP JMD) DKI Jakarta 2017-2022 tentang amanat untuk 
+meningkatkan kualitas Sumber Daya Manusia (SDM). 
+Dalam mewujudkan hal tersebut, JSC menghadirkan 
+berbagai program terkait pengembangan 
+kemampuan, keterampilan, dan daya saing SDM di 
+bidang teknologi Informasi, serta peningkatan literasi 
+digital bagi masyarakat, melalui kegiatan Data Science 
+Trainee, Kompetisi Student Science Research, JSCLab 
+Sharing, JSC Talks, JSC Goes to School, JSC Goes 
+to Society, JSC Community, dan beragam kegiatan 
+pameran.
+Data Science Trainee (DST) merupakan sebuah program 
+yang diselenggarakan Jakarta Smart City untuk melatih 
+talenta ilmuwan data (
+data scientist ) di Indonesia. 
+Para trainee yang mengikuti program ini diharapkan 
+mendapat pengalaman untuk mencoba mencari solusi 
+dari masalah perkotaan. Program ini sudah berjalan sejak 
+2021 dan diselenggarakan sebanyak 2-3 
+batch dalam 
+kurun waktu setahun. Pada 2023, kegiatan Data Science 
+Trainee sudah dua kali dilaksanakan, yakni pada Batch 
+6 dan Batch 7. Jika ditotalkan dari Batch 1 hingga Batch 
+7, maka program ini sudah menghasilkan 40 alumni 
+dengan 
+output dan talenta yang luar biasa. 
+Pada Batch 6, terpilih enam orang trainee dari total 
+jumlah pendaftar 179 orang. Batch 6 berlangsung selama 
+kurang lebih dua bulan, dimulai dengan kick-off meeting 
+pada 21 Maret 2023 dan diakhiri dengan presentasi final 
+project pada 7 Juni 2023 yang merupakan waktu bagi 
+peserta trainee untuk memaparkan hasil akhir project 
+yang telah mereka kerjakan. Pada batch ini terdapat 
+satu output dalam bentuk paper dan lima lainnya 
+dalam bentuk artikel Medium. Satu paper tersebut 
+telah dipresentasikan dalam acara “IEEE International 
+Conference on Communication, Networks, and Satellite 
+(ComNetSat) 2023”, dengan judul Few-Shot Object 
+Detection for Classifying Reported Urban Problems , 
+pada 23 November 2023, yang dilakukan secara daring.
+Sementara itu, pada Batch 7, telah terpilih enam orang 
+trainee dari total jumlah pendaftar 316 orang dan 155 
+universitas. Batch ini dimulai pada 25 September 
+2023 dan berakhir pada 7 Desember 2023. Salah 
+satu rangkaian kegiatan yang membedakan 
+batch ini 
+dengan batch sebelumnya yaitu diadakan Mini Reading 
+Group, di mana trainee dan seluruh mentor berdiskusi 
+tentang literatur berupa paper atau artikel yang dirujuk 
+oleh para trainee dalam pengerjaan final project . 
+Output dari batch ini meliputi dua kajian dalam bentuk 
+paper, tiga artikel Medium, dan sebuah policy brief. 
+Teknik data science yang digunakan oleh para trainee 
+cukup beragam, mulai dari clustering, image and 
+object detection,  hingga sentiment analysis , dengan 
+beberapa topik penelitian, di antaranya tentang polusi 
+udara, ruang terbuka hijau, dan ekonomi.
+
+PAGE 32
+32
+Annual Report Jakarta Smart City 2023
+Trainee Batch Judul Penelitian
+Hanzalah Assidiq Batch 6 Analisis Sentimen Masyarakat Terkait Rencana Penerapan ERP 
+di Jakarta
+Muhafidz Ahmad Halim Batch 6 Klasifikasi Kategori Laporan pada Aplikasi JAKI (JakLapor) 
+Berdasarkan Teks Deskripsi Laporan
+Faris Izzatur Rahman Batch 6 Multimodal Architecture for Image-Text Analysis With JAKI 
+Report Data
+Sachi Emelin Carissa Batch 6 Kajian dan 
+Dashboard  Rekomendasi Kebijakan Electronic 
+Road Pricing
+Iqbal Adi Putra Batch 6 Pembuatan Model Pendeteksi Laporan Duplikat pada CRM 
+Jakarta
+Nadya Novalina Batch 6 Few-Shot Object Detection for Classifying Reported Urban 
+Problems
+Virginia Washington Batch 7 Analisis Sektor Ekonomi Unggulan Provinsi DKI Jakarta
+Muhammad Bondan Vitto Ramadhan Batch 7 Blurring Faces and Number Plate using JakLapor Data in the 
+JAKI App
+Bramandika Batch 7 Kajian dan Dashboard  Efektivitas Ganjil Genap dalam 
+Memberantas Kemacetan dan Polusi Udara Akibat Kendaraan
+Kevina Windy Arlianni Batch 7 Analisis Kecamatan di Jakarta Berdasarkan Kualitas Udara dan 
+Ruang Terbuka Hijau Tahun 2023
+Annisa Khusna Amalia Batch 7 Analisis Sentimen Masyarakat terhadap Polusi Udara Jakarta
+Nurkhanifah Batch 7 Analisis Ketersediaan Ruang Terbuka Hijau dan Kawasan 
+Permukiman Kumuh terhadap Potensi Banjir di Jakarta
+Kompetisi Student Science Research
+Kompetisi Student Science Research merupakan 
+sebuah rangkaian seleksi yang bertujuan untuk 
+mengasah dan menguji keterampilan siswa SMA/
+SMK/sederajat di Jakarta dalam bidang data dan 
+critical thinking . Kompetisi ini berlangsung sejak 16 
+Oktober 2023 hingga 6 November 2023. Rangkaian 
+seleksi meliputi pembekalan materi untuk para 
+siswa, pengerjaan 
+use-case (penelitian) dalam upaya 
+menyelesaikan permasalahan di Jakarta yang berbasis 
+data, babak penyisihan yang penilaiannya dilakukan 
+berdasarkan dokumen hasil penelitian para siswa, dan 
+babak final di mana sepuluh besar tim dengan nilai 
+terbaik mempresentasikan hasil penelitian tersebut.
+Para siswa mengikuti rangkaian kompetisi ini 
+dengan antusias. Topik 
+use-case yang dikerjakan 
+sangat beragam, mulai dari kebersihan lingkungan, 
+infrastruktur, parkir liar, hingga kondisi jalan di Jakarta. 
+Mereka menggunakan data Cepat Respon Masyarakat 
+(CRM) sebagai basis usulan solusi untuk mengatasi 
+masalah-masalah perkotaan yang ditemukan. Tidak 
+hanya melakukan analisis data sederhana, beberapa 
+tim juga melakukan teknik analisis 
+advanced seperti 
+prediksi/forecasting, membuat dashboard yang 
+atraktif dan interaktif, serta menyusun sebuah sistem 
+digital yang solutif dalam bentuk skema ataupun 
+prototype aplikasi.
+
+
+PAGE 33
+33
+Annual Report Jakarta Smart City 2023
+Kelas bersama Pakar (JSCLab Sharing)
+Peringkat Tim Sekolah Judul Penelitian
+1 SIJAWAN SMKN 26 Jakarta Meninjau Kebersihan Kecamatan Pulo Gadung
+2 TEAM 3 SMKN 13 Jakarta Analisis Masalah Sampah di DKI Jakarta
+3 EDICOLBIE SMAN 26 Jakarta Analisa Keluhan Kondisi Jalan di Tebet Barat
+4 D’PAINTERS SMKN 26 Jakarta Pengaruh Evaluasi Lingkungan Hidup dan Infrastruktur di Kelurahan Rawamangun
+5 ARCHE SMAK 7 Penabur Kendala Listrik di Kelurahan Pondok Bambu, Kecamatan Duren Sawit, Jakarta Timur
+6 HOSI SMAN 56 Jakarta Upaya Mengatasi Masalah Sampah Jakarta dengan POS Sampah Online (TRASHEE)
+7 VICTORY SMKN 26 Jakarta Kebijakan Penanganan Parkir Liar di Wilayah Pulo Gadung : Evaluasi dan Rekomendasi
+8 TEAM 2 SMKN 13 Jakarta Parkir Liar di DKI Jakarta
+9 KARMAYOGI SMAN 104 Jakarta Analisis Laporan Tawuran
+10 POWER RANGERS SMKN 26 Jakarta Pengaruh Parkir Liar terhadap Produktivitas Masyarakat
+Terdapat 152 tim (465 siswa) dari 124 sekolah di DKI 
+Jakarta yang ikut berpartisipasi dalam kompetisi 
+ini. Pada akhir kompetisi, sepuluh tim terbaik dipilih 
+dan diundang pada acara Jakarta Smart City Forum 
+(JSCF) 2023. Peringkat tiga teratas berkesempatan 
+untuk memajang poster hasil penelitiannya di poster 
+exhibition JSCF 2023. Sementara itu, pemenang 
+kompetisi ini (Tim SIJAWAN dari SMKN 26 Jakarta) 
+memperoleh kesempatan untuk mempresentasikan 
+hasil penelitiannya di main event JSCF 2023.
+JSCLab Sharing merupakan suatu program yang 
+diinisiasi oleh Jakarta Smart City dalam upaya 
+mempertemukan praktisi, pakar atau ahli dalam bidang 
+tertentu, untuk berbagi pengetahuan dan pengalaman 
+dalam rangka 
+upskilling tenaga ahli Jakarta Smart City 
+serta warga Jakarta. Kegiatan ini juga mewakili upaya 
+Pemerintah Provinsi DKI Jakarta untuk menciptakan 
+kota yang lebih cerdas, inklusif, serta berkelanjutan 
+melalui pemanfaatan teknologi dan data.
+JSCLab Sharing menghadirkan kelas-kelas yang 
+berfokus pada pengembangan kapasitas dalam 
+bidang teknologi, 
+smart city , kebijakan publik, dan 
+literasi digital. Program ini dilaksanakan 1-2 kali selama 
+2023.
+Narasumber
+Jumlah: 18 Narasumber
+Keterangan: Materi meliputi 
+data analytics, 
+tata bahasa, public speaking, product 
+development, regulatory sandbox,SEO, 
+marketing, brand image, campaign 
+strategy, digital unit model and funding, 
+UX writing, remote worker, dan startup.
+Peserta
+Jumlah: 2.925 Peserta
+Keterangan: Peserta terdiri atas 671 orang 
+peserta yang sudah mengikutinya secara 
+luring dan 2.254 orang peserta yang sudah 
+mengikuti secara daring.
+Fokus utama kegiatan ini adalah untuk meningkatkan 
+pengetahuan dan keterampilan peserta, membantu 
+peserta dalam pengembangan karier, membantu 
+peserta dalam pemecahan masalah tertentu, serta 
+memperluas jaringan dan membangun hubungan yang 
+lebih kuat di antara peserta.
+
+PAGE 34
+34
+Annual Report Jakarta Smart City 2023
+Talkshow  Terkait Isu Jakarta Terkini (JSC Talks)
+JSC Goes to School dan JSC Goes to Society
+Kegiatan sosialisasi Jakarta Smart City ke sekolah (JSC 
+goes to School) dan masyarakat (JSC Goes to Society) 
+sudah dilakukan sejak 2022. Tujuan dari kegiatan 
+sosialisasi ini untuk menyebarluaskan informasi terkait 
+produk dan layanan Jakarta Smart City serta program 
+prioritas Penjabat Gubernur Jakarta. Dengan harapan 
+banyak warga maupun anak-anak sekolah dapat 
+merasakan manfaat dari produk dan layanan Jakarta 
+Smart City. 
+Sepanjang 2023, Jakarta Smart City sudah melakukan 
+sosialisasi ke 86 sekolah, 250 kelurahan, 8 kecamatan, 
+dan 7 universitas dengan total lebih dari 21.230 audiens. 
+Dalam kegiatan ini, Jakarta Smart City juga menjalin 
+sinergi dengan pihak-pihak lain seperti Berita Jakarta 
+(34 kali), Komisi Informasi DKI Jakarta (7 kali), Biro Hukum 
+Provinsi DKI Jakarta (14 kali) serta Dinas Tenaga Kerja, 
+Transmigrasi, dan Energi Provinsi DKI Jakarta (12 kali).
+JSC Talks merupakan sebuah ruang diskusi dan 
+lokakarya yang membahas berbagai layanan 
+Pemerintah Provinsi DKI Jakarta yang telah menerapkan 
+konsep Smart City. JSC Talks juga membahas seputar 
+data, kota, teknologi, riset, dan konsep kota cerdas 
+Jakarta. Melalui JSC Talks, peserta dapat mengenal 
+berbagai layanan dan program 
+smart city  yang 
+diselenggarakan Pemprov DKI Jakarta.
+JSC Talks menghadirkan wadah diskusi yang berfokus 
+pada isu-isu terkini yang terjadi di Jakarta dengan 
+melibatkan beberapa narasumber dari lintas sektor, 
+baik dari dinas/PD terkait di internal Pemprov DKI 
+Jakarta maupun pihak eksternal baik dari akademisi/
+peneliti, organisasi, 
+think tank , swasta, startup, atau 
+instansi terkait lainnya. Program ini dilaksanakan 
+sebanyak tiga kali sepanjang 2023.
+Fokus utama kegiatan ini adalah mengajak masyarakat 
+untuk berpartisipasi aktif mendiskusikan isu-isu terkini, 
+memperkenalkan program-program terkait yang 
+dilaksanakan Pemprov DKI Jakarta, serta mendorong 
+masyarakat untuk dapat menghasilkan inovasi-inovasi 
+baru terkait perkembangan teknologi informasi dan 
+komunikasi.
+Narasumber
+Jumlah:9 Narasumber (3 pertemuan)
+Keterangan: Topik meliputi kompetisi dunia 
+WSIS Prizes, sedekah platform digital, dan 
+transformasi Jakarta menjadi kota global.
+Peserta
+Jumlah: 400 Peserta
+Keterangan: Peserta terdiri atas 122 orang 
+peserta yang sudah mengikutinya secara 
+luring dan 278 orang peserta yang sudah 
+mengikuti secara daring.
+
+
+PAGE 35
+35
+Annual Report Jakarta Smart City 2023
+Berikut merupakan data pemetaan sosialisasi yang sudah dilakukan selama 2023:
+JSC Goes to School feat Partner
+Selain sosialisasi, JSC Goes to School juga menjadi 
+bagian program peningkatan literasi digital dan 
+sumber daya manusia (SDM), dengan misi khusus 
+untuk menjawab masalah ketidaksesuaian latar 
+belakang pendidikan dengan kebutuhan dunia kerja 
+serta jumlah talenta digital yang rendah. Adapun 
+beberapa hal yang melatarbelakangi permasalahan 
+di atas yakni rendahnya lulusan perguruan tinggi yang 
+bekerja sesuai latar belakang pendidikan (Mendikbud, 
+2021), rendahnya angkatan kerja yang selaras dengan 
+jurusan (Menaker, 2017), 600.000 talenta digital baru 
+dibutuhkan setiap tahun di Indonesia (Menkominfo, 
+2022), dan kekurangan talenta digital di Asia Pasifik 
+pada 2030 (Digital Talent Insight 2022, Korn Ferry). 
+JSC Goes to School Feat Partner hadir untuk menjawab 
+masalah tersebut dengan menggandeng mitra dari 
+perusahaan-perusahaan teknologi untuk bersama-
+sama mengadakan sosialisasi dan edukasi peningkatan 
+kesadaran siswa-siswi yang duduk di bangku sekolah. 
+Tujuan kegiatan ini yaitu membuka jalur informasi 
+tentang kebutuhan talenta digital pada masa depan 
+melalui 
+transfer of knowledge  tentang keahlian digital 
+yang sangat dibutuhkan industri teknologi, serta 
+memperkenalkan sekaligus mengajak peserta didik 
+untuk menggunakan aplikasi JAKI dan inovasi dari mitra. 
+Selama 2023, JSC menggandeng lima perusahaan 
+teknologi, yaitu Zenius, Grab, JakLingko, XL Axiata, dan 
+Cakap.
+
+
+PAGE 36
+36
+Annual Report Jakarta Smart City 2023
+JSC Community
+Selain melakukan sosialisasi ke berbagai sektor, Jakarta Smart City juga melebarkan sayap kepada  
+komunitas dalam menjalankan aktivasi literasi digital. Pada tahun ini, JSC mulai membuka beberapa 
+program untuk komunitas, yaitu Community Talkshow, Community Visit, dan Jakarta Community 
+Forum.
+Community Talkshow merupakan talkshow khusus 
+yang dikemas oleh Jakarta Smart City untuk melibatkan 
+komunitas sebagai 
+Co-Creator  untuk tampil bersama 
+dalam bentuk sharing dan diskusi terkait isu smart city, 
+program prioritas Pemprov DKI atau isu Jakarta terkini. 
+Melalui Community Talkshow, JSC juga dapat 
+memaksimalkan potensi kerja sama branding kegiatan 
+secara bersama-sama, serta menghasilkan diskusi 
+yang dapat menjadi bahan kajian terhadap kebijakan 
+pemerintah daerah, hingga menggali inovasi masyarakat 
+untuk kemajuan Jakarta. Selama 2023, kegiatan Communty 
+Talkshow telah melibatkan 199 peserta dari berbagai 
+komunitas seperti Jakarta Community Leadership Circles 
+from Facebook, Indorelawan, Rame-Rame Jakarta, 
+Coworkinc, dan Campaign.com.
+Community Visit merupakan program untuk menjangkau 
+komunitas-komunitas di Jakarta yang memiliki fokus 
+terhadap isu-isu 
+smart city  dan permasalahan Jakarta 
+untuk bisa terhubung dan bersinergi bersama Jakarta 
+Smart City dalam pengembangan Jakarta menjadi kota 
+global. Melalui Community Visit, JSC memperkenalkan 
+program, produk, dan layanan Jakarta Smart City kepada 
+komunitas di Jakarta, serta memberikan ruang diskusi dan 
+ruang kolaborasi yang memungkinkan untuk dijalankan 
+kedua belah pihak. 
+Selama 2023, kegiatan Community Visit menjangkau 16 
+komunitas, yakni Workin Studio, Ayo Mengajar Indonesia, 
+Kami Kerja Remote, OPERA, Ruang Internasional, 
+Elaborasi Teen, Ikatan Duta Bahasa DKI Jakarta, Think 
+Hub Jabodetabek, Negeri Kami, Dedikasi Untuk Negeri, 
+Single Moms Indonesia, Ruang Mama,  Teman Main, I Am 
+Polyglot, Turun Tangan Jakarta, Naramuda Jakarta, dan 
+Katalisator Muda Indonesia.
+Jakarta Community Forum  merupakan kegiatan yang 
+mempertemukan berbagai komunitas di Jakarta dan mitra 
+smart city dalam satu forum bersama, sebagai wadah bagi 
+para komunitas dan mitra untuk bisa mengenal, berbagi, 
+serta bersinergi membahas isu-isu permasalahan kota 
+yang relevan dengan komunitas untuk dapat melahirkan 
+beberapa program dan inovasi. Kegiatan ini dilaksanakan 
+pertama kali pada September 2023 dan melibatkan 67 
+peserta dari 34 komunitas, serta enam mitra yaitu Smart 
+Change, Elaborasi Teen, Ruang Internasional, OPERA, 
+Ikatan Duta Bahasa DKI Jakarta, dan Workin Studio. 
+Kegiatan ini menghasilkan forum komunitas di bawah jejaring komunitas JSC dan dua program 
+sinergi antar komunitas. Pertama, Education of Jakarta (Edukarta), yaitu program sinergi komunitas 
+di bidang pendidikan, berupa pembelajaran siswa berbasis riset dan literasi digital yang berfokus 
+pada kurikulum serta bahan ajar, untuk membangun kesadaran dan kepedulian siswa terhadap 
+lingkungan hidup. Kedua, Pekerjaan Layak Untuk Semua (PLUS), yaitu program sinergi komunitas di 
+bidang ketenagakerjaan, berupa peningkatan 
+soft skill dan kemandirian usaha melalui mentorship 
+dan pelatihan atau bootcamp, serta jembatan ke perusahaan pencari kerja.
+
+
+PAGE 37
+37
+Annual Report Jakarta Smart City 2023
+Pengenalan JSC dan Produknya melalui Pameran
+Dalam mewujudkan Jakarta sebagai kota global, JSC berupaya untuk meningkatkan literasi digital 
+kepada masyarakat. Salah satunya adalah melalui pameran event berskala regional, nasional, 
+maupun internasional. Kegiatan pameran bertujuan untuk memperkenalkan JSC serta produk-
+produknya kepada masyarakat luas. Selain itu, membuka ruang bagi para mitra seperti pemerintah 
+daerah, pemerintah kota, akademisi, komunitas, dan perusahaan teknologi baik nasional maupun 
+internasional untuk bersinergi dengan Jakarta Smart City.
+Selama 2023 JSC melakukan 14 kali pameran dengan total 1.87 4 pengunjung 
+booth JSC di event-
+event bergengsi seperti:
+•  Smart Home + City 2023
+•  Jakarta Fair Kemayoran 2023
+•  Jakarta Kreatif Festival
+•  Digital Transformation Indonesia Expo (DTICX)
+•  MGMAC and AMF 2023
+•  Indonesia Technology & Innovation
+•  Indonesia 4.0 Conference & Expo 2023
+•  Indonesia International Smart City Expo & Forum 2023
+•  International Smart City Conference
+•  World Clean Up Day
+•  Jakarta Innovation Day 
+•  Fordigi
+•  Tech In Asia
+•  National Cybersecurity Connect 2023
+•  Jakarta Smart City Forum 2023
+
+
+PAGE 38
+38
+Annual Report Jakarta Smart City 2023
+Memaksimalkan Aktivasi Literasi melalui Media Sosial
+Upaya aktivasi literasi digital serta pengenalan Jakarta Smart City dan produk-produk unggulannya 
+tidak terbatas pada kegiatan-kegiatan di atas dan merupakan satu kesatuan yang tak terpisahkan. 
+Melalui upaya 
+monitoring, sosialisasi tersebut terus dipantau mulai dari Instagram @jsclab, @
+jakisuperapp, @cepatresponjkt, TikTok @jsclab, Y outube Jakarta Smart City, Twitter @jsclab, 
+LinkedIn Jakarta Smart City, dan Facebook Page Jakarta Smart City.
+Berdasarkan analisis pantauan akun @jsclab, saat ini Jakarta Smart City sudah 
+memiliki lebih dari 120.000 pengikut. Konten-konten mengenai sosialisasi 
+JSC, 
+event di Jakarta, dan Inovasi Jakarta dalam menanggulangi masalah urban 
+merupakan konten dengan capaian engagement tertinggi sepanjang 2023. 
+Tentu hal ini merupakan bukti antusiasme masyarakat terhadap program JSC 
+dan Pemprov Jakarta, sehingga 
+hashtag yang paling banyak digunakan juga 
+berkaitan dengan program tersebut.
+Pada 2023, beberapa konten baru untuk meningkatkan literasi digital dan interaksi masyarakat 
+dibuat. Salah satunya adalah konten tutorial penggunaan ataupun pengurusan layanan di Jakarta 
+yang rutin disosialisasikan dalam 
+channel Y outube Jakarta Smart City bertajuk Begini Caranya. 
+Sepanjang 2023, terdapat 20 video Begini Caranya yang diproduksi dan dipublikasikan mulai 
+dari tutorial atau panduan mengenai penggunaan fitur JAKI, pembuatan Kartu Identitas Anak (KIA), 
+sampai pengajuan modal usaha di Jakarta. 
+Top 3
+Kategori Konten
+dengan 
+Engagement 
+Tertinggi
+
+PAGE 39
+39
+Annual Report Jakarta Smart City 2023
+Seiring minat masyarakat yang meningkat dalam platform Y ouTube, Jakarta Smart City juga 
+meningkatkan produksi jenis konten lain, demi menjaga kepercayaan masyarakat terhadap 
+penyelesaian pengaduan laporan masyarakat. Sepanjang 2023, JSC memproduksi enam video 
+bertajuk Cepat Respon Masyarakat Behind the Story, yaitu video testimoni pengalaman pelapor 
+pengaduan masyarakat dan tiga video bertajuk Pahlawan Ibu Kota yang mengulas profil petugas 
+dalam menindaklanjuti laporan warga.
+Mendukung aktivasi literasi digital melalui 
+program JSCLab Sharing, masyarakat pun kini 
+dapat menyaksikan kembali kegiatan workshop 
+JSCLab Sharing di channel Y outube Jakarta 
+Smart City. Selama 2023, terdapat 14 video 
+rekaman JSCLab Sharing yang bisa ditonton 
+kembali. 
+Dalam upaya menunjukkan kapabilitas Jakarta 
+Smart City sebagai tombak penggerak 
+Jakarta menuju kota cerdas berskala global, 
+JSC memperkenalkan diri melalui serial video 
+berjudul Smart Session, berisi cerita tim JSC di 
+balik proses besar inovasi-inovasi 
+smart city , 
+serta mengenalkan produk-produk JSC melalui 
+video khusus tentang produk JAKI, CRM, dan 
+Future City Hub.
+Melengkapi progres yang kuat di 
+channel 
+Y outube, media sosial JSC secara bersamaan 
+menggaungkan pula program literasi digital 
+yang dilakukan Jakarta Smart City melalui 
+publikasi dokumentasi kegiatan berbentuk 
+video, foto, ataupun poster kegiatan JSC Goes 
+to Society, JSC Goes to School Feat. Partner, 
+Data Science Trainee, pameran, serta konten-
+konten hiburan seperti 
+event-event di Jakarta 
+dan challenge. Berikut adalah rekap capaian 
+sosial media yang dikelola JSC selama 2023
+Total Follower
+494.883
+Total Engagement
+4.142.673
+Total  New Follower
+51.805
+Total Share
+80.662
+Total Content Published
+2.692
+Total Likes
+878.751
+Total Impressions
+12.442.897
+Total Comment
+18.726
+*data akumulasi dari keseluruhan media sosial yang dikelola Jakarta Smart City 
+(Instagram, Twitter, Facebook, Youtube, LinkedIn, dan Tiktok)
+Banyak yang menjadi pembelajaran sepanjang 2023, yaitu perencanaan yang matang serta 
+menyiapkan sarana dan prasarana teknis yang mumpuni, baik secara internal maupun eksternal. 
+Hal ini tentunya dapat mendukung kegiatan Jakarta Smart City untuk menangkap momen-momen 
+penting, mengabadikannya, serta memberitakannya secara cepat dan tepat kepada warga DKI 
+Jakarta.
+
+PAGE 40
+40
+Annual Report Jakarta Smart City 2023
+Laporan Layanan BLUD
+Layanan Konsultasi peningkatan literasi digital untuk Badan 
+Pengembangan dan Pembinaan Bahasa, Kementerian Pendidikan, 
+Kebudayaan, Riset, dan Teknologi sebesar Rp. 10.000.000.A
+Hingga 30 Desember 2023, realisasi pendapatan Badan Layanan Umum Daerah Jakarta Smart City (BLUD JSC) telah 
+mencapai Rp 595.315.780 sebagaimana terlampir. Dengan rincian sebagai berikut :
+Jakarta Smart City memberikan dukungan layanan konsultasi untuk meningkatkan literasi digital dalam 
+kegiatan Abdi Bahasa Kepulauan Seribu yang dilaksanakan oleh Badan Bahasa Kemendikbudristek 
+RI dan Ikatan Duta Bahasa DKI Jakarta. Kegiatan ini bertujuan untuk meningkatkan literasi digital 
+generasi muda di Pulau Tidung melalui berbagai kelas pelatihan yang diisi oleh para profesional JSC. 
+Adapun kelas-kelas pelatihan yang diberikan yaitu fotografi, desain konten poster/video, penyusunan 
+storyboard, penulisan wara, serta pengelolaan media sosial. Kegiatan ini menjadi pendapatan BLUD 
+pertama yang bisa diinisiasi oleh JSC.
+Pembangunan Sistem lnformasi Manajemen Pengendalian 
+Data Pribadi Fase 2 melalui Swakelola Tipe II Rp 585.315.780B
+Sistem lnformasi Manajemen Pengendalian Data Pribadi merupakan pengembangan dari project tahun 
+lalu. Adapun tambahan beberapa fitur dari sistem ini menjadi 12 modul. Tahun ini menggunakan metode 
+pengadaan Swakelola Tipe II.
+
+PAGE 41
+41
+Annual Report Jakarta Smart City 2023
+C
+B
+Selain mendapatkan pendapatan dari dua sumber di atas, Jakarta 
+Smart City juga melakukan proses pemetaan maupun pendekatan 
+untuk memperluas diseminasi informasi layanan yang potensial 
+dengan rincian sebagai berikut:
+Melakukan audiensi dan pemetaan layanan potensial 
+dengan pihak swasta melalui bidang propertiA
+Layanan potensial yang ditawarkan berupa replikasi aplikasi untuk 
+kawasan hunian, namun belum mencapai kesepakatan. Hasilnya masih 
+berupa paparan dan analisis layanan potensial yang bisa diberikan 
+kepada pihak swasta.
+Melakukan pemetaan layanan potensial dengan dinas 
+lain di Pemprov DKI Jakarta
+Jakarta Smart City menyadari bahwa dinas-dinas dalam Pemprov DKI 
+Jakarta juga dapat menjadi target potensial dalam kerja sama terkait 
+hal teknologi dan informasi untuk kemajuan kota Jakarta. Salah satunya  
+Dinas Perumahan Rakyat dan Kawasan Permukiman (DPRKP) Provinsi 
+DKI Jakarta, yang mempunyai aplikasi Sistem Informasi Perumahan 
+dan Permukiman (Sirukim), yang potensial untuk dikembangkan 
+lebih lanjut. Aplikasi tersebut memudahkan masyarakat untuk 
+mendapatkan informasi seputar hunian terjangkau. Melihat potensi 
+tersebut, Jakarta Smart City memenuhi undangan diskusi, kemudian 
+melakukan pemetaan pengembangan layanan aplikasi. Pemetaan 
+yang dilakukan menghasilkan analisis paparan terkait pengembangan 
+layanan Sirukim, untuk diajukan dan dikerjasamakan bersama Jakarta 
+Smart City di tahun berikutnya.
+Melakukan audiensi dan pemetaan layanan potensial 
+dengan Badan Usaha Milik Daerah melalui Bank DKI
+.Pemprov DKI Jakarta mempunyai Organisasi Perangkat Daerah selain 
+dinas berupa Badan Usaha Milik Daerah (BUMD) yang fokus di bidang 
+usaha. Jakarta Smart City sebagai BLUD di bawah Diskominfotik 
+yang bergerak di bidang digital menganalisis potensi pendapatan 
+dari sektor tersebut. Salah satunya melalui Bank DKI yang terlebih 
+dahulu telah ada di aplikasi JAKI untuk melakukan pembayaran lewat 
+JakOne Pay. Dalam hal ini, layanan potensial yang bisa dikembangkan 
+adalah JakOne Pay dengan mengembangkan 
+Top-Up dan transaksi 
+lewat JAKI, namun belum mencapai kesepakatan. Meskipun belum 
+terlaksana, sudah ada hasilnya berupa analisis tarif dan potensi 
+layanan untuk proses kerja sama dengan BUMD lainnya, terutama di 
+bidang digitalisasi.
+
+PAGE 42
+42
+Annual Report Jakarta Smart City 2023
+Publikasi 
+Penelitian
+Sepanjang 2023, JSC telah melakukan terobosan signifikan dalam bidang data science . Melalui serangkaian 
+penelitian yang inovatif dan berdampak tinggi, JSC berhasil mencapai prestasi luar biasa dengan penelitian 
+yang masuk dalam kategori Q1 dan dipublikasikan di jurnal ilmiah internasional IEEE. Penelitian tersebut tidak 
+hanya menunjukkan komitmen JSC terhadap inovasi dan peningkatan kualitas hidup warga Jakarta. Tetapi juga 
+menegaskan posisi Jakarta Smart City sebagai inisiator penerapan teknologi dan 
+data science untuk menciptakan 
+kota yang lebih cerdas dan berkelanjutan. Berikut adalah beberapa penelitian terbaik dari JSC selama 2023 yang 
+telah mendapatkan pengakuan internasional:
+Publikasi penelitian internasional JSC pada 2023
+•  Novriansyah, M.F., Nugraha, Y., Wiguna, H., Ernesto, A., Sulasikin, A., Nasution, B.I., Kanggrawan, J.I. and Suherman, 
+A.L., 2023, March. The impact of large-scale social restriction and odd-even policies on transportation mobility 
+and COVID-19 positivity rates in Jakarta. In AIP Conference Proceedings (Vol. 2508, No. 1). AIP Publishing.
+•  Bahrul Ilmi Nasution, Yudhistira Nugraha, Irfan Dwiki Bhaswara, and Muhamad Erza Aminanto. 2023. How 
+Resilient is Privacy-preserving Machine Learning Towards Data-Driven Policy? Jakarta COVID-19 Patient Study 
+Case. In Proceedings of the 2023 Workshop on Recent Advances in Resilient and Trustworthy ML Systems in 
+Autonomous Networks (ARTMAN ‘23). Association for Computing Machinery, New Y ork, NY, USA, 5–10. https://
+doi.org/10.1145/3605772.3624003
+•  A. Fadhlurohman, A. Sulasikin, Y. Nugraha, N. L. R. Husna, M. E. Aminanto and J. I. Kanggrawan, “Development of 
+Indonesian Language Intelligent Chatbot for Public Services in JAKI Application,” 2023 IEEE International Smart 
+Cities Conference (ISC2), Bucharest, Romania, 2023, pp. 01-07, doi: 10.1109/ISC257844.2023.10293514.
+•  M. C. Airlangga et al., “Understanding Citizen Feedback of Jakarta Government Super App: Leveraging Deep 
+Learning Models,” 2023 IEEE International Smart Cities Conference (ISC2), Bucharest, Romania, 2023, pp. 1-6, 
+doi: 10.1109/ISC257844.2023.10293572.
+Untuk lebih memperluas penyebaran karya JSC dalam bidang data science, berbagai penelitian terbaik JSC sejak 
+2020 yang telah mencapai skala internasional dan masuk dalam kategori Q1 dan IEEE telah dirangkum dalam bentuk 
+poster infografis. Poster-poster ini dipamerkan dalam berbagai 
+event yang diikuti JSC selama 2023, termasuk 
+pada Jakarta Smart City Forum 2023. Selain poster jurnal penelitian, JSC juga memamerkan karya penelitian terbaik 
+Kompetisi Student Science Research 2023 serta karya 
+startup dengan inovasi terbaik, dalam kegiatan #Hack4ID 
+Gerakan 1000 Startup Digital x JSC dan JAKI. Berikut 14 poster infografis karya terbaik penelitian JSC, Kompetisi 
+Student Science Research 2023, dan inovasi 
+startup #Hack4ID:
+An evidence-based culture: COVID-19 positivity factors during the 
+asymptomatic occurrence in Jakarta, Indonesia
+(Budaya Berbasis Bukti: Faktor-Faktor Positivitas COVID-19 Selama Kejadian 
+Asimptomatik di Jakarta, Indonesia)
+Jurnal ini bertujuan untuk menyelidiki faktor-faktor yang berkelanjutan dalam 
+diagnosis COVID-19 menggunakan empat skenario inklusi asimptomatik. Kami 
+menggunakan Regresi Logistik Bayesian untuk mengidentifikasi faktor-faktor 
+positivitas COVID-19. 
+Penelitian ini menemukan tiga temuan utama: (1) COVID-19 dapat menginfeksi 
+orang tanpa memandang usia; (2) Dari dua belas gejala penyakit coronavirus 
+(COVID-19), lima gejala meningkatkan kemungkinan COVID-19, dan dua 
+gejala mengurangi kemungkinan infeksi COVID-19; dan (3) Dari perspektif 
+epidemiologi, riwayat kontak meningkatkan probabilitas COVID-19, sementara 
+pekerja kesehatan dan orang yang melakukan perjalanan lebih jarang terinfeksi 
+COVID-19. 
+Berdasarkan penelitian ini, penting untuk memperhatikan orang-orang yang 
+memiliki gejala dan riwayat kontak. Mengejutkannya, pekerja kesehatan dan 
+pelancong yang menerapkan protokol kesehatan dengan ketat sesuai dengan 
+aturan memiliki risiko rendah terinfeksi COVID-19.
+
+
+PAGE 43
+43
+Annual Report Jakarta Smart City 2023
+COVID-19 Mortality Risk Factors Using Survival Analysis: A Case Study of 
+Jakarta, Indonesia
+(Faktor Risiko Kematian COVID-19 Menggunakan Analisis Survival: Studi Kasus di 
+Jakarta, Indonesia)
+Penelitian ini bertujuan untuk mengidentifikasi faktor risiko kematian akibat 
+COVID-19 di Indonesia dengan pendekatan analisis survival menggunakan Jakarta 
+sebagai studi kasus. 
+Penelitian ini menggunakan Model Eksponensial Berpotongan (PEM) untuk 
+mengatasi masalah yang tergantung pada waktu dalam CPH. 
+Temuan menunjukkan bahwa kematian akibat COVID-19 tidak berbeda 
+berdasarkan jenis kelamin. Kami menyarankan bahwa kerja sama antara pemerintah, 
+masyarakat, dan rumah sakit sangat penting dalam mengatasi pandemi COVID-19 
+dan meminimalkan kematian akibat COVID-19. 
+Data Analysis and Synthesis of COVID-19 Patients using Deep Generative Models: 
+A Case Study of Jakarta, Indonesia
+(Analisis Data dan Sintesis Pasien COVID-19 menggunakan Model Generatif 
+Mendalam: Studi Kasus di Jakarta, Indonesia)
+Masalah privasi dapat muncul ketika orang menggunakan data pasien COVID-19. 
+Oleh karena itu, sangat penting untuk menjaga kerahasiaan data COVID-19 dengan 
+menggunakan publikasi data sintetis (SDP). 
+Studi ini mengeksplorasi penggunaan model generatif Jaringan Generatif 
+Adversarial (GAN), Autoencoder Adversarial (AAE), dan Adversarial Variational Bayes 
+(AVB) untuk mensintesis data individu COVID-19.
+Data sintetis yang dihasilkan masih memiliki kekurangan dan bias, terutama dalam 
+melakukan model statistik. Studi ini menemukan bahwa penting untuk meningkatkan 
+model generatif mendalam, terutama dalam menjaga jaminan statistik dari kumpulan 
+data.
+Developing a knowledge management system for supporting flood 
+decision-making 
+(Mengembangkan sistem manajemen pengetahuan untuk mendukung 
+pengambilan keputusan terkait banjir)
+Perserikatan Bangsa-Bangsa telah menetapkan manajemen bencana sebagai 
+salah satu Tujuan Pembangunan Berkelanjutan (
+Sustainable Development Goals). 
+Dalam penelitian ini, kami menjelaskan upaya yang telah dilakukan untuk mencapai 
+layanan manajemen banjir satu atap, dengan menggunakan Jakarta sebagai studi 
+kasus. Metodologi yang diusulkan memiliki tiga nilai: pendeteksian, pemahaman, 
+dan tindakan. 
+Kami menyimpulkan penelitian ini dengan aplikasi masa depan dari sistem 
+manajemen banjir yang diharapkan dapat meminimalkan risiko bencana banjir di 
+Jakarta. 
+Automating Public Complaint Classification Through JakLapor Channel: A Case 
+Study of Jakarta, Indonesia
+(Mengotomatisasi Klasifikasi Pengaduan Publik Melalui Saluran JakLapor: Studi Kasus 
+Jakarta, Indonesia)
+Masih banyak warga DKI Jakarta melaporkan pengaduan dengan kategori yang tidak 
+tepat melalui JakLapor di JAKI. 
+Penelitian ini bertujuan untuk membandingkan dan menemukan model klasifikasi 
+pengaduan terbaik, dengan menerapkan beberapa model pembelajaran mesin 
+untuk mengklasifikasikan teks secara otomatis. 
+Hasil klasifikasi menunjukkan bahwa model metode Random Forest dengan ekstraksi 
+fitur TF-IDF adalah model yang paling akurat dan optimal dibandingkan yang lain, 
+dengan tingkat akurasi 90%. 
+
+
+PAGE 44
+44
+Annual Report Jakarta Smart City 2023
+Forecasting for a data-driven policy using time series methods in handling 
+COVID-19 pandemic in Jakarta
+(Peramalan untuk kebijakan berbasis data menggunakan metode time series dalam 
+menghadapi pandemi COVID-19 di Jakarta)
+Penelitian ini melakukan analisis kuantitatif terhadap penyebaran pandemi 
+COVID-19 di Jakarta. Dalam penelitian ini, model deret waktu seperti Holt’s 
+exponential smoothing dan Auto-Regressive Integrated Moving Average (ARIMA) 
+digunakan untuk meramalkan jumlah kasus COVID-19 di Jakarta antara 1 Maret dan 
+6 Juli 2020. 
+Hasilnya menunjukkan bahwa ARIMA memiliki R-Squared (R2) tertinggi, dan Mean 
+Squared Error (MSE) dan Root Mean Squared Error (RMSE) terendah, sehingga 
+menjadi model terbaik untuk meramalkan jumlah kasus terinfeksi COVID-19 di 
+Jakarta yang akan datang. 
+Understanding Citizen Feedback of Jakarta Government Super App: Leveraging 
+Deep Learning Models
+(Memahami Umpan Balik Warga pada Aplikasi Super Pemerintah Jakarta: 
+Memanfaatkan Model Deep Learning)
+Dalam jurnal ini, dilakukan analisis awan kata 
+(word cloud)  dan perbandingan 
+beberapa metode deep learning untuk menganalisis sentimen dari ulasan-ulasan 
+JAKI. Beberapa teknik deep learning  yang digunakan adalah LSTM, BiLSTM, GRU, 
+BiGRU, dan IndoBERT, karena kinerjanya lebih baik dibandingkan dengan metode 
+pembelajaran mesin konvensional. 
+Hasil menunjukkan bahwa model IndoBERT unggul dan efektif digunakan untuk 
+tugas analisis sentimen berbahasa Indonesia.
+Development of Indonesian Language Intelligent Chatbot for Public Services in 
+JAKI Application 
+(Pengembangan 
+Chatbot Cerdas Bahasa Indonesia untuk Pelayanan Publik di 
+Aplikasi JAKI)
+Salah satu fitur JAKI untuk memperluas keterjangkauan penggunaan adalah 
+chatbot. Penelitian ini bertujuan untuk membangun chatbot berbahasa Indonesia 
+dalam domain pelayanan publik di aplikasi JAKI. Percobaan mencakup embedding 
+Word2Vec, GloVe, FastText, dan BERT, lalu classifier yang digunakan adalah 
+Classifier DIET bawaan dari kerangka kerja Rasa dan SVM sebagai model matematis. 
+Model terbaik diperoleh melalui model 
+pipeline yang menggunakan Classifier DIET 
+dengan embedding kontekstual IndoBERT dengan kinerja F1-score sebesar 0.93.
+Analisa Keluhan Kondisi Jalan di Tebet Barat
+Penelitian ini dilakukan oleh tim EDICOLBIE dari SMAN 26 Jakarta, membahas 
+peran penting jalan dalam mendukung pembangunan nasional dan bagaimana 
+keterlibatan masyarakat dapat membantu menjaga kualitas jalan, khususnya jalan 
+di Tebet Barat. Penelitian ini juga menyoroti peran pemerintah dalam memastikan 
+kondisi jalan yang baik dan aman, serta pentingnya kerja sama antara pemerintah 
+dan masyarakat dalam hal ini.
+Berdasarkan penelitian ini, beberapa rekomendasi kebijakan bagi pemerintah 
+termasuk memastikan tindak lanjut yang berdampak berkelanjutan, menegakkan 
+dan memperkuat hukum yang ada, dan meningkatkan kesadaran masyarakat 
+tentang pentingnya ketertiban. Selain itu, penelitian ini juga merekomendasikan 
+beberapa langkah atau pengembangan lanjutan, seperti membangun fitur 
+kepuasan dan respons masyarakat terhadap tindak lanjut pihak berwenang dan 
+melakukan pembaruan berkala pada aplikasi terkait masalah yang dilaporkan.
+
+
+PAGE 45
+45
+Annual Report Jakarta Smart City 2023
+Analisis Masalah Sampah di DKI Jakarta
+Penelitian ini dilakukan oleh tim Team 3 dari SMKN 13 Jakarta yang berusaha 
+mengungkap bahwa DKI Jakarta menghadapi tantangan serius dalam mengelola 
+sampah. Pada 2022, produksi sampah mencapai 3,11 juta ton, level tertinggi dalam 
+empat tahun terakhir. Selain itu, laporan aduan masalah sampah dari masyarakat 
+menunjukkan bahwa permasalahan ini membutuhkan perhatian lebih. Meskipun 
+seluruh laporan sudah diselesaikan, data ini menyoroti pentingnya upaya perbaikan 
+dalam penanganan sampah di seluruh DKI Jakarta. 
+Penelitian ini merekomendasikan beberapa kebijakan, seperti pengolahan sampah 
+organik dengan maggot, pengolahan sampah menjadi energi terbarukan, dan 
+penerapan prinsip 3R 
+(Reduce, Reuse, Recycle).
+Meninjau Kebersihan Kecamatan Pulo Gadung: Tantangan dan Progres 
+Penanganan Sampah
+Penelitian ini dilakukan oleh tim SIJAWAN dari SMKN 26 Jakarta, berfokus pada 
+masalah sampah di Kecamatan Pulo Gadung, dengan tujuan utama mencari solusi 
+yang paling efektif untuk mengurangi dan mengelola masalah sampah di wilayah 
+tersebut. Menggunakan data laporan sampah dari CRM dan OpenData, serta 
+teknologi seperti Microsoft Excel, Looker Studio, serta Microsoft PowerPoint, 
+penelitian ini menemukan bahwa Kelurahan Rawamangun mencatat jumlah laporan 
+terbanyak, menunjukkan adanya masalah serius terkait pengelolaan sampah. 
+Penelitian ini merekomendasikan beberapa langkah, seperti penempatan tanda 
+larangan, instalasi CCTV untuk pemantauan, peran aktif dari badan-badan yang 
+bertugas mengawasi lingkungan, dan penerapan denda yang signifikan bagi 
+pelanggaran dalam membuang sampah sembarangan. 
+Sobat Mental
+“Sobat Mental”, merupakan sebuah inovasi yang dirancang untuk membantu 
+individu yang membutuhkan ruang aman untuk berkonseling dan berbagi beban 
+emosional. 
+Mengingat peningkatan drastis dalam masalah kesehatan mental setelah pandemi, 
+platform ini menawarkan solusi berbasis 
+website dan aplikasi untuk layanan 
+kesehatan mental, termasuk hotline online  24/7, konseling online dengan ahli, 
+dan komunitas edukatif. Konten dan sumber daya tersedia secara online untuk 
+memberikan informasi tentang kesehatan mental, dan komunikasi dapat dilakukan 
+melalui pesan teks, obrolan langsung, atau panggilan video. 
+Dengan pasar kesehatan mental global dan regional yang sedang berkembang, 
+Sobat Mental berpotensi untuk membantu banyak orang, termasuk penduduk 
+Jakarta, dalam mengatasi tantangan kesehatan mental mereka.
+Nakkuliah
+“Nakkuliah”, merupakan sebuah inovasi yang dirancang untuk membantu siswa 
+SMA dan SMK kelas 12 di Jakarta dalam mencapai kampus impian mereka. 
+Mengingat permasalahan sulitnya menemukan layanan bimbingan kuliah, 
+perbedaan pendapat antara siswa dan orang tua, dan masih ada mahasiswa 
+yang merasa salah jurusan, Nakkuliah menawarkan solusi berupa ruang diskusi 
+dengan mahasiswa serta  persiapan bagi siswa mulai dari kelas 10. Produk ini dapat 
+diluncurkan dalam bentuk 
+website dan aplikasi mobile, menawarkan berbagai 
+fitur seperti blog perkuliahan, info detail jurusan, info beasiswa, ruang diskusi, chat 
+dengan mahasiswa, dan pencarian jurusan. 
+Dengan kolaborasi bersama JSC, Nakkuliah berpotensi untuk memberikan akses 
+bagi siswa DKI dalam mendapatkan informasi kampus secara mudah, sehingga 
+dapat membantu Jakarta dalam meningkatkan kualitas pendidikan.
+
+
+PAGE 46
+46
+Annual Report Jakarta Smart City 2023
+Jakbon (Jejak Karbon)
+“JAKBON” atau “Jejak Karbon”, merupakan sebuah inovasi untuk otomatisasi 
+pemantauan jejak karbon di Provinsi DKI Jakarta. 
+Mengingat permasalahan kualitas udara, peningkatan kasus penyakit pernapasan, 
+dan jejak karbon, JAKBON dirancang untuk mencatat seluruh aktivitas yang 
+menghasilkan karbon dan membantu masyarakat serta pemerintah untuk 
+mencapai target net-zero 2050. 
+Platform ini, yang terintegrasi dengan aplikasi JAKI, menawarkan fitur seperti 
+menghitung jejak karbon, alat pembayaran, meningkatkan kesadaran lingkungan, 
+serta berkontribusi dalam mengurangi jejak karbon. Dengan target pasar pengguna 
+JAKI dan warga DKI Jakarta serta pendatang, JAKBON berpotensi untuk membantu 
+Jakarta dalam mengatasi masalah lingkungan dan kesehatan.
+
+
+PAGE 47
+47
+Annual Report Jakarta Smart City 2023
+Awards
+Selama 2023, berbagai upaya peningkatan inovasi produk dan layanan 
+Jakarta Smart City telah mendapatkan apresiasi, baik dari dalam maupun 
+luar negeri, melalui berbagai ajang kompetisi. Hal ini menunjukkan komitmen 
+JSC untuk terus memberikan layanan terbaik bagi masyarakat.
+Champion Category Building Confidence 
+and Security in the use of ICT
+World Summit of Information Society 2023 
+Jaklapor: Privacy-Preserving Online Public 
+Complaint Application
+Terbaik Penerapan Layanan SPBE Tingkat 
+Provinsi, Digital Government Awards
+dalam SPBE Summit 2023
+Pemprov DKI Jakarta
+Recognition of Excellence award
+7th Annual Indonesia OpenGov Leadership 
+Forum: JAKI
+Recognition of Excellence award
+7th Annual Indonesia OpenGov Leadership 
+Forum: Jaklapor
+Recognition of Excellence award
+7th Annual Indonesia OpenGov Leadership 
+Forum: Data Science Trainee
+Digital Leader of the Y ear
+Indosecsummit 2023
+Provinsi Terinovatif
+ Innovative Government Awards 2023 
+Provinsi DKI Jakarta
+Provinsi dengan Nilai Indeks Inovasi 
+tertinggi di Region Pulau Jawa
+Innovative Government Awards 2023
+Provinsi DKI Jakarta
+Nominasi dan Semi-Finalist
+Nominate Category E-Science World Summit of Information Society Prizes 2023
+Data Science Trainee: Building Citizen Data Savvy and Data Scientist
+Nominate Category E-Science World Summit of Information Society Prizes 2023 
+Master Data Management for Citizen 360 Profiling
+Nominate Category Media Nominate Category E-Science World Summit of 
+Information Society Prizes 2023
+Jakarta Smart City Living Lab: Social Media Innovation Smart City
+Nominate Category International and Regional Cooperation World Summit of 
+Information Society Prizes 2023
+Smart Change: Collaboration for Sustainable Urban Development
+Semi-Finalist Seoul Smart City Prizes 2023
+JakLapor
+
+
+PAGE 48
+48
+Annual Report Jakarta Smart City 2023
+Unit Pengelola Jakarta Smart City
+Dinas Komunikasi, Informatika dan Statistik Provinsi DKI Jakarta
+Gedung Balai Kota DKI Jakarta
+Jl Medan Merdeka Selatan No 8-9 RT 11/RW 2 Kecamatan Gambir,
+Kota Jakarta Pusat Daerah Khusus Ibukota DKI Jakarta 10110
+Website: smartcity.jakarta.go.id
+Email: smartcity@jakarta.go.id

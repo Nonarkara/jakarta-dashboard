@@ -36,7 +36,7 @@ function applyLanguage(){
  document.title=t('Pantau Jakarta','Jakarta city watch');
  $('city-map').title=t('Atlas 3D Jakarta','Jakarta 3D atlas');
  document.querySelector('.sections').setAttribute('aria-label',t('Navigasi bagian','Section navigation'));
- send({type:'atlas:setLanguage',language:lang});renderWeather();renderAir();renderAlerts();renderQuake();renderFlood();renderTransit();renderCivic();renderSources();renderCrmViewerStatus();renderExplorePlaces();renderBuildingView();clock();
+ send({type:'atlas:setLanguage',language:lang});renderWeather();renderAir();renderAlerts();renderQuake();renderFlood();renderTransit();renderCivic();renderSources();renderCrmViewerStatus();renderExplorePlaces();renderBuildingView();clock();document.dispatchEvent(new Event('dashboard:language'));
  $('release').textContent=DASHBOARD_BUILD;
 }
 function renderWeather(){
@@ -95,17 +95,17 @@ async function selectRoute(id){
 }
 async function loadCivic(){
  const kind=$('civic-kind').value;
- if(!civicData[kind])civicData[kind]=await get('/data/jakarta-v1/'+kind+'.geojson?v='+DASHBOARD_BUILD);
+ if(!civicData[kind]){$('civic-results').innerHTML='<p>'+t('Memuat referensi…','Loading reference…')+'</p>';$('civic-results-status').textContent=t('Memuat lapisan terpilih…','Loading selected layer…');$('civic-evidence').textContent='';civicData[kind]=await get('/data/jakarta-v1/'+kind+'.geojson?v='+DASHBOARD_BUILD);}
  renderCivic();
 }
 function renderCivic(){
  const kind=$('civic-kind').value,d=civicData[kind];
- if(!d?.features){$('civic-results').innerHTML=unavailable();return;}
+ if(!d?.features){$('civic-results').innerHTML=unavailable();$('civic-results-status').textContent=t('Lapisan tidak tersedia.','Layer unavailable.');$('civic-evidence').textContent='';return;}
  const q=$('civic-search').value.toLocaleLowerCase().trim();
  const rows=d.features.filter(f=>[f.properties.name,f.properties.kelurahan,f.properties.kecamatan,f.properties.kota].join(' ').toLocaleLowerCase().includes(q));
  $('civic-results-status').textContent=num(rows.length)+' '+t('rekaman cocok; menampilkan hingga 30','matching records; showing up to 30');
- $('civic-results').innerHTML=rows.slice(0,30).map(f=>{const p=f.properties,[lng,lat]=f.geometry.coordinates;return '<button class="result civic-result" data-lng="'+lng+'" data-lat="'+lat+'" data-name="'+esc(p.name)+'"><strong>'+esc(p.name)+'</strong><span>'+esc([p.kind,p.kelurahan,p.kecamatan].filter(Boolean).join(' · '))+'</span></button>';}).join('')||'<p>'+t('Tidak ditemukan. Coba kelurahan lain.','No matches. Try another kelurahan.')+'</p>';
- $('civic-evidence').textContent=d.publisher+' · '+t('referensi publik; tanggal pengamatan tidak diterbitkan','public reference; observation date not published')+' · '+t('diambil','retrieved')+' '+date(d.retrievedAt);
+ $('civic-results').innerHTML=rows.slice(0,30).map(f=>{const p=f.properties;if(f.geometry.type!=='Point')return '<button class="result green-result" data-green="'+d.features.indexOf(f)+'"><strong>'+esc(p.name)+'</strong><span>'+esc([p.kind,p.kelurahan,p.kecamatan].filter(Boolean).join(' · '))+'</span></button>';const [lng,lat]=f.geometry.coordinates;return '<button class="result civic-result" data-lng="'+lng+'" data-lat="'+lat+'" data-name="'+esc(p.name)+'"><strong>'+esc(p.name)+'</strong><span>'+esc([p.kind,p.kelurahan,p.kecamatan].filter(Boolean).join(' · '))+'</span></button>';}).join('')||'<p>'+t('Tidak ditemukan. Coba kelurahan lain.','No matches. Try another kelurahan.')+'</p>';
+ $('civic-evidence').textContent=(kind==='green'?num(d.count)+'/'+num(d.sourceRecordCount)+' '+t('poligon valid; ','valid polygons; ')+num(d.excludedOutOfRegion)+' '+t('di luar wilayah dan ','out of region and ')+num(d.excludedMissingGeometry)+' '+t('geometri kosong/tidak valid dikeluarkan. Inventaris termasuk pemakaman dan jalur hijau; bukan jaminan akses publik. ','empty/invalid geometries excluded. Inventory includes cemeteries and green strips; not a guarantee of public access. '):'')+d.publisher+' · '+t('referensi publik; tanggal pengamatan tidak diterbitkan','public reference; observation date not published')+' · '+t('diambil','retrieved')+' '+date(d.retrievedAt);
 }
 function renderCrmViewerStatus() {
  $('crm-viewer').title=t('Laporan bulanan resmi CRM Jakarta','Official CRM Jakarta monthly report');
@@ -127,10 +127,15 @@ $('crm-close').addEventListener('click',()=>{
 });
 $('crm-viewer').addEventListener('load',()=>{if(!$('crm-viewer-shell').hidden){crmViewerOpened=true;renderCrmViewerStatus();}});
 const ledger=[
+ ['Satu Data Jakarta','https://satudata.jakarta.go.id/home','Referensi tahunan','Annual reference','154 rekaman rawan banjir · 2024; koordinat tidak dipakai','154 flood-prone reference rows · 2024; coordinates withheld','Terbuka; atribusi; lisensi penggunaan spesifik belum dinyatakan','Open; attribution; specific reuse license not stated'],
+ ['Pantau Banjir','https://pantaubanjir.jakarta.go.id','Akses belum tersedia','Access unavailable','Portal tidak merespons pada pemeriksaan 11 Oktober 2026; bukan tidak ada banjir','Portal did not respond on 11 October 2026; not a no-flood reading','Tautan resmi; sensor terkini belum diimpor','Official link; current sensors not imported'],
+ ['Jakarta Smart City','https://smartcity.jakarta.go.id/en/dokumen/','Laporan & rencana','Reports & plans','Laporan 2023; 5 dokumen rencana 2024/2026','2023 annual report; 5 planning documents from 2024/2026','Fakta terpilih; dokumen pada penerbit','Selected facts; publisher-hosted documents'],
+ ['Bappeda','https://bappeda.jakarta.go.id/kota-global','Sasaran perencanaan','Planning target','20 besar kota global pada 2045; bukan peringkat saat ini','Top 20 global cities by 2045; not current rank','Kepgub 294 Tahun 2025','Governor decision 294 of 2025'],
+ ['Jakarta Investment Centre','https://invest.jakarta.go.id/potential-projects','Usulan penerbit','Publisher proposals','Proyek menurut sektor; biaya dan tanggal mulai berupa rencana','Projects by sector; costs and start dates are proposed','Snapshot bertanggal; bukan konfirmasi konstruksi','Dated snapshot; not construction confirmation'],
  ['Jakarta Smart City / CRM','https://crm.jakarta.go.id/data-bulanan','Laporan penerbit & layanan warga','Publisher report & citizen services','Harian, bulanan, kelurahan dan peta pada situs resmi; periode diatur penerbit','Daily, monthly, kelurahan and map views on the official site; publisher controls periods','Tampilan resmi; tidak ada API aduan privat','Official viewer; no private complaint API'],
  ['BMKG','https://data.bmkg.go.id/','Prakiraan & peringatan resmi','Official forecasts & warnings','Kelurahan; CAP DKI/Jawa Barat/Banten; gempa Indonesia','Kelurahan forecasts; CAP DKI/West Java/Banten; Indonesia earthquakes','Terbuka; atribusi BMKG','Open; BMKG attribution'],
  ['TransJakarta','https://ppid.transjakarta.co.id/informasi/berkala','Jadwal statis','Static schedule','240 rute; bukan posisi bus atau kemacetan','240 routes; no observed bus positions or congestion','CC BY 4.0','CC BY 4.0'],
- ['Jakarta Satu','https://jakartasatu.jakarta.go.id/geoportal/','Referensi publik','Public reference','678 fasilitas kesehatan; 3.525 sekolah; bukan kapasitas tersedia','678 health facilities; 3,525 schools; no live capacity','Atribusi penerbit; lisensi dataset tidak dinyatakan','Publisher attribution; dataset license not stated'],
+ ['Jakarta Satu','https://jakartasatu.jakarta.go.id/geoportal/','Referensi publik','Public reference','Referensi kesehatan, sekolah dan ruang hijau; bukan kapasitas tersedia','Health, schools and green-space references; no live capacity','Atribusi penerbit; lisensi dataset tidak dinyatakan','Publisher attribution; dataset license not stated'],
  ['PetaBencana','https://docs.petabencana.id/informasi-lisensi-data','Laporan warga','Crowdsourced reports','Jumlah laporan satu jam; bukan survei banjir','One-hour report count; not a flood survey','CC BY-NC 4.0; perjanjian untuk komersial','CC BY-NC 4.0; commercial agreement'],
  ['Open-Meteo / CAMS','https://open-meteo.com/en/docs/air-quality-api','Perkiraan model','Model estimate','Lima sampel; US AQI bukan ISPU','Five samples; US AQI is not ISPU','Atribusi; layanan gratis nonkomersial','Attribution; non-commercial free service'],
  ['Overture / OSM / Google / GHSL','/atlas#atlas-data','Snapshot geospasial','Geospatial snapshot','3,38 juta fitur dalam persegi panjang; tinggi dari berbagai sumber/tahun','3.38 million features in a rectangle; mixed-source and mixed-epoch heights','ODbL / CC BY; lihat atlas','ODbL / CC BY; see atlas'],
@@ -151,6 +156,7 @@ $('language').addEventListener('change',()=>{lang=$('language').value;try{localS
 $('basemap').addEventListener('change',()=>send({type:'atlas:setBasemap',bas:$('basemap').value}));
 $('refresh').addEventListener('click',refresh);$('forecast-location').addEventListener('change',renderForecast);$('route-search').addEventListener('input',renderTransit);$('civic-search').addEventListener('input',renderCivic);$('civic-kind').addEventListener('change',loadCivic);
 $('route-results').addEventListener('click',e=>{const b=e.target.closest('[data-route]');if(b)selectRoute(b.dataset.route);});
+$('civic-results').addEventListener('click',e=>{const b=e.target.closest('[data-green]');if(!b)return;const d=civicData.green,f=d?.features[Number(b.dataset.green)];if(f)showOverlay({type:'FeatureCollection',features:[f]},f.properties.name+' · Jakarta Satu · '+t('referensi ruang hijau','green-space reference')+' · '+date(d.retrievedAt));});
 function locate(e){const b=e.target.closest('[data-lng]');if(!b)return;showOverlay({type:'FeatureCollection',features:[{type:'Feature',properties:{name:b.dataset.name},geometry:{type:'Point',coordinates:[Number(b.dataset.lng),Number(b.dataset.lat)]}}]},b.dataset.name+' · '+t('titik referensi','reference point'));}
 $('civic-results').addEventListener('click',locate);$('route-detail').addEventListener('click',locate);
 $('alerts').addEventListener('click',e=>{const b=e.target.closest('[data-alert]');const a=alertsData?.alerts?.find(a=>a.id===b?.dataset.alert);if(a)showOverlay(a.geometry,'BMKG · '+a.headline);});
@@ -158,7 +164,7 @@ document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',(
 $('clear-overlay').addEventListener('click',()=>{showOverlay({type:'FeatureCollection',features:[]},t('Lapisan pilihan dihapus.','Selected overlay cleared.'));});
 window.addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==$('city-map').contentWindow)return;const d=e.data;if(d?.type==='jakarta-atlas'&&d.event==='ready'||d?.type==='atlas:ready'){mapReady=true;$('map-status').textContent=t('Atlas siap','Atlas ready');send({type:'atlas:setLanguage',language:lang});send({type:'atlas:setTheme',theme:document.documentElement.dataset.theme});if(selectedOverlay)showOverlay(selectedOverlay.data,selectedOverlay.label);if(requestedBuildingFilter)send({type:'atlas:setBuildingFilter',filter:requestedBuildingFilter});pendingMapMessages.splice(0).forEach(send);}});
 window.addEventListener('atlas:theme',e=>send({type:'atlas:setTheme',theme:e.detail}));
-$('export').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({build:DASHBOARD_BUILD,exportedAt:new Date().toISOString(),weather:weatherData,air:airData,alerts:alertsData,earthquake:quakeData,floodReports:floodData,transit:transit?{...transit,routes:undefined}:null,selectedRoute:routeDetail,civic,selectedOverlay,buildingView,crm:{sourceUrl:'https://crm.jakarta.go.id/data-bulanan',viewerUrl:CRM_MONTHLY_URL,tier:'publisher-hosted-report',dataImported:false}},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='jakarta-evidence-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+$('export').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({build:DASHBOARD_BUILD,exportedAt:new Date().toISOString(),weather:weatherData,air:airData,alerts:alertsData,earthquake:quakeData,floodReports:floodData,transit:transit?{...transit,routes:undefined}:null,selectedRoute:routeDetail,civic,selectedOverlay,buildingView,officialCityData:window.officialCityEvidence||null,crm:{sourceUrl:'https://crm.jakarta.go.id/data-bulanan',viewerUrl:CRM_MONTHLY_URL,tier:'publisher-hosted-report',dataImported:false}},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='jakarta-evidence-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 
 // Jakarta Satu's separate search/filter/legend jobs, adapted to a bounded popup.
 function renderExplorePlaces(){

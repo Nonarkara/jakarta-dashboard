@@ -42,5 +42,5 @@ writeFileSync(appJs, nextJs, "utf8");
 console.log(`[stamp-build-id] wrote ${stamp} into index.html and app.js`);
 const dashboardHtml = join(__dirname, '..', 'public', 'dashboard.html');
 const dashboardJs = join(__dirname, '..', 'public', 'dashboard.js');
-writeFileSync(dashboardHtml, readFileSync(dashboardHtml, 'utf8').replace(/(dashboard\.css|dashboard\.js|theme\.js|jakarta-design\.css)\?v=[^" ]*/g, '$1?v=' + stamp));
+writeFileSync(dashboardHtml, readFileSync(dashboardHtml, 'utf8').replace(/(dashboard\.css|dashboard\.js|official-data\.js|theme\.js|jakarta-design\.css)\?v=[^" ]*/g, '$1?v=' + stamp));
 writeFileSync(dashboardJs, readFileSync(dashboardJs, 'utf8').replace(/const DASHBOARD_BUILD = '[^']*';/, "const DASHBOARD_BUILD = '" + stamp + "';"));

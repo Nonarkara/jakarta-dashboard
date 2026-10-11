@@ -101,3 +101,9 @@ The user's explicit request to stop page bleed replaces the long scrolling dashb
 ## Jakarta Satu 3D patterns · 11 October 2026
 
 Observed public source: https://jakartasatu.jakarta.go.id/geoportal/peta/3d. Adopted place search, height/type filters, legend and reset-view jobs in a bounded Explore popup. Improve with explicit source-tag grouping, height-provenance filtering and checked viewport counts (rendered simplified footprints, not a census). Loading/failing map data produce no numeric count. Keep height geometries unchanged. Landmark parts filter using the tallest published part per name. No official land-use attributes, meshes, RDTR geometry or proprietary scene assets were copied; official 3D/RDTR links remain available for comparison.
+
+## Official portal imports · 11 October 2026
+
+Data kota dialog adds 37 JIC project proposals (9 sectors; 31 publisher point coordinates, 2 duplicate coordinates quarantined, 4 without points), 154 Satpol PP flood-prone reference rows for 2024 aggregated into 104 kelurahan-period groups, five JSC planning-document records plus two selected facts from the 2023 annual report, and Bappeda top20/2045 planning target. Current Pantau Banjir water/pump feed timed out and is explicitly not imported. Existing CRM report retained.
+
+Green-space selector adds 5,842 valid polygons from Jakarta Satu model_gab_rth (5,847 source records; one out-of-region, four null/empty geometries withheld). Categories decoded from public field domain; no staff/certificate fields. These are reference inventory, not all publicly accessible parks. No area totals. Single selected polygon goes through existing overlay bridge; building, rail, flood and environmental layers unchanged. Popup data loads on open; 3.8MB green inventory loads only on selection. New official-data.js participates in version stamping and exact edge-byte smoke. See docs/OFFICIAL-PORTALS-2026-10-11.md for contracts and refresh limitations.

@@ -144,3 +144,7 @@ VNTT, Vietcombank/Vietnam currency providers, Thailand camera systems, hand-draw
 Every new record should retain publisher/source URL, data tier, geographic scope, issue/observation time, valid-until when applicable, retrieval time, units/index system, rights, and missing/stale state. Slow geometry gets a versioned snapshot and checksum; live providers get bounded calls, cache and failure diagnostics. Add CSP hosts only for the adapters actually needed. No paid credentials, accounts, provider agreements or external messages were created during this audit.
 
 The next useful outcome is an atlas with official warnings, licensed scheduled transit and dated civic layers. A district risk score should wait until coverage, denominators, thresholds and validation support it.
+
+## Later verification: official portal imports
+
+The subsequent requested-source study proved Satu Data's anonymous JSON endpoint through its own **Lihat JSON** interface. The earlier “export/API resource not proved” finding above is superseded for the 2024 Satpol PP flood-prone dataset only. Imported public references, project proposals, report facts, coordinate/geometry exclusions and the Pantau Banjir timeout are documented in [OFFICIAL-PORTALS-2026-10-11.md](OFFICIAL-PORTALS-2026-10-11.md). A portal's open classification does not establish a blanket reuse license for all its datasets.

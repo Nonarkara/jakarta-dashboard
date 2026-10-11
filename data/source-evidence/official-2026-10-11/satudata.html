@@ -1,0 +1,245 @@
+<!doctype html><html lang="id" translate="yes"><head><meta charset="utf-8"><meta http-equiv="x-ua-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer"/><title>Satu Data Jakarta — Portal Data Terbuka Pemerintah Provinsi DKI Jakarta</title><script>(function() {
+        'use strict';
+        // Detect production environment based on hostname
+        var hostname = window.location.hostname;
+        var isProduction = 
+          hostname === 'satudata.jakarta.go.id' ||
+          hostname === 'www.satudata.jakarta.go.id' ||
+          (hostname !== 'localhost' && 
+           hostname !== '127.0.0.1' && 
+           !hostname.startsWith('192.168.') &&
+           !hostname.startsWith('10.') &&
+           !hostname.includes('local'));
+        
+        // Disable all console methods in production
+        if (isProduction) {
+          var noop = function() {};
+          var methods = ['log', 'debug', 'info', 'warn', 'error', 'trace', 'group', 'groupEnd', 'groupCollapsed', 'table', 'time', 'timeEnd', 'timeLog', 'dir', 'dirxml', 'assert', 'count', 'countReset', 'clear', 'profile', 'profileEnd'];
+          
+          // Store original console if needed (for emergency debugging)
+          if (!window._originalConsole) {
+            window._originalConsole = {};
+            methods.forEach(function(method) {
+              try {
+                window._originalConsole[method] = console[method];
+              } catch(e) {}
+            });
+          }
+          
+          // Override console methods with no-op functions immediately
+          methods.forEach(function(method) {
+            try {
+              console[method] = noop;
+            } catch(e) {}
+          });
+          
+          // Try to make console methods non-writable, but don't fail if it's not possible
+          methods.forEach(function(method) {
+            try {
+              Object.defineProperty(console, method, {
+                value: noop,
+                writable: true, // Allow writable to prevent errors
+                configurable: true, // Allow configurable to prevent errors
+                enumerable: false
+              });
+            } catch(e) {
+              // If defineProperty fails, just use direct assignment
+              try {
+                console[method] = noop;
+              } catch(e2) {}
+            }
+          });
+          
+          // Intercept console calls from dynamically loaded scripts
+          // Use a more aggressive approach that re-overrides after any assignment
+          var overrideConsole = function() {
+            methods.forEach(function(method) {
+              try {
+                // Always override, even if it was changed
+                if (typeof console[method] === 'function') {
+                  var originalMethod = console[method];
+                  console[method] = function() {
+                    // Silently do nothing
+                    return;
+                  };
+                } else {
+                  console[method] = noop;
+                }
+              } catch(e) {
+                // Ignore errors
+              }
+            });
+          };
+          
+          // Override immediately
+          overrideConsole();
+          
+          // Re-override periodically to catch any library overrides
+          setInterval(overrideConsole, 100);
+          
+          // Also override when console object is accessed
+          try {
+            var consoleProxy = new Proxy(console, {
+              set: function(target, property, value) {
+                if (methods.indexOf(property) !== -1) {
+                  // If someone tries to set a console method, override with noop
+                  target[property] = noop;
+                  return true;
+                }
+                target[property] = value;
+                return true;
+              },
+              get: function(target, property) {
+                if (methods.indexOf(property) !== -1) {
+                  return noop;
+                }
+                return target[property];
+              }
+            });
+            // Try to replace console with proxy (may not work in all browsers)
+            try {
+              Object.defineProperty(window, 'console', {
+                value: consoleProxy,
+                writable: true,
+                configurable: true
+              });
+            } catch(e) {
+              // If proxy doesn't work, just use interval override
+            }
+          } catch(e) {
+            // Proxy not supported, use interval override only
+          }
+        }
+      })();</script><script>// Guard for prerender environment
+      if (typeof window !== 'undefined' && !window.__PRERENDER_INJECTED) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+
+        var _initAnalyticsLoaded = false;
+        function _initAnalytics() {
+          if (_initAnalyticsLoaded) return;
+          _initAnalyticsLoaded = true;
+
+          // GTM
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-KB8M88GD');
+
+          // GA4 (gtag.js)
+          var script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=G-9LVDVR9NCM';
+          document.head.appendChild(script);
+
+          gtag('js', new Date());
+          gtag('config', 'G-9LVDVR9NCM');
+        }
+
+        // Defer until browser idle or user interaction or window load (whichever comes first)
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(function() {
+            setTimeout(_initAnalytics, 800);
+          }, { timeout: 2500 });
+        } else {
+          window.addEventListener('load', function() {
+            setTimeout(_initAnalytics, 1000);
+          });
+        }
+
+        // Immediate fallback on first user interaction so events are captured
+        ['scroll', 'keydown', 'touchstart', 'click'].forEach(function(evt) {
+          window.addEventListener(evt, _initAnalytics, { once: true, passive: true });
+        });
+      }</script><script>(function () {
+        if (typeof window === 'undefined' || window.__PRERENDER_INJECTED) return;
+        var host = (window.location && window.location.hostname) || '';
+        if (host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0') return;
+
+        window.addEventListener('load', function () {
+          setTimeout(function () {
+            var contentsquareScript = document.createElement('script');
+            contentsquareScript.src = 'https://t.contentsquare.net/uxa/b860cfd96bcb2.js';
+            contentsquareScript.async = true;
+            contentsquareScript.defer = true;
+            contentsquareScript.setAttribute('data-cs-loaded', 'true');
+            document.head.appendChild(contentsquareScript);
+          }, 2000);
+        });
+      })();</script><meta name="keywords" content="data jakarta, statistik jakarta, open data, satudata, portal data terbuka, dki jakarta, statistik dki jakarta, data statistik jakarta, download data jakarta, unduh data jakarta, tabel data jakarta, pemprov dki jakarta, diskominfotik jakarta, data terbuka jakarta, visualisasi data jakarta, dashboard statistik jakarta"><meta name="description" content="Portal Satu Data Jakarta - Akses data terbuka DKI Jakarta. Statistik, visualisasi, dan dataset lengkap untuk penelitian dan pengembangan kota Jakarta."><meta name="author" content="Bidang Data dan Statistik Jakarta"><meta name="robots" content="index, follow"><meta name="googlebot" content="index, follow"><meta name="viewport" content="width=device-width,initial-scale=1"><meta property="og:title" content="Satu Data Jakarta — Portal Data Terbuka Pemerintah Provinsi DKI Jakarta"><meta property="og:description" content="Portal Satu Data Jakarta menyediakan data dalam format yang mudah dicari, diakses dan digunakan kembali. Akses statistik, visualisasi, dan dataset lengkap DKI Jakarta."><meta property="og:url" content="https://satudata.jakarta.go.id"><meta property="og:image" content="https://satudata.jakarta.go.id/favicon.ico"><meta property="og:image:alt" content="Satu Data Jakarta"><meta property="og:type" content="website"><meta property="og:site_name" content="Satu Data Jakarta"><meta property="og:locale" content="id_ID"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Satu Data Jakarta — Portal Data Terbuka Pemerintah Provinsi DKI Jakarta"><meta name="twitter:description" content="Akses data terbuka DKI Jakarta. Statistik, visualisasi, dan dataset lengkap untuk penelitian dan pengembangan kota Jakarta."><meta name="twitter:image" content="https://satudata.jakarta.go.id/favicon.ico"><meta name="twitter:site" content="@satudatajakarta"><meta name="twitter:creator" content="@satudatajakarta"><link rel="canonical" id="seo-canonical" href="https://satudata.jakarta.go.id/home"><meta name="theme-color" content="#1e40af"><meta name="msapplication-TileColor" content="#1e40af"><meta name="application-name" content="Satudata Jakarta"><meta name="apple-mobile-web-app-title" content="Satudata Jakarta"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><script>(function () {
+        'use strict';
+        if (typeof window === 'undefined' || window.__PRERENDER_INJECTED) return;
+        try {
+          var loc = window.location;
+          var path = loc.pathname || '/';
+          var params = new URLSearchParams(loc.search || '');
+          var pageUrl = params.get('page_url') || '';
+          var kategori = params.get('kategori') || '';
+          var canonEl = document.getElementById('seo-canonical');
+          var descEl = document.querySelector('meta[name="description"]');
+          var robotsEl = document.querySelector('meta[name="robots"]');
+          var isHome = path === '/' || path === '/home';
+
+          function slugTitle(slug) {
+            if (!slug) return '';
+            return slug.split('-').filter(Boolean).map(function (w) {
+              return w.charAt(0).toUpperCase() + w.slice(1);
+            }).join(' ');
+          }
+
+          function setMeta(name, content, attr) {
+            attr = attr || 'name';
+            var el = document.querySelector('meta[' + attr + '="' + name + '"]');
+            if (el) el.setAttribute('content', content);
+          }
+
+          // Jangan biarkan canonical /home menempel di semua deep link SPA
+          if (!isHome && canonEl) {
+            if (pageUrl && (path.indexOf('/open-data/detail') === 0 || path.indexOf('/statistik-sektoral/detail') === 0 || path.indexOf('/visualisasi/detail') === 0)) {
+              var qs = new URLSearchParams();
+              if (kategori) qs.set('kategori', kategori);
+              qs.set('page_url', pageUrl);
+              canonEl.setAttribute('href', loc.origin + path + '?' + qs.toString());
+              var provisional = slugTitle(pageUrl);
+              if (provisional) document.title = provisional + ' | Satu Data Jakarta';
+            } else {
+              canonEl.parentNode && canonEl.parentNode.removeChild(canonEl);
+            }
+          }
+
+          // Upgrade async dari backend (sama origin /backend)
+          var uri = path + (loc.search || '');
+          fetch('/backend/seo/meta?uri=' + encodeURIComponent(uri), {
+            credentials: 'omit',
+            headers: { 'Accept': 'application/json' }
+          }).then(function (r) { return r.ok ? r.json() : null; }).then(function (meta) {
+            if (!meta || !meta.title) return;
+            document.title = meta.title;
+            if (meta.description && descEl) descEl.setAttribute('content', meta.description);
+            if (meta.robots && robotsEl) robotsEl.setAttribute('content', meta.robots);
+            setMeta('og:title', meta.title, 'property');
+            setMeta('og:description', meta.description || '', 'property');
+            setMeta('twitter:title', meta.title);
+            setMeta('twitter:description', meta.description || '');
+            if (meta.og_image) {
+              setMeta('og:image', meta.og_image, 'property');
+              setMeta('twitter:image', meta.og_image);
+            }
+            if (meta.canonical) {
+              var link = document.getElementById('seo-canonical') || document.querySelector('link[rel="canonical"]');
+              if (!link) {
+                link = document.createElement('link');
+                link.rel = 'canonical';
+                link.id = 'seo-canonical';
+                document.head.appendChild(link);
+              }
+              link.setAttribute('href', meta.canonical);
+            } else {
+              var bad = document.getElementById('seo-canonical') || document.querySelector('link[rel="canonical"]');
+              if (bad && bad.parentNode) bad.parentNode.removeChild(bad);
+            }
+            window.__SATUDATA_SEO_META = meta;
+          }).catch(function () {});
+        } catch (e) {}
+      })();</script><script defer="defer" src="/js/runtime.fe8e467b.js"></script><script defer="defer" src="/js/vue-vendor.dbcbd616.js"></script><script defer="defer" src="/js/openlayers-9db457b3.a7f399bb.js"></script><script defer="defer" src="/js/openlayers-52999750.fd3f14e6.js"></script><script defer="defer" src="/js/openlayers-658e83dc.1ecf8468.js"></script><script defer="defer" src="/js/openlayers-9dd8bc6c.e6351a24.js"></script><script defer="defer" src="/js/openlayers-9088a402.f2b49468.js"></script><script defer="defer" src="/js/openlayers-8a2fa609.aa1ea0d2.js"></script><script defer="defer" src="/js/openlayers-70fba6d8.c24208f8.js"></script><script defer="defer" src="/js/openlayers-f8791c22.315b73df.js"></script><script defer="defer" src="/js/openlayers-0145514d.666bef8e.js"></script><script defer="defer" src="/js/openlayers-2267d0c2.5a1742ef.js"></script><script defer="defer" src="/js/openlayers-aea77a21.d9f1d7f1.js"></script><script defer="defer" src="/js/openlayers-f6b321e5.c7c1fac9.js"></script><script defer="defer" src="/js/openlayers-63b6ee35.d7526a92.js"></script><script defer="defer" src="/js/openlayers-e59b05ab.d7e23dfe.js"></script><script defer="defer" src="/js/openlayers-5d6f332d.e3624000.js"></script><script defer="defer" src="/js/openlayers-9b7c7306.989150e3.js"></script><script defer="defer" src="/js/openlayers-2609cdbd.9dd6a3af.js"></script><script defer="defer" src="/js/openlayers-7c403228.aa9d54ce.js"></script><script defer="defer" src="/js/openlayers-b89744c6.07ce0692.js"></script><script defer="defer" src="/js/openlayers-e16b4279.7bc543c5.js"></script><script defer="defer" src="/js/openlayers-67ee2fc8.a654c6ff.js"></script><script defer="defer" src="/js/openlayers-b77d1737.88cba934.js"></script><script defer="defer" src="/js/openlayers-c70ba488.ac6eab22.js"></script><script defer="defer" src="/js/openlayers-92e2c3f6.5554a305.js"></script><script defer="defer" src="/js/openlayers-0df70469.1b838eeb.js"></script><script defer="defer" src="/js/openlayers-7535598f.39f43f55.js"></script><script defer="defer" src="/js/openlayers-8ea1c26b.02f9d8dd.js"></script><script defer="defer" src="/js/charts-0b6ed301.39218c2c.js"></script><script defer="defer" src="/js/charts-f3cee03a.ae0bea40.js"></script><script defer="defer" src="/js/charts-c33fb9e1.cf1285f0.js"></script><script defer="defer" src="/js/datatable.4568570b.js"></script><script defer="defer" src="/js/vendors-c0d76f48.10a29baa.js"></script><script defer="defer" src="/js/vendors-ad6a2f20.d0182816.js"></script><script defer="defer" src="/js/vendors-00833fa6.7271c143.js"></script><script defer="defer" src="/js/vendors-daa478a9.4b6b777f.js"></script><script defer="defer" src="/js/vendors-1047a06a.5819dce0.js"></script><script defer="defer" src="/js/vendors-01f6fbab.754ee04a.js"></script><script defer="defer" src="/js/vendors-06cf5c7b.ffc19319.js"></script><script defer="defer" src="/js/vendors-c99f1521.92af7740.js"></script><script defer="defer" src="/js/vendors-30cfcfec.3bcb00f7.js"></script><script defer="defer" src="/js/vendors-fa70753b.9affef66.js"></script><script defer="defer" src="/js/vendors-a0de3438.4b8f2b8c.js"></script><script defer="defer" src="/js/vendors-f1e9694f.1d223313.js"></script><script defer="defer" src="/js/vendors-9e97ab24.d74ef677.js"></script><script defer="defer" src="/js/vendors-8a2e291a.5d8063e4.js"></script><script defer="defer" src="/js/vendors-cca472bf.e6a9c6fa.js"></script><script defer="defer" src="/js/vendors-1656f0b4.59761d9a.js"></script><script defer="defer" src="/js/vendors-f93b33b9.d71cf314.js"></script><script defer="defer" src="/js/vendors-4f852d99.a85d5d8d.js"></script><script defer="defer" src="/js/vendors-acdbc3da.f97f313d.js"></script><script defer="defer" src="/js/vendors-a523c416.518d20f3.js"></script><script defer="defer" src="/js/index-c3373795.5740545d.js"></script><script defer="defer" src="/js/index-ac40d2f0.98b5ebd6.js"></script><script defer="defer" src="/js/index-01b6b8b1.064b181e.js"></script><script defer="defer" src="/js/index-eb856a53.08f4e7c3.js"></script><script defer="defer" src="/js/index-ceed7327.f23a9980.js"></script><link href="/css/vendors-00833fa6.f7688e66.css" rel="stylesheet"><link href="/css/vendors-a0de3438.20bd94fb.css" rel="stylesheet"><link href="/css/vendors-cca472bf.0fd6fd40.css" rel="stylesheet"><link href="/css/vendors-1b0c3802.07db0ba3.css" rel="stylesheet"><link href="/css/vendors-a56f7bc9.0b3dd1f0.css" rel="stylesheet"><link href="/css/vendors-d3d096af.21f30467.css" rel="stylesheet"><link href="/css/vendors-22ebb3fc.ff852fd7.css" rel="stylesheet"><link href="/css/vendors-7c81a24c.87c9c9eb.css" rel="stylesheet"><link href="/css/vendors-554a9a52.fb4ee83a.css" rel="stylesheet"><link href="/css/vendors-eb2fbf4c.fe2dad35.css" rel="stylesheet"><link href="/css/vendors-1656f0b4.fb5eec01.css" rel="stylesheet"><link href="/css/vendors-4f852d99.71c289a7.css" rel="stylesheet"><link href="/css/vendors-acdbc3da.e455fe9e.css" rel="stylesheet"><link href="/css/index-01b6b8b1.0bd4b0d0.css" rel="stylesheet"></head><body><noscript><strong>Satu Data Jakarta menyediakan data dalam format yang mudah dicari, diakses dan digunakan kembali. Publik pengguna portal dapat memanfaatkan data yang telah tersedia, serta menciptakan inovasi dan peran serta dalam membangun kota Jakarta.</strong></noscript><div id="app"></div></body></html>
