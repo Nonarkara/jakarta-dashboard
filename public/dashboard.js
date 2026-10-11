@@ -1,10 +1,10 @@
 'use strict';
-const DASHBOARD_BUILD = 'jakarta-atlas-20261011-1791706604-e3f6a5a';
+const DASHBOARD_BUILD = 'jakarta-atlas-20261011-1791707831-dd21537';
 const CRM_MONTHLY_URL = 'https://datastudio.google.com/embed/reporting/d7d87175-bfa2-4067-bf4d-42e8b996da11/page/27A2C';
 let crmViewerOpened = false;
 const $ = id => document.getElementById(id);
 let lang = 'id', weatherData=null, airData=null, alertsData=null, quakeData=null, floodData=null, transit=null, civic=null;
-let exploreAreas=[], exploreAreasState='loading', buildingView=null;
+let exploreAreas=[], exploreAreasState='loading', buildingView=null, requestedBuildingFilter=null;
 let chosenRoute=null, routeDetail=null, civicData={}, selectedOverlay=null, mapReady=false, refreshId=0;
 try {const q=new URLSearchParams(location.search).get('lang');lang=['id','en'].includes(q)?q:localStorage.getItem('jakarta-dashboard-lang')==='en'?'en':'id';}catch{} // axiom-audit-ignore honesty -- Optional local preference persistence; current controls and source values remain available with explicit defaults.
 const t=(id,en)=>lang==='id'?id:en;
@@ -145,7 +145,7 @@ $('civic-results').addEventListener('click',locate);$('route-detail').addEventLi
 $('alerts').addEventListener('click',e=>{const b=e.target.closest('[data-alert]');const a=alertsData?.alerts?.find(a=>a.id===b?.dataset.alert);if(a)showOverlay(a.geometry,'BMKG · '+a.headline);});
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-view]').forEach(el=>el.setAttribute('aria-pressed',String(el===b)));send({type:'atlas:setView',view:b.dataset.view});}));
 $('clear-overlay').addEventListener('click',()=>{showOverlay({type:'FeatureCollection',features:[]},t('Lapisan pilihan dihapus.','Selected overlay cleared.'));});
-window.addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==$('city-map').contentWindow)return;const d=e.data;if(d?.type==='jakarta-atlas'&&d.event==='ready'||d?.type==='atlas:ready'){mapReady=true;$('map-status').textContent=t('Atlas siap','Atlas ready');send({type:'atlas:setLanguage',language:lang});send({type:'atlas:setTheme',theme:document.documentElement.dataset.theme});if(selectedOverlay)showOverlay(selectedOverlay.data,selectedOverlay.label);}});
+window.addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==$('city-map').contentWindow)return;const d=e.data;if(d?.type==='jakarta-atlas'&&d.event==='ready'||d?.type==='atlas:ready'){mapReady=true;$('map-status').textContent=t('Atlas siap','Atlas ready');send({type:'atlas:setLanguage',language:lang});send({type:'atlas:setTheme',theme:document.documentElement.dataset.theme});if(selectedOverlay)showOverlay(selectedOverlay.data,selectedOverlay.label);if(requestedBuildingFilter)send({type:'atlas:setBuildingFilter',filter:requestedBuildingFilter});}});
 window.addEventListener('atlas:theme',e=>send({type:'atlas:setTheme',theme:e.detail}));
 $('export').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({build:DASHBOARD_BUILD,exportedAt:new Date().toISOString(),weather:weatherData,air:airData,alerts:alertsData,earthquake:quakeData,floodReports:floodData,transit:transit?{...transit,routes:undefined}:null,selectedRoute:routeDetail,civic,selectedOverlay,buildingView,crm:{sourceUrl:'https://crm.jakarta.go.id/data-bulanan',viewerUrl:CRM_MONTHLY_URL,tier:'publisher-hosted-report',dataImported:false}},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='jakarta-evidence-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 
@@ -175,13 +175,15 @@ $('building-filter').addEventListener('submit',e=>{
  e.preventDefault();
  const min=Number($('building-min').value),max=Number($('building-max').value);
  if(!Number.isFinite(min)||!Number.isFinite(max)||min<0||max>500||min>max){$('building-filter-status').textContent=t('Tinggi harus 0–500 m; minimum tidak boleh melebihi maksimum.','Heights must be 0–500 m; minimum cannot exceed maximum.');return;}
- send({type:'atlas:setBuildingFilter',filter:{min,max,kind:$('building-kind').value,source:$('building-source').value,unknown:$('building-unknown').checked}});
+ requestedBuildingFilter={min,max,kind:$('building-kind').value,source:$('building-source').value,unknown:$('building-unknown').checked};
+ if(mapReady)send({type:'atlas:setBuildingFilter',filter:requestedBuildingFilter});
  $('building-filter-status').textContent=t('Menerapkan filter…','Applying filter…');
 });
-$('building-reset').addEventListener('click',()=>{$('building-filter').reset();send({type:'atlas:setBuildingFilter',filter:{min:0,max:500,kind:'all',source:'all',unknown:true}});});
+$('building-reset').addEventListener('click',()=>{requestedBuildingFilter=null;$('building-filter').reset();send({type:'atlas:setBuildingFilter',filter:{min:0,max:500,kind:'all',source:'all',unknown:true}});});
 window.addEventListener('message',e=>{
  if(e.origin!==location.origin||e.source!==$('city-map').contentWindow)return;
  const d=e.data;
+ if(d?.type==='jakarta-atlas'&&d.event==='view'&&['2d','3d'].includes(d.view)){document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===d.view)));if(['esri','osm'].includes(d.basemap))$('basemap').value=d.basemap;}
  if(d?.type==='jakarta-atlas'&&d.event==='building-view'&&d.filter&&['ready','loading','hidden','unavailable'].includes(d.state)&&(d.count===null||Number.isSafeInteger(d.count)&&d.count>=0)) {buildingView=d;renderBuildingView();}
  if(d?.type==='jakarta-atlas'&&d.event==='building-filter-error')$('building-filter-status').textContent=t('Filter ditolak; periksa tinggi dan jenis.','Filter rejected; check height and type.');
 });
