@@ -43,7 +43,7 @@ let mapInstance = null;
 // Build tag sent to an embedding page in the `jakarta-atlas` ready
 // postMessage. `scripts/stamp-build-id.mjs` rewrites this on every
 // deploy so the dashboard can detect a stale iframe bundle.
-const ATLAS_BUILD_TAG = "jakarta-atlas-20261011-1791706604-e3f6a5a";
+const ATLAS_BUILD_TAG = "jakarta-atlas-20261011-1791707642-83a5b65";
 // Append a build-tag query string to the PMTiles URLs so every deploy
 // busts Cloudflare's edge cache. Without this, the first GET (which the
 // protocol handler makes without a Range header) gets cached as 200 OK
@@ -1081,6 +1081,7 @@ const BUILDING_TYPE_GROUPS = {
 };
 let buildingFilterState = {min:0,max:500,kind:'all',source:'all',unknown:true};
 const originalBuildingFilters = new Map();
+let buildingFilterPending = false;
 function normalizeBuildingFilter(input) {
  if (!input || !Number.isFinite(input.min) || !Number.isFinite(input.max) || input.min<0 || input.max>500 || input.min>input.max || typeof input.unknown!=='boolean') return null;
  if (input.kind!=='all' && !Object.hasOwn(BUILDING_TYPE_GROUPS,input.kind)) return null;
@@ -1102,7 +1103,7 @@ function reportBuildingView() {
  if (!mapInstance) return;
  const visible=currentView==='3d' && mapInstance.getLayer('jkt-buildings') && mapInstance.getLayoutProperty('jkt-buildings','visibility')!=='none';
  const failed=!!mapInstance.__atlasTileError;
- const ready=mapInstance.areTilesLoaded()&&!failed;
+ const ready=mapInstance.areTilesLoaded()&&!failed&&!buildingFilterPending;
  const rows=visible&&ready?mapInstance.queryRenderedFeatures(undefined,{layers:['jkt-buildings']}):[];
  const ids=new Set(rows.filter(f=>f.id!=null).map(f=>String(f.id)));
  postMsg('building-view',{filter:buildingFilterState,count:visible&&ready?ids.size:null,state:failed?'unavailable':!visible?'hidden':ready?'ready':'loading',colors:mapTheme().buildings,scope:'rendered-footprints',tier:'rendered-snapshot',source:'Overture / OSM / Microsoft / Google',datasetDate:'2026-09-23',checkedAt:new Date().toISOString(),zoom:mapInstance.getZoom()});
@@ -1112,6 +1113,7 @@ function applyBuildingFilter(input) {
  if (!config) { postMsg('building-filter-error',{reason:'invalid_filter'});return; }
  buildingFilterState=config;
  styleReady.then(()=>{
+  buildingFilterPending=true;
   const expression=buildingFilterExpression(config);
   for(const id of ['jkt-buildings','jkt-buildings-outline','jkt-landmarks-3d','jkt-landmarks-outline','jkt-landmarks-label']){
    if(!mapInstance.getLayer(id))continue;
@@ -1122,7 +1124,7 @@ function applyBuildingFilter(input) {
   closeInspect();reportBuildingView();
  });
 }
-if(mapInstance){mapInstance.on('idle',reportBuildingView);mapInstance.on('moveend',reportBuildingView);}
+if(mapInstance){mapInstance.on('idle',()=>{buildingFilterPending=false;reportBuildingView();});mapInstance.on('moveend',reportBuildingView);}
 window.addEventListener('atlas:theme',reportBuildingView);
 if (window.parent !== window) {
   document.body.classList.add('atlas-embedded');
