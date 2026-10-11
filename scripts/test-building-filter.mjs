@@ -33,3 +33,13 @@ assert.equal(evaluate(expr({...range,source:'ghsl'}),{h:100,hs:'satellite'}),tru
 const part={height:6,exploreHeight:132,exploreKind:'landmark',exploreSource:'landmark'};
 assert.equal(evaluate(expr({...range,kind:'landmark',source:'landmark'}),part),true,'filter landmark by its tallest published part');assert.equal(part.height,6,'filter never changes extrusion height');
 console.log('PASS building filters: bounds, unknowns, height provenance, grouped tags and landmark-part semantics');
+
+const dashboard=readFileSync(new URL('../public/dashboard.js',import.meta.url),'utf8');
+const sent=[];
+const bridge=vm.createContext({mapReady:false,$:()=>({contentWindow:{postMessage:m=>sent.push(m)}}),location:{origin:'https://test'}});
+vm.runInContext(dashboard.slice(dashboard.indexOf('const pendingMapMessages'),dashboard.indexOf('function showOverlay')),bridge);
+bridge.send({type:'atlas:setView',view:'2d'});bridge.send({type:'atlas:resetCityView'});bridge.send({type:'atlas:setView',view:'3d'});
+assert.equal(sent.length,0,'early commands wait for atlas readiness');
+bridge.mapReady=true;vm.runInContext('pendingMapMessages.splice(0).forEach(send)',bridge);
+assert.deepEqual(sent.map(m=>m.type),['atlas:resetCityView','atlas:setView']);assert.equal(sent[1].view,'3d','latest view survives cold load');
+console.log('PASS cold-load bridge: queued camera commands retain final user intent');

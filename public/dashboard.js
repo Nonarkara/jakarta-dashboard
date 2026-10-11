@@ -1,5 +1,5 @@
 'use strict';
-const DASHBOARD_BUILD = 'jakarta-atlas-20261011-1791707831-dd21537';
+const DASHBOARD_BUILD = 'jakarta-atlas-20261011-1791708029-ea5bfb5';
 const CRM_MONTHLY_URL = 'https://datastudio.google.com/embed/reporting/d7d87175-bfa2-4067-bf4d-42e8b996da11/page/27A2C';
 let crmViewerOpened = false;
 const $ = id => document.getElementById(id);
@@ -14,7 +14,18 @@ const date=(v)=>v&&Number.isFinite(Date.parse(v))?new Date(v).toLocaleString(lan
 const stale=(v,age)=>!v||!Number.isFinite(Date.parse(v))||Date.now()-Date.parse(v)>age||Date.parse(v)>Date.now()+300000;
 const unavailable=()=>'<p class="note">'+t('Data tidak tersedia atau tidak lolos pemeriksaan.','Data unavailable or did not pass validation.')+'</p>';
 const evidence=(source,tier,stamp,label)=>'<p class="meta">'+esc(source)+' · '+esc(tier)+'<br>'+esc(label||t('Berlaku','Valid'))+': '+esc(date(stamp))+'</p>';
-function send(message){$('city-map').contentWindow?.postMessage(message,location.origin);}
+const pendingMapMessages=[];
+function send(message){
+ if(!mapReady){
+  if(!['atlas:setLanguage','atlas:setTheme'].includes(message.type)){
+   const previous=pendingMapMessages.findIndex(m=>m.type===message.type);
+   if(previous>=0)pendingMapMessages.splice(previous,1);
+   pendingMapMessages.push(message);
+  }
+  return;
+ }
+ $('city-map').contentWindow?.postMessage(message,location.origin);
+}
 function showOverlay(data,label){document.querySelector('dialog[open]')?.close();selectedOverlay={data,label};$('selection-status').textContent=label;send({type:'atlas:dashboardOverlay',data});}
 async function get(path){
  try{const r=await fetch(path,{signal:AbortSignal.timeout(25000)});const d=await r.json();return d;}catch{return null;}
@@ -145,7 +156,7 @@ $('civic-results').addEventListener('click',locate);$('route-detail').addEventLi
 $('alerts').addEventListener('click',e=>{const b=e.target.closest('[data-alert]');const a=alertsData?.alerts?.find(a=>a.id===b?.dataset.alert);if(a)showOverlay(a.geometry,'BMKG · '+a.headline);});
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-view]').forEach(el=>el.setAttribute('aria-pressed',String(el===b)));send({type:'atlas:setView',view:b.dataset.view});}));
 $('clear-overlay').addEventListener('click',()=>{showOverlay({type:'FeatureCollection',features:[]},t('Lapisan pilihan dihapus.','Selected overlay cleared.'));});
-window.addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==$('city-map').contentWindow)return;const d=e.data;if(d?.type==='jakarta-atlas'&&d.event==='ready'||d?.type==='atlas:ready'){mapReady=true;$('map-status').textContent=t('Atlas siap','Atlas ready');send({type:'atlas:setLanguage',language:lang});send({type:'atlas:setTheme',theme:document.documentElement.dataset.theme});if(selectedOverlay)showOverlay(selectedOverlay.data,selectedOverlay.label);if(requestedBuildingFilter)send({type:'atlas:setBuildingFilter',filter:requestedBuildingFilter});}});
+window.addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==$('city-map').contentWindow)return;const d=e.data;if(d?.type==='jakarta-atlas'&&d.event==='ready'||d?.type==='atlas:ready'){mapReady=true;$('map-status').textContent=t('Atlas siap','Atlas ready');send({type:'atlas:setLanguage',language:lang});send({type:'atlas:setTheme',theme:document.documentElement.dataset.theme});if(selectedOverlay)showOverlay(selectedOverlay.data,selectedOverlay.label);if(requestedBuildingFilter)send({type:'atlas:setBuildingFilter',filter:requestedBuildingFilter});pendingMapMessages.splice(0).forEach(send);}});
 window.addEventListener('atlas:theme',e=>send({type:'atlas:setTheme',theme:e.detail}));
 $('export').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({build:DASHBOARD_BUILD,exportedAt:new Date().toISOString(),weather:weatherData,air:airData,alerts:alertsData,earthquake:quakeData,floodReports:floodData,transit:transit?{...transit,routes:undefined}:null,selectedRoute:routeDetail,civic,selectedOverlay,buildingView,crm:{sourceUrl:'https://crm.jakarta.go.id/data-bulanan',viewerUrl:CRM_MONTHLY_URL,tier:'publisher-hosted-report',dataImported:false}},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='jakarta-evidence-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 
