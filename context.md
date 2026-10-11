@@ -1,3 +1,17 @@
+# Jakarta dashboard release · 11 October 2026
+
+Active source repo: `Nonarkara/jakarta-dashboard` (private). Local checkout: `/Users/nonarkara/Projects/dashboards/Jakarta-dashboard`. The original atlas repo was forked with its full history; all atlas interactive content is preserved.
+
+Dashboard `/`, full atlas `/atlas`. The deployed Worker deliberately retains `jakarta-3d-atlas`, its account, custom domain and R2 archives. Only this new dashboard repo should deploy to that Worker now. Asset HTML canonicalization is disabled because the Worker routes root/atlas to different HTML files; otherwise `/atlas` redirects to root and embeds the dashboard recursively.
+
+Console register. Design read: a Jakarta research desk with one dominant map and aligned observation/official-bulletin rails. Reference: existing HCMC operations layout and Vignelli's 1972 subway diagram. Main divisions 2px, local rows 1px. Named batik palette exception and three appearance modes are retained. Mobile map appears before supporting rails. Language/theme/selection changes never remount the iframe.
+
+New live data: five verified BMKG `adm4` locations (Kemayoran, Penjaringan, Cengkareng Barat, Tebet Timur, Pisangan Baru); BMKG regional weather alerts and national latest earthquake; aggregate PetaBencana reports. Static prepared data: 240 operator GTFS routes, 8,091 source stop rows; 678 public health and 3,525 school reference points. Store source dates and licenses in assets/ledger. No measured air network or live transit/congestion source is claimed.
+
+Air adapters now require UTC offset zero and a returned model grid within 35 km (global CAMS grid); weather allows 20 km. These limits accommodate gridded output while rejecting the audited 44 km shift. Source coordinates remain separate from requested samples. Tests cover nonzero offset and shifted location. Building identity/provenance improvements from the audit remain a later data rebake; existing archive was preserved.
+
+## Original atlas context (retained)
+
 # JKTx atlas (Jakarta)
 
 Ported 2026-10-10 from `hcmc-3d-atlas` at commit 7695ff9. Same engine, same

@@ -43,7 +43,7 @@ let mapInstance = null;
 // Build tag sent to an embedding page in the `jakarta-atlas` ready
 // postMessage. `scripts/stamp-build-id.mjs` rewrites this on every
 // deploy so the dashboard can detect a stale iframe bundle.
-const ATLAS_BUILD_TAG = "jakarta-atlas-20261010-1791651343-f5650ce";
+const ATLAS_BUILD_TAG = "jakarta-atlas-20261011-1791701279-c3db1ba";
 // Append a build-tag query string to the PMTiles URLs so every deploy
 // busts Cloudflare's edge cache. Without this, the first GET (which the
 // protocol handler makes without a Range header) gets cached as 200 OK
@@ -647,7 +647,7 @@ async function fetchBrowserAirQuality() {
     const category = aqi => aqi <= 50 ? "Good" : aqi <= 100 ? "Moderate" : aqi <= 150 ? "Unhealthy for Sensitive Groups" : aqi <= 200 ? "Unhealthy" : aqi <= 300 ? "Very Unhealthy" : "Hazardous";
     const out = points.flatMap((p, i) => {
       const row = rows[i], stamp = freshStamp(row?.current?.time), units = row?.current_units || {};
-      const near = !!stamp && Math.abs(row?.latitude - p.lat) <= 0.5 && Math.abs(row?.longitude - p.lng) <= 0.5;
+      const near = row?.utc_offset_seconds === 0 && !!stamp && Number.isFinite(row?.latitude) && Number.isFinite(row?.longitude) && Math.hypot((row.latitude-p.lat)*111,(row.longitude-p.lng)*110.4) <= 35;
       const aqi = near && units.us_aqi === "USAQI" ? boundedReading(row.current?.us_aqi, 0, 500) : null;
       const pm25 = near && (units.pm2_5 === "μg/m³" || units.pm2_5 === "µg/m³") ? boundedReading(row.current?.pm2_5, 0, 1000) : null;
       return aqi == null ? [] : [{ ...p, aqi, pm25, category: category(aqi), observedAt: stamp, provenance: { source: "Open-Meteo / CAMS", tier: "model-estimate" } }];
@@ -1035,13 +1035,49 @@ function postMsg(type, payload) {
     }
   } catch (e) {}
 }
+// Bounded same-origin bridge for licensed scheduled routes and public civic points.
+function applyDashboardOverlay(data) {
+  if (!data || data.type !== 'FeatureCollection' || !Array.isArray(data.features) || data.features.length > 2000) return;
+  const coordinates = [];
+  function walk(c) {
+    if (!Array.isArray(c)) return false;
+    if (typeof c[0] === 'number') {
+      if (c.length < 2 || !c.slice(0,2).every(Number.isFinite) || c[0] < 105 || c[0] > 108 || c[1] < -8 || c[1] > -5) return false;
+      coordinates.push(c); return coordinates.length <= 20000;
+    }
+    return c.every(walk);
+  }
+  if (data.features.some(f => !['Point','LineString','Polygon'].includes(f?.geometry?.type) || !walk(f.geometry.coordinates))) return;
+  styleReady.then(function () {
+    const sourceId = 'jkt-dashboard-selection';
+    if (!mapInstance.getSource(sourceId)) {
+      mapInstance.addSource(sourceId, {type:'geojson', data});
+      mapInstance.addLayer({id:sourceId+'-fill',type:'fill',source:sourceId,filter:['==',['geometry-type'],'Polygon'],paint:{'fill-color':'#d8a24a','fill-opacity':0.2}});
+      mapInstance.addLayer({id:sourceId+'-line',type:'line',source:sourceId,filter:['!=',['geometry-type'],'Point'],paint:{'line-color':'#d8a24a','line-width':4}});
+      mapInstance.addLayer({id:sourceId+'-point',type:'circle',source:sourceId,filter:['==',['geometry-type'],'Point'],paint:{'circle-color':'#d8a24a','circle-radius':7,'circle-stroke-color':'#0f1b33','circle-stroke-width':2}});
+    } else mapInstance.getSource(sourceId).setData(data);
+    if (coordinates.length) {
+      setMapView('2d');
+      const bounds = coordinates.reduce((b,c)=>b.extend(c), new maplibregl.LngLatBounds(coordinates[0],coordinates[0]));
+      mapInstance.fitBounds(bounds,{padding:70,maxZoom:15,duration:window.matchMedia('(prefers-reduced-motion: reduce)').matches?0:250});
+    }
+    postMsg('selection', {featureCount:data.features.length});
+  });
+}
+if (window.parent !== window) document.body.classList.add('atlas-embedded');
 window.addEventListener("message", function (e) {
   if (PARENT_ORIGINS.indexOf(e.origin) === -1 && e.origin !== window.location.origin) return;
   if (e.source !== window.parent) return;
   const m = e.data;
   if (!m || typeof m !== "object") return;
   if (m.type === "atlas:setLanguage" && ["id", "en"].includes(m.language)) { window.AtlasLanguage?.set(m.language); return; }
+  if (m.type === "atlas:setTheme" && ['dark','light','contrast'].includes(m.theme)) {
+    const select = document.getElementById('atlas-theme');
+    if (select) { select.value = m.theme; select.dispatchEvent(new Event('change')); }
+    return;
+  }
   if (!mapInstance) return;
+  if (m.type === 'atlas:dashboardOverlay') { applyDashboardOverlay(m.data); return; }
   if (m.type === "atlas:flyTo" && m.areaId) flyToArea(m.areaId, { updateHash: false });
   else if (m.type === "atlas:flyover") (m.start ? startFlyover : stopFlyover)();
   else if (m.type === "atlas:setBasemap" && ["esri", "osm"].includes(m.bas)) setBasemap(m.bas);
@@ -1275,7 +1311,7 @@ async function fillWatchAir() {
     const row = rows[i];
     const stamp = freshStamp(row?.current?.time);
     const units = row?.current_units || {};
-    const near = !!stamp && Number.isFinite(row?.latitude) && Number.isFinite(row?.longitude) && Math.abs(row.latitude - point.lat) <= 0.5 && Math.abs(row.longitude - point.lng) <= 0.5;
+    const near = row?.utc_offset_seconds === 0 && !!stamp && Number.isFinite(row?.latitude) && Number.isFinite(row?.longitude) && Math.hypot((row.latitude-point.lat)*111,(row.longitude-point.lng)*110.4) <= 35;
     const pm25 = near && (units.pm2_5 === "μg/m³" || units.pm2_5 === "µg/m³") ? boundedReading(row.current?.pm2_5, 0, 1000) : null;
     const pm10 = near && (units.pm10 === "μg/m³" || units.pm10 === "µg/m³") ? boundedReading(row.current?.pm10, 0, 1000) : null;
     const usAqi = near && units.us_aqi === "USAQI" ? boundedReading(row.current?.us_aqi, 0, 500) : null;
@@ -1594,7 +1630,7 @@ async function fetchBrowserRainfall() {
     const validNumber = value => typeof value === 'number' && Number.isFinite(value) && value >= 0;
     return {source:'Open-Meteo weather models',tier:'model-estimate-and-forecast',fetchedAt:new Date().toISOString(),points:points.map((point,i)=>{
       const row=rows[i],validAt=stamp(row?.current?.time),time=Date.parse(validAt);
-      const available=row?.utc_offset_seconds===0 && row?.current_units?.precipitation==='mm' && row?.hourly_units?.precipitation==='mm' && Number.isFinite(time) && Date.now()-time>=0 && Date.now()-time<3*3600000 && Number.isFinite(row.latitude) && Number.isFinite(row.longitude) && Math.abs(row.latitude-point.lat)<=0.5 && Math.abs(row.longitude-point.lng)<=0.5;
+      const available=row?.utc_offset_seconds===0 && row?.current_units?.precipitation==='mm' && row?.hourly_units?.precipitation==='mm' && Number.isFinite(time) && Date.now()-time>=0 && Date.now()-time<3*3600000 && Number.isFinite(row.latitude) && Number.isFinite(row.longitude) && Math.hypot((row.latitude-point.lat)*111,(row.longitude-point.lng)*110.4)<=20;
       const start=Math.ceil(time/3600000)*3600000;
       const forecast=available ? (row.hourly?.time||[]).flatMap((value,index)=>{
         const validAt=stamp(value),hour=Date.parse(validAt),precipitationMm=row.hourly?.precipitation?.[index];

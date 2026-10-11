@@ -1,3 +1,28 @@
+# Jakarta city dashboard
+
+Live: **https://jakarta.nonarkara.org** · complete atlas: **https://jakarta.nonarkara.org/atlas**
+
+Private repository: https://github.com/Nonarkara/jakarta-dashboard. The original atlas history and documentation below are retained. Deploy this repository for the main domain; the separate atlas repository remains a source archive and should not overwrite the dashboard Worker.
+
+The Bahasa Indonesia / English dashboard follows the HCMC observation–map–bulletin arrangement, with Jakarta's batik themes. It adds five official BMKG kelurahan forecasts, dated weather warnings for DKI/Jawa Barat/Banten, the latest Indonesia earthquake, PetaBencana report counts, searchable official TransJakarta scheduled routes and stops, and dated Jakarta Satu health/school reference points. Source, tier and time remain visible; missing inputs never become a safety claim.
+
+Search a route and select it to draw the scheduled alignment. Select a stop or civic facility to locate its reference point. Language/theme changes retain the same map instance. The forecast chart has a complete text table. Export evidence JSON for source payloads and selected geometry. The complete atlas retains all building, environment, inspection and navigation controls.
+
+## New dashboard data
+
+- `npm run prepare:data`: fetch and validate TransJakarta GTFS and selected Jakarta Satu public fields. Outputs versioned JSON under `public/data/jakarta-v1`, including a checksum, publisher, retrieval time, CRS and simplification record. No resident data or staff/editor fields are included.
+- `/api/jakarta/weather`: bounded five-location official forecasts, cached 30 minutes.
+- `/api/jakarta/alerts?lang=id|en`: BMKG RSS plus bounded official CAP detail requests, cached three minutes. Expired/cancelled/test warnings do not appear as active.
+- `/api/jakarta/earthquake`: latest national official event, not necessarily near Jakarta.
+- `/api/jakarta/flood-reports`: one-hour report count only. An empty result does not establish dry streets. PetaBencana's non-commercial/commercial distinction applies.
+- Existing `/api/atlas/*`, building tiles and waterways remain available.
+
+`npm run deploy:live` runs all seven suites, stamps dashboard/atlas assets, deploys the existing Worker with its R2 binding and custom domain, and checks the exact deployed bytes plus provider envelopes. Do not deploy from the old atlas repo to this Worker.
+
+Civic datasets publish no observation epoch or explicit dataset license in the inspected service metadata; the ledger labels their attribution/access limitation. GTFS is CC BY 4.0, normalized/simplified here; service calendars and selected representative trips are scheduled records. DLH measured-air, BPS statistical baselines, tides, subsidence, live vehicles and congestion remain unconnected.
+
+---
+
 # JKTx 3D Atlas — Jakarta, block by block
 
 Live: **https://jakarta.nonarkara.org** (also https://jakarta-3d-atlas.drnon.workers.dev)

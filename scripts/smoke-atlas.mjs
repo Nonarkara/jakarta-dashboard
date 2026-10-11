@@ -38,7 +38,7 @@ async function check(name, fn) {
 async function main() {
   console.log(`Smoke-testing ${BASE}`);
 
-  const html = await fetchText("/");
+  const html = await fetchText("/atlas");
   const appJs = await fetchText(
     html.match(/data-app="\/app\.js\?v=[^"]+"/)[0].replace(/data-app="|"/g, ""),
   );

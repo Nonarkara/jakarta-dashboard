@@ -13,3 +13,5 @@ export EXPECTED_BUILD
 sleep 12
 ATLAS_BASE="$ATLAS_URL" npm run smoke
 ATLAS_URL="$ATLAS_URL" npm run smoke:api
+
+npm run smoke:dashboard

@@ -36,3 +36,11 @@ Public access does not establish an operational SLA or clear every institutional
 The selectable street basemap uses https://tile.openstreetmap.org/{z}/{x}/{y}.png with visible © OpenStreetMap contributors attribution and ordinary browser caching/referrers. No offline download or bulk prefetch is provided. Best-effort public service: https://operations.osmfoundation.org/policies/tiles/.
 
 Himawari AHI Band 13 clean infrared imagery is served by NASA GIBS with JMA attribution. Ten-minute timestamps and available intervals come from live WMTS capabilities. The image shows cloud-top brightness temperature (kelvin), not measured rain; rainfall context comes from radar or IMERG. Source: https://www.jma.go.jp/jma/jma-eng/jma-center/nowcasting/index.html.
+
+## Jakarta dashboard additions · 11 October 2026
+
+- BMKG official forecasts, warnings and earthquake data: visible BMKG attribution, links and issue/valid/observation times. Public API limits documented at https://data.bmkg.go.id/; upstream output is normalized, cached and validated. CAP lat/lon pairs are converted to GeoJSON lon/lat.
+- GTFS Static Transjakarta © 2026 PT Transportasi Jakarta, CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Published license: https://ppid.transjakarta.co.id/informasi/berkala. Original ZIP: https://gtfs.transjakarta.co.id/files/file_gtfs.zip. Changes: normalized JSON, representative trips per direction, rounded coordinates and simplified geometry. The manifest retains SHA-256 and retrieval time. No claim of actual vehicle positions.
+- Jakarta Satu © Pemprov DKI Jakarta. Public health/school reference fields and WGS84 geometry selected from published ArcGIS services. Retrieval date and source URLs are retained; observation epoch and an explicit dataset open license were not published in inspected metadata. Facility records are not a live-capacity system.
+- PetaBencana aggregate reports: CC BY-NC 4.0 for non-commercial use; commercial use requires the publisher's agreement. https://docs.petabencana.id/informasi-lisensi-data. This public research demo displays aggregate recent report counts; no resident text, photos or household coordinates are redistributed.
+- fast-xml-parser: MIT license, npm package pinned in package-lock.json.

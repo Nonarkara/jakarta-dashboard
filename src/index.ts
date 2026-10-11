@@ -1,3 +1,4 @@
+import { handleJakarta } from "./jakarta.js";
 // Cloudflare Worker entry for jakarta-3d-atlas.
 //
 // The atlas is a static SPA in public/ (no build step). The Worker exists to
@@ -470,7 +471,7 @@ async function loadWeatherPoints(): Promise<{ points: any[]; fetchedAt: string |
     const valid = d?.utc_offset_seconds === 0 && d?.current_units?.precipitation === "mm"
       && d?.hourly_units?.precipitation === "mm" && !!time && validObservation(time, 3 * 3600000)
       && Number.isFinite(d?.latitude) && Number.isFinite(d?.longitude)
-      && Math.abs(d.latitude - p.lat) <= 0.5 && Math.abs(d.longitude - p.lng) <= 0.5;
+      && distanceKm(p.lat, p.lng, d.latitude, d.longitude) <= 20;
     const forecastStart = time ? Math.ceil(Date.parse(time) / 3600000) * 3600000 : NaN;
     const times = Array.isArray(d?.hourly?.time) ? d.hourly.time : [];
     const forecast = valid ? times.flatMap((t: unknown, j: number) => {
@@ -534,9 +535,9 @@ async function handleCityWatch(): Promise<Response> {
     const { forecast: _forecast, ...place } = point;
     const row = airRows[i];
     const time = normalizedUtc(row?.current?.time);
-    const located = !!time && validObservation(time, 3 * 3600000)
+    const located = row?.utc_offset_seconds === 0 && !!time && validObservation(time, 3 * 3600000)
       && Number.isFinite(row?.latitude) && Number.isFinite(row?.longitude)
-      && Math.abs(row.latitude - point.lat) <= 0.5 && Math.abs(row.longitude - point.lng) <= 0.5;
+      && distanceKm(point.lat, point.lng, row.latitude, row.longitude) <= 35;
     const pm25 = unitNumber(row, "pm2_5", ["μg/m³", "µg/m³"], 0, 1000, located);
     const pm10 = unitNumber(row, "pm10", ["μg/m³", "µg/m³"], 0, 1000, located);
     const usAqi = unitNumber(row, "us_aqi", ["USAQI"], 0, 500, located);
@@ -614,15 +615,16 @@ async function loadAirPoints(): Promise<{ points: any[]; fetchedAt: string | nul
   const points = RAIN_POINTS.map((p, i) => {
     const row = rows[i];
     const time = normalizedUtc(row?.current?.time);
-    const located = !!time && validObservation(time, 3 * 3600000)
+    const located = row?.utc_offset_seconds === 0 && !!time && validObservation(time, 3 * 3600000)
       && Number.isFinite(row?.latitude) && Number.isFinite(row?.longitude)
-      && Math.abs(row.latitude - p.lat) <= 0.5 && Math.abs(row.longitude - p.lng) <= 0.5;
+      && distanceKm(p.lat, p.lng, row.latitude, row.longitude) <= 35;
     return {
       id: p.id, label: p.name, label_id: p.name_id, lat: p.lat, lng: p.lng,
       aqi: unitNumber(row, "us_aqi", ["USAQI"], 0, 500, located),
       pm25: unitNumber(row, "pm2_5", ["μg/m³", "µg/m³"], 0, 1000, located),
       pm10: unitNumber(row, "pm10", ["μg/m³", "µg/m³"], 0, 1000, located),
       observedAt: located ? time : null,
+      modelLocation: located ? { lat: row.latitude, lng: row.longitude } : null,
       provenance: { source: "Open-Meteo / CAMS", tier: "model-estimate" },
     };
   });
@@ -667,7 +669,7 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const response = await routeRequest(request, env);
     const headers = new Headers(response.headers);
-    if (["/", "/index.html"].includes(new URL(request.url).pathname)) headers.set("cache-control", "no-cache");
+    if (["/", "/index.html", "/atlas", "/atlas/"].includes(new URL(request.url).pathname)) headers.set("cache-control", "no-cache");
     if (response.status >= 500) headers.set("cache-control", "no-store");
     headers.set("x-content-type-options", "nosniff");
     headers.set("referrer-policy", "strict-origin-when-cross-origin");
@@ -695,6 +697,13 @@ async function routeRequest(request: Request, env: Env): Promise<Response> {
   }
   if (request.method !== "GET" && request.method !== "HEAD") {
     return new Response("method not allowed", { status: 405, headers: { allow: "GET, HEAD, OPTIONS", "access-control-allow-origin": "*" } });
+  }
+
+  if (path.startsWith("/api/jakarta/")) return handleJakarta(request);
+  if (["/", "/index.html", "/atlas", "/atlas/"].includes(path)) {
+    const target = new URL(request.url);
+    target.pathname = path.startsWith("/atlas") ? "/index.html" : "/dashboard.html";
+    return env.ASSETS.fetch(new Request(target, request));
   }
 
   // PMTiles Range passthrough. pmtiles.js appends `?v=` cache busters, so

@@ -7,7 +7,7 @@ import ts from 'typescript';
 const source = readFileSync(new URL('../src/index.ts', import.meta.url), 'utf8');
 const compiled = ts.transpileModule(source, {
   compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
-}).outputText;
+}).outputText.replace("./jakarta.js", new URL("../src/jakarta.js", import.meta.url).href);
 const worker = (await import('data:text/javascript;base64,' + Buffer.from(compiled).toString('base64'))).default;
 const savedFetch = globalThis.fetch, savedCaches = globalThis.caches;
 const points = [[-6.18,106.83],[-6.12,106.88],[-6.17,106.75],[-6.27,106.81],[-6.23,106.90]];

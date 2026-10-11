@@ -19,6 +19,7 @@ bucket_name = "jakarta-tiles"
 preview_bucket_name = "jakarta-tiles-preview"
 
 [assets]
+html_handling = "none"
 directory = "./public"
 binding = "ASSETS"
 # PMTiles needs Range passthrough, so the Worker runs before [assets];

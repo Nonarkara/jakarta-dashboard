@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import ts from 'typescript';
 
 const source = readFileSync(new URL('../src/index.ts', import.meta.url), 'utf8');
-const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText;
+const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText.replace("./jakarta.js", new URL("../src/jakarta.js", import.meta.url).href);
 const worker = (await import('data:text/javascript;base64,' + Buffer.from(compiled).toString('base64'))).default;
 const originalFetch = globalThis.fetch, originalCaches = globalThis.caches;
 const stamp = new Date(Math.floor(Date.now() / 3600000) * 3600000).toISOString().slice(0, 16);
@@ -33,9 +33,14 @@ try {
   air = [null, { latitude: -6.12, longitude: 106.88, current_units: { us_aqi: 'USAQI' }, current: { time: stamp, us_aqi: null } }];
   assert.equal((await request('/api/atlas/air-quality')).status, 503, 'invalid data never becomes zero AQI');
   air = [-6.18, -6.12, -6.17, -6.27, -6.23].map((lat, i) => ({ latitude: lat, longitude: [106.83, 106.88, 106.75, 106.81, 106.90][i],
-    current_units: { pm2_5: 'µg/m³', pm10: 'µg/m³', us_aqi: 'USAQI' }, current: { time: stamp, pm2_5: 20, pm10: 30, us_aqi: i === 1 ? 160 : 0 } }));
+    utc_offset_seconds: 0, current_units: { pm2_5: 'µg/m³', pm10: 'µg/m³', us_aqi: 'USAQI' }, current: { time: stamp, pm2_5: 20, pm10: 30, us_aqi: i === 1 ? 160 : 0 } }));
   let rows = await (await request('/api/atlas/air-quality')).json();
   assert.equal(rows.length, 5); assert.equal(rows[0].aqi, 0, 'zero AQI is valid data'); assert.equal(rows[1].category, 'Unhealthy');
+  air.forEach(row => { row.utc_offset_seconds = 25200; });
+  assert.equal((await request('/api/atlas/air-quality')).status, 503, 'non-UTC data rejected');
+  air.forEach(row => { row.utc_offset_seconds = 0; row.latitude += 0.4; });
+  assert.equal((await request('/api/atlas/air-quality')).status, 503, 'wrong model location rejected');
+  air.forEach(row => { row.latitude -= 0.4; });
   air.forEach(row => { row.current.time = '2020-01-01T00:00'; });
   assert.equal((await request('/api/atlas/air-quality')).status, 503, 'stale model time is not current air');
 
