@@ -1,0 +1,3418 @@
+[
+  {
+    "id": "roads",
+    "url": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu/Peta_Jalan/MapServer/0",
+    "checkedAt": "2026-10-11T06:29:55.084023+00:00",
+    "metadata": {
+      "currentVersion": 11.5,
+      "cimVersion": "3.5.0",
+      "id": 0,
+      "name": "Jalan Garis",
+      "type": "Feature Layer",
+      "description": "",
+      "geometryType": "esriGeometryPolyline",
+      "sourceSpatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": 0,
+        "zUnits": 1,
+        "falseM": 0,
+        "mUnits": 1
+      },
+      "spatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      },
+      "copyrightText": "",
+      "parentLayer": null,
+      "subLayers": [],
+      "minScale": 0,
+      "maxScale": 0,
+      "referenceScale": 0.0,
+      "drawingInfo": {
+        "renderer": {
+          "type": "simple",
+          "symbol": {
+            "type": "esriSLS",
+            "style": "esriSLSSolid",
+            "color": [
+              39,
+              163,
+              88,
+              255
+            ],
+            "width": 1
+          }
+        },
+        "scaleSymbols": true,
+        "transparency": 0,
+        "labelingInfo": null
+      },
+      "defaultVisibility": true,
+      "extent": {
+        "xmin": 686673.4413,
+        "ymin": 9295228.1337,
+        "xmax": 718361.7941,
+        "ymax": 9326598.09,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 10000,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "hasAttachments": false,
+      "htmlPopupType": "esriServerHTMLPopupTypeAsHTMLText",
+      "displayField": "NAMA_JALAN",
+      "typeIdField": null,
+      "subtypeFieldName": null,
+      "subtypeField": null,
+      "defaultSubtypeCode": null,
+      "fields": [
+        {
+          "name": "OBJECTID",
+          "type": "esriFieldTypeOID",
+          "alias": "OBJECTID",
+          "domain": null
+        },
+        {
+          "name": "NAMA_JALAN",
+          "type": "esriFieldTypeString",
+          "alias": "NAMA_JALAN",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "LEBAR_JALAN",
+          "type": "esriFieldTypeString",
+          "alias": "LEBAR_JALAN",
+          "length": 10,
+          "domain": null
+        },
+        {
+          "name": "KELAS_JALAN",
+          "type": "esriFieldTypeString",
+          "alias": "KELAS_JALAN",
+          "length": 20,
+          "domain": null
+        },
+        {
+          "name": "KETERANGAN",
+          "type": "esriFieldTypeString",
+          "alias": "KETERANGAN",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "LEVEL_JALAN",
+          "type": "esriFieldTypeString",
+          "alias": "LEVEL_JALAN",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "SHAPE",
+          "type": "esriFieldTypeGeometry",
+          "alias": "SHAPE",
+          "domain": null
+        },
+        {
+          "name": "SHAPE.LEN",
+          "type": "esriFieldTypeDouble",
+          "alias": "SHAPE.LEN",
+          "domain": null
+        }
+      ],
+      "geometryField": {
+        "name": "SHAPE",
+        "type": "esriFieldTypeGeometry",
+        "alias": "SHAPE"
+      },
+      "indexes": [
+        {
+          "name": "R184_SDE_ROWID_UK",
+          "fields": "OBJECTID",
+          "isAscending": true,
+          "isUnique": true,
+          "description": ""
+        },
+        {
+          "name": "A40_IX1",
+          "fields": "SHAPE",
+          "isAscending": true,
+          "isUnique": true,
+          "description": ""
+        }
+      ],
+      "subtypes": [],
+      "relationships": [],
+      "canModifyLayer": true,
+      "canScaleSymbols": false,
+      "hasLabels": false,
+      "capabilities": "Map,Query,Data",
+      "maxRecordCount": 2000,
+      "maxSelectionCount": 2000,
+      "supportsStatistics": true,
+      "supportsExceedsLimitStatistics": true,
+      "supportsAdvancedQueries": true,
+      "supportedQueryFormats": "JSON, geoJSON, PBF",
+      "isDataVersioned": false,
+      "ownershipBasedAccessControlForFeatures": {
+        "allowOthersToQuery": true
+      },
+      "useStandardizedQueries": true,
+      "supportedSpatialRelationships": [
+        "esriSpatialRelIntersects",
+        "esriSpatialRelContains",
+        "esriSpatialRelCrosses",
+        "esriSpatialRelEnvelopeIntersects",
+        "esriSpatialRelIndexIntersects",
+        "esriSpatialRelOverlaps",
+        "esriSpatialRelTouches",
+        "esriSpatialRelWithin",
+        "esriSpatialRelRelation"
+      ],
+      "advancedQueryCapabilities": {
+        "useStandardizedQueries": true,
+        "supportsStatistics": true,
+        "supportsPercentileStatistics": true,
+        "supportsHavingClause": true,
+        "supportsOrderBy": true,
+        "supportsDistinct": true,
+        "supportsCountDistinct": true,
+        "supportsAdvancedQueryRelated": true,
+        "supportsQueryRelatedPagination": true,
+        "supportsPagination": true,
+        "supportsLod": false,
+        "supportsQueryWithLodSR": false,
+        "supportsTrueCurve": true,
+        "supportsQueryWithDatumTransformation": true,
+        "supportsReturningQueryExtent": true,
+        "supportsQueryWithDistance": true,
+        "supportsSqlExpression": true,
+        "supportsTimeRelation": true,
+        "supportsSqlFormat": false,
+        "supportsQueryAnalytic": true,
+        "supportsCurrentUserQueries": true
+      },
+      "supportsDatumTransformation": true,
+      "advancedQueryAnalyticCapabilities": {
+        "supportsLinearRegression": true,
+        "supportsAsync": false,
+        "supportsPercentileAnalytic": true
+      },
+      "dateFieldsTimeReference": null,
+      "preferredTimeReference": null,
+      "datesInUnknownTimezone": false,
+      "hasGeometryProperties": true,
+      "geometryProperties": {
+        "shapeLengthFieldName": "SHAPE.LEN",
+        "units": "esriMeters",
+        "mapUnits": {
+          "uwkid": 9001
+        }
+      },
+      "hasMetadata": true,
+      "isDataArchived": false,
+      "archivingInfo": {
+        "supportsQueryWithHistoricMoment": false,
+        "startArchivingMoment": -1
+      },
+      "supportsCoordinatesQuantization": true,
+      "supportsDynamicLegends": true,
+      "serviceItemId": "9ffad5b0b0024028b3fb363e40f986e0"
+    },
+    "count": {
+      "count": 102616
+    }
+  },
+  {
+    "id": "health",
+    "url": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu/Fasilitas_Kesehatan/MapServer/0",
+    "checkedAt": "2026-10-11T06:29:55.084414+00:00",
+    "metadata": {
+      "currentVersion": 11.5,
+      "cimVersion": "3.5.0",
+      "id": 0,
+      "name": "Fasilitas Kesehatan",
+      "type": "Feature Layer",
+      "description": "",
+      "geometryType": "esriGeometryPoint",
+      "sourceSpatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 2,
+        "mTolerance": 2,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": 0,
+        "zUnits": 1,
+        "falseM": 0,
+        "mUnits": 1
+      },
+      "spatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      },
+      "copyrightText": "",
+      "parentLayer": null,
+      "subLayers": [],
+      "minScale": 0,
+      "maxScale": 0,
+      "referenceScale": 0.0,
+      "drawingInfo": {
+        "renderer": {
+          "type": "simple",
+          "symbol": {
+            "type": "esriPMS",
+            "url": "d36add3e53bdf7f6d110c02d64c29f92",
+            "imageData": "iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAzUlEQVQokZ2RIQ7CQBREn1hT1wtgG4LhAgTLHeoICZdAI7EIDoBE1JU7YAnBgiKIKhSCDOy2G9hmG0b9/T+zf2a+4U+YQC/NYGZgoMcdDjdYdyHSh/kCMtVLGBWwBaooUeh1lJr6UkPyaVDVRHmSPDcZegvHn7p07xNszrB6ExWEPIXk5ZDk1u8FmNrQWj3GYFzkSs+Xl0OiegfXPTzc7AnHmqg72chdEKWTJ1IBE+8cTTh+owWadbujgoh6/P5dkbv0rKcfNcGNulNkIS9zJS36Xw9R1gAAAABJRU5ErkJggg==",
+            "contentType": "image/png",
+            "width": 10,
+            "height": 10,
+            "angle": 0,
+            "xoffset": 0,
+            "yoffset": 0
+          }
+        },
+        "scaleSymbols": true,
+        "transparency": 0,
+        "labelingInfo": null
+      },
+      "defaultVisibility": true,
+      "extent": {
+        "xmin": 686814.4774,
+        "ymin": 9297136.7658,
+        "xmax": 716555.547,
+        "ymax": 9326029.0688,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 10000,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "hasAttachments": false,
+      "htmlPopupType": "esriServerHTMLPopupTypeAsHTMLText",
+      "displayField": "OBJECTID",
+      "typeIdField": null,
+      "subtypeFieldName": null,
+      "subtypeField": null,
+      "defaultSubtypeCode": null,
+      "fields": [
+        {
+          "name": "OBJECTID_1",
+          "type": "esriFieldTypeOID",
+          "alias": "OBJECTID_1",
+          "domain": null
+        },
+        {
+          "name": "OBJECTID",
+          "type": "esriFieldTypeInteger",
+          "alias": "OBJECTID",
+          "domain": null
+        },
+        {
+          "name": "NAMA",
+          "type": "esriFieldTypeString",
+          "alias": "NAMA",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "JENIS",
+          "type": "esriFieldTypeString",
+          "alias": "JENIS",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "KELURAHAN",
+          "type": "esriFieldTypeString",
+          "alias": "KELURAHAN",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "KECAMATAN",
+          "type": "esriFieldTypeString",
+          "alias": "KECAMATAN",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "KOTA_ADMIN",
+          "type": "esriFieldTypeString",
+          "alias": "KOTA_ADMIN",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "ALAMAT",
+          "type": "esriFieldTypeString",
+          "alias": "ALAMAT",
+          "length": 254,
+          "domain": null
+        },
+        {
+          "name": "NAMA_PENGI",
+          "type": "esriFieldTypeString",
+          "alias": "NAMA_PENGI",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "TANGGAL_IN",
+          "type": "esriFieldTypeDate",
+          "alias": "TANGGAL_IN",
+          "length": 8,
+          "domain": null
+        },
+        {
+          "name": "SHAPE",
+          "type": "esriFieldTypeGeometry",
+          "alias": "SHAPE",
+          "domain": null
+        }
+      ],
+      "geometryField": {
+        "name": "SHAPE",
+        "type": "esriFieldTypeGeometry",
+        "alias": "SHAPE"
+      },
+      "indexes": [
+        {
+          "name": "R1551_SDE_ROWID_UK",
+          "fields": "OBJECTID_1",
+          "isAscending": true,
+          "isUnique": true,
+          "description": ""
+        },
+        {
+          "name": "A66_IX1",
+          "fields": "SHAPE",
+          "isAscending": true,
+          "isUnique": true,
+          "description": ""
+        }
+      ],
+      "subtypes": [],
+      "relationships": [],
+      "canModifyLayer": true,
+      "canScaleSymbols": false,
+      "hasLabels": false,
+      "capabilities": "Map,Query,Data",
+      "maxRecordCount": 200000,
+      "maxSelectionCount": 2000,
+      "supportsStatistics": true,
+      "supportsExceedsLimitStatistics": true,
+      "supportsAdvancedQueries": true,
+      "supportedQueryFormats": "JSON, geoJSON, PBF",
+      "isDataVersioned": false,
+      "ownershipBasedAccessControlForFeatures": {
+        "allowOthersToQuery": true
+      },
+      "useStandardizedQueries": true,
+      "supportedSpatialRelationships": [
+        "esriSpatialRelIntersects",
+        "esriSpatialRelContains",
+        "esriSpatialRelCrosses",
+        "esriSpatialRelEnvelopeIntersects",
+        "esriSpatialRelIndexIntersects",
+        "esriSpatialRelOverlaps",
+        "esriSpatialRelTouches",
+        "esriSpatialRelWithin",
+        "esriSpatialRelRelation"
+      ],
+      "advancedQueryCapabilities": {
+        "useStandardizedQueries": true,
+        "supportsStatistics": true,
+        "supportsPercentileStatistics": true,
+        "supportsHavingClause": true,
+        "supportsOrderBy": true,
+        "supportsDistinct": true,
+        "supportsCountDistinct": true,
+        "supportsAdvancedQueryRelated": true,
+        "supportsQueryRelatedPagination": true,
+        "supportsPagination": true,
+        "supportsLod": false,
+        "supportsQueryWithLodSR": false,
+        "supportsTrueCurve": true,
+        "supportsQueryWithDatumTransformation": true,
+        "supportsReturningQueryExtent": true,
+        "supportsQueryWithDistance": true,
+        "supportsSqlExpression": true,
+        "supportsTimeRelation": true,
+        "supportsSqlFormat": false,
+        "supportsQueryAnalytic": true,
+        "supportsCurrentUserQueries": true
+      },
+      "supportsDatumTransformation": true,
+      "advancedQueryAnalyticCapabilities": {
+        "supportsLinearRegression": true,
+        "supportsAsync": false,
+        "supportsPercentileAnalytic": true
+      },
+      "dateFieldsTimeReference": null,
+      "preferredTimeReference": null,
+      "datesInUnknownTimezone": false,
+      "hasMetadata": true,
+      "isDataArchived": false,
+      "archivingInfo": {
+        "supportsQueryWithHistoricMoment": false,
+        "startArchivingMoment": -1
+      },
+      "supportsCoordinatesQuantization": true,
+      "supportsDynamicLegends": true,
+      "serviceItemId": "d90cac39a93d4eb3b3d57a066051a353"
+    },
+    "count": {
+      "count": 678
+    }
+  },
+  {
+    "id": "rail",
+    "url": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu/Jalur_Kereta_Api/MapServer/0",
+    "checkedAt": "2026-10-11T06:29:55.084593+00:00",
+    "metadata": {
+      "currentVersion": 11.5,
+      "cimVersion": "3.5.0",
+      "id": 0,
+      "name": "Jalur Kereta Api",
+      "type": "Feature Layer",
+      "description": "",
+      "geometryType": "esriGeometryPolyline",
+      "sourceSpatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": 0,
+        "zUnits": 1,
+        "falseM": 0,
+        "mUnits": 1
+      },
+      "spatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      },
+      "copyrightText": "",
+      "parentLayer": null,
+      "subLayers": [],
+      "minScale": 0,
+      "maxScale": 0,
+      "referenceScale": 0.0,
+      "drawingInfo": {
+        "renderer": {
+          "type": "simple",
+          "symbol": {
+            "type": "esriSLS",
+            "style": "esriSLSSolid",
+            "color": [
+              163,
+              255,
+              115,
+              255
+            ],
+            "width": 1
+          }
+        },
+        "scaleSymbols": true,
+        "transparency": 0,
+        "labelingInfo": null
+      },
+      "defaultVisibility": true,
+      "extent": {
+        "xmin": 686770.2941,
+        "ymin": 9297070.3851,
+        "xmax": 716471.3442,
+        "ymax": 9324449.2933,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 10000,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "hasAttachments": false,
+      "htmlPopupType": "esriServerHTMLPopupTypeAsHTMLText",
+      "displayField": "SHAPE.LEN",
+      "typeIdField": null,
+      "subtypeFieldName": null,
+      "subtypeField": null,
+      "defaultSubtypeCode": null,
+      "fields": [
+        {
+          "name": "OBJECTID",
+          "type": "esriFieldTypeOID",
+          "alias": "OBJECTID",
+          "domain": null
+        },
+        {
+          "name": "SHAPE",
+          "type": "esriFieldTypeGeometry",
+          "alias": "SHAPE",
+          "domain": null
+        },
+        {
+          "name": "SHAPE.LEN",
+          "type": "esriFieldTypeDouble",
+          "alias": "SHAPE.LEN",
+          "domain": null
+        }
+      ],
+      "geometryField": {
+        "name": "SHAPE",
+        "type": "esriFieldTypeGeometry",
+        "alias": "SHAPE"
+      },
+      "indexes": [
+        {
+          "name": "R146_SDE_ROWID_UK",
+          "fields": "OBJECTID",
+          "isAscending": true,
+          "isUnique": true,
+          "description": ""
+        },
+        {
+          "name": "A26_IX1",
+          "fields": "SHAPE",
+          "isAscending": true,
+          "isUnique": true,
+          "description": ""
+        }
+      ],
+      "subtypes": [],
+      "relationships": [],
+      "canModifyLayer": true,
+      "canScaleSymbols": false,
+      "hasLabels": false,
+      "capabilities": "Map,Query,Data",
+      "maxRecordCount": 2000,
+      "maxSelectionCount": 2000,
+      "supportsStatistics": true,
+      "supportsExceedsLimitStatistics": true,
+      "supportsAdvancedQueries": true,
+      "supportedQueryFormats": "JSON, geoJSON, PBF",
+      "isDataVersioned": false,
+      "ownershipBasedAccessControlForFeatures": {
+        "allowOthersToQuery": true
+      },
+      "useStandardizedQueries": true,
+      "supportedSpatialRelationships": [
+        "esriSpatialRelIntersects",
+        "esriSpatialRelContains",
+        "esriSpatialRelCrosses",
+        "esriSpatialRelEnvelopeIntersects",
+        "esriSpatialRelIndexIntersects",
+        "esriSpatialRelOverlaps",
+        "esriSpatialRelTouches",
+        "esriSpatialRelWithin",
+        "esriSpatialRelRelation"
+      ],
+      "advancedQueryCapabilities": {
+        "useStandardizedQueries": true,
+        "supportsStatistics": true,
+        "supportsPercentileStatistics": true,
+        "supportsHavingClause": true,
+        "supportsOrderBy": true,
+        "supportsDistinct": true,
+        "supportsCountDistinct": true,
+        "supportsAdvancedQueryRelated": true,
+        "supportsQueryRelatedPagination": true,
+        "supportsPagination": true,
+        "supportsLod": false,
+        "supportsQueryWithLodSR": false,
+        "supportsTrueCurve": true,
+        "supportsQueryWithDatumTransformation": true,
+        "supportsReturningQueryExtent": true,
+        "supportsQueryWithDistance": true,
+        "supportsSqlExpression": true,
+        "supportsTimeRelation": true,
+        "supportsSqlFormat": false,
+        "supportsQueryAnalytic": true,
+        "supportsCurrentUserQueries": true
+      },
+      "supportsDatumTransformation": true,
+      "advancedQueryAnalyticCapabilities": {
+        "supportsLinearRegression": true,
+        "supportsAsync": false,
+        "supportsPercentileAnalytic": true
+      },
+      "dateFieldsTimeReference": null,
+      "preferredTimeReference": null,
+      "datesInUnknownTimezone": false,
+      "hasGeometryProperties": true,
+      "geometryProperties": {
+        "shapeLengthFieldName": "SHAPE.LEN",
+        "units": "esriMeters",
+        "mapUnits": {
+          "uwkid": 9001
+        }
+      },
+      "hasMetadata": true,
+      "isDataArchived": false,
+      "archivingInfo": {
+        "supportsQueryWithHistoricMoment": false,
+        "startArchivingMoment": -1
+      },
+      "supportsCoordinatesQuantization": true,
+      "supportsDynamicLegends": true,
+      "serviceItemId": "1669a24590ef4ef385365da7d74f253b"
+    },
+    "count": {
+      "count": 263
+    }
+  },
+  {
+    "id": "bus_routes",
+    "url": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu/Jalur_Transjakarta/MapServer/0",
+    "checkedAt": "2026-10-11T06:29:55.084754+00:00",
+    "metadata": {
+      "currentVersion": 11.5,
+      "cimVersion": "3.5.0",
+      "id": 0,
+      "name": "SDE.JALUR_TRANSJAKARTA",
+      "type": "Feature Layer",
+      "description": "",
+      "geometryType": "esriGeometryPolyline",
+      "sourceSpatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 2,
+        "mTolerance": 2,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": 0,
+        "zUnits": 1,
+        "falseM": 0,
+        "mUnits": 1
+      },
+      "spatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      },
+      "copyrightText": "",
+      "parentLayer": null,
+      "subLayers": [],
+      "minScale": 0,
+      "maxScale": 0,
+      "referenceScale": 0.0,
+      "drawingInfo": {
+        "renderer": {
+          "type": "simple",
+          "symbol": {
+            "type": "esriSLS",
+            "style": "esriSLSSolid",
+            "color": [
+              223,
+              115,
+              255,
+              255
+            ],
+            "width": 3.4
+          }
+        },
+        "scaleSymbols": true,
+        "transparency": 0,
+        "labelingInfo": null
+      },
+      "defaultVisibility": true,
+      "extent": {
+        "xmin": 688719.0454,
+        "ymin": 9302126.6996,
+        "xmax": 716170.2889,
+        "ymax": 9324329.7882,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 10000,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "hasAttachments": false,
+      "htmlPopupType": "esriServerHTMLPopupTypeAsHTMLText",
+      "displayField": "KORIDOR",
+      "typeIdField": null,
+      "subtypeFieldName": null,
+      "subtypeField": null,
+      "defaultSubtypeCode": null,
+      "fields": [
+        {
+          "name": "OBJECTID",
+          "type": "esriFieldTypeOID",
+          "alias": "OBJECTID",
+          "domain": null
+        },
+        {
+          "name": "KORIDOR",
+          "type": "esriFieldTypeString",
+          "alias": "KORIDOR",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "JURUSAN",
+          "type": "esriFieldTypeString",
+          "alias": "JURUSAN",
+          "length": 100,
+          "domain": null
+        },
+        {
+          "name": "SHAPE",
+          "type": "esriFieldTypeGeometry",
+          "alias": "SHAPE",
+          "domain": null
+        },
+        {
+          "name": "SHAPE.LEN",
+          "type": "esriFieldTypeDouble",
+          "alias": "SHAPE.LEN",
+          "domain": null
+        }
+      ],
+      "geometryField": {
+        "name": "SHAPE",
+        "type": "esriFieldTypeGeometry",
+        "alias": "SHAPE"
+      },
+      "indexes": [
+        {
+          "name": "R1769_SDE_ROWID_UK",
+          "fields": "OBJECTID",
+          "isAscending": true,
+          "isUnique": true,
+          "description": ""
+        },
+        {
+          "name": "A75_IX1",
+          "fields": "SHAPE",
+          "isAscending": true,
+          "isUnique": true,
+          "description": ""
+        }
+      ],
+      "subtypes": [],
+      "relationships": [],
+      "canModifyLayer": true,
+      "canScaleSymbols": false,
+      "hasLabels": false,
+      "capabilities": "Map,Query,Data",
+      "maxRecordCount": 2000,
+      "maxSelectionCount": 2000,
+      "supportsStatistics": true,
+      "supportsExceedsLimitStatistics": true,
+      "supportsAdvancedQueries": true,
+      "supportedQueryFormats": "JSON, geoJSON, PBF",
+      "isDataVersioned": false,
+      "ownershipBasedAccessControlForFeatures": {
+        "allowOthersToQuery": true
+      },
+      "useStandardizedQueries": true,
+      "supportedSpatialRelationships": [
+        "esriSpatialRelIntersects",
+        "esriSpatialRelContains",
+        "esriSpatialRelCrosses",
+        "esriSpatialRelEnvelopeIntersects",
+        "esriSpatialRelIndexIntersects",
+        "esriSpatialRelOverlaps",
+        "esriSpatialRelTouches",
+        "esriSpatialRelWithin",
+        "esriSpatialRelRelation"
+      ],
+      "advancedQueryCapabilities": {
+        "useStandardizedQueries": true,
+        "supportsStatistics": true,
+        "supportsPercentileStatistics": true,
+        "supportsHavingClause": true,
+        "supportsOrderBy": true,
+        "supportsDistinct": true,
+        "supportsCountDistinct": true,
+        "supportsAdvancedQueryRelated": true,
+        "supportsQueryRelatedPagination": true,
+        "supportsPagination": true,
+        "supportsLod": false,
+        "supportsQueryWithLodSR": false,
+        "supportsTrueCurve": true,
+        "supportsQueryWithDatumTransformation": true,
+        "supportsReturningQueryExtent": true,
+        "supportsQueryWithDistance": true,
+        "supportsSqlExpression": true,
+        "supportsTimeRelation": true,
+        "supportsSqlFormat": false,
+        "supportsQueryAnalytic": true,
+        "supportsCurrentUserQueries": true
+      },
+      "supportsDatumTransformation": true,
+      "advancedQueryAnalyticCapabilities": {
+        "supportsLinearRegression": true,
+        "supportsAsync": false,
+        "supportsPercentileAnalytic": true
+      },
+      "dateFieldsTimeReference": null,
+      "preferredTimeReference": null,
+      "datesInUnknownTimezone": false,
+      "hasGeometryProperties": true,
+      "geometryProperties": {
+        "shapeLengthFieldName": "SHAPE.LEN",
+        "units": "esriMeters",
+        "mapUnits": {
+          "uwkid": 9001
+        }
+      },
+      "hasMetadata": true,
+      "isDataArchived": false,
+      "archivingInfo": {
+        "supportsQueryWithHistoricMoment": false,
+        "startArchivingMoment": -1
+      },
+      "supportsCoordinatesQuantization": true,
+      "supportsDynamicLegends": true,
+      "serviceItemId": "ca817a5c411649a3849148f56c39804b"
+    },
+    "count": {
+      "count": 24
+    }
+  },
+  {
+    "id": "green_space",
+    "url": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu/model_gab_rth/MapServer/0",
+    "checkedAt": "2026-10-11T06:29:55.084879+00:00",
+    "metadata": {
+      "currentVersion": 11.5,
+      "cimVersion": "3.5.0",
+      "id": 0,
+      "name": "SDE.gab_rth",
+      "type": "Feature Layer",
+      "description": "",
+      "geometryType": "esriGeometryPolygon",
+      "sourceSpatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": 0,
+        "zUnits": 1,
+        "falseM": 0,
+        "mUnits": 1
+      },
+      "spatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 2,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 450445547.3910538,
+        "falseZ": 0,
+        "zUnits": 1,
+        "falseM": -100000,
+        "mUnits": 10000
+      },
+      "copyrightText": "",
+      "parentLayer": null,
+      "subLayers": [],
+      "minScale": 0,
+      "maxScale": 0,
+      "referenceScale": 0.0,
+      "drawingInfo": {
+        "renderer": {
+          "type": "simple",
+          "symbol": {
+            "type": "esriSFS",
+            "style": "esriSFSSolid",
+            "color": [
+              201,
+              242,
+              208,
+              255
+            ],
+            "outline": {
+              "type": "esriSLS",
+              "style": "esriSLSSolid",
+              "color": [
+                110,
+                110,
+                110,
+                255
+              ],
+              "width": 0.4
+            }
+          }
+        },
+        "scaleSymbols": true,
+        "transparency": 0,
+        "labelingInfo": null
+      },
+      "defaultVisibility": true,
+      "extent": {
+        "xmin": "NaN",
+        "ymin": "NaN",
+        "xmax": "NaN",
+        "ymax": "NaN",
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 2,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 450445547.3910538,
+          "falseZ": 0,
+          "zUnits": 1,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "hasAttachments": true,
+      "attachmentProperties": [
+        {
+          "name": "id",
+          "fieldName": "ATTACHMENTID",
+          "isEnabled": true
+        },
+        {
+          "name": "globalid",
+          "fieldName": "GLOBALID",
+          "isEnabled": true
+        },
+        {
+          "name": "keywords",
+          "fieldName": "KEYWORDS",
+          "isEnabled": false
+        },
+        {
+          "name": "name",
+          "fieldName": "ATT_NAME",
+          "isEnabled": true
+        },
+        {
+          "name": "contentType",
+          "fieldName": "CONTENT_TYPE",
+          "isEnabled": true
+        },
+        {
+          "name": "size",
+          "fieldName": "DATA_SIZE",
+          "isEnabled": true
+        },
+        {
+          "name": "exifInfo",
+          "fieldName": "EXIFINFO",
+          "isEnabled": false
+        }
+      ],
+      "attachmentFields": [
+        {
+          "name": "ATTACHMENTID",
+          "type": "esriFieldTypeOID",
+          "alias": "ATTACHMENTID",
+          "editable": false,
+          "nullable": false,
+          "length": 4,
+          "domain": null
+        },
+        {
+          "name": "GLOBALID",
+          "type": "esriFieldTypeGlobalID",
+          "alias": "GLOBALID",
+          "editable": false,
+          "nullable": false,
+          "length": 38,
+          "domain": null
+        },
+        {
+          "name": "ATT_NAME",
+          "type": "esriFieldTypeString",
+          "alias": "ATT_NAME",
+          "editable": true,
+          "nullable": false,
+          "length": 250,
+          "domain": null
+        },
+        {
+          "name": "CONTENT_TYPE",
+          "type": "esriFieldTypeString",
+          "alias": "CONTENT_TYPE",
+          "editable": true,
+          "nullable": false,
+          "length": 150,
+          "domain": null
+        },
+        {
+          "name": "DATA_SIZE",
+          "type": "esriFieldTypeInteger",
+          "alias": "DATA_SIZE",
+          "editable": true,
+          "nullable": false,
+          "length": 4,
+          "domain": null
+        }
+      ],
+      "supportsAttachmentsResizing": true,
+      "htmlPopupType": "esriServerHTMLPopupTypeAsHTMLText",
+      "displayField": "KAB_NAME",
+      "typeIdField": null,
+      "subtypeFieldName": null,
+      "subtypeField": null,
+      "defaultSubtypeCode": null,
+      "fields": [
+        {
+          "name": "OBJECTID",
+          "type": "esriFieldTypeOID",
+          "alias": "OBJECTID",
+          "domain": null
+        },
+        {
+          "name": "NAMA",
+          "type": "esriFieldTypeString",
+          "alias": "Nama Lahan",
+          "length": 100,
+          "domain": null
+        },
+        {
+          "name": "LUAS",
+          "type": "esriFieldTypeDouble",
+          "alias": "Luas Lahan",
+          "domain": null
+        },
+        {
+          "name": "X",
+          "type": "esriFieldTypeDouble",
+          "alias": "X",
+          "domain": null
+        },
+        {
+          "name": "Y",
+          "type": "esriFieldTypeDouble",
+          "alias": "Y",
+          "domain": null
+        },
+        {
+          "name": "KETERANGAN",
+          "type": "esriFieldTypeString",
+          "alias": "Keterangan",
+          "length": 500,
+          "domain": null
+        },
+        {
+          "name": "JENIS_OBJECT",
+          "type": "esriFieldTypeInteger",
+          "alias": "Jenis Object",
+          "domain": {
+            "type": "codedValue",
+            "name": "Dishut_Jenis",
+            "description": "Dishut_Jenis",
+            "codedValues": [
+              {
+                "name": "Hutan Kota",
+                "code": 1
+              },
+              {
+                "name": "Lapangan Olahraga",
+                "code": 2
+              },
+              {
+                "name": "Pemakaman",
+                "code": 3
+              },
+              {
+                "name": "Taman Interaktif",
+                "code": 4
+              },
+              {
+                "name": "Taman Kota",
+                "code": 5
+              },
+              {
+                "name": "Taman Lingkungan",
+                "code": 6
+              },
+              {
+                "name": "Taman Rekreasi",
+                "code": 7
+              },
+              {
+                "name": "Belum Diketahui",
+                "code": 8
+              },
+              {
+                "name": "RTH",
+                "code": 9
+              },
+              {
+                "name": "Jalur Hijau",
+                "code": 10
+              },
+              {
+                "name": "Hutan Produksi",
+                "code": 11
+              },
+              {
+                "name": "Hutan Lindung",
+                "code": 12
+              },
+              {
+                "name": "Kebun Bibit",
+                "code": 13
+              }
+            ],
+            "mergePolicy": "esriMPTDefaultValue",
+            "splitPolicy": "esriSPTDefaultValue"
+          }
+        },
+        {
+          "name": "CREATED_USER",
+          "type": "esriFieldTypeString",
+          "alias": "CREATED_USER",
+          "length": 255,
+          "domain": null
+        },
+        {
+          "name": "CREATED_DATE",
+          "type": "esriFieldTypeDate",
+          "alias": "CREATED_DATE",
+          "length": 8,
+          "domain": null
+        },
+        {
+          "name": "LAST_EDITED_USER",
+          "type": "esriFieldTypeString",
+          "alias": "LAST_EDITED_USER",
+          "length": 255,
+          "domain": null
+        },
+        {
+          "name": "LAST_EDITED_DATE",
+          "type": "esriFieldTypeDate",
+          "alias": "LAST_EDITED_DATE",
+          "length": 8,
+          "domain": null
+        },
+        {
+          "name": "KEPEMILIKAN_TANAH",
+          "type": "esriFieldTypeSmallInteger",
+          "alias": "Kepemilikan Tanah",
+          "domain": {
+            "type": "codedValue",
+            "name": "DISHUT_KEPEMILIKAN",
+            "description": "DISHUT_KEPEMILIKAN",
+            "codedValues": [
+              {
+                "name": "Pembebasan",
+                "code": 1
+              },
+              {
+                "name": "Pemeliharaan",
+                "code": 2
+              }
+            ],
+            "mergePolicy": "esriMPTDefaultValue",
+            "splitPolicy": "esriSPTDefaultValue"
+          }
+        },
+        {
+          "name": "PEMBANGUNAN_RTH",
+          "type": "esriFieldTypeSmallInteger",
+          "alias": "Pembangunan RTH",
+          "domain": {
+            "type": "codedValue",
+            "name": "DISHUT_TERBANGUN",
+            "description": "DISHUT_TERBANGUN",
+            "codedValues": [
+              {
+                "name": "TERBANGUN",
+                "code": 1
+              },
+              {
+                "name": "BELUM TERBANGUN",
+                "code": 2
+              }
+            ],
+            "mergePolicy": "esriMPTDefaultValue",
+            "splitPolicy": "esriSPTDefaultValue"
+          }
+        },
+        {
+          "name": "KELURAHAN",
+          "type": "esriFieldTypeString",
+          "alias": "Kelurahan",
+          "length": 50,
+          "domain": {
+            "type": "codedValue",
+            "name": "KELURAHAN",
+            "description": "KELURAHAN",
+            "codedValues": [
+              {
+                "name": "ANCOL",
+                "code": "ANCOL"
+              },
+              {
+                "name": "ANGKE",
+                "code": "ANGKE"
+              },
+              {
+                "name": "BALE KAMBANG",
+                "code": "BALE KAMBANG"
+              },
+              {
+                "name": "BALI MESTER",
+                "code": "BALI MESTER"
+              },
+              {
+                "name": "BANGKA",
+                "code": "BANGKA"
+              },
+              {
+                "name": "BARU",
+                "code": "BARU"
+              },
+              {
+                "name": "BATU AMPAR",
+                "code": "BATU AMPAR"
+              },
+              {
+                "name": "BENDUNGAN HILIR",
+                "code": "BENDUNGAN HILIR"
+              },
+              {
+                "name": "BIDARA CINA",
+                "code": "BIDARA CINA"
+              },
+              {
+                "name": "BINTARO",
+                "code": "BINTARO"
+              },
+              {
+                "name": "BUKIT DURI",
+                "code": "BUKIT DURI"
+              },
+              {
+                "name": "BUNGUR",
+                "code": "BUNGUR"
+              },
+              {
+                "name": "CAKUNG",
+                "code": "CAKUNG"
+              },
+              {
+                "name": "CAKUNG TIMUR",
+                "code": "CAKUNG TIMUR"
+              },
+              {
+                "name": "CAWANG",
+                "code": "CAWANG"
+              },
+              {
+                "name": "CEGER",
+                "code": "CEGER"
+              },
+              {
+                "name": "CEMPAKA BARU",
+                "code": "CEMPAKA BARU"
+              },
+              {
+                "name": "CEMPAKA PUTIH BARAT",
+                "code": "CEMPAKA PUTIH BARAT"
+              },
+              {
+                "name": "CEMPAKA PUTIH TIMUR",
+                "code": "CEMPAKA PUTIH TIMUR"
+              },
+              {
+                "name": "CENGKARENG BARAT",
+                "code": "CENGKARENG BARAT"
+              },
+              {
+                "name": "CENGKARENG TIMUR",
+                "code": "CENGKARENG TIMUR"
+              },
+              {
+                "name": "CIBUBUR",
+                "code": "CIBUBUR"
+              },
+              {
+                "name": "CIDENG",
+                "code": "CIDENG"
+              },
+              {
+                "name": "CIGANJUR",
+                "code": "CIGANJUR"
+              },
+              {
+                "name": "CIJANTUNG",
+                "code": "CIJANTUNG"
+              },
+              {
+                "name": "CIKINI",
+                "code": "CIKINI"
+              },
+              {
+                "name": "CIKOKO",
+                "code": "CIKOKO"
+              },
+              {
+                "name": "CILANDAK BARAT",
+                "code": "CILANDAK BARAT"
+              },
+              {
+                "name": "CILANDAK TIMUR",
+                "code": "CILANDAK TIMUR"
+              },
+              {
+                "name": "CILANGKAP",
+                "code": "CILANGKAP"
+              },
+              {
+                "name": "CILILITAN",
+                "code": "CILILITAN"
+              },
+              {
+                "name": "CILINCING",
+                "code": "CILINCING"
+              },
+              {
+                "name": "CIPAYUNG",
+                "code": "CIPAYUNG"
+              },
+              {
+                "name": "CIPEDAK",
+                "code": "CIPEDAK"
+              },
+              {
+                "name": "CIPETE SELATAN",
+                "code": "CIPETE SELATAN"
+              },
+              {
+                "name": "CIPETE UTARA",
+                "code": "CIPETE UTARA"
+              },
+              {
+                "name": "CIPINANG",
+                "code": "CIPINANG"
+              },
+              {
+                "name": "CIPINANG BESAR SELATAN",
+                "code": "CIPINANG BESAR SELATAN"
+              },
+              {
+                "name": "CIPINANG BESAR UTARA",
+                "code": "CIPINANG BESAR UTARA"
+              },
+              {
+                "name": "CIPINANG CEMPEDAK",
+                "code": "CIPINANG CEMPEDAK"
+              },
+              {
+                "name": "CIPINANG MELAYU",
+                "code": "CIPINANG MELAYU"
+              },
+              {
+                "name": "CIPINANG MUARA",
+                "code": "CIPINANG MUARA"
+              },
+              {
+                "name": "CIPULIR",
+                "code": "CIPULIR"
+              },
+              {
+                "name": "CIRACAS",
+                "code": "CIRACAS"
+              },
+              {
+                "name": "DUKUH",
+                "code": "DUKUH"
+              },
+              {
+                "name": "DUREN SAWIT",
+                "code": "DUREN SAWIT"
+              },
+              {
+                "name": "DURENTIGA",
+                "code": "DURENTIGA"
+              },
+              {
+                "name": "DURI KEPA",
+                "code": "DURI KEPA"
+              },
+              {
+                "name": "DURI KOSAMBI",
+                "code": "DURI KOSAMBI"
+              },
+              {
+                "name": "DURI PULO",
+                "code": "DURI PULO"
+              },
+              {
+                "name": "DURI SELATAN",
+                "code": "DURI SELATAN"
+              },
+              {
+                "name": "DURI UTARA",
+                "code": "DURI UTARA"
+              },
+              {
+                "name": "GALUR",
+                "code": "GALUR"
+              },
+              {
+                "name": "GAMBIR",
+                "code": "GAMBIR"
+              },
+              {
+                "name": "GANDARIA SELATAN",
+                "code": "GANDARIA SELATAN"
+              },
+              {
+                "name": "GANDARIA UTARA",
+                "code": "GANDARIA UTARA"
+              },
+              {
+                "name": "GEDONG",
+                "code": "GEDONG"
+              },
+              {
+                "name": "GELORA",
+                "code": "GELORA"
+              },
+              {
+                "name": "GLODOK",
+                "code": "GLODOK"
+              },
+              {
+                "name": "GONDANGDIA",
+                "code": "GONDANGDIA"
+              },
+              {
+                "name": "GROGOL",
+                "code": "GROGOL"
+              },
+              {
+                "name": "GROGOL SELATAN",
+                "code": "GROGOL SELATAN"
+              },
+              {
+                "name": "GROGOL UTARA",
+                "code": "GROGOL UTARA"
+              },
+              {
+                "name": "GUNTUR",
+                "code": "GUNTUR"
+              },
+              {
+                "name": "GUNUNG",
+                "code": "GUNUNG"
+              },
+              {
+                "name": "GUNUNG SAHARI SELATAN",
+                "code": "GUNUNG SAHARI SELATAN"
+              },
+              {
+                "name": "GUNUNG SAHARI UTARA",
+                "code": "GUNUNG SAHARI UTARA"
+              },
+              {
+                "name": "HALIM PERDANA KUSUMA",
+                "code": "HALIM PERDANA KUSUMA"
+              },
+              {
+                "name": "HARAPAN MULYA",
+                "code": "HARAPAN MULYA"
+              },
+              {
+                "name": "JAGAKARSA",
+                "code": "JAGAKARSA"
+              },
+              {
+                "name": "JATI",
+                "code": "JATI"
+              },
+              {
+                "name": "JATI PADANG",
+                "code": "JATI PADANG"
+              },
+              {
+                "name": "JATINEGARA",
+                "code": "JATINEGARA"
+              },
+              {
+                "name": "JATINEGARA KAUM",
+                "code": "JATINEGARA KAUM"
+              },
+              {
+                "name": "JATIPULO",
+                "code": "JATIPULO"
+              },
+              {
+                "name": "JELAMBAR",
+                "code": "JELAMBAR"
+              },
+              {
+                "name": "JELAMBAR BARU",
+                "code": "JELAMBAR BARU"
+              },
+              {
+                "name": "JEMBATAN BESI",
+                "code": "JEMBATAN BESI"
+              },
+              {
+                "name": "JEMBATAN LIMA",
+                "code": "JEMBATAN LIMA"
+              },
+              {
+                "name": "JOGLO",
+                "code": "JOGLO"
+              },
+              {
+                "name": "JOHAR BARU",
+                "code": "JOHAR BARU"
+              },
+              {
+                "name": "KALI ANYAR",
+                "code": "KALI ANYAR"
+              },
+              {
+                "name": "KALIBARU",
+                "code": "KALIBARU"
+              },
+              {
+                "name": "KALIBATA",
+                "code": "KALIBATA"
+              },
+              {
+                "name": "KALIDERES",
+                "code": "KALIDERES"
+              },
+              {
+                "name": "KALISARI",
+                "code": "KALISARI"
+              },
+              {
+                "name": "KAMAL",
+                "code": "KAMAL"
+              },
+              {
+                "name": "KAMAL MUARA",
+                "code": "KAMAL MUARA"
+              },
+              {
+                "name": "KAMPUNG BALI",
+                "code": "KAMPUNG BALI"
+              },
+              {
+                "name": "KAMPUNG MELAYU",
+                "code": "KAMPUNG MELAYU"
+              },
+              {
+                "name": "KAMPUNG RAWA",
+                "code": "KAMPUNG RAWA"
+              },
+              {
+                "name": "KAMPUNG TENGAH",
+                "code": "KAMPUNG TENGAH"
+              },
+              {
+                "name": "KAPUK",
+                "code": "KAPUK"
+              },
+              {
+                "name": "KAPUK MUARA",
+                "code": "KAPUK MUARA"
+              },
+              {
+                "name": "KARANG ANYAR",
+                "code": "KARANG ANYAR"
+              },
+              {
+                "name": "KARET",
+                "code": "KARET"
+              },
+              {
+                "name": "KARET KUNINGAN",
+                "code": "KARET KUNINGAN"
+              },
+              {
+                "name": "KARET SEMANGGI",
+                "code": "KARET SEMANGGI"
+              },
+              {
+                "name": "KARET TENGSIN",
+                "code": "KARET TENGSIN"
+              },
+              {
+                "name": "KARTINI",
+                "code": "KARTINI"
+              },
+              {
+                "name": "KAYU MANIS",
+                "code": "KAYU MANIS"
+              },
+              {
+                "name": "KAYU PUTIH",
+                "code": "KAYU PUTIH"
+              },
+              {
+                "name": "KEAGUNGAN",
+                "code": "KEAGUNGAN"
+              },
+              {
+                "name": "KEBAGUSAN",
+                "code": "KEBAGUSAN"
+              },
+              {
+                "name": "KEBAYORAN LAMA SELATAN",
+                "code": "KEBAYORAN LAMA SELATAN"
+              },
+              {
+                "name": "KEBAYORAN LAMA UTARA",
+                "code": "KEBAYORAN LAMA UTARA"
+              },
+              {
+                "name": "KEBON BARU",
+                "code": "KEBON BARU"
+              },
+              {
+                "name": "KEBON BAWANG",
+                "code": "KEBON BAWANG"
+              },
+              {
+                "name": "KEBON JERUK",
+                "code": "KEBON JERUK"
+              },
+              {
+                "name": "KEBON KACANG",
+                "code": "KEBON KACANG"
+              },
+              {
+                "name": "KEBON KELAPA",
+                "code": "KEBON KELAPA"
+              },
+              {
+                "name": "KEBON KOSONG",
+                "code": "KEBON KOSONG"
+              },
+              {
+                "name": "KEBON MANGGIS",
+                "code": "KEBON MANGGIS"
+              },
+              {
+                "name": "KEBON MELATI",
+                "code": "KEBON MELATI"
+              },
+              {
+                "name": "KEBON PALA",
+                "code": "KEBON PALA"
+              },
+              {
+                "name": "KEBON SIRIH",
+                "code": "KEBON SIRIH"
+              },
+              {
+                "name": "KEDAUNG KALIANGKE",
+                "code": "KEDAUNG KALIANGKE"
+              },
+              {
+                "name": "KEDOYA SELATAN",
+                "code": "KEDOYA SELATAN"
+              },
+              {
+                "name": "KEDOYA UTARA",
+                "code": "KEDOYA UTARA"
+              },
+              {
+                "name": "KELAPA DUA",
+                "code": "KELAPA DUA"
+              },
+              {
+                "name": "KELAPA DUA WETAN",
+                "code": "KELAPA DUA WETAN"
+              },
+              {
+                "name": "KELAPA GADING BARAT",
+                "code": "KELAPA GADING BARAT"
+              },
+              {
+                "name": "KELAPA GADING TIMUR",
+                "code": "KELAPA GADING TIMUR"
+              },
+              {
+                "name": "KEMANGGISAN",
+                "code": "KEMANGGISAN"
+              },
+              {
+                "name": "KEMAYORAN",
+                "code": "KEMAYORAN"
+              },
+              {
+                "name": "KEMBANGAN SELATAN",
+                "code": "KEMBANGAN SELATAN"
+              },
+              {
+                "name": "KEMBANGAN UTARA",
+                "code": "KEMBANGAN UTARA"
+              },
+              {
+                "name": "KENARI",
+                "code": "KENARI"
+              },
+              {
+                "name": "KLENDER",
+                "code": "KLENDER"
+              },
+              {
+                "name": "KOJA SELATAN",
+                "code": "KOJA SELATAN"
+              },
+              {
+                "name": "KOJA UTARA",
+                "code": "KOJA UTARA"
+              },
+              {
+                "name": "KOTA BAMBU SELATAN",
+                "code": "KOTA BAMBU SELATAN"
+              },
+              {
+                "name": "KOTA BAMBU UTARA",
+                "code": "KOTA BAMBU UTARA"
+              },
+              {
+                "name": "KRAMAT",
+                "code": "KRAMAT"
+              },
+              {
+                "name": "KRAMAT JATI",
+                "code": "KRAMAT JATI"
+              },
+              {
+                "name": "KRAMAT PELA",
+                "code": "KRAMAT PELA"
+              },
+              {
+                "name": "KRENDANG",
+                "code": "KRENDANG"
+              },
+              {
+                "name": "KRUKUT",
+                "code": "KRUKUT"
+              },
+              {
+                "name": "KUNINGAN BARAT",
+                "code": "KUNINGAN BARAT"
+              },
+              {
+                "name": "KUNINGAN TIMUR",
+                "code": "KUNINGAN TIMUR"
+              },
+              {
+                "name": "KWITANG",
+                "code": "KWITANG"
+              },
+              {
+                "name": "LAGOA",
+                "code": "LAGOA"
+              },
+              {
+                "name": "LEBAK BULUS",
+                "code": "LEBAK BULUS"
+              },
+              {
+                "name": "LENTENG AGUNG",
+                "code": "LENTENG AGUNG"
+              },
+              {
+                "name": "LUBANG BUAYA",
+                "code": "LUBANG BUAYA"
+              },
+              {
+                "name": "MAKASAR",
+                "code": "MAKASAR"
+              },
+              {
+                "name": "MALAKA JAYA",
+                "code": "MALAKA JAYA"
+              },
+              {
+                "name": "MALAKA SARI",
+                "code": "MALAKA SARI"
+              },
+              {
+                "name": "MAMPANG PRAPATAN",
+                "code": "MAMPANG PRAPATAN"
+              },
+              {
+                "name": "MANGGA BESAR",
+                "code": "MANGGA BESAR"
+              },
+              {
+                "name": "MANGGA DUA SELATAN",
+                "code": "MANGGA DUA SELATAN"
+              },
+              {
+                "name": "MANGGARAI",
+                "code": "MANGGARAI"
+              },
+              {
+                "name": "MANGGARAI SELATAN",
+                "code": "MANGGARAI SELATAN"
+              },
+              {
+                "name": "MAPHAR",
+                "code": "MAPHAR"
+              },
+              {
+                "name": "MARUNDA",
+                "code": "MARUNDA"
+              },
+              {
+                "name": "MELAWAI",
+                "code": "MELAWAI"
+              },
+              {
+                "name": "MENTENG",
+                "code": "MENTENG"
+              },
+              {
+                "name": "MENTENG ATAS",
+                "code": "MENTENG ATAS"
+              },
+              {
+                "name": "MENTENG DALAM",
+                "code": "MENTENG DALAM"
+              },
+              {
+                "name": "MERUYA SELATAN",
+                "code": "MERUYA SELATAN"
+              },
+              {
+                "name": "MERUYA UTARA",
+                "code": "MERUYA UTARA"
+              },
+              {
+                "name": "MUNJUL",
+                "code": "MUNJUL"
+              },
+              {
+                "name": "PADEMANGAN BARAT",
+                "code": "PADEMANGAN BARAT"
+              },
+              {
+                "name": "PADEMANGAN TIMUR",
+                "code": "PADEMANGAN TIMUR"
+              },
+              {
+                "name": "PALMERAH",
+                "code": "PALMERAH"
+              },
+              {
+                "name": "PALMERIAM",
+                "code": "PALMERIAM"
+              },
+              {
+                "name": "PANCORAN",
+                "code": "PANCORAN"
+              },
+              {
+                "name": "PAPANGGO",
+                "code": "PAPANGGO"
+              },
+              {
+                "name": "PASAR BARU",
+                "code": "PASAR BARU"
+              },
+              {
+                "name": "PASAR MANGGIS",
+                "code": "PASAR MANGGIS"
+              },
+              {
+                "name": "PASAR MINGGU",
+                "code": "PASAR MINGGU"
+              },
+              {
+                "name": "PASEBAN\nPASEBAN",
+                "code": "PASEBAN"
+              },
+              {
+                "name": "PEGADUNGAN",
+                "code": "PEGADUNGAN"
+              },
+              {
+                "name": "PEGANGSAAN",
+                "code": "PEGANGSAAN"
+              },
+              {
+                "name": "PEGANGSAAN DUA",
+                "code": "PEGANGSAAN DUA"
+              },
+              {
+                "name": "PEJAGALAN",
+                "code": "PEJAGALAN"
+              },
+              {
+                "name": "PEJATEN BARAT",
+                "code": "PEJATEN BARAT"
+              },
+              {
+                "name": "PEJATEN TIMUR",
+                "code": "PEJATEN TIMUR"
+              },
+              {
+                "name": "PEKAYON",
+                "code": "PEKAYON"
+              },
+              {
+                "name": "PEKOJAN",
+                "code": "PEKOJAN"
+              },
+              {
+                "name": "PELA MAMPANG",
+                "code": "PELA MAMPANG"
+              },
+              {
+                "name": "PENGADEGAN",
+                "code": "PENGADEGAN"
+              },
+              {
+                "name": "PENGGILINGAN",
+                "code": "PENGGILINGAN"
+              },
+              {
+                "name": "PENJARINGAN",
+                "code": "PENJARINGAN"
+              },
+              {
+                "name": "PESANGGRAHAN",
+                "code": "PESANGGRAHAN"
+              },
+              {
+                "name": "PETAMBURAN",
+                "code": "PETAMBURAN"
+              },
+              {
+                "name": "PETOGOGAN",
+                "code": "PETOGOGAN"
+              },
+              {
+                "name": "PETOJO SELATAN",
+                "code": "PETOJO SELATAN"
+              },
+              {
+                "name": "PETOJO UTARA",
+                "code": "PETOJO UTARA"
+              },
+              {
+                "name": "PETUKANGAN SELATAN",
+                "code": "PETUKANGAN SELATAN"
+              },
+              {
+                "name": "PETUKANGAN UTARA",
+                "code": "PETUKANGAN UTARA"
+              },
+              {
+                "name": "PINANG RANTI",
+                "code": "PINANG RANTI"
+              },
+              {
+                "name": "PINANGSIA",
+                "code": "PINANGSIA"
+              },
+              {
+                "name": "PISANGAN BARU",
+                "code": "PISANGAN BARU"
+              },
+              {
+                "name": "PISANGAN TIMUR",
+                "code": "PISANGAN TIMUR"
+              },
+              {
+                "name": "PLUIT",
+                "code": "PLUIT"
+              },
+              {
+                "name": "PONDOK BAMBU",
+                "code": "PONDOK BAMBU"
+              },
+              {
+                "name": "PONDOK INDAH",
+                "code": "PONDOK INDAH"
+              },
+              {
+                "name": "PONDOK KELAPA",
+                "code": "PONDOK KELAPA"
+              },
+              {
+                "name": "PONDOK KOPI",
+                "code": "PONDOK KOPI"
+              },
+              {
+                "name": "PONDOK LABU",
+                "code": "PONDOK LABU"
+              },
+              {
+                "name": "PONDOK PINANG",
+                "code": "PONDOK PINANG"
+              },
+              {
+                "name": "PONDOK RANGON",
+                "code": "PONDOK RANGON"
+              },
+              {
+                "name": "PULAU HARAPAN",
+                "code": "PULAU HARAPAN"
+              },
+              {
+                "name": "PULAU KELAPA",
+                "code": "PULAU KELAPA"
+              },
+              {
+                "name": "PULAU PANGGANG",
+                "code": "PULAU PANGGANG"
+              },
+              {
+                "name": "PULAU PARI",
+                "code": "PULAU PARI"
+              },
+              {
+                "name": "PULAU TIDUNG",
+                "code": "PULAU TIDUNG"
+              },
+              {
+                "name": "PULAU UNTUNG JAWA",
+                "code": "PULAU UNTUNG JAWA"
+              },
+              {
+                "name": "PULO",
+                "code": "PULO"
+              },
+              {
+                "name": "PULO GADUNG",
+                "code": "PULO GADUNG"
+              },
+              {
+                "name": "PULO GEBANG",
+                "code": "PULO GEBANG"
+              },
+              {
+                "name": "RAGUNAN",
+                "code": "RAGUNAN"
+              },
+              {
+                "name": "RAMBUTAN",
+                "code": "RAMBUTAN"
+              },
+              {
+                "name": "RAWA BARAT",
+                "code": "RAWA BARAT"
+              },
+              {
+                "name": "RAWA BUAYA",
+                "code": "RAWA BUAYA"
+              },
+              {
+                "name": "RAWA BUNGA",
+                "code": "RAWA BUNGA"
+              },
+              {
+                "name": "RAWA TERATE",
+                "code": "RAWA TERATE"
+              },
+              {
+                "name": "RAWABADAK SELATAN",
+                "code": "RAWABADAK SELATAN"
+              },
+              {
+                "name": "RAWABADAK UTARA",
+                "code": "RAWABADAK UTARA"
+              },
+              {
+                "name": "RAWAJATI",
+                "code": "RAWAJATI"
+              },
+              {
+                "name": "RAWAMANGUN",
+                "code": "RAWAMANGUN"
+              },
+              {
+                "name": "RAWASARI",
+                "code": "RAWASARI"
+              },
+              {
+                "name": "ROA MALAKA",
+                "code": "ROA MALAKA"
+              },
+              {
+                "name": "ROROTAN",
+                "code": "ROROTAN"
+              },
+              {
+                "name": "SELONG",
+                "code": "SELONG"
+              },
+              {
+                "name": "SEMANAN",
+                "code": "SEMANAN"
+              },
+              {
+                "name": "SEMPER BARAT",
+                "code": "SEMPER BARAT"
+              },
+              {
+                "name": "SEMPER TIMUR",
+                "code": "SEMPER TIMUR"
+              },
+              {
+                "name": "SENAYAN",
+                "code": "SENAYAN"
+              },
+              {
+                "name": "SENEN",
+                "code": "SENEN"
+              },
+              {
+                "name": "SERDANG",
+                "code": "SERDANG"
+              },
+              {
+                "name": "SETIABUDI",
+                "code": "SETIABUDI"
+              },
+              {
+                "name": "SETU",
+                "code": "SETU"
+              },
+              {
+                "name": "SLIPI",
+                "code": "SLIPI"
+              },
+              {
+                "name": "SRENGSENG",
+                "code": "SRENGSENG"
+              },
+              {
+                "name": "SRENGSENG SAWAH",
+                "code": "SRENGSENG SAWAH"
+              },
+              {
+                "name": "SUKABUMI SELATAN",
+                "code": "SUKABUMI SELATAN"
+              },
+              {
+                "name": "SUKABUMI UTARA",
+                "code": "SUKABUMI UTARA"
+              },
+              {
+                "name": "SUKAPURA",
+                "code": "SUKAPURA"
+              },
+              {
+                "name": "SUMUR BATU",
+                "code": "SUMUR BATU"
+              },
+              {
+                "name": "SUNGAI BAMBU",
+                "code": "SUNGAI BAMBU"
+              },
+              {
+                "name": "SUNTER AGUNG",
+                "code": "SUNTER AGUNG"
+              },
+              {
+                "name": "SUNTER JAYA",
+                "code": "SUNTER JAYA"
+              },
+              {
+                "name": "SUSUKAN",
+                "code": "SUSUKAN"
+              },
+              {
+                "name": "TAMANSARI",
+                "code": "TAMANSARI"
+              },
+              {
+                "name": "TAMBORA",
+                "code": "TAMBORA"
+              },
+              {
+                "name": "TANAH SEREAL",
+                "code": "TANAH SEREAL"
+              },
+              {
+                "name": "TANAH TINGGI",
+                "code": "TANAH TINGGI"
+              },
+              {
+                "name": "TANGKI",
+                "code": "TANGKI"
+              },
+              {
+                "name": "TANJUNG BARAT",
+                "code": "TANJUNG BARAT"
+              },
+              {
+                "name": "TANJUNG DUREN SELATAN",
+                "code": "TANJUNG DUREN SELATAN"
+              },
+              {
+                "name": "TANJUNG DUREN UTARA",
+                "code": "TANJUNG DUREN UTARA"
+              },
+              {
+                "name": "TANJUNG PRIOK",
+                "code": "TANJUNG PRIOK"
+              },
+              {
+                "name": "TEBET BARAT",
+                "code": "TEBET BARAT"
+              },
+              {
+                "name": "TEBET TIMUR",
+                "code": "TEBET TIMUR"
+              },
+              {
+                "name": "TEGAL ALUR",
+                "code": "TEGAL ALUR"
+              },
+              {
+                "name": "TEGAL PARANG",
+                "code": "TEGAL PARANG"
+              },
+              {
+                "name": "TOMANG",
+                "code": "TOMANG"
+              },
+              {
+                "name": "TUGU SELATAN",
+                "code": "TUGU SELATAN"
+              },
+              {
+                "name": "TUGU UTARA",
+                "code": "TUGU UTARA"
+              },
+              {
+                "name": "UJUNG MENTENG",
+                "code": "UJUNG MENTENG"
+              },
+              {
+                "name": "ULUJAMI",
+                "code": "ULUJAMI"
+              },
+              {
+                "name": "UTAN KAYU SELATAN",
+                "code": "UTAN KAYU SELATAN"
+              },
+              {
+                "name": "UTAN KAYU UTARA",
+                "code": "UTAN KAYU UTARA"
+              },
+              {
+                "name": "UTAN PANJANG",
+                "code": "UTAN PANJANG"
+              },
+              {
+                "name": "WARAKAS",
+                "code": "WARAKAS"
+              },
+              {
+                "name": "WIJAYA KUSUMA",
+                "code": "WIJAYA KUSUMA"
+              },
+              {
+                "name": "BAMBU APUS",
+                "code": "BAMBU APUS"
+              }
+            ],
+            "mergePolicy": "esriMPTDefaultValue",
+            "splitPolicy": "esriSPTDefaultValue"
+          }
+        },
+        {
+          "name": "KECAMATAN",
+          "type": "esriFieldTypeString",
+          "alias": "Kecamatan",
+          "length": 50,
+          "domain": {
+            "type": "codedValue",
+            "name": "KECAMATAN_3",
+            "description": "KECAMATAN",
+            "codedValues": [
+              {
+                "name": "CAKUNG",
+                "code": "CAKUNG"
+              },
+              {
+                "name": "CEMPAKA PUTIH",
+                "code": "CEMPAKA PUTIH"
+              },
+              {
+                "name": "CENGKARENG",
+                "code": "CENGKARENG"
+              },
+              {
+                "name": "CILANDAK",
+                "code": "CILANDAK"
+              },
+              {
+                "name": "CILINCING",
+                "code": "CILINCING"
+              },
+              {
+                "name": "CIPAYUNG",
+                "code": "CIPAYUNG"
+              },
+              {
+                "name": "CIRACAS",
+                "code": "CIRACAS"
+              },
+              {
+                "name": "DUREN SAWIT",
+                "code": "DUREN SAWIT"
+              },
+              {
+                "name": "GAMBIR",
+                "code": "GAMBIR"
+              },
+              {
+                "name": "GROGOL PETAMBURAN",
+                "code": "GROGOL PETAMBURAN"
+              },
+              {
+                "name": "JAGAKARSA",
+                "code": "JAGAKARSA"
+              },
+              {
+                "name": "JATINEGARA",
+                "code": "JATINEGARA"
+              },
+              {
+                "name": "JOHAR BARU",
+                "code": "JOHAR BARU"
+              },
+              {
+                "name": "KALIDERES",
+                "code": "KALIDERES"
+              },
+              {
+                "name": "KEBAYORAN BARU",
+                "code": "KEBAYORAN BARU"
+              },
+              {
+                "name": "KEBAYORAN LAMA",
+                "code": "KEBAYORAN LAMA"
+              },
+              {
+                "name": "KEBON JERUK",
+                "code": "KEBON JERUK"
+              },
+              {
+                "name": "KELAPA GADING",
+                "code": "KELAPA GADING"
+              },
+              {
+                "name": "KEMAYORAN",
+                "code": "KEMAYORAN"
+              },
+              {
+                "name": "KEMBANGAN",
+                "code": "KEMBANGAN"
+              },
+              {
+                "name": "KOJA",
+                "code": "KOJA"
+              },
+              {
+                "name": "KRAMATJATI",
+                "code": "KRAMATJATI"
+              },
+              {
+                "name": "MAKASAR",
+                "code": "MAKASAR"
+              },
+              {
+                "name": "MAMPANG PRAPATAN",
+                "code": "MAMPANG PRAPATAN"
+              },
+              {
+                "name": "MATRAMAN",
+                "code": "MATRAMAN"
+              },
+              {
+                "name": "MENTENG",
+                "code": "MENTENG"
+              },
+              {
+                "name": "PADEMANGAN",
+                "code": "PADEMANGAN"
+              },
+              {
+                "name": "PALMERAH",
+                "code": "PALMERAH"
+              },
+              {
+                "name": "PANCORAN",
+                "code": "PANCORAN"
+              },
+              {
+                "name": "PASAR MINGGU",
+                "code": "PASAR MINGGU"
+              },
+              {
+                "name": "PASAR REBO",
+                "code": "PASAR REBO"
+              },
+              {
+                "name": "PENJARINGAN",
+                "code": "PENJARINGAN"
+              },
+              {
+                "name": "PESANGGRAHAN",
+                "code": "PESANGGRAHAN"
+              },
+              {
+                "name": "PULOGADUNG",
+                "code": "PULOGADUNG"
+              },
+              {
+                "name": "SAWAH BESAR",
+                "code": "SAWAH BESAR"
+              },
+              {
+                "name": "SENEN",
+                "code": "SENEN"
+              },
+              {
+                "name": "SETIABUDI",
+                "code": "SETIABUDI"
+              },
+              {
+                "name": "TAMANSARI",
+                "code": "TAMANSARI"
+              },
+              {
+                "name": "TAMBORA",
+                "code": "TAMBORA"
+              },
+              {
+                "name": "TANAH ABANG",
+                "code": "TANAH ABANG"
+              },
+              {
+                "name": "TANJUNG PRIOK",
+                "code": "TANJUNG PRIOK"
+              },
+              {
+                "name": "TEBET",
+                "code": "TEBET"
+              },
+              {
+                "name": "KEPULAUAN SERIBU SELATAN",
+                "code": "KEPULAUAN SERIBU SELATAN"
+              },
+              {
+                "name": "KEPULAUAN SERIBU UTARA",
+                "code": "KEPULAUAN SERIBU UTARA"
+              }
+            ],
+            "mergePolicy": "esriMPTDefaultValue",
+            "splitPolicy": "esriSPTDefaultValue"
+          }
+        },
+        {
+          "name": "KOTA",
+          "type": "esriFieldTypeString",
+          "alias": "Kota",
+          "length": 50,
+          "domain": {
+            "type": "codedValue",
+            "name": "KOTA",
+            "description": "KOTA",
+            "codedValues": [
+              {
+                "name": "JAKARTA PUSAT",
+                "code": "JAKARTA PUSAT"
+              },
+              {
+                "name": "JAKARTA UTARA",
+                "code": "JAKARTA UTARA"
+              },
+              {
+                "name": "JAKARTA TIMUR",
+                "code": "JAKARTA TIMUR"
+              },
+              {
+                "name": "JAKARTA SELATAN",
+                "code": "JAKARTA SELATAN"
+              },
+              {
+                "name": "JAKARTA BARAT",
+                "code": "JAKARTA BARAT"
+              },
+              {
+                "name": "KEPULAUAN SERIBU",
+                "code": "KEPULAUAN SERIBU"
+              }
+            ],
+            "mergePolicy": "esriMPTDefaultValue",
+            "splitPolicy": "esriSPTDefaultValue"
+          }
+        },
+        {
+          "name": "TAHUN_PEMBEBASAN",
+          "type": "esriFieldTypeSmallInteger",
+          "alias": "Tahun Pembebasan",
+          "domain": null
+        },
+        {
+          "name": "JNS_KEPEMILIKAN_TANAH",
+          "type": "esriFieldTypeSmallInteger",
+          "alias": "Jenis Kepemilikan Tanah",
+          "domain": {
+            "type": "codedValue",
+            "name": "DISHUT_JNS_KEPEMILIKAN",
+            "description": "DISHUT_JNS_KEPEMILIKAN",
+            "codedValues": [
+              {
+                "name": "Pemerintah",
+                "code": 1
+              },
+              {
+                "name": "Masyarakat",
+                "code": 2
+              }
+            ],
+            "mergePolicy": "esriMPTDefaultValue",
+            "splitPolicy": "esriSPTDefaultValue"
+          }
+        },
+        {
+          "name": "NO_SERTIFIKAT",
+          "type": "esriFieldTypeString",
+          "alias": "No. Sertifikat Tanah",
+          "length": 100,
+          "domain": null
+        },
+        {
+          "name": "TGL_SERTIFIKAT",
+          "type": "esriFieldTypeDate",
+          "alias": "Tgl. Sertifikat Tanah",
+          "length": 8,
+          "domain": null
+        },
+        {
+          "name": "KATEGORI_ASET",
+          "type": "esriFieldTypeSmallInteger",
+          "alias": "Kategori Aset",
+          "domain": {
+            "type": "codedValue",
+            "name": "DISHUT_KIB",
+            "description": "DISHUT_KIB",
+            "codedValues": [
+              {
+                "name": "KIB A",
+                "code": 1
+              },
+              {
+                "name": "KIB B",
+                "code": 2
+              },
+              {
+                "name": "KIB C",
+                "code": 3
+              },
+              {
+                "name": "KIB D",
+                "code": 4
+              },
+              {
+                "name": "KIB E",
+                "code": 5
+              }
+            ],
+            "mergePolicy": "esriMPTDefaultValue",
+            "splitPolicy": "esriSPTDefaultValue"
+          }
+        },
+        {
+          "name": "PENGELOLA",
+          "type": "esriFieldTypeSmallInteger",
+          "alias": "Pengelola Aset",
+          "domain": {
+            "type": "codedValue",
+            "name": "DISHUT_PENGELOLA",
+            "description": "DISHUT_PENGELOLA",
+            "codedValues": [
+              {
+                "name": "Kecamatan",
+                "code": 2
+              },
+              {
+                "name": "Kelurahan",
+                "code": 3
+              },
+              {
+                "name": "UPT",
+                "code": 5
+              },
+              {
+                "name": "Suku Dinas Kehutanan",
+                "code": 1
+              },
+              {
+                "name": "Dinas Kehutanan",
+                "code": 4
+              },
+              {
+                "name": "BUMD",
+                "code": 6
+              },
+              {
+                "name": "BUMN",
+                "code": 7
+              },
+              {
+                "name": "Pemerintah Pusat",
+                "code": 8
+              },
+              {
+                "name": "Masyarakat",
+                "code": 9
+              }
+            ],
+            "mergePolicy": "esriMPTDefaultValue",
+            "splitPolicy": "esriSPTDefaultValue"
+          }
+        },
+        {
+          "name": "PETUGAS_INPUT",
+          "type": "esriFieldTypeString",
+          "alias": "Nama Petugas Input",
+          "length": 225,
+          "domain": null
+        },
+        {
+          "name": "UNIT_PETUGAS",
+          "type": "esriFieldTypeString",
+          "alias": "Unit Petugas Input",
+          "length": 100,
+          "domain": {
+            "type": "codedValue",
+            "name": "dishut_sotk",
+            "description": "dishut_sotk",
+            "codedValues": [
+              {
+                "name": "Bidang Kehutanan Dinas Kehutanan",
+                "code": "Bidang Kehutanan Dinas Kehutanan"
+              },
+              {
+                "name": "Bidang Pertamanan Dinas Kehutanan",
+                "code": "Bidang Pertamanan Dinas Kehutanan"
+              },
+              {
+                "name": "Bidang Pemakaman Dinas Kehutanan",
+                "code": "Bidang Pemakaman Dinas Kehutanan"
+              },
+              {
+                "name": "Bidang Pemberdayaan Masyarakat dan Penegakan Hukum Dinas Kehutanan",
+                "code": "Bidang Pemberdayaan Masyarakat dan Penegakan Hukum Dinas Kehutanan"
+              },
+              {
+                "name": "Seksi Kehutanan Sudin Kehutanan Jakarta Pusat",
+                "code": "Seksi Kehutanan Sudin Kehutanan Jakarta Pusat"
+              },
+              {
+                "name": "Seksi Kehutanan Sudin Kehutanan Jakarta Bara",
+                "code": "Seksi Kehutanan Sudin Kehutanan Jakarta Barat"
+              },
+              {
+                "name": "Seksi Kehutanan Sudin Kehutanan Jakarta Utara",
+                "code": "Seksi Kehutanan Sudin Kehutanan Jakarta Utara"
+              },
+              {
+                "name": "Seksi Kehutanan Sudin Kehutanan Jakarta Timur",
+                "code": "Seksi Kehutanan Sudin Kehutanan Jakarta Timur"
+              },
+              {
+                "name": "Seksi Kehutanan Sudin Kehutanan Jakarta Selatan",
+                "code": "Seksi Kehutanan Sudin Kehutanan Jakarta Selatan"
+              },
+              {
+                "name": "Seksi Pertamanan Sudin Kehutanan Jakarta Pusat",
+                "code": "Seksi Pertamanan Sudin Kehutanan Jakarta Pusat"
+              },
+              {
+                "name": "Seksi Pertamanan Sudin Kehutanan Jakarta Barat",
+                "code": "Seksi Pertamanan Sudin Kehutanan Jakarta Barat"
+              },
+              {
+                "name": "Seksi Pertamanan Sudin Kehutanan Jakarta Utara",
+                "code": "Seksi Pertamanan Sudin Kehutanan Jakarta Utara"
+              },
+              {
+                "name": "Seksi Pertamanan Sudin Kehutanan Jakarta Timur",
+                "code": "Seksi Pertamanan Sudin Kehutanan Jakarta Timur"
+              },
+              {
+                "name": "Seksi Pertamanan Sudin Kehutanan Jakarta Selatan",
+                "code": "Seksi Pertamanan Sudin Kehutanan Jakarta Selatan"
+              },
+              {
+                "name": "Unit Pengelola Taman Margasatwa Ragunan",
+                "code": "Unit Pengelola Taman Margasatwa Ragunan"
+              },
+              {
+                "name": "Unit Pengelola Pengembangan Tanaman Perkotaan",
+                "code": "Unit Pengelola Pengembangan Tanaman Perkotaan"
+              },
+              {
+                "name": "Seksi Pemakaman Sudin Kehutanan Jakarta Pusat",
+                "code": "Seksi Pemakaman Sudin Kehutanan Jakarta Pusat"
+              },
+              {
+                "name": "Seksi Pemakaman Sudin Kehutanan Jakarta Barat",
+                "code": "Seksi Pemakaman Sudin Kehutanan Jakarta Barat"
+              },
+              {
+                "name": "Seksi Pemakaman Sudin Kehutanan Jakarta Utara",
+                "code": "Seksi Pemakaman Sudin Kehutanan Jakarta Utara"
+              },
+              {
+                "name": "Seksi Pemakaman Sudin Kehutanan Jakarta Timur",
+                "code": "Seksi Pemakaman Sudin Kehutanan Jakarta Timur"
+              },
+              {
+                "name": "Seksi Pemakaman Sudin Kehutanan Jakarta Selatan",
+                "code": "Seksi Pemakaman Sudin Kehutanan Jakarta Selatan"
+              }
+            ],
+            "mergePolicy": "esriMPTDefaultValue",
+            "splitPolicy": "esriSPTDefaultValue"
+          }
+        },
+        {
+          "name": "PERUNTUKKAN_RDTR",
+          "type": "esriFieldTypeString",
+          "alias": "PERUNTUKKAN_RDTR",
+          "length": 100,
+          "domain": null
+        },
+        {
+          "name": "KET_KONDISI_EXISTING",
+          "type": "esriFieldTypeString",
+          "alias": "Keterangan Kondisi Existing",
+          "length": 500,
+          "domain": null
+        },
+        {
+          "name": "ALAMAT",
+          "type": "esriFieldTypeString",
+          "alias": "Lokasi",
+          "length": 500,
+          "domain": null
+        },
+        {
+          "name": "VERIFIKASI",
+          "type": "esriFieldTypeSmallInteger",
+          "alias": "Verifikasi",
+          "domain": {
+            "type": "codedValue",
+            "name": "YA/TIDAK_NUMBER",
+            "description": "YA/TIDAK_NUMBER",
+            "codedValues": [
+              {
+                "name": "Ya",
+                "code": 1
+              },
+              {
+                "name": "Tidak",
+                "code": 2
+              }
+            ],
+            "mergePolicy": "esriMPTDefaultValue",
+            "splitPolicy": "esriSPTDefaultValue"
+          }
+        },
+        {
+          "name": "SUID3",
+          "type": "esriFieldTypeInteger",
+          "alias": "SUID3",
+          "domain": null
+        },
+        {
+          "name": "FUNGSI_LAHAN",
+          "type": "esriFieldTypeSmallInteger",
+          "alias": "Fungsi Lahan Existing",
+          "domain": {
+            "type": "codedValue",
+            "name": "dishut_fungsi",
+            "description": "dishut_fungsi",
+            "codedValues": [
+              {
+                "name": "Lahan Hijau",
+                "code": 1
+              },
+              {
+                "name": "Berubah Fungsi",
+                "code": 2
+              }
+            ],
+            "mergePolicy": "esriMPTDefaultValue",
+            "splitPolicy": "esriSPTDefaultValue"
+          }
+        },
+        {
+          "name": "AKTIF",
+          "type": "esriFieldTypeSmallInteger",
+          "alias": "AKTIF",
+          "domain": {
+            "type": "codedValue",
+            "name": "YA/TIDAK_NUMBER",
+            "description": "YA/TIDAK_NUMBER",
+            "codedValues": [
+              {
+                "name": "Ya",
+                "code": 1
+              },
+              {
+                "name": "Tidak",
+                "code": 2
+              }
+            ],
+            "mergePolicy": "esriMPTDefaultValue",
+            "splitPolicy": "esriSPTDefaultValue"
+          }
+        },
+        {
+          "name": "KIB_KODE_BARANG",
+          "type": "esriFieldTypeString",
+          "alias": "KIB (Kode Barang)",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "KIB_NO_REGISTER",
+          "type": "esriFieldTypeString",
+          "alias": "KIB (No Register)",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "KAB_NAME",
+          "type": "esriFieldTypeString",
+          "alias": "KAB_NAME",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "KEC_NAME",
+          "type": "esriFieldTypeString",
+          "alias": "KEC_NAME",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "KEL_NAME",
+          "type": "esriFieldTypeString",
+          "alias": "KEL_NAME",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "GLOBALID",
+          "type": "esriFieldTypeGlobalID",
+          "alias": "GLOBALID",
+          "length": 38,
+          "domain": null
+        },
+        {
+          "name": "LUAS_POLY",
+          "type": "esriFieldTypeDouble",
+          "alias": "LUAS_POLY",
+          "domain": null
+        },
+        {
+          "name": "SHAPE",
+          "type": "esriFieldTypeGeometry",
+          "alias": "SHAPE",
+          "domain": null
+        },
+        {
+          "name": "SHAPE.AREA",
+          "type": "esriFieldTypeDouble",
+          "alias": "SHAPE.AREA",
+          "domain": null
+        },
+        {
+          "name": "SHAPE.LEN",
+          "type": "esriFieldTypeDouble",
+          "alias": "SHAPE.LEN",
+          "domain": null
+        }
+      ],
+      "geometryField": {
+        "name": "SHAPE",
+        "type": "esriFieldTypeGeometry",
+        "alias": "SHAPE"
+      },
+      "indexes": [
+        {
+          "name": "R78108_SDE_ROWID_UK",
+          "fields": "OBJECTID",
+          "isAscending": true,
+          "isUnique": true,
+          "description": ""
+        },
+        {
+          "name": "UUID_78108",
+          "fields": "GLOBALID",
+          "isAscending": true,
+          "isUnique": true,
+          "description": ""
+        },
+        {
+          "name": "A742_IX1",
+          "fields": "SHAPE",
+          "isAscending": true,
+          "isUnique": true,
+          "description": ""
+        }
+      ],
+      "subtypes": [],
+      "relationships": [],
+      "canModifyLayer": true,
+      "canScaleSymbols": false,
+      "hasLabels": false,
+      "capabilities": "Map,Query,Data",
+      "maxRecordCount": 2000,
+      "maxSelectionCount": 2000,
+      "supportsStatistics": true,
+      "supportsExceedsLimitStatistics": true,
+      "supportsAdvancedQueries": true,
+      "supportedQueryFormats": "JSON, geoJSON, PBF",
+      "isDataVersioned": false,
+      "ownershipBasedAccessControlForFeatures": {
+        "allowOthersToQuery": true
+      },
+      "useStandardizedQueries": true,
+      "supportedSpatialRelationships": [
+        "esriSpatialRelIntersects",
+        "esriSpatialRelContains",
+        "esriSpatialRelCrosses",
+        "esriSpatialRelEnvelopeIntersects",
+        "esriSpatialRelIndexIntersects",
+        "esriSpatialRelOverlaps",
+        "esriSpatialRelTouches",
+        "esriSpatialRelWithin",
+        "esriSpatialRelRelation"
+      ],
+      "advancedQueryCapabilities": {
+        "useStandardizedQueries": true,
+        "supportsStatistics": true,
+        "supportsPercentileStatistics": true,
+        "supportsHavingClause": true,
+        "supportsOrderBy": true,
+        "supportsDistinct": true,
+        "supportsCountDistinct": true,
+        "supportsAdvancedQueryRelated": true,
+        "supportsQueryRelatedPagination": true,
+        "supportsPagination": true,
+        "supportsLod": false,
+        "supportsQueryWithLodSR": false,
+        "supportsTrueCurve": true,
+        "supportsQueryWithDatumTransformation": true,
+        "supportsReturningQueryExtent": true,
+        "supportsQueryWithDistance": true,
+        "supportsSqlExpression": true,
+        "supportsTimeRelation": true,
+        "supportsSqlFormat": false,
+        "supportsQueryAttachments": true,
+        "supportsQueryAttachmentsWithReturnUrl": true,
+        "supportsQueryAnalytic": true,
+        "supportsCurrentUserQueries": true
+      },
+      "supportsDatumTransformation": true,
+      "advancedQueryAnalyticCapabilities": {
+        "supportsLinearRegression": true,
+        "supportsAsync": false,
+        "supportsPercentileAnalytic": true
+      },
+      "dateFieldsTimeReference": null,
+      "preferredTimeReference": null,
+      "datesInUnknownTimezone": false,
+      "hasGeometryProperties": true,
+      "geometryProperties": {
+        "shapeAreaFieldName": "SHAPE.AREA",
+        "shapeLengthFieldName": "SHAPE.LEN",
+        "units": "esriMeters",
+        "mapUnits": {
+          "uwkid": 9001
+        }
+      },
+      "hasMetadata": true,
+      "isDataArchived": false,
+      "archivingInfo": {
+        "supportsQueryWithHistoricMoment": false,
+        "startArchivingMoment": -1
+      },
+      "supportsCoordinatesQuantization": true,
+      "supportsDynamicLegends": true,
+      "serviceItemId": "a9e3cf6169084bb89e2ea2d051d601b1"
+    },
+    "count": {
+      "count": 5847
+    }
+  },
+  {
+    "id": "schools",
+    "url": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu/Sekolah/MapServer/0",
+    "checkedAt": "2026-10-11T06:29:55.085020+00:00",
+    "metadata": {
+      "currentVersion": 11.5,
+      "cimVersion": "3.5.0",
+      "id": 0,
+      "name": "Sekolah",
+      "type": "Feature Layer",
+      "description": "",
+      "geometryType": "esriGeometryPoint",
+      "sourceSpatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 2,
+        "mTolerance": 2,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": 0,
+        "zUnits": 1,
+        "falseM": 0,
+        "mUnits": 1
+      },
+      "spatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      },
+      "copyrightText": "",
+      "parentLayer": null,
+      "subLayers": [],
+      "minScale": 0,
+      "maxScale": 0,
+      "referenceScale": 0.0,
+      "drawingInfo": {
+        "renderer": {
+          "type": "simple",
+          "symbol": {
+            "type": "esriPMS",
+            "url": "fbbb8935f652061674f50f95fb0570f3",
+            "imageData": "iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAACu0lEQVQ4jcVVS2wSURS9fAxMY63ghI/xk3RKhZaFRTc1Uk0b17aTWsaNK3FZE40L49q40oR148aNz4ZM0402mjapoBtr3aAQkG4MUJUWKw0FQwdzZ5xxGIYGTYxndbmPd979nTtm+Ecw/zdinucd9Tr4BQEcAIJT8hoXOY5N/BUxIbwfQBir/RCmjx470kVZLWaKokx4lsvlbz0m0RoYGuRy6NKdjokJ4f0Nw+7dfk/fGaa3t7un54BFfe7znrBVq9XdD8nUNUKiowDGsDYDsx7pIfrggn9wwOZyObtk/+pcFt7NZWFogoHABANWq9UUGDpJ48PPFl7ME8JfVJOb9SL1a0hllItVWE+VYLu4A/tpSvRhNufPnXUtL8dnAGC4TcTCGKavR4rASEfCgy1+/L+nn+kjJHqd4yYjTcQ8zzuwUZga/s7E8lBIlZTLGGW5uAMvZ94rPk/wMLi9NtEe8Hlt6XR2GgCaiet18GP35UZl4nlIx/IKqZw6Pijb6HffPi3aWHOatltmZ/nRqSl2SSEWBHDgSKlTvProgkjy5GYMQveDok+2tzXRI+x2m2Wj+M2hqbHglOdUhnyxkCzB03srLbYW0n1JRHsqr5DcVFLWs90+e9u7KmLjIioKh1/2hB4E/6gUuVy+gjxNxBzHJlCmqChshEhyI6bM78Mrz6UsUiXFVke8tfW9tlHc/MRxk4nWUhgaBGXqpo7TOFracVNK9MuPD46EpYnJrq2VG4bGkk4pAHChoPYdp1zdgXHGEhhnoBOsr3+upDMfX1v2mcQZbo1YhDEcf/tqHmXaToFa0jcrq19NBlOEZdkvbYk5jk3gQkHto0xRUXLN1cCaYvoYKZKiKNTnuuPGSVtqGLWPMkVF4fCr9nEFG4U1xfTVke5J/PsBcaFEUKaSotRfEKn77dDRN0+bZif4CW0BU+wbhanjAAAAAElFTkSuQmCC",
+            "contentType": "image/png",
+            "width": 16,
+            "height": 16,
+            "angle": 0,
+            "xoffset": 0,
+            "yoffset": 0
+          }
+        },
+        "scaleSymbols": true,
+        "transparency": 0,
+        "labelingInfo": null
+      },
+      "defaultVisibility": true,
+      "extent": {
+        "xmin": 666115.4567,
+        "ymin": 9296250.2577,
+        "xmax": 718314.5324,
+        "ymax": 9374860.1003,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 10000,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "hasAttachments": false,
+      "htmlPopupType": "esriServerHTMLPopupTypeAsHTMLText",
+      "displayField": "OBJECTID",
+      "typeIdField": null,
+      "subtypeFieldName": null,
+      "subtypeField": null,
+      "defaultSubtypeCode": null,
+      "fields": [
+        {
+          "name": "OBJECTID_1",
+          "type": "esriFieldTypeOID",
+          "alias": "OBJECTID_1",
+          "domain": null
+        },
+        {
+          "name": "OBJECTID",
+          "type": "esriFieldTypeInteger",
+          "alias": "OBJECTID",
+          "domain": null
+        },
+        {
+          "name": "NAMA",
+          "type": "esriFieldTypeString",
+          "alias": "NAMA",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "JENIS",
+          "type": "esriFieldTypeString",
+          "alias": "JENIS",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "KELURAHAN",
+          "type": "esriFieldTypeString",
+          "alias": "KELURAHAN",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "KECAMATAN",
+          "type": "esriFieldTypeString",
+          "alias": "KECAMATAN",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "KOTA_ADMIN",
+          "type": "esriFieldTypeString",
+          "alias": "KOTA_ADMIN",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "ALAMAT",
+          "type": "esriFieldTypeString",
+          "alias": "ALAMAT",
+          "length": 254,
+          "domain": null
+        },
+        {
+          "name": "NAMA_PENGI",
+          "type": "esriFieldTypeString",
+          "alias": "NAMA_PENGI",
+          "length": 50,
+          "domain": null
+        },
+        {
+          "name": "TANGGAL_IN",
+          "type": "esriFieldTypeDate",
+          "alias": "TANGGAL_IN",
+          "length": 8,
+          "domain": null
+        },
+        {
+          "name": "SHAPE",
+          "type": "esriFieldTypeGeometry",
+          "alias": "SHAPE",
+          "domain": null
+        }
+      ],
+      "geometryField": {
+        "name": "SHAPE",
+        "type": "esriFieldTypeGeometry",
+        "alias": "SHAPE"
+      },
+      "indexes": [
+        {
+          "name": "R1549_SDE_ROWID_UK",
+          "fields": "OBJECTID_1",
+          "isAscending": true,
+          "isUnique": true,
+          "description": ""
+        },
+        {
+          "name": "A65_IX1",
+          "fields": "SHAPE",
+          "isAscending": true,
+          "isUnique": true,
+          "description": ""
+        }
+      ],
+      "subtypes": [],
+      "relationships": [],
+      "canModifyLayer": true,
+      "canScaleSymbols": false,
+      "hasLabels": false,
+      "capabilities": "Map,Query,Data",
+      "maxRecordCount": 200000,
+      "maxSelectionCount": 2000,
+      "supportsStatistics": true,
+      "supportsExceedsLimitStatistics": true,
+      "supportsAdvancedQueries": true,
+      "supportedQueryFormats": "JSON, geoJSON, PBF",
+      "isDataVersioned": false,
+      "ownershipBasedAccessControlForFeatures": {
+        "allowOthersToQuery": true
+      },
+      "useStandardizedQueries": true,
+      "supportedSpatialRelationships": [
+        "esriSpatialRelIntersects",
+        "esriSpatialRelContains",
+        "esriSpatialRelCrosses",
+        "esriSpatialRelEnvelopeIntersects",
+        "esriSpatialRelIndexIntersects",
+        "esriSpatialRelOverlaps",
+        "esriSpatialRelTouches",
+        "esriSpatialRelWithin",
+        "esriSpatialRelRelation"
+      ],
+      "advancedQueryCapabilities": {
+        "useStandardizedQueries": true,
+        "supportsStatistics": true,
+        "supportsPercentileStatistics": true,
+        "supportsHavingClause": true,
+        "supportsOrderBy": true,
+        "supportsDistinct": true,
+        "supportsCountDistinct": true,
+        "supportsAdvancedQueryRelated": true,
+        "supportsQueryRelatedPagination": true,
+        "supportsPagination": true,
+        "supportsLod": false,
+        "supportsQueryWithLodSR": false,
+        "supportsTrueCurve": true,
+        "supportsQueryWithDatumTransformation": true,
+        "supportsReturningQueryExtent": true,
+        "supportsQueryWithDistance": true,
+        "supportsSqlExpression": true,
+        "supportsTimeRelation": true,
+        "supportsSqlFormat": false,
+        "supportsQueryAnalytic": true,
+        "supportsCurrentUserQueries": true
+      },
+      "supportsDatumTransformation": true,
+      "advancedQueryAnalyticCapabilities": {
+        "supportsLinearRegression": true,
+        "supportsAsync": false,
+        "supportsPercentileAnalytic": true
+      },
+      "dateFieldsTimeReference": null,
+      "preferredTimeReference": null,
+      "datesInUnknownTimezone": false,
+      "hasMetadata": true,
+      "isDataArchived": false,
+      "archivingInfo": {
+        "supportsQueryWithHistoricMoment": false,
+        "startArchivingMoment": -1
+      },
+      "supportsCoordinatesQuantization": true,
+      "supportsDynamicLegends": true,
+      "serviceItemId": "0ea3442f1b334d7da5a499fa51f5cb3e"
+    },
+    "count": {
+      "count": 3525
+    }
+  }
+]

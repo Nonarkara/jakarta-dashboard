@@ -1,0 +1,48 @@
+[
+  {
+    "id": "petabencana_reports_current",
+    "url": "https://api.petabencana.id/reports?admin=ID-JK&geoformat=geojson&disaster=flood",
+    "checkedAt": "2026-10-11T06:30:05.801705+00:00",
+    "status": 200,
+    "cors": "*",
+    "body": {
+      "statusCode": 200,
+      "result": {
+        "type": "FeatureCollection",
+        "features": []
+      }
+    }
+  },
+  {
+    "id": "petabencana_floods_current",
+    "url": "https://api.petabencana.id/floods?admin=ID-JK&geoformat=geojson",
+    "checkedAt": "2026-10-11T06:30:05.802231+00:00",
+    "error": "HTTP Error 400: Bad Request"
+  },
+  {
+    "id": "petabencana_gauges_current",
+    "url": "https://api.petabencana.id/floodgauges?admin=ID-JK&geoformat=geojson",
+    "checkedAt": "2026-10-11T06:30:05.802430+00:00",
+    "status": 200,
+    "cors": "*",
+    "body": {
+      "statusCode": 200,
+      "result": {
+        "type": "Topology",
+        "objects": {
+          "output": {
+            "type": "GeometryCollection",
+            "geometries": []
+          }
+        },
+        "arcs": [],
+        "bbox": [
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    }
+  }
+]

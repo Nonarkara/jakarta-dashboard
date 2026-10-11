@@ -1,0 +1,2255 @@
+[
+  {
+    "id": "bmkg_forecast",
+    "url": "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001",
+    "checkedAt": "2026-10-11T06:28:04.340581+00:00",
+    "status": 200,
+    "contentType": "application/json; charset=utf-8",
+    "cors": "*",
+    "bytesRead": 8746,
+    "finalUrl": "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=31.71.03.1001",
+    "shape": [
+      "lokasi",
+      "data"
+    ],
+    "sample": {
+      "lokasi": {
+        "adm1": "31",
+        "adm2": "31.71",
+        "adm3": "31.71.03",
+        "adm4": "31.71.03.1001",
+        "provinsi": "DKI Jakarta",
+        "kotkab": "Kota Adm. Jakarta Pusat",
+        "kecamatan": "Kemayoran",
+        "desa": "Kemayoran",
+        "lon": 106.8453837867,
+        "lat": -6.1647214778,
+        "timezone": "Asia/Jakarta"
+      },
+      "data": [
+        {
+          "lokasi": {
+            "adm1": "31",
+            "adm2": "31.71",
+            "adm3": "31.71.03",
+            "adm4": "31.71.03.1001",
+            "provinsi": "DKI Jakarta",
+            "kotkab": "Kota Adm. Jakarta Pusat",
+            "kecamatan": "Kemayoran",
+            "desa": "Kemayoran",
+            "lon": 106.8453837867,
+            "lat": -6.1647214778,
+            "timezone": "+0700",
+            "type": "adm4"
+          },
+          "cuaca": [
+            [
+              {
+                "datetime": "2026-10-11T07:00:00Z",
+                "t": 32,
+                "tcc": 56,
+                "tp": 0.6,
+                "weather": 1,
+                "weather_desc": "Cerah",
+                "weather_desc_en": "Sunny",
+                "wd_deg": 12,
+                "wd": "N",
+                "wd_to": "S",
+                "ws": 11.1,
+                "hu": 58,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "6-7",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/cerah-am.svg",
+                "utc_datetime": "2026-10-11 07:00:00",
+                "local_datetime": "2026-10-11 14:00:00"
+              },
+              {
+                "datetime": "2026-10-11T10:00:00Z",
+                "t": 29,
+                "tcc": 25,
+                "tp": 0.7,
+                "weather": 1,
+                "weather_desc": "Cerah",
+                "weather_desc_en": "Sunny",
+                "wd_deg": 249,
+                "wd": "SW",
+                "wd_to": "NE",
+                "ws": 7.2,
+                "hu": 72,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "9-10",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/cerah-am.svg",
+                "utc_datetime": "2026-10-11 10:00:00",
+                "local_datetime": "2026-10-11 17:00:00"
+              },
+              {
+                "datetime": "2026-10-11T13:00:00Z",
+                "t": 25,
+                "tcc": 96,
+                "tp": 1.6,
+                "weather": 61,
+                "weather_desc": "Hujan Ringan",
+                "weather_desc_en": "Light Rain",
+                "wd_deg": 135,
+                "wd": "E",
+                "wd_to": "W",
+                "ws": 7.2,
+                "hu": 93,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "12-13",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/hujan ringan-pm.svg",
+                "utc_datetime": "2026-10-11 13:00:00",
+                "local_datetime": "2026-10-11 20:00:00"
+              },
+              {
+                "datetime": "2026-10-11T16:00:00Z",
+                "t": 24,
+                "tcc": 98,
+                "tp": 0.8,
+                "weather": 3,
+                "weather_desc": "Berawan",
+                "weather_desc_en": "Mostly Cloudy",
+                "wd_deg": 139,
+                "wd": "SE",
+                "wd_to": "NW",
+                "ws": 9.1,
+                "hu": 93,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "15-16",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/berawan-pm.svg",
+                "utc_datetime": "2026-10-11 16:00:00",
+                "local_datetime": "2026-10-11 23:00:00"
+              }
+            ],
+            [
+              {
+                "datetime": "2026-10-11T19:00:00Z",
+                "t": 24,
+                "tcc": 98,
+                "tp": 0.2,
+                "weather": 3,
+                "weather_desc": "Berawan",
+                "weather_desc_en": "Mostly Cloudy",
+                "wd_deg": 180,
+                "wd": "SE",
+                "wd_to": "NW",
+                "ws": 3,
+                "hu": 93,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "18-19",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/berawan-pm.svg",
+                "utc_datetime": "2026-10-11 19:00:00",
+                "local_datetime": "2026-10-12 02:00:00"
+              },
+              {
+                "datetime": "2026-10-11T22:00:00Z",
+                "t": 25,
+                "tcc": 96,
+                "tp": 0,
+                "weather": 3,
+                "weather_desc": "Berawan",
+                "weather_desc_en": "Mostly Cloudy",
+                "wd_deg": 153,
+                "wd": "SE",
+                "wd_to": "NW",
+                "ws": 0.5,
+                "hu": 92,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "21-22",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/berawan-pm.svg",
+                "utc_datetime": "2026-10-11 22:00:00",
+                "local_datetime": "2026-10-12 05:00:00"
+              },
+              {
+                "datetime": "2026-10-12T01:00:00Z",
+                "t": 29,
+                "tcc": 45,
+                "tp": 0,
+                "weather": 1,
+                "weather_desc": "Cerah",
+                "weather_desc_en": "Sunny",
+                "wd_deg": 184,
+                "wd": "S",
+                "wd_to": "N",
+                "ws": 1.2,
+                "hu": 72,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "24-25",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/cerah-am.svg",
+                "utc_datetime": "2026-10-12 01:00:00",
+                "local_datetime": "2026-10-12 08:00:00"
+              },
+              {
+                "datetime": "2026-10-12T04:00:00Z",
+                "t": 31,
+                "tcc": 48,
+                "tp": 0.4,
+                "weather": 1,
+                "weather_desc": "Cerah",
+                "weather_desc_en": "Sunny",
+                "wd_deg": 31,
+                "wd": "N",
+                "wd_to": "S",
+                "ws": 9.7,
+                "hu": 66,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "27-28",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/cerah-am.svg",
+                "utc_datetime": "2026-10-12 04:00:00",
+                "local_datetime": "2026-10-12 11:00:00"
+              },
+              {
+                "datetime": "2026-10-12T07:00:00Z",
+                "t": 30,
+                "tcc": 34,
+                "tp": 0.4,
+                "weather": 1,
+                "weather_desc": "Cerah",
+                "weather_desc_en": "Sunny",
+                "wd_deg": 326,
+                "wd": "NW",
+                "wd_to": "SE",
+                "ws": 7.1,
+                "hu": 67,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "30-31",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/cerah-am.svg",
+                "utc_datetime": "2026-10-12 07:00:00",
+                "local_datetime": "2026-10-12 14:00:00"
+              },
+              {
+                "datetime": "2026-10-12T10:00:00Z",
+                "t": 27,
+                "tcc": 81,
+                "tp": 0.9,
+                "weather": 2,
+                "weather_desc": "Cerah Berawan",
+                "weather_desc_en": "Partly Cloudy",
+                "wd_deg": 246,
+                "wd": "SW",
+                "wd_to": "NE",
+                "ws": 5.9,
+                "hu": 82,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "33-34",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/cerah berawan-am.svg",
+                "utc_datetime": "2026-10-12 10:00:00",
+                "local_datetime": "2026-10-12 17:00:00"
+              },
+              {
+                "datetime": "2026-10-12T13:00:00Z",
+                "t": 26,
+                "tcc": 81,
+                "tp": 0,
+                "weather": 2,
+                "weather_desc": "Cerah Berawan",
+                "weather_desc_en": "Partly Cloudy",
+                "wd_deg": 142,
+                "wd": "SE",
+                "wd_to": "NW",
+                "ws": 2.4,
+                "hu": 89,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "36-37",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/cerah berawan-pm.svg",
+                "utc_datetime": "2026-10-12 13:00:00",
+                "local_datetime": "2026-10-12 20:00:00"
+              },
+              {
+                "datetime": "2026-10-12T16:00:00Z",
+                "t": 26,
+                "tcc": 45,
+                "tp": 0,
+                "weather": 1,
+                "weather_desc": "Cerah",
+                "weather_desc_en": "Sunny",
+                "wd_deg": 190,
+                "wd": "S",
+                "wd_to": "N",
+                "ws": 2.5,
+                "hu": 90,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "39-40",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/cerah-pm.svg",
+                "utc_datetime": "2026-10-12 16:00:00",
+                "local_datetime": "2026-10-12 23:00:00"
+              }
+            ],
+            [
+              {
+                "datetime": "2026-10-12T19:00:00Z",
+                "t": 26,
+                "tcc": 82,
+                "tp": 0,
+                "weather": 2,
+                "weather_desc": "Cerah Berawan",
+                "weather_desc_en": "Partly Cloudy",
+                "wd_deg": 183,
+                "wd": "S",
+                "wd_to": "N",
+                "ws": 3.5,
+                "hu": 93,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "42-43",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/cerah berawan-pm.svg",
+                "utc_datetime": "2026-10-12 19:00:00",
+                "local_datetime": "2026-10-13 02:00:00"
+              },
+              {
+                "datetime": "2026-10-12T22:00:00Z",
+                "t": 26,
+                "tcc": 97,
+                "tp": 0,
+                "weather": 3,
+                "weather_desc": "Berawan",
+                "weather_desc_en": "Mostly Cloudy",
+                "wd_deg": 160,
+                "wd": "SE",
+                "wd_to": "NW",
+                "ws": 2.3,
+                "hu": 89,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "45-46",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/berawan-pm.svg",
+                "utc_datetime": "2026-10-12 22:00:00",
+                "local_datetime": "2026-10-13 05:00:00"
+              },
+              {
+                "datetime": "2026-10-13T01:00:00Z",
+                "t": 30,
+                "tcc": 93,
+                "tp": 0.2,
+                "weather": 3,
+                "weather_desc": "Berawan",
+                "weather_desc_en": "Mostly Cloudy",
+                "wd_deg": 160,
+                "wd": "SE",
+                "wd_to": "NW",
+                "ws": 2.3,
+                "hu": 70,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "48-49",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/berawan-am.svg",
+                "utc_datetime": "2026-10-13 01:00:00",
+                "local_datetime": "2026-10-13 08:00:00"
+              },
+              {
+                "datetime": "2026-10-13T04:00:00Z",
+                "t": 31,
+                "tcc": 45,
+                "tp": 0.2,
+                "weather": 1,
+                "weather_desc": "Cerah",
+                "weather_desc_en": "Sunny",
+                "wd_deg": 323,
+                "wd": "NW",
+                "wd_to": "SE",
+                "ws": 8.3,
+                "hu": 69,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "51-52",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/cerah-am.svg",
+                "utc_datetime": "2026-10-13 04:00:00",
+                "local_datetime": "2026-10-13 11:00:00"
+              },
+              {
+                "datetime": "2026-10-13T07:00:00Z",
+                "t": 31,
+                "tcc": 56,
+                "tp": 0.4,
+                "weather": 1,
+                "weather_desc": "Cerah",
+                "weather_desc_en": "Sunny",
+                "wd_deg": 323,
+                "wd": "NW",
+                "wd_to": "SE",
+                "ws": 8.3,
+                "hu": 65,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "54-55",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/cerah-am.svg",
+                "utc_datetime": "2026-10-13 07:00:00",
+                "local_datetime": "2026-10-13 14:00:00"
+              },
+              {
+                "datetime": "2026-10-13T10:00:00Z",
+                "t": 27,
+                "tcc": 22,
+                "tp": 0.4,
+                "weather": 1,
+                "weather_desc": "Cerah",
+                "weather_desc_en": "Sunny",
+                "wd_deg": 208,
+                "wd": "S",
+                "wd_to": "N",
+                "ws": 4.1,
+                "hu": 85,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "57-58",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/cerah-am.svg",
+                "utc_datetime": "2026-10-13 10:00:00",
+                "local_datetime": "2026-10-13 17:00:00"
+              },
+              {
+                "datetime": "2026-10-13T13:00:00Z",
+                "t": 27,
+                "tcc": 11,
+                "tp": 0,
+                "weather": 1,
+                "weather_desc": "Cerah",
+                "weather_desc_en": "Sunny",
+                "wd_deg": 208,
+                "wd": "S",
+                "wd_to": "N",
+                "ws": 4.1,
+                "hu": 88,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "60-61",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/cerah-pm.svg",
+                "utc_datetime": "2026-10-13 13:00:00",
+                "local_datetime": "2026-10-13 20:00:00"
+              },
+              {
+                "datetime": "2026-10-13T16:00:00Z",
+                "t": 26,
+                "tcc": 3,
+                "tp": 0,
+                "weather": 0,
+                "weather_desc": "Cerah",
+                "weather_desc_en": "Sunny",
+                "wd_deg": 233,
+                "wd": "SW",
+                "wd_to": "NE",
+                "ws": 3.1,
+                "hu": 92,
+                "vs": null,
+                "vs_text": null,
+                "time_index": "63-64",
+                "analysis_date": "2026-10-11T00:00:00",
+                "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/cerah-pm.svg",
+                "utc_datetime": "2026-10-13 16:00:00",
+                "local_datetime": "2026-10-13 23:00:00"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    "seconds": 1.14
+  },
+  {
+    "id": "bmkg_alerts",
+    "url": "https://www.bmkg.go.id/alerts/nowcast/id",
+    "checkedAt": "2026-10-11T06:28:04.341104+00:00",
+    "status": 200,
+    "contentType": "application/xml",
+    "cors": null,
+    "bytesRead": 8209,
+    "finalUrl": "https://www.bmkg.go.id/alerts/nowcast/id",
+    "snippet": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n    <?xml-stylesheet type=\"text/xsl\" href=\"/cap/nowcast-rss-style.xsl\"?>\n    <rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n        <channel>\n            <title>Peringatan Dini Cuaca BMKG</title>\n            <link>https://www.bmkg.go.id/alerts/nowcast/id/rss.xml</link>\n            <description>Peringatan Dini Cuaca dari BMKG (Badan Meteorologi, Klimatologi, dan Geofisika)</description>\n            <atom:link href=\"https://www.bmkg.go.id/alerts",
+    "seconds": 1.54
+  },
+  {
+    "id": "bmkg_quake",
+    "url": "https://data.bmkg.go.id/DataMKG/TEWS/autogempa.json",
+    "checkedAt": "2026-10-11T06:28:04.341355+00:00",
+    "status": 200,
+    "contentType": "application/json",
+    "cors": "*",
+    "bytesRead": 353,
+    "finalUrl": "https://data.bmkg.go.id/DataMKG/TEWS/autogempa.json",
+    "shape": [
+      "Infogempa"
+    ],
+    "sample": "{'Infogempa': {'gempa': {'Tanggal': '11 Okt 2026', 'Jam': '10:30:20 WIB', 'DateTime': '2026-10-11T03:30:20+00:00', 'Coordinates': '-8.73,106.47', 'Lintang': '8.73 LS', 'Bujur': '106.47 BT', 'Magnitude': '5.7', 'Kedalaman': '10 km', 'Wilayah': '193 km BaratDaya KAB-SUKABUMI-JABAR', 'Potensi': 'Tidak berpotensi tsunami', 'Dirasakan': '-', 'Shakemap': '20261011103316.mmi.jpg'}}}",
+    "seconds": 0.97
+  },
+  {
+    "id": "petabencana_floods",
+    "url": "https://data.petabencana.id/floods?admin=ID-JK&geoformat=geojson",
+    "checkedAt": "2026-10-11T06:28:04.341550+00:00",
+    "error": "HTTP Error 500: Internal Server Error",
+    "seconds": 5.78
+  },
+  {
+    "id": "petabencana_gauges",
+    "url": "https://data.petabencana.id/floodgauges?admin=ID-JK&geoformat=geojson",
+    "checkedAt": "2026-10-11T06:28:04.341736+00:00",
+    "status": 200,
+    "contentType": "application/json",
+    "cors": "*",
+    "bytesRead": 70,
+    "finalUrl": "https://data.petabencana.id/floodgauges?admin=ID-JK&geoformat=geojson",
+    "shape": [
+      "statusCode",
+      "result"
+    ],
+    "sample": {
+      "statusCode": 200,
+      "result": {
+        "type": "FeatureCollection",
+        "features": []
+      }
+    },
+    "seconds": 1.69
+  },
+  {
+    "id": "petabencana_reports",
+    "url": "https://data.petabencana.id/reports?admin=ID-JK&geoformat=geojson",
+    "checkedAt": "2026-10-11T06:28:04.341901+00:00",
+    "status": 200,
+    "contentType": "application/json; charset=utf-8",
+    "cors": "*",
+    "bytesRead": 70,
+    "finalUrl": "https://data.petabencana.id/reports?admin=ID-JK&geoformat=geojson",
+    "shape": [
+      "statusCode",
+      "result"
+    ],
+    "sample": "{'statusCode': 200, 'result': {'type': 'FeatureCollection', 'features': []}}",
+    "seconds": 1.68
+  },
+  {
+    "id": "jakarta_gis",
+    "url": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu?f=pjson",
+    "checkedAt": "2026-10-11T06:28:04.342090+00:00",
+    "status": 200,
+    "contentType": "text/plain;charset=UTF-8",
+    "cors": "https://jakarta.nonarkara.org",
+    "bytesRead": 2573,
+    "finalUrl": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu?f=pjson",
+    "shape": [
+      "currentVersion",
+      "folders",
+      "services"
+    ],
+    "sample": {
+      "currentVersion": 11.5,
+      "folders": [],
+      "services": [
+        {
+          "name": "JakartaSatu/batas_kelurahan_vs_dukcapil",
+          "type": "FeatureServer"
+        },
+        {
+          "name": "JakartaSatu/batas_kelurahan_vs_dukcapil",
+          "type": "MapServer"
+        },
+        {
+          "name": "JakartaSatu/Fasilitas_Kesehatan",
+          "type": "FeatureServer"
+        },
+        {
+          "name": "JakartaSatu/Fasilitas_Kesehatan",
+          "type": "MapServer"
+        },
+        {
+          "name": "JakartaSatu/Jalur_Kereta_Api",
+          "type": "FeatureServer"
+        },
+        {
+          "name": "JakartaSatu/Jalur_Kereta_Api",
+          "type": "MapServer"
+        },
+        {
+          "name": "JakartaSatu/Jalur_Transjakarta",
+          "type": "FeatureServer"
+        },
+        {
+          "name": "JakartaSatu/Jalur_Transjakarta",
+          "type": "MapServer"
+        },
+        {
+          "name": "JakartaSatu/js_subblock_dashboard",
+          "type": "FeatureServer"
+        },
+        {
+          "name": "JakartaSatu/js_subblock_dashboard",
+          "type": "MapServer"
+        },
+        {
+          "name": "JakartaSatu/Laporan_air_Tanah_Jakartasatu",
+          "type": "FeatureServer"
+        },
+        {
+          "name": "JakartaSatu/Laporan_air_Tanah_Jakartasatu",
+          "type": "MapServer"
+        },
+        {
+          "name": "JakartaSatu/Lapor",
+          "type": "FeatureServer"
+        },
+        {
+          "name": "JakartaSatu/Lapor",
+          "type": "MapServer"
+        },
+        {
+          "name": "JakartaSatu/model_gab_rth",
+          "type": "FeatureServer"
+        },
+        {
+          "name": "JakartaSatu/model_gab_rth",
+          "type": "MapServer"
+        },
+        {
+          "name": "JakartaSatu/Peta_Aset_KIB_A",
+          "type": "FeatureServer"
+        },
+        {
+          "name": "JakartaSatu/Peta_Aset_KIB_A",
+          "type": "MapServer"
+        },
+        {
+          "name": "JakartaSatu/Peta_Aset_KIB_D",
+          "type": "FeatureServer"
+        },
+        {
+          "name": "JakartaSatu/Peta_Aset_KIB_D",
+          "type": "MapServer"
+        },
+        {
+          "name": "JakartaSatu/Peta_Jalan",
+          "type": "FeatureServer"
+        },
+        {
+          "name": "JakartaSatu/Peta_Jalan",
+          "type": "MapServer"
+        },
+        {
+          "name": "JakartaSatu/Peta_Ops_V2_Garis_View",
+          "type": "FeatureServer"
+        },
+        {
+          "name": "JakartaSatu/Peta_Ops_V2_Garis_View",
+          "type": "MapServer"
+        },
+        {
+          "name": "JakartaSatu/Peta_Ops_V2_View",
+          "type": "FeatureServer"
+        },
+        {
+          "name": "JakartaSatu/Peta_Ops_V2_View",
+          "type": "MapServer"
+        },
+        {
+          "name": "JakartaSatu/Peta_Rekomendasi_Pengelolaan_Limbah",
+          "type": "FeatureServer"
+        },
+        {
+          "name": "JakartaSatu/Peta_Rekomendasi_Pengelolaan_Limbah",
+          "type": "MapServer"
+        },
+        {
+          "name": "JakartaSatu/Sekolah",
+          "type": "FeatureServer"
+        },
+        {
+          "name": "JakartaSatu/Sekolah",
+          "type": "MapServer"
+        },
+        {
+          "name": "JakartaSatu/Transjakarta",
+          "type": "FeatureServer"
+        },
+        {
+          "name": "JakartaSatu/Transjakarta",
+          "type": "MapServer"
+        }
+      ]
+    },
+    "seconds": 1.84
+  },
+  {
+    "id": "jakarta_gis_transit",
+    "url": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu/Transjakarta/MapServer?f=pjson",
+    "checkedAt": "2026-10-11T06:28:04.342255+00:00",
+    "status": 200,
+    "contentType": "text/plain;charset=UTF-8",
+    "cors": "https://jakarta.nonarkara.org",
+    "bytesRead": 2903,
+    "finalUrl": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu/Transjakarta/MapServer?f=pjson",
+    "shape": [
+      "currentVersion",
+      "cimVersion",
+      "serviceDescription",
+      "mapName",
+      "description",
+      "copyrightText",
+      "supportsDynamicLayers",
+      "layers",
+      "tables",
+      "spatialReference",
+      "singleFusedMapCache",
+      "initialExtent",
+      "fullExtent",
+      "datesInUnknownTimezone",
+      "minScale",
+      "maxScale",
+      "units",
+      "supportedImageFormatTypes",
+      "documentInfo",
+      "supportsQueryDomains",
+      "capabilities",
+      "supportedQueryFormats",
+      "exportTilesAllowed",
+      "referenceScale",
+      "supportsDatumTransformation",
+      "archivingInfo",
+      "supportsClipping",
+      "supportsSpatialFilter",
+      "supportsTimeRelation",
+      "supportsQueryDataElements",
+      "mapUnits",
+      "maxSelectionCount",
+      "maxRecordCount",
+      "maxImageHeight",
+      "maxImageWidth",
+      "supportedExtensions",
+      "serviceItemId"
+    ],
+    "sample": {
+      "currentVersion": 11.5,
+      "cimVersion": "3.5.0",
+      "serviceDescription": "",
+      "mapName": "Map",
+      "description": "",
+      "copyrightText": "",
+      "supportsDynamicLayers": true,
+      "layers": [
+        {
+          "id": 0,
+          "name": "Halte Transjakarta",
+          "parentLayerId": -1,
+          "defaultVisibility": true,
+          "subLayerIds": null,
+          "minScale": 0,
+          "maxScale": 0,
+          "type": "Feature Layer",
+          "geometryType": "esriGeometryPoint",
+          "supportsDynamicLegends": true
+        },
+        {
+          "id": 1,
+          "name": "Jalur Transjakarta",
+          "parentLayerId": -1,
+          "defaultVisibility": true,
+          "subLayerIds": null,
+          "minScale": 0,
+          "maxScale": 0,
+          "type": "Feature Layer",
+          "geometryType": "esriGeometryPolyline",
+          "supportsDynamicLegends": true
+        }
+      ],
+      "tables": [],
+      "spatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      },
+      "singleFusedMapCache": false,
+      "initialExtent": {
+        "xmin": 681490.2542653639,
+        "ymin": 9288604.165155817,
+        "xmax": 728672.0790309891,
+        "ymax": 9329878.282590382,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 10000,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "fullExtent": {
+        "xmin": 688719.0454,
+        "ymin": 9302126.6996,
+        "xmax": 716170.2889,
+        "ymax": 9324329.7882,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 10000,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "datesInUnknownTimezone": false,
+      "minScale": 0,
+      "maxScale": 0,
+      "units": "esriMeters",
+      "supportedImageFormatTypes": "PNG32,PNG24,PNG,JPG,DIB,TIFF,EMF,PS,PDF,GIF,SVG,SVGZ,BMP",
+      "documentInfo": {
+        "Title": "Map",
+        "Author": "",
+        "Comments": "",
+        "Subject": "",
+        "Category": "",
+        "Version": "2.6.0",
+        "AntialiasingMode": "Fast",
+        "TextAntialiasingMode": "Force",
+        "Keywords": "Transjakarta"
+      },
+      "supportsQueryDomains": true,
+      "capabilities": "Map,Query,Data",
+      "supportedQueryFormats": "JSON, geoJSON, PBF",
+      "exportTilesAllowed": false,
+      "referenceScale": 0.0,
+      "supportsDatumTransformation": true,
+      "archivingInfo": {
+        "supportsHistoricMoment": false
+      },
+      "supportsClipping": true,
+      "supportsSpatialFilter": true,
+      "supportsTimeRelation": true,
+      "supportsQueryDataElements": true,
+      "mapUnits": {
+        "uwkid": 9001
+      },
+      "maxSelectionCount": 2000,
+      "maxRecordCount": 2000,
+      "maxImageHeight": 4096,
+      "maxImageWidth": 4096,
+      "supportedExtensions": "FeatureServer",
+      "serviceItemId": "8850ae24b1584a289e18e2b8d07ffd5d"
+    },
+    "seconds": 1.82
+  },
+  {
+    "id": "udara",
+    "url": "https://udara.jakarta.go.id/",
+    "checkedAt": "2026-10-11T06:28:05.313936+00:00",
+    "status": 200,
+    "contentType": "text/html; charset=utf-8",
+    "cors": null,
+    "bytesRead": 184341,
+    "finalUrl": "https://udara.jakarta.go.id/",
+    "snippet": "<!DOCTYPE html>\r\n<html lang=\"id\">\r\n    <head>\r\n        <meta charset=\"UTF-8\">\r\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n        <title>Udara Jakarta - Platform Pemantauan Kualitas Udara</title>\r\n        <meta name=\"description\" content=\"Informasi Real-time, Prakiraan, dan Peringatan Dini Kualitas Udara DKI Jakarta.\">\r\n        <meta name=\"keywords\" content=\"kualitas udara jakarta, ISPU jakarta, indeks standar pencemaran udara jakarta, polusi udara jakarta, P",
+    "seconds": 2.39
+  },
+  {
+    "id": "satudata",
+    "url": "https://satudata.jakarta.go.id/open-data/detail/data-kejadian-bencana-banjir",
+    "checkedAt": "2026-10-11T06:28:05.480915+00:00",
+    "status": 200,
+    "contentType": "text/html",
+    "cors": null,
+    "bytesRead": 18984,
+    "finalUrl": "https://satudata.jakarta.go.id/open-data/detail/data-kejadian-bencana-banjir",
+    "snippet": "<!doctype html><html lang=\"id\" translate=\"yes\"><head><meta charset=\"utf-8\"><meta http-equiv=\"x-ua-Compatible\" content=\"IE=edge\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><link rel=\"icon\" href=\"/favicon.ico\"><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\" integrity=\"sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==\" crossorigin=\"anonymous\" referrerpolicy=\"no-refe",
+    "seconds": 1.75
+  },
+  {
+    "id": "live_health",
+    "url": "https://jakarta.nonarkara.org/api/health",
+    "checkedAt": "2026-10-11T06:28:05.882218+00:00",
+    "status": 200,
+    "contentType": "application/json; charset=utf-8",
+    "cors": "*",
+    "bytesRead": 208,
+    "finalUrl": "https://jakarta.nonarkara.org/api/health",
+    "shape": [
+      "tool",
+      "version",
+      "ok",
+      "pmtiles",
+      "bbox",
+      "checkedAt"
+    ],
+    "sample": {
+      "tool": "health",
+      "version": "0.1.0",
+      "ok": true,
+      "pmtiles": {
+        "available": true,
+        "sizeMb": 124.65325355529785
+      },
+      "bbox": {
+        "minLat": -6.4,
+        "maxLat": -6.08,
+        "minLon": 106.65,
+        "maxLon": 107
+      },
+      "checkedAt": "2026-10-11T06:28:07.504Z"
+    },
+    "seconds": 1.67
+  },
+  {
+    "id": "live_watch",
+    "url": "https://jakarta.nonarkara.org/api/atlas/watch",
+    "checkedAt": "2026-10-11T06:28:06.022000+00:00",
+    "status": 200,
+    "contentType": "application/json; charset=utf-8",
+    "cors": "*",
+    "bytesRead": 3850,
+    "finalUrl": "https://jakarta.nonarkara.org/api/atlas/watch",
+    "shape": [
+      "places",
+      "notices",
+      "storm",
+      "traffic",
+      "flood",
+      "source",
+      "tier",
+      "fetchedAt"
+    ],
+    "sample": {
+      "places": [
+        {
+          "id": "pusat",
+          "name": "Central Jakarta",
+          "name_id": "Jakarta Pusat",
+          "lat": -6.18,
+          "lng": 106.83,
+          "available": true,
+          "validAt": "2026-10-11T06:15Z",
+          "forecastFromUtc": "2026-10-11T07:00:00.000Z",
+          "forecastToUtc": "2026-10-12T07:00:00.000Z",
+          "precipitationMm": 0,
+          "intervalSeconds": 900,
+          "windKph": 16.7,
+          "gustKph": 44.6,
+          "windFromDeg": 11,
+          "pressureHpa": 1009.4,
+          "next24hMm": 4.9,
+          "modelLocation": {
+            "lat": -6.151142,
+            "lng": 106.8421
+          },
+          "air": {
+            "available": true,
+            "pm25": 41.1,
+            "pm10": 44.8,
+            "usAqi": 138,
+            "validAt": "2026-10-11T06:00Z",
+            "source": "Open-Meteo / CAMS",
+            "tier": "model-estimate"
+          }
+        },
+        {
+          "id": "utara",
+          "name": "North Jakarta",
+          "name_id": "Jakarta Utara",
+          "lat": -6.12,
+          "lng": 106.88,
+          "available": true,
+          "validAt": "2026-10-11T06:15Z",
+          "forecastFromUtc": "2026-10-11T07:00:00.000Z",
+          "forecastToUtc": "2026-10-12T07:00:00.000Z",
+          "precipitationMm": 0,
+          "intervalSeconds": 900,
+          "windKph": 16.7,
+          "gustKph": 44.6,
+          "windFromDeg": 11,
+          "pressureHpa": 1009.4,
+          "next24hMm": 4.9,
+          "modelLocation": {
+            "lat": -6.151142,
+            "lng": 106.8421
+          },
+          "air": {
+            "available": true,
+            "pm25": 41.1,
+            "pm10": 44.8,
+            "usAqi": 138,
+            "validAt": "2026-10-11T06:00Z",
+            "source": "Open-Meteo / CAMS",
+            "tier": "model-estimate"
+          }
+        },
+        {
+          "id": "barat",
+          "name": "West Jakarta",
+          "name_id": "Jakarta Barat",
+          "lat": -6.17,
+          "lng": 106.75,
+          "available": true,
+          "validAt": "2026-10-11T06:15Z",
+          "forecastFromUtc": "2026-10-11T07:00:00.000Z",
+          "forecastToUtc": "2026-10-12T07:00:00.000Z",
+          "precipitationMm": 0.3,
+          "intervalSeconds": 900,
+          "windKph": 16,
+          "gustKph": 42.1,
+          "windFromDeg": 19,
+          "pressureHpa": 1009.5,
+          "next24hMm": 9.8,
+          "modelLocation": {
+            "lat": -6.151142,
+            "lng": 106.766914
+          },
+          "air": {
+            "available": true,
+            "pm25": 41.1,
+            "pm10": 44.8,
+            "usAqi": 138,
+            "validAt": "2026-10-11T06:00Z",
+            "source": "Open-Meteo / CAMS",
+            "tier": "model-estimate"
+          }
+        },
+        {
+          "id": "selatan",
+          "name": "South Jakarta",
+          "name_id": "Jakarta Selatan",
+          "lat": -6.27,
+          "lng": 106.81,
+          "available": true,
+          "validAt": "2026-10-11T06:15Z",
+          "forecastFromUtc": "2026-10-11T07:00:00.000Z",
+          "forecastToUtc": "2026-10-12T07:00:00.000Z",
+          "precipitationMm": 0.1,
+          "intervalSeconds": 900,
+          "windKph": 10.3,
+          "gustKph": 30.6,
+          "windFromDeg": 358,
+          "pressureHpa": 1009,
+          "next24hMm": 15,
+          "modelLocation": {
+            "lat": -6.2917395,
+            "lng": 106.794975
+          },
+          "air": {
+            "available": true,
+            "pm25": 61.9,
+            "pm10": 63.8,
+            "usAqi": 193,
+            "validAt": "2026-10-11T06:00Z",
+            "source": "Open-Meteo / CAMS",
+            "tier": "model-estimate"
+          }
+        },
+        {
+          "id": "timur",
+          "name": "East Jakarta",
+          "name_id": "Jakarta Timur",
+          "lat": -6.23,
+          "lng": 106.9,
+          "available": true,
+          "validAt": "2026-10-11T06:15Z",
+          "forecastFromUtc": "2026-10-11T07:00:00.000Z",
+          "forecastToUtc": "2026-10-12T07:00:00.000Z",
+          "precipitationMm": 0.1,
+          "intervalSeconds": 900,
+          "windKph": 10.9,
+          "gustKph": 33.1,
+          "windFromDeg": 351,
+          "pressureHpa": 1008.9,
+          "next24hMm": 7.3,
+          "modelLocation": {
+            "lat": -6.221441,
+            "lng": 106.931435
+          },
+          "air": {
+            "available": true,
+            "pm25": 61.9,
+            "pm10": 63.8,
+            "usAqi": 193,
+            "validAt": "2026-10-11T06:00Z",
+            "source": "Open-Meteo / CAMS",
+            "tier": "model-estimate"
+          }
+        }
+      ],
+      "notices": [
+        {
+          "id": "air-selatan",
+          "topic": "air",
+          "placeId": "selatan",
+          "level": "watch",
+          "statement": "South Jakarta model US AQI is 193 and PM2.5 is 61.9 µg/m³.",
+          "action": "People should limit long outdoor exertion while this sample stays at or above US AQI 151. An administrator should open the aerosol layer. This point is a model, not a street monitor.",
+          "basis": "Open-Meteo US AQI at or above 151. The category may be driven by a pollutant other than PM2.5.",
+          "source": "Open-Meteo / CAMS",
+          "tier": "model-estimate",
+          "validAt": "2026-10-11T06:00Z"
+        }
+      ],
+      "storm": {
+        "available": true,
+        "systems": [],
+        "radiusKm": 800,
+        "source": "GDACS",
+        "tier": "event-list",
+        "fetchedAt": "2026-10-11T06:28:07.834Z",
+        "sourceUrl": "https://www.gdacs.org/"
+      },
+      "traffic": {
+        "congestion": "unavailable",
+        "reason": "No open live feed for Jakarta street congestion or TransJakarta positions is wired into this atlas."
+      },
+      "flood": {
+        "surveyed": false,
+        "reason": "Satellite surface water is a separate dated overlay. This response does not convert it into a flooded-street list."
+      },
+      "source": "Open-Meteo, CAMS, GDACS",
+      "tier": "mixed-open-data",
+      "fetchedAt": "2026-10-11T06:28:07.846Z"
+    },
+    "seconds": 1.86
+  },
+  {
+    "id": "live_environment",
+    "url": "https://jakarta.nonarkara.org/api/atlas/environment",
+    "checkedAt": "2026-10-11T06:28:06.034927+00:00",
+    "status": 200,
+    "contentType": "application/json; charset=utf-8",
+    "cors": "*",
+    "bytesRead": 5447,
+    "finalUrl": "https://jakarta.nonarkara.org/api/atlas/environment",
+    "shape": [
+      "products",
+      "radar",
+      "fetchedAt"
+    ],
+    "sample": {
+      "products": [
+        {
+          "id": "surface-water",
+          "layer": "MODIS_Combined_Flood_3-Day",
+          "maxzoom": 9,
+          "resolution": "250 m",
+          "units": "classification",
+          "legend": "MODIS_Flood",
+          "tier": "satellite-observation",
+          "available": true,
+          "source": "NASA GIBS / LANCE",
+          "date": "2026-10-10",
+          "latestAvailableDate": "2026-10-11",
+          "dates": [
+            "2026-10-11",
+            "2026-10-10",
+            "2026-10-09",
+            "2026-10-08",
+            "2026-10-07",
+            "2026-10-06",
+            "2026-10-05"
+          ],
+          "fetchedAt": "2026-10-11T06:28:16.703Z",
+          "timePrecision": "day",
+          "windowDays": 3,
+          "tiles": [
+            "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Combined_Flood_3-Day/default/2026-10-10/GoogleMapsCompatible_Level9/{z}/{y}/{x}.png"
+          ],
+          "legendUrl": "https://gibs.earthdata.nasa.gov/legends/MODIS_Flood_H.svg",
+          "sourceUrl": "https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/"
+        },
+        {
+          "id": "aerosol",
+          "layer": "MODIS_Terra_Aerosol",
+          "maxzoom": 6,
+          "resolution": "10 km",
+          "units": "AOD (unitless)",
+          "legend": "MODIS_VIIRS_AOD",
+          "tier": "satellite-observation",
+          "available": true,
+          "source": "NASA GIBS / LANCE",
+          "date": "2026-10-10",
+          "latestAvailableDate": "2026-10-11",
+          "dates": [
+            "2026-10-11",
+            "2026-10-10",
+            "2026-10-09",
+            "2026-10-08",
+            "2026-10-07",
+            "2026-10-06",
+            "2026-10-05"
+          ],
+          "fetchedAt": "2026-10-11T06:28:16.703Z",
+          "timePrecision": "day",
+          "windowDays": 1,
+          "tiles": [
+            "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Aerosol/default/2026-10-10/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png"
+          ],
+          "legendUrl": "https://gibs.earthdata.nasa.gov/legends/MODIS_VIIRS_AOD_H.svg",
+          "sourceUrl": "https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/"
+        },
+        {
+          "id": "satellite-rain",
+          "layer": "IMERG_Precipitation_Rate",
+          "maxzoom": 6,
+          "resolution": "0.1°",
+          "units": "mm/h",
+          "legend": "GPM_Precipitation_Rate",
+          "tier": "satellite-estimate",
+          "available": true,
+          "source": "NASA GIBS / LANCE",
+          "date": "2026-10-09",
+          "latestAvailableDate": "2026-10-09",
+          "dates": [
+            "2026-10-09",
+            "2026-10-08",
+            "2026-10-07",
+            "2026-10-06",
+            "2026-10-05",
+            "2026-10-04",
+            "2026-10-03"
+          ],
+          "fetchedAt": "2026-10-11T06:28:16.703Z",
+          "timePrecision": "day",
+          "windowDays": 1,
+          "tiles": [
+            "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/IMERG_Precipitation_Rate/default/2026-10-09/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png"
+          ],
+          "legendUrl": "https://gibs.earthdata.nasa.gov/legends/GPM_Precipitation_Rate_H.svg",
+          "sourceUrl": "https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/"
+        },
+        {
+          "id": "himawari",
+          "layer": "Himawari_AHI_Band13_Clean_Infrared",
+          "maxzoom": 6,
+          "resolution": "2 km",
+          "units": "K",
+          "legend": "Clean_Longwave_Infrared_Window_Band",
+          "tier": "satellite-observation",
+          "available": true,
+          "source": "JMA Himawari AHI / NASA GIBS",
+          "date": "2026-10-11T05:30:00Z",
+          "latestAvailableDate": "2026-10-11T05:30:00Z",
+          "dates": [
+            "2026-10-11T05:30:00Z",
+            "2026-10-11T05:20:00Z",
+            "2026-10-11T05:10:00Z",
+            "2026-10-11T05:00:00Z",
+            "2026-10-11T04:50:00Z",
+            "2026-10-11T04:40:00Z",
+            "2026-10-11T04:30:00Z",
+            "2026-10-11T04:20:00Z",
+            "2026-10-11T04:10:00Z",
+            "2026-10-11T04:00:00Z",
+            "2026-10-11T03:50:00Z",
+            "2026-10-11T03:40:00Z"
+          ],
+          "fetchedAt": "2026-10-11T06:28:16.703Z",
+          "timePrecision": "10 minutes",
+          "windowDays": null,
+          "tiles": [
+            "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/Himawari_AHI_Band13_Clean_Infrared/default/2026-10-11T05:30:00Z/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png"
+          ],
+          "legendUrl": "https://gibs.earthdata.nasa.gov/legends/Clean_Longwave_Infrared_Window_Band_H.svg",
+          "sourceUrl": "https://www.jma.go.jp/jma/jma-eng/jma-center/nowcasting/index.html"
+        }
+      ],
+      "radar": {
+        "available": true,
+        "frames": [
+          {
+            "observedAt": "2026-10-11T04:20:00.000Z",
+            "tiles": [
+              "https://tilecache.rainviewer.com/v2/radar/a608f3053699/256/{z}/{x}/{y}/2/0_0.png"
+            ]
+          },
+          {
+            "observedAt": "2026-10-11T04:30:00.000Z",
+            "tiles": [
+              "https://tilecache.rainviewer.com/v2/radar/b9c6520a8100/256/{z}/{x}/{y}/2/0_0.png"
+            ]
+          },
+          {
+            "observedAt": "2026-10-11T04:40:00.000Z",
+            "tiles": [
+              "https://tilecache.rainviewer.com/v2/radar/e68a6dc722d5/256/{z}/{x}/{y}/2/0_0.png"
+            ]
+          },
+          {
+            "observedAt": "2026-10-11T04:50:00.000Z",
+            "tiles": [
+              "https://tilecache.rainviewer.com/v2/radar/25d0064f3411/256/{z}/{x}/{y}/2/0_0.png"
+            ]
+          },
+          {
+            "observedAt": "2026-10-11T05:00:00.000Z",
+            "tiles": [
+              "https://tilecache.rainviewer.com/v2/radar/55e6e01cece5/256/{z}/{x}/{y}/2/0_0.png"
+            ]
+          },
+          {
+            "observedAt": "2026-10-11T05:10:00.000Z",
+            "tiles": [
+              "https://tilecache.rainviewer.com/v2/radar/70bc945aabe9/256/{z}/{x}/{y}/2/0_0.png"
+            ]
+          },
+          {
+            "observedAt": "2026-10-11T05:20:00.000Z",
+            "tiles": [
+              "https://tilecache.rainviewer.com/v2/radar/8d209052ad9b/256/{z}/{x}/{y}/2/0_0.png"
+            ]
+          },
+          {
+            "observedAt": "2026-10-11T05:30:00.000Z",
+            "tiles": [
+              "https://tilecache.rainviewer.com/v2/radar/60336bb64fa4/256/{z}/{x}/{y}/2/0_0.png"
+            ]
+          },
+          {
+            "observedAt": "2026-10-11T05:40:00.000Z",
+            "tiles": [
+              "https://tilecache.rainviewer.com/v2/radar/31570c5e1cc1/256/{z}/{x}/{y}/2/0_0.png"
+            ]
+          },
+          {
+            "observedAt": "2026-10-11T05:50:00.000Z",
+            "tiles": [
+              "https://tilecache.rainviewer.com/v2/radar/36b78593a3bf/256/{z}/{x}/{y}/2/0_0.png"
+            ]
+          },
+          {
+            "observedAt": "2026-10-11T06:00:00.000Z",
+            "tiles": [
+              "https://tilecache.rainviewer.com/v2/radar/4925c79583dd/256/{z}/{x}/{y}/2/0_0.png"
+            ]
+          },
+          {
+            "observedAt": "2026-10-11T06:10:00.000Z",
+            "tiles": [
+              "https://tilecache.rainviewer.com/v2/radar/cd246084755c/256/{z}/{x}/{y}/2/0_0.png"
+            ]
+          },
+          {
+            "observedAt": "2026-10-11T06:20:00.000Z",
+            "tiles": [
+              "https://tilecache.rainviewer.com/v2/radar/50a8b8ce2e3a/256/{z}/{x}/{y}/2/0_0.png"
+            ]
+          }
+        ],
+        "maxzoom": 7,
+        "source": "RainViewer radar composite",
+        "tier": "radar-observation",
+        "fetchedAt": "2026-10-11T06:28:07.914Z",
+        "coverageTiles": [
+          "https://tilecache.rainviewer.com/v2/coverage/0/256/{z}/{x}/{y}/0/0_0.png"
+        ],
+        "sourceUrl": "https://www.rainviewer.com",
+        "termsUrl": "https://www.rainviewer.com/api.html"
+      },
+      "fetchedAt": "2026-10-11T06:28:16.876Z"
+    },
+    "seconds": 10.94
+  },
+  {
+    "id": "live_rainfall",
+    "url": "https://jakarta.nonarkara.org/api/atlas/rainfall",
+    "checkedAt": "2026-10-11T06:28:06.159313+00:00",
+    "status": 200,
+    "contentType": "application/json; charset=utf-8",
+    "cors": "*",
+    "bytesRead": 10978,
+    "finalUrl": "https://jakarta.nonarkara.org/api/atlas/rainfall",
+    "shape": [
+      "points",
+      "source",
+      "tier",
+      "fetchedAt",
+      "sourceUrl",
+      "timezone"
+    ],
+    "sample": {
+      "points": [
+        {
+          "id": "pusat",
+          "name": "Central Jakarta",
+          "name_id": "Jakarta Pusat",
+          "lat": -6.18,
+          "lng": 106.83,
+          "available": true,
+          "validAt": "2026-10-11T06:15Z",
+          "forecastFromUtc": "2026-10-11T07:00:00.000Z",
+          "forecastToUtc": "2026-10-12T07:00:00.000Z",
+          "precipitationMm": 0,
+          "intervalSeconds": 900,
+          "windKph": 16.7,
+          "gustKph": 44.6,
+          "windFromDeg": 11,
+          "pressureHpa": 1009.4,
+          "next24hMm": 4.9,
+          "forecast": [
+            {
+              "validAt": "2026-10-11T08:00Z",
+              "precipitationMm": 0.4,
+              "probabilityPct": 89
+            },
+            {
+              "validAt": "2026-10-11T09:00Z",
+              "precipitationMm": 0.2,
+              "probabilityPct": 94
+            },
+            {
+              "validAt": "2026-10-11T10:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 95
+            },
+            {
+              "validAt": "2026-10-11T11:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 92
+            },
+            {
+              "validAt": "2026-10-11T12:00Z",
+              "precipitationMm": 0.2,
+              "probabilityPct": 90
+            },
+            {
+              "validAt": "2026-10-11T13:00Z",
+              "precipitationMm": 0.9,
+              "probabilityPct": 92
+            },
+            {
+              "validAt": "2026-10-11T14:00Z",
+              "precipitationMm": 0.5,
+              "probabilityPct": 94
+            },
+            {
+              "validAt": "2026-10-11T15:00Z",
+              "precipitationMm": 0.7,
+              "probabilityPct": 92
+            },
+            {
+              "validAt": "2026-10-11T16:00Z",
+              "precipitationMm": 1.1,
+              "probabilityPct": 81
+            },
+            {
+              "validAt": "2026-10-11T17:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 65
+            },
+            {
+              "validAt": "2026-10-11T18:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 51
+            },
+            {
+              "validAt": "2026-10-11T19:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 41
+            },
+            {
+              "validAt": "2026-10-11T20:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 32
+            },
+            {
+              "validAt": "2026-10-11T21:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 25
+            },
+            {
+              "validAt": "2026-10-11T22:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 19
+            },
+            {
+              "validAt": "2026-10-11T23:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 13
+            },
+            {
+              "validAt": "2026-10-12T00:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 10
+            },
+            {
+              "validAt": "2026-10-12T01:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 6
+            },
+            {
+              "validAt": "2026-10-12T02:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 5
+            },
+            {
+              "validAt": "2026-10-12T03:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 10
+            },
+            {
+              "validAt": "2026-10-12T04:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 29
+            },
+            {
+              "validAt": "2026-10-12T05:00Z",
+              "precipitationMm": 0.1,
+              "probabilityPct": 55
+            },
+            {
+              "validAt": "2026-10-12T06:00Z",
+              "precipitationMm": 0.5,
+              "probabilityPct": 76
+            },
+            {
+              "validAt": "2026-10-12T07:00Z",
+              "precipitationMm": 0.3,
+              "probabilityPct": 87
+            }
+          ],
+          "modelLocation": {
+            "lat": -6.151142,
+            "lng": 106.8421
+          }
+        },
+        {
+          "id": "utara",
+          "name": "North Jakarta",
+          "name_id": "Jakarta Utara",
+          "lat": -6.12,
+          "lng": 106.88,
+          "available": true,
+          "validAt": "2026-10-11T06:15Z",
+          "forecastFromUtc": "2026-10-11T07:00:00.000Z",
+          "forecastToUtc": "2026-10-12T07:00:00.000Z",
+          "precipitationMm": 0,
+          "intervalSeconds": 900,
+          "windKph": 16.7,
+          "gustKph": 44.6,
+          "windFromDeg": 11,
+          "pressureHpa": 1009.4,
+          "next24hMm": 4.9,
+          "forecast": [
+            {
+              "validAt": "2026-10-11T08:00Z",
+              "precipitationMm": 0.4,
+              "probabilityPct": 84
+            },
+            {
+              "validAt": "2026-10-11T09:00Z",
+              "precipitationMm": 0.2,
+              "probabilityPct": 92
+            },
+            {
+              "validAt": "2026-10-11T10:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 91
+            },
+            {
+              "validAt": "2026-10-11T11:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 84
+            },
+            {
+              "validAt": "2026-10-11T12:00Z",
+              "precipitationMm": 0.2,
+              "probabilityPct": 78
+            },
+            {
+              "validAt": "2026-10-11T13:00Z",
+              "precipitationMm": 0.9,
+              "probabilityPct": 78
+            },
+            {
+              "validAt": "2026-10-11T14:00Z",
+              "precipitationMm": 0.5,
+              "probabilityPct": 79
+            },
+            {
+              "validAt": "2026-10-11T15:00Z",
+              "precipitationMm": 0.7,
+              "probabilityPct": 78
+            },
+            {
+              "validAt": "2026-10-11T16:00Z",
+              "precipitationMm": 1.1,
+              "probabilityPct": 75
+            },
+            {
+              "validAt": "2026-10-11T17:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 70
+            },
+            {
+              "validAt": "2026-10-11T18:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 61
+            },
+            {
+              "validAt": "2026-10-11T19:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 45
+            },
+            {
+              "validAt": "2026-10-11T20:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 26
+            },
+            {
+              "validAt": "2026-10-11T21:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 12
+            },
+            {
+              "validAt": "2026-10-11T22:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 7
+            },
+            {
+              "validAt": "2026-10-11T23:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 6
+            },
+            {
+              "validAt": "2026-10-12T00:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 6
+            },
+            {
+              "validAt": "2026-10-12T01:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 2
+            },
+            {
+              "validAt": "2026-10-12T02:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 0
+            },
+            {
+              "validAt": "2026-10-12T03:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 2
+            },
+            {
+              "validAt": "2026-10-12T04:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 22
+            },
+            {
+              "validAt": "2026-10-12T05:00Z",
+              "precipitationMm": 0.1,
+              "probabilityPct": 50
+            },
+            {
+              "validAt": "2026-10-12T06:00Z",
+              "precipitationMm": 0.5,
+              "probabilityPct": 73
+            },
+            {
+              "validAt": "2026-10-12T07:00Z",
+              "precipitationMm": 0.3,
+              "probabilityPct": 84
+            }
+          ],
+          "modelLocation": {
+            "lat": -6.151142,
+            "lng": 106.8421
+          }
+        },
+        {
+          "id": "barat",
+          "name": "West Jakarta",
+          "name_id": "Jakarta Barat",
+          "lat": -6.17,
+          "lng": 106.75,
+          "available": true,
+          "validAt": "2026-10-11T06:15Z",
+          "forecastFromUtc": "2026-10-11T07:00:00.000Z",
+          "forecastToUtc": "2026-10-12T07:00:00.000Z",
+          "precipitationMm": 0.3,
+          "intervalSeconds": 900,
+          "windKph": 16,
+          "gustKph": 42.1,
+          "windFromDeg": 19,
+          "pressureHpa": 1009.5,
+          "next24hMm": 9.8,
+          "forecast": [
+            {
+              "validAt": "2026-10-11T08:00Z",
+              "precipitationMm": 0.3,
+              "probabilityPct": 89
+            },
+            {
+              "validAt": "2026-10-11T09:00Z",
+              "precipitationMm": 0.4,
+              "probabilityPct": 94
+            },
+            {
+              "validAt": "2026-10-11T10:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 95
+            },
+            {
+              "validAt": "2026-10-11T11:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 92
+            },
+            {
+              "validAt": "2026-10-11T12:00Z",
+              "precipitationMm": 2.2,
+              "probabilityPct": 90
+            },
+            {
+              "validAt": "2026-10-11T13:00Z",
+              "precipitationMm": 2,
+              "probabilityPct": 92
+            },
+            {
+              "validAt": "2026-10-11T14:00Z",
+              "precipitationMm": 0.5,
+              "probabilityPct": 94
+            },
+            {
+              "validAt": "2026-10-11T15:00Z",
+              "precipitationMm": 0.9,
+              "probabilityPct": 92
+            },
+            {
+              "validAt": "2026-10-11T16:00Z",
+              "precipitationMm": 1.6,
+              "probabilityPct": 81
+            },
+            {
+              "validAt": "2026-10-11T17:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 65
+            },
+            {
+              "validAt": "2026-10-11T18:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 51
+            },
+            {
+              "validAt": "2026-10-11T19:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 41
+            },
+            {
+              "validAt": "2026-10-11T20:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 32
+            },
+            {
+              "validAt": "2026-10-11T21:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 25
+            },
+            {
+              "validAt": "2026-10-11T22:00Z",
+              "precipitationMm": 0.1,
+              "probabilityPct": 19
+            },
+            {
+              "validAt": "2026-10-11T23:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 13
+            },
+            {
+              "validAt": "2026-10-12T00:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 10
+            },
+            {
+              "validAt": "2026-10-12T01:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 6
+            },
+            {
+              "validAt": "2026-10-12T02:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 5
+            },
+            {
+              "validAt": "2026-10-12T03:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 10
+            },
+            {
+              "validAt": "2026-10-12T04:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 29
+            },
+            {
+              "validAt": "2026-10-12T05:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 55
+            },
+            {
+              "validAt": "2026-10-12T06:00Z",
+              "precipitationMm": 1.3,
+              "probabilityPct": 76
+            },
+            {
+              "validAt": "2026-10-12T07:00Z",
+              "precipitationMm": 0.5,
+              "probabilityPct": 87
+            }
+          ],
+          "modelLocation": {
+            "lat": -6.151142,
+            "lng": 106.766914
+          }
+        },
+        {
+          "id": "selatan",
+          "name": "South Jakarta",
+          "name_id": "Jakarta Selatan",
+          "lat": -6.27,
+          "lng": 106.81,
+          "available": true,
+          "validAt": "2026-10-11T06:15Z",
+          "forecastFromUtc": "2026-10-11T07:00:00.000Z",
+          "forecastToUtc": "2026-10-12T07:00:00.000Z",
+          "precipitationMm": 0.1,
+          "intervalSeconds": 900,
+          "windKph": 10.3,
+          "gustKph": 30.6,
+          "windFromDeg": 358,
+          "pressureHpa": 1009,
+          "next24hMm": 15,
+          "forecast": [
+            {
+              "validAt": "2026-10-11T08:00Z",
+              "precipitationMm": 1.1,
+              "probabilityPct": 89
+            },
+            {
+              "validAt": "2026-10-11T09:00Z",
+              "precipitationMm": 0.9,
+              "probabilityPct": 94
+            },
+            {
+              "validAt": "2026-10-11T10:00Z",
+              "precipitationMm": 0.4,
+              "probabilityPct": 95
+            },
+            {
+              "validAt": "2026-10-11T11:00Z",
+              "precipitationMm": 1.8,
+              "probabilityPct": 92
+            },
+            {
+              "validAt": "2026-10-11T12:00Z",
+              "precipitationMm": 5.2,
+              "probabilityPct": 90
+            },
+            {
+              "validAt": "2026-10-11T13:00Z",
+              "precipitationMm": 2.3,
+              "probabilityPct": 92
+            },
+            {
+              "validAt": "2026-10-11T14:00Z",
+              "precipitationMm": 0.9,
+              "probabilityPct": 94
+            },
+            {
+              "validAt": "2026-10-11T15:00Z",
+              "precipitationMm": 0.6,
+              "probabilityPct": 92
+            },
+            {
+              "validAt": "2026-10-11T16:00Z",
+              "precipitationMm": 0.3,
+              "probabilityPct": 81
+            },
+            {
+              "validAt": "2026-10-11T17:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 65
+            },
+            {
+              "validAt": "2026-10-11T18:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 51
+            },
+            {
+              "validAt": "2026-10-11T19:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 41
+            },
+            {
+              "validAt": "2026-10-11T20:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 32
+            },
+            {
+              "validAt": "2026-10-11T21:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 25
+            },
+            {
+              "validAt": "2026-10-11T22:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 19
+            },
+            {
+              "validAt": "2026-10-11T23:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 13
+            },
+            {
+              "validAt": "2026-10-12T00:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 10
+            },
+            {
+              "validAt": "2026-10-12T01:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 6
+            },
+            {
+              "validAt": "2026-10-12T02:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 5
+            },
+            {
+              "validAt": "2026-10-12T03:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 10
+            },
+            {
+              "validAt": "2026-10-12T04:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 29
+            },
+            {
+              "validAt": "2026-10-12T05:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 55
+            },
+            {
+              "validAt": "2026-10-12T06:00Z",
+              "precipitationMm": 0.9,
+              "probabilityPct": 76
+            },
+            {
+              "validAt": "2026-10-12T07:00Z",
+              "precipitationMm": 0.6,
+              "probabilityPct": 87
+            }
+          ],
+          "modelLocation": {
+            "lat": -6.2917395,
+            "lng": 106.794975
+          }
+        },
+        {
+          "id": "timur",
+          "name": "East Jakarta",
+          "name_id": "Jakarta Timur",
+          "lat": -6.23,
+          "lng": 106.9,
+          "available": true,
+          "validAt": "2026-10-11T06:15Z",
+          "forecastFromUtc": "2026-10-11T07:00:00.000Z",
+          "forecastToUtc": "2026-10-12T07:00:00.000Z",
+          "precipitationMm": 0.1,
+          "intervalSeconds": 900,
+          "windKph": 10.9,
+          "gustKph": 33.1,
+          "windFromDeg": 351,
+          "pressureHpa": 1008.9,
+          "next24hMm": 7.3,
+          "forecast": [
+            {
+              "validAt": "2026-10-11T08:00Z",
+              "precipitationMm": 1.5,
+              "probabilityPct": 84
+            },
+            {
+              "validAt": "2026-10-11T09:00Z",
+              "precipitationMm": 1,
+              "probabilityPct": 92
+            },
+            {
+              "validAt": "2026-10-11T10:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 91
+            },
+            {
+              "validAt": "2026-10-11T11:00Z",
+              "precipitationMm": 0.1,
+              "probabilityPct": 84
+            },
+            {
+              "validAt": "2026-10-11T12:00Z",
+              "precipitationMm": 0.6,
+              "probabilityPct": 78
+            },
+            {
+              "validAt": "2026-10-11T13:00Z",
+              "precipitationMm": 1.3,
+              "probabilityPct": 78
+            },
+            {
+              "validAt": "2026-10-11T14:00Z",
+              "precipitationMm": 0.5,
+              "probabilityPct": 79
+            },
+            {
+              "validAt": "2026-10-11T15:00Z",
+              "precipitationMm": 0.5,
+              "probabilityPct": 78
+            },
+            {
+              "validAt": "2026-10-11T16:00Z",
+              "precipitationMm": 0.3,
+              "probabilityPct": 75
+            },
+            {
+              "validAt": "2026-10-11T17:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 70
+            },
+            {
+              "validAt": "2026-10-11T18:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 61
+            },
+            {
+              "validAt": "2026-10-11T19:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 45
+            },
+            {
+              "validAt": "2026-10-11T20:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 26
+            },
+            {
+              "validAt": "2026-10-11T21:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 12
+            },
+            {
+              "validAt": "2026-10-11T22:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 7
+            },
+            {
+              "validAt": "2026-10-11T23:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 6
+            },
+            {
+              "validAt": "2026-10-12T00:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 6
+            },
+            {
+              "validAt": "2026-10-12T01:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 2
+            },
+            {
+              "validAt": "2026-10-12T02:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 0
+            },
+            {
+              "validAt": "2026-10-12T03:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 2
+            },
+            {
+              "validAt": "2026-10-12T04:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 22
+            },
+            {
+              "validAt": "2026-10-12T05:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 50
+            },
+            {
+              "validAt": "2026-10-12T06:00Z",
+              "precipitationMm": 1.5,
+              "probabilityPct": 73
+            },
+            {
+              "validAt": "2026-10-12T07:00Z",
+              "precipitationMm": 0,
+              "probabilityPct": 84
+            }
+          ],
+          "modelLocation": {
+            "lat": -6.221441,
+            "lng": 106.931435
+          }
+        }
+      ],
+      "source": "Open-Meteo weather models",
+      "tier": "model-estimate-and-forecast",
+      "fetchedAt": "2026-10-11T06:28:07.234Z",
+      "sourceUrl": "https://open-meteo.com/en/docs",
+      "timezone": "UTC"
+    },
+    "seconds": 1.14
+  },
+  {
+    "id": "live_air",
+    "url": "https://jakarta.nonarkara.org/api/atlas/air-quality",
+    "checkedAt": "2026-10-11T06:28:06.178999+00:00",
+    "status": 200,
+    "contentType": "application/json; charset=utf-8",
+    "cors": "*",
+    "bytesRead": 1312,
+    "finalUrl": "https://jakarta.nonarkara.org/api/atlas/air-quality",
+    "shape": "list",
+    "sample": [
+      {
+        "id": "pusat",
+        "label": "Central Jakarta",
+        "label_id": "Jakarta Pusat",
+        "lat": -6.18,
+        "lng": 106.83,
+        "aqi": 138,
+        "pm25": 41.1,
+        "pm10": 44.8,
+        "observedAt": "2026-10-11T06:00Z",
+        "provenance": {
+          "source": "Open-Meteo / CAMS",
+          "tier": "model-estimate"
+        },
+        "category": "Unhealthy for Sensitive Groups"
+      },
+      {
+        "id": "utara",
+        "label": "North Jakarta",
+        "label_id": "Jakarta Utara",
+        "lat": -6.12,
+        "lng": 106.88,
+        "aqi": 138,
+        "pm25": 41.1,
+        "pm10": 44.8,
+        "observedAt": "2026-10-11T06:00Z",
+        "provenance": {
+          "source": "Open-Meteo / CAMS",
+          "tier": "model-estimate"
+        },
+        "category": "Unhealthy for Sensitive Groups"
+      },
+      {
+        "id": "barat",
+        "label": "West Jakarta",
+        "label_id": "Jakarta Barat",
+        "lat": -6.17,
+        "lng": 106.75,
+        "aqi": 138,
+        "pm25": 41.1,
+        "pm10": 44.8,
+        "observedAt": "2026-10-11T06:00Z",
+        "provenance": {
+          "source": "Open-Meteo / CAMS",
+          "tier": "model-estimate"
+        },
+        "category": "Unhealthy for Sensitive Groups"
+      },
+      {
+        "id": "selatan",
+        "label": "South Jakarta",
+        "label_id": "Jakarta Selatan",
+        "lat": -6.27,
+        "lng": 106.81,
+        "aqi": 193,
+        "pm25": 61.9,
+        "pm10": 63.8,
+        "observedAt": "2026-10-11T06:00Z",
+        "provenance": {
+          "source": "Open-Meteo / CAMS",
+          "tier": "model-estimate"
+        },
+        "category": "Unhealthy"
+      },
+      {
+        "id": "timur",
+        "label": "East Jakarta",
+        "label_id": "Jakarta Timur",
+        "lat": -6.23,
+        "lng": 106.9,
+        "aqi": 193,
+        "pm25": 61.9,
+        "pm10": 63.8,
+        "observedAt": "2026-10-11T06:00Z",
+        "provenance": {
+          "source": "Open-Meteo / CAMS",
+          "tier": "model-estimate"
+        },
+        "category": "Unhealthy"
+      }
+    ],
+    "seconds": 1.16
+  },
+  {
+    "id": "openmeteo",
+    "url": "https://api.open-meteo.com/v1/forecast?latitude=-6.18&longitude=106.83&current=precipitation&timezone=UTC",
+    "checkedAt": "2026-10-11T06:28:07.234802+00:00",
+    "status": 200,
+    "contentType": "application/json; charset=utf-8",
+    "cors": "*",
+    "bytesRead": 322,
+    "finalUrl": "https://api.open-meteo.com/v1/forecast?latitude=-6.18&longitude=106.83&current=precipitation&timezone=UTC",
+    "shape": [
+      "latitude",
+      "longitude",
+      "generationtime_ms",
+      "utc_offset_seconds",
+      "timezone",
+      "timezone_abbreviation",
+      "elevation",
+      "current_units",
+      "current"
+    ],
+    "sample": "{'latitude': -6.151142, 'longitude': 106.8421, 'generationtime_ms': 0.027894973754882812, 'utc_offset_seconds': 0, 'timezone': 'GMT', 'timezone_abbreviation': 'GMT', 'elevation': 12.0, 'current_units': {'time': 'iso8601', 'interval': 'seconds', 'precipitation': 'mm'}, 'current': {'time': '2026-10-11T06:15', 'interval': 900, 'precipitation': 0.0}}",
+    "seconds": 1.36
+  }
+]

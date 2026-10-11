@@ -1,0 +1,1299 @@
+[
+  {
+    "id": "batas_kelurahan_vs_dukcapil",
+    "url": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu/batas_kelurahan_vs_dukcapil/MapServer?f=pjson",
+    "checkedAt": "2026-10-11T06:29:26.351945+00:00",
+    "status": 200,
+    "cors": "https://jakarta.nonarkara.org",
+    "contentType": "text/plain;charset=UTF-8",
+    "bytesRead": 162,
+    "body": {
+      "error": {
+        "code": 500,
+        "message": "Error handling service request :GISService not instantiated and set in the thread local storage.",
+        "details": []
+      }
+    },
+    "seconds": 3.95
+  },
+  {
+    "id": "Fasilitas_Kesehatan",
+    "url": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu/Fasilitas_Kesehatan/MapServer?f=pjson",
+    "checkedAt": "2026-10-11T06:29:26.352517+00:00",
+    "status": 200,
+    "cors": "https://jakarta.nonarkara.org",
+    "contentType": "text/plain;charset=UTF-8",
+    "bytesRead": 2663,
+    "body": {
+      "currentVersion": 11.5,
+      "cimVersion": "3.5.0",
+      "serviceDescription": "",
+      "mapName": "Map1",
+      "description": "",
+      "copyrightText": "",
+      "supportsDynamicLayers": true,
+      "layers": [
+        {
+          "id": 0,
+          "name": "Fasilitas Kesehatan",
+          "parentLayerId": -1,
+          "defaultVisibility": true,
+          "subLayerIds": null,
+          "minScale": 0,
+          "maxScale": 0,
+          "type": "Feature Layer",
+          "geometryType": "esriGeometryPoint",
+          "supportsDynamicLegends": true
+        }
+      ],
+      "tables": [],
+      "spatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      },
+      "singleFusedMapCache": false,
+      "initialExtent": {
+        "xmin": 671499.0993034934,
+        "ymin": 9283504.192565808,
+        "xmax": 734669.1564807495,
+        "ymax": 9340302.313540837,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 10000,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "fullExtent": {
+        "xmin": 686814.4774,
+        "ymin": 9297136.7658,
+        "xmax": 716555.547,
+        "ymax": 9326029.0688,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 10000,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "datesInUnknownTimezone": false,
+      "minScale": 0,
+      "maxScale": 0,
+      "units": "esriMeters",
+      "supportedImageFormatTypes": "PNG32,PNG24,PNG,JPG,DIB,TIFF,EMF,PS,PDF,GIF,SVG,SVGZ,BMP",
+      "documentInfo": {
+        "Title": "Map1",
+        "Author": "",
+        "Comments": "",
+        "Subject": "",
+        "Category": "",
+        "Version": "2.6.0",
+        "AntialiasingMode": "Fast",
+        "TextAntialiasingMode": "Force",
+        "Keywords": "Fasilitas Kesehatan"
+      },
+      "supportsQueryDomains": true,
+      "capabilities": "Map,Query,Data",
+      "supportedQueryFormats": "JSON, geoJSON, PBF",
+      "exportTilesAllowed": false,
+      "referenceScale": 0.0,
+      "supportsDatumTransformation": true,
+      "archivingInfo": {
+        "supportsHistoricMoment": false
+      },
+      "supportsClipping": true,
+      "supportsSpatialFilter": true,
+      "supportsTimeRelation": true,
+      "supportsQueryDataElements": true,
+      "mapUnits": {
+        "uwkid": 9001
+      },
+      "maxSelectionCount": 2000,
+      "maxRecordCount": 200000,
+      "maxImageHeight": 4096,
+      "maxImageWidth": 4096,
+      "supportedExtensions": "FeatureServer",
+      "resampling": false,
+      "serviceItemId": "d90cac39a93d4eb3b3d57a066051a353"
+    },
+    "seconds": 3.49
+  },
+  {
+    "id": "Jalur_Kereta_Api",
+    "url": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu/Jalur_Kereta_Api/MapServer?f=pjson",
+    "checkedAt": "2026-10-11T06:29:26.352720+00:00",
+    "status": 200,
+    "cors": "https://jakarta.nonarkara.org",
+    "contentType": "text/plain;charset=UTF-8",
+    "bytesRead": 2637,
+    "body": {
+      "currentVersion": 11.5,
+      "cimVersion": "3.5.0",
+      "serviceDescription": "",
+      "mapName": "Map1",
+      "description": "",
+      "copyrightText": "",
+      "supportsDynamicLayers": true,
+      "layers": [
+        {
+          "id": 0,
+          "name": "Jalur Kereta Api",
+          "parentLayerId": -1,
+          "defaultVisibility": true,
+          "subLayerIds": null,
+          "minScale": 0,
+          "maxScale": 0,
+          "type": "Feature Layer",
+          "geometryType": "esriGeometryPolyline",
+          "supportsDynamicLegends": true
+        }
+      ],
+      "tables": [],
+      "spatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      },
+      "singleFusedMapCache": false,
+      "initialExtent": {
+        "xmin": 678926.7977084974,
+        "ymin": 9293793.449182063,
+        "xmax": 724925.8295659269,
+        "ymax": 9335152.578695614,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 10000,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "fullExtent": {
+        "xmin": 686770.2941,
+        "ymin": 9297070.3851,
+        "xmax": 716471.3442,
+        "ymax": 9324449.2933,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 10000,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "datesInUnknownTimezone": false,
+      "minScale": 0,
+      "maxScale": 0,
+      "units": "esriMeters",
+      "supportedImageFormatTypes": "PNG32,PNG24,PNG,JPG,DIB,TIFF,EMF,PS,PDF,GIF,SVG,SVGZ,BMP",
+      "documentInfo": {
+        "Title": "Map1",
+        "Author": "",
+        "Comments": "",
+        "Subject": "",
+        "Category": "",
+        "Version": "2.6.0",
+        "AntialiasingMode": "Fast",
+        "TextAntialiasingMode": "Force",
+        "Keywords": "Jalur Kereta Api"
+      },
+      "supportsQueryDomains": true,
+      "capabilities": "Map,Query,Data",
+      "supportedQueryFormats": "JSON, geoJSON, PBF",
+      "exportTilesAllowed": false,
+      "referenceScale": 0.0,
+      "supportsDatumTransformation": true,
+      "archivingInfo": {
+        "supportsHistoricMoment": false
+      },
+      "supportsClipping": true,
+      "supportsSpatialFilter": true,
+      "supportsTimeRelation": true,
+      "supportsQueryDataElements": true,
+      "mapUnits": {
+        "uwkid": 9001
+      },
+      "maxSelectionCount": 2000,
+      "maxRecordCount": 2000,
+      "maxImageHeight": 4096,
+      "maxImageWidth": 4096,
+      "supportedExtensions": "FeatureServer",
+      "serviceItemId": "1669a24590ef4ef385365da7d74f253b"
+    },
+    "seconds": 3.73
+  },
+  {
+    "id": "Jalur_Transjakarta",
+    "url": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu/Jalur_Transjakarta/MapServer?f=pjson",
+    "checkedAt": "2026-10-11T06:29:26.352909+00:00",
+    "status": 200,
+    "cors": "https://jakarta.nonarkara.org",
+    "contentType": "text/plain;charset=UTF-8",
+    "bytesRead": 2666,
+    "body": {
+      "currentVersion": 11.5,
+      "cimVersion": "3.5.0",
+      "serviceDescription": "",
+      "mapName": "Map1",
+      "description": "",
+      "copyrightText": "",
+      "supportsDynamicLayers": true,
+      "layers": [
+        {
+          "id": 0,
+          "name": "SDE.JALUR_TRANSJAKARTA",
+          "parentLayerId": -1,
+          "defaultVisibility": true,
+          "subLayerIds": null,
+          "minScale": 0,
+          "maxScale": 0,
+          "type": "Feature Layer",
+          "geometryType": "esriGeometryPolyline",
+          "supportsDynamicLegends": true
+        }
+      ],
+      "tables": [],
+      "spatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      },
+      "singleFusedMapCache": false,
+      "initialExtent": {
+        "xmin": 645631.7938292988,
+        "ymin": 9299028.843306312,
+        "xmax": 738204.6200101078,
+        "ymax": 9341592.92247686,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 10000,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "fullExtent": {
+        "xmin": 688719.0454,
+        "ymin": 9302126.6996,
+        "xmax": 716170.2889,
+        "ymax": 9324329.7882,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 10000,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "datesInUnknownTimezone": false,
+      "minScale": 0,
+      "maxScale": 0,
+      "units": "esriMeters",
+      "supportedImageFormatTypes": "PNG32,PNG24,PNG,JPG,DIB,TIFF,EMF,PS,PDF,GIF,SVG,SVGZ,BMP",
+      "documentInfo": {
+        "Title": "Map1",
+        "Author": "",
+        "Comments": "",
+        "Subject": "",
+        "Category": "",
+        "Version": "2.4.0",
+        "AntialiasingMode": "Fast",
+        "TextAntialiasingMode": "Force",
+        "Keywords": "Jalur_Transjakarta"
+      },
+      "supportsQueryDomains": true,
+      "capabilities": "Map,Query,Data",
+      "supportedQueryFormats": "JSON, geoJSON, PBF",
+      "exportTilesAllowed": false,
+      "referenceScale": 0.0,
+      "supportsDatumTransformation": true,
+      "archivingInfo": {
+        "supportsHistoricMoment": false
+      },
+      "supportsClipping": true,
+      "supportsSpatialFilter": true,
+      "supportsTimeRelation": true,
+      "supportsQueryDataElements": true,
+      "mapUnits": {
+        "uwkid": 9001
+      },
+      "maxSelectionCount": 2000,
+      "maxRecordCount": 2000,
+      "maxImageHeight": 4096,
+      "maxImageWidth": 4096,
+      "supportedExtensions": "FeatureServer",
+      "resampling": false,
+      "serviceItemId": "ca817a5c411649a3849148f56c39804b"
+    },
+    "seconds": 3.41
+  },
+  {
+    "id": "Peta_Jalan",
+    "url": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu/Peta_Jalan/MapServer?f=pjson",
+    "checkedAt": "2026-10-11T06:29:26.353545+00:00",
+    "status": 200,
+    "cors": "https://jakarta.nonarkara.org",
+    "contentType": "text/plain;charset=UTF-8",
+    "bytesRead": 2887,
+    "body": {
+      "currentVersion": 11.5,
+      "cimVersion": "3.5.0",
+      "serviceDescription": "",
+      "mapName": "Map",
+      "description": "",
+      "copyrightText": "",
+      "supportsDynamicLayers": true,
+      "layers": [
+        {
+          "id": 0,
+          "name": "Jalan Garis",
+          "parentLayerId": -1,
+          "defaultVisibility": true,
+          "subLayerIds": null,
+          "minScale": 0,
+          "maxScale": 0,
+          "type": "Feature Layer",
+          "geometryType": "esriGeometryPolyline",
+          "supportsDynamicLegends": true
+        },
+        {
+          "id": 1,
+          "name": "Jalan Polygon",
+          "parentLayerId": -1,
+          "defaultVisibility": true,
+          "subLayerIds": null,
+          "minScale": 0,
+          "maxScale": 0,
+          "type": "Feature Layer",
+          "geometryType": "esriGeometryPolygon",
+          "supportsDynamicLegends": true
+        }
+      ],
+      "tables": [],
+      "spatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      },
+      "singleFusedMapCache": false,
+      "initialExtent": {
+        "xmin": 701637.538287395,
+        "ymin": 9311967.06979086,
+        "xmax": 701928.608481499,
+        "ymax": 9312221.69464763,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 10000,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "fullExtent": {
+        "xmin": 686618.3057,
+        "ymin": 9295227.1683,
+        "xmax": 718361.7941,
+        "ymax": 9326598.1709,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 10000,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "datesInUnknownTimezone": false,
+      "minScale": 0,
+      "maxScale": 0,
+      "units": "esriMeters",
+      "supportedImageFormatTypes": "PNG32,PNG24,PNG,JPG,DIB,TIFF,EMF,PS,PDF,GIF,SVG,SVGZ,BMP",
+      "documentInfo": {
+        "Title": "Map",
+        "Author": "",
+        "Comments": "",
+        "Subject": "",
+        "Category": "",
+        "Version": "2.6.0",
+        "AntialiasingMode": "Fast",
+        "TextAntialiasingMode": "Force",
+        "Keywords": "Peta Jalan"
+      },
+      "supportsQueryDomains": true,
+      "capabilities": "Map,Query,Data",
+      "supportedQueryFormats": "JSON, geoJSON, PBF",
+      "exportTilesAllowed": false,
+      "referenceScale": 0.0,
+      "supportsDatumTransformation": true,
+      "archivingInfo": {
+        "supportsHistoricMoment": false
+      },
+      "supportsClipping": true,
+      "supportsSpatialFilter": true,
+      "supportsTimeRelation": true,
+      "supportsQueryDataElements": true,
+      "mapUnits": {
+        "uwkid": 9001
+      },
+      "maxSelectionCount": 2000,
+      "maxRecordCount": 2000,
+      "maxImageHeight": 4096,
+      "maxImageWidth": 4096,
+      "supportedExtensions": "FeatureServer",
+      "serviceItemId": "9ffad5b0b0024028b3fb363e40f986e0"
+    },
+    "seconds": 3.45
+  },
+  {
+    "id": "model_gab_rth",
+    "url": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu/model_gab_rth/MapServer?f=pjson",
+    "checkedAt": "2026-10-11T06:29:26.353715+00:00",
+    "status": 200,
+    "cors": "https://jakarta.nonarkara.org",
+    "contentType": "text/plain;charset=UTF-8",
+    "bytesRead": 2662,
+    "body": {
+      "currentVersion": 11.5,
+      "cimVersion": "3.5.0",
+      "serviceDescription": "",
+      "mapName": "Layers4",
+      "description": "",
+      "copyrightText": "",
+      "supportsDynamicLayers": true,
+      "layers": [
+        {
+          "id": 0,
+          "name": "SDE.gab_rth",
+          "parentLayerId": -1,
+          "defaultVisibility": true,
+          "subLayerIds": null,
+          "minScale": 0,
+          "maxScale": 0,
+          "type": "Feature Layer",
+          "geometryType": "esriGeometryPolygon",
+          "supportsDynamicLegends": true
+        }
+      ],
+      "tables": [],
+      "spatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 2,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 450445547.3910538,
+        "falseZ": 0,
+        "zUnits": 1,
+        "falseM": -100000,
+        "mUnits": 10000
+      },
+      "singleFusedMapCache": false,
+      "initialExtent": {
+        "xmin": 710891.4869528568,
+        "ymin": 9322736.163524523,
+        "xmax": 710956.0748471435,
+        "ymax": 9322785.414175477,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 2,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 450445547.3910538,
+          "falseZ": 0,
+          "zUnits": 1,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "fullExtent": {
+        "xmin": -5120763.26769827,
+        "ymin": 2036.0569814298228,
+        "xmax": 6120763.26769827,
+        "ymax": 19997963.94301857,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 2,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 450445547.3910538,
+          "falseZ": 0,
+          "zUnits": 1,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "datesInUnknownTimezone": false,
+      "minScale": 0,
+      "maxScale": 0,
+      "units": "esriMeters",
+      "supportedImageFormatTypes": "PNG32,PNG24,PNG,JPG,DIB,TIFF,EMF,PS,PDF,GIF,SVG,SVGZ,BMP",
+      "documentInfo": {
+        "Title": "Publisher_JakOne.aprx",
+        "Author": "",
+        "Comments": "",
+        "Subject": "",
+        "Category": "",
+        "Version": "2.4.0",
+        "AntialiasingMode": "Fast",
+        "TextAntialiasingMode": "Force",
+        "Keywords": "rth"
+      },
+      "supportsQueryDomains": true,
+      "capabilities": "Map,Query,Data",
+      "supportedQueryFormats": "JSON, geoJSON, PBF",
+      "exportTilesAllowed": false,
+      "referenceScale": 0.0,
+      "supportsDatumTransformation": true,
+      "archivingInfo": {
+        "supportsHistoricMoment": false
+      },
+      "supportsClipping": true,
+      "supportsSpatialFilter": true,
+      "supportsTimeRelation": true,
+      "supportsQueryDataElements": true,
+      "mapUnits": {
+        "uwkid": 9001
+      },
+      "maxSelectionCount": 2000,
+      "maxRecordCount": 2000,
+      "maxImageHeight": 4096,
+      "maxImageWidth": 4096,
+      "supportedExtensions": "FeatureServer",
+      "serviceItemId": "a9e3cf6169084bb89e2ea2d051d601b1"
+    },
+    "seconds": 3.48
+  },
+  {
+    "id": "Sekolah",
+    "url": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu/Sekolah/MapServer?f=pjson",
+    "checkedAt": "2026-10-11T06:29:26.353905+00:00",
+    "status": 200,
+    "cors": "https://jakarta.nonarkara.org",
+    "contentType": "text/plain;charset=UTF-8",
+    "bytesRead": 2640,
+    "body": {
+      "currentVersion": 11.5,
+      "cimVersion": "3.5.0",
+      "serviceDescription": "",
+      "mapName": "Map1",
+      "description": "",
+      "copyrightText": "",
+      "supportsDynamicLayers": true,
+      "layers": [
+        {
+          "id": 0,
+          "name": "Sekolah",
+          "parentLayerId": -1,
+          "defaultVisibility": true,
+          "subLayerIds": null,
+          "minScale": 0,
+          "maxScale": 0,
+          "type": "Feature Layer",
+          "geometryType": "esriGeometryPoint",
+          "supportsDynamicLegends": true
+        }
+      ],
+      "tables": [],
+      "spatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      },
+      "singleFusedMapCache": false,
+      "initialExtent": {
+        "xmin": 670376.5011995526,
+        "ymin": 9281320.627314998,
+        "xmax": 731926.3354055097,
+        "ymax": 9336661.956505397,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 10000,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "fullExtent": {
+        "xmin": 666115.4567,
+        "ymin": 9296250.2577,
+        "xmax": 718314.5324,
+        "ymax": 9374860.1003,
+        "spatialReference": {
+          "wkid": 32748,
+          "latestWkid": 32748,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -5120900,
+          "falseY": 1900,
+          "xyUnits": 10000,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        }
+      },
+      "datesInUnknownTimezone": false,
+      "minScale": 0,
+      "maxScale": 0,
+      "units": "esriMeters",
+      "supportedImageFormatTypes": "PNG32,PNG24,PNG,JPG,DIB,TIFF,EMF,PS,PDF,GIF,SVG,SVGZ,BMP",
+      "documentInfo": {
+        "Title": "Map1",
+        "Author": "",
+        "Comments": "",
+        "Subject": "",
+        "Category": "",
+        "Version": "2.6.0",
+        "AntialiasingMode": "Fast",
+        "TextAntialiasingMode": "Force",
+        "Keywords": "Sekolah"
+      },
+      "supportsQueryDomains": true,
+      "capabilities": "Map,Query,Data",
+      "supportedQueryFormats": "JSON, geoJSON, PBF",
+      "exportTilesAllowed": false,
+      "referenceScale": 0.0,
+      "supportsDatumTransformation": true,
+      "archivingInfo": {
+        "supportsHistoricMoment": false
+      },
+      "supportsClipping": true,
+      "supportsSpatialFilter": true,
+      "supportsTimeRelation": true,
+      "supportsQueryDataElements": true,
+      "mapUnits": {
+        "uwkid": 9001
+      },
+      "maxSelectionCount": 2000,
+      "maxRecordCount": 200000,
+      "maxImageHeight": 4096,
+      "maxImageWidth": 4096,
+      "supportedExtensions": "FeatureServer",
+      "resampling": false,
+      "serviceItemId": "0ea3442f1b334d7da5a499fa51f5cb3e"
+    },
+    "seconds": 3.42
+  },
+  {
+    "id": "Laporan_air_Tanah_Jakartasatu",
+    "url": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu/Laporan_air_Tanah_Jakartasatu/MapServer?f=pjson",
+    "checkedAt": "2026-10-11T06:29:26.354048+00:00",
+    "status": 200,
+    "cors": "https://jakarta.nonarkara.org",
+    "contentType": "text/plain;charset=UTF-8",
+    "bytesRead": 162,
+    "body": {
+      "error": {
+        "code": 500,
+        "message": "Error handling service request :GISService not instantiated and set in the thread local storage.",
+        "details": []
+      }
+    },
+    "seconds": 4.02
+  },
+  {
+    "id": "gtfs",
+    "url": "https://gtfs.transjakarta.co.id/files/file_gtfs.zip",
+    "checkedAt": "2026-10-11T06:29:29.766906+00:00",
+    "status": 200,
+    "cors": null,
+    "contentType": "application/zip",
+    "bytesRead": 2497332,
+    "files": [
+      "agency.txt",
+      "calendar.txt",
+      "fare_attributes.txt",
+      "fare_rules.txt",
+      "frequencies.txt",
+      "routes.txt",
+      "shapes.txt",
+      "stops.txt",
+      "stop_times.txt",
+      "ticketing_deep_links.txt",
+      "ticketing_identifiers.txt",
+      "transfers.txt",
+      "trips.txt"
+    ],
+    "metadata": {
+      "agency.txt": "agency_id,agency_name,agency_url,agency_timezone,agency_lang,agency_phone,agency_email,ticketing_deep_link_id\r\nTije,Transjakarta,https://transjakarta.co.id/,Asia/Jakarta,id,1500102,naektije@transjakarta.co.id,tdl-tj\r\n"
+    },
+    "counts": {
+      "routes.txt": 240,
+      "stops.txt": 8091
+    },
+    "seconds": 6.55
+  },
+  {
+    "id": "demnas",
+    "url": "https://geoservices.big.go.id/raster/rest/services/DEMNAS/DEM_Indonesia/ImageServer?f=pjson",
+    "checkedAt": "2026-10-11T06:29:29.769817+00:00",
+    "status": 200,
+    "cors": "https://jakarta.nonarkara.org",
+    "contentType": "text/plain;charset=UTF-8",
+    "bytesRead": 5415,
+    "body": {
+      "currentVersion": 10.81,
+      "serviceDescription": "DEMNAS Indonesia",
+      "name": "DEMNAS/DEM_Indonesia",
+      "description": "DEMNAS Indonesia",
+      "extent": {
+        "xmin": 94.75,
+        "ymin": -11.250000000000002,
+        "xmax": 141,
+        "ymax": 6.249999999999998,
+        "spatialReference": {
+          "wkid": 4326,
+          "latestWkid": 4326,
+          "vcsWkid": 105790,
+          "latestVcsWkid": 3855
+        }
+      },
+      "initialExtent": {
+        "xmin": 94.75,
+        "ymin": -11.250000000000002,
+        "xmax": 141,
+        "ymax": 6.249999999999998,
+        "spatialReference": {
+          "wkid": 4326,
+          "latestWkid": 4326,
+          "vcsWkid": 105790,
+          "latestVcsWkid": 3855
+        }
+      },
+      "fullExtent": {
+        "xmin": 94.75,
+        "ymin": -11.250000000000002,
+        "xmax": 141,
+        "ymax": 6.249999999999998,
+        "spatialReference": {
+          "wkid": 4326,
+          "latestWkid": 4326,
+          "vcsWkid": 105790,
+          "latestVcsWkid": 3855
+        }
+      },
+      "heightModelInfo": {
+        "heightModel": "gravity_related_height",
+        "vertCRS": "EGM2008_Geoid",
+        "heightUnit": "meter"
+      },
+      "pixelSizeX": 7.498500299940011e-05,
+      "pixelSizeY": 7.498500299940011e-05,
+      "bandCount": 1,
+      "pixelType": "F32",
+      "minPixelSize": 0,
+      "maxPixelSize": 0,
+      "copyrightText": "Badan Informasi Geospasial",
+      "serviceDataType": "esriImageServiceDataTypeGeneric",
+      "minValues": [
+        -70.76360321044922
+      ],
+      "maxValues": [
+        4535.35888671875
+      ],
+      "meanValues": [
+        259.6510867740327
+      ],
+      "stdvValues": [
+        482.68727298697206
+      ],
+      "objectIdField": "OBJECTID",
+      "fields": [
+        {
+          "name": "OBJECTID",
+          "type": "esriFieldTypeOID",
+          "alias": "OBJECTID",
+          "domain": null
+        },
+        {
+          "name": "Shape",
+          "type": "esriFieldTypeGeometry",
+          "alias": "Shape",
+          "domain": null
+        },
+        {
+          "name": "Name",
+          "type": "esriFieldTypeString",
+          "alias": "Name",
+          "domain": null,
+          "length": 200
+        },
+        {
+          "name": "MinPS",
+          "type": "esriFieldTypeDouble",
+          "alias": "MinPS",
+          "domain": null
+        },
+        {
+          "name": "MaxPS",
+          "type": "esriFieldTypeDouble",
+          "alias": "MaxPS",
+          "domain": null
+        },
+        {
+          "name": "LowPS",
+          "type": "esriFieldTypeDouble",
+          "alias": "LowPS",
+          "domain": null
+        },
+        {
+          "name": "HighPS",
+          "type": "esriFieldTypeDouble",
+          "alias": "HighPS",
+          "domain": null
+        },
+        {
+          "name": "Category",
+          "type": "esriFieldTypeInteger",
+          "alias": "Category",
+          "domain": {
+            "type": "codedValue",
+            "name": "MosaicCatalogItemCategoryDomain",
+            "description": "Catalog item categories.",
+            "codedValues": [
+              {
+                "name": "Unknown",
+                "code": 0
+              },
+              {
+                "name": "Primary",
+                "code": 1
+              },
+              {
+                "name": "Overview",
+                "code": 2
+              },
+              {
+                "name": "Unprocessed Overview",
+                "code": 3
+              },
+              {
+                "name": "Partial Overview",
+                "code": 4
+              },
+              {
+                "name": "Inactive",
+                "code": 5
+              },
+              {
+                "name": "Uploaded",
+                "code": 253
+              },
+              {
+                "name": "Incomplete",
+                "code": 254
+              },
+              {
+                "name": "Custom",
+                "code": 255
+              }
+            ],
+            "mergePolicy": "esriMPTDefaultValue",
+            "splitPolicy": "esriSPTDefaultValue"
+          }
+        },
+        {
+          "name": "Tag",
+          "type": "esriFieldTypeString",
+          "alias": "Tag",
+          "domain": null,
+          "length": 100
+        },
+        {
+          "name": "GroupName",
+          "type": "esriFieldTypeString",
+          "alias": "GroupName",
+          "domain": null,
+          "length": 100
+        },
+        {
+          "name": "ProductName",
+          "type": "esriFieldTypeString",
+          "alias": "ProductName",
+          "domain": null,
+          "length": 100
+        },
+        {
+          "name": "CenterX",
+          "type": "esriFieldTypeDouble",
+          "alias": "CenterX",
+          "domain": null
+        },
+        {
+          "name": "CenterY",
+          "type": "esriFieldTypeDouble",
+          "alias": "CenterY",
+          "domain": null
+        },
+        {
+          "name": "ZOrder",
+          "type": "esriFieldTypeInteger",
+          "alias": "ZOrder",
+          "domain": null
+        },
+        {
+          "name": "Shape_Length",
+          "type": "esriFieldTypeDouble",
+          "alias": "Shape_Length",
+          "domain": null
+        },
+        {
+          "name": "Shape_Area",
+          "type": "esriFieldTypeDouble",
+          "alias": "Shape_Area",
+          "domain": null
+        }
+      ],
+      "capabilities": "Image,Metadata,Catalog",
+      "defaultMosaicMethod": "Northwest",
+      "allowedMosaicMethods": "NorthWest,Center,LockRaster,ByAttribute,Nadir,Viewpoint,Seamline,None",
+      "sortField": "",
+      "sortValue": null,
+      "sortAscending": true,
+      "mosaicOperator": "First",
+      "maxDownloadSizeLimit": 2048,
+      "defaultCompressionQuality": 75,
+      "defaultResamplingMethod": "Bilinear",
+      "maxImageHeight": 4100,
+      "maxImageWidth": 15000,
+      "maxRecordCount": 1000,
+      "maxDownloadImageCount": 20,
+      "maxMosaicImageCount": 20,
+      "allowRasterFunction": true,
+      "rasterFunctionInfos": [
+        {
+          "name": "None",
+          "description": "",
+          "help": ""
+        }
+      ],
+      "rasterTypeInfos": [
+        {
+          "name": "Raster Dataset",
+          "description": "Supports all ArcGIS Raster Datasets",
+          "help": ""
+        }
+      ],
+      "mensurationCapabilities": "None",
+      "hasHistograms": true,
+      "hasColormap": false,
+      "hasRasterAttributeTable": false,
+      "minScale": 0,
+      "maxScale": 0,
+      "exportTilesAllowed": false,
+      "hasMultidimensions": false,
+      "supportsStatistics": true,
+      "supportsAdvancedQueries": true,
+      "editFieldsInfo": null,
+      "ownershipBasedAccessControlForRasters": null,
+      "allowComputeTiePoints": false,
+      "useStandardizedQueries": true,
+      "advancedQueryCapabilities": {
+        "useStandardizedQueries": true,
+        "supportsStatistics": true,
+        "supportsOrderBy": true,
+        "supportsDistinct": true,
+        "supportsPagination": true
+      },
+      "spatialReference": {
+        "wkid": 4326,
+        "latestWkid": 4326,
+        "vcsWkid": 105790,
+        "latestVcsWkid": 3855
+      }
+    },
+    "seconds": 5.16
+  },
+  {
+    "id": "bnpb",
+    "url": "https://gis.bnpb.go.id/server/rest/services?f=pjson",
+    "checkedAt": "2026-10-11T06:29:29.798763+00:00",
+    "status": 200,
+    "cors": "https://jakarta.nonarkara.org",
+    "contentType": "text/plain; charset=UTF-8",
+    "bytesRead": 1781,
+    "body": {
+      "currentVersion": 11.4,
+      "folders": [
+        "2026_gempabumi_ntt",
+        "2026_karhutla",
+        "ANTISIPASI_KARHUTLA_2019",
+        "ATLAS",
+        "BANJIR_BANDANG_SENTANI",
+        "Banjir_Jakarta_2020",
+        "Banjir_Konawe_Utara",
+        "Banjir_Luwu_Utara",
+        "BANJIR_SULSEL_2019",
+        "bansor_sumatera_2025",
+        "Basemap",
+        "Bencana_Harian",
+        "Bencana_Mingguan",
+        "citra_senyar",
+        "Destana",
+        "ESADAYANA",
+        "GEMPA_HALMAHERA_SELATAN",
+        "Gempa_Lombok",
+        "Gempa_Maluku_2019",
+        "Gempa_Sulteng",
+        "Gempabumi_Halmahera_Selatan",
+        "gunung_agung",
+        "Gunung_Semeru",
+        "Gunungapi_Merapi",
+        "HKB2019",
+        "Hosted",
+        "IDRIP",
+        "IKN",
+        "inarisk",
+        "inarisk_darurat",
+        "InAWARE",
+        "Karhutla_2019",
+        "Longsor_Sumedang",
+        "Marapi",
+        "Palu_EQ",
+        "POI",
+        "Semeru",
+        "survey123",
+        "Tematik_Bencana_2018",
+        "thematic",
+        "TSUNAMI_DAN_GELOMBANG_TINGGI",
+        "UAV_Drone",
+        "Utilities",
+        "Wuhan_Coronavirus2020"
+      ],
+      "services": [
+        {
+          "name": "Data_Jalan_Jembatan_Putus_Akses_PU",
+          "type": "MapServer"
+        },
+        {
+          "name": "Data_Jalur_Mudik",
+          "type": "MapServer"
+        },
+        {
+          "name": "FU_Cianjur_2022",
+          "type": "MapServer"
+        },
+        {
+          "name": "Jumlah_Bencana_kabkot_2025",
+          "type": "MapServer"
+        },
+        {
+          "name": "Kejadian_Bencana_Mingguan",
+          "type": "FeatureServer"
+        },
+        {
+          "name": "Kejadian_Bencana_Mingguan",
+          "type": "MapServer"
+        },
+        {
+          "name": "Kelas_Banjir",
+          "type": "MapServer"
+        },
+        {
+          "name": "layer_risiko_gempabumi",
+          "type": "MapServer"
+        },
+        {
+          "name": "MV_Bansor_Sumatera_v4",
+          "type": "MapServer"
+        },
+        {
+          "name": "peta_bpbd",
+          "type": "MapServer"
+        },
+        {
+          "name": "PUPR_Jalan_Tol_Operasional",
+          "type": "MapServer"
+        },
+        {
+          "name": "rumah_rusak_cianjur",
+          "type": "MapServer"
+        },
+        {
+          "name": "test_image",
+          "type": "ImageServer"
+        }
+      ]
+    },
+    "seconds": 1.31
+  },
+  {
+    "id": "udara_terms",
+    "url": "https://udara.jakarta.go.id/ketentuan-layanan",
+    "checkedAt": "2026-10-11T06:29:29.836077+00:00",
+    "status": 200,
+    "cors": null,
+    "contentType": "text/html; charset=utf-8",
+    "bytesRead": 43941,
+    "seconds": 0.64,
+    "termsSummary": "Public viewing and personal/non-commercial use are permitted; reproduction, distribution, derivatives and commercial use require written permission. Publisher provides a PPID data-request route. No machine API established by this audit."
+  },
+  {
+    "id": "petabencana_index",
+    "url": "https://docs.petabencana.id/llms.txt",
+    "checkedAt": "2026-10-11T06:29:29.840340+00:00",
+    "status": 200,
+    "cors": null,
+    "contentType": "text/markdown; charset=utf-8",
+    "bytesRead": 5097,
+    "text": "# PetaBencana\n\n## Bahasa\n\n- [Pengantar](https://docs.petabencana.id/readme.md)\n- [Informasi Umum](https://docs.petabencana.id/general.md)\n- [Autentikasi](https://docs.petabencana.id/general/authentication.md)\n- [Pembuatan Versi](https://docs.petabencana.id/general/versioning.md)\n- [Pembatasan Akses](https://docs.petabencana.id/general/rate_limits.md)\n- [CORS](https://docs.petabencana.id/general/cors.md)\n- [HTTPS](https://docs.petabencana.id/general/https.md)\n- [Koordinat](https://docs.petabencana.id/general/coordinates.md)\n- [Kode Eror](https://docs.petabencana.id/general/error_codes.md)\n- [Jenis Konten](https://docs.petabencana.id/general/encoding.md)\n- [Contoh](https://docs.petabencana.id/general/examples.md)\n- [Area Didukung](https://docs.petabencana.id/general/area-didukung.md)\n- [Jenis Bencana](https://docs.petabencana.id/general/jenis-bencana.md)\n- [Open API](https://docs.petabencana.id/routes.md)\n- [Laporan Urun-Daya](https://docs.petabencana.id/routes/laporan-urun-daya.md)\n- [Laporan Urun-Daya/Timeseries](https://docs.petabencana.id/routes/laporan-urun-daya-timeseries.md)\n- [Area Banjir](https://docs.petabencana.id/routes/area-banjir.md)\n- [Area Banjir/Arsip](https://docs.petabencana.id/routes/area-banjir-arsip.md)\n- [Area Banjir/Timeseries](https://docs.petabencana.id/routes/area-banjir-timeseries.md)\n- [Pemantauan TMA](https://docs.petabencana.id/routes/pemantauan-tma.md)\n- [Infrastruktur](https://docs.petabencana.id/routes/infrastruktur.md)\n- [Statistik](https://docs.petabencana.id/routes/statistik.md)\n- [Stats - Rangkuman Laporan Urun-Daya](https://docs.petabencana.id/routes/statistik/reportssummary.md)\n- [Stats - Rangkuman RW Banjir](https://docs.petabencana.id/routes/statistik/floodedrwssummary.md)\n- [Stats - Rangkuman Wilayah](https://docs.petabencana.id/routes/statistik/floodedregionssummary.md)\n- [API Terauntentikasi](https://docs.petabencana.id/authenticated-api.md)\n- [Kartu Laporan](https://docs.petabencana.id/authenticated-api/kartu-laporan.md)\n- [Umpan](https://docs.petabencana.id/authenticated-api/umpan.md)\n- [Laporan Urun-Daya/Arsip](https://docs.petabencana.id/authenticated-api/laporan-urun-saya-arsip.md)\n- [Informasi Lisensi Data](https://docs.petabencana.id/informasi-lisensi-data.md)\n- [Penggunaan Non-Komersial (CC BY-NC 4.0)](https://docs.petabencana.id/informasi-lisensi-data/penggunaan-non-komersial-cc-by-nc-4.0.md)\n- [Penggunaan Komersial (CC BY 4.0)](https://docs.petabencana.id/informasi-lisensi-data/penggunaan-komersial-cc-by-4.0.md)\n- [Perjanjian Lisensi Pengguna](https://docs.petabencana.id/perjanjian-lisensi-pengguna.md)\n\n## English\n\n- [Introduction](https://docs.petabencana.id/master-1/readme.md)\n- [General](https://docs.petabencana.id/master-1/general.md)\n- [Authentication](https://docs.petabencana.id/master-1/general/authentication.md)\n- [Versioning](https://docs.petabencana.id/master-1/general/versioning.md)\n- [Rate Limits](https://docs.petabencana.id/master-1/general/rate_limits.md)\n- [CORS](https://docs.petabencana.id/master-1/general/cors.md)\n- [HTTPS](https://docs.petabencana.id/master-1/general/https.md)\n- [Coordinates](https://docs.petabencana.id/master-1/general/coordinates.md)\n- [Error Codes](https://docs.petabencana.id/master-1/general/error_codes.md)\n- [Content Types](https://docs.petabencana.id/master-1/general/encoding.md)\n- [Examples](https://docs.petabencana.id/master-1/general/examples.md)\n- [Supported Area](https://docs.petabencana.id/master-1/general/supported-area.md)\n- [Supported Hazards](https://docs.petabencana.id/master-1/general/supported-hazards.md)\n- [Open API](https://docs.petabencana.id/master-1/routes.md)\n- [Cards](https://docs.petabencana.id/master-1/routes/cards.md)\n- [Feeds](https://docs.petabencana.id/master-1/routes/feeds.md)\n- [Flood Gauges](https://docs.petabencana.id/master-1/routes/floodgauges.md)\n- [Flooded Area](https://docs.petabencana.id/master-1/routes/flooded-area.md)\n- [Flooded Area/Archive](https://docs.petabencana.id/master-1/routes/flooded-area-archive.md)\n- [Flooded Area/Timeseries](https://docs.petabencana.id/master-1/routes/flooded-area-timeseries.md)\n- [Infrastructure](https://docs.petabencana.id/master-1/routes/infrastructure.md)\n- [Crowdsourced Reports](https://docs.petabencana.id/master-1/routes/crowdsourced-reports.md)\n- [Crowdsourced Reports/Archive](https://docs.petabencana.id/master-1/routes/crowdsourced-reports-archive.md)\n- [Crowdsourced Reports/Timeseries](https://docs.petabencana.id/master-1/routes/crowdsourced-reports-timeseries.md)\n- [Stats](https://docs.petabencana.id/master-1/routes/stats.md)\n- [Stats - Reports Summary](https://docs.petabencana.id/master-1/routes/stats/reportssummary.md)\n- [Stats - Flooded RWs Summary](https://docs.petabencana.id/master-1/routes/stats/floodedrwssummary.md)\n- [Stats - Flooded Regions Summary](https://docs.petabencana.id/master-1/routes/stats/floodedregionssummary.md)\n- [Authenticated API](https://docs.petabencana.id/master-1/routes-1.md)\n- [Cards](https://docs.petabencana.id/master-1/routes-1/cards.md)\n- [Feeds](https://docs.petabencana.id/master-1/routes-1/feeds.md)\n",
+    "seconds": 2.6
+  },
+  {
+    "id": "worldbank",
+    "url": "https://api.worldbank.org/v2/country/IDN/indicator/NY.GDP.MKTP.CD?format=json&mrv=1",
+    "checkedAt": "2026-10-11T06:29:30.081424+00:00",
+    "status": 200,
+    "cors": "*",
+    "contentType": "application/json;charset=utf-8",
+    "bytesRead": 299,
+    "body": [
+      {
+        "page": 1,
+        "pages": 1,
+        "per_page": 50,
+        "total": 1,
+        "sourceid": "2",
+        "lastupdated": "2026-10-08"
+      },
+      [
+        {
+          "indicator": {
+            "id": "NY.GDP.MKTP.CD",
+            "value": "GDP (current US$)"
+          },
+          "country": {
+            "id": "ID",
+            "value": "Indonesia"
+          },
+          "countryiso3code": "IDN",
+          "date": "2025",
+          "value": 1445642584163.81,
+          "unit": "",
+          "obs_status": "",
+          "decimal": 0
+        }
+      ]
+    ],
+    "seconds": 2.83
+  }
+]
