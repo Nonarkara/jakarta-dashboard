@@ -75,3 +75,12 @@ Verified: exact source logo bytes on production; TypeScript, 12 local checks, al
 The presentation-sheet cropping was rejected by the owner for its cut-and-paste appearance. This release supersedes that treatment: true-alpha `jktx-symbol-v2.png`, an AI-assisted reconstruction of the supplied Monas/layers symbol, plus a native Plus Jakarta Sans JKTx wordmark. No blend mode, inverted raster lettering or navy icon tile remains on the live header. Original sheet is retained as source evidence. PNG 1289×1221 RGBA, alpha range 0–255, corner alpha 0.
 
 Source `d22c557`; build `jakarta-atlas-20261011-1791705028-d22c557`; Worker `e2153de6-44fe-4c29-8080-a4704f6d83e1`. All eight suites, typecheck, 12 local checks and canonical production smoke passed. Exact production symbol bytes matched local. Browser dark/light proof confirms native wordmark background is none, clean mark without tile corners, and 50px desktop header. Screenshots: `JAKARTA-CLEAN-LOGO-DARK-2026-10-11.jpg`, `JAKARTA-CLEAN-LOGO-LIGHT-2026-10-11.jpg`, `JAKARTA-CLEAN-LOGO-DETAIL-2026-10-11.jpg`.
+
+
+## Dense workbench and embedded viewport correction
+
+The user rejected excessive footer spacing, nested map scrolling and the type. Source `edf1078`, build `jakarta-atlas-20261011-1791705932-edf1078`, Worker `21a9465a-42f0-4de4-8fd2-6e11db06c796`.
+
+The embedded atlas now has a fixed three-row grid: lens toolbar, evidence entry, and the remaining map. All secondary tools, environmental controls, data tables and attribution are retained in an explicit evidence drawer; the standalone atlas remains a full page. Desktop action strip measured 37px. Adobe Source Sans 3 replaces the previous geometric face, with tighter panel spacing and preserved source/tier/date rows. Coarse-pointer controls retain 44px targets.
+
+Live proof: desktop embedded clientHeight/scrollHeight both 580 and width/scrollWidth both 790; phone both 672 and width/scrollWidth both 375. No inner document scrolling. Evidence drawer opened and data remained accessible; 2D/3D switching and zoom worked. Local 12 checks, all eight suites, typecheck, atlas asset/Range smoke, 14 API checks and dashboard exact-byte smoke passed. Updated client tests require retention of tools, environment, data and attribution. Screenshots `JAKARTA-DENSE-WORKBENCH-2026-10-11.jpg` and `JAKARTA-DENSE-PHONE-2026-10-11.jpg` record the live revision. No human usability study is claimed.
