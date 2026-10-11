@@ -52,3 +52,6 @@ Plus Jakarta Sans: Copyright 2020 The Plus Jakarta Sans Project Authors, https:/
 Palette plate 267: Sanzo Wada's relationship, via Matt DesLauriers' MIT-licensed digital conversion data (Copyright (c) 2020 Matt DesLauriers), which credits Dain M. Blodorn Kim. Production shades and role assignments are our own adaptation. Values are digital conversions, not exact printed inks. Palette reference: https://colors.nonarkara.org/#plate-267. The dataset notice and MIT permission/disclaimer are available at https://github.com/mattdesl/dictionary-of-colour-combinations; no source book scans are distributed.
 
 CRM: official hosted monthly report by Jakarta Smart City/CRM; the Google report URL comes from https://crm.jakarta.go.id/data-bulanan. The report is displayed on demand as the publisher's own iframe. No private complaint data or copied report metrics are stored. Links, periods and data access remain publisher-controlled; no official affiliation is claimed by this research dashboard.
+
+
+Logo artwork: supplied by the project owner as “Jakarta Civic Dashboard Logo Explorations.png” on 11 October 2026. The original raster is retained in `public/brand/jakarta-logo-set.png`; CSS frames its app icon and wordmark, and the favicon uses the same app-icon region. No external license or official Jakarta government endorsement is asserted.
