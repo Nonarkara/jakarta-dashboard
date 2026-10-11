@@ -1,5 +1,5 @@
 'use strict';
-const DASHBOARD_BUILD = 'jakarta-atlas-20261011-1791710995-4fe94d5';
+const DASHBOARD_BUILD = 'jakarta-atlas-20261011-1791713512-1851546';
 const CRM_MONTHLY_URL = 'https://datastudio.google.com/embed/reporting/d7d87175-bfa2-4067-bf4d-42e8b996da11/page/27A2C';
 let crmViewerOpened = false;
 const $ = id => document.getElementById(id);
@@ -48,7 +48,7 @@ function renderWeather(){
  const points=weatherData?.points?.filter(p=>p.available)||[];
  $('weather-summary').innerHTML=points.length?points.map(p=>{const row=p.forecast.find(r=>Date.parse(r.validAt)>=Date.now())||p.forecast.at(-1);return '<div class="reading"><div class="reading-top"><strong>'+esc(p.name)+'</strong><strong>'+num(row.temperatureC)+' °C</strong></div><p>'+esc(window.CivicLanguage.admin(p.kota,lang))+' · '+esc(lang==='id'?row.conditionId:row.conditionEn)+'</p>'+evidence('BMKG',t('prakiraan resmi','official forecast'),row.validAt)+'<p>'+t('Terbit','Issued')+': '+esc(date(row.issuedAt))+'</p></div>';}).join(''):unavailable();
  const value=$('forecast-location').value;
- $('forecast-location').innerHTML=points.map(p=>'<option value="'+esc(p.code)+'">'+esc(p.name+' · '+p.kota)+'</option>').join('');
+ $('forecast-location').innerHTML=points.map(p=>'<option value="'+esc(p.code)+'">'+esc(p.name+' · '+window.CivicLanguage.admin(p.kota,lang))+'</option>').join('');
  if(points.some(p=>p.code===value))$('forecast-location').value=value;
  renderForecast();
 }
