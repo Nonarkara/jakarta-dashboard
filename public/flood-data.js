@@ -3,16 +3,17 @@
 // with the dated monitoring-network, risk-reference and population assets.
 // Nothing here presents a live sensor value; every block keeps source, tier
 // and date, and missing live feeds stay explicit states with official links.
-let floodDesk=null, floodDeskLoad=null, riskLayer=null, riskLayerLoad=null;
+let floodObservation=null, floodDesk=null, floodDeskLoad=null, riskLayer=null, riskLayerLoad=null;
 const SITU_CONDITIONS={'PENDANGKALAN':['Pendangkalan','Silted'],'PENCEMARAN DAN PENDANGKALAN':['Pencemaran dan pendangkalan','Polluted and silted'],'TELAH MENJADI DARATAN':['Telah menjadi daratan','Became dry land'],'MENGERING DAN MENJADI DARATAN':['Mengering dan menjadi daratan','Dried and became land']};
 const floodLink=(url,label)=>'<a href="'+esc(url)+'" target="_blank" rel="noopener">'+esc(label)+' ↗</a>';
 const siagaLabel=s=>({1:['SIAGA 1','ALERT 1'],2:['SIAGA 2','ALERT 2'],3:['SIAGA 3','ALERT 3'],4:['SIAGA 4','ALERT 4']}[s.level]?.[lang==='id'?0:1]||('SIAGA '+s.level));
 function loadFloodDesk(){
  if(floodDeskLoad)return floodDeskLoad;
  $('flood-network-status').textContent=t('Memuat jaringan pantauan…','Loading monitoring network…');
- floodDeskLoad=get('/data/jakarta-v1/flood-network.json?v='+DASHBOARD_BUILD).then(d=>{
+ floodDeskLoad=Promise.all([get('/data/jakarta-v1/flood-network.json?v='+DASHBOARD_BUILD),get('/data/jakarta-v1/bpbd-water-reference.json?v='+DASHBOARD_BUILD)]).then(([d,obs])=>{
+  floodObservation=obs?.tier==='dated-publisher-observation'&&Array.isArray(obs.stations)?obs:null;
   floodDesk=d?.tier==='public-reference'&&Array.isArray(d.stations)?d:null;
-  window.floodDeskEvidence=floodDesk?{retrievedAt:floodDesk.retrievedAt,counts:floodDesk.counts,accessStates:floodDesk.accessStates,populationJoin:floodDesk.populationJoin,riskSummary:floodDesk.riskSummary}:null;
+  window.floodDeskEvidence=floodDesk?{waterObservation:floodObservation,retrievedAt:floodDesk.retrievedAt,counts:floodDesk.counts,accessStates:floodDesk.accessStates,populationJoin:floodDesk.populationJoin,riskSummary:floodDesk.riskSummary}:null;
   renderFloodDesk();
   if(!floodDesk)floodDeskLoad=null;
  });
@@ -48,7 +49,7 @@ function renderFloodNetwork(){
  for(const s of awlr){(rivers[s.river||t('tidak disebutkan','unspecified')]=rivers[s.river||t('tidak disebutkan','unspecified')]||[]).push(s);}
  $('flood-network-body').innerHTML=Object.entries(rivers).map(([river,rows])=>'<details class="official-project"><summary class="official-project-heading"><strong>'+esc(river)+'</strong><span class="meta">'+num(rows.length)+' '+t('pos · ambang siaga resmi','stations · official alert thresholds')+'</span></summary>'+rows.map(s=>'<dl class="official-project-fields"><div><dt>'+esc(s.name)+' · '+esc(s.city||'')+'</dt><dd>'+(s.siaga.map(b=>b.original?'<span class="siaga-band">'+siagaLabel(b)+' '+esc(b.original)+'</span>':'').filter(Boolean).join(' ')||t('ambang siaga tidak diterbitkan','thresholds not published'))+'</dd></div></dl>').join('')+'</details>').join('')
  +'<p class="note">'+t('Peta memuat ','The map holds ')+num(c.awlrInRegion)+'/'+num(c.awlrTotal)+' AWLR '+t('dan','and')+' '+num(c.arrInRegion)+'/'+num(c.arrTotal)+' ARR '+t('pos di dalam persegi peta. ','stations inside the map rectangle. ')+num(upstream.length)+' '+t('pos hulu sungai di luar peta tetap dicantumkan karena hidrologi Jakarta dimulai di hulu (','upstream river stations outside the map stay listed because Jakarta\u2019s hydrology starts upstream (')+esc(upstream.map(s=>s.name.trim()).slice(0,4).join(', '))+').'+'</p>'
- +'<p class="note">'+t('Nilai tinggi air terkini tidak ditayangkan di sini: tidak ada umpan mesin terbuka yang menerbitkannya. Ambang siaga di atas adalah referensi resmi, bukan pembacaan.','Current water-level values are not shown here: no open machine feed publishes them. The alert thresholds above are official reference, not readings.')+'</p>'
+ +'<p class="note">'+t('Umpan tinggi air langsung belum terverifikasi di sini. Tabel BPBD di atas adalah snapshot bertanggal. Ambang katalog Jakarta Satu tidak diterapkan pada pembacaan BPBD karena datum belum direkonsiliasi.','No live water-level feed is verified here. The BPBD table above is a dated snapshot. Jakarta Satu catalog bands are not applied to BPBD readings because their datums have not been reconciled.')+'</p>'
  +accessState(d.accessStates?.pantauBanjir)+accessState(d.accessStates?.petaBencanaGauges);
 }
 async function showRiskPolygons(code,name){
@@ -94,7 +95,7 @@ function renderFloodSitu(){
  +'<p class="meta">'+t('Sumber: Jakarta Satu (PETA_SITU) · diambil','Source: Jakarta Satu (PETA_SITU) · retrieved')+' '+date(d.retrievedAt)+'</p>'
  +accessState(d.accessStates?.tide);
 }
-function renderFloodDesk(){renderFloodLive();renderFloodNetwork();renderFloodRisk();renderFloodSitu();}
+function renderFloodDesk(){renderFloodObservation();renderFloodLive();renderFloodNetwork();renderFloodRisk();renderFloodSitu();}
 document.addEventListener('dashboard:language',()=>{if(floodDesk||floodDeskLoad)renderFloodDesk();});
 document.addEventListener('click',e=>{
  const b=e.target.closest('[data-risk-kelurahan]');
@@ -102,3 +103,10 @@ document.addEventListener('click',e=>{
  if(e.target.closest('[data-open="flood-dialog"]'))loadFloodDesk();
 });
 if($('flood-dialog').open)loadFloodDesk();
+
+function renderFloodObservation(){
+ const d=floodObservation;
+ if(!d){$('flood-observation-body').innerHTML=unavailable();return;}
+ const rows=d.stations.map(s=>'<tr><th scope="row">'+esc(s.name)+'</th><td>'+num(s.latestCm)+' cm</td><td>'+num(s.changeCmPerHour)+' cm/h</td></tr>').join('');
+ $('flood-observation-body').innerHTML='<p class="note">'+t('Snapshot tabel penerbit; bukan umpan langsung. Selisih satu jam adalah perubahan tinggi pos, bukan kecepatan aliran air. Datum pos berbeda; angka antarpos tidak dapat dibandingkan sebagai elevasi.','Publisher-table snapshot; not a live feed. The one-hour difference is gauge-level change, not water-flow speed. Station datums differ; values cannot be compared as elevations.')+'</p><div class="table-scroll"><table><caption>'+t('Pengamatan','Observation')+' '+esc(date(d.observedAt))+'</caption><thead><tr><th>'+t('Pos penerbit','Publisher station')+'</th><th>'+t('Tinggi lokal','Local level')+'</th><th>Δ 1 h</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+evidence(d.source,t('pengamatan penerbit bertanggal','dated publisher observation'),d.observedAt,t('Pengamatan','Observation'))+'<p class="note">'+t('Permintaan mesin langsung diblokir penerbit pada pemeriksaan; pembaruan otomatis belum terverifikasi.','Direct machine requests were publisher-blocked when checked; automatic refresh is unverified.')+' '+esc(date(d.checkedAt))+' · '+floodLink(d.sourceUrl,t('Periksa tabel BPBD terbaru','Check the latest BPBD table'))+'</p>';
+}

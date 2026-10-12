@@ -99,8 +99,29 @@ const desk=read('flood-data.js');
 assert.match(desk,/flood-network\.json/);assert.match(desk,/risk\.geojson/);
 assert.match(desk,/accessStates\?\.pantauBanjir/);
 assert.match(desk,/SIAGA/);
-assert.doesNotMatch(desk,/live.*(reading|level)/i,'desk must not claim live sensor readings');
+assert.doesNotMatch(desk,/tier:[^,]*['"]live['"]/i,'desk must not promote reference data to a live sensor tier');
 const shell=read('dashboard.js');
 assert.match(shell,/floodDesk:window\.floodDeskEvidence\|\|null/);
 assert.match(read('reference-language.js'),/flood-risk reference/);
 console.log('PASS flood desk client: dialog, overlay kinds, coupling script and evidence export wired');
+
+// Publisher water table is a dated snapshot; station datums never become a
+// shared elevation and observed level change never becomes water velocity.
+const observed=JSON.parse(readFileSync(new URL('../public/data/jakarta-v1/bpbd-water-reference.json',import.meta.url),'utf8'));
+assert.equal(observed.tier,'dated-publisher-observation');
+assert.equal(observed.stations.length,12);
+assert.equal(observed.observedAt,'2026-10-12T15:00:00+07:00');
+for(const station of observed.stations){
+ assert.equal(station.series.length,7);
+ assert.equal(station.latestCm,station.series[0].levelCm);
+ assert.equal(station.changeCmPerHour,station.series[0].levelCm-station.series[1].levelCm);
+ for(let i=1;i<7;i++)assert.equal(Date.parse(station.series[i-1].observedAt)-Date.parse(station.series[i].observedAt),3600000);
+}
+assert.equal(observed.stations.find(s=>s.name==='Waduk Pluit').latestCm,-175,'negative local datum retained');
+assert.equal(observed.stations.find(s=>s.name==='Pasar Ikan - Laut').changeCmPerHour,-7,'falling level sign retained');
+assert.equal(observed.stations.find(s=>s.name==='Pos Depok').changeCmPerHour,0,'a published unchanged level is a real zero');
+assert.match(desk,/station datums|Station datums/);
+assert.match(desk,/not water-flow speed/);
+assert.match(desk,/datums have not been reconciled/);
+assert.match(desk,/dated snapshot/);
+console.log('PASS dated BPBD observations: source time, twelve stations, seven hourly levels, signed changes and separate datums');

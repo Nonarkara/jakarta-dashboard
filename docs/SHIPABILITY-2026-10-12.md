@@ -19,6 +19,7 @@ The supplied report matches commits 900aeea and 02a4220. The current paper-step 
 | Official ISPU monthly batches, 2024–November 2025 | Weather reference | Dated station measurements, never a live network |
 | RainViewer, JMA Himawari, NASA GIBS, GDACS | Radar / cloud / observed & recurring water / aerosol | Product-specific date, resolution and coverage; no echo or cloud-obscured pixels cannot establish safety |
 | PetaBencana reports | Flood desk / warnings | Last-hour citizen-report aggregate; empty reports do not mean dry streets |
+| BPBD / Dinas SDA 12-station hourly table, 12 October 2026 09:00–15:00 WIB | Flood desk | Dated observation snapshot; signed one-hour local level changes in cm/h, not flow velocity; direct automatic fetch publisher-blocked |
 | 28 AWLR / 56 ARR inventory | Flood desk / monitoring map | Station locations and official thresholds; no current sensor values |
 | 263 pumps / 589 floodgates / 147 reservoirs | Monitoring map | Three distinct asset kinds, now distinct legend/paint; capacities and operation unknown |
 | 1,900 risk polygons, 260 population joins | Exposure map / Research paper / flood desk | Historical/reference class mix and Semester 2 2023 population; area-weighted population proxy assumes uniform density, not people geolocated on severe land |
@@ -42,6 +43,8 @@ The supplied report matches commits 900aeea and 02a4220. The current paper-step 
 
 7. Preserve map-ready status through language switching; fit the three-station scenario with enough bottom clearance for published labels above the retained quick-jump controls.
 8. Replace a fixed post-deploy sleep with bounded exact-byte convergence (three consecutive canonical probes, then three custom-domain probes). Disposable probe keys prevent early checks from using the real release cache key. The new verifier was executed against the current live build and both hostname streaks passed.
+
+9. Import the BPBD public hourly table as a reproducible dated snapshot: 12 stations × 7 hours, including negative local datums and signed hourly changes. Current machine requests receive security-block HTML, while the public web reading surfaced the publisher table dated 12 October at 15:00 WIB. This corrects the earlier absolute claim that no public readings exist. The UI says the automatic feed is not verified and never applies unmatched Jakarta Satu catalogue SIAGA bands to BPBD values.
 
 ## Sources and access
 

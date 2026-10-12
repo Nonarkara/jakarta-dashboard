@@ -22,7 +22,8 @@
     "prepare:official": "python3 scripts/prepare-official-portals.py && python3 scripts/prepare-official-context.py",
     "prepare:flood": "python3 scripts/prepare-flood-network.py",
     "prepare:insight": "python3 scripts/prepare-insight-views.py",
-    "prepare:ispu": "python3 scripts/prepare-ispu-reference.py"
+    "prepare:ispu": "python3 scripts/prepare-ispu-reference.py",
+    "prepare:water-reference": "python3 scripts/prepare-bpbd-reference.py"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20261002.1",

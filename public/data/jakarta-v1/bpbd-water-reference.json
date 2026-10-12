@@ -1,0 +1,435 @@
+{
+  "source": "BPBD DKI Jakarta / Dinas SDA Prov. DKI Jakarta",
+  "sourceUrl": "https://bpbd.jakarta.go.id/",
+  "tier": "dated-publisher-observation",
+  "observedAt": "2026-10-12T15:00:00+07:00",
+  "checkedAt": "2026-10-12T09:30:45.490834+00:00",
+  "rawSha256": "cb9086979c8263d9bdb1f9c6fc02fd8180f3078c3aaeb9186159b9f56e551cc5",
+  "access": "Public page table returned by web reading tool; manual transcription of dated hourly numerical facts. Direct automated HTTP returned publisher security-block HTML; no periodic refresh is verified.",
+  "units": {
+    "level": "cm at local gauge datum",
+    "change": "cm/h, level change not flow velocity"
+  },
+  "stations": [
+    {
+      "name": "Bendung Katulampa",
+      "latestCm": 10,
+      "changeCmPerHour": 0,
+      "series": [
+        {
+          "observedAt": "2026-10-12T15:00:00+07:00",
+          "levelCm": 10
+        },
+        {
+          "observedAt": "2026-10-12T14:00:00+07:00",
+          "levelCm": 10
+        },
+        {
+          "observedAt": "2026-10-12T13:00:00+07:00",
+          "levelCm": 10
+        },
+        {
+          "observedAt": "2026-10-12T12:00:00+07:00",
+          "levelCm": 10
+        },
+        {
+          "observedAt": "2026-10-12T11:00:00+07:00",
+          "levelCm": 10
+        },
+        {
+          "observedAt": "2026-10-12T10:00:00+07:00",
+          "levelCm": 10
+        },
+        {
+          "observedAt": "2026-10-12T09:00:00+07:00",
+          "levelCm": 10
+        }
+      ]
+    },
+    {
+      "name": "Pos Depok",
+      "latestCm": 70,
+      "changeCmPerHour": 0,
+      "series": [
+        {
+          "observedAt": "2026-10-12T15:00:00+07:00",
+          "levelCm": 70
+        },
+        {
+          "observedAt": "2026-10-12T14:00:00+07:00",
+          "levelCm": 70
+        },
+        {
+          "observedAt": "2026-10-12T13:00:00+07:00",
+          "levelCm": 70
+        },
+        {
+          "observedAt": "2026-10-12T12:00:00+07:00",
+          "levelCm": 70
+        },
+        {
+          "observedAt": "2026-10-12T11:00:00+07:00",
+          "levelCm": 70
+        },
+        {
+          "observedAt": "2026-10-12T10:00:00+07:00",
+          "levelCm": 70
+        },
+        {
+          "observedAt": "2026-10-12T09:00:00+07:00",
+          "levelCm": 70
+        }
+      ]
+    },
+    {
+      "name": "Manggarai BKB",
+      "latestCm": 540,
+      "changeCmPerHour": 0,
+      "series": [
+        {
+          "observedAt": "2026-10-12T15:00:00+07:00",
+          "levelCm": 540
+        },
+        {
+          "observedAt": "2026-10-12T14:00:00+07:00",
+          "levelCm": 540
+        },
+        {
+          "observedAt": "2026-10-12T13:00:00+07:00",
+          "levelCm": 540
+        },
+        {
+          "observedAt": "2026-10-12T12:00:00+07:00",
+          "levelCm": 540
+        },
+        {
+          "observedAt": "2026-10-12T11:00:00+07:00",
+          "levelCm": 540
+        },
+        {
+          "observedAt": "2026-10-12T10:00:00+07:00",
+          "levelCm": 540
+        },
+        {
+          "observedAt": "2026-10-12T09:00:00+07:00",
+          "levelCm": 540
+        }
+      ]
+    },
+    {
+      "name": "PA. Karet",
+      "latestCm": 270,
+      "changeCmPerHour": 0,
+      "series": [
+        {
+          "observedAt": "2026-10-12T15:00:00+07:00",
+          "levelCm": 270
+        },
+        {
+          "observedAt": "2026-10-12T14:00:00+07:00",
+          "levelCm": 270
+        },
+        {
+          "observedAt": "2026-10-12T13:00:00+07:00",
+          "levelCm": 270
+        },
+        {
+          "observedAt": "2026-10-12T12:00:00+07:00",
+          "levelCm": 270
+        },
+        {
+          "observedAt": "2026-10-12T11:00:00+07:00",
+          "levelCm": 270
+        },
+        {
+          "observedAt": "2026-10-12T10:00:00+07:00",
+          "levelCm": 260
+        },
+        {
+          "observedAt": "2026-10-12T09:00:00+07:00",
+          "levelCm": 250
+        }
+      ]
+    },
+    {
+      "name": "Pos Krukut Hulu",
+      "latestCm": 40,
+      "changeCmPerHour": 0,
+      "series": [
+        {
+          "observedAt": "2026-10-12T15:00:00+07:00",
+          "levelCm": 40
+        },
+        {
+          "observedAt": "2026-10-12T14:00:00+07:00",
+          "levelCm": 40
+        },
+        {
+          "observedAt": "2026-10-12T13:00:00+07:00",
+          "levelCm": 40
+        },
+        {
+          "observedAt": "2026-10-12T12:00:00+07:00",
+          "levelCm": 40
+        },
+        {
+          "observedAt": "2026-10-12T11:00:00+07:00",
+          "levelCm": 40
+        },
+        {
+          "observedAt": "2026-10-12T10:00:00+07:00",
+          "levelCm": 40
+        },
+        {
+          "observedAt": "2026-10-12T09:00:00+07:00",
+          "levelCm": 40
+        }
+      ]
+    },
+    {
+      "name": "Pos Pesanggrahan",
+      "latestCm": 55,
+      "changeCmPerHour": 0,
+      "series": [
+        {
+          "observedAt": "2026-10-12T15:00:00+07:00",
+          "levelCm": 55
+        },
+        {
+          "observedAt": "2026-10-12T14:00:00+07:00",
+          "levelCm": 55
+        },
+        {
+          "observedAt": "2026-10-12T13:00:00+07:00",
+          "levelCm": 55
+        },
+        {
+          "observedAt": "2026-10-12T12:00:00+07:00",
+          "levelCm": 55
+        },
+        {
+          "observedAt": "2026-10-12T11:00:00+07:00",
+          "levelCm": 55
+        },
+        {
+          "observedAt": "2026-10-12T10:00:00+07:00",
+          "levelCm": 55
+        },
+        {
+          "observedAt": "2026-10-12T09:00:00+07:00",
+          "levelCm": 60
+        }
+      ]
+    },
+    {
+      "name": "Pos Angke Hulu",
+      "latestCm": 40,
+      "changeCmPerHour": 0,
+      "series": [
+        {
+          "observedAt": "2026-10-12T15:00:00+07:00",
+          "levelCm": 40
+        },
+        {
+          "observedAt": "2026-10-12T14:00:00+07:00",
+          "levelCm": 40
+        },
+        {
+          "observedAt": "2026-10-12T13:00:00+07:00",
+          "levelCm": 40
+        },
+        {
+          "observedAt": "2026-10-12T12:00:00+07:00",
+          "levelCm": 40
+        },
+        {
+          "observedAt": "2026-10-12T11:00:00+07:00",
+          "levelCm": 40
+        },
+        {
+          "observedAt": "2026-10-12T10:00:00+07:00",
+          "levelCm": 40
+        },
+        {
+          "observedAt": "2026-10-12T09:00:00+07:00",
+          "levelCm": 40
+        }
+      ]
+    },
+    {
+      "name": "Waduk Pluit",
+      "latestCm": -175,
+      "changeCmPerHour": 0,
+      "series": [
+        {
+          "observedAt": "2026-10-12T15:00:00+07:00",
+          "levelCm": -175
+        },
+        {
+          "observedAt": "2026-10-12T14:00:00+07:00",
+          "levelCm": -175
+        },
+        {
+          "observedAt": "2026-10-12T13:00:00+07:00",
+          "levelCm": -180
+        },
+        {
+          "observedAt": "2026-10-12T12:00:00+07:00",
+          "levelCm": -180
+        },
+        {
+          "observedAt": "2026-10-12T11:00:00+07:00",
+          "levelCm": -180
+        },
+        {
+          "observedAt": "2026-10-12T10:00:00+07:00",
+          "levelCm": -185
+        },
+        {
+          "observedAt": "2026-10-12T09:00:00+07:00",
+          "levelCm": -190
+        }
+      ]
+    },
+    {
+      "name": "Pasar Ikan - Laut",
+      "latestCm": 205,
+      "changeCmPerHour": -7,
+      "series": [
+        {
+          "observedAt": "2026-10-12T15:00:00+07:00",
+          "levelCm": 205
+        },
+        {
+          "observedAt": "2026-10-12T14:00:00+07:00",
+          "levelCm": 212
+        },
+        {
+          "observedAt": "2026-10-12T13:00:00+07:00",
+          "levelCm": 218
+        },
+        {
+          "observedAt": "2026-10-12T12:00:00+07:00",
+          "levelCm": 226
+        },
+        {
+          "observedAt": "2026-10-12T11:00:00+07:00",
+          "levelCm": 227
+        },
+        {
+          "observedAt": "2026-10-12T10:00:00+07:00",
+          "levelCm": 220
+        },
+        {
+          "observedAt": "2026-10-12T09:00:00+07:00",
+          "levelCm": 214
+        }
+      ]
+    },
+    {
+      "name": "Pos Cipinang Hulu",
+      "latestCm": 80,
+      "changeCmPerHour": 0,
+      "series": [
+        {
+          "observedAt": "2026-10-12T15:00:00+07:00",
+          "levelCm": 80
+        },
+        {
+          "observedAt": "2026-10-12T14:00:00+07:00",
+          "levelCm": 80
+        },
+        {
+          "observedAt": "2026-10-12T13:00:00+07:00",
+          "levelCm": 80
+        },
+        {
+          "observedAt": "2026-10-12T12:00:00+07:00",
+          "levelCm": 80
+        },
+        {
+          "observedAt": "2026-10-12T11:00:00+07:00",
+          "levelCm": 80
+        },
+        {
+          "observedAt": "2026-10-12T10:00:00+07:00",
+          "levelCm": 80
+        },
+        {
+          "observedAt": "2026-10-12T09:00:00+07:00",
+          "levelCm": 80
+        }
+      ]
+    },
+    {
+      "name": "Pos Sunter Hulu",
+      "latestCm": 50,
+      "changeCmPerHour": 0,
+      "series": [
+        {
+          "observedAt": "2026-10-12T15:00:00+07:00",
+          "levelCm": 50
+        },
+        {
+          "observedAt": "2026-10-12T14:00:00+07:00",
+          "levelCm": 50
+        },
+        {
+          "observedAt": "2026-10-12T13:00:00+07:00",
+          "levelCm": 50
+        },
+        {
+          "observedAt": "2026-10-12T12:00:00+07:00",
+          "levelCm": 50
+        },
+        {
+          "observedAt": "2026-10-12T11:00:00+07:00",
+          "levelCm": 50
+        },
+        {
+          "observedAt": "2026-10-12T10:00:00+07:00",
+          "levelCm": 50
+        },
+        {
+          "observedAt": "2026-10-12T09:00:00+07:00",
+          "levelCm": 50
+        }
+      ]
+    },
+    {
+      "name": "Pulo Gadung",
+      "latestCm": 300,
+      "changeCmPerHour": 0,
+      "series": [
+        {
+          "observedAt": "2026-10-12T15:00:00+07:00",
+          "levelCm": 300
+        },
+        {
+          "observedAt": "2026-10-12T14:00:00+07:00",
+          "levelCm": 300
+        },
+        {
+          "observedAt": "2026-10-12T13:00:00+07:00",
+          "levelCm": 300
+        },
+        {
+          "observedAt": "2026-10-12T12:00:00+07:00",
+          "levelCm": 300
+        },
+        {
+          "observedAt": "2026-10-12T11:00:00+07:00",
+          "levelCm": 300
+        },
+        {
+          "observedAt": "2026-10-12T10:00:00+07:00",
+          "levelCm": 300
+        },
+        {
+          "observedAt": "2026-10-12T09:00:00+07:00",
+          "levelCm": 300
+        }
+      ]
+    }
+  ]
+}
