@@ -14,7 +14,7 @@ export function createController(map,{text:t,active,buildTag}) {
   const ids=['network-water-fill','network-water-lines','network-water-labels','network-gauges','network-cameras','network-clusters','network-counts','network-comparison'];
   const safeUrl=u=>{try{const url=new URL(u);return ['https:','http:'].includes(url.protocol)?url.href:null;}catch{return null;}};
   const el=(tag,content,cls)=>{const node=document.createElement(tag);if(content!==undefined)node.textContent=content;if(cls)node.className=cls;return node;};
-  const number=(n,d=1)=>Number.isFinite(n)?n.toLocaleString(undefined,{maximumFractionDigits:d}):t('Unavailable','Tidak tersedia');
+  const number=(n,d=1)=>Number.isFinite(n)?n.toLocaleString(t('en-GB','id-ID'),{maximumFractionDigits:d}):t('Unavailable','Tidak tersedia');
   const time=v=>v?new Date(v).toLocaleString(t('en-GB','id-ID'),{timeZone:'Asia/Jakarta'})+' WIB':t('Undated / rejected','Tanpa tanggal / ditolak');
   async function get(path){const response=await fetch(path,{headers:{accept:'application/json'}});if(!response.ok)throw new Error('source '+response.status);return response.json();}
   function link(label,url){const a=el('a',label);const href=safeUrl(url);if(href)a.href=href;a.target='_blank';a.rel='noopener noreferrer';return a;}
@@ -28,9 +28,10 @@ export function createController(map,{text:t,active,buildTag}) {
   function pointLayer(id,data,paint,cluster=false){map.addSource(id,{type:'geojson',data,cluster,clusterRadius:40,clusterMaxZoom:14});map.addLayer({id,type:'circle',source:id,filter:cluster?['!', ['has','point_count']]:undefined,paint});}
   function gaugeFeature(row){return {type:'Feature',geometry:{type:'Point',coordinates:[row.lng,row.lat]},properties:{id:row.id,name:row.name,levelM:row.levelM,observedAt:row.observedAt,basin:row.basin}};}
   function featureCollection(features){return {type:'FeatureCollection',features};}
+  const kindLabel=kind=>t(...({river:['River','Sungai'],canal:['Canal','Kanal'],stream:['Stream','Anak sungai'],drain:['Drain','Saluran'],ditch:['Ditch','Parit'],waterbody:['Water body','Badan air'],'waterbody-edge':['Water edge','Tepi air']}[kind]||[kind,kind]));
   function renderWaterSelection(parent,feature){
     parent.replaceChildren();const p=feature.properties;parent.append(el('h3',p.name||t('Unnamed mapped waterway','Alur air terpetakan tanpa nama')));
-    parent.append(el('p',p.kind+' · '+(p.lengthM?number(Number(p.lengthM)/1000,2)+' km':t('Mapped water-body polygon','Poligon badan air terpetakan'))));
+    parent.append(el('p',kindLabel(p.kind)+' · '+(p.lengthM?number(Number(p.lengthM)/1000,2)+' km':t('Mapped water-body polygon','Poligon badan air terpetakan'))));
     note(parent,'Geometry follows OpenStreetMap. Length is computed along its original geometry. No discharge or measured flow direction is attached to this line.','Geometri mengikuti OpenStreetMap. Panjang dihitung sepanjang geometri aslinya. Garis ini tidak memiliki debit atau arah aliran terukur.');
     parent.append(link('OpenStreetMap ↗','https://www.openstreetmap.org/way/'+p.id));
   }
@@ -86,7 +87,7 @@ export function createController(map,{text:t,active,buildTag}) {
     note(body,'Rivers, canals, streams, drains, ditches and mapped water bodies. This covers the published OSM ways in the Jakarta extent, not every physical waterway.','Sungai, kanal, anak sungai, saluran, parit, dan badan air terpetakan. Mencakup way OSM yang dipublikasikan pada wilayah Jakarta, bukan setiap alur air fisik.');
     const selected=section(body,'Selected waterway / gauge','Alur air / pos terpilih');
     on('click','network-water-lines',event=>{const f=event.features?.[0];if(!f)return;renderWaterSelection(selected,f);selected.parentElement.open=true;document.getElementById('atlas-lens-evidence').open=true;});
-    const kinds=el('p',Object.entries(water.kinds).map(([k,n])=>k+' '+number(n,0)).join(' · '),'note');body.append(kinds);
+    const kinds=el('p',Object.entries(water.kinds).map(([k,n])=>kindLabel(k)+' '+number(n,0)).join(' · '),'note');body.append(kinds);
     const measure=section(body,'Incoming water · gauges & volume','Air masuk · pos & volume');
     measure.append(el('p',t('Loading publisher readings…','Memuat pembacaan penerbit…')));
     comparison(section(body,'Satellite & model comparison','Perbandingan satelit & model'),token).catch(()=>{});
