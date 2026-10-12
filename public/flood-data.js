@@ -43,7 +43,6 @@ function renderFloodNetwork(){
  const c=d.counts;
  $('flood-network-status').textContent=num(c.awlrTotal)+' '+t('pos pantau air (AWLR),','water-level stations (AWLR),')+' '+num(c.arrTotal)+' '+t('pos curah hujan (ARR),','rain gauges (ARR),')+' '+num(c.pumps)+' '+t('pompa,','pumps,')+' '+num(c.gates)+' '+t('pintu air,','floodgates,')+' '+num(c.reservoirs)+' '+t('waduk/embung —','reservoirs —')+t(' tanggal pengamatan tidak diterbitkan layanan;',' observation dates not published by the service;')+' · '+t('diambil','retrieved')+' '+date(d.retrievedAt);
  const awlr=d.stations.filter(s=>s.kind==='Pos Pantau Air (AWLR)');
- const arrIn=d.stations.filter(s=>s.kind==='Pos Curah Hujan (ARR)'&&s.inRegion);
  const upstream=d.stations.filter(s=>!s.inRegion);
  const rivers={};
  for(const s of awlr){(rivers[s.river||t('tidak disebutkan','unspecified')]=rivers[s.river||t('tidak disebutkan','unspecified')]||[]).push(s);}
@@ -59,11 +58,11 @@ async function showRiskPolygons(code,name){
    riskLayerLoad=get('/data/jakarta-v1/risk.geojson?v='+DASHBOARD_BUILD);
    $('flood-risk-status').textContent=t('Memuat poligon risiko (4,5 MB)…','Loading risk polygons (4.5 MB)…');
    riskLayer=await riskLayerLoad;
-   if(!riskLayer?.features)riskLayer=null;
+   if(!riskLayer?.features){riskLayer=null;riskLayerLoad=null;}
   }
  }
  const layer=riskLayer||await riskLayerLoad;
- if(!layer?.features){$('flood-risk-status').textContent=t('Lapisan risiko tidak tersedia.','Risk layer unavailable.');return;}
+ if(!layer?.features){riskLayerLoad=null;$('flood-risk-status').textContent=t('Lapisan risiko tidak tersedia.','Risk layer unavailable.');return;}
  const features=layer.features.filter(f=>f.properties.kelurahanCode===code);
  if(!features.length){$('flood-risk-status').textContent=t('Tidak ada poligon untuk kelurahan ini.','No polygons for this kelurahan.');return;}
  showOverlay({type:'FeatureCollection',features},name+' · '+t('referensi risiko banjir','flood-risk reference')+' · '+date(layer.retrievedAt));
@@ -76,7 +75,6 @@ function renderFloodRisk(){
  const dist={Berat:0,Sedang:0,Ringan:0};
  for(const r of rs)dist[r.dominantClass]=(dist[r.dominantClass]||0)+1;
  const anyBerat=rs.filter(r=>r.beratPolygons>0);
- const sum=rows=>rows.reduce((n,r)=>n+(r.wni||0),0);
  const sumKey=(rows,k)=>rows.reduce((n,r)=>n+(r[k]||0),0);
  const top=[...anyBerat].sort((a,b)=>b.beratPolygons-a.beratPolygons).slice(0,8);
  $('flood-risk-status').textContent=num(rs.length)+' '+t('kelurahan dengan poligon risiko ·','kelurahan with risk polygons ·')+' '+num(d.counts.riskPolygons)+' '+t('poligon · kelas dominan:','polygons · dominant classes:')+' Berat '+num(dist.Berat)+' · Sedang '+num(dist.Sedang)+' · Ringan '+num(dist.Ringan)+' · '+t('tanggal pengamatan tidak diterbitkan','observation date not published');
@@ -87,10 +85,14 @@ function renderFloodRisk(){
 function renderFloodSitu(){
  const d=floodDesk;
  if(!d){$('flood-situ-body').innerHTML=unavailable();return;}
- const states=SITU_CONDITIONS;
+ const rows=d.situ||[];
+ const condLabel=c=>c==='-'?t('tidak ditentukan','unspecified'):(lang==='id'?SITU_CONDITIONS[c]?.[0]:SITU_CONDITIONS[c]?.[1])||c;
  const counts={};
- for(const key of Object.keys(states))counts[key]=0;
- $('flood-situ-body').innerHTML='<p class="note">'+num(d.counts.situ)+' '+t('situ/rawa retensi dengan kondisi penerbit:','retention lakes with publisher conditions:')+' '+Object.entries(states).map(([k,v])=>esc(lang==='id'?v[0]:v[1])).join(', ')+'. '+t('Kondisi penerbit; bukan kapasitas retensi terukur.','Publisher condition; not a measured retention capacity.')+'</p>'+accessState(d.accessStates?.tide);
+ for(const s of rows)counts[s.condition]=(counts[s.condition]||0)+1;
+ $('flood-situ-body').innerHTML='<p class="note">'+num(rows.length)+' '+t('situ/rawa dalam inventaris penerbit;','lakes in the publisher inventory;')+' '+Object.entries(counts).map(([k,v])=>esc(condLabel(k))+' '+num(v)).join(' · ')+'. '+t('Kondisi penerbit; bukan kapasitas retensi terukur.','Publisher condition; not a measured retention capacity.')+'</p>'
+ +'<div class="result-list">'+[...rows].sort((a,b)=>(a.kota||'').localeCompare(b.kota||'')||(a.name||'').localeCompare(b.name||'')).map(s=>'<div class="result"><strong>'+esc(s.name)+'</strong><span>'+esc([s.kelurahan,s.kecamatan,s.kota].filter(Boolean).join(' · '))+' · '+num(s.areaHa,2)+' ha · '+esc(condLabel(s.condition))+'</span></div>').join('')+'</div>'
+ +'<p class="meta">'+t('Sumber: Jakarta Satu (PETA_SITU) · diambil','Source: Jakarta Satu (PETA_SITU) · retrieved')+' '+date(d.retrievedAt)+'</p>'
+ +accessState(d.accessStates?.tide);
 }
 function renderFloodDesk(){renderFloodLive();renderFloodNetwork();renderFloodRisk();renderFloodSitu();}
 document.addEventListener('dashboard:language',()=>{if(floodDesk||floodDeskLoad)renderFloodDesk();});

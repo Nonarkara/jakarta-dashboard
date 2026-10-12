@@ -69,6 +69,9 @@ assert.equal(net.counts.riskPolygons,risk.count);assert.equal(net.counts.situ,si
 assert.equal(net.stations.length,net.counts.awlrTotal+net.counts.arrTotal);
 assert.ok(net.stations.some(s=>!s.inRegion),'upstream catchment stations stay listed outside the map');
 assert.equal(net.stations.filter(s=>!s.inRegion).length,awlr.excludedOutOfRegion+arr.excludedOutOfRegion);
+const situPairs=new Set(situ.features.map(f=>f.properties.name+'|'+f.properties.condition));
+assert.equal(net.situ.length,situ.count,'desk ships the full situ inventory');
+for(const s of net.situ){assert.ok(situPairs.has(s.name+'|'+s.condition),'situ row matches the baked overlay');assert.ok(s.name);assert.ok(s.areaHa==null||s.areaHa>0,'situ keeps its publisher area');}
 const popByCode=new Map(pop.kelurahan.map(r=>[r.code,r]));
 const classes={Berat:0,Sedang:0,Ringan:0};
 for(const r of net.riskSummary){

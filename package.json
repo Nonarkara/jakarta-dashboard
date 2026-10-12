@@ -20,7 +20,8 @@
     "smoke:dashboard": "node scripts/smoke-dashboard.mjs",
     "prepare:data": "python3 scripts/prepare-jakarta-data.py",
     "prepare:official": "python3 scripts/prepare-official-portals.py && python3 scripts/prepare-official-context.py",
-    "prepare:flood": "python3 scripts/prepare-flood-network.py"
+    "prepare:flood": "python3 scripts/prepare-flood-network.py",
+    "prepare:ispu": "python3 scripts/prepare-ispu-reference.py"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20261002.1",

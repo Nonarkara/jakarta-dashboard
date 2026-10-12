@@ -4,7 +4,7 @@ const DASHBOARD_VERSION = '1.0.0';
 const CRM_MONTHLY_URL = 'https://datastudio.google.com/embed/reporting/d7d87175-bfa2-4067-bf4d-42e8b996da11/page/27A2C';
 let crmViewerOpened = false;
 const $ = id => document.getElementById(id);
-let lang = 'id', weatherData=null, airData=null, alertsData=null, quakeData=null, floodData=null, transit=null, civic=null;
+let lang = 'id', weatherData=null, airData=null, alertsData=null, quakeData=null, floodData=null, transit=null, civic=null, ispuData=null;
 let exploreAreas=[], exploreAreasState='loading', buildingView=null, requestedBuildingFilter=null;
 let chosenRoute=null, routeDetail=null, civicData={}, civicLoading=new Set(), selectedOverlay=null, mapReady=false, refreshId=0;
 try {const q=new URLSearchParams(location.search).get('lang');lang=['id','en'].includes(q)?q:(localStorage.getItem('jakarta-dashboard-lang')||localStorage.getItem('jakarta-atlas-language'))==='en'?'en':'id';}catch{} // axiom-audit-ignore honesty -- Optional local preference persistence; current controls and source values remain available with explicit defaults.
@@ -42,7 +42,7 @@ function applyLanguage(){
  document.title=t('Pantau Jakarta','Jakarta city watch');
  $('city-map').title=t('Atlas 3D Jakarta','Jakarta 3D atlas');
  document.querySelector('.sections').setAttribute('aria-label',t('Navigasi bagian','Section navigation'));
- send({type:'atlas:setLanguage',language:lang});renderWeather();renderAir();renderAlerts();renderQuake();renderFlood();renderTransit();renderCivic();renderSources();renderCrmViewerStatus();renderExplorePlaces();renderBuildingView();clock();document.dispatchEvent(new Event('dashboard:language'));
+ send({type:'atlas:setLanguage',language:lang});renderWeather();renderAir();renderIspu();renderAlerts();renderQuake();renderFlood();renderTransit();renderCivic();renderSources();renderCrmViewerStatus();renderExplorePlaces();renderBuildingView();clock();document.dispatchEvent(new Event('dashboard:language'));
  $('release').textContent='v'+DASHBOARD_VERSION+' · '+DASHBOARD_BUILD;
 }
 function renderWeather(){
@@ -64,6 +64,15 @@ function renderForecast(){
 function renderAir(){
  const rows=Array.isArray(airData)?airData:[];
  $('air-summary').innerHTML=rows.length?rows.map(p=>'<div class="reading"><div class="reading-top"><span>'+esc(lang==='id'?p.label_id:p.label)+'</span><strong>'+num(p.aqi)+' US AQI</strong></div><p>PM2.5 '+num(p.pm25,1)+' µg/m³ · '+esc(stale(p.observedAt,3*3600000)?t('kedaluwarsa','stale'):t('perkiraan model','model estimate'))+'</p>'+evidence('CAMS / Open-Meteo',t('model','modeled'),p.observedAt)+'</div>').join(''):unavailable();
+}
+function renderIspu(){
+ const d=ispuData;
+ if(!d||d.tier!=='official-monitoring-reference'){$('ispu-summary').innerHTML=unavailable();return;}
+ const kat=k=>({BAIK:['BAIK','Good'],SEDANG:['SEDANG','Moderate'],'TIDAK SEHAT':['TIDAK SEHAT','Unhealthy'],'SANGAT TIDAK SEHAT':['SANGAT TIDAK SEHAT','Very unhealthy'],'BERBAHAYA':['BERBAHAYA','Hazardous']}[k]||[k,k]);
+ $('ispu-summary').innerHTML=d.stations.map(s=>{
+  const w=s.latest.worstDay;
+  return '<div class="reading"><div class="reading-top"><strong>'+esc(s.code+' · '+s.name)+'</strong><strong>'+num(s.latest.meanDailyMax,1)+' ISPU</strong></div><p>'+t('rata-rata maks harian','daily-max mean')+' '+esc(s.latest.period)+' · '+t('terburuk','worst')+': '+num(w.ispu)+' ('+esc(w.date)+' · '+esc(lang==='id'?kat(w.kategori)[0]:kat(w.kategori)[1])+(w.criticalPollutant?', '+esc(w.criticalPollutant):'')+')</p>'+evidence('Satu Data Jakarta / DLH DKI',t('referensi pemantauan resmi','official monitoring reference'),d.observedAt.end,t('periode penerbit','publisher period'))+'</div>';
+ }).join('')+'<p class="note">'+t('Pengukuran SPKU resmi yang diterbitkan dalam batch bulanan; batch terakhir bertanggal','Official SPKU measurements published in monthly batches; the latest batch is dated')+' '+esc(d.observedAt.latestPeriod)+'. '+t('Bukan umpan langsung; hari tanpa data tidak diisi.','Not a live feed; no-data days are never filled in.')+'</p>';
 }
 function renderAlerts(){
  const d=alertsData;
@@ -146,9 +155,10 @@ const ledger=[
  ['BIG pasut','https://srgi.big.go.id/tides/panj','Tautan resmi','Official link','Stasiun pasang surut Indonesia; umpan mesin belum terverifikasi','Indonesian tide stations; machine feed not verified','Rujukan pihak ketiga','Third-party reference'],
  ['PetaBencana','https://docs.petabencana.id/informasi-lisensi-data','Laporan warga','Crowdsourced reports','Jumlah laporan satu jam; bukan survei banjir','One-hour report count; not a flood survey','CC BY-NC 4.0; perjanjian untuk komersial','CC BY-NC 4.0; commercial agreement'],
  ['Open-Meteo / CAMS','https://open-meteo.com/en/docs/air-quality-api','Perkiraan model','Model estimate','Lima sampel; US AQI bukan ISPU','Five samples; US AQI is not ISPU','Atribusi; layanan gratis nonkomersial','Attribution; non-commercial free service'],
+ ['Satu Data · ISPU','https://satudata.jakarta.go.id/open-data/detail/data-indeks-standar-pencemar-udara-ispu-di-provinsi-dki-jakarta','Referensi pemantauan resmi','Official monitoring reference','Pengukuran harian 5 SPKU dalam batch bulanan; batch terakhir 2025-11; bukan umpan langsung','Daily measurements from 5 stations in monthly batches; latest batch 2025-11; not a live feed','Atribusi penerbit; lisensi dataset tidak dinyatakan','Publisher attribution; dataset license not stated'],
  ['Overture / OSM / Google / GHSL','/atlas#atlas-data','Snapshot geospasial','Geospatial snapshot','3,38 juta fitur dalam persegi panjang; tinggi dari berbagai sumber/tahun','3.38 million features in a rectangle; mixed-source and mixed-epoch heights','ODbL / CC BY; lihat atlas','ODbL / CC BY; see atlas'],
  ['NASA / JMA / RainViewer / GDACS','/atlas#atlas-environment','Satelit, radar & kejadian','Satellite, radar & events','Air permukaan, awan, aerosol dan badai regional; resolusi terbatas','Surface water, clouds, aerosols and regional storms; limited resolution','Ketentuan tiap penyedia','Provider-specific terms'],
- ['Udara Jakarta / BPS / BIG','https://udara.jakarta.go.id/','Sumber lanjutan','Further sources','Pengukuran udara dan statistik kota belum terhubung; pasang surut sebagai tautan resmi','Measured air and city statistics are not yet connected; tides as an official link','Akses atau izin tambahan','Additional access or permission']
+ ['Udara Jakarta / BPS / BIG','https://udara.jakarta.go.id/','Sumber lanjutan','Further sources','Statistik kota dan pasang surut belum terhubung; ISPU resmi kini sebagai referensi bulanan','City statistics and tides are not yet connected; official ISPU now ships as a monthly reference','Akses atau izin tambahan','Additional access or permission']
 ];
 function renderSources(){ $('source-ledger').innerHTML=ledger.map(r=>'<tr><td><a href="'+r[1]+'" target="_blank" rel="noopener">'+esc(r[0])+' ↗</a></td><td>'+esc(lang==='id'?r[2]:r[3])+'</td><td>'+esc(lang==='id'?r[4]:r[5])+'</td><td>'+esc(lang==='id'?r[6]:r[7])+'</td></tr>').join(''); }
 function clock(){ $('clock').textContent=new Date().toLocaleString(lang==='id'?'id-ID':'en-GB',{timeZone:'Asia/Jakarta',weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+' WIB'; }
@@ -254,4 +264,4 @@ function initDetailDialogs() {
 }
 initDetailDialogs();
 applyLanguage();refresh();setInterval(refresh,5*60000);setInterval(clock,60000);
-get('/data/jakarta-v1/transit.json?v='+DASHBOARD_BUILD).then(d=>{transit=d;renderTransit();});get('/data/jakarta-v1/civic.json?v='+DASHBOARD_BUILD).then(d=>{civic=d;});loadCivic();
+get('/data/jakarta-v1/transit.json?v='+DASHBOARD_BUILD).then(d=>{transit=d;renderTransit();});get('/data/jakarta-v1/civic.json?v='+DASHBOARD_BUILD).then(d=>{civic=d;});get('/data/jakarta-v1/ispu-reference.json?v='+DASHBOARD_BUILD).then(d=>{ispuData=d;renderIspu();});loadCivic();

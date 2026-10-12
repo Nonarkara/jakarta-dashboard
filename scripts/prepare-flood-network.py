@@ -247,6 +247,7 @@ save('flood-network.json',{'publisher':PUBLISHER,'retrievedAt':NOW,'tier':'publi
               'pumps':sum(1 for i in infra if i['kind']=='Pompa'),'gates':sum(1 for i in infra if i['kind']=='Pintu Air'),
               'reservoirs':sum(1 for i in infra if i['kind']=='Waduk & Embung'),'situ':len(situ),'riskPolygons':len(risk)},
     'stations':[{**r,'inRegion':in_box(r['coordinates'],DKI)} for r in awlr+arr],
+    'situ':[{k:s[k] for k in ('name','kelurahan','kecamatan','kota','areaHa','condition')} for s in situ],
     'riskSummary':risk_summary,'populationJoin':{'riskKelurahan':len(risk_by_code),'joined':joined},
     'accessStates':{
       'pantauBanjir':{'checkedAt':NOW,'state':'unreachable','sourceUrl':'https://pantaubanjir.jakarta.go.id',
