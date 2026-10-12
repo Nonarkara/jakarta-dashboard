@@ -63,6 +63,22 @@ def ring_area_m2(ring):
     return R * R / 2.0 * abs(total)
 
 
+def geometry_points(geom):
+    """Every vertex of a Polygon or MultiPolygon (navigation hints only)."""
+    pts = []
+    if not isinstance(geom, dict):
+        return pts
+    def rec(c):
+        if isinstance(c, list):
+            if c and isinstance(c[0], (int, float)):
+                pts.append(c)
+                return
+            for part in c:
+                rec(part)
+    rec(geom.get('coordinates'))
+    return pts
+
+
 def geometry_area_m2(geom):
     """Area of a Polygon or MultiPolygon with holes subtracted. Any other
     geometry returns None so the caller can count it rather than guess."""
@@ -120,6 +136,7 @@ def main():
     joined = {str(r['kelurahanCode']): r for r in network['riskSummary']}
     grouped = {}
     unreadable_risk = 0
+    bbox = {}
     for feature in risk['features']:
         props = feature.get('properties') or {}
         kelas = props.get('kelas')
@@ -142,6 +159,10 @@ def main():
         row['polygons'] += 1
         row['classes'][kelas] += 1
         row['areaHa'][kelas] += area / 10000.0
+        bb = bbox.setdefault(code, [float('inf'), float('inf'), float('-inf'), float('-inf')])
+        for x, y, *rest in geometry_points(feature.get('geometry')):
+            bb[0] = min(bb[0], x); bb[1] = min(bb[1], y)
+            bb[2] = max(bb[2], x); bb[3] = max(bb[3], y)
 
     exposure = []
     for code, row in grouped.items():
@@ -161,8 +182,10 @@ def main():
         if stats.get('wni') is not None:
             share = (row['areaHa']['Berat'] / total_ha) if total_ha > 0 else 0.0
             population['residentsOnSevere'] = int(round(stats['wni'] * share))
+        bb = bbox.get(code)
         exposure.append({
             **row,
+            'center': [round((bb[0] + bb[2]) / 2, 4), round((bb[1] + bb[3]) / 2, 4)] if bb else None,
             'riskAreaHa': round(total_ha, 2),
             'beratSharePct': round(100.0 * (row['areaHa']['Berat'] / total_ha), 1) if total_ha > 0 else 0.0,
             'exposureScore': round(score / total_ha, 1) if total_ha > 0 else 0.0,

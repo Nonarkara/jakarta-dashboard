@@ -6,3 +6,4 @@ Untitled/
 .env
 .env.*
 out/
+.deploy-locked/

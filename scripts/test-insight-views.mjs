@@ -61,6 +61,7 @@ for (const row of rows) {
   // beratSharePct is published rounded to 0.1, so allow exactly that rounding and nothing more.
   const tolerance = row.population.wni * 0.0005 + 1;
   assert.ok(Math.abs(row.population.residentsOnSevere - row.population.wni * share) <= tolerance, 'residents on severe land follows the severe share: ' + row.kelurahan);
+  assert.ok(Array.isArray(row.center) && row.center[0] > 106.3 && row.center[0] < 107.1 && row.center[1] > -6.6 && row.center[1] < -5.9, 'every exposed neighbourhood carries a mappable centroid: ' + row.kelurahan);
 }
 // Sorting is by residents on severe land, descending, so "the top of the list"
 // is reproducible.

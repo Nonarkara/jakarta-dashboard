@@ -1640,7 +1640,7 @@ window.addEventListener('atlas:language', function () {
 
 const INSIGHT_ASSET = '/data/jakarta-v1/insight.json';
 const INSIGHT_LENSES = ['exposure', 'confidence', 'green', 'coverage'];
-let activeLens = 'city', lensRequest = 0, lensNote = null;
+let activeLens = 'city', lensRequest = 0;
 let insightData = null, insightPending = null, buildingShare = null;
 
 function lensText(en, id) { return uiLanguage() === 'id' ? id : en; }
@@ -1667,7 +1667,7 @@ function dropInsightLayer(id) {
 }
 
 function clearInsightLayers() {
-  ['insight-risk', 'insight-risk-outline', 'insight-green', 'insight-stations', 'insight-stations-label'].forEach(dropInsightLayer);
+  ['insight-risk', 'insight-green', 'insight-stations'].forEach(dropInsightLayer);
 }
 
 // Scale each view on its own measured spread rather than a rounded constant, so
@@ -1828,7 +1828,7 @@ function renderExposurePanel(data) {
     value.textContent = fmtNum(row.population.residentsOnSevere, 0) + ' ' + lensText('residents', 'penduduk');
     button.append(name, value);
     button.addEventListener('click', () => {
-      mapInstance?.flyTo({ center: [106.82, -6.20], zoom: 12.4, pitch: currentView === '2d' ? 0 : 45 });
+      if (Array.isArray(row.center)) mapInstance?.flyTo({ center: row.center, zoom: 12.8, pitch: currentView === '2d' ? 0 : 45 });
       detail.textContent = (row.kelurahan || '') + ' — ' + lensText('mapped risk', 'risiko terpetakan') + ' ' + fmtNum(row.riskAreaHa, 0) + ' ha · ' +
         lensText('severe share', 'porsi berat') + ' ' + row.beratSharePct + '% · ' +
         lensText('residents', 'penduduk') + ' ' + fmtNum(row.population.wni, 0) +
@@ -1909,7 +1909,8 @@ function renderConfidencePanel(data, share) {
   body.append(lensSource((share
     ? fmtNum(share.total, 0) + ' ' + lensText('buildings on screen', 'bangunan di layar')
     : lensText('Move the map to count buildings', 'Geser peta untuk menghitung bangunan')) +
-    ' · ' + lensText('simplified rendered footprints, not a census', 'tapak terender yang disederhanakan, bukan sensus')));
+    ' · ' + lensText('simplified rendered footprints, not a census', 'tapak terender yang disederhanakan, bukan sensus') +
+    ' · ' + lensText('checked', 'diperiksa') + ' ' + (data.checkedAt || lensText('undated', 'tanpa tanggal'))));
 }
 
 function renderLensEvidence() {

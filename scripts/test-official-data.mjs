@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
 const data=n=>JSON.parse(readFileSync(new URL('../public/data/jakarta-v1/'+n,import.meta.url),'utf8'));
 const p=data('projects.json');assert.equal(p.count,p.projects.length);assert.equal(p.tier,'publisher-proposal');assert.equal(new Set(p.projects.map(r=>r.id)).size,p.count);
 const coords=new Set();for(const r of p.projects){assert.ok(r.sourceUrl.startsWith('https://invest.jakarta.go.id/potential-projects/'));if(r.available){assert.match(r.proposedCost,/IDR|Rp/);assert.ok(r.location&&r.expectedStart);assert.match(r.sha256,/^[a-f0-9]{64}$/);}if(r.coordinates){const [x,y]=r.coordinates;assert.ok(x>106&&x<108&&y> -7&&y< -5);assert.equal(r.coordinateSource,'publisher-location');assert.ok(!coords.has(r.coordinates.join(',')),'Duplicate source locations must be withheld');coords.add(r.coordinates.join(','));}if(r.coordinateWarning)assert.equal(r.coordinates,null);}
@@ -9,7 +10,9 @@ for(const r of g.features){assert.deepEqual(Object.keys(r.properties).sort(),['n
 const c=data('city-context.json');assert.equal(c.documents.length,6);assert.equal(c.vision.tier,'planning-target');assert.equal(c.vision.targetYear,2045);assert.equal(c.floodAccess.state,'unavailable');assert.equal(c.facts.find(f=>f.id==='flood-network').period,'2023');assert.equal(c.facts.find(f=>f.id==='jaki-services').qualifier,'>');
 const ispu=data('ispu-reference.json');assert.equal(ispu.tier,'official-monitoring-reference');assert.equal(ispu.stations.length,5);assert.ok(Date.parse(ispu.retrievedAt)>0);assert.ok(ispu.observedAt.start<=ispu.observedAt.end);
 assert.ok(ispu.evidencePath.startsWith('data/source-evidence/'),'the bake names its raw evidence');
-const ispuRaw=readFileSync(new URL('../'+ispu.evidencePath,import.meta.url),'utf8');
+const ispuRawBuf=readFileSync(new URL('../'+ispu.evidencePath,import.meta.url));
+assert.equal(createHash('sha256').update(ispuRawBuf).digest('hex'),ispu.sha256,'the committed evidence is the exact payload the bake digested');
+const ispuRaw=ispuRawBuf.toString('utf8');
 const ispuRows={};
 for(const line of ispuRaw.split('\n').slice(1)){ if(!line.trim())continue;
  const cells=line.split(',');

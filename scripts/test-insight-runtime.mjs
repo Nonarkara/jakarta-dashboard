@@ -179,6 +179,13 @@ assert.ok(exposureText.includes(insight.checkedAt), 'exposure states the checked
 assert.match(exposureText, /Semester 2 2023/, 'exposure states the population period');
 assert.match(exposureText, /Kapuk/, 'the ranked neighbourhood list renders');
 assert.doesNotMatch(exposureText, /undefined|NaN|\[object/, 'no unresolved value reaches the panel');
+const findRows = (n, out = []) => { for (const c of n.children || []) { if (String(c.className || '').includes('lens-row--button')) out.push(c); findRows(c, out); } return out; };
+const rankRows = findRows(body());
+assert.ok(rankRows.length, 'exposure rows are clickable');
+map.flight = null;
+rankRows[0].listeners.click();
+assert.ok(map.flight, 'clicking a ranked row flies the map');
+assert.deepEqual(map.flight.center, insight.exposure.kelurahan[0].center, 'the fly target is the clicked neighbourhood, not a hardcoded city point');
 
 // ── green ──────────────────────────────────────────────────────────────────
 await (pick('green'))();
