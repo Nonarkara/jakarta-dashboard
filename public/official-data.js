@@ -17,11 +17,18 @@ async function loadOfficialData(){
   if(!p||!f||!c)officialLoad=null;
  });return officialLoad;
 }
+const OFFICIAL_TOPICS=['projects','flood','plans','paper','legal','about'];
+const OFFICIAL_FILES={projects:'projects.json',flood:'flood-reference.json',plans:'city-context.json',paper:'insight.json'};
+const OFFICIAL_HEADINGS={projects:['Proyek, riwayat banjir & rencana kota','Projects, flood history & city strategy'],flood:['Proyek, riwayat banjir & rencana kota','Projects, flood history & city strategy'],plans:['Proyek, riwayat banjir & rencana kota','Projects, flood history & city strategy'],paper:['Cara sistem ini dibuat','How this was built'],legal:['Dasar hukum','Legal basis'],about:['Tentang pembuat','About the builder']};
 function renderOfficialData(){
  const topic=$('official-topic').value;
- const file={projects:'projects.json',flood:'flood-reference.json',plans:'city-context.json'}[topic];$('official-download').href='/data/jakarta-v1/'+file;$('official-download').download='jakarta-'+file;
- ['projects','flood','plans'].forEach(k=>{$('official-'+k).hidden=k!==topic;});
- renderProjects();renderFloodReference();renderCityContext();
+ const head=$('official-heading'),face=OFFICIAL_HEADINGS[topic]||OFFICIAL_HEADINGS.projects;
+ head.dataset.id=face[0];head.dataset.en=face[1];head.textContent=lang==='id'?face[0]:face[1];
+ const file=OFFICIAL_FILES[topic],dl=$('official-download');
+ if(file){dl.hidden=false;dl.href='/data/jakarta-v1/'+file;dl.download='jakarta-'+file;}else dl.hidden=true;
+ OFFICIAL_TOPICS.forEach(k=>{$('official-'+k).hidden=k!==topic;});
+ renderProjects();renderFloodReference();renderCityContext();renderPaper();
+ if(topic==='paper')loadPaperData();
 }
 function renderProjects(){
  const d=officialProjects;if(!d){$('project-results').innerHTML=unavailable();return;}
@@ -50,6 +57,50 @@ function renderCityContext(){
  $('global-vision').innerHTML='<h3>Jakarta Rise#20 · '+esc(v.instrument)+'</h3><p>'+esc(lang==='id'?v.summaryId:v.summaryEn)+'</p>'+publicLink(v.sourceUrl,t('Visi resmi','Official vision'))+' · '+publicLink(v.documentUrl,t('Dokumen peta jalan','Roadmap document'));
  $('city-documents').innerHTML=d.documents.map(p=>'<article class="official-project"><strong>'+esc(p.year)+' · '+esc(referenceText(p.title))+'</strong><p class="meta">'+esc(p.tier==='annual-report'?t('Laporan tahunan','Annual report'):t('Dokumen rencana','Planning document'))+'</p>'+publicLink(p.url,t('Buka dokumen penerbit','Open publisher document'))+'</article>').join('');
  $('city-context-evidence').textContent=t('Katalog diperiksa','Catalogue checked')+' '+date(d.retrievedAt)+' · '+t('Fakta laporan historis dan sasaran kebijakan dipisahkan dari data langsung.','Historical report facts and policy targets are separate from live data.');
+}
+
+let paperInsight=null,paperFlood=null,paperLoad=null;
+async function loadPaperData(){
+ if(paperInsight&&paperFlood)return;
+ if(paperLoad)return paperLoad;
+ for(const id of ['paper-exposure','paper-riskmix','paper-green','paper-coverage','paper-inventory'])$(id).innerHTML='<p class="meta">'+t('Memuat tampilan turunan…','Loading the derived view…')+'</p>';
+ paperLoad=Promise.all([get('/data/jakarta-v1/insight.json?v='+DASHBOARD_BUILD),get('/data/jakarta-v1/flood-network.json?v='+DASHBOARD_BUILD)]).then(([i,f])=>{
+  paperInsight=i&&i.derived===true&&Array.isArray(i.exposure?.kelurahan)?i:null;
+  paperFlood=f&&Array.isArray(f.riskSummary)&&f.riskSummary.length?f:null;
+  window.officialPaperEvidence=paperInsight&&paperFlood?{insightGeneratedAt:paperInsight.generatedAt,checkedAt:paperInsight.checkedAt,counts:paperFlood.counts}:null;
+  renderPaper();
+  if(!paperInsight||!paperFlood)paperLoad=null;
+ });return paperLoad;
+}
+function paperBars(rows){
+ const max=Math.max(0,...rows.map(r=>r[2]));
+ return '<div class="paper-bars">'+rows.map(r=>'<div class="paper-bar-row"><span>'+esc(r[0])+'</span><strong class="mono">'+esc(r[1])+'</strong><span class="paper-bar" aria-hidden="true"><i style="width:'+(max>0?(100*r[2]/max).toFixed(1):0)+'%"></i></span>'+(r[3]?'<span class="meta">'+esc(r[3])+'</span>':'')+'</div>').join('')+'</div>';
+}
+function renderPaper(){
+ if($('official-topic').value!=='paper')return;
+ if(!paperInsight||!paperFlood){
+  for(const id of ['paper-exposure','paper-riskmix','paper-green','paper-coverage','paper-inventory'])$(id).innerHTML=unavailable();
+  return;
+ }
+ const kelurahan=[...paperInsight.exposure.kelurahan].sort((a,b)=>(b.population?.residentsOnSevere||0)-(a.population?.residentsOnSevere||0)).slice(0,8);
+ $('paper-exposure').innerHTML=paperBars(kelurahan.map(r=>[r.kelurahan||'—',num(r.population.residentsOnSevere)+' · '+num(r.beratSharePct,1)+'%',r.population.residentsOnSevere||0,(r.kota||'').replace('Kota Adm. Jakarta ','')+' · '+t('dari','of')+' '+num(r.population.wni)]))+evidence('Jakarta Satu · '+t('referensi risiko banjir','flood-risk reference'),t('turunan bertanggal','dated derived'),paperInsight.checkedAt,t('populasi','population')+' '+paperInsight.exposure.populationPeriod);
+ const classes={Berat:0,Sedang:0,Ringan:0};
+ for(const r of paperFlood.riskSummary)for(const k of Object.keys(classes))classes[k]+=Number(r.classes?.[k])||0;
+ const total=classes.Berat+classes.Sedang+classes.Ringan;
+ $('paper-riskmix').innerHTML=paperBars(Object.keys(classes).map(k=>[k,num(classes[k]),classes[k],total>0?num(100*classes[k]/total,1)+'%':null]))+evidence('Jakarta Satu · '+t('referensi risiko banjir','flood-risk reference'),t('turunan bertanggal','dated derived'),paperInsight.checkedAt,num(total)+' '+t('poligon','polygons'));
+ const boroughs=[...paperInsight.green.byBorough].sort((a,b)=>b.greenHa-a.greenHa);
+ $('paper-green').innerHTML=paperBars(boroughs.map(g=>[(g.kota||'').replace('Kota Adm. Jakarta ','').replace('Kepulauan Seribu',t('Kepulauan Seribu','Seribu Islands')),num(g.greenHa,1)+' ha',g.greenHa,Number.isFinite(g.greenSharePct)?num(g.greenSharePct,2)+'% '+t('luas borough','of borough area'):t('luas borough tidak dipublikasikan','no borough area published')]))+evidence('Jakarta Satu · '+t('referensi ruang hijau','green-space reference'),t('turunan bertanggal','dated derived'),paperInsight.checkedAt,t('dari geometri poligon','from polygon geometry'));
+ const coverage=[...paperInsight.coverage.byBorough].sort((a,b)=>b.kelurahanWithoutPublishedPump-a.kelurahanWithoutPublishedPump);
+ $('paper-coverage').innerHTML=paperBars(coverage.map(c=>[(c.kota||'').replace('Kota Adm. Jakarta ',''),num(c.kelurahanWithPublishedPump)+' / '+num(c.kelurahanWithRiskMapping),c.kelurahanWithRiskMapping,num(c.kelurahanWithoutPublishedPump)+' '+t('tanpa pompa terpublikasi','without a published pump')]))+evidence('Jakarta Satu · '+t('jaringan pantauan','monitoring network'),t('turunan bertanggal','dated derived'),paperInsight.checkedAt,t('tidak adanya stasiun terpublikasi bukan berarti aman','no published station is not clearance'));
+ const greenTotal=boroughs.reduce((n,g)=>n+(Number.isFinite(g.greenHa)?g.greenHa:0),0);
+ $('paper-inventory').innerHTML='<dl class="official-project-fields">'
+  +'<div><dt>'+t('Dokumen rencana','Planning documents')+'</dt><dd>'+num(officialContext?.documents?.length||0)+' · '+t('lihat Laporan & visi','see Reports & vision')+'</dd></div>'
+  +'<div><dt>'+t('Usulan investasi','Investment proposals')+'</dt><dd>'+num(officialProjects?.count||0)+' · '+t('diambil','retrieved')+' '+date(officialProjects?.retrievedAt)+'</dd></div>'
+  +'<div><dt>'+t('Baris referensi banjir','Flood reference rows')+'</dt><dd>'+num(officialFlood?.count||0)+' → '+num(officialFlood?.rows?.length||0)+' '+t('kelompok','groups')+'</dd></div>'
+  +'<div><dt>'+t('Poligon risiko banjir','Flood-risk polygons')+'</dt><dd>'+num(paperFlood.counts.riskPolygons)+' · '+num(paperFlood.populationJoin.joined)+'/'+num(paperFlood.populationJoin.riskKelurahan)+' '+t('terhubung populasi','joined to population')+'</dd></div>'
+  +'<div><dt>'+t('Ruang hijau referensi','Reference green space')+'</dt><dd>'+num(Math.round(greenTotal))+' ha '+t('dihitung','computed')+'</dd></div>'
+  +'<div><dt>'+t('Stasiun ISPU','ISPU stations')+'</dt><dd>'+t('lihat Cuaca & udara','see Weather & air')+'</dd></div>'
+  +'</dl>';
 }
 $('official-topic').addEventListener('change',renderOfficialData);
 $('project-search').addEventListener('input',renderProjects);

@@ -10,6 +10,8 @@ The Bahasa Indonesia / English dashboard follows the HCMC observation–map–bu
 
 Search a route and select it to draw the scheduled alignment. Select a stop or civic facility to locate its reference point. Language/theme changes retain the same map instance. The forecast chart has a complete text table. Export evidence JSON for source payloads and selected geometry. The complete atlas retains all building, environment, inspection and navigation controls.
 
+The Research dialog now has three more tabs beside the project, flood and report data: how the system was built (method, live/dated/unavailable states, charts computed from the shipped records, build inventory), the legal basis (independent demo, source licenses, no personal data, non-affiliation), and the builder (bio and contact).
+
 The Banjir / Flood desk popup couples those live signals with the dated Jakarta Satu monitoring network: AWLR water-level stations with official SIAGA 1–4 alert thresholds grouped by river, ARR rain gauges, pumps, floodgates and reservoirs, flood-risk reference polygons joined to 2023 kelurahan population, and the situ inventory. No live water level is shown anywhere; stations publish thresholds, not readings, and unavailable feeds stay explicit states with official links.
 
 ## Map insight lenses
