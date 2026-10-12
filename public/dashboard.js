@@ -27,7 +27,7 @@ function send(message){
  }
  $('city-map').contentWindow?.postMessage(message,location.origin);
 }
-function showOverlay(data,label){document.querySelector('dialog[open]')?.close();selectedOverlay={data,label};$('selection-status').textContent=label;send({type:'atlas:dashboardOverlay',data});}
+function showOverlay(data,label){document.querySelector('dialog[open]')?.close();selectedOverlay={data,label};$('selection-status').hidden=false;$('selection-status').textContent=label;send({type:'atlas:dashboardOverlay',data});}
 async function get(path){
  try{const r=await fetch(path,{signal:AbortSignal.timeout(25000)});const d=await r.json();return d;}catch{return null;}
 }
@@ -243,7 +243,7 @@ function initDetailDialogs() {
   if(!dialog || dialog.tagName!=='DIALOG') return;
   event.preventDefault();
   document.querySelector('.city-controls').open=false;
-  returnFocus.set(dialog,trigger);
+  returnFocus.set(dialog,trigger.closest?.('.city-controls')?document.querySelector('.city-controls > summary'):trigger);
   if(dialog.id==='warnings-dialog') dialog.querySelector('.modal-content').append($('alerts-panel'));
   dialog.showModal();
   if(dialog.id==='explore-dialog')send({type:'atlas:requestBuildingView'});
@@ -266,3 +266,12 @@ function initDetailDialogs() {
 initDetailDialogs();
 applyLanguage();refresh();setInterval(refresh,5*60000);setInterval(clock,60000);
 get('/data/jakarta-v1/transit.json?v='+DASHBOARD_BUILD).then(d=>{transit=d;renderTransit();});get('/data/jakarta-v1/civic.json?v='+DASHBOARD_BUILD).then(d=>{civic=d;});get('/data/jakarta-v1/ispu-reference.json?v='+DASHBOARD_BUILD).then(d=>{ispuData=d;renderIspu();});loadCivic();
+
+// Phone navigation uses one masthead row; native details keeps keyboard focus.
+{
+ const navigation=document.getElementById('city-navigation');
+ const narrow=matchMedia('(max-width:1000px)');
+ const dockNavigation=()=>{if(navigation)navigation.open=!narrow.matches;};
+ dockNavigation();narrow.addEventListener?.('change',dockNavigation);
+ document.addEventListener('keydown',event=>{if(event.key==='Escape'&&navigation?.open&&narrow.matches&&!document.querySelector('dialog[open]')){navigation.open=false;navigation.querySelector('summary')?.focus();}});
+}

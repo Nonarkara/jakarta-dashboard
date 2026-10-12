@@ -11,6 +11,7 @@ window.ATLAS_ID = {
   "Choose a map lens. Sources and valid times stay with the evidence.": "Pilih lensa peta. Sumber dan waktu berlaku selalu menyertai data.",
 
   "Observation": "Pengamatan",
+  "Controls": "Kontrol",
   "Tools & appearance": "Alat dan tampilan", "Layer settings": "Pengaturan lapisan", "Guidance & limits": "Panduan dan batasan",
   "Skip to map controls": "Langsung ke kontrol peta", "Private repository": "Repositori privat", "Access requires repository permission": "Akses memerlukan izin repositori",
   "These are research screening rules, not official warnings. For warnings follow BMKG and BPBD DKI Jakarta. Check the source and observation time before acting.": "Ini adalah aturan penyaringan riset, bukan peringatan resmi. Untuk peringatan, ikuti BMKG dan BPBD DKI Jakarta. Periksa sumber dan waktu pengamatan sebelum bertindak.",

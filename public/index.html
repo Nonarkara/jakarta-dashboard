@@ -18,21 +18,23 @@
   <main class="atlas-page">
     <header class="atlas-header">
       <div class="atlas-header-meta">
-        <span class="atlas-eyebrow" id="atlas-eyebrow">3D Atlas -- Jakarta -- 3.4 M buildings</span>
+
         <h1 class="atlas-title">
           <span class="atlas-title-desk">Jakarta, block by block</span>
           <span class="atlas-title-phone">Jakarta -- 3D atlas</span>
         </h1>
-        <p class="atlas-maturity">Public demo · reference map with modeled feeds</p>
+
       </div>
       <nav class="atlas-header-nav" aria-label="Atlas navigation">
-        <label class="atlas-theme-control">Map view <select id="atlas-view" aria-label="Map view"><option value="2d">2D map</option><option value="3d" selected>3D city</option></select></label>
-        <label class="atlas-theme-control">Basemap <select id="atlas-basemap" aria-label="Basemap"><option value="osm">OpenStreetMap streets</option><option value="esri" selected>Esri satellite</option></select></label>
+
+
         <label class="atlas-theme-control" for="atlas-language">Language
           <select id="atlas-language" aria-label="Language"><option value="id">Bahasa Indonesia</option><option value="en">English</option></select>
         </label>
-        <details class="atlas-menu" id="atlas-menu"><summary>Tools &amp; appearance</summary><div class="atlas-menu-body">
-        <details class="atlas-about"><summary>About this atlas</summary><div class="atlas-about-body"><p class="atlas-kicker">
+        <details class="atlas-menu" id="atlas-menu"><summary>Controls</summary><div class="atlas-menu-body">
+        <label class="atlas-theme-control">Map view <select id="atlas-view" aria-label="Map view"><option value="2d">2D map</option><option value="3d" selected>3D city</option></select></label>
+        <label class="atlas-theme-control">Basemap <select id="atlas-basemap" aria-label="Basemap"><option value="osm">OpenStreetMap streets</option><option value="esri" selected>Esri satellite</option></select></label>
+        <details class="atlas-about"><summary>About this atlas</summary><div class="atlas-about-body">        <span class="atlas-eyebrow" id="atlas-eyebrow">3D Atlas -- Jakarta -- 3.4 M buildings</span>        <p class="atlas-maturity">Public demo · reference map with modeled feeds</p><p class="atlas-kicker">
           3 380 317 building features from Overture Maps, each with a tagged height, a satellite estimate for that building, or an area estimate. Explore the skyline on Esri imagery with OpenStreetMap rail and waterways and source-labeled data overlays. Lighting follows the calculated sun position over Jakarta; night lighting is illustrative.
           Click any building to see its height and where that number came from.
         </p></div></details>
@@ -54,6 +56,7 @@
     </header>
 
     <nav class="atlas-lenses" aria-label="Explore city conditions">
+<details id="atlas-lens-evidence"><summary>Explore evidence</summary><div id="atlas-lens-body"></div></details>
       <button data-lens="city" aria-pressed="true">City in 3D</button>
       <button data-lens="exposure" aria-pressed="false">Flood exposure</button>
       <button data-lens="confidence" aria-pressed="false">Height confidence</button>
@@ -67,12 +70,12 @@
       <button data-lens="recurring" aria-pressed="false">Recurring water</button>
       <button data-lens="air" aria-pressed="false">Aerosol</button>
     </nav>
-    <section class="atlas-lens-story" aria-live="polite"><strong id="atlas-lens-title">Read the city, from skyline to street</strong><span id="atlas-lens-description">Choose a map lens. Sources and valid times stay with the evidence.</span><details id="atlas-lens-evidence"><summary>Explore evidence</summary><div id="atlas-lens-body"></div></details></section>
+    <section class="atlas-lens-story" aria-live="polite"><strong id="atlas-lens-title">Read the city, from skyline to street</strong><span id="atlas-lens-description">Choose a map lens. Sources and valid times stay with the evidence.</span></section>
     <div class="atlas-map-wrap">
       <div id="atlas-map" class="atlas-map" aria-label="3D map of Jakarta"></div>
       <section class="atlas-watch" id="atlas-watch" aria-label="City watch">
-        <details class="atlas-watch-shell" id="atlas-watch-shell" open><summary>City watch</summary>
-        <div class="atlas-watch-grid">
+        <details class="atlas-watch-shell" id="atlas-watch-shell"><summary>City watch</summary>
+        <div class="atlas-watch-content"><div class="atlas-watch-grid">
           <button type="button" id="atlas-watch-flood" data-watch="flood"><small>Flood and rain</small><strong id="atlas-watch-flood-value">Checking open data</strong></button>
           <button type="button" id="atlas-watch-air" data-watch="air"><small>Air particles</small><strong id="atlas-watch-air-value">Checking open data</strong></button>
           <button type="button" id="atlas-watch-wind" data-watch="wind"><small>Wind and storms</small><strong id="atlas-watch-wind-value">Checking open data</strong></button>
@@ -81,7 +84,7 @@
         <details class="atlas-watch-notices" id="atlas-watch-notices"><summary>Guidance &amp; limits</summary><div class="atlas-watch-notice-body">
         <p id="atlas-watch-action" class="atlas-watch-action" hidden></p>
         <p>These are research screening rules, not official warnings. For warnings follow BMKG and BPBD DKI Jakarta. Check the source and observation time before acting.</p>
-        </div></details></details>
+        </div></details></div></details>
       </section>
 
       <div id="atlas-map-loading" class="atlas-map-loading">
@@ -153,9 +156,10 @@
             <span class="atlas-eyebrow">Quick jump</span>
             <span class="atlas-quick-heading">12 places</span>
           </summary>
+                  <button type="button" id="atlas-flyover-btn" aria-pressed="false" class="atlas-flyover-btn">Start flyover</button>
           <div id="atlas-area-grid" class="atlas-area-grid" role="group" aria-label="Jakarta key areas"></div>
         </details>
-        <button type="button" id="atlas-flyover-btn" aria-pressed="false" class="atlas-flyover-btn">Start flyover</button>
+
       </section>
     </div>
 

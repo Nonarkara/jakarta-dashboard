@@ -37,3 +37,12 @@ assert.equal(stoppedReports,1,'closing CRM stops even an unloaded report');
 media.matches=true;media.change();assert.equal(get('observations').parent,get('weather-detail-dialog').content);assert.equal(get('alerts-panel').parent,get('warnings-dialog').content);
 media.matches=false;media.change();assert.equal(get('observations').parent,workspace);assert.equal(get('alerts-panel').parent,workspace);
 console.log('PASS popup contract: explicit opening, closing/focus, preserved sections and responsive panel docking');
+
+// A filter trigger now lives in the closed Controls drawer: close must return
+// to the visible summary, rather than a hidden nested action.
+const controlsSummary=new Node('controls-summary','SUMMARY');
+const priorQuery=document.querySelector;
+document.querySelector=s=>s==='.city-controls > summary'?controlsSummary:priorQuery(s);
+const nestedTrigger=new Node('nested');nestedTrigger.dataset.open='civic-dialog';nestedTrigger.closest=()=>get('controls');
+document.click({target:{closest:()=>nestedTrigger},preventDefault(){}});
+get('civic-dialog').close();assert.equal(controlsSummary.focused,true,'drawer action restores focus to visible Controls summary');

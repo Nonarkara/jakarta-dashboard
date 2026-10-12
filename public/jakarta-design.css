@@ -294,3 +294,101 @@ body.atlas-embedded .atlas-lens-popup { position:absolute; top:28px; left:0; wid
 body.atlas-embedded #atlas-lens-evidence[open] .atlas-lens-popup .atlas-lens-context { position:static; width:auto; padding:8px; border:0; border-bottom:1px solid var(--line); }
 body.atlas-embedded #atlas-lens-evidence .atlas-lens-popup #atlas-lens-body { position:static; width:auto; max-height:none; overflow:visible; padding:10px; border:0; }
 body.atlas-embedded[data-lens="arrival"] #atlas-lens-evidence[open] .atlas-lens-popup .atlas-lens-context { display:none; }
+
+/* Map-first workbench: two compact rows, all secondary content on demand. */
+body.atlas-workbench { --atlas-header-row:36px; --atlas-lenses-row:36px; height:100svh; overflow:hidden; }
+body.atlas-workbench .atlas-page { height:100%; min-height:0; display:grid; grid-template-rows:var(--atlas-header-row) var(--atlas-lenses-row) minmax(0,1fr); }
+body.atlas-workbench.atlas-embedded .atlas-page { grid-template-rows:var(--atlas-lenses-row) minmax(0,1fr); }
+body.atlas-workbench .atlas-header { padding:2px 8px; display:flex; gap:8px; flex-wrap:nowrap; min-height:0; }
+body.atlas-workbench .atlas-header-meta { display:block; min-width:0; flex:1; }
+body.atlas-workbench .atlas-title { font-size:14px; margin:0; line-height:1; white-space:nowrap; }
+body.atlas-workbench .atlas-title::before { width:20px; height:24px; margin-right:4px; }
+body.atlas-workbench .atlas-header-nav { display:flex; gap:6px; flex:none; width:auto; }
+body.atlas-workbench .atlas-header-nav > .atlas-theme-control { display:flex; flex-direction:row; gap:0; font-size:0; }
+body.atlas-workbench .atlas-header-nav > .atlas-theme-control select { width:auto; padding:2px 4px; min-height:30px; font-size:12px; }
+body.atlas-workbench .atlas-menu { margin:0; align-self:center; }
+body.atlas-workbench .atlas-menu > summary { min-height:30px; padding:4px 8px; font-size:12px; }
+body.atlas-workbench .atlas-menu-body { z-index:65; width:min(360px,calc(100vw - 16px)); }
+body.atlas-workbench .atlas-lens-story { display:none; }
+body.atlas-workbench .atlas-lenses { min-height:0; align-items:center; padding:0; gap:0; }
+body.atlas-workbench .atlas-lenses button { min-height:30px; padding:4px 8px; font-size:12px; }
+body.atlas-workbench #atlas-lens-evidence { position:sticky; left:0; order:-1; flex:none; background:var(--bg); z-index:60; margin:0; border:0; padding:0; }
+body.atlas-workbench #atlas-lens-evidence > summary { display:flex; align-items:center; min-height:30px; padding:4px 8px; font-size:12px; white-space:nowrap; cursor:pointer; border-right:1px solid var(--line); }
+body.atlas-workbench .atlas-lens-popup { position:fixed; top:calc(var(--atlas-header-row) + var(--atlas-lenses-row)); left:8px; width:min(520px,calc(100vw - 16px)); max-height:65svh; overflow:auto; z-index:65; border:1px solid var(--line); background:var(--bg); }
+body.atlas-workbench.atlas-embedded .atlas-lens-popup { top:var(--atlas-lenses-row); }
+body.atlas-workbench #atlas-lens-evidence[open] .atlas-lens-popup .atlas-lens-context { display:block; position:static; width:auto; padding:8px; border:0; border-bottom:1px solid var(--line); background:var(--bg-raised); }
+body.atlas-workbench .atlas-lens-context > * { display:block; font-size:12px; }
+body.atlas-workbench #atlas-lens-evidence .atlas-lens-popup #atlas-lens-body { position:static; width:auto; max-height:none; overflow:visible; padding:10px; border:0; }
+body.atlas-workbench[data-lens="arrival"] #atlas-lens-evidence[open] .atlas-lens-popup .atlas-lens-context { display:none; }
+body.atlas-workbench .atlas-map-wrap { height:auto; min-height:0; }
+body.atlas-workbench .atlas-watch { top:8px; right:8px; left:auto; width:auto; border:0; background:transparent; z-index:42; }
+body.atlas-workbench .atlas-watch-shell { margin:0; padding:0; border:0; }
+body.atlas-workbench .atlas-watch-shell > summary { display:block; min-height:30px; padding:4px 8px; background:var(--bg); }
+body.atlas-workbench .atlas-watch-content { position:absolute; right:0; top:100%; width:min(360px,calc(100vw - 16px)); max-height:60svh; overflow:auto; border:1px solid var(--line); background:var(--bg); }
+body.atlas-workbench .atlas-watch-grid { grid-template-columns:1fr 1fr; }
+body.atlas-workbench .atlas-watch-notice-body { position:static; }
+body.atlas-workbench .atlas-menu-body .atlas-watch, body.atlas-workbench .atlas-embedded-evidence .atlas-watch { position:static; width:100%; }
+body.atlas-workbench .atlas-menu-body .atlas-watch-content, body.atlas-workbench .atlas-embedded-evidence .atlas-watch-content { position:static; width:auto; }
+body.atlas-workbench .atlas-layers { top:8px; width:auto; padding:0 8px; font-family:var(--font-sans); }
+body.atlas-workbench .atlas-layers:has(details[open]) { width:min(250px,calc(100vw - 72px)); max-height:60svh; overflow:auto; }
+body.atlas-workbench .atlas-panel-summary { min-height:30px; gap:6px; }
+body.atlas-workbench .atlas-panel-summary .atlas-eyebrow { margin:0; font-family:var(--font-sans); letter-spacing:0; text-transform:none; font-size:12px; }
+body.atlas-workbench .atlas-quick { padding:0 8px; max-height:55svh; }
+body.atlas-workbench .atlas-quick-details { min-width:0; }
+body.atlas-workbench .atlas-quick-heading { font-size:11px; }
+body.atlas-workbench .atlas-observation-hud { top:48px; }
+body.atlas-workbench .atlas-embedded-drawer { right:8px; }
+body.atlas-workbench .atlas-embedded-drawer > summary { min-height:30px; padding:4px 8px; }
+body.atlas-workbench .water-scenario-location { bottom:76px; }
+body.atlas-workbench .maplibregl-ctrl-group button { width:30px; height:30px; min-width:30px; min-height:30px; }
+body.atlas-workbench .maplibregl-ctrl-attrib { font-size:10px; }
+body.atlas-workbench .maplibregl-ctrl-attrib-button { min-width:30px; min-height:30px; }
+
+/* Dashboard masthead and tools use the same density. */
+body[data-surface="jakarta-dashboard"] .masthead { padding:0 8px; gap:6px; }
+body[data-surface="jakarta-dashboard"] .city-brand { height:36px; gap:4px; }
+body[data-surface="jakarta-dashboard"] .city-brand-icon { width:22px; height:28px; background-size:auto 34px; }
+body[data-surface="jakarta-dashboard"] .city-brand-wordmark { font-size:22px; }
+.city-navigation { margin:0; padding:0; border:0; min-width:0; }
+.city-navigation > summary { display:none; }
+body[data-surface="jakarta-dashboard"] .sections a, body[data-surface="jakarta-dashboard"] .sections button { min-height:34px; padding:4px 6px; }
+body[data-surface="jakarta-dashboard"] .city-controls > summary, body[data-surface="jakarta-dashboard"] .language-toggle { min-height:30px; padding:4px 6px; }
+body[data-surface="jakarta-dashboard"] .utilities { top:34px; max-height:75svh; overflow:auto; gap:8px; padding:10px; width:min(300px,calc(100vw - 16px)); }
+body[data-surface="jakarta-dashboard"] .utilities .map-actions { display:grid; grid-template-columns:1fr 1fr; padding:8px 0; border-block:1px solid var(--line); }
+body[data-surface="jakarta-dashboard"] .utilities .map-actions label, body[data-surface="jakarta-dashboard"] .utilities .map-actions a { grid-column:1/-1; }
+body[data-surface="jakarta-dashboard"] .utilities .map-actions label { display:grid; grid-template-columns:auto minmax(0,1fr); }
+body[data-surface="jakarta-dashboard"] .map-panel { position:relative; grid-template-rows:18px minmax(0,1fr); }
+body[data-surface="jakarta-dashboard"] .map-heading { padding:1px 8px; font-size:11px; }
+body[data-surface="jakarta-dashboard"] .map-heading h2 { font-size:11px; }
+body[data-surface="jakarta-dashboard"] .map-heading .eyebrow { display:none; }
+body[data-surface="jakarta-dashboard"] .map-panel > .note { position:absolute; top:62px; left:130px; right:60px; z-index:12; background:var(--bg-raised); border:1px solid var(--line); padding:4px 6px; }
+body[data-surface="jakarta-dashboard"] .map-panel > .note[hidden] { display:none; }
+@media(max-width:1000px) {
+ body[data-surface="jakarta-dashboard"] .masthead { grid-template-columns:auto minmax(0,1fr) auto; }
+ .city-navigation { grid-column:2; grid-row:1; position:relative; justify-self:end; }
+ .city-navigation > summary { display:block; min-height:36px; padding:8px; cursor:pointer; }
+ body[data-surface="jakarta-dashboard"] .city-navigation .sections { position:absolute; top:100%; left:0; min-width:180px; max-width:calc(100vw - 16px); max-height:70svh; overflow:auto; display:grid; z-index:70; background:var(--bg-raised); border:1px solid var(--line); }
+ body[data-surface="jakarta-dashboard"] .city-navigation .sections > * { min-height:44px; padding:8px 12px; }
+ .city-preferences { grid-column:3; grid-row:1; }
+ body[data-surface="jakarta-dashboard"] .map-panel > .note { left:8px; top:100px; }
+}
+@media(pointer:coarse), (max-width:600px) {
+ body.atlas-workbench { --atlas-header-row:44px; --atlas-lenses-row:44px; }
+ body.atlas-workbench .atlas-header { padding:0 6px; }
+ body.atlas-workbench .atlas-header-nav > .atlas-theme-control select, body.atlas-workbench .atlas-menu > summary, body.atlas-workbench .atlas-lenses button, body.atlas-workbench #atlas-lens-evidence > summary, body.atlas-workbench .atlas-panel-summary, body.atlas-workbench .atlas-watch-shell > summary, body.atlas-workbench .atlas-embedded-drawer > summary { min-height:44px; }
+ body.atlas-workbench .maplibregl-ctrl-group button { width:44px; height:44px; min-width:44px; min-height:44px; }
+ body.atlas-workbench .maplibregl-ctrl-attrib-button { min-width:44px; min-height:44px; }
+ body.atlas-workbench .water-scenario-location { bottom:92px; }
+ body[data-surface="jakarta-dashboard"] .city-brand, body[data-surface="jakarta-dashboard"] .language-toggle, body[data-surface="jakarta-dashboard"] .city-controls > summary, .city-navigation > summary { min-height:44px; }
+ body[data-surface="jakarta-dashboard"] .utilities { top:44px; }
+}
+
+body.atlas-workbench:not(.atlas-embedded) .atlas-watch { right:132px; }
+body.atlas-workbench.atlas-embedded .atlas-header { display:none; }
+body.atlas-workbench .atlas-quick:not(:has(details[open])) { right:auto; width:fit-content; }
+body[data-surface="jakarta-dashboard"] .map-panel > .note { right:140px; }
+@media(max-width:1000px) { body[data-surface="jakarta-dashboard"] .map-panel > .note { top:140px; right:8px; } }
+body.atlas-workbench:not(.atlas-embedded) .atlas-watch-content { right:-124px; }
+body.atlas-workbench .atlas-lenses { scrollbar-width:none; }
+body.atlas-workbench .atlas-lenses::-webkit-scrollbar { display:none; }
+body.atlas-workbench .atlas-watch { overflow:visible; max-height:none; }

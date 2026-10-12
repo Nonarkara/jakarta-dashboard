@@ -1152,16 +1152,20 @@ function applyBuildingFilter(input) {
 }
 if(mapInstance){mapInstance.on('idle',()=>{buildingFilterPending=false;reportBuildingView();});mapInstance.on('moveend',reportBuildingView);}
 window.addEventListener('atlas:theme',reportBuildingView);
-if (window.parent !== window) {
-  document.body.classList.add('atlas-embedded');
-  document.documentElement.classList.add('atlas-embedded-root');
+{
+  const embedded = window.parent !== window;
+  document.body.classList.add('atlas-workbench');
+  if (embedded) {
+    document.body.classList.add('atlas-embedded');
+    document.documentElement.classList.add('atlas-embedded-root');
+  }
   const drawer = document.createElement('details');
   drawer.className = 'atlas-embedded-drawer';
   const summary = document.createElement('summary');
   summary.textContent = 'Data & sources';
   const body = document.createElement('div');
   body.className = 'atlas-embedded-evidence';
-  for (const selector of ['.atlas-menu-body', '#atlas-environment', '#atlas-data', '.atlas-footer']) {
+  for (const selector of (embedded ? ['.atlas-menu-body', '#atlas-environment', '#atlas-data', '.atlas-footer'] : ['#atlas-environment', '#atlas-data', '.atlas-footer'])) {
     const node = document.querySelector(selector);
     if (node) body.append(node);
   }
@@ -1489,18 +1493,19 @@ function setupEnvironmentControls() {
 // ── Boot ──────────────────────────────────────────────────────────────────
 function setupResponsiveControls() {
   const shell = document.getElementById('atlas-watch-shell');
-  const media = window.matchMedia('(max-width: 700px)');
-  const embedded = !!window.parent && window.parent !== window;
-  if (shell) shell.open = !media.matches && !embedded;
-  media.addEventListener?.('change', event => { if (shell) shell.open = !event.matches && !embedded; });
+  if (shell) shell.open = false;
+  // HUD readings open only on demand at every width; resizing never expands them.
   document.getElementById('atlas-menu')?.addEventListener('click', event => {
-    if (event.target.closest('a')) document.getElementById('atlas-menu').open = false;
+    const link=event.target.closest('a');
+    if(link){
+      if(['#atlas-data','#atlas-environment'].includes(link.getAttribute('href')))document.querySelector('.atlas-embedded-drawer').open=true;
+      document.getElementById('atlas-menu').open=false;
+    }
   });
   document.addEventListener('keydown', event => {
     if (event.key !== 'Escape') return;
-    const selectors = '.atlas-menu[open], .atlas-about[open], .atlas-extra-controls[open], .atlas-environment-details[open], .atlas-watch-notices[open], .atlas-watch-shell[open]';
+    const selectors = '.atlas-menu[open], .atlas-about[open], .atlas-extra-controls[open], .atlas-environment-details[open], .atlas-watch-notices[open], .atlas-watch-shell[open], .atlas-embedded-drawer[open], #atlas-lens-evidence[open], .atlas-quick-details[open], .atlas-layers details[open]';
     document.querySelectorAll(selectors).forEach(details => {
-      if (details.id === "atlas-watch-shell" && !media.matches) return;
       const focused = details.contains(document.activeElement);
       details.open = false;
       if (focused) details.querySelector('summary')?.focus();
@@ -1623,16 +1628,22 @@ window.addEventListener('atlas:language', function () {
   const header = document.querySelector('.atlas-header');
   const toolbar = document.getElementById('atlas-environment');
   const watch = document.getElementById('atlas-watch');
+  const viewport = document.querySelector('.atlas-map-wrap');
+  const viewportSize = () => { const rect=viewport?.getBoundingClientRect(); return rect?rect.width+'×'+rect.height:''; };
+  if (mapInstance) mapInstance.resize();
+  let lastViewportSize=viewportSize();
   const observer = new ResizeObserver(function () {
     if (header) document.documentElement.style.setProperty('--atlas-header-height', header.getBoundingClientRect().height + 'px');
     if (toolbar) document.documentElement.style.setProperty('--atlas-toolbar-height', toolbar.getBoundingClientRect().height + 'px');
     if (watch) document.documentElement.style.setProperty('--atlas-watch-height', watch.getBoundingClientRect().height + 'px');
-    if (mapInstance) mapInstance.resize();
+    const nextSize=viewportSize();
+    if (mapInstance && nextSize!==lastViewportSize) { mapInstance.resize();lastViewportSize=nextSize; }
     if (header) postMsg('layout', { headerHeight: header.getBoundingClientRect().height });
   });
   if (header) observer.observe(header);
   if (toolbar) observer.observe(toolbar);
   if (watch) observer.observe(watch);
+  if (viewport) observer.observe(viewport);
 })();
 
 // ── Insight lenses ──────────────────────────────────────────────────────────

@@ -277,3 +277,16 @@ assert.match(exposureText,/uniform density/,'population proxy assumption visible
 console.log('PASS water scenario: exact station endpoints, variable travel time, independent gauge datum, map layers, limitations and cleanup');
 
 await (pick('green'))();await settle(30);assert.equal(context.__probe.buildingPaintMode,'height','confidence paint clears on direct switch to green');
+
+// Reading/drawer updates must not interrupt a camera flight through resize().
+let resizeCallback, viewportRect={width:1280,height:648};
+const sizingMap={resizes:0,moving:false,resize(){this.resizes++;this.moving=false;}};
+const sizingNode={getBoundingClientRect:()=>viewportRect};
+const sizingContext=vm.createContext({mapInstance:sizingMap,postMsg(){},document:{documentElement:{style:{setProperty(){}}},querySelector:()=>sizingNode,getElementById:()=>sizingNode},ResizeObserver:class{constructor(cb){resizeCallback=cb;}observe(){}}});
+const sizingStart=app.indexOf('(function sizeAtlasViewport()');
+vm.runInContext(app.slice(sizingStart,app.indexOf('// ── Insight lenses',sizingStart)),sizingContext);
+assert.equal(sizingMap.resizes,1,'initial compact layout sizes the canvas');
+sizingMap.moving=true;resizeCallback();
+assert.equal(sizingMap.resizes,1,'same viewport does not resize on HUD changes');assert.equal(sizingMap.moving,true,'camera motion survives HUD updates');
+viewportRect={width:390,height:756};resizeCallback();assert.equal(sizingMap.resizes,2,'actual viewport change still resizes');
+console.log('PASS map sizing: initial canvas setup, live-reading stability and responsive resize');
