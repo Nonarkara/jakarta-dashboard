@@ -20,3 +20,11 @@ Root dashboard: masthead 38px, map iframe 642.80px, existing readings/warnings r
 ## Verification
 
 Full contract test chain passes. Added executed regression checks for visible focus restoration from drawer actions and map resize stability through HUD updates. Browser exercises: controls → filters → close/focus; phone Menu → Research; full-atlas Controls, collapsed/expanded watch, lens evidence and stage controls. The watch popup's inherited overflow clipping was found visually and corrected; its 360px popup fits the 390px viewport. Final deployment identity and visual receipts are recorded after live verification.
+
+## Live release receipt
+
+Build `jakarta-atlas-20261012-1791800497-ed2887c`; implementation `ed2887c`; stamp `1df1844`; Worker version `cd55ced5-889b-4a97-ab4b-9fdf4880213d`. Canonical release passed typecheck, 12/12 verification, full contract test chain, atlas smoke, 14/14 API checks and dashboard smoke. Three consecutive matching exact-byte probes passed on each of the Worker and custom domains.
+
+Live browser at 1280×800: standalone header 36px, lenses 36px, map 728px (91% viewport); document scroll dimensions exactly 1280×800. Root masthead 38px, iframe 722.80px. Phone root at 390×844: masthead 46px, iframe 758.80px; navigation initially collapsed; document scroll dimensions exactly 390×844. Live expanded City watch exposes all four readings; Controls retains view, basemap, theme, About and data access.
+
+Visual receipts: [atlas](COMPACT-ATLAS-LIVE-2026-10-12.jpg), [desktop dashboard](COMPACT-DASHBOARD-LIVE-2026-10-12.jpg), [phone dashboard](COMPACT-DASHBOARD-PHONE-LIVE-2026-10-12.jpg). All maps, layers, datasets, research, attribution and dedication retained.
