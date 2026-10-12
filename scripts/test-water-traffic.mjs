@@ -35,7 +35,7 @@ for(const query of ['product=private&date=2026101212&z=8&x=203&y=132','product=O
 const camera='ebd0c75a-bba8-41f0-a5da-72bec7af707f';
 const env={ASSETS:{fetch:async()=>Response.json({streams:[{url:`https://jmlive.jasamarga.com/hls/2/${camera}/index.m3u8`}]})}};
 let fetched=0;globalThis.fetch=async url=>{fetched++;assert.equal(new URL(url).hostname,'jmlive.jasamarga.com');return new Response('#EXTM3U\n#EXTINF:2,\nsegment/123/file.ts\n');};
-const playlist=await handleHydrology(new Request('https://atlas.test/api/atlas/traffic-stream?camera='+camera),env);assert.equal(playlist.status,200);assert.equal(playlist.headers.get('cache-control'),'no-store');assert.match(await playlist.text(),/asset=segment%2F123%2Ffile.ts/);assert.equal(fetched,1);
+const playlist=await handleHydrology(new Request('https://atlas.test/api/atlas/traffic-stream?camera='+camera),env);assert.equal(playlist.status,200);assert.equal(playlist.headers.get('cache-control'),'no-store');assert.match(await playlist.text(),/segment\/123\/file\.ts/);assert.equal(fetched,1);
 assert.equal((await handleHydrology(new Request('https://atlas.test/api/atlas/traffic-stream?camera='+camera+'&asset=../private'),env)).status,400);
 assert.equal((await handleHydrology(new Request('https://atlas.test/api/atlas/traffic-stream?camera=00000000-0000-0000-0000-000000000000'),env)).status,404);assert.equal(fetched,1);
 globalThis.fetch=originalFetch;

@@ -138,7 +138,7 @@ export function createController(map,{text:t,active,buildTag}) {
         const stream=catalog.streams[Number(cameraSelect.value)];const thisPlay=++playRequest;
         if(token!==epoch)return;player?.destroy();player=null;if(video){video.pause();video.remove();}
         video=el('video');video.controls=true;video.muted=true;video.playsInline=true;video.setAttribute('aria-label',stream.name);streamStatus.after(video);const selectedVideo=video;
-        const camera=new URL(stream.url).pathname.split('/')[3];const url='/api/atlas/traffic-stream?camera='+camera;
+        const camera=new URL(stream.url).pathname.split('/')[3];const url='/api/atlas/traffic-stream/'+camera+'/index.m3u8';
         streamStatus.textContent=stream.name+' · '+t('Loading provider stream… capture time is not independently verified.','Memuat tayangan penyedia… waktu pengambilan tidak diverifikasi secara independen.');
         video.addEventListener('playing',()=>{streamStatus.textContent=stream.name+' · '+t('Provider video playing','Video penyedia diputar');selectedVideo.scrollIntoView({block:'nearest'});});
         try {
@@ -146,7 +146,7 @@ export function createController(map,{text:t,active,buildTag}) {
           if(token!==epoch||thisPlay!==playRequest||video!==selectedVideo)return;
           if(Hls.isSupported()) {
             player=new Hls({enableWorker:true,lowLatencyMode:false});
-            player.on(Hls.Events.ERROR,(_event,data)=>{if(data.fatal)streamStatus.textContent=t('Stream unavailable; open the official viewer.','Tayangan tidak tersedia; buka penampil resmi.');});
+            player.on(Hls.Events.ERROR,(_event,data)=>{if(data.fatal){console.warn('[traffic-playback]',data.details,data.response?.code,data.error?.message);streamStatus.textContent=t('Stream unavailable; open the official viewer.','Tayangan tidak tersedia; buka penampil resmi.')+(data.response?.code?' HTTP '+data.response.code:'');}});
             player.on(Hls.Events.MANIFEST_PARSED,()=>{if(token===epoch&&thisPlay===playRequest)selectedVideo.play().catch(()=>{});});player.loadSource(url);player.attachMedia(selectedVideo);
           } else if(selectedVideo.canPlayType('application/vnd.apple.mpegurl')) {
             selectedVideo.src=url;selectedVideo.addEventListener('canplay',()=>{if(token===epoch&&thisPlay===playRequest)selectedVideo.play().catch(()=>{});},{once:true});

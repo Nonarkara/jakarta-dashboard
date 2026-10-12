@@ -710,6 +710,7 @@ async function routeRequest(request: Request, env: Env): Promise<Response> {
     return new Response("method not allowed", { status: 405, headers: { allow: "GET, HEAD, OPTIONS", "access-control-allow-origin": "*" } });
   }
 
+  if (path.startsWith("/api/atlas/traffic-stream/")) return handleHydrology(request, env);
   if (["/api/atlas/hydrology", "/api/atlas/jaxa-water", "/api/atlas/jaxa-tile", "/api/atlas/traffic-stream"].includes(path)) return handleHydrology(request, env);
   if (path.startsWith("/api/jakarta/")) return handleJakarta(request);
   if (["/", "/index.html", "/atlas", "/atlas/"].includes(path)) {

@@ -42,8 +42,10 @@ async function cached(key: string, fetcher: () => Promise<unknown>) {
 }
 export async function handleHydrology(request: Request, env: Env) {
   const url=new URL(request.url);
-  if(url.pathname==='/api/atlas/traffic-stream') {
-    const camera=url.searchParams.get('camera'),asset=url.searchParams.get('asset')||'index.m3u8';
+  if(url.pathname==='/api/atlas/traffic-stream'||url.pathname.startsWith('/api/atlas/traffic-stream/')) {
+    const pathParts=url.pathname.slice('/api/atlas/traffic-stream/'.length).split('/');
+    const fromPath=url.pathname.startsWith('/api/atlas/traffic-stream/');
+    const camera=fromPath?pathParts.shift():url.searchParams.get('camera'),asset=fromPath?pathParts.join('/'):url.searchParams.get('asset')||'index.m3u8';
     if(!/^[0-9a-f-]{36}$/.test(camera||'')||! /^(index\.m3u8|segment\/\d{1,10}\/file\.ts)$/.test(asset))return new Response('invalid stream',{status:400});
     const catalogResponse=await env.ASSETS.fetch(new Request('https://jakarta.nonarkara.org/data/jakarta-v1/toll-cameras.json'));
     if(!catalogResponse.ok)return new Response('catalog unavailable',{status:503});
@@ -56,7 +58,7 @@ export async function handleHydrology(request: Request, env: Env) {
       if(asset==='index.m3u8') {
         const playlist=await response.text();
         if(!playlist.startsWith('#EXTM3U')||playlist.length>65536||playlist.includes('#EXT-X-KEY'))return new Response('unsupported playlist',{status:502});
-        const lines=playlist.split(/\r?\n/).map(line=>{if(!line||line.startsWith('#'))return line;if(!/^segment\/\d{1,10}\/file\.ts$/.test(line.trim()))throw new Error('unpublished segment');return `/api/atlas/traffic-stream?camera=${camera}&asset=${encodeURIComponent(line.trim())}`;});
+        const lines=playlist.split(/\r?\n/).map(line=>{if(!line||line.startsWith('#'))return line;if(!/^segment\/\d{1,10}\/file\.ts$/.test(line.trim()))throw new Error('unpublished segment');return `/api/atlas/traffic-stream/${camera}/${line.trim()}`;});
         return new Response(lines.join('\n'),{headers:{'content-type':'application/vnd.apple.mpegurl','cache-control':'no-store'}});
       }
       return new Response(response.body,{headers:{'content-type':'video/mp2t','cache-control':'no-store'}});
