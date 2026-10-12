@@ -1,5 +1,9 @@
 # Jakarta dashboard release · 11 October 2026
 
+## Landmark authoring exploration · 12 October 2026
+
+`docs/landmarks/README.md` records the img2threejs evaluation and a reusable city asset/admission contract. Pinned upstream v2.0.0 commit `a669e9a97cea4452b1c2310c5cca6aa0f6657c1f`; 38 budget/target-resolution tests passed in an isolated checkout. Recommendation: offline authoring, first Monas pilot, real metre constraints and source footprints preserved. HCMC already contains landmark GLBs and needs its own renderer adapter. No reconstructed asset or runtime integration was produced by this exploration, and no application deploy is needed for these documentation changes.
+
 Dedicated to Kiki Yunita of the Jakarta Investment Agency. The dedication is stated in the dashboard footer, the atlas footer and the README; `scripts/test-release-contract.mjs` fails if it is removed from any of them.
 
 ## Version 1.0.0 · 11 October 2026
