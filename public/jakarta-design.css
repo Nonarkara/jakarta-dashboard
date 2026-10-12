@@ -288,3 +288,9 @@ body[data-surface="jakarta-dashboard"] .modal-content > .panel { height: auto; m
 /* A visible language action shares the existing compact toolbar footprint. */
 .city-preferences{display:flex;align-items:center;gap:6px;min-width:0}.city-preferences .language-toggle{font-size:var(--type-note);padding:6px 8px;white-space:nowrap;min-height:36px}.city-preferences .city-controls{grid-column:auto;grid-row:auto}@media(max-width:1000px){.city-preferences{grid-column:2;grid-row:1}}
 .modal-toolbar [data-language-switch]{margin-inline-start:auto;font-size:var(--type-note);white-space:nowrap}.modal-toolbar{gap:8px}
+
+/* Embedded evidence has one bounded popup: context and body cannot overlap. */
+body.atlas-embedded .atlas-lens-popup { position:absolute; top:28px; left:0; width:min(520px,calc(100vw - 32px)); max-height:55svh; overflow:auto; z-index:46; background:var(--bg); border:1px solid var(--line); }
+body.atlas-embedded #atlas-lens-evidence[open] .atlas-lens-popup .atlas-lens-context { position:static; width:auto; padding:8px; border:0; border-bottom:1px solid var(--line); }
+body.atlas-embedded #atlas-lens-evidence .atlas-lens-popup #atlas-lens-body { position:static; width:auto; max-height:none; overflow:visible; padding:10px; border:0; }
+body.atlas-embedded[data-lens="arrival"] #atlas-lens-evidence[open] .atlas-lens-popup .atlas-lens-context { display:none; }

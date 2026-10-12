@@ -25,7 +25,7 @@ for(const [en,id] of [
  ['Every number carries source, tier, date','Setiap angka berlabel sumber, tingkat, tanggal'],
  ['That is this dashboard\'s conservation law.','Itulah hukum konservasi dasbor ini.'],
  ['Pantau Banjir live feed, bus positions, congestion. Shown as unavailable, never as zero.','Umpan langsung Pantau Banjir, posisi bus, kemacetan. Ditampilkan sebagai tidak tersedia, bukan nol.'],
- ['Residents on severe-risk land','Penduduk di lahan risiko berat'],
+ ['Area-weighted population proxy','Proksi penduduk berbobot luas'],
  ['Risk polygons by class','Poligon risiko per kelas'],
  ['Green space by borough','Ruang hijau per kota'],
  ['Monitoring gap by borough','Kesenjangan pantauan per kota'],

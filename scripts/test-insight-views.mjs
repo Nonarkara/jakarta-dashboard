@@ -123,7 +123,7 @@ assert.match(app, /ALL_LENSES = \[[^\]]*'exposure'[^\]]*'confidence'[^\]]*'green
 assert.match(app, /'https:\/\/jakarta\.nonarkara\.org|ATLAS_BASE|'\//, 'assets stay same-origin and relative');
 // Exactly two places name a data path: the base and the helper that appends a
 // file name. Anything else would be a second, unaudited route to the data.
-assert.equal((app.match(/\/data\/jakarta-v1\//g) || []).length, 2, 'data paths are named in one place only');
+assert.equal((app.match(/\/data\/jakarta-v1\//g) || []).length, 3, 'insight and scenario data paths are named in one place only');
 assert.match(app, /function insightAsset\(file\)/, 'asset files are loaded through the one helper');
 // Data stays same-origin and cache-busted. The only absolute fetches in this
 // file are the documented Open-Meteo provider fallbacks, which are not data assets.
@@ -140,7 +140,7 @@ for (const marker of ['Jakarta Satu flood-risk reference', 'Jakarta Satu green-s
   assert.ok(app.includes(marker), 'lens source line present: ' + marker);
 assert.match(app, /data\.checkedAt/, 'each panel prints the checked date');
 // Bilingual: every lens title and description has both languages.
-for (const pair of [['Who lives on the riskiest land', 'Siapa yang tinggal di lahan paling rawan'],
+for (const pair of [['Population and severe-risk land', 'Penduduk dan lahan risiko berat'],
   ['How well each height is known', 'Seberapa baik setiap tinggi diketahui'],
   ['Where the city keeps its green', 'Di mana kota menyimpan ruang hijaunya'],
   ['Where Jakarta is instrumented, and where it is not', 'Di mana Jakarta terukur, dan di mana tidak']])

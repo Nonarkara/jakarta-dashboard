@@ -121,6 +121,7 @@ window.ATLAS_ID = {
   "Flood exposure": "Kerentanan banjir",
   "Height confidence": "Keyakinan tinggi",
   "Green space": "Ruang hijau",
+  "Water arrival scenario": "Skenario kedatangan air",
   "Flood monitoring": "Pemantauan banjir",
   "For Kiki Yunita · Jakarta Investment Agency": "Untuk Kiki Yunita · Badan Investment Jakarta",
   "Source-specific data terms": "Ketentuan data per sumber",

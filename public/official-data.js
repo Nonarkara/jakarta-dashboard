@@ -83,7 +83,7 @@ function renderPaper(){
   return;
  }
  const kelurahan=[...paperInsight.exposure.kelurahan].sort((a,b)=>(b.population?.residentsOnSevere||0)-(a.population?.residentsOnSevere||0)).slice(0,8);
- $('paper-exposure').innerHTML=paperBars(kelurahan.map(r=>[r.kelurahan||'—',num(r.population.residentsOnSevere)+' · '+num(r.beratSharePct,1)+'%',r.population.residentsOnSevere||0,(r.kota||'').replace('Kota Adm. Jakarta ','')+' · '+t('dari','of')+' '+num(r.population.wni)]))+evidence('Jakarta Satu · '+t('referensi risiko banjir','flood-risk reference'),t('turunan bertanggal','dated derived'),paperInsight.checkedAt,t('populasi','population')+' '+paperInsight.exposure.populationPeriod);
+ $('paper-exposure').innerHTML='<p class="note">'+t('Proksi = penduduk kelurahan × porsi lahan risiko terpetakan pada kelas berat. Asumsi kepadatan merata; bukan jumlah warga yang terlokasi atau sedang kebanjiran.','Proxy = neighbourhood residents × severe share of mapped risk land. Assumes uniform density; not located residents or people currently flooded.')+'</p>'+paperBars(kelurahan.map(r=>[r.kelurahan||'—',num(r.population.residentsOnSevere)+' · '+num(r.beratSharePct,1)+'%',r.population.residentsOnSevere||0,(r.kota||'').replace('Kota Adm. Jakarta ','')+' · '+t('dari','of')+' '+num(r.population.wni)]))+evidence('Jakarta Satu · '+t('referensi risiko banjir','flood-risk reference'),t('turunan bertanggal','dated derived'),paperInsight.checkedAt,t('populasi','population')+' '+paperInsight.exposure.populationPeriod);
  const classes={Berat:0,Sedang:0,Ringan:0};
  for(const r of paperFlood.riskSummary)for(const k of Object.keys(classes))classes[k]+=Number(r.classes?.[k])||0;
  const total=classes.Berat+classes.Sedang+classes.Ringan;

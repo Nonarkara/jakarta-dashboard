@@ -100,7 +100,7 @@ function applyMapTheme() {
     "jkt-dashboard-selection-line": { "line-color": palette.accent },
     "jkt-dashboard-selection-point": { "circle-color": palette.accent },
     "insight-green": { "fill-color": palette.green },
-    "insight-stations": { "circle-color": ["match", ["get", "__kind"], 0, palette.water, 1, palette.accent, palette.sensor] },
+    "insight-stations": { "circle-color": ["match", ["get", "__kind"], 0, palette.water, 1, palette.accent, 2, palette.sensor, 3, palette.civic, palette.green] },
   };
   Object.keys(paints).forEach(function (id) {
     if (!mapInstance.getLayer(id)) return;
@@ -1170,7 +1170,10 @@ if (window.parent !== window) {
   const context = document.createElement('div');
   context.className = 'atlas-lens-context';
   context.append(document.getElementById('atlas-lens-title'), document.getElementById('atlas-lens-description'));
-  document.getElementById('atlas-lens-evidence').append(context);
+  const lensPopup = document.createElement('div');
+  lensPopup.className = 'atlas-lens-popup';
+  lensPopup.append(context, document.getElementById('atlas-lens-body'));
+  document.getElementById('atlas-lens-evidence').append(lensPopup);
 }
 window.addEventListener("message", function (e) {
   if (PARENT_ORIGINS.indexOf(e.origin) === -1 && e.origin !== window.location.origin) return;
@@ -1641,7 +1644,7 @@ window.addEventListener('atlas:language', function () {
 const INSIGHT_ASSET = '/data/jakarta-v1/insight.json';
 const INSIGHT_LENSES = ['exposure', 'confidence', 'green', 'coverage'];
 let activeLens = 'city', lensRequest = 0;
-let insightData = null, insightPending = null, buildingShare = null;
+let insightData = null, insightPending = null, buildingShare = null, stationGeometryState = null;
 
 function lensText(en, id) { return uiLanguage() === 'id' ? id : en; }
 
@@ -1687,9 +1690,8 @@ function bandOf(value, cuts) {
 }
 
 function removeInsightLayersWhenLeaving(lens) {
-  if (INSIGHT_LENSES.includes(lens)) return;
   clearInsightLayers();
-  if (buildingPaintMode === 'confidence') { buildingPaintMode = 'height'; applyMapTheme(); }
+  if (lens !== 'confidence' && buildingPaintMode === 'confidence') { buildingPaintMode = 'height'; applyMapTheme(); }
   buildingShare = null;
 }
 
@@ -1736,7 +1738,8 @@ async function loadStationGeometry(request) {
   const files = ['awlr', 'arr', 'pumps'];
   const parts = await Promise.all(files.map(f => fetch(insightAsset(f), { headers: { accept: 'application/json' } }).then(r => r.ok ? r.json() : null).catch(() => null)));
   if (request !== lensRequest) return false;
-  const data = { type: 'FeatureCollection', features: parts.flatMap((part, i) => (part ? part.features.map(f => ({ ...f, properties: { ...f.properties, __kind: i } })) : [])) };
+  stationGeometryState = files.filter((file, i) => !parts[i]?.features);
+  const data = { type: 'FeatureCollection', features: parts.flatMap((part, i) => (part?.features ? part.features.map(f => ({ ...f, properties: { ...f.properties, __kind: i < 2 ? i : ({'Pompa':2,'Pintu Air':3,'Waduk & Embung':4}[f.properties.kind] ?? 5) } })) : [])) };
   const theme = mapTheme();
   dropInsightLayer('insight-stations');
   mapInstance.addSource('insight-stations', { type: 'geojson', data });
@@ -1745,8 +1748,8 @@ async function loadStationGeometry(request) {
     paint: {
       // Water level, rain and pumps keep the meanings the project already uses
       // for them elsewhere: water, gauge accent, and the sensor green.
-      'circle-radius': ['match', ['get', '__kind'], 0, 5, 1, 4, 6],
-      'circle-color': ['match', ['get', '__kind'], 0, theme.water, 1, theme.accent, theme.sensor],
+      'circle-radius': ['match', ['get', '__kind'], 0, 5, 1, 4, 2, 6, 3, 3, 8],
+      'circle-color': ['match', ['get', '__kind'], 0, theme.water, 1, theme.accent, 2, theme.sensor, 3, theme.civic, theme.green],
       'circle-opacity': 0.9,
       'circle-stroke-color': '#0f1b33', 'circle-stroke-width': 1.5,
     },
@@ -1813,8 +1816,8 @@ function lensSource(text) {
 function renderExposurePanel(data) {
   const body = lensPanelBody();
   body.append(lensNoteLine(lensText(
-    'Flood-risk classes and population are official reference data. Each neighbourhood carries its own residents; they are never summed across neighbourhoods.',
-    'Kelas rawan banjir dan populasi adalah data referensi resmi. Setiap kelurahan membawa jumlah penduduknya sendiri; tidak dijumlahkan lintas kelurahan.')));
+    'Area-weighted population proxy: neighbourhood residents × severe share of mapped risk land. Assumes uniform density within mapped land; not located residents or people currently flooded.',
+    'Proksi penduduk berbobot luas: penduduk kelurahan × porsi lahan risiko terpetakan pada kelas berat. Mengasumsikan kepadatan merata di lahan terpetakan; bukan lokasi penduduk atau jumlah warga yang sedang kebanjiran.')));
   const table = lensTable();
   const detail = lensNoteLine('');
   detail.className = 'lens-note lens-note--detail';
@@ -1825,7 +1828,7 @@ function renderExposurePanel(data) {
     const name = document.createElement('span');
     name.textContent = (row.kelurahan || '—') + ' · ' + String(row.kota || '').replace('Kota Adm. Jakarta ', '');
     const value = document.createElement('strong');
-    value.textContent = fmtNum(row.population.residentsOnSevere, 0) + ' ' + lensText('residents', 'penduduk');
+    value.textContent = fmtNum(row.population.residentsOnSevere, 0) + ' ' + lensText('population proxy', 'proksi penduduk');
     button.append(name, value);
     button.addEventListener('click', () => {
       if (Array.isArray(row.center)) mapInstance?.flyTo({ center: row.center, zoom: 12.8, pitch: currentView === '2d' ? 0 : 45 });
@@ -1880,6 +1883,13 @@ function renderCoveragePanel(data) {
         : ' · ' + lensText('floodgates', 'pintu air') + ' ' + row.floodgates)));
   }
   body.append(table);
+  body.append(lensNoteLine(lensText('Select a map point to read its published name and coordinates. Inventory locations, not live operating status.', 'Pilih titik peta untuk membaca nama dan koordinat terpublikasi. Lokasi inventaris, bukan status operasi langsung.')));
+  const legend=lensTable();
+  const palette=mapTheme();
+  const types=[[0,'Water-level stations','Pos tinggi air',palette.water],[1,'Rain gauges','Pos curah hujan',palette.accent],[2,'Pumps','Pompa',palette.sensor],[3,'Floodgates','Pintu air',palette.civic],[4,'Reservoirs','Waduk/embung',palette.green]];
+  for(const [kind,en,id,color] of types){const row=lensRow(lensText(en,id),'●');row.children[1].style.color=color;legend.append(row);}
+  body.append(legend);
+  if(stationGeometryState?.length)body.append(lensNoteLine(lensText('Map inventory unavailable: ', 'Inventaris peta tidak tersedia: ')+stationGeometryState.join(', ')));
   body.append(lensSource('Jakarta Satu monitoring network · checked ' + (data.checkedAt || 'undated') +
     ' · ' + lensText('water-level and rain records publish no neighbourhood', 'stasiun tinggi air dan hujan tidak menyebut kelurahan')));
 }
@@ -1917,12 +1927,13 @@ function renderLensEvidence() {
   const titles = {
     radar: ['Rain echoes, with coverage', 'Gema hujan radar dan cakupannya'],
     cloud: ['Watch the cloud system', 'Pantau sistem awan'],
+    arrival: ['Upstream → Jakarta · an adjustable scenario', 'Hulu → Jakarta · skenario yang dapat diatur'],
     city: ['Read the city, from skyline to street', 'Baca kota, dari cakrawala hingga jalan'],
     rain: ['Where rain is forecast', 'Di mana hujan diprakirakan'],
     water: ['Water the satellite can see', 'Air yang terlihat dari satelit'],
     recurring: ['Where water has recurred', 'Di mana genangan berulang'],
     air: ['Particles across the region', 'Partikel di seluruh kawasan'],
-    exposure: ['Who lives on the riskiest land', 'Siapa yang tinggal di lahan paling rawan'],
+    exposure: ['Population and severe-risk land', 'Penduduk dan lahan risiko berat'],
     confidence: ['How well each height is known', 'Seberapa baik setiap tinggi diketahui'],
     green: ['Where the city keeps its green', 'Di mana kota menyimpan ruang hijaunya'],
     coverage: ['Where Jakarta is instrumented, and where it is not', 'Di mana Jakarta terukur, dan di mana tidak']
@@ -1930,12 +1941,13 @@ function renderLensEvidence() {
   const descriptions = {
     radar: ['RainViewer radar · no echo is not proof of no rain outside radar coverage.', 'Radar RainViewer · tidak ada gema bukan bukti tidak hujan di luar cakupan radar.'],
     cloud: ['Himawari infrared · cloud-top temperature, not rainfall intensity. Check the observation time.', 'Inframerah Himawari · suhu puncak awan, bukan intensitas hujan. Periksa waktu pengamatan.'],
+    arrival: ['Illustrative travel time, not a flood forecast. Dashed route is a station-to-station schematic. Open evidence to play or change assumptions.', 'Waktu tempuh ilustratif, bukan prakiraan banjir. Rute putus-putus adalah skema antarpos. Buka bukti untuk memutar atau mengubah asumsi.'],
     city: ['Choose a map lens. Sources and valid times stay with the evidence.', 'Pilih lensa peta. Sumber dan waktu berlaku selalu menyertai data.'],
     rain: ['Open-Meteo · model forecast at five sample points, one per kota. Select one to explore its hourly outlook.', 'Open-Meteo · prakiraan model di lima titik sampel, satu per kota. Pilih satu untuk melihat prakiraan per jam.'],
     water: ['NASA MODIS · cyan: water; red: detected flood; yellow: recurring flood. Clouds can hide water. Check the observation day.', 'NASA MODIS · biru muda: air; merah: banjir terdeteksi; kuning: banjir berulang. Awan dapat menutupi air. Periksa hari pengamatan.'],
     recurring: ['NASA MODIS · yellow marks recurring flood in the satellite classification. This is not a prediction of how long water will remain.', 'NASA MODIS · kuning menandai banjir berulang dalam klasifikasi satelit. Ini bukan prakiraan berapa lama air bertahan.'],
     air: ['NASA satellite aerosol optical depth · regional atmosphere, not a street-level PM2.5 measurement.', 'Kedalaman optik aerosol satelit NASA · atmosfer kawasan, bukan pengukuran PM2.5 di tingkat jalan.'],
-    exposure: ['Jakarta Satu flood-risk classes · shaded by the share of each neighbourhood\'s mapped land in the severe class, with that neighbourhood\'s own residents beside it.', 'Kelas rawan banjir Jakarta Satu · diarsir menurut porsi lahan terpetakan tiap kelurahan pada kelas berat, dengan jumlah penduduk kelurahan tersebut.'],
+    exposure: ['Jakarta Satu flood-risk classes · shaded by weighted risk-class mix (Ringan 1, Sedang 3, Berat 6). Population figures are area-weighted proxies, not located residents.', 'Kelas rawan banjir Jakarta Satu · diarsir menurut campuran kelas berbobot (Ringan 1, Sedang 3, Berat 6). Angka penduduk adalah proksi berbobot luas, bukan penduduk yang terlokasi.'],
     confidence: ['Overture footprints · coloured by height source. Bright is tagged or published; dim is a type default with no measurement and no satellite signal.', 'Tapak Overture · diwarnai menurut asal tinggi. Terang berarti bertag atau terpublikasi; redup berarti nilai bawaan jenis tanpa pengukuran dan tanpa sinyal satelit.'],
     green: ['Jakarta Satu green-space reference · area computed from the published polygons. This is not every park, and not an official green-space total.', 'Referensi ruang hijau Jakarta Satu · luas dihitung dari poligon yang dipublikasikan. Ini bukan semua taman, dan bukan total resmi ruang hijau.'],
     coverage: ['Jakarta Satu monitoring network · stations, gauges and pumps as published. An area with none published is not a cleared area.', 'Jaringan pemantauan Jakarta Satu · stasiun, alat ukur dan pompa sesuai yang dipublikasikan. Area tanpa satupun yang dipublikasikan bukan area yang aman.']
@@ -1944,6 +1956,7 @@ function renderLensEvidence() {
   document.getElementById('atlas-lens-description').textContent = lensText(...descriptions[activeLens]);
   const body = document.getElementById('atlas-lens-body');
   body.replaceChildren();
+  if (activeLens === 'arrival') { renderWaterScenario(); return; }
   if (INSIGHT_LENSES.includes(activeLens)) {
     if (!insightData) {
       const wanted = activeLens;
@@ -1981,9 +1994,14 @@ function renderLensEvidence() {
     body.textContent = activeLens === 'city' ? lensText('Building heights mix tagged measurements, satellite estimates and defaults. Explore Data & sources below.', 'Tinggi bangunan memadukan pengukuran bertag, perkiraan satelit, dan nilai bawaan. Lihat Data & sumber di bawah.') : (product?.source || 'NASA GIBS') + ' · ' + lensText('See the observation time and legend in the map evidence panel.', 'Lihat waktu pengamatan dan legenda di panel bukti peta.');
   }
 }
-const ALL_LENSES = ['city','exposure','confidence','green','coverage','rain','radar','cloud','water','recurring','air'];
+const ALL_LENSES = ['city','arrival','exposure','confidence','green','coverage','rain','radar','cloud','water','recurring','air'];
 async function selectCityLens(lens) {
   if (!ALL_LENSES.includes(lens)) return;
+  stopWaterPlayback();
+  ['water-scenario-route', 'water-scenario-front', 'water-scenario-stations', 'water-scenario-labels'].forEach(dropInsightLayer);
+  document.getElementById('water-scenario-location')?.remove();
+  document.getElementById('monitoring-location')?.remove();
+  document.body.dataset.lens = lens;
   activeLens = lens; const request = ++lensRequest;
   const shareUrl = new URL(window.location.href); shareUrl.searchParams.set('lens', lens);
   history.replaceState(null, '', shareUrl.toString());
@@ -2001,6 +2019,9 @@ async function selectCityLens(lens) {
     if (request !== lensRequest) return;
     setLayerVisible('rain-model-samples', true);
     mapInstance.flyTo({center:[106.83,-6.20], zoom:10.6, pitch:currentView === '2d' ? 0 : 45, bearing:0});
+  } else if (lens === 'arrival') {
+    await showWaterScenario(request);
+    if (request !== lensRequest) return;
   } else if (lens === 'confidence') {
     buildingPaintMode = 'confidence';
     applyMapTheme();
@@ -2048,6 +2069,89 @@ styleReady.then(() => { setLayerVisible('rain-model-samples', false); if (docume
 
 // The public provider can remain reachable from a user's network when edge IPs
 // are unavailable. Apply the same UTC/unit/completeness gates to this fallback.
+// Lightweight preparedness scenario. Timing never transfers gauge heights:
+// each gauge has a separate datum, and the route has no hydraulic geometry.
+let waterScenario = null, waterScenarioLoad = null, waterPlayback = null;
+const waterState = { hours: 0, factor: 1, station: 0, levelCm: 100, riseCmH: 10 };
+function stopWaterPlayback() { if (waterPlayback !== null) clearInterval(waterPlayback); waterPlayback = null; const play=document.getElementById('water-play');if(play)play.textContent=lensText('Play scenario · 1 h/s','Putar skenario · 1 jam/detik'); }
+function waterPosition(hours, factor, data) {
+  const durations = data.baselineHours.map(h => h * factor);
+  const elapsed = Math.max(0, Math.min(hours, durations[0] + durations[1]));
+  const segment = elapsed <= durations[0] ? 0 : 1;
+  const progress = Math.min(1, (elapsed - (segment ? durations[0] : 0)) / durations[segment]);
+  const a = data.stations[segment].coordinates, b = data.stations[segment + 1].coordinates;
+  return { coordinates: a.map((n, i) => n + (b[i] - n) * progress), segment, progress, elapsed, total: durations[0] + durations[1] };
+}
+function waterGaugeLevel(hours, initial, rise) { return initial + Math.max(0, hours) * rise; }
+async function showWaterScenario(request) {
+  if (!waterScenarioLoad) waterScenarioLoad = fetch('/data/jakarta-v1/water-scenario.json?v=' + encodeURIComponent(ATLAS_BUILD_TAG))
+    .then(r => r.ok ? r.json() : null).then(d => { waterScenario = d; if (!d) waterScenarioLoad = null; return d; })
+    .catch(() => { waterScenarioLoad = null; return null; });
+  const data = await waterScenarioLoad;
+  if (request !== lensRequest || !data || !mapInstance) { if(request === lensRequest) renderWaterScenario(); return; }
+  const route = {type:'FeatureCollection',features:[{type:'Feature',properties:{},geometry:{type:'LineString',coordinates:data.stations.map(s => s.coordinates)}}]};
+  mapInstance.addSource('water-scenario-route', {type:'geojson',data:route});
+  mapInstance.addLayer({id:'water-scenario-route',type:'line',source:'water-scenario-route',paint:{'line-color':mapTheme().water,'line-width':3,'line-dasharray':[2,2]}});
+  mapInstance.addSource('water-scenario-stations', {type:'geojson',data:{type:'FeatureCollection',features:data.stations.map(s=>({type:'Feature',properties:{name:s.name},geometry:{type:'Point',coordinates:s.coordinates}}))}});
+  mapInstance.addLayer({id:'water-scenario-stations',type:'circle',source:'water-scenario-stations',paint:{'circle-color':mapTheme().accent,'circle-radius':6,'circle-stroke-width':2,'circle-stroke-color':mapTheme().water}});
+  mapInstance.addLayer({id:'water-scenario-labels',type:'symbol',source:'water-scenario-stations',layout:{'text-field':['get','name'],'text-font':['Open Sans Regular'],'text-size':12,'text-offset':[0,1.5],'text-anchor':'top','text-allow-overlap':true},paint:{'text-color':'#a32125','text-halo-color':'#fff6ef','text-halo-width':2}});
+  mapInstance.addSource('water-scenario-front', {type:'geojson',data:{type:'FeatureCollection',features:[]}});
+  mapInstance.addLayer({id:'water-scenario-front',type:'circle',source:'water-scenario-front',paint:{'circle-color':mapTheme().water,'circle-radius':10,'circle-stroke-width':3,'circle-stroke-color':mapTheme().accent}});
+  mapInstance.fitBounds([[106.80,-6.65],[106.88,-6.18]],{padding:60,pitch:0,bearing:0});
+  const location = document.createElement('div'); location.id='water-scenario-location'; location.className='water-scenario-location';
+  document.querySelector('.atlas-map-wrap').append(location);
+  renderWaterScenario(); updateWaterScenario();
+}
+function updateWaterScenario() {
+  if (!waterScenario || activeLens !== 'arrival') return;
+  const p = waterPosition(waterState.hours, waterState.factor, waterScenario);
+  mapInstance?.getSource('water-scenario-front')?.setData({type:'FeatureCollection',features:[{type:'Feature',properties:{},geometry:{type:'Point',coordinates:p.coordinates}}]});
+  const station = waterScenario.stations[waterState.station];
+  const node = document.getElementById('water-scenario-location');
+  if(node) node.textContent = station.name + ' · ' + station.coordinates[1].toFixed(6) + ', ' + station.coordinates[0].toFixed(6) + ' · WGS84';
+  const output = document.getElementById('water-scenario-output');
+  if(output) output.textContent = lensText('Scenario elapsed', 'Waktu skenario')+' '+fmtNum(waterState.hours,1)+' h · '+lensText('arrival at Manggarai', 'tiba di Manggarai')+' '+fmtNum(p.total,1)+' h · '+lensText('assumed local gauge level', 'tinggi pos asumsi')+' '+fmtNum(waterGaugeLevel(waterState.hours,waterState.levelCm,waterState.riseCmH),1)+' cm';
+}
+function renderWaterScenario() {
+  const body = lensPanelBody();
+  if(!waterScenario) { body.textContent = lensText('Scenario source unavailable or loading. No water level assumed.', 'Sumber skenario tidak tersedia atau sedang dimuat. Tidak diasumsikan tinggi air.'); return; }
+  body.append(lensNoteLine(lensText('PREPAREDNESS SCENARIO · BPBD 2021 approximate travel time: Katulampa → Depok 3 h; Depok → Manggarai 6 h. Straight dashed connections are schematic, not river geometry. No flood extent or street depth predicted.', 'SKENARIO KESIAPSIAGAAN · Waktu tempuh perkiraan BPBD 2021: Katulampa → Depok 3 jam; Depok → Manggarai 6 jam. Garis lurus putus-putus adalah skema, bukan geometri sungai. Tidak memprediksi luas banjir atau kedalaman jalan.')));
+  function control(label, tag, id, value, attrs, change) {
+    const wrapper=document.createElement('label'); wrapper.className='water-scenario-control';
+    const caption=document.createElement('span'); caption.textContent=label;
+    const input=document.createElement(tag); input.id=id;
+    Object.entries(attrs||{}).forEach(([k,v])=>input.setAttribute(k,String(v)));
+    input.value=String(value); input.addEventListener('input',()=>{change(input.value);updateWaterScenario();});
+    wrapper.append(caption,input);body.append(wrapper);return input;
+  }
+  control(lensText('Travel-time factor (0.5–2× reference)', 'Faktor waktu tempuh (0,5–2× referensi)'), 'input','water-factor',waterState.factor,{type:'range',min:0.5,max:2,step:0.1},v=>waterState.factor=Number(v));
+  control(lensText('Elapsed scenario time · h', 'Waktu skenario · jam'), 'input','water-hours',waterState.hours,{type:'range',min:0,max:18,step:0.1},v=>{stopWaterPlayback();waterState.hours=Number(v);});
+  const select=control(lensText('Local gauge (separate datum)', 'Pos lokal (datum masing-masing)'), 'select','water-station',waterState.station,{},v=>{waterState.station=Number(v);renderWaterScenario();});
+  waterScenario.stations.forEach((s,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=s.name;select.append(o);});select.value=String(waterState.station);
+  control(lensText('Assumed starting level · cm', 'Tinggi awal asumsi · cm'), 'input','water-level',waterState.levelCm,{type:'number',min:-100,max:2000,step:10},v=>{const n=Number(v);if(Number.isFinite(n))waterState.levelCm=Math.max(-100,Math.min(2000,n));});
+  control(lensText('Assumed local rise · cm/h', 'Kenaikan lokal asumsi · cm/jam'), 'input','water-rise',waterState.riseCmH,{type:'number',min:0,max:100,step:1},v=>{const n=Number(v);if(Number.isFinite(n))waterState.riseCmH=Math.max(0,Math.min(100,n));});
+  const play=document.createElement('button');play.type='button';play.id='water-play';play.setAttribute('aria-pressed',String(waterPlayback!==null));play.textContent=waterPlayback!==null?lensText('Pause scenario', 'Jeda skenario'):lensText('Play scenario · 1 h/s', 'Putar skenario · 1 jam/detik');
+  play.addEventListener('click',()=>{if(waterPlayback!==null)stopWaterPlayback();else{if(waterState.hours>=18)waterState.hours=0;waterPlayback=setInterval(()=>{if(document.hidden)return;waterState.hours=Math.min(18,waterState.hours+0.1);updateWaterScenario();const input=document.getElementById('water-hours');if(input)input.value=String(waterState.hours);if(waterState.hours>=18)stopWaterPlayback();},100);}play.textContent=waterPlayback!==null?lensText('Pause scenario','Jeda skenario'):lensText('Play scenario · 1 h/s','Putar skenario · 1 jam/detik');play.setAttribute('aria-pressed',String(waterPlayback!==null));});body.append(play);
+  const output=document.createElement('p');output.id='water-scenario-output';output.className='lens-note';body.append(output);
+  const station=waterScenario.stations[waterState.station];
+  body.append(lensNoteLine(station.name+' · '+station.siaga.map(b=>'SIAGA '+b.level+' '+b.original).join(' · ')));
+  body.append(lensNoteLine(lensText('Gauge rise is a user assumption, independent of the moving marker. Heights cannot be transferred between station datums. No measured water speed, discharge, terrain, tide or pump capacity is available to this scenario.', 'Kenaikan pos adalah asumsi pengguna, terpisah dari titik bergerak. Tinggi tidak dapat dipindahkan antar-datum pos. Skenario ini tidak memiliki kecepatan air terukur, debit, medan, pasut atau kapasitas pompa.')));
+  const source=lensSource(lensText('Jakarta Satu station coordinates / thresholds · retrieved ', 'Koordinat / ambang pos Jakarta Satu · diambil ')+formatLocal(waterScenario.stationRetrievedAt));
+  const link=document.createElement('a');link.href=waterScenario.sourceUrl;link.target='_blank';link.rel='noopener';link.textContent=lensText('BPBD 2021 timing reference ↗ (PDF currently blocked)', 'Referensi waktu BPBD 2021 ↗ (PDF saat ini diblokir)');source.append(document.createElement('br'),link);body.append(source);updateWaterScenario();
+}
+window.addEventListener('atlas:theme',()=>{for(const id of ['water-scenario-route','water-scenario-front','water-scenario-stations'])if(mapInstance?.getLayer(id))mapInstance.setPaintProperty(id,id==='water-scenario-route'?'line-color':'circle-color',id==='water-scenario-stations'?mapTheme().accent:mapTheme().water);});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){stopWaterPlayback();if(activeLens==='arrival')renderWaterScenario();}});
+
+function showMonitoringLocation(feature) {
+  const coords=feature?.geometry?.coordinates;
+  if(feature?.geometry?.type!=='Point'||!Array.isArray(coords)||!coords.every(Number.isFinite))return;
+  let node=document.getElementById('monitoring-location');
+  if(!node){node=document.createElement('div');node.id='monitoring-location';node.className='water-scenario-location';document.querySelector('.atlas-map-wrap').append(node);}
+  const p=feature.properties||{};
+  node.textContent=(p.name||'—')+' · '+(p.kind||'')+' · '+coords[1].toFixed(6)+', '+coords[0].toFixed(6)+' · WGS84 · '+lensText('reference location','lokasi referensi');
+}
+mapInstance?.on('click','insight-stations',e=>{if(activeLens==='coverage'&&e.features?.[0])showMonitoringLocation(e.features[0]);});
+
 async function fetchBrowserRainfall() {
   const points = [
     {id:'pusat',name:'Central Jakarta',name_id:'Jakarta Pusat',lat:-6.18,lng:106.83},

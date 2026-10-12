@@ -1,0 +1,142 @@
+{
+  "tier": "illustrative-scenario",
+  "source": "BPBD DKI Jakarta · preparedness guide (2021); Jakarta Satu station inventory",
+  "sourceUrl": "https://bpbd.jakarta.go.id/data/files/perpustakaan/2021/11/11/30/163662760561-buku-saku-panduan-kesiapsiagaan-menghadapi-banjir-bagi-masyarakat.pdf",
+  "checkedAt": "2026-10-12",
+  "stationRetrievedAt": "2026-10-11T23:47:42+00:00",
+  "baselineHours": [
+    3,
+    6
+  ],
+  "sourceAccess": "Guide timing is indexed publicly; direct PDF retrieval was blocked by publisher security page on 2026-10-12. Historical preparedness reference, not current forecast.",
+  "stations": [
+    {
+      "kind": "Pos Pantau Air (AWLR)",
+      "name": "PS. Bendung Katulampa",
+      "river": "Kali Ciliwung",
+      "city": "Bogor, Jawa Barat",
+      "address": "Jl. Babadak, Kel. Katulampa, Kec. Bogor Timur, Kota Bogor, Jawa Barat",
+      "siaga": [
+        {
+          "level": 1,
+          "original": "> 300 cm",
+          "unit": "cm",
+          "minCm": 300.0,
+          "maxCm": null
+        },
+        {
+          "level": 2,
+          "original": "250 - 300 cm",
+          "unit": "cm",
+          "minCm": 250.0,
+          "maxCm": 300.0
+        },
+        {
+          "level": 3,
+          "original": "200 - 250 cm",
+          "unit": "cm",
+          "minCm": 200.0,
+          "maxCm": 250.0
+        },
+        {
+          "level": 4,
+          "original": "< 200 cm",
+          "unit": "cm",
+          "minCm": null,
+          "maxCm": 200.0
+        }
+      ],
+      "coordinates": [
+        106.836996,
+        -6.633192
+      ],
+      "inRegion": false
+    },
+    {
+      "kind": "Pos Pantau Air (AWLR)",
+      "name": "PS. Depok",
+      "river": "Kali Ciliwung",
+      "city": "Depok",
+      "address": "Jemb. Panus, Depok, Kec. Pancoran Mas, Kota Depok, Jawa Barat",
+      "siaga": [
+        {
+          "level": 1,
+          "original": "> 200 cm",
+          "unit": "cm",
+          "minCm": 200.0,
+          "maxCm": null
+        },
+        {
+          "level": 2,
+          "original": "150 - 200 cm",
+          "unit": "cm",
+          "minCm": 150.0,
+          "maxCm": 200.0
+        },
+        {
+          "level": 3,
+          "original": "80 - 150 cm",
+          "unit": "cm",
+          "minCm": 80.0,
+          "maxCm": 150.0
+        },
+        {
+          "level": 4,
+          "original": "< 80 cm",
+          "unit": "cm",
+          "minCm": null,
+          "maxCm": 80.0
+        }
+      ],
+      "coordinates": [
+        106.831749,
+        -6.400539
+      ],
+      "inRegion": false
+    },
+    {
+      "kind": "Pos Pantau Air (AWLR)",
+      "name": "P.A. Manggarai",
+      "river": "Kali Ciliwung & Kali Banjir Kanal Barat",
+      "city": "Jakarta Selatan",
+      "address": "Jl. Tambak, Kel. Pegangsaan, Kec. Menteng, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta",
+      "siaga": [
+        {
+          "level": 1,
+          "original": "> 250 cm",
+          "unit": "cm",
+          "minCm": 250.0,
+          "maxCm": null
+        },
+        {
+          "level": 2,
+          "original": "200 - 250 cm",
+          "unit": "cm",
+          "minCm": 200.0,
+          "maxCm": 250.0
+        },
+        {
+          "level": 3,
+          "original": "170 - 200 cm",
+          "unit": "cm",
+          "minCm": 170.0,
+          "maxCm": 200.0
+        },
+        {
+          "level": 4,
+          "original": "< 170 cm",
+          "unit": "cm",
+          "minCm": null,
+          "maxCm": 170.0
+        }
+      ],
+      "coordinates": [
+        106.848458,
+        -6.207825
+      ],
+      "inRegion": true
+    }
+  ],
+  "routeGeometry": "Straight station-to-station schematic, not surveyed river centerline",
+  "limitations": "No terrain, discharge, cross-sections, tide, pump capacities or calibrated hydraulics. No inundation depth or street flooding predicted."
+}

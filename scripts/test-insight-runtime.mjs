@@ -14,6 +14,7 @@ const parsed = name => JSON.parse(data(name));
 const insight = parsed('insight.json');
 const feeds = {
   '/data/jakarta-v1/insight.json': insight,
+  '/data/jakarta-v1/water-scenario.json': parsed('water-scenario.json'),
   '/data/jakarta-v1/risk.geojson': parsed('risk.geojson'),
   '/data/jakarta-v1/green.geojson': parsed('green.geojson'),
   '/data/jakarta-v1/awlr.geojson': parsed('awlr.geojson'),
@@ -68,6 +69,7 @@ class FakeMap {
   }
   getPitch() { return 60; } getBearing() { return -18; } setMaxPitch() {}
   dragRotate = { enable() {}, disable() {} }; easeTo() {} resize() {} addControl() {} setLight() {}
+  fitBounds(bounds,options) { this.bounds={bounds,options}; }
   moveLayer() {} stop() {} jumpTo() {} flyTo(o) { this.flight = o; }
   getZoom() { return 14; } areTilesLoaded() { return true; }
   getFilter(id) { return this.layers[id]?.filter; } setFilter() {}
@@ -98,7 +100,7 @@ function boot() {
   get('atlas-lens-evidence');
   get('atlas-view').value = '3d';
   get('atlas-environment-layer').value = 'none';
-  const lenses = ['city', 'exposure', 'confidence', 'green', 'coverage', 'rain', 'radar', 'cloud', 'water', 'recurring', 'air']
+  const lenses = ['city', 'arrival', 'exposure', 'confidence', 'green', 'coverage', 'rain', 'radar', 'cloud', 'water', 'recurring', 'air']
     .map(id => { const el = element('button'); el.dataset.lens = id; return el; });
   const toggles = ['jkt-buildings', 'rail-stations', 'jkt-landmarks-3d', 'aqi-points', 'waterways-line', 'rain-model-samples']
     .map(id => { const el = element('button'); el.dataset.layerToggle = id; return el; });
@@ -136,7 +138,9 @@ function boot() {
   // the probe is appended to the same script to reach them.
   vm.runInContext(app + `
 ;globalThis.__probe = {
-  selectCityLens,
+  selectCityLens, waterPosition, waterGaugeLevel,
+  get waterState() { return waterState; },
+  get waterPlayback() { return waterPlayback; },
   renderLensEvidence,
   buildingThemeColor,
   mapTheme,
@@ -189,6 +193,7 @@ assert.deepEqual(map.flight.center, insight.exposure.kelurahan[0].center, 'the f
 
 // ── green ──────────────────────────────────────────────────────────────────
 await (pick('green'))();
+assert.ok(!map.getLayer('insight-risk'),'exposure clears on a direct switch to green');
 await settle(40);
 assert.ok(map.getLayer('insight-green'), 'green adds its layer');
 assert.equal(map.getLayer('insight-green').paint['fill-color'], context.__probe.mapTheme().green, 'green reads the theme token');
@@ -199,11 +204,13 @@ assert.match(greenText, new RegExp(String(insight.green.unknownKindPolygons)), '
 
 // ── coverage ───────────────────────────────────────────────────────────────
 await (pick('coverage'))();
+assert.ok(!map.getLayer('insight-green'),'green clears on a direct switch to coverage');
 await settle(40);
 assert.ok(map.getLayer('insight-stations'), 'coverage adds its station layer');
 const stations = map.getSource('insight-stations').data.features;
 assert.ok(stations.length > 0, 'stations actually loaded');
 assert.ok(stations.every(f => f.properties.__kind !== undefined), 'each feature knows which inventory it came from');
+for(const [kind,n] of [[2,263],[3,589],[4,147]])assert.equal(stations.filter(f=>f.properties.__kind===kind).length,n,'infrastructure category keeps identity '+kind);
 const coverageText = textOf(body());
 assert.match(coverageText, /Jakarta Satu monitoring network/, 'coverage states its source');
 assert.match(coverageText, /floodgates not placed by borough/i, 'an unplaced inventory is said out loud, not shown as zero');
@@ -211,6 +218,7 @@ assert.doesNotMatch(coverageText, /\b0 floodgates\b/i, 'no floodgate zero is pub
 
 // ── confidence ─────────────────────────────────────────────────────────────
 await (pick('confidence'))();
+assert.ok(!map.getLayer('insight-stations'),'coverage clears on a direct switch to confidence');
 await settle(30);
 const buildings = [];
 for (const hs of ['measured', 'google', 'floors', 'ghsl', 'estimated'])
@@ -244,3 +252,28 @@ assert.match(JSON.stringify(confidencePaint), /"measured"/, 'confidence keys on 
 assert.match(JSON.stringify(confidencePaint), /"has","hs"/, 'a building with no stated source is handled explicitly');
 
 console.log('PASS insight runtime: four lenses build their real layers, paint from theme tokens, state their source and date, and clear themselves on exit');
+
+// Scenario endpoints, piecewise timing and real rendering/cleanup, not a regex.
+const scenario = parsed('water-scenario.json');
+const pos=context.__probe.waterPosition;
+assert.deepEqual(Array.from(pos(0,1,scenario).coordinates),scenario.stations[0].coordinates);
+assert.deepEqual(Array.from(pos(3,1,scenario).coordinates),scenario.stations[1].coordinates);
+assert.deepEqual(Array.from(pos(9,1,scenario).coordinates),scenario.stations[2].coordinates);
+assert.equal(pos(18,2,scenario).total,18);
+assert.equal(pos(9,0.5,scenario).elapsed,4.5,'front clamps at arrival');
+assert.equal(context.__probe.waterGaugeLevel(3,100,10),130,'level uses only explicit local assumptions');
+assert.equal(context.__probe.waterGaugeLevel(0,-50,0),-50,'negative local datum is preserved');
+await (pick('arrival'))(); await settle(30);
+for(const id of ['water-scenario-route','water-scenario-front','water-scenario-stations','water-scenario-labels'])assert.ok(map.getLayer(id),'real scenario layer '+id);
+assert.equal(map.getSource('water-scenario-stations').data.features.length,3);
+assert.match(textOf(body()),/schematic, not river geometry/);
+assert.match(textOf(body()),/No flood extent or street depth predicted/);
+assert.match(textOf(body()),/separate datum/);
+assert.equal(map.getSource('water-scenario-front').data.features.length,1);
+await (pick('city'))();
+for(const id of ['water-scenario-route','water-scenario-front','water-scenario-stations','water-scenario-labels'])assert.ok(!map.getLayer(id)&&!map.getSource(id),'scenario cleans '+id);
+assert.equal(context.__probe.waterPlayback,null,'leaving pauses animation');
+assert.match(exposureText,/uniform density/,'population proxy assumption visible');
+console.log('PASS water scenario: exact station endpoints, variable travel time, independent gauge datum, map layers, limitations and cleanup');
+
+await (pick('green'))();await settle(30);assert.equal(context.__probe.buildingPaintMode,'height','confidence paint clears on direct switch to green');
