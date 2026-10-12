@@ -76,5 +76,6 @@ assert.match(css,/\.paper-bar i\{[^}]*background:var\(--accent\)/,'bars use the 
 assert.ok(!/\.paper-[^{]*\{[^}]*border-radius/.test(css),'no border-radius on paper styles');
 assert.ok(!/\.paper-[^{]*\{[^}]*gradient/.test(css),'no gradients on paper styles');
 assert.ok(!/data-en="(delve|vibrant|showcas|pivotal|tapestry|nestled|groundbreaking)"/i.test(html),'no AI-tell adjectives in new copy');
+assert.match(css,/\.paper-steps li::before\{[^}]*grid-row:1\s*\/\s*3/,'step number spans both grid rows so the note never collapses into the 2ch column');
 
 console.log('PASS research paper: paper/legal/about panes bilingual, figures computed from shipped data, builder identity with non-affiliation, house presentation rules kept');
