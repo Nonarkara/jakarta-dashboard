@@ -1,3 +1,4 @@
+import { handleHydrology } from "./hydrology.js";
 import { handleJakarta } from "./jakarta.js";
 // Cloudflare Worker entry for jakarta-3d-atlas.
 //
@@ -684,7 +685,7 @@ export default {
     headers.set("x-content-type-options", "nosniff");
     headers.set("referrer-policy", "strict-origin-when-cross-origin");
     headers.set("permissions-policy", "camera=(), microphone=(), geolocation=()");
-    headers.set("content-security-policy", "default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com; connect-src 'self' https://api.open-meteo.com https://services.arcgisonline.com https://tile.openstreetmap.org https://demotiles.maplibre.org https://gibs.earthdata.nasa.gov https://tilecache.rainviewer.com https://air-quality-api.open-meteo.com; img-src 'self' data: blob: https://gibs.earthdata.nasa.gov; frame-src 'self' https://datastudio.google.com https://lookerstudio.google.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'self'");
+    headers.set("content-security-policy", "default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com; connect-src 'self' https://api.open-meteo.com https://services.arcgisonline.com https://tile.openstreetmap.org https://demotiles.maplibre.org https://gibs.earthdata.nasa.gov https://tilecache.rainviewer.com https://air-quality-api.open-meteo.com; img-src 'self' data: blob: https://gibs.earthdata.nasa.gov; frame-src 'self' https://datastudio.google.com https://lookerstudio.google.com https://www.youtube-nocookie.com https://cctv.balitower.co.id; media-src 'self' blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'self'");
     return new Response(request.method === "HEAD" ? null : response.body, { status: response.status, statusText: response.statusText, headers });
   },
 };
@@ -709,6 +710,7 @@ async function routeRequest(request: Request, env: Env): Promise<Response> {
     return new Response("method not allowed", { status: 405, headers: { allow: "GET, HEAD, OPTIONS", "access-control-allow-origin": "*" } });
   }
 
+  if (["/api/atlas/hydrology", "/api/atlas/jaxa-water", "/api/atlas/jaxa-tile", "/api/atlas/traffic-stream"].includes(path)) return handleHydrology(request, env);
   if (path.startsWith("/api/jakarta/")) return handleJakarta(request);
   if (["/", "/index.html", "/atlas", "/atlas/"].includes(path)) {
     const target = new URL(request.url);

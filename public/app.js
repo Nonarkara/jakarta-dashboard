@@ -1661,6 +1661,14 @@ window.addEventListener('atlas:language', function () {
 const INSIGHT_ASSET = '/data/jakarta-v1/insight.json';
 const INSIGHT_LENSES = ['exposure', 'confidence', 'green', 'coverage'];
 let activeLens = 'city', lensRequest = 0;
+let observationController = null, observationPending = null;
+async function loadObservationController() {
+  if (observationController) return observationController;
+  if (!observationPending) observationPending = import('./water-traffic.js?v=' + encodeURIComponent(ATLAS_BUILD_TAG))
+    .then(module => { observationController = module.createController(mapInstance, {text:lensText,active:()=>activeLens,buildTag:ATLAS_BUILD_TAG}); return observationController; })
+    .finally(() => { observationPending = null; });
+  return observationPending;
+}
 let insightData = null, insightPending = null, buildingShare = null, stationGeometryState = null;
 
 function lensText(en, id) { return uiLanguage() === 'id' ? id : en; }
@@ -1942,6 +1950,8 @@ function renderConfidencePanel(data, share) {
 
 function renderLensEvidence() {
   const titles = {
+    waterways: ['Mapped waterways, incoming-water evidence', 'Alur air terpetakan, bukti air masuk'],
+    traffic: ['Public street cameras, with source access', 'Kamera jalan publik dengan akses sumber'],
     radar: ['Rain echoes, with coverage', 'Gema hujan radar dan cakupannya'],
     cloud: ['Watch the cloud system', 'Pantau sistem awan'],
     arrival: ['Upstream → Jakarta · an adjustable scenario', 'Hulu → Jakarta · skenario yang dapat diatur'],
@@ -1956,6 +1966,8 @@ function renderLensEvidence() {
     coverage: ['Where Jakarta is instrumented, and where it is not', 'Di mana Jakarta terukur, dan di mana tidak']
   };
   const descriptions = {
+    waterways: ['Mapped drainage, observed levels and predicted discharge stay distinct. Open evidence for volume assumptions and NASA/JAXA comparison.', 'Drainase terpetakan, tinggi teramati, dan prediksi debit tetap dipisahkan. Buka bukti untuk asumsi volume dan perbandingan NASA/JAXA.'],
+    traffic: ['Published camera locations and on-demand provider players. Availability is unverified; camera coverage is not measured congestion.', 'Lokasi kamera terpublikasi dan pemutar penyedia sesuai permintaan. Ketersediaan belum terverifikasi; cakupan kamera bukan kemacetan terukur.'],
     radar: ['RainViewer radar · no echo is not proof of no rain outside radar coverage.', 'Radar RainViewer · tidak ada gema bukan bukti tidak hujan di luar cakupan radar.'],
     cloud: ['Himawari infrared · cloud-top temperature, not rainfall intensity. Check the observation time.', 'Inframerah Himawari · suhu puncak awan, bukan intensitas hujan. Periksa waktu pengamatan.'],
     arrival: ['Illustrative travel time, not a flood forecast. Dashed route is a station-to-station schematic. Open evidence to play or change assumptions.', 'Waktu tempuh ilustratif, bukan prakiraan banjir. Rute putus-putus adalah skema antarpos. Buka bukti untuk memutar atau mengubah asumsi.'],
@@ -1972,6 +1984,7 @@ function renderLensEvidence() {
   document.getElementById('atlas-lens-title').textContent = lensText(...titles[activeLens]);
   document.getElementById('atlas-lens-description').textContent = lensText(...descriptions[activeLens]);
   const body = document.getElementById('atlas-lens-body');
+  if (['waterways','traffic'].includes(activeLens)) { if (!observationController) body.textContent=lensText('Loading mapped evidence…','Memuat bukti terpetakan…'); return; }
   body.replaceChildren();
   if (activeLens === 'arrival') { renderWaterScenario(); return; }
   if (INSIGHT_LENSES.includes(activeLens)) {
@@ -2011,10 +2024,11 @@ function renderLensEvidence() {
     body.textContent = activeLens === 'city' ? lensText('Building heights mix tagged measurements, satellite estimates and defaults. Explore Data & sources below.', 'Tinggi bangunan memadukan pengukuran bertag, perkiraan satelit, dan nilai bawaan. Lihat Data & sumber di bawah.') : (product?.source || 'NASA GIBS') + ' · ' + lensText('See the observation time and legend in the map evidence panel.', 'Lihat waktu pengamatan dan legenda di panel bukti peta.');
   }
 }
-const ALL_LENSES = ['city','arrival','exposure','confidence','green','coverage','rain','radar','cloud','water','recurring','air'];
+const ALL_LENSES = ['city','waterways','traffic','arrival','exposure','confidence','green','coverage','rain','radar','cloud','water','recurring','air'];
 async function selectCityLens(lens) {
   if (!ALL_LENSES.includes(lens)) return;
   stopWaterPlayback();
+  observationController?.clear();
   ['water-scenario-route', 'water-scenario-front', 'water-scenario-stations', 'water-scenario-labels'].forEach(dropInsightLayer);
   document.getElementById('water-scenario-location')?.remove();
   document.getElementById('monitoring-location')?.remove();
@@ -2036,6 +2050,10 @@ async function selectCityLens(lens) {
     if (request !== lensRequest) return;
     setLayerVisible('rain-model-samples', true);
     mapInstance.flyTo({center:[106.83,-6.20], zoom:10.6, pitch:currentView === '2d' ? 0 : 45, bearing:0});
+  } else if (['waterways','traffic'].includes(lens)) {
+    try { const controller=await loadObservationController(); if(request!==lensRequest)return; await controller.show(lens,document.getElementById('atlas-lens-body')); }
+    catch { if(request===lensRequest)document.getElementById('atlas-lens-body').textContent=lensText('Mapped evidence is unavailable.','Bukti terpetakan tidak tersedia.'); }
+    if(request!==lensRequest)return;
   } else if (lens === 'arrival') {
     await showWaterScenario(request);
     if (request !== lensRequest) return;
@@ -2064,7 +2082,7 @@ async function selectCityLens(lens) {
   renderLensEvidence();
 }
 document.querySelectorAll('[data-lens]').forEach(button => button.addEventListener('click', () => selectCityLens(button.dataset.lens)));
-window.addEventListener('atlas:language', renderLensEvidence);
+window.addEventListener('atlas:language', () => {renderLensEvidence(); if(['waterways','traffic'].includes(activeLens))observationController?.rerender(document.getElementById('atlas-lens-body'));});
 window.addEventListener('atlas:theme', () => { if (activeLens === 'coverage') renderLensEvidence(); });
 // The confidence lens reports what is on screen, so the count follows the camera.
 mapInstance?.on('moveend', () => {

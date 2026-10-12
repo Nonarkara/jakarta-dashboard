@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-10-12T15:54:16.478215+00:00",
+  "queries": {
+    "waterways": "[out:json][timeout:90];(way[waterway~\"^(river|canal|stream|drain|ditch)$\"](-6.4,106.65,-6.08,107.0);way[natural=water](-6.4,106.65,-6.08,107.0););out geom;",
+    "cameras": "FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=geojson, paginated 1000 records",
+    "gauges": "https://ewscilicis.id/Home/GetAwlrLastReading"
+  },
+  "limitations": [
+    "OSM source snapshot is 2026-06-01, not fetch date.",
+    "Camera catalog edited 2025-04-23; playback not established by metadata.",
+    "Gauge response fields selected; credential-bearing camera endpoints are not stored or used."
+  ]
+}

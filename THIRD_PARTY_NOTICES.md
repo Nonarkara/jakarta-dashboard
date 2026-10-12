@@ -63,3 +63,13 @@ Logo production correction: `jktx-symbol-v2.png` is an AI-assisted transparent r
 
 
 Source Sans 3 variable upright: Adobe Source Sans, copyright 2010–2024 Adobe, SIL OFL 1.1. Original WOFF2 from https://github.com/adobe-fonts/source-sans, release branch `WOFF2/VF/SourceSans3VF-Upright.ttf.woff2`; full license retained in `public/fonts/SourceSans3-OFL.txt`. Now used for interface text; prior Plus Jakarta font assets remain as historical source.
+
+## Water and traffic observation lenses · 12 October 2026
+
+- Expanded water network: © OpenStreetMap contributors, ODbL. Overpass snapshot dated 2026-06-01, captured 12 October 2026; five-decimal coordinates, 0.00002° line simplification. Source ways retained; not every physical drain or multipolygon relation. Original-geometry length computed by this project.
+- Hydrology: BBWS Ciliwung Cisadane / EWS Sodetan Ciliwung, public gauge readings and separately labelled publisher predictions. No general open license stated. Local gauge datum is not discharge; predicted serial sections are never summed. Credentials, authenticated cameras and credential-bearing responses are not stored or used.
+- NASA: existing GIBS/LANCE MODIS 3-day flood classification, 250m, observation date explicit. JAXA/EORC Today’s Earth: satellite-informed TE-Global model (~0.1°), run timestamp explicit, not direct observed inundation. See https://www.eorc.jaxa.jp/water/documents.html and provider terms.
+- Camera catalogue: public ArcGIS CCTV Jakarta 2019 feature service, catalog data edited 23 April 2025. Source-specific redistribution license not stated; locations and source links attributed, video kept on provider. 4,340 records are camera references, not verified active cameras.
+- Toll camera video: Bina Marga public CCTV viewer links to Jasa Marga streams (https://binamarga.pu.go.id/contents/cctv_tol/?id_ruas=dalam-kota). 26 published cards / 21 unique HLS streams. No coordinates on that page; not given invented map positions. On-demand pass-through only, no recording. Playlist/segment availability is not independent verification of scene capture time.
+- YouTube: provider players and channel links for Andi Saputra Siahaan / Jakarta Street Cam and World Live Cam 24. No current live channel broadcast verified at collection; availability/replay stays explicit. No video downloads or copied streaming URLs.
+- hls.js 1.7.3 light ES module: Apache-2.0, license preserved at public/vendor/hls-1.7.3/LICENSE.txt. Source package https://www.npmjs.com/package/hls.js.
