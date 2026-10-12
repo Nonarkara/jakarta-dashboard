@@ -53,8 +53,8 @@ export async function handleHydrology(request: Request, env: Env) {
     const source=catalog.streams?.find(row=>row.url===`https://jmlive.jasamarga.com/hls/2/${camera}/index.m3u8`);
     if(!source)return new Response('unknown camera',{status:404});
     try {
-      const response=await fetch(source.url.replace('index.m3u8',asset),{signal:AbortSignal.timeout(15000)});
-      if(!response.ok)return new Response('source unavailable',{status:502});
+      const response=await fetch(source.url.replace('index.m3u8',asset),{signal:AbortSignal.timeout(15000),headers:{accept:asset==='index.m3u8'?'application/vnd.apple.mpegurl, application/x-mpegURL, */*':'video/mp2t, */*','user-agent':'JakartaCivicDashboard/1.0 (https://jakarta.nonarkara.org)'}});
+      if(!response.ok)return new Response('source unavailable: HTTP '+response.status,{status:502});
       if(asset==='index.m3u8') {
         const playlist=await response.text();
         if(!playlist.startsWith('#EXTM3U')||playlist.length>65536||playlist.includes('#EXT-X-KEY'))return new Response('unsupported playlist',{status:502});
