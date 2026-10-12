@@ -12,6 +12,17 @@ Search a route and select it to draw the scheduled alignment. Select a stop or c
 
 The Banjir / Flood desk popup couples those live signals with the dated Jakarta Satu monitoring network: AWLR water-level stations with official SIAGA 1–4 alert thresholds grouped by river, ARR rain gauges, pumps, floodgates and reservoirs, flood-risk reference polygons joined to 2023 kelurahan population, and the situ inventory. No live water level is shown anywhere; stations publish thresholds, not readings, and unavailable feeds stay explicit states with official links.
 
+## Map insight lenses
+
+The map carries four lenses beside the weather and satellite ones, each one tap from the page people land on. All four compute from assets already baked here — `npm run prepare:insight` makes no network call, so a new view never becomes a new claim.
+
+- **Flood exposure** — the 260 flood-mapped neighbourhoods shaded by the share of their own land in the heavy class, listed by residents on severe land. A neighbourhood counts its residents once no matter how many risk polygons it has, and no city-wide total is offered. Top of the list: Kapuk, Duri Kosambi, Pejagalan, Rawa Buaya, Tegal Alur, Semanan.
+- **Height confidence** — the building extrusion recoloured by height *source* instead of height, with the share of buildings on screen in each tier. Bright is tagged or published; dim is a type default with no measurement and no satellite signal.
+- **Green space** — reference polygons aggregated per borough, with the area labelled as computed from published geometry rather than a publisher total. Rows that name no borough and no neighbourhood are counted, not spread.
+- **Flood monitoring** — published stations, gauges and pumps, and the gap beside them: 106 of the 260 mapped neighbourhoods have a published pump. Water-level and rain records publish no neighbourhood, so they are never attributed to one by inference.
+
+Risk classes, station inventories and green polygons are official reference data, not live observations. A neighbourhood with nothing published in them is not a cleared neighbourhood.
+
 ## Local design and citizen services
 
 Palette/Wada plate 267 supplies a documented warm/cool relationship, adapted into dark coastal, city-daylight and high-contrast modes. Plus Jakarta Sans is the city-commissioned Tokotype family, self-hosted under OFL 1.1. The font, actual tokens, contrast proof and local source evidence are recorded in `docs/JAKARTA-DESIGN-AND-CRM.md`. Source/period text is larger; scientific layer legends keep their own semantic colours.

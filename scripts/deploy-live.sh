@@ -24,13 +24,14 @@ ATLAS_URL="$ATLAS_URL" npm run smoke:api
 npm run smoke:dashboard
 
 # The stamp rewrites the asset cache-busters, so the tree is dirty by design once
-# a deploy runs. Commit exactly those four stamped files, never `git add -A`, so
-# work another agent left in the tree is not swept into the stamp commit. This
-# leaves a clean tree for the next release.
+# a deploy runs. Commit exactly those four stamped files, never `git add -A`, and
+# commit WITH a pathspec too: a bare `git commit` would commit the whole index,
+# sweeping anything a parallel agent staged mid-release. RELEASE_AGENT names the
+# runner in the audit trail. This leaves a clean tree for the next release.
 STAMPED=(public/app.js public/index.html public/dashboard.html public/dashboard.js)
 if ! git diff --quiet -- "${STAMPED[@]}"; then
   git add -- "${STAMPED[@]}"
-  git commit -q -m "chore: stamp build ${EXPECTED_BUILD}" -m "Agent: opencode-space-bunny-free"
+  git commit -q -m "chore: stamp build ${EXPECTED_BUILD}" -m "Agent: ${RELEASE_AGENT:-unattributed-release}" -- "${STAMPED[@]}"
   echo "stamped ${EXPECTED_BUILD} committed"
 fi
 git status --short

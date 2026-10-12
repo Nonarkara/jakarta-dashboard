@@ -52,15 +52,18 @@ for r in csv.DictReader(body.decode('utf-8-sig').splitlines()):
     rows.append({'code':m.group(1),'date':date,'period':str(r.get('periode_data') or '')[:6],
         'maxIspu':num(r.get('max')),'kategori':str(r.get('kategori') or '').strip(),
         'critical':str(r.get('parameter_pencemar_kritis') or '').strip()})
-assert len(rows)>3000, f'too few rows: {len(rows)}'
-assert skipped<=40, f'too many skipped rows: {skipped}'
+if len(rows)<=3000:
+    raise SystemExit(f'refuse to bake: too few rows ({len(rows)})')
+if skipped>40:
+    raise SystemExit(f'refuse to bake: too many skipped rows ({skipped})')
 
 stations=[]
 for code,name in STATIONS.items():
     mine=[r for r in rows if r['code']==code]
     mine.sort(key=lambda r:r['date'])
     measured=[r for r in mine if r['maxIspu'] is not None]
-    assert measured, f'no measured rows for {code}'
+    if not measured:
+        raise SystemExit(f'refuse to bake: no measured rows for {code}')
     latest_period=measured[-1]['period']
     latest=[r for r in measured if r['period']==latest_period]
     worst=max(latest,key=lambda r:r['maxIspu'])
@@ -78,13 +81,15 @@ for code,name in STATIONS.items():
 obs_start=min(s['coverage']['start'] for s in stations)
 obs_end=max(s['coverage']['end'] for s in stations)
 latest_periods=sorted({s['latest']['period'] for s in stations})
-assert len(latest_periods)==1, f'stations disagree on latest period: {latest_periods}'
+if len(latest_periods)!=1:
+    raise SystemExit(f'refuse to bake: stations disagree on latest period: {latest_periods}')
 OUT.mkdir(parents=True,exist_ok=True)
 payload={'publisher':'Dinas Lingkungan Hidup DKI Jakarta · Satu Data Jakarta','sourceUrl':PAGE,'exportUrl':EXPORT,
     'retrievedAt':NOW,'observedAt':{'start':obs_start,'end':obs_end,'latestPeriod':latest_periods[0]},
     'tier':'official-monitoring-reference',
     'license':'Publisher attribution; explicit dataset license not stated in inspected metadata',
     'sha256':sha,'rowsImported':len(rows),'rowsSkipped':skipped,
+    'evidencePath':'data/source-evidence/ispu-2026-10-12/ispu-export.csv',
     'units':{'ispu':'ISPU index (unitless, Permen LHK 14/2020)'},
     'categories':[{'name':c,'range':BOUNDS[c]} for c in CATEGORIES],
     'stations':stations,

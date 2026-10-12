@@ -7,8 +7,28 @@ const f=data('flood-reference.json');assert.equal(f.tier,'annual-reference');ass
 const g=data('green.geojson');assert.equal(g.count,g.features.length);assert.equal(g.count+g.excludedOutOfRegion+g.excludedMissingGeometry,g.sourceRecordCount);assert.equal(g.observedAt,null);assert.equal(g.crs,'EPSG:4326');
 for(const r of g.features){assert.deepEqual(Object.keys(r.properties).sort(),['name','kind','kelurahan','kecamatan','kota'].sort());assert.equal(typeof r.properties.kind,'string');const rings=r.geometry.type==='Polygon'?r.geometry.coordinates:r.geometry.coordinates.flat();assert.ok(rings.length);for(const ring of rings){assert.ok(ring.length>=4);assert.deepEqual(ring[0],ring.at(-1));for(const [x,y]of ring)assert.ok(x>105&&x<108&&y> -8&&y< -5);}}
 const c=data('city-context.json');assert.equal(c.documents.length,6);assert.equal(c.vision.tier,'planning-target');assert.equal(c.vision.targetYear,2045);assert.equal(c.floodAccess.state,'unavailable');assert.equal(c.facts.find(f=>f.id==='flood-network').period,'2023');assert.equal(c.facts.find(f=>f.id==='jaki-services').qualifier,'>');
-const ispu=data('ispu-reference.json');assert.equal(ispu.tier,'official-monitoring-reference');assert.equal(ispu.stations.length,5);assert.equal(ispu.rowsImported+ispu.rowsSkipped,3501);assert.ok(Date.parse(ispu.retrievedAt)>0);assert.ok(ispu.observedAt.start<=ispu.observedAt.end);
-for(const s of ispu.stations){assert.match(s.code,/^DKI[1-5]$/);assert.ok(s.coverage.start<=s.coverage.end);assert.ok(s.latest.daysReported>0);assert.ok(s.latest.meanDailyMax>=1&&s.latest.meanDailyMax<=500);assert.ok(s.latest.worstDay.ispu>=s.latest.meanDailyMax-0.1);assert.ok(ispu.categories.some(k=>k.name===s.latest.worstDay.kategori));assert.ok(s.latest.period<=ispu.observedAt.latestPeriod,'no station reports a period past the declared batch');}
+const ispu=data('ispu-reference.json');assert.equal(ispu.tier,'official-monitoring-reference');assert.equal(ispu.stations.length,5);assert.ok(Date.parse(ispu.retrievedAt)>0);assert.ok(ispu.observedAt.start<=ispu.observedAt.end);
+assert.ok(ispu.evidencePath.startsWith('data/source-evidence/'),'the bake names its raw evidence');
+const ispuRaw=readFileSync(new URL('../'+ispu.evidencePath,import.meta.url),'utf8');
+const ispuRows={};
+for(const line of ispuRaw.split('\n').slice(1)){ if(!line.trim())continue;
+ const cells=line.split(',');
+ const code=(cells[5]||'').replace(/"/g,'').match(/^(DKI[1-5])\b/)?.[1]; if(!code)continue;
+ const max=Number(cells[12]); ispuRows[code]??=[]; ispuRows[code].push({date:`${cells[2].slice(0,4)}-${String(Number(cells[3])).padStart(2,'0')}-${String(Number(cells[4])).padStart(2,'0')}`,period:cells[2],max:Number.isFinite(max)&&cells[12]!==''?max:null,kategori:cells[1]});}
+assert.equal(Object.values(ispuRows).flat().length,ispu.rowsImported,'every parseable CSV row is accounted for in the bake');
+for(const s of ispu.stations){assert.match(s.code,/^DKI[1-5]$/);
+ const rows=ispuRows[s.code];assert.ok(rows?.length,'the CSV contains this station');
+ const measured=rows.filter(r=>r.max!==null).sort((a,b)=>a.date<b.date?-1:1);
+ const latestPeriod=measured.at(-1).period;const latest=measured.filter(r=>r.period===latestPeriod);
+ const worst=latest.reduce((a,b)=>b.max>a.max?b:a);
+ assert.equal(s.coverage.start,rows.map(r=>r.date).sort()[0],'coverage start reconciles with the raw CSV');
+ assert.equal(s.coverage.end,rows.map(r=>r.date).sort().at(-1),'coverage end reconciles with the raw CSV');
+ assert.equal(s.coverage.daysReported,measured.length);assert.equal(s.coverage.daysNoData,rows.length-measured.length);
+ assert.equal(s.latest.period,`${latestPeriod.slice(0,4)}-${latestPeriod.slice(4)}`,'the declared batch is the freshest in the CSV');
+ assert.equal(s.latest.daysReported,latest.length);
+ assert.equal(Math.round(s.latest.meanDailyMax*10)/10,Math.round(latest.reduce((n,r)=>n+r.max,0)/latest.length*10)/10,'mean daily max reconciles with the raw CSV');
+ assert.equal(s.latest.worstDay.date,worst.date);assert.equal(s.latest.worstDay.ispu,worst.max);
+ assert.ok(ispu.categories.some(k=>k.name===s.latest.worstDay.kategori),'worst-day category is in the regulation legend');}
 assert.ok(ispu.categories.every(k=>k.range[0]<=k.range[1]&&k.range[1]<=500));
 console.log('PASS official data: proposal identity/units/coordinate quarantine, annual-period totals, geometry/field allowlist, historical facts and future targets');
 // Exercise the actual async civic UI functions: typing during fetch remains loading,
