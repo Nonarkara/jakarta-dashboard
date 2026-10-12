@@ -1,5 +1,9 @@
 # Jakarta dashboard release · 11 October 2026
 
+## Shared text alignment · 12 October 2026
+
+Modal toolbars, detail bodies and explorer panels share a 12 px reading gutter. Project disclosures and unframed search results no longer add stray 4/12 px indents. Native selects use the same text inset as search fields, with a CSS chevron retaining the selection affordance. Rails use the same 8 px edge as compact chrome; atlas evidence context/body share one gutter. Existing intentional framed insets, content, languages and slim bar heights remain. Live research bounds verified at desktop: toolbar/body/project row x=103, search/select text x=116; at 390 px: x=30 and x=43 respectively. Visual receipts: `docs/ALIGNMENT-DESKTOP-2026-10-12.jpg`, `docs/ALIGNMENT-MOBILE-2026-10-12.jpg`. Canonical clean-checkout release passed typecheck, verification, all test suites, exact-byte convergence and live atlas/API/dashboard smokes; build `jakarta-atlas-20261012-1791823836-a2cd5f3`, Worker version `19d1a963-0002-45b2-85db-8b1b0803a83e`. Unrelated dirty insight-runtime test was preserved and excluded from the release checkout.
+
 ## Landmark authoring exploration · 12 October 2026
 
 `docs/landmarks/README.md` records the img2threejs evaluation and a reusable city asset/admission contract. Pinned upstream v2.0.0 commit `a669e9a97cea4452b1c2310c5cca6aa0f6657c1f`; 38 budget/target-resolution tests passed in an isolated checkout. Recommendation: offline authoring, first Monas pilot, real metre constraints and source footprints preserved. HCMC already contains landmark GLBs and needs its own renderer adapter. No reconstructed asset or runtime integration was produced by this exploration, and no application deploy is needed for these documentation changes.
