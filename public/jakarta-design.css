@@ -439,3 +439,36 @@ body[data-surface="jakarta-dashboard"] footer { padding:1px 8px; font-size:11px;
 .network-section a { display:inline-block; margin:4px 8px 4px 0; }
 
 .network-section video { display:block; width:100%; max-height:36svh; background:#000; margin-top:6px; }
+
+/* Shared reading edges: borders create deliberate insets, unframed rows do not. */
+:root { --reading-gutter:12px; --rail-gutter:8px; }
+.modal-toolbar { padding-inline:var(--reading-gutter); }
+body[data-surface="jakarta-dashboard"] .dashboard-modal .detail-section,
+body[data-surface="jakarta-dashboard"] .modal-content > .panel,
+.explore-layout { padding:var(--reading-gutter); }
+body[data-surface="jakarta-dashboard"] .workspace > .panel { padding-inline:var(--rail-gutter); }
+#project-results .official-project > summary { padding-inline:0; column-gap:12px; align-items:baseline; }
+#project-results .official-project-fields,
+#project-results .crm-actions { padding-inline:0; }
+.dashboard-modal .result { padding-inline:0; }
+.dashboard-modal .section-heading { align-items:baseline; }
+.dashboard-modal .section-heading:has(label) { align-items:end; }
+/* Native selects add a browser-specific text inset; draw a consistent chevron. */
+.dashboard-modal .modal-content select { appearance:none; padding:9px 32px 9px 12px; line-height:1.35; }
+.dashboard-modal .modal-content input[type="search"] { appearance:none; padding:9px 12px; line-height:1.35; }
+.dashboard-modal .modal-content label:has(> select) { position:relative; min-width:0; }
+.dashboard-modal .modal-content label:has(> select)::after {
+ content:""; position:absolute; right:14px; bottom:20px; width:6px; height:6px;
+ border-right:1px solid currentColor; border-bottom:1px solid currentColor;
+ transform:rotate(45deg); pointer-events:none;
+}
+.dashboard-modal .modal-content input,
+.dashboard-modal .modal-content select { min-width:0; width:100%; }
+.explore-range, .network-calculator { align-items:end; }
+.paper-bar-row { padding-inline:12px; }
+body.atlas-workbench #atlas-lens-evidence[open] .atlas-lens-popup .atlas-lens-context,
+body.atlas-workbench #atlas-lens-evidence .atlas-lens-popup #atlas-lens-body { padding:var(--reading-gutter); }
+body.atlas-embedded .atlas-embedded-evidence { padding:var(--reading-gutter); }
+body.atlas-embedded .atlas-embedded-evidence .atlas-environment,
+body.atlas-embedded .atlas-embedded-evidence .atlas-data,
+body.atlas-embedded .atlas-embedded-evidence .atlas-footer { padding-inline:0; }
