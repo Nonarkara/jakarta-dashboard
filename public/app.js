@@ -2048,6 +2048,7 @@ async function selectCityLens(lens) {
 }
 document.querySelectorAll('[data-lens]').forEach(button => button.addEventListener('click', () => selectCityLens(button.dataset.lens)));
 window.addEventListener('atlas:language', renderLensEvidence);
+window.addEventListener('atlas:theme', () => { if (activeLens === 'coverage') renderLensEvidence(); });
 // The confidence lens reports what is on screen, so the count follows the camera.
 mapInstance?.on('moveend', () => {
   if (activeLens !== 'confidence') return;
