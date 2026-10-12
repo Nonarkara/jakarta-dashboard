@@ -225,7 +225,7 @@ mapInstance = new __maplibregl__.Map({
   renderWorldCopies: false,
   maxPitch: 70,
   hash: false,
-  attributionControl: { customAttribution: "Heights: Google 2.5D / GHSL / OSM / estimates" },
+  attributionControl: { compact: true, customAttribution: "Heights: Google 2.5D / GHSL / OSM / estimates" },
 });
 
   }
@@ -1492,6 +1492,12 @@ function setupEnvironmentControls() {
 
 // ── Boot ──────────────────────────────────────────────────────────────────
 function setupResponsiveControls() {
+  // MapLibre 6 starts compact attribution expanded; keep its native disclosure on demand.
+  const attribution = document.querySelector('.maplibregl-ctrl-attrib');
+  if (attribution) {
+    attribution.removeAttribute('open');
+    attribution.classList.remove('maplibregl-compact-show');
+  }
   const shell = document.getElementById('atlas-watch-shell');
   if (shell) shell.open = false;
   // HUD readings open only on demand at every width; resizing never expands them.

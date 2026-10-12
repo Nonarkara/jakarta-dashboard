@@ -404,3 +404,25 @@ body.atlas-workbench .atlas-watch { overflow:visible; max-height:none; }
  body[data-surface="jakarta-dashboard"] .city-navigation > summary { display:flex; align-items:center; height:21px; min-height:21px; padding:0 6px; font-size:12px; line-height:19px; }
  body[data-surface="jakarta-dashboard"] .utilities { top:100%; }
 }
+
+
+/* Slim control frames: labels carry the action, padding stays secondary. */
+body.atlas-workbench { --atlas-lenses-row:28px; }
+body.atlas-workbench .atlas-lenses button,
+body.atlas-workbench #atlas-lens-evidence > summary,
+body.atlas-workbench .atlas-panel-summary,
+body.atlas-workbench .atlas-watch-shell > summary,
+body.atlas-workbench .atlas-embedded-drawer > summary { min-height:24px; padding:2px 6px; line-height:18px; }
+body.atlas-workbench .atlas-layers,
+body.atlas-workbench .atlas-quick { padding:0 4px; }
+body.atlas-workbench .maplibregl-ctrl-group button { width:28px; height:28px; min-width:28px; min-height:28px; }
+body.atlas-workbench .maplibregl-ctrl-attrib-button { width:24px; height:24px; min-width:24px; min-height:24px; background-repeat:no-repeat; }
+body.atlas-workbench .maplibregl-ctrl-attrib.maplibregl-compact { min-height:24px; padding:2px 24px 2px 0; }
+body[data-surface="jakarta-dashboard"] footer { padding:1px 8px; font-size:11px; }
+@media(max-width:600px) {
+ body.atlas-workbench { --atlas-header-row:24px; --atlas-lenses-row:24px; }
+ body.atlas-workbench .atlas-header { padding:0 4px; }
+ body.atlas-workbench .atlas-header-nav > .atlas-theme-control select,
+ body.atlas-workbench .atlas-menu > summary { min-height:22px; padding:0 4px; line-height:20px; }
+ body.atlas-workbench .atlas-title::before { width:16px; height:20px; }
+}
