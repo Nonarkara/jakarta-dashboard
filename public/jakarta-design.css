@@ -392,3 +392,15 @@ body.atlas-workbench:not(.atlas-embedded) .atlas-watch-content { right:-124px; }
 body.atlas-workbench .atlas-lenses { scrollbar-width:none; }
 body.atlas-workbench .atlas-lenses::-webkit-scrollbar { display:none; }
 body.atlas-workbench .atlas-watch { overflow:visible; max-height:none; }
+
+/* Requested phone masthead: half the previous 46px, all actions retained. */
+@media(max-width:600px) {
+ body[data-surface="jakarta-dashboard"] .masthead { padding:0 6px; gap:4px; }
+ body[data-surface="jakarta-dashboard"] .city-brand { height:21px; min-height:21px; }
+ body[data-surface="jakarta-dashboard"] .city-brand-icon { width:16px; height:20px; background-size:auto 24px; }
+ body[data-surface="jakarta-dashboard"] .city-brand-wordmark { font-size:18px; }
+ body[data-surface="jakarta-dashboard"] .language-toggle,
+ body[data-surface="jakarta-dashboard"] .city-controls > summary,
+ body[data-surface="jakarta-dashboard"] .city-navigation > summary { display:flex; align-items:center; height:21px; min-height:21px; padding:0 6px; font-size:12px; line-height:19px; }
+ body[data-surface="jakarta-dashboard"] .utilities { top:100%; }
+}
