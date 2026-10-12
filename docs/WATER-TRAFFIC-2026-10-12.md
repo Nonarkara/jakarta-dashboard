@@ -15,3 +15,13 @@ Toll streams: Bina Marga publishes 26 Dalam Kota cards / 21 distinct Jasa Marga 
 YouTube channel players are wired on demand. Checked search results included ended/replay broadcasts; channel availability is labelled, with no invented point for multi-city video. Full provider source links and notices remain accessible.
 
 Validation: numerical volume, future-time quarantine, exact source counts/coordinates, null versus zero, forecast tier, cleanup order and proxy allowlist tests. Browser verification covers water evidence, NASA/JAXA comparison, camera search and provider playback. Final live release receipts below.
+
+## Final live receipt
+
+Implementation `9ca25ec`; build `jakarta-atlas-20261012-1791822639-9ca25ec`; Worker version `f81b8f0f-2013-4636-8ac4-c56d61ce85f8`. Full release chain passed typecheck,12/12 verification, all contract tests including new water/traffic checks, exact-byte convergence on canonical/custom domains, atlas smoke,14/14 API checks and dashboard exact-asset smoke (including new GeoJSON/module/HLS assets). A concurrent uncommitted edit to the existing insight runtime test was preserved; releases used an isolated committed checkout.
+
+Live new APIs return200:58 gauge locations,five publisher discharge predictions,JAXA model run2026-10-12T12:00Z. Browser volume selection31.51m³/s×1h=113436m³. NASA and JAXA comparisons selectable. Gauge marker filter omission corrected after warning inspection; latest build produces no matching warning. At390×844, document scroll dimensions equal viewport and evidence popup width374px; Bahasa labels and numeric formatting native.
+
+Live JTC KM19+000 verified by decoded640×480 frames,readyState4,paused=false,currentTime86.13s. First-source/provider errors remain possible and are reported with fallback; no promise all cameras are online. hls.js is preferred over native capability hints, fixed media paths avoid query-dependent media handling, and transparent User-Agent/Accept headers identify public requests. Video stops/removes when switching to water.
+
+Visual receipts: [water network](WATERWAYS-LIVE-2026-10-12.jpg), [water comparison](WATER-COMPARISON-LIVE-2026-10-12.jpg), [actual live toll playback](TRAFFIC-CAMERA-LIVE-2026-10-12.jpg). No current live YouTube broadcast was verified; channel players are on demand, with availability explicit.
