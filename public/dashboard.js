@@ -39,6 +39,7 @@ function applyLanguage(){
  document.querySelector('.city-brand').setAttribute('aria-label',t('JKTx · Pantau Jakarta','JKTx · Jakarta city watch'));
  document.querySelectorAll('a[href^="/atlas"]').forEach(a=>{const u=new URL(a.href,location.origin);u.searchParams.set('lang',lang);a.href=u.pathname+u.search+u.hash;});
  if(selectedOverlay)$('selection-status').textContent=window.CivicLanguage.status(selectedOverlay.label,lang);
+ $('map-status').textContent=mapReady?t('Atlas siap','Atlas ready'):t('Memuat atlas','Loading atlas');
  document.title=t('Pantau Jakarta','Jakarta city watch');
  $('city-map').title=t('Atlas 3D Jakarta','Jakarta 3D atlas');
  document.querySelector('.sections').setAttribute('aria-label',t('Navigasi bagian','Section navigation'));

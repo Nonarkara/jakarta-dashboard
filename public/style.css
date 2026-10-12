@@ -777,4 +777,3 @@ button:disabled { opacity: 0.55; cursor: not-allowed; }
 @media (pointer:coarse) { .water-scenario-control input, .water-scenario-control select { min-height:44px; } }
 
 .water-scenario-control input, .water-scenario-control select, #water-play { font:inherit; }
-

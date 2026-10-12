@@ -2097,7 +2097,7 @@ async function showWaterScenario(request) {
   mapInstance.addLayer({id:'water-scenario-labels',type:'symbol',source:'water-scenario-stations',layout:{'text-field':['get','name'],'text-font':['Open Sans Regular'],'text-size':12,'text-offset':[0,1.5],'text-anchor':'top','text-allow-overlap':true},paint:{'text-color':'#a32125','text-halo-color':'#fff6ef','text-halo-width':2}});
   mapInstance.addSource('water-scenario-front', {type:'geojson',data:{type:'FeatureCollection',features:[]}});
   mapInstance.addLayer({id:'water-scenario-front',type:'circle',source:'water-scenario-front',paint:{'circle-color':mapTheme().water,'circle-radius':10,'circle-stroke-width':3,'circle-stroke-color':mapTheme().accent}});
-  mapInstance.fitBounds([[106.80,-6.65],[106.88,-6.18]],{padding:60,pitch:0,bearing:0});
+  mapInstance.fitBounds([[106.80,-6.65],[106.88,-6.18]],{padding:{top:45,right:60,bottom:140,left:60},pitch:0,bearing:0});
   const location = document.createElement('div'); location.id='water-scenario-location'; location.className='water-scenario-location';
   document.querySelector('.atlas-map-wrap').append(location);
   renderWaterScenario(); updateWaterScenario();

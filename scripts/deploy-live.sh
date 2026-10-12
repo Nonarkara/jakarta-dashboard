@@ -33,8 +33,8 @@ npm run deploy
 ATLAS_URL="${ATLAS_URL:-https://jakarta.nonarkara.org}"
 EXPECTED_BUILD="$(node --input-type=module -e 'import {readFileSync} from "node:fs"; console.log(readFileSync("public/app.js", "utf8").match(/const ATLAS_BUILD_TAG = "([^"]+)"/)[1])')"
 export EXPECTED_BUILD
-# Allow a bounded edge propagation interval; a mismatch fails the release.
-sleep 12
+# Require matching bytes on the canonical hostname and then the custom domain.
+node scripts/verify-deployed-bytes.mjs
 ATLAS_BASE="$ATLAS_URL" npm run smoke
 ATLAS_URL="$ATLAS_URL" npm run smoke:api
 

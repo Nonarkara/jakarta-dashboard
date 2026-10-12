@@ -40,6 +40,9 @@ The supplied report matches commits 900aeea and 02a4220. The current paper-step 
 
 6. Put embedded evidence context and controls in a single bounded popup; long bilingual headings no longer overlap the body. Monitoring point selection shows its published name and WGS84 coordinate in red.
 
+7. Preserve map-ready status through language switching; fit the three-station scenario with enough bottom clearance for published labels above the retained quick-jump controls.
+8. Replace a fixed post-deploy sleep with bounded exact-byte convergence (three consecutive canonical probes, then three custom-domain probes). Disposable probe keys prevent early checks from using the real release cache key. The new verifier was executed against the current live build and both hostname streaks passed.
+
 ## Sources and access
 
 [BPBD preparedness guide, 2021](https://bpbd.jakarta.go.id/data/files/perpustakaan/2021/11/11/30/163662760561-buku-saku-panduan-kesiapsiagaan-menghadapi-banjir-bagi-masyarakat.pdf) publicly indexed the 3-hour Katulampa–Depok and 6-hour Depok–Manggarai guidance during this audit. Direct PDF requests returned the publisher's security-block HTML, not a PDF. The UI discloses this access state; no PDF capture or current timing calibration is claimed. The independent official [Korlantas report](https://korlantas.polri.go.id/intensitas-hujan-tinggi-katulampa-siaga-1/) is publicly indexed with BPBD's approximate 6–9-hour end-to-end guidance; its direct web fetch timed out. Historical timing is a preparedness illustration only.

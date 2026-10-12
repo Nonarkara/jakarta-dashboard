@@ -58,3 +58,5 @@ const dashboardHtml=fs.readFileSync(new URL('../public/dashboard.html',import.me
 const dashboardSource=fs.readFileSync(new URL('../public/dashboard.js',import.meta.url),'utf8');assert.match(dashboardSource,/d\.language!==lang/,'Map acknowledgement must not create a language loop');assert.match(dashboardSource,/data-en-.*attribute/,'Accessible attributes switch with visible labels');
 assert.match(fs.readFileSync(new URL('../public/official-data.js',import.meta.url),'utf8'),/expanded\.has\(p\.id\)/,'Expanded research rows survive a language change');
 console.log('PASS native research: bilingual costs/documents/status/types, unchanged unknown values, visible switch, accessible attributes and state preservation');
+
+assert.match(fs.readFileSync(new URL('../public/dashboard.js',import.meta.url),'utf8'),/mapReady\?t\('Atlas siap','Atlas ready'\):t\('Memuat atlas','Loading atlas'\)/,'language updates preserve map readiness');
