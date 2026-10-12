@@ -177,3 +177,5 @@ User rejected remaining top-bar/HUD real estate. Both atlas and root are now map
 ## Half-height phone masthead · 12 October 2026
 
 At the user's explicit request, the root dashboard phone masthead is now 23px including its border, half the previous 46px. The existing logo, Menu, language switch and Controls remain in one row; logo geometry and vertical padding shrink together. Menu/settings contents retain their existing full-size controls. Local browser measurement at 390×844 confirms 23px and no document overflow; Menu and Controls both open correctly. Desktop remains unchanged. This is an intentional compact masthead exception to the earlier 44px top-action height.
+
+Live receipt: build `jakarta-atlas-20261012-1791819471-7b835f7` (implementation `7b835f7`). Canonical release gates, exact-byte checks, atlas/dashboard smokes and 14/14 API checks passed. Live 390×844 DOM measurement confirms 23px masthead and no page overflow. Local English layout also fits at 320px with the same 23px masthead. Screenshot: `docs/HALF-HEIGHT-PHONE-LIVE-2026-10-12.jpg`.
