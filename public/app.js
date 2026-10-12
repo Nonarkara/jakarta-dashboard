@@ -68,13 +68,23 @@ let lastAirQuality = [];
 // Jakarta/Palette 267: coastal blue structure with warm pointers. Hazard and
 // transit colours keep their geographic meaning (context.md).
 const MAP_THEMES = {
-  dark: { buildings: ["#66848d", "#92aeb5", "#c3d4d7", "#edf7f5"], accent: "#fdbf68", civic: "#fdbf68", opacity: 0.8, saturation: -0.45 },
-  light: { buildings: ["#647f83", "#91a7a8", "#bed0cf", "#e6f0ec"], accent: "#985200", civic: "#985200", opacity: 0.65, saturation: -0.6 },
-  contrast: { buildings: ["#91a7a8", "#bed0cf", "#edf7f5", "#f6fff9"], accent: "#ffcf7d", civic: "#ffcf7d", opacity: 0.45, saturation: -1 },
+  dark: { buildings: ["#66848d", "#92aeb5", "#c3d4d7", "#edf7f5"], accent: "#fdbf68", civic: "#fdbf68", opacity: 0.8, saturation: -0.45, hazard: ["#3f5a6e", "#7f9a7a", "#c98a3c", "#d9534f"], green: "#2f7d63", water: "#3b82c4", sensor: "#3fb950" },
+  light: { buildings: ["#647f83", "#91a7a8", "#bed0cf", "#e6f0ec"], accent: "#985200", civic: "#985200", opacity: 0.65, saturation: -0.6, hazard: ["#8aa0ab", "#b08a4a", "#b45309", "#b91c1c"], green: "#1f6b52", water: "#1d4ed8", sensor: "#15803d" },
+  contrast: { buildings: ["#91a7a8", "#bed0cf", "#edf7f5", "#f6fff9"], accent: "#ffcf7d", civic: "#ffcf7d", opacity: 0.45, saturation: -1, hazard: ["#ffffff", "#ffcf7d", "#ffa94d", "#ff6b6b"], green: "#1f6b52", water: "#1d4ed8", sensor: "#15803d" },
 };
 function mapTheme() { return MAP_THEMES[document.documentElement.dataset.theme] || MAP_THEMES.dark; }
+// "height" colours by height; "confidence" colours by where the height came from.
+// Both read the same four theme stops, so the confidence lens introduces no new
+// colour and the legend can order the tiers from observed to assumed.
+let buildingPaintMode = "height";
 function buildingThemeColor() {
   const colors = mapTheme().buildings;
+  if (buildingPaintMode === "confidence") {
+    return ["case", ["!", ["has", "hs"]], colors[0],
+      ["match", ["get", "hs"],
+        "measured", colors[3], "landmark", colors[3], "google", colors[2],
+        "floors", colors[1], "ghsl", colors[1], colors[0]]];
+  }
   return ["interpolate", ["linear"], HEIGHT_GET, 6, colors[0], 20, colors[1], 60, colors[2], 150, colors[3]];
 }
 function applyMapTheme() {
@@ -89,6 +99,8 @@ function applyMapTheme() {
     "jkt-dashboard-selection-fill": { "fill-color": palette.accent },
     "jkt-dashboard-selection-line": { "line-color": palette.accent },
     "jkt-dashboard-selection-point": { "circle-color": palette.accent },
+    "insight-green": { "fill-color": palette.green },
+    "insight-stations": { "circle-color": ["match", ["get", "__kind"], 0, palette.water, 1, palette.accent, palette.sensor] },
   };
   Object.keys(paints).forEach(function (id) {
     if (!mapInstance.getLayer(id)) return;
@@ -96,6 +108,20 @@ function applyMapTheme() {
   });
 }
 window.addEventListener("atlas:theme", applyMapTheme);
+// The exposure lens shades by a quartile of its own measured spread, so the four
+// hazard stops are rebuilt on every theme change rather than baked into the layer.
+// Separate from applyMapTheme, which must not grow a dependency on the data views.
+function repaintExposureLayer() {
+  if (!mapInstance || !mapInstance.getLayer('insight-risk') || !insightData) return;
+  const rows = insightData.exposure.kelurahan;
+  const cuts = quantileBands(rows.map(r => r.exposureScore), 0.25);
+  const hazard = mapTheme().hazard;
+  const byCode = ['match', ['get', '__code']];
+  rows.forEach(r => byCode.push(r.kelurahanCode, hazard[bandOf(r.exposureScore, cuts)]));
+  byCode.push(hazard[0]);
+  mapInstance.setPaintProperty('insight-risk', 'fill-color', byCode);
+}
+window.addEventListener('atlas:theme', repaintExposureLayer);
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 function escapeHtml(value) {
@@ -1606,9 +1632,286 @@ window.addEventListener('atlas:language', function () {
   if (watch) observer.observe(watch);
 })();
 
-// Client exploration changes layers on the existing map; it never recreates it.
-let activeLens = 'city', lensRequest = 0;
+// ── Insight lenses ──────────────────────────────────────────────────────────
+// Four views derived from dated public assets already baked into this project:
+// flood exposure, height confidence, green space and flood-monitoring coverage.
+// Nothing here invents a number. Each view keeps its own source and date, and
+// an area the publisher does not describe is reported as unknown, never as zero.
+
+const INSIGHT_ASSET = '/data/jakarta-v1/insight.json';
+const INSIGHT_LENSES = ['exposure', 'confidence', 'green', 'coverage'];
+let activeLens = 'city', lensRequest = 0, lensNote = null;
+let insightData = null, insightPending = null, buildingShare = null;
+
 function lensText(en, id) { return uiLanguage() === 'id' ? id : en; }
+
+function loadInsight() {
+  if (insightData) return Promise.resolve(insightData);
+  if (insightPending) return insightPending;
+  insightPending = fetch(INSIGHT_ASSET + '?v=' + encodeURIComponent(ATLAS_BUILD_TAG), { headers: { accept: 'application/json' } })
+    .then(r => r.ok ? r.json() : Promise.reject(new Error('insight ' + r.status)))
+    .then(data => { insightData = data; return data; })
+    .catch(() => null)
+    .finally(() => { insightPending = null; });
+  return insightPending;
+}
+
+function insightAsset(file) {
+  return '/data/jakarta-v1/' + file + '.geojson?v=' + encodeURIComponent(ATLAS_BUILD_TAG);
+}
+
+function dropInsightLayer(id) {
+  if (!mapInstance) return;
+  if (mapInstance.getLayer(id)) mapInstance.removeLayer(id);
+  if (mapInstance.getSource(id)) mapInstance.removeSource(id);
+}
+
+function clearInsightLayers() {
+  ['insight-risk', 'insight-risk-outline', 'insight-green', 'insight-stations', 'insight-stations-label'].forEach(dropInsightLayer);
+}
+
+// Scale each view on its own measured spread rather than a rounded constant, so
+// the legend can never claim a band the data does not reach.
+function quantileBands(values, step) {
+  const sorted = [...values].filter(Number.isFinite).sort((a, b) => a - b);
+  if (!sorted.length) return [];
+  const cut = [];
+  for (let q = step; q < 1; q += step) cut.push(sorted[Math.min(sorted.length - 1, Math.floor(q * sorted.length))]);
+  return [...new Set(cut)];
+}
+
+function bandOf(value, cuts) {
+  let band = 0;
+  while (band < cuts.length && value > cuts[band]) band++;
+  return band;
+}
+
+function removeInsightLayersWhenLeaving(lens) {
+  if (INSIGHT_LENSES.includes(lens)) return;
+  clearInsightLayers();
+  if (buildingPaintMode === 'confidence') { buildingPaintMode = 'height'; applyMapTheme(); }
+  buildingShare = null;
+}
+
+async function renderExposureLens(request) {
+  const data = await loadInsight();
+  if (request !== lensRequest || !data) return null;
+  const rows = data.exposure.kelurahan;
+  const cuts = quantileBands(rows.map(r => r.exposureScore), 0.25);
+  const geo = await fetch(insightAsset('risk'), { headers: { accept: 'application/json' } }).then(r => r.ok ? r.json() : null).catch(() => null);
+  if (request !== lensRequest) return null;
+  if (!geo) { showToast(lensText('Flood-risk geometry is unavailable. See Data & sources.', 'Geometri rawan banjir tidak tersedia. Lihat Data & sumber.')); return null; }
+  // The published geometry writes the neighbourhood code as 31.71.03.1008 while
+  // the aggregate uses 3171011001. Add the digits-only key rather than editing
+  // the published value, so the join is explicit and reversible.
+  const features = geo.features.map(f => ({
+    ...f,
+    properties: { ...f.properties, __code: String(f.properties.kelurahanCode || '').replace(/\D/g, '') },
+  }));
+  const byCode = ['match', ['get', '__code']];
+  const hazard = mapTheme().hazard;
+  rows.forEach(r => byCode.push(r.kelurahanCode, hazard[bandOf(r.exposureScore, cuts)]));
+  byCode.push(hazard[0]);
+  dropInsightLayer('insight-risk');
+  mapInstance.addSource('insight-risk', { type: 'geojson', data: { type: 'FeatureCollection', features } });
+  mapInstance.addLayer({
+    id: 'insight-risk', type: 'fill', source: 'insight-risk',
+    paint: { 'fill-color': byCode, 'fill-opacity': ['interpolate', ['linear'], ['zoom'], 10, 0.25, 13, 0.7] },
+  });
+  return { cuts };}
+
+async function loadGreenGeometry(request) {
+  const geo = await fetch(insightAsset('green'), { headers: { accept: 'application/json' } }).then(r => r.ok ? r.json() : null).catch(() => null);
+  if (request !== lensRequest || !geo) return false;
+  dropInsightLayer('insight-green');
+  mapInstance.addSource('insight-green', { type: 'geojson', data: geo });
+  mapInstance.addLayer({
+    id: 'insight-green', type: 'fill', source: 'insight-green',
+    paint: { 'fill-color': mapTheme().green, 'fill-opacity': ['interpolate', ['linear'], ['zoom'], 10, 0.35, 14, 0.6] },
+  });
+  return true;
+}
+
+async function loadStationGeometry(request) {
+  const files = ['awlr', 'arr', 'pumps'];
+  const parts = await Promise.all(files.map(f => fetch(insightAsset(f), { headers: { accept: 'application/json' } }).then(r => r.ok ? r.json() : null).catch(() => null)));
+  if (request !== lensRequest) return false;
+  const data = { type: 'FeatureCollection', features: parts.flatMap((part, i) => (part ? part.features.map(f => ({ ...f, properties: { ...f.properties, __kind: i } })) : [])) };
+  const theme = mapTheme();
+  dropInsightLayer('insight-stations');
+  mapInstance.addSource('insight-stations', { type: 'geojson', data });
+  mapInstance.addLayer({
+    id: 'insight-stations', type: 'circle', source: 'insight-stations',
+    paint: {
+      // Water level, rain and pumps keep the meanings the project already uses
+      // for them elsewhere: water, gauge accent, and the sensor green.
+      'circle-radius': ['match', ['get', '__kind'], 0, 5, 1, 4, 6],
+      'circle-color': ['match', ['get', '__kind'], 0, theme.water, 1, theme.accent, theme.sensor],
+      'circle-opacity': 0.9,
+      'circle-stroke-color': '#0f1b33', 'circle-stroke-width': 1.5,
+    },
+  });
+  return true;
+}
+
+function buildingConfidenceShare() {
+  if (!mapInstance || !mapInstance.getLayer('jkt-buildings')) return null;
+  const rows = mapInstance.queryRenderedFeatures(undefined, { layers: ['jkt-buildings'], filter: ['has', 'hs'] });
+  const tally = {};
+  for (const row of rows) {
+    const key = row.properties.hs;
+    tally[key] = (tally[key] || 0) + 1;
+  }
+  const total = rows.length;
+  if (!total) return null;
+  return { total, tally };
+}
+
+function lensPanelBody() {
+  const body = document.getElementById('atlas-lens-body');
+  body.replaceChildren();
+  return body;
+}
+
+function lensNoteLine(text) {
+  const p = document.createElement('p');
+  p.className = 'lens-note';
+  p.textContent = text;
+  return p;
+}
+
+function lensTable() {
+  const table = document.createElement('div');
+  table.className = 'lens-table';
+  return table;
+}
+
+function lensRow(label, value, extra) {
+  const row = document.createElement('div');
+  row.className = 'lens-row';
+  const left = document.createElement('span');
+  left.textContent = label;
+  const right = document.createElement('strong');
+  right.textContent = value;
+  row.append(left, right);
+  if (extra) {
+    const sub = document.createElement('span');
+    sub.className = 'lens-sub';
+    sub.textContent = extra;
+    row.append(sub);
+  }
+  return row;
+}
+
+function lensSource(text) {
+  const p = document.createElement('p');
+  p.className = 'lens-source';
+  p.textContent = text;
+  return p;
+}
+
+function renderExposurePanel(data) {
+  const body = lensPanelBody();
+  body.append(lensNoteLine(lensText(
+    'Flood-risk classes and population are official reference data. Each neighbourhood carries its own residents; they are never summed across neighbourhoods.',
+    'Kelas rawan banjir dan populasi adalah data referensi resmi. Setiap kelurahan membawa jumlah penduduknya sendiri; tidak dijumlahkan lintas kelurahan.')));
+  const table = lensTable();
+  const detail = lensNoteLine('');
+  detail.className = 'lens-note lens-note--detail';
+  for (const row of data.exposure.kelurahan.slice(0, 12)) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'lens-row lens-row--button';
+    const name = document.createElement('span');
+    name.textContent = (row.kelurahan || '—') + ' · ' + String(row.kota || '').replace('Kota Adm. Jakarta ', '');
+    const value = document.createElement('strong');
+    value.textContent = fmtNum(row.population.residentsOnSevere, 0) + ' ' + lensText('residents', 'penduduk');
+    button.append(name, value);
+    button.addEventListener('click', () => {
+      mapInstance?.flyTo({ center: [106.82, -6.20], zoom: 12.4, pitch: currentView === '2d' ? 0 : 45 });
+      detail.textContent = (row.kelurahan || '') + ' — ' + lensText('mapped risk', 'risiko terpetakan') + ' ' + fmtNum(row.riskAreaHa, 0) + ' ha · ' +
+        lensText('severe share', 'porsi berat') + ' ' + row.beratSharePct + '% · ' +
+        lensText('residents', 'penduduk') + ' ' + fmtNum(row.population.wni, 0) +
+        ' (' + lensText('children', 'anak') + ' ' + fmtNum(row.population.children, 0) +
+        ', ' + lensText('aged 60+', 'usia 60+') + ' ' + fmtNum(row.population.elderly60, 0) + ')';
+    });
+    table.append(button);
+  }
+  body.append(table, detail);
+  body.append(lensSource('Jakarta Satu flood-risk reference · population ' + data.exposure.populationPeriod + ' · ' + (data.checkedAt || 'undated')));
+}
+
+function renderGreenPanel(data) {
+  const body = lensPanelBody();
+  body.append(lensNoteLine(lensText(
+    'Green-space area is computed from published polygon geometry, not a publisher-declared total. This is a reference inventory, not every park in the city.',
+    'Luas ruang hijau dihitung dari geometri poligon yang dipublikasikan, bukan total resmi penerbit. Ini inventaris referensi, bukan semua taman di kota.')));
+  const table = lensTable();
+  for (const row of data.green.byBorough) {
+    table.append(lensRow(
+      row.kota.replace('Kota Adm. Jakarta ', ''),
+      fmtNum(row.greenHa, 0) + ' ha',
+      Number.isFinite(row.greenSharePct)
+        ? row.greenSharePct + '% ' + lensText('of borough area', 'luas borough') + ' · ' + row.polygons + ' ' + lensText('polygons', 'poligon')
+        : lensText('no borough area published', 'luas borough tidak dipublikasikan')));
+  }
+  body.append(table);
+  body.append(lensSource('Jakarta Satu green-space reference · ' + data.checkedAt +
+    ' · ' + data.green.unknownKindPolygons + ' ' + lensText('polygons with an unstated category', 'poligon tanpa kategori') +
+    ' · ' + data.green.unresolvedFeatures + ' ' + lensText('rows not placed in any borough', 'baris tidak masuk borough mana pun')));
+}
+
+function renderCoveragePanel(data) {
+  const body = lensPanelBody();
+  body.append(lensNoteLine(lensText(
+    'A neighbourhood with no published station is not a cleared neighbourhood. This is the inventory the publisher publishes, not a survey of what exists.',
+    'Kelurahan tanpa stasiun yang dipublikasikan bukan kelurahan yang aman. Ini inventaris yang dipublikasikan penerbit, bukan survei apa yang ada.')));
+  const table = lensTable();
+  for (const row of data.coverage.byBorough) {
+    table.append(lensRow(
+      row.kota.replace('Kota Adm. Jakarta ', ''),
+      row.kelurahanWithPublishedPump + ' / ' + row.kelurahanWithRiskMapping,
+      lensText('mapped neighbourhoods with a published pump', 'kelurahan terpetakan dengan pompa terpublikasi') + ' · ' +
+      lensText('water-level stations', 'stasiun tinggi air') + ' ' + row.awlrStations + ' · ' +
+      lensText('rain gauges', 'curah hujan') + ' ' + row.arrGauges + ' · ' +
+      lensText('pumps', 'pompa') + ' ' + row.pumps +
+      (row.floodgates === null
+        ? ' · ' + lensText('floodgates not placed by borough', 'pintu air tidak terpetakan per borough')
+        : ' · ' + lensText('floodgates', 'pintu air') + ' ' + row.floodgates)));
+  }
+  body.append(table);
+  body.append(lensSource('Jakarta Satu monitoring network · checked ' + (data.checkedAt || 'undated') +
+    ' · ' + lensText('water-level and rain records publish no neighbourhood', 'stasiun tinggi air dan hujan tidak menyebut kelurahan')));
+}
+
+function renderConfidencePanel(data, share) {
+  const body = lensPanelBody();
+  body.append(lensNoteLine(lensText(
+    'Every building states where its height came from. This colours by that source, not by size: it says how well a height is known, not how well a footprint is drawn.',
+    'Setiap bangunan menyatakan asal tingginya. Warna menandakan asal itu, bukan ukuran: ini mengatur seberapa baik tinggi diketahui, bukan seberapa baik tapak digambar.')));
+  const labels = {
+    measured: ['Tagged height', 'Tinggi bertag'],
+    landmark: ['Published landmark', 'Landmark terpublikasi'],
+    google: ['Satellite, per building', 'Satelit, per bangunan'],
+    floors: ['Floor count × 3.3 m', 'Jumlah lantai × 3,3 m'],
+    ghsl: ['100 m area average', 'Rata-rata area 100 m'],
+    estimated: ['Type default', 'Nilai bawaan jenis'],
+  };
+  const table = lensTable();
+  for (const key of data.confidence.order) {
+    const count = share ? share.tally[key] : 0;
+    table.append(lensRow(
+      labels[key] ? lensText(labels[key][0], labels[key][1]) : key,
+      share ? (count ? fmtNum(100 * count / share.total, 0) + '%' : lensText('none on screen', 'tidak ada di layar')) : '—',
+      data.confidence.sources[key]));
+  }
+  body.append(table);
+  body.append(lensSource((share
+    ? fmtNum(share.total, 0) + ' ' + lensText('buildings on screen', 'bangunan di layar')
+    : lensText('Move the map to count buildings', 'Geser peta untuk menghitung bangunan')) +
+    ' · ' + lensText('simplified rendered footprints, not a census', 'tapak terender yang disederhanakan, bukan sensus')));
+}
+
 function renderLensEvidence() {
   const titles = {
     radar: ['Rain echoes, with coverage', 'Gema hujan radar dan cakupannya'],
@@ -1617,7 +1920,11 @@ function renderLensEvidence() {
     rain: ['Where rain is forecast', 'Di mana hujan diprakirakan'],
     water: ['Water the satellite can see', 'Air yang terlihat dari satelit'],
     recurring: ['Where water has recurred', 'Di mana genangan berulang'],
-    air: ['Particles across the region', 'Partikel di seluruh kawasan']
+    air: ['Particles across the region', 'Partikel di seluruh kawasan'],
+    exposure: ['Who lives on the riskiest land', 'Siapa yang tinggal di lahan paling rawan'],
+    confidence: ['How well each height is known', 'Seberapa baik setiap tinggi diketahui'],
+    green: ['Where the city keeps its green', 'Di mana kota menyimpan ruang hijaunya'],
+    coverage: ['Where Jakarta is instrumented, and where it is not', 'Di mana Jakarta terukur, dan di mana tidak']
   };
   const descriptions = {
     radar: ['RainViewer radar · no echo is not proof of no rain outside radar coverage.', 'Radar RainViewer · tidak ada gema bukan bukti tidak hujan di luar cakupan radar.'],
@@ -1626,12 +1933,32 @@ function renderLensEvidence() {
     rain: ['Open-Meteo · model forecast at five sample points, one per kota. Select one to explore its hourly outlook.', 'Open-Meteo · prakiraan model di lima titik sampel, satu per kota. Pilih satu untuk melihat prakiraan per jam.'],
     water: ['NASA MODIS · cyan: water; red: detected flood; yellow: recurring flood. Clouds can hide water. Check the observation day.', 'NASA MODIS · biru muda: air; merah: banjir terdeteksi; kuning: banjir berulang. Awan dapat menutupi air. Periksa hari pengamatan.'],
     recurring: ['NASA MODIS · yellow marks recurring flood in the satellite classification. This is not a prediction of how long water will remain.', 'NASA MODIS · kuning menandai banjir berulang dalam klasifikasi satelit. Ini bukan prakiraan berapa lama air bertahan.'],
-    air: ['NASA satellite aerosol optical depth · regional atmosphere, not a street-level PM2.5 measurement.', 'Kedalaman optik aerosol satelit NASA · atmosfer kawasan, bukan pengukuran PM2.5 di tingkat jalan.']
+    air: ['NASA satellite aerosol optical depth · regional atmosphere, not a street-level PM2.5 measurement.', 'Kedalaman optik aerosol satelit NASA · atmosfer kawasan, bukan pengukuran PM2.5 di tingkat jalan.'],
+    exposure: ['Jakarta Satu flood-risk classes · shaded by the share of each neighbourhood\'s mapped land in the severe class, with that neighbourhood\'s own residents beside it.', 'Kelas rawan banjir Jakarta Satu · diarsir menurut porsi lahan terpetakan tiap kelurahan pada kelas berat, dengan jumlah penduduk kelurahan tersebut.'],
+    confidence: ['Overture footprints · coloured by height source. Bright is tagged or published; dim is a type default with no measurement and no satellite signal.', 'Tapak Overture · diwarnai menurut asal tinggi. Terang berarti bertag atau terpublikasi; redup berarti nilai bawaan jenis tanpa pengukuran dan tanpa sinyal satelit.'],
+    green: ['Jakarta Satu green-space reference · area computed from the published polygons. This is not every park, and not an official green-space total.', 'Referensi ruang hijau Jakarta Satu · luas dihitung dari poligon yang dipublikasikan. Ini bukan semua taman, dan bukan total resmi ruang hijau.'],
+    coverage: ['Jakarta Satu monitoring network · stations, gauges and pumps as published. An area with none published is not a cleared area.', 'Jaringan pemantauan Jakarta Satu · stasiun, alat ukur dan pompa sesuai yang dipublikasikan. Area tanpa satupun yang dipublikasikan bukan area yang aman.']
   };
   document.getElementById('atlas-lens-title').textContent = lensText(...titles[activeLens]);
   document.getElementById('atlas-lens-description').textContent = lensText(...descriptions[activeLens]);
   const body = document.getElementById('atlas-lens-body');
   body.replaceChildren();
+  if (INSIGHT_LENSES.includes(activeLens)) {
+    if (!insightData) {
+      const wanted = activeLens;
+      body.textContent = lensText('Loading the derived view…', 'Memuat tampilan turunan…');
+      loadInsight().then(loaded => {
+        if (activeLens === wanted && loaded) renderLensEvidence();
+        else if (activeLens === wanted) body.textContent = lensText('This derived view is unavailable. See Data & sources.', 'Tampilan turunan ini tidak tersedia. Lihat Data & sumber.');
+      });
+      return;
+    }
+    if (activeLens === 'exposure') renderExposurePanel(insightData);
+    else if (activeLens === 'green') renderGreenPanel(insightData);
+    else if (activeLens === 'coverage') renderCoveragePanel(insightData);
+    else renderConfidencePanel(insightData, buildingShare);
+    return;
+  }
   if (activeLens === 'rain') {
     for (const p of rainfallData?.points || []) {
       const button = document.createElement('button'); button.type = 'button';
@@ -1653,8 +1980,9 @@ function renderLensEvidence() {
     body.textContent = activeLens === 'city' ? lensText('Building heights mix tagged measurements, satellite estimates and defaults. Explore Data & sources below.', 'Tinggi bangunan memadukan pengukuran bertag, perkiraan satelit, dan nilai bawaan. Lihat Data & sumber di bawah.') : (product?.source || 'NASA GIBS') + ' · ' + lensText('See the observation time and legend in the map evidence panel.', 'Lihat waktu pengamatan dan legenda di panel bukti peta.');
   }
 }
+const ALL_LENSES = ['city','exposure','confidence','green','coverage','rain','radar','cloud','water','recurring','air'];
 async function selectCityLens(lens) {
-  if (!['city','rain','radar','cloud','water','recurring','air'].includes(lens)) return;
+  if (!ALL_LENSES.includes(lens)) return;
   activeLens = lens; const request = ++lensRequest;
   const shareUrl = new URL(window.location.href); shareUrl.searchParams.set('lens', lens);
   history.replaceState(null, '', shareUrl.toString());
@@ -1662,6 +1990,7 @@ async function selectCityLens(lens) {
   const selector = document.getElementById('atlas-environment-layer');
   selector.value = {radar:'radar',cloud:'himawari',water:'surface-water',recurring:'surface-water',air:'aerosol'}[lens] || 'none';
   selector.dispatchEvent(new Event('change', {bubbles:true}));
+  removeInsightLayersWhenLeaving(lens);
   renderLensEvidence();
   await styleReady;
   if (request !== lensRequest || !mapInstance) return;
@@ -1671,6 +2000,25 @@ async function selectCityLens(lens) {
     if (request !== lensRequest) return;
     setLayerVisible('rain-model-samples', true);
     mapInstance.flyTo({center:[106.83,-6.20], zoom:10.6, pitch:currentView === '2d' ? 0 : 45, bearing:0});
+  } else if (lens === 'confidence') {
+    buildingPaintMode = 'confidence';
+    applyMapTheme();
+    buildingShare = buildingConfidenceShare();
+    // The building layer is an extrusion, so this lens is only legible in 3D.
+    if (currentView === '2d') setMapView('3d');
+    mapInstance.flyTo({center:[106.83,-6.20], zoom:13.2, pitch:currentView === '2d' ? 0 : 60, bearing:0});
+  } else if (lens === 'exposure') {
+    await renderExposureLens(request);
+    if (request !== lensRequest) return;
+    mapInstance.flyTo({center:[106.83,-6.20], zoom:9.8, pitch:0, bearing:0});
+  } else if (lens === 'green') {
+    await loadGreenGeometry(request);
+    if (request !== lensRequest) return;
+    mapInstance.flyTo({center:[106.83,-6.20], zoom:9.8, pitch:0, bearing:0});
+  } else if (lens === 'coverage') {
+    await loadStationGeometry(request);
+    if (request !== lensRequest) return;
+    mapInstance.flyTo({center:[106.83,-6.20], zoom:9.6, pitch:0, bearing:0});
   } else if (['radar','cloud','water','recurring','air'].includes(lens)) {
     mapInstance.flyTo({center:[106.83,-6.20], zoom:9.3, pitch:currentView === '2d' ? 0 : 35, bearing:0});
   } else flyToArea('sudirman-thamrin', {updateHash:false});
@@ -1678,6 +2026,14 @@ async function selectCityLens(lens) {
 }
 document.querySelectorAll('[data-lens]').forEach(button => button.addEventListener('click', () => selectCityLens(button.dataset.lens)));
 window.addEventListener('atlas:language', renderLensEvidence);
+// The confidence lens reports what is on screen, so the count follows the camera.
+mapInstance?.on('moveend', () => {
+  if (activeLens !== 'confidence') return;
+  const share = buildingConfidenceShare();
+  if (!share) return;
+  buildingShare = share;
+  renderLensEvidence();
+});
 if (new URLSearchParams(window.location.search).get('showcase') === '1') {
   document.body.classList.add('atlas-showcase');
   document.getElementById('atlas-watch-shell').open = false;

@@ -14,13 +14,14 @@
     "verify": "node scripts/verify-local.mjs",
     "smoke": "node scripts/smoke-atlas.mjs",
     "smoke:api": "node scripts/smoke-atlas-api.mjs",
-    "test": "node scripts/test-release-contract.mjs && node scripts/test-client-contract.mjs && node scripts/test-theme-contract.mjs && node scripts/test-environment-contract.mjs && node scripts/test-i18n-contract.mjs && node scripts/test-browser-forecast.mjs && node scripts/test-jakarta-contract.mjs && node scripts/test-localized-design.mjs && node scripts/test-popup-contract.mjs && node scripts/test-building-filter.mjs && node scripts/test-official-data.mjs && node scripts/test-flood-network.mjs",
+    "test": "node scripts/test-release-contract.mjs && node scripts/test-client-contract.mjs && node scripts/test-theme-contract.mjs && node scripts/test-environment-contract.mjs && node scripts/test-i18n-contract.mjs && node scripts/test-browser-forecast.mjs && node scripts/test-jakarta-contract.mjs && node scripts/test-localized-design.mjs && node scripts/test-popup-contract.mjs && node scripts/test-building-filter.mjs && node scripts/test-official-data.mjs && node scripts/test-flood-network.mjs && node scripts/test-insight-views.mjs && node scripts/test-insight-runtime.mjs",
     "bake:buildings": "python3 scripts/bake-buildings.py extract && python3 scripts/bake-buildings.py heights && python3 scripts/bake-buildings.py bake",
     "bake:osm": "python3 scripts/bake-osm-layers.py rail && python3 scripts/bake-osm-layers.py waterways",
     "smoke:dashboard": "node scripts/smoke-dashboard.mjs",
     "prepare:data": "python3 scripts/prepare-jakarta-data.py",
     "prepare:official": "python3 scripts/prepare-official-portals.py && python3 scripts/prepare-official-context.py",
     "prepare:flood": "python3 scripts/prepare-flood-network.py",
+    "prepare:insight": "python3 scripts/prepare-insight-views.py",
     "prepare:ispu": "python3 scripts/prepare-ispu-reference.py"
   },
   "devDependencies": {
