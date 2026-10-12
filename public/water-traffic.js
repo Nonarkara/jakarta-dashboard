@@ -142,8 +142,15 @@ export function createController(map,{text:t,active,buildTag}) {
         streamStatus.textContent=stream.name+' · '+t('Loading provider stream… capture time is not independently verified.','Memuat tayangan penyedia… waktu pengambilan tidak diverifikasi secara independen.');
         video.addEventListener('playing',()=>{streamStatus.textContent=stream.name+' · '+t('Provider video playing','Video penyedia diputar');selectedVideo.scrollIntoView({block:'nearest'});});
         try {
-          if(video.canPlayType('application/vnd.apple.mpegurl')){video.src=url;video.addEventListener('canplay',()=>{if(token===epoch&&thisPlay===playRequest)selectedVideo.play().catch(()=>{});},{once:true});}
-          else {const {default:Hls}=await import('/vendor/hls-1.7.3/hls.light.mjs');if(token!==epoch||thisPlay!==playRequest||video!==selectedVideo)return;if(!Hls.isSupported())throw new Error('unsupported');player=new Hls({enableWorker:true,lowLatencyMode:false});player.on(Hls.Events.ERROR,(_event,data)=>{if(data.fatal)streamStatus.textContent=t('Stream unavailable; open the official viewer.','Tayangan tidak tersedia; buka penampil resmi.');});player.on(Hls.Events.MANIFEST_PARSED,()=>{if(token===epoch&&thisPlay===playRequest)selectedVideo.play().catch(()=>{});});player.loadSource(url);player.attachMedia(selectedVideo);}
+          const {default:Hls}=await import('/vendor/hls-1.7.3/hls.light.mjs');
+          if(token!==epoch||thisPlay!==playRequest||video!==selectedVideo)return;
+          if(Hls.isSupported()) {
+            player=new Hls({enableWorker:true,lowLatencyMode:false});
+            player.on(Hls.Events.ERROR,(_event,data)=>{if(data.fatal)streamStatus.textContent=t('Stream unavailable; open the official viewer.','Tayangan tidak tersedia; buka penampil resmi.');});
+            player.on(Hls.Events.MANIFEST_PARSED,()=>{if(token===epoch&&thisPlay===playRequest)selectedVideo.play().catch(()=>{});});player.loadSource(url);player.attachMedia(selectedVideo);
+          } else if(selectedVideo.canPlayType('application/vnd.apple.mpegurl')) {
+            selectedVideo.src=url;selectedVideo.addEventListener('canplay',()=>{if(token===epoch&&thisPlay===playRequest)selectedVideo.play().catch(()=>{});},{once:true});
+          } else throw new Error('unsupported');
         }catch{streamStatus.textContent=t('Playback unavailable on this device.','Pemutaran tidak tersedia pada perangkat ini.');}
       });
       toll.append(link(t('Official toll viewer ↗','Penampil tol resmi ↗'),catalog.sourceUrl));
