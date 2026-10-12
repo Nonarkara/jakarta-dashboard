@@ -55,3 +55,17 @@ Coordinates and bands are copied exactly from the existing, dated Jakarta Satu m
 ## Verification
 
 Runtime tests exercise station endpoints, separate segment durations, arrival clamping, variable factor, local negative gauge datum, actual MapLibre sources/layers and cleanup on exit. Monitoring tests reconcile 263/589/147 distinct geometry categories. Existing paper grid protection and all other contract suites remain in the canonical release. Browser proof and final release identity are recorded after live verification below.
+
+## Final release receipt
+
+Application source: `4e56575` (preceding map/scenario fixes `62f7e4e`, readiness/convergence `06e0049`, theme legend `b0ec430`). Build: `jakarta-atlas-20261012-1791797612-4e56575`. Worker version: `affd8ec4-f54f-4351-860b-e9b1d8c2749d`. Repository remains private.
+
+Canonical `RELEASE_AGENT=codex npm run release`: typecheck, 12 local checks, full contract test chain, deployment, three consecutive exact-byte probes on the Worker hostname and then the custom domain, atlas smoke, 14/14 API checks (no hard failures), dashboard smoke including exact BPBD snapshot bytes. All green. The first earlier release attempt caught stale atlas bytes during propagation; that red gate was not called success. The fixed convergence step passed on subsequent canonical releases.
+
+Browser proof: desktop 1280×800 and phone 390×844 have equal client/scroll dimensions, so no outer page bleed. Evidence popup headings/controls share one bounded scroll region. Live map shows published station names and red WGS84 locations; a monitoring-point tap returned a reservoir identity and its coordinates. Scenario playback, elapsed-time scrubbing, factor change, local gauge change, Bahasa/English switching, ready-status preservation and return to city view were exercised. The reported paper-step layout is readable at 390px in light, dark and contrast; five steps and three original states remain. Final BPBD table has all twelve rows and retains negative datum and falling-level signs in both languages.
+
+The reused browser tab retained five unattributed MutationObserver `observe(Node)` errors spanning earlier local/reload navigations. They did not reproduce in a fresh final-build tab after map readiness and complete BPBD table rendering (fresh error log empty). This receipt does not claim a universal absence of browser errors.
+
+Visuals: `WATER-SCENARIO-LIVE-2026-10-12.jpg` (final build), `WATER-ROUTE-LIVE-2026-10-12.jpg`, `WATER-SCENARIO-PHONE-LIVE-2026-10-12.jpg`, `MONITORING-LOCATION-LIVE-2026-10-12.jpg` (same map implementation before the BPBD import), `BPBD-WATER-PHONE-LIVE-2026-10-12.jpg` (final observation table), and `PAPER-VERIFIED-{LIGHT,DARK,CONTRAST}-2026-10-12.jpg`. Viewport override reset; live root left in Bahasa on the city overview.
+
+Remaining boundary: hourly BPBD table is manually captured and dated, not an automated live feed. Historical travel timing plus user assumptions are not calibrated hydraulics. No discharge/flow velocity, reconciled gauge datums, terrain, tide series, channel/drainage geometry or pump capacity has been acquired for a street-level inundation model. Original source observation gaps and coordinate quarantines remain visible.
