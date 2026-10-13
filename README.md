@@ -41,6 +41,7 @@ The citizen-services section links to CRM's official daily, monthly, kelurahan a
 - Existing `/api/atlas/*`, building tiles and waterways remain available.
 
 - `npm run prepare:flood`: bake the Jakarta Satu flood-desk network — AWLR/ARR stations with SIAGA thresholds, pumps/floodgates/reservoirs, situ, risk polygons and kelurahan population — into versioned assets under `public/data/jakarta-v1`, with DKI-bbox quarantine and access-state records for unreachable sources.
+- `npm run prepare:ciliwung`: bake the OSM Ciliwung corridor (river/canal ways through shared node IDs, published admission gates) into `public/data/jakarta-v1/ciliwung-{route.geojson,manifest.json}` for the water-arrival lens; raw Overpass capture retained as evidence.
 - `npm run prepare:ispu`: bake the Satu Data Jakarta official ISPU CSV export (daily SPKU measurements, five stations, DKI1–DKI5) into a dated monthly reference at `public/data/jakarta-v1/ispu-reference.json`, with the raw export retained under `data/source-evidence/`.
 - `npm run release` runs the full local gate (typecheck, verify, every test suite), stamps dashboard/atlas assets, deploys the existing Worker with its R2 binding and custom domain, and checks the exact deployed bytes plus provider envelopes. It refuses to deploy an uncommitted tree, so deployed bytes always trace to a commit. Do not deploy from the old atlas repo to this Worker.
 

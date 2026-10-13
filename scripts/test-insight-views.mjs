@@ -124,7 +124,7 @@ assert.match(app, /'https:\/\/jakarta\.nonarkara\.org|ATLAS_BASE|'\//, 'assets s
 // Exactly two places name a data path: the base and the helper that appends a
 // file name. Anything else would be a second, unaudited route to the data.
 assert.equal((app.match(/\/data\/jakarta-v1\//g) || []).length, 3, 'insight and scenario data paths are named in one place only');
-assert.match(app, /function insightAsset\(file\)/, 'asset files are loaded through the one helper');
+assert.match(app, /function insightAsset\(file, ext\)/, 'asset files are loaded through the one helper');
 // Data stays same-origin and cache-busted. The only absolute fetches in this
 // file are the documented Open-Meteo provider fallbacks, which are not data assets.
 assert.doesNotMatch(app, /https?:\/\/[^"']*\/data\/jakarta-v1/, 'no data asset is fetched from an absolute origin');

@@ -78,4 +78,21 @@ assert.ok(!/\.paper-[^{]*\{[^}]*gradient/.test(css),'no gradients on paper style
 assert.ok(!/data-en="(delve|vibrant|showcas|pivotal|tapestry|nestled|groundbreaking)"/i.test(html),'no AI-tell adjectives in new copy');
 assert.match(css,/\.paper-steps li::before\{[^}]*grid-row:1\s*\/\s*3/,'step number spans both grid rows so the note never collapses into the 2ch column');
 
+// ── research opens on the system explanation, with the approved voice ──
+assert.match(html,/<option value="paper" selected/,'the Research dialog opens on how the system is built');
+for(const [en,id] of [
+ ['I built this dashboard so you can read Jakarta through its data and check what each view can actually tell you.','Saya membuat dasbor ini agar Anda bisa membaca Jakarta melalui datanya dan memeriksa apa yang benar-benar bisa dijelaskan oleh setiap tampilan.'],
+ ['A water level belongs to a gauge. A forecast belongs to a time. A satellite image has a resolution. I keep those limits visible because putting them on one map does not make them the same measurement.','Tinggi air berlaku di titik pengukurnya. Prakiraan berlaku pada waktunya. Citra satelit punya batas resolusi. Saya menampilkan batas-batas itu karena menyatukannya dalam satu peta tidak membuatnya menjadi pengukuran yang sama.'],
+ ['Compare the evidence. Change the assumptions. See what follows — and keep the difference clear.','Bandingkan buktinya. Ubah asumsinya. Lihat hasilnya — dan tetap bedakan keduanya.']])
+ assert.ok(html.includes('data-en="'+en+'"')&&html.includes('>'+id+'</p>'),'purpose voice present bilingually: '+en.slice(0,40));
+assert.match(html,/data-en="Model & scenario"/,'model and scenario are a stated evidence state beside live, dated and unavailable');
+assert.equal((html.match(/<h3 data-en="[^"]+">[^<]+<\/h3><p data-en=/g)||[]).length>=4,true,'four evidence states rendered');
+
+// ── charts say what they encode, in both languages ──
+assert.match(js,/Berat:t\('Berat','Heavy'\)/,'risk classes translate for display while publisher identifiers stay intact');
+assert.match(js,/Sedang:t\('Sedang','Moderate'\)/,'moderate class translates');
+assert.match(js,/Ringan:t\('Ringan','Light'\)/,'light class translates');
+assert.match(js,/100\*c\.kelurahanWithPublishedPump\/c\.kelurahanWithRiskMapping/,'the pump bar encodes the displayed coverage fraction');
+for(const c of insight.coverage.byBorough){assert.ok(c.kelurahanWithPublishedPump<=c.kelurahanWithRiskMapping,'pump presence cannot exceed mapped neighbourhoods: '+c.kota);}
+
 console.log('PASS research paper: paper/legal/about panes bilingual, figures computed from shipped data, builder identity with non-affiliation, house presentation rules kept');

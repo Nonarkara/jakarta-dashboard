@@ -1669,6 +1669,14 @@ async function loadObservationController() {
     .finally(() => { observationPending = null; });
   return observationPending;
 }
+let airTimelineController = null, airTimelinePending = null;
+async function loadAirTimeline() {
+  if (airTimelineController) return airTimelineController;
+  if (!airTimelinePending) airTimelinePending = import('./air-timeline.js?v=' + encodeURIComponent(ATLAS_BUILD_TAG))
+    .then(module => { airTimelineController = module.createAirTimeline(mapInstance, {text:lensText,active:()=>activeLens,buildTag:ATLAS_BUILD_TAG}); return airTimelineController; })
+    .finally(() => { airTimelinePending = null; });
+  return airTimelinePending;
+}
 let insightData = null, insightPending = null, buildingShare = null, stationGeometryState = null;
 
 function lensText(en, id) { return uiLanguage() === 'id' ? id : en; }
@@ -1684,8 +1692,8 @@ function loadInsight() {
   return insightPending;
 }
 
-function insightAsset(file) {
-  return '/data/jakarta-v1/' + file + '.geojson?v=' + encodeURIComponent(ATLAS_BUILD_TAG);
+function insightAsset(file, ext) {
+  return '/data/jakarta-v1/' + file + '.' + (ext || 'geojson') + '?v=' + encodeURIComponent(ATLAS_BUILD_TAG);
 }
 
 function dropInsightLayer(id) {
@@ -2029,6 +2037,7 @@ async function selectCityLens(lens) {
   if (!ALL_LENSES.includes(lens)) return;
   stopWaterPlayback();
   observationController?.clear();
+  airTimelineController?.clear();
   ['water-scenario-route', 'water-scenario-front', 'water-scenario-stations', 'water-scenario-labels'].forEach(dropInsightLayer);
   document.getElementById('water-scenario-location')?.remove();
   document.getElementById('monitoring-location')?.remove();
@@ -2057,6 +2066,10 @@ async function selectCityLens(lens) {
   } else if (lens === 'arrival') {
     await showWaterScenario(request);
     if (request !== lensRequest) return;
+  } else if (lens === 'air') {
+    try { const controller = await loadAirTimeline(); if (request !== lensRequest) return; controller.show(document.getElementById('atlas-lens-body')); }
+    catch { if (request === lensRequest) document.getElementById('atlas-lens-body').textContent = lensText('The model timeline is unavailable.', 'Linimasa model tidak tersedia.'); }
+    mapInstance.flyTo({center:[106.83,-6.20], zoom:9.3, pitch:currentView === '2d' ? 0 : 35, bearing:0});
   } else if (lens === 'confidence') {
     buildingPaintMode = 'confidence';
     applyMapTheme();
@@ -2076,13 +2089,13 @@ async function selectCityLens(lens) {
     await loadStationGeometry(request);
     if (request !== lensRequest) return;
     mapInstance.flyTo({center:[106.83,-6.20], zoom:9.6, pitch:0, bearing:0});
-  } else if (['radar','cloud','water','recurring','air'].includes(lens)) {
+  } else if (['radar','cloud','water','recurring'].includes(lens)) {
     mapInstance.flyTo({center:[106.83,-6.20], zoom:9.3, pitch:currentView === '2d' ? 0 : 35, bearing:0});
   } else flyToArea('sudirman-thamrin', {updateHash:false});
   renderLensEvidence();
 }
 document.querySelectorAll('[data-lens]').forEach(button => button.addEventListener('click', () => selectCityLens(button.dataset.lens)));
-window.addEventListener('atlas:language', () => {renderLensEvidence(); if(['waterways','traffic'].includes(activeLens))observationController?.rerender(document.getElementById('atlas-lens-body'));});
+window.addEventListener('atlas:language', () => {renderLensEvidence(); if(['waterways','traffic'].includes(activeLens))observationController?.rerender(document.getElementById('atlas-lens-body')); if(activeLens==='air')airTimelineController?.render(document.getElementById('atlas-lens-body'));});
 window.addEventListener('atlas:theme', () => { if (activeLens === 'coverage') renderLensEvidence(); });
 // The confidence lens reports what is on screen, so the count follows the camera.
 mapInstance?.on('moveend', () => {
@@ -2109,23 +2122,73 @@ styleReady.then(() => { setLayerVisible('rain-model-samples', false); if (docume
 // each gauge has a separate datum, and the route has no hydraulic geometry.
 let waterScenario = null, waterScenarioLoad = null, waterPlayback = null;
 const waterState = { hours: 0, factor: 1, station: 0, levelCm: 100, riseCmH: 10 };
-function stopWaterPlayback() { if (waterPlayback !== null) clearInterval(waterPlayback); waterPlayback = null; const play=document.getElementById('water-play');if(play)play.textContent=lensText('Play scenario · 1 h/s','Putar skenario · 1 jam/detik'); }
-function waterPosition(hours, factor, data) {
+let waterRouteAssets = null, waterRouteLoad = null;
+function loadWaterRoute() {
+  if (!waterRouteLoad) waterRouteLoad = Promise.all([
+    fetch(insightAsset('ciliwung-route'), { headers: { accept: 'application/json' } }).then(r => r.ok ? r.json() : null),
+    fetch(insightAsset('ciliwung-manifest', 'json'), { headers: { accept: 'application/json' } }).then(r => r.ok ? r.json() : null)
+  ]).then(([route, manifest]) => {
+    if (!route || !manifest || !Array.isArray(route.features) || !Array.isArray(manifest.segments)) { waterRouteLoad = null; return null; }
+    waterRouteAssets = { route, manifest };
+    return waterRouteAssets;
+  }).catch(() => { waterRouteLoad = null; return null; });
+  return waterRouteLoad;
+}
+// Segment polylines in scenario order; null where no geometry was admitted.
+function waterRoutePolylines() {
+  if (!waterRouteAssets || waterScenario?.stations?.length !== waterRouteAssets.manifest.segments.length + 1) return null;
+  return waterRouteAssets.manifest.segments.map((seg, i) => {
+    if (!seg.admitted) return null;
+    const want = waterScenario.stations[i].name + '→' + waterScenario.stations[i + 1].name;
+    const f = waterRouteAssets.route.features.find(f => f.properties?.segment === want);
+    return f?.geometry?.type === 'LineString' && f.geometry.coordinates.length >= 2 ? f.geometry.coordinates : null;
+  });
+}
+const waterPolylineCumulative = new WeakMap();
+function pointAlongPolyline(coords, t) {
+  let cum = waterPolylineCumulative.get(coords);
+  if (!cum) {
+    cum = [0];
+    let total = 0;
+    for (let i = 1; i < coords.length; i++) {
+      const dx = (coords[i][0] - coords[i - 1][0]) * 111320 * Math.cos(coords[i][1] * Math.PI / 180);
+      const dy = (coords[i][1] - coords[i - 1][1]) * 110540;
+      total += Math.hypot(dx, dy); cum.push(total);
+    }
+    waterPolylineCumulative.set(coords, cum);
+  }
+  const target = Math.max(0, Math.min(1, t)) * cum[cum.length - 1];
+  let lo = 0, hi = cum.length - 1;
+  while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (cum[mid] <= target) lo = mid; else hi = mid; }
+  const span = cum[hi] - cum[lo] || 1;
+  const f = (target - cum[lo]) / span;
+  return [coords[lo][0] + (coords[hi][0] - coords[lo][0]) * f, coords[lo][1] + (coords[hi][1] - coords[lo][1]) * f];
+}
+function stopWaterPlayback() { if (waterPlayback !== null) clearInterval(waterPlayback); waterPlayback = null; const play=document.getElementById('water-play');if(play){play.textContent=lensText('Play scenario · 1 h/s','Putar skenario · 1 jam/detik');play.setAttribute('aria-pressed','false');} }
+function waterPosition(hours, factor, data, polylines) {
   const durations = data.baselineHours.map(h => h * factor);
   const elapsed = Math.max(0, Math.min(hours, durations[0] + durations[1]));
   const segment = elapsed <= durations[0] ? 0 : 1;
   const progress = Math.min(1, (elapsed - (segment ? durations[0] : 0)) / durations[segment]);
-  const a = data.stations[segment].coordinates, b = data.stations[segment + 1].coordinates;
-  return { coordinates: a.map((n, i) => n + (b[i] - n) * progress), segment, progress, elapsed, total: durations[0] + durations[1] };
+  const poly = Array.isArray(polylines) ? polylines[segment] : null;
+  const coordinates = poly ? pointAlongPolyline(poly, progress)
+    : data.stations[segment].coordinates.map((n, i) => n + (data.stations[segment + 1].coordinates[i] - n) * progress);
+  return { coordinates, segment, progress, elapsed, total: durations[0] + durations[1] };
 }
 function waterGaugeLevel(hours, initial, rise) { return initial + Math.max(0, hours) * rise; }
 async function showWaterScenario(request) {
   if (!waterScenarioLoad) waterScenarioLoad = fetch('/data/jakarta-v1/water-scenario.json?v=' + encodeURIComponent(ATLAS_BUILD_TAG))
     .then(r => r.ok ? r.json() : null).then(d => { waterScenario = d; if (!d) waterScenarioLoad = null; return d; })
     .catch(() => { waterScenarioLoad = null; return null; });
-  const data = await waterScenarioLoad;
+  const [data] = await Promise.all([waterScenarioLoad, loadWaterRoute()]);
   if (request !== lensRequest || !data || !mapInstance) { if(request === lensRequest) renderWaterScenario(); return; }
-  const route = {type:'FeatureCollection',features:[{type:'Feature',properties:{},geometry:{type:'LineString',coordinates:data.stations.map(s => s.coordinates)}}]};
+  const polylines = waterRoutePolylines();
+  const routeFeatures = data.stations.slice(0, -1).map((s, i) => ({
+    type: 'Feature',
+    properties: { segment: s.name + '→' + data.stations[i + 1].name, mapped: Boolean(polylines?.[i]) },
+    geometry: { type: 'LineString', coordinates: polylines?.[i] || [s.coordinates, data.stations[i + 1].coordinates] }
+  }));
+  const route = {type:'FeatureCollection',features:routeFeatures};
   mapInstance.addSource('water-scenario-route', {type:'geojson',data:route});
   mapInstance.addLayer({id:'water-scenario-route',type:'line',source:'water-scenario-route',paint:{'line-color':mapTheme().water,'line-width':3,'line-dasharray':[2,2]}});
   mapInstance.addSource('water-scenario-stations', {type:'geojson',data:{type:'FeatureCollection',features:data.stations.map(s=>({type:'Feature',properties:{name:s.name},geometry:{type:'Point',coordinates:s.coordinates}}))}});
@@ -2140,7 +2203,7 @@ async function showWaterScenario(request) {
 }
 function updateWaterScenario() {
   if (!waterScenario || activeLens !== 'arrival') return;
-  const p = waterPosition(waterState.hours, waterState.factor, waterScenario);
+  const p = waterPosition(waterState.hours, waterState.factor, waterScenario, waterRoutePolylines());
   mapInstance?.getSource('water-scenario-front')?.setData({type:'FeatureCollection',features:[{type:'Feature',properties:{},geometry:{type:'Point',coordinates:p.coordinates}}]});
   const station = waterScenario.stations[waterState.station];
   const node = document.getElementById('water-scenario-location');
@@ -2151,7 +2214,14 @@ function updateWaterScenario() {
 function renderWaterScenario() {
   const body = lensPanelBody();
   if(!waterScenario) { body.textContent = lensText('Scenario source unavailable or loading. No water level assumed.', 'Sumber skenario tidak tersedia atau sedang dimuat. Tidak diasumsikan tinggi air.'); return; }
-  body.append(lensNoteLine(lensText('PREPAREDNESS SCENARIO · BPBD 2021 approximate travel time: Katulampa → Depok 3 h; Depok → Manggarai 6 h. Straight dashed connections are schematic, not river geometry. No flood extent or street depth predicted.', 'SKENARIO KESIAPSIAGAAN · Waktu tempuh perkiraan BPBD 2021: Katulampa → Depok 3 jam; Depok → Manggarai 6 jam. Garis lurus putus-putus adalah skema, bukan geometri sungai. Tidak memprediksi luas banjir atau kedalaman jalan.')));
+  const polylines = waterRoutePolylines();
+  const mapped = waterRouteAssets && polylines && polylines.filter(Boolean).length;
+  const lengthNote = mapped
+    ? lensText('Route follows published OpenStreetMap river geometry for the ' + mapped + ' verified ' + (mapped === 1 ? 'segment' : 'segments') + (polylines.some(p => !p) ? '; the unverified segment stays a straight schematic connection' : '') + '. The 3 h / 6 h timing is BPBD 2021 historical guidance, not a speed derived from the mapped length. No flood extent or street depth predicted.',
+               'Rute mengikuti geometri sungai OpenStreetMap terpublikasi untuk ' + mapped + ' ' + (mapped === 1 ? 'segmen terverifikasi' : 'segmen terverifikasi') + (polylines.some(p => !p) ? '; segmen yang belum terverifikasi tetap berupa garis lurus skema' : '') + '. Waktu 3 jam / 6 jam adalah panduan historis BPBD 2021, bukan kecepatan yang dihitung dari panjang terpetakan. Tidak memprediksi luas banjir atau kedalaman jalan.')
+    : lensText('PREPAREDNESS SCENARIO · BPBD 2021 approximate travel time: Katulampa → Depok 3 h; Depok → Manggarai 6 h. Straight dashed connections are schematic, not river geometry. No flood extent or street depth predicted.',
+               'SKENARIO KESIAPSIAGAAN · Waktu tempuh perkiraan BPBD 2021: Katulampa → Depok 3 jam; Depok → Manggarai 6 jam. Garis lurus putus-putus adalah skema, bukan geometri sungai. Tidak memprediksi luas banjir atau kedalaman jalan.');
+  body.append(lensNoteLine(lengthNote));
   function control(label, tag, id, value, attrs, change) {
     const wrapper=document.createElement('label'); wrapper.className='water-scenario-control';
     const caption=document.createElement('span'); caption.textContent=label;
@@ -2172,7 +2242,7 @@ function renderWaterScenario() {
   const station=waterScenario.stations[waterState.station];
   body.append(lensNoteLine(station.name+' · '+station.siaga.map(b=>'SIAGA '+b.level+' '+b.original).join(' · ')));
   body.append(lensNoteLine(lensText('Gauge rise is a user assumption, independent of the moving marker. Heights cannot be transferred between station datums. No measured water speed, discharge, terrain, tide or pump capacity is available to this scenario.', 'Kenaikan pos adalah asumsi pengguna, terpisah dari titik bergerak. Tinggi tidak dapat dipindahkan antar-datum pos. Skenario ini tidak memiliki kecepatan air terukur, debit, medan, pasut atau kapasitas pompa.')));
-  const source=lensSource(lensText('Jakarta Satu station coordinates / thresholds · retrieved ', 'Koordinat / ambang pos Jakarta Satu · diambil ')+formatLocal(waterScenario.stationRetrievedAt));
+  const source=lensSource(lensText('Jakarta Satu station coordinates / thresholds · retrieved ', 'Koordinat / ambang pos Jakarta Satu · diambil ')+formatLocal(waterScenario.stationRetrievedAt)+(waterRouteAssets?lensText(' · OSM river geometry · ODbL, retrieved ',' · geometri sungai OSM · ODbL, diambil ')+formatLocal(waterRouteAssets.route.retrievedAt):''));
   const link=document.createElement('a');link.href=waterScenario.sourceUrl;link.target='_blank';link.rel='noopener';link.textContent=lensText('BPBD 2021 timing reference ↗ (PDF currently blocked)', 'Referensi waktu BPBD 2021 ↗ (PDF saat ini diblokir)');source.append(document.createElement('br'),link);body.append(source);updateWaterScenario();
 }
 window.addEventListener('atlas:theme',()=>{for(const id of ['water-scenario-route','water-scenario-front','water-scenario-stations'])if(mapInstance?.getLayer(id))mapInstance.setPaintProperty(id,id==='water-scenario-route'?'line-color':'circle-color',id==='water-scenario-stations'?mapTheme().accent:mapTheme().water);});

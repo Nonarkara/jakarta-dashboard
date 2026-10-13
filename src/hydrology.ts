@@ -3,14 +3,19 @@ import type { Env } from './index';
 const EWS = 'https://ewscilicis.id';
 const JAXA = 'https://www.eorc.jaxa.jp/cgi-bin/water/tilemap';
 const MONTHS = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const FRESH_WINDOW_MS = 3 * 3600000;
+const FRESHNESS_POLICY = 'Gauge readings older than three hours are kept as dated evidence and never counted as current levels. This is a trial display policy, not a provider service interval.';
 export function cleanGauge(row: any, now = Date.now()) {
   if (!row || typeof row !== 'object') return null;
   const at = typeof row.reading_at === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(row.reading_at) ? row.reading_at + (/[Z+-]\d/.test(row.reading_at.slice(10)) || row.reading_at.endsWith('Z') ? '' : '+07:00') : null;
   const stamp = at ? Date.parse(at) : NaN;
   const valid = Number.isFinite(stamp) && stamp <= now + 5 * 60000;
   if (!Number.isFinite(row.longitude) || !Number.isFinite(row.latitude) || row.longitude < 106.4 || row.longitude > 107.2 || row.latitude < -6.9 || row.latitude > -5.9) return null;
+  const usable = valid && row.unit_display === 'm' && Number.isFinite(row.water_level);
+  const fresh = usable && (now - stamp) <= FRESH_WINDOW_MS;
   return { id:String(row.id),name:String(row.name || ''),lng:row.longitude,lat:row.latitude,basin:String(row.watershed_name || ''),
-    levelM:valid && row.unit_display === 'm' && Number.isFinite(row.water_level) ? row.water_level : null,
+    levelM:usable ? row.water_level : null,
+    levelState:usable ? (fresh ? 'fresh' : 'stale') : 'unknown', fresh,
     observedAt:valid ? at : null, rejectedTimestamp:!valid, dischargeM3s:null,
     tier:'publisher-gauge-level', source:'BBWS Ciliwung Cisadane / EWS Sodetan Ciliwung', sourceUrl:EWS };
 }
@@ -36,9 +41,19 @@ async function publicFetch(url: string, format: 'json'|'text') {
 async function cached(key: string, fetcher: () => Promise<unknown>) {
   const cache = (caches as unknown as {default:Cache}).default;
   const request = new Request('https://jakarta.nonarkara.org/api/cache/'+key);
-  const hit = await cache.match(request); if(hit) return hit;
-  try { const response=Response.json(await fetcher(),{headers:{'cache-control':'public,max-age=300'}}); await cache.put(request,response.clone());return response; }
-  catch { return Response.json({available:false,checkedAt:new Date().toISOString(),error:'Publisher unavailable; no zero flow is assumed.'},{status:503}); }
+  // The cache is optional infrastructure. A read fault is not a publisher
+  // fault and must not 500; a write fault must never discard fetched data.
+  let hit: Response | undefined;
+  try { hit = await cache.match(request); } catch { hit = undefined; }
+  if (hit) return hit;
+  let payload: unknown;
+  try { payload = await fetcher(); }
+  catch { return Response.json({available:false,checkedAt:new Date().toISOString(),error:'Publisher unavailable; no zero flow is assumed.'},{status:503,headers:{'cache-control':'no-store'}}); }
+  let response: Response;
+  try { response = Response.json(payload,{headers:{'cache-control':'public,max-age=300'}}); }
+  catch { return Response.json({available:false,checkedAt:new Date().toISOString(),error:'Response could not be serialised.'},{status:503,headers:{'cache-control':'no-store'}}); }
+  try { await cache.put(request,response.clone()); } catch { /* cache write fault is not a data fault */ }
+  return response;
 }
 export async function handleHydrology(request: Request, env: Env) {
   const url=new URL(request.url);
@@ -72,7 +87,15 @@ export async function handleHydrology(request: Request, env: Env) {
       const station=stations.find(row=>row?.name===prediction.name);
       return {...prediction,lng:station?.lng??null,lat:station?.lat??null,basin:station?.basin??null,coordinateMatch:station?'exact-publisher-name':'not-published'};
     });
-    return {available:stations.length>0||predictions.length>0,checkedAt:new Date().toISOString(),stations,predictions,levelsAvailable:gauges.status==='fulfilled',predictionsAvailable:html.status==='fulfilled',sourceUrl:EWS,levelDatum:'Local gauge datum; not comparable between stations',flowNote:'Predicted discharge is separate from observed gauge levels. Serial stations must not be summed as independent inflows.'};
+    // HTTP access is separate from validated availability: a fetched page that
+    // parses to nothing must not set an availability flag, and no valid data at
+    // all is an outage, not an empty 200.
+    const levelsAvailable=gauges.status==='fulfilled'&&stations.length>0;
+    const predictionsAvailable=html.status==='fulfilled'&&predictions.length>0;
+    const freshLevels=stations.filter(s=>s?.fresh).length;
+    const available=freshLevels>0||predictions.length>0;
+    if(!available) throw new Error('no valid hydrology data');
+    return {available,checkedAt:new Date().toISOString(),stations,predictions,levelsAvailable,predictionsAvailable,freshLevels,freshnessPolicy:FRESHNESS_POLICY,freshnessWindowMs:FRESH_WINDOW_MS,sourceUrl:EWS,levelDatum:'Local gauge datum; not comparable between stations',flowNote:'Predicted discharge is separate from observed gauge levels. Serial stations must not be summed as independent inflows.'};
   });
   if(url.pathname==='/api/atlas/jaxa-water')return cached('jaxa-water',async()=>{
     const d=await publicFetch(JAXA+'/latest_global_10km.cgi','json') as {init?:{y:number;m:number;d:number;h:number}};

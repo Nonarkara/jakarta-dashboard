@@ -11,8 +11,13 @@ for(const args of [[null,1],[-1,1],[10,0],[10,Infinity],[NaN,1]])assert.equal(vo
 assert.deepEqual(approachSector(106.9,-6.6),['South','Selatan']);
 const now=Date.parse('2026-10-12T16:00:00Z');
 const base={id:'g',name:'Gauge',longitude:106.83,latitude:-6.2,water_level:0,unit_display:'m',reading_at:'2026-10-12T22:45:00'};
-assert.equal(cleanGauge(base,now).levelM,0,'published zero level remains a real level');
-const future=cleanGauge({...base,reading_at:'2027-11-11T09:00:00'},now);assert.equal(future.levelM,null);assert.equal(future.observedAt,null);assert.equal(future.dischargeM3s,null);
+const freshRow=cleanGauge(base,now);assert.equal(freshRow.levelM,0,'published zero level remains a real level');
+assert.equal(freshRow.levelState,'fresh','a 15-minute-old reading is current');assert.equal(freshRow.fresh,true);
+const stale=cleanGauge({...base,reading_at:'2020-01-01T09:00:00'},now);
+assert.equal(stale.levelM,0,'dated evidence is preserved, not discarded');assert.equal(stale.levelState,'stale');assert.equal(stale.fresh,false);
+assert.equal(cleanGauge({...base,reading_at:'2026-10-12T09:00:00'},now).levelState,'stale','older than three hours is dated evidence');
+const noLevel=cleanGauge({...base,unit_display:'cm'},now);assert.equal(noLevel.levelM,null);assert.equal(noLevel.levelState,'unknown');
+const future=cleanGauge({...base,reading_at:'2027-11-11T09:00:00'},now);assert.equal(future.levelM,null);assert.equal(future.observedAt,null);assert.equal(future.dischargeM3s,null);assert.equal(future.levelState,'unknown');
 assert.equal(cleanGauge({...base,latitude:106.83},now),null,'transposed coordinates rejected');
 assert.equal(cleanGauge(null,now),null);
 const prediction='<li class="completed"><h4>PDA PANUS DEPOK</h4><span>13 Oktober 2026 05.00</span><h4>49.78<sup>m<sup>3</sup>/s</sup></h4></li>';
@@ -39,4 +44,78 @@ const playlist=await handleHydrology(new Request('https://atlas.test/api/atlas/t
 assert.equal((await handleHydrology(new Request('https://atlas.test/api/atlas/traffic-stream?camera='+camera+'&asset=../private'),env)).status,400);
 assert.equal((await handleHydrology(new Request('https://atlas.test/api/atlas/traffic-stream?camera=00000000-0000-0000-0000-000000000000'),env)).status,404);assert.equal(fetched,1);
 globalThis.fetch=originalFetch;
+// ── hydrology envelope reliability: outage, partial, malformed, cache faults ──
+const gaugeEnvelope=rows=>({response:rows.map((r,i)=>({id:'s'+i,name:r.name||'Gauge '+(i+1),longitude:106.83,latitude:-6.2,water_level:r.level,unit_display:'m',reading_at:r.at}))});
+const wibNow=()=>new Date(Date.now()+7*3600000).toISOString().slice(0,16);
+const predictionHtml='<li class="completed"><h4>PDA PANUS DEPOK</h4><span>13 Oktober 2026 05.00</span><h4>49.78<sup>m<sup>3</sup>/s</sup></h4></li>';
+let store=new Map(),cacheReadFault=false,cacheWriteFault=false;
+globalThis.caches={default:{
+  match:async key=>{if(cacheReadFault)throw Error('cache read fault');const hit=store.get(String(key));return hit?hit.clone():undefined;},
+  put:async(key,value)=>{if(cacheWriteFault)throw Error('cache write fault');store.set(String(key),value);}
+}};
+const realFetch=globalThis.fetch;
+let fetchCalls=0;
+const mockHydrology=(gauges,html)=>{globalThis.fetch=async url=>{fetchCalls++;if(String(url).includes('GetAwlrLastReading')){if(gauges instanceof Error)throw gauges;return new Response(gauges,{headers:{'content-type':'application/json'}});}if(html instanceof Error)throw html;return new Response(html,{headers:{'content-type':'text/html'}});};};
+// outage: neither branch answers → 503, no-store, nothing cached
+mockHydrology(new Error('publisher down'),new Error('publisher down'));
+let outage=await handleHydrology(new Request('https://atlas.test/api/atlas/hydrology'),{});
+assert.equal(outage.status,503,'total outage is not an empty 200');
+assert.equal(outage.headers.get('cache-control'),'no-store','an outage is never cached');
+assert.equal(store.size,0);
+const outageBody=await outage.json();assert.equal(outageBody.available,false);
+// fresh gauges + predictions → 200 with freshLevels, availability flags and the policy
+mockHydrology(JSON.stringify(gaugeEnvelope([{name:'Katulampa',level:1.2,at:wibNow()},{name:'Depok',level:2.4,at:'2020-01-01T09:00:00'}])),predictionHtml);
+let full=await handleHydrology(new Request('https://atlas.test/api/atlas/hydrology'),{});
+assert.equal(full.status,200);const fullBody=await full.json();
+assert.equal(fullBody.available,true);assert.equal(fullBody.levelsAvailable,true);assert.equal(fullBody.predictionsAvailable,true);
+assert.equal(fullBody.freshLevels,1,'only the fresh reading counts as current');
+assert.equal(fullBody.stations[1].levelState,'stale');
+assert.match(fullBody.freshnessPolicy,/three hours/i);
+assert.equal(full.headers.get('cache-control'),'public,max-age=300');
+assert.equal(store.size,1,'a valid response is cached');
+// publisher down again → the cached copy still serves
+const callsBefore=fetchCalls;mockHydrology(new Error('publisher down'),new Error('publisher down'));
+const cachedHit=await handleHydrology(new Request('https://atlas.test/api/atlas/hydrology'),{});
+assert.equal(cachedHit.status,200,'a cache hit survives a publisher outage');assert.equal(fetchCalls,callsBefore,'the cache answered without the publisher');
+// cache read fault → treated as a miss, data still fetched and served
+store=new Map();cacheReadFault=true;
+mockHydrology(JSON.stringify(gaugeEnvelope([{name:'Katulampa',level:1.2,at:wibNow()}])),'<ul></ul>');
+const readFault=await handleHydrology(new Request('https://atlas.test/api/atlas/hydrology'),{});
+assert.equal(readFault.status,200,'a cache read fault is not a publisher fault');assert.ok(fetchCalls>callsBefore);
+cacheReadFault=false;
+// cache write fault → fetched data still served, not turned into 503
+cacheWriteFault=true;store=new Map();
+mockHydrology(JSON.stringify(gaugeEnvelope([{name:'Katulampa',level:1.2,at:wibNow()}])),'<ul></ul>');
+const writeFault=await handleHydrology(new Request('https://atlas.test/api/atlas/hydrology'),{});
+assert.equal(writeFault.status,200,'a cache write fault must not discard fetched data');
+assert.equal(store.size,0);const writeFaultBody=await writeFault.json();assert.equal(writeFaultBody.freshLevels,1);
+cacheWriteFault=false;
+// malformed-but-200 gauge payload parses to zero stations → levelsAvailable false;
+// with no predictions either, it is an outage, never an all-clear 200
+mockHydrology('{"response":"garbage"}','<ul></ul>');
+const malformed=await handleHydrology(new Request('https://atlas.test/api/atlas/hydrology'),{});
+assert.equal(malformed.status,503,'malformed-but-200 data with nothing valid is an outage');
+// partial: gauges fail, predictions parse → 200 with the usable branch and its failure state
+mockHydrology(new Error('gauge branch down'),predictionHtml);
+const partial=await handleHydrology(new Request('https://atlas.test/api/atlas/hydrology'),{});
+assert.equal(partial.status,200);const partialBody=await partial.json();
+assert.equal(partialBody.available,true);assert.equal(partialBody.levelsAvailable,false);assert.equal(partialBody.predictionsAvailable,true);
+globalThis.fetch=realFetch;delete globalThis.caches;
+// observation client: every request is bounded and cancelled on exit
+{
+  const layers2=new Map(),sources2=new Map();
+  const map2={getLayer:id=>layers2.get(id),getSource:id=>sources2.get(id),removeLayer:id=>layers2.delete(id),removeSource:id=>sources2.delete(id),off(){},on(){},flyTo(){},addSource(){},addLayer(){},getZoom:()=>10};
+  const controller2=createController(map2,{text:e=>e,active:()=>null,buildTag:'test'});
+  let observed=null;const realFetch2=globalThis.fetch;
+  globalThis.fetch=(url,init)=>{
+    observed=init||{};
+    return new Promise((_,reject)=>{observed.signal?.addEventListener('abort',()=>reject(new Error('aborted')));});
+  };
+  const body2={replaceChildren(){},append(){},textContent:''};
+  controller2.show('waterways',body2).catch(()=>{});
+  await new Promise(r=>setTimeout(r,10));
+  assert.ok(observed?.signal,'the observation client passes an abort signal to every fetch');
+  controller2.clear();
+  globalThis.fetch=realFetch2;
+}
 console.log('PASS water/traffic: source coverage, coordinates, future gauge rejection, predicted-flow tiers, volume arithmetic, cleanup order, camera access boundaries and fixed JAXA proxy');

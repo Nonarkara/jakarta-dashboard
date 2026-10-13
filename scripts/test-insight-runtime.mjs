@@ -15,6 +15,8 @@ const insight = parsed('insight.json');
 const feeds = {
   '/data/jakarta-v1/insight.json': insight,
   '/data/jakarta-v1/water-scenario.json': parsed('water-scenario.json'),
+  '/data/jakarta-v1/ciliwung-route.geojson': parsed('ciliwung-route.geojson'),
+  '/data/jakarta-v1/ciliwung-manifest.json': parsed('ciliwung-manifest.json'),
   '/data/jakarta-v1/risk.geojson': parsed('risk.geojson'),
   '/data/jakarta-v1/green.geojson': parsed('green.geojson'),
   '/data/jakarta-v1/awlr.geojson': parsed('awlr.geojson'),
@@ -108,8 +110,9 @@ function boot() {
     location: { origin: 'https://atlas.test', href: 'https://atlas.test/', search: '' },
     parent: { postMessage() {} },
     matchMedia: () => ({ matches: false }),
-    addEventListener() {},
-    dispatchEvent() {},
+    __listeners: {},
+    addEventListener(type, cb) { (this.__listeners[type] ??= []).push(cb); },
+    dispatchEvent(ev) { for (const cb of this.__listeners[ev.type] || []) cb(ev); },
     history: {},
   };
   window.maplibregl = { Map: FakeMap, addProtocol() {}, NavigationControl: class {}, ScaleControl: class {} };
@@ -119,7 +122,8 @@ function boot() {
     document: {
       documentElement: { ...element('html'), dataset: { theme: 'dark' } },
       body: element('body'), head: element('head'), referrer: '',
-      getElementById: get, createElement: element,
+      getElementById: get,
+      createElement: tag => { const node = element(tag); Object.defineProperty(node, 'id', { configurable: true, get() { return this._id ?? ''; }, set(v) { this._id = v; if (v) elements.set(v, node); } }); return node; },
       querySelectorAll: s => (s === '[data-layer-toggle]' ? toggles : s === '[data-lens]' ? lenses : []),
       querySelector: s => ['.atlas-map-wrap', '.atlas-menu-body', '#atlas-environment', '#atlas-data', '.atlas-footer', '#atlas-watch-shell', '#atlas-watch', '#atlas-inspect'].includes(s) ? get(s) : null,
       addEventListener() {},
@@ -138,7 +142,7 @@ function boot() {
   // the probe is appended to the same script to reach them.
   vm.runInContext(app + `
 ;globalThis.__probe = {
-  selectCityLens, waterPosition, waterGaugeLevel,
+  selectCityLens, waterPosition, waterGaugeLevel, stopWaterPlayback,
   get waterState() { return waterState; },
   get waterPlayback() { return waterPlayback; },
   renderLensEvidence,
@@ -215,6 +219,14 @@ const coverageText = textOf(body());
 assert.match(coverageText, /Jakarta Satu monitoring network/, 'coverage states its source');
 assert.match(coverageText, /floodgates not placed by borough/i, 'an unplaced inventory is said out loud, not shown as zero');
 assert.doesNotMatch(coverageText, /\b0 floodgates\b/i, 'no floodgate zero is published');
+// Theme changes must refresh the live legend: a stale panel would keep the old
+// palette's evidence. Corrupt the body, fire the theme event, demand a rebuild.
+const staleMarker = element('span');
+staleMarker.textContent = 'STALE-PANEL';
+body().children.push(staleMarker);
+context.window.dispatchEvent({ type: 'atlas:theme' });
+assert.ok(!body().children.includes(staleMarker), 'a theme change re-renders the coverage legend, not a stale panel');
+assert.match(textOf(body()), /Jakarta Satu monitoring network/, 'the rebuilt coverage panel states its source again');
 
 // ── confidence ─────────────────────────────────────────────────────────────
 await (pick('confidence'))();
@@ -232,6 +244,7 @@ assert.match(confidenceText, /Tagged height 17%/, 'measured is reported as a sha
 assert.match(confidenceText, /Satellite, per building 33%/, 'a repeated tier is counted honestly');
 assert.match(confidenceText, /none on screen/, 'a tier with no buildings on screen says so instead of showing zero');
 assert.match(confidenceText, /Floor count/, 'every tier is named');
+assert.ok(confidenceText.includes(insight.checkedAt), 'confidence states its checked date like the other lenses');
 assert.doesNotMatch(confidenceText, /undefined|NaN/, 'no unresolved tier reaches the panel');
 
 // ── leaving an insight lens restores the map ───────────────────────────────
@@ -266,13 +279,49 @@ assert.equal(context.__probe.waterGaugeLevel(0,-50,0),-50,'negative local datum 
 await (pick('arrival'))(); await settle(30);
 for(const id of ['water-scenario-route','water-scenario-front','water-scenario-stations','water-scenario-labels'])assert.ok(map.getLayer(id),'real scenario layer '+id);
 assert.equal(map.getSource('water-scenario-stations').data.features.length,3);
-assert.match(textOf(body()),/schematic, not river geometry/);
+assert.match(textOf(body()),/OpenStreetMap river geometry/,'the mapped route states its OSM basis');
+assert.match(textOf(body()),/BPBD 2021 historical guidance, not a speed derived from the mapped length/,'timing stays a historical assumption, never a mapped-length speed');
 assert.match(textOf(body()),/No flood extent or street depth predicted/);
+const routeSource = map.getSource('water-scenario-route');
+assert.equal(routeSource.data.features.length, 2, 'one route feature per station pair');
+assert.ok(routeSource.data.features.every(f => f.properties.mapped === true), 'both segments carry admitted geometry when the assets verify them');
+assert.equal(map.getSource('water-scenario-front').data.features.length,1);
+// Geometry-aware traversal: the marker follows the mapped polyline, not the straight chord.
+const polys = [routeSource.data.features[0].geometry.coordinates, routeSource.data.features[1].geometry.coordinates];
+const straightMid = scenario.stations[0].coordinates.map((n,i)=>n+(scenario.stations[1].coordinates[i]-n)*0.5);
+const onPoly = pos(1.5, 1, scenario, polys);
+assert.equal(onPoly.segment, 0);
+assert.ok(Math.hypot(onPoly.coordinates[0]-straightMid[0], onPoly.coordinates[1]-straightMid[1]) > 0.0005, 'the mid-journey marker sits on the mapped meander, not the straight chord');
+const startPt = pos(0, 1, scenario, polys);
+assert.ok(Math.hypot(startPt.coordinates[0]-polys[0][0][0], startPt.coordinates[1]-polys[0][0][1]) < 1e-9, 'the marker starts exactly on the mapped geometry');
+const endPt = pos(9, 1, scenario, polys);
+assert.ok(Math.hypot(endPt.coordinates[0]-polys[1][polys[1].length-1][0], endPt.coordinates[1]-polys[1][polys[1].length-1][1]) < 1e-9, 'the marker ends exactly on the mapped geometry');
 assert.match(textOf(body()),/separate datum/);
 assert.equal(map.getSource('water-scenario-front').data.features.length,1);
+// Playback button state must track playback exactly: start, pause, scrub,
+// central stop and lens exit all reset the label AND the pressed state.
+const playBtn = get('water-play');
+assert.ok(playBtn, 'the scenario renders a play control');
+assert.equal(playBtn.getAttribute('aria-pressed'), 'false', 'play starts unpressed');
+playBtn.listeners.click();
+assert.notEqual(context.__probe.waterPlayback, null, 'click starts playback');
+assert.equal(playBtn.getAttribute('aria-pressed'), 'true', 'starting sets the pressed state');
+playBtn.listeners.click();
+assert.equal(context.__probe.waterPlayback, null, 'the button pauses playback');
+assert.equal(playBtn.getAttribute('aria-pressed'), 'false', 'pausing resets the pressed state');
+playBtn.listeners.click();
+get('water-hours').listeners.input();
+assert.equal(context.__probe.waterPlayback, null, 'scrubbing the timeline stops playback');
+assert.equal(playBtn.getAttribute('aria-pressed'), 'false', 'a scrub resets the pressed state');
+playBtn.listeners.click();
+context.__probe.stopWaterPlayback();
+assert.equal(context.__probe.waterPlayback, null, 'the central stop stops playback');
+assert.equal(playBtn.getAttribute('aria-pressed'), 'false', 'the central stop resets the pressed state, not just the label');
+assert.doesNotMatch(playBtn.textContent, /pause|jeda/i, 'the central stop resets the label too');
 await (pick('city'))();
 for(const id of ['water-scenario-route','water-scenario-front','water-scenario-stations','water-scenario-labels'])assert.ok(!map.getLayer(id)&&!map.getSource(id),'scenario cleans '+id);
 assert.equal(context.__probe.waterPlayback,null,'leaving pauses animation');
+assert.equal(playBtn.getAttribute('aria-pressed'),'false','leaving the lens resets the pressed state');
 assert.match(exposureText,/uniform density/,'population proxy assumption visible');
 console.log('PASS water scenario: exact station endpoints, variable travel time, independent gauge datum, map layers, limitations and cleanup');
 

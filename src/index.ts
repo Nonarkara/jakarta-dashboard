@@ -658,6 +658,73 @@ async function handleAirQuality(): Promise<Response> {
   return jsonResponse(rows, { headers: { "cache-control": "public, max-age=300" } });
 }
 
+// 48-hour CAMS pollutant timeline joined to wind on exact timestamps. One
+// model cell, its identity retained; hourly output is interpolated by the
+// provider from native three-hourly CAMS — model forecast, never observation.
+async function handleAirTimeline(): Promise<Response> {
+  const point = RAIN_POINTS[0];
+  const airUrl = new URL("https://air-quality-api.open-meteo.com/v1/air-quality");
+  airUrl.searchParams.set("latitude", String(point.lat));
+  airUrl.searchParams.set("longitude", String(point.lng));
+  airUrl.searchParams.set("hourly", "pm2_5,pm10,aerosol_optical_depth,dust");
+  airUrl.searchParams.set("forecast_days", "2");
+  airUrl.searchParams.set("timezone", "UTC");
+  const windUrl = new URL("https://api.open-meteo.com/v1/forecast");
+  windUrl.searchParams.set("latitude", String(point.lat));
+  windUrl.searchParams.set("longitude", String(point.lng));
+  windUrl.searchParams.set("hourly", "wind_speed_10m,wind_direction_10m");
+  windUrl.searchParams.set("wind_speed_unit", "ms");
+  windUrl.searchParams.set("forecast_days", "2");
+  windUrl.searchParams.set("timezone", "UTC");
+  const [airRow, windRow] = await Promise.all([
+    fetchEnvironmentProvider(airUrl.toString(), "json", 600).then(d => d?.body ?? null).catch(() => null),
+    fetchEnvironmentProvider(windUrl.toString(), "json", 600).then(d => d?.body ?? null).catch(() => null),
+  ]);
+  const airOk = airRow?.utc_offset_seconds === 0 && Number.isFinite(airRow?.latitude) && Number.isFinite(airRow?.longitude)
+    && distanceKm(point.lat, point.lng, airRow.latitude, airRow.longitude) <= 35
+    && airRow?.hourly_units?.pm2_5 === "μg/m³" && airRow?.hourly_units?.pm10 === "μg/m³"
+    && airRow?.hourly_units?.dust === "μg/m³" && airRow?.hourly_units?.aerosol_optical_depth === "";
+  const windOk = windRow?.utc_offset_seconds === 0 && Number.isFinite(windRow?.latitude) && Number.isFinite(windRow?.longitude)
+    && distanceKm(point.lat, point.lng, windRow.latitude, windRow.longitude) <= 20
+    && windRow?.hourly_units?.wind_speed_10m === "m/s" && windRow?.hourly_units?.wind_direction_10m === "°";
+  const airTimes = Array.isArray(airRow?.hourly?.time) ? airRow.hourly.time : [];
+  const windTimes = Array.isArray(windRow?.hourly?.time) ? windRow.hourly.time : [];
+  const joined = airOk && windOk && airTimes.length === windTimes.length
+    && airTimes.every((t: string, i: number) => normalizedUtc(t) === normalizedUtc(windTimes[i]));
+  if (!joined) {
+    return jsonResponse({ available: false, checkedAt: new Date().toISOString(),
+      error: "air_timeline_unavailable", airAvailable: Boolean(airOk), windAvailable: Boolean(windOk),
+      note: "Model timeline unavailable or failed validation; no values are assumed." },
+      { status: 503, headers: { "cache-control": "no-store" } });
+  }
+  const bounded = (v: unknown, max: number) => typeof v === "number" && Number.isFinite(v) && v >= 0 && v <= max ? v : null;
+  const times = airTimes.map((t: string, i: number) => ({
+    validAt: normalizedUtc(t),
+    pm25: bounded(airRow.hourly.pm2_5[i], 1000),
+    pm10: bounded(airRow.hourly.pm10[i], 2000),
+    dust: bounded(airRow.hourly.dust[i], 2000),
+    aod: bounded(airRow.hourly.aerosol_optical_depth[i], 10),
+    windMs: bounded(windRow.hourly.wind_speed_10m[i], 100),
+    windFromDeg: typeof windRow.hourly.wind_direction_10m[i] === "number" && Number.isFinite(windRow.hourly.wind_direction_10m[i]) ? windRow.hourly.wind_direction_10m[i] : null,
+  }));
+  const withValues = times.filter((r: any) => r.pm25 !== null || r.pm10 !== null || r.windMs !== null);
+  if (!withValues.length) {
+    return jsonResponse({ available: false, checkedAt: new Date().toISOString(), error: "air_timeline_empty",
+      note: "The model returned no usable values for the window; nothing is shown as zero." },
+      { status: 503, headers: { "cache-control": "no-store" } });
+  }
+  return jsonResponse({
+    available: true, checkedAt: new Date().toISOString(),
+    sample: { lat: point.lat, lng: point.lng, name: point.name, name_id: point.name_id },
+    grid: { air: { lat: airRow.latitude, lng: airRow.longitude }, wind: { lat: windRow.latitude, lng: windRow.longitude } },
+    resolution: "CAMS global 0.4° (~45 km); hourly API output interpolated from the native three-hourly model",
+    hours: times.length, firstValidAt: times[0].validAt, lastValidAt: times[times.length - 1].validAt,
+    times, source: "Open-Meteo / CAMS + Open-Meteo wind models", sourceUrl: "https://open-meteo.com/en/docs/air-quality-api",
+    tier: "model-forecast",
+    note: "Every value is model output for one CAMS cell, not a measurement. Unknown stays null, never zero. Wind transport drawn from this data is an illustration of speed and bearing, not a concentration or plume.",
+  }, { headers: { "cache-control": "public, max-age=600" } });
+}
+
 // ── /api/health — quick liveness probe ────────────────────────────────────
 
 async function handleHealth(env: Env): Promise<Response> {
@@ -728,6 +795,7 @@ async function routeRequest(request: Request, env: Env): Promise<Response> {
   if (path === "/api/atlas/rainfall") return handleRainfall();
   if (path === "/api/atlas/watch") return handleCityWatch();
   if (path === "/api/atlas/air-quality") return handleAirQuality();
+  if (path === "/api/atlas/air-timeline") return handleAirTimeline();
   if (path === "/api/atlas/areas") return handleAreas(request, env);
   if (path === "/api/atlas/districts") return handleDistricts();
   if (path === "/api/atlas/at-this-point") return handleAtThisPoint(request, env);

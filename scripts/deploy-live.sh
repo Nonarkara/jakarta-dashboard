@@ -10,6 +10,7 @@ cd "$(dirname "$0")/.."
 LOCK=.deploy-locked
 if ! mkdir "$LOCK"; then
   echo "release refused: another deploy holds the lock" >&2
+  echo "if no deploy is actually running (a SIGKILL left this behind): rmdir $LOCK" >&2
   exit 1
 fi
 trap 'rmdir "$LOCK"' EXIT

@@ -11,12 +11,14 @@ export function approachSector(lng,lat) {
 export function createController(map,{text:t,active,buildTag}) {
   let mode=null,epoch=0,water=null,cameras=null,hydrology=null,jaxa=null,nasa=null,lastBody=null;
   const listeners=[]; let player=null, video=null, playRequest=0;
+  const pending=new Set();
+  async function get(path){const c=new AbortController();const timer=setTimeout(()=>c.abort(new Error('timeout')),12000);pending.add(c);try{const response=await fetch(path,{headers:{accept:'application/json'},signal:c.signal});if(!response.ok)throw new Error('source '+response.status);return await response.json();}finally{clearTimeout(timer);pending.delete(c);}}
+  function cancelPending(){for(const c of pending)c.abort(new Error('lens closed'));}
   const ids=['network-water-fill','network-water-lines','network-water-labels','network-gauges','network-cameras','network-clusters','network-counts','network-comparison'];
   const safeUrl=u=>{try{const url=new URL(u);return ['https:','http:'].includes(url.protocol)?url.href:null;}catch{return null;}};
   const el=(tag,content,cls)=>{const node=document.createElement(tag);if(content!==undefined)node.textContent=content;if(cls)node.className=cls;return node;};
   const number=(n,d=1)=>Number.isFinite(n)?n.toLocaleString(t('en-GB','id-ID'),{maximumFractionDigits:d}):t('Unavailable','Tidak tersedia');
   const time=v=>v?new Date(v).toLocaleString(t('en-GB','id-ID'),{timeZone:'Asia/Jakarta'})+' WIB':t('Undated / rejected','Tanpa tanggal / ditolak');
-  async function get(path){const response=await fetch(path,{headers:{accept:'application/json'}});if(!response.ok)throw new Error('source '+response.status);return response.json();}
   function link(label,url){const a=el('a',label);const href=safeUrl(url);if(href)a.href=href;a.target='_blank';a.rel='noopener noreferrer';return a;}
   function note(parent,en,id){parent.append(el('p',t(en,id),'note'));}
   function button(parent,label,run){const b=el('button',label);b.type='button';b.addEventListener('click',run);parent.append(b);return b;}
@@ -24,7 +26,7 @@ export function createController(map,{text:t,active,buildTag}) {
   function on(event,id,callback){map.on(event,id,callback);listeners.push([event,id,callback]);}
   function focusFeature(feature,body){const c=feature.geometry.type==='Point'?feature.geometry.coordinates:null;if(c)map.flyTo({center:c,zoom:14,pitch:35});document.getElementById('atlas-lens-evidence').open=true;body.scrollIntoView({block:'nearest'});}
   function removeLayers(){for(const id of ids)if(map.getLayer(id))map.removeLayer(id);for(const id of ids)if(map.getSource(id))map.removeSource(id);for(const [event,id,callback] of listeners)map.off(event,id,callback);listeners.length=0;}
-  function clear(){epoch++;playRequest++;mode=null;removeLayers();lastBody=null;player?.destroy();player=null;if(video){video.pause();video.removeAttribute("src");video.load();video=null;}}
+  function clear(){epoch++;playRequest++;mode=null;cancelPending();removeLayers();lastBody=null;player?.destroy();player=null;if(video){video.pause();video.removeAttribute("src");video.load();video=null;}}
   function pointLayer(id,data,paint,cluster=false){map.addSource(id,{type:'geojson',data,cluster,clusterRadius:40,clusterMaxZoom:14});const layer={id,type:'circle',source:id,paint};if(cluster)layer.filter=['!', ['has','point_count']];map.addLayer(layer);}
   function gaugeFeature(row){return {type:'Feature',geometry:{type:'Point',coordinates:[row.lng,row.lat]},properties:{id:row.id,name:row.name,levelM:row.levelM,observedAt:row.observedAt,basin:row.basin}};}
   function featureCollection(features){return {type:'FeatureCollection',features};}
@@ -38,7 +40,10 @@ export function createController(map,{text:t,active,buildTag}) {
   function renderGauge(parent,row){
     parent.replaceChildren();parent.append(el('h3',row.name));const [en,id]=approachSector(row.lng,row.lat);
     parent.append(el('p',row.basin+' · '+t(en,id)+' '+t('of Monas','dari Monas')));
+    const state=row.levelState||'unknown';
+    const stateText=state==='fresh'?t('Current level · under 3 h old','Tinggi terkini · di bawah 3 jam'):state==='stale'?t('Dated evidence · older than 3 h, not a current level','Bukti bertanggal · lebih dari 3 jam, bukan tinggi terkini'):t('No usable level at this gauge','Tidak ada tinggi yang dapat dipakai di pos ini');
     parent.append(el('p',number(row.levelM,2)+' '+t('m at local gauge datum','m pada datum pos setempat')+' · '+time(row.observedAt)));
+    parent.append(el('p',stateText,state==='fresh'?'network-state network-state--fresh':'network-state'));
     parent.append(el('p',row.lat.toFixed(5)+', '+row.lng.toFixed(5),'network-location'));
     note(parent,'Sector is station position, not a measured inflow vector. A level is not flow velocity or m³/s. Stations along the same river must not be added together.','Sektor menunjukkan posisi pos, bukan vektor air masuk terukur. Tinggi air bukan kecepatan aliran atau m³/s. Pos sepanjang sungai yang sama tidak boleh dijumlahkan.');
     parent.append(link('BBWS / EWS ↗',row.sourceUrl));
@@ -92,15 +97,17 @@ export function createController(map,{text:t,active,buildTag}) {
     measure.append(el('p',t('Loading publisher readings…','Memuat pembacaan penerbit…')));
     comparison(section(body,'Satellite & model comparison','Perbandingan satelit & model'),token).catch(()=>{});
     try {hydrology=await get('/api/atlas/hydrology');}catch{hydrology={stations:[],predictions:[],available:false};}
-    if(!hydrology.stations?.length){const reference=await get('/data/jakarta-v1/hydrology-reference.json?v='+buildTag);hydrology={...hydrology,stations:reference.stations.map(s=>({...s,levelM:null,observedAt:null,sourceUrl:reference.sourceUrl})),checkedAt:hydrology.checkedAt||reference.checkedAt,predictions:hydrology.predictions||[]};}if(token!==epoch)return;
-    measure.replaceChildren();const valid=hydrology.stations.filter(s=>s.levelM!==null);
-    measure.append(el('p',number(valid.length,0)+' / '+number(hydrology.stations.length,0)+' '+t('published gauge levels usable','tinggi air pos terpublikasi dapat dipakai')+' · '+time(hydrology.checkedAt)));
-    note(measure,'Gauge levels use local datums. No city-wide measured inflow or direction is available from these levels; invalid future timestamps are excluded.','Tinggi pos memakai datum setempat. Pembacaan ini tidak memberikan total air masuk atau arah aliran kota terukur; waktu masa depan yang tidak valid dikeluarkan.');
+    if(!hydrology.stations?.length){const reference=await get('/data/jakarta-v1/hydrology-reference.json?v='+buildTag);hydrology={...hydrology,stations:reference.stations.map(s=>({...s,levelM:null,observedAt:null,levelState:'unknown',sourceUrl:reference.sourceUrl})),checkedAt:hydrology.checkedAt||reference.checkedAt,predictions:hydrology.predictions||[]};}if(token!==epoch)return;
+    measure.replaceChildren();
+    const fresh=hydrology.stations.filter(s=>s.levelState==='fresh').length;
+    const dated=hydrology.stations.filter(s=>s.levelM!==null&&s.levelState!=='fresh').length;
+    measure.append(el('p',number(fresh,0)+' '+t('current levels','tinggi terkini')+' · '+number(dated,0)+' '+t('kept as dated evidence','disimpan sebagai bukti bertanggal')+' · '+number(hydrology.stations.length-fresh-dated,0)+' '+t('without a usable level','tanpa tinggi terpakai')+' / '+number(hydrology.stations.length,0)+' '+t('gauges','pos')+' · '+time(hydrology.checkedAt)));
+    note(measure,'Gauge levels use local datums. A reading older than three hours is dated evidence, never a current level — a trial display policy, not a provider service interval. Invalid future timestamps are excluded. No city-wide measured inflow or direction is available from these levels.','Tinggi pos memakai datum setempat. Pembacaan lebih dari tiga jam adalah bukti bertanggal, bukan tinggi terkini — kebijakan tampilan percobaan, bukan interval layanan penyedia. Waktu masa depan yang tidak valid dikeluarkan. Pembacaan ini tidak memberikan total air masuk atau arah aliran kota terukur.');
     if(hydrology.stations.length){
       pointLayer('network-gauges',featureCollection(hydrology.stations.map(gaugeFeature)),{'circle-radius':5,'circle-color':'#d74841','circle-stroke-color':'#fff','circle-stroke-width':1});
       on('click','network-gauges',event=>{const row=hydrology.stations.find(s=>s.id===event.features?.[0]?.properties.id);if(row){renderGauge(selected,row);selected.parentElement.open=true;document.getElementById('atlas-lens-evidence').open=true;}});
       const list=section(measure,'Gauge positions & readings','Posisi pos & pembacaan');
-      for(const row of hydrology.stations){const [en,id]=approachSector(row.lng,row.lat);button(list,row.name+' · '+row.basin+' · '+t(en,id)+' · '+number(row.levelM,2)+' m · '+time(row.observedAt),()=>{renderGauge(selected,row);selected.parentElement.open=true;focusFeature(gaugeFeature(row),selected);});}
+      for(const row of hydrology.stations){const [en,id]=approachSector(row.lng,row.lat);const state=row.levelState||'unknown';const stateLabel=state==='fresh'?t('current','terkini'):state==='stale'?t('dated evidence','bukti bertanggal'):t('no usable level','tanpa tinggi terpakai');button(list,row.name+' · '+row.basin+' · '+t(en,id)+' · '+number(row.levelM,2)+' m · '+stateLabel+' · '+time(row.observedAt),()=>{renderGauge(selected,row);selected.parentElement.open=true;focusFeature(gaugeFeature(row),selected);});}
     }
     const predicted=section(measure,'Predicted discharge by upstream section','Prediksi debit per penampang hulu');
     note(predicted,'Each row has its own valid time. Directions below are geographic sectors of exactly matched station locations, not measured water vectors. Unmatched locations remain unknown.','Setiap baris memiliki waktu berlaku tersendiri. Arah di bawah adalah sektor geografis lokasi pos yang cocok persis, bukan vektor air terukur. Lokasi yang belum cocok tetap tidak diketahui.');
@@ -162,7 +169,7 @@ export function createController(map,{text:t,active,buildTag}) {
     }
     body.append(link('ArcGIS catalogue ↗',cameras.sourceUrl));body.append(link('Dishub ATCS ↗','https://atcs-jakarta.com/index.html'));map.flyTo({center:[106.83,-6.20],zoom:10.2,pitch:0,bearing:0});
   }
-  async function show(lens,body){clear();mode=lens;lastBody=body;const token=epoch;body.textContent=t('Loading mapped evidence…','Memuat bukti terpetakan…');try{await(lens==='waterways'?showWater(body,token):showTraffic(body,token));}catch{if(token===epoch)body.textContent=t('This source is unavailable. No zero water or traffic is assumed.','Sumber ini tidak tersedia. Tidak diasumsikan air atau lalu lintas nol.');}}
+  async function show(lens,body){clear();mode=lens;lastBody=body;const token=epoch;body.textContent=t('Loading mapped evidence…','Memuat bukti terpetakan…');try{await(lens==='waterways'?showWater(body,token):showTraffic(body,token));}catch{if(token===epoch){body.replaceChildren();body.append(el('p',t('This source is unavailable. No zero water or traffic is assumed.','Sumber ini tidak tersedia. Tidak diasumsikan air atau lalu lintas nol.'),'note'));button(body,t('Try again','Coba lagi'),()=>show(lens,body));}}}
   function rerender(body){if(mode&&lastBody&&active()===mode)return show(mode,body);}
   return {show,clear,rerender};
 }
