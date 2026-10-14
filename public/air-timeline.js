@@ -108,9 +108,10 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
     }
     section.append(el('h3', t('CAMS 48-hour model timeline', 'Linimasa model CAMS 48 jam')));
     section.append(el('p', t('Model cell ', 'Sel model ') + data.grid.air.lat.toFixed(4) + ', ' + data.grid.air.lng.toFixed(4) + ' · ' + t('wind cell', 'sel angin') + ' ' + (data.grid.wind ? data.grid.wind.lat.toFixed(4) + ', ' + data.grid.wind.lng.toFixed(4) : t('unavailable','tidak tersedia')) + ' · ' + data.resolution, 'meta'));
-    section.append(el('p', t('Valid ', 'Berlaku ') + time(data.firstValidAt) + ' → ' + time(data.lastValidAt) + ' · ' + t('checked', 'diperiksa') + ' ' + time(data.checkedAt) + ' · ' + t('one CAMS cell; five dashboard samples share this cell', 'satu sel CAMS; lima sampel dasbor berbagi sel ini'), 'meta'));
+    section.append(el('p', t('Valid ', 'Berlaku ') + time(data.firstValidAt) + ' → ' + time(data.lastValidAt) + ' · ' + t('checked', 'diperiksa') + ' ' + time(data.checkedAt) + ' · ' + t('one CAMS cell; dashboard samples may share model cells', 'satu sel CAMS; sampel dasbor dapat berbagi sel model'), 'meta'));
     const peak = data.times.reduce((best, r) => Number.isFinite(r.pm25) && r.pm25 > (best?.pm25 ?? -Infinity) ? r : best, null);
     if (peak) section.append(el('p', t('Peak PM2.5 ', 'Puncak PM2.5 ') + number(peak.pm25, 1) + ' µg/m³ · ' + time(peak.validAt), 'meta'));
+    section.append(el('p',t('PM2.5, PM10 and dust: µg/m³. AOD: dimensionless. Wind: m/s and FROM degrees.', 'PM2.5, PM10 dan debu: µg/m³. AOD: tanpa satuan. Angin: m/s dan derajat arah DARI.'),'note'));
     const scroll = el('div', undefined, 'air-tl-scroll');
     const table = el('table'); table.className = 'air-tl-table';
     const head = el('tr');
