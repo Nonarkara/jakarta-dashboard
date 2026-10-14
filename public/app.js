@@ -541,7 +541,7 @@ async function addAirQuality() {
 function addFires() {
   mapInstance.addSource("jkt-fires-src", {
     type: "geojson",
-    data: { type: "FeatureCollection", features: [] },
+    data: firesData || { type: "FeatureCollection", features: [] },
     attribution: "Fire detections: NASA FIRMS (NOAA-20 VIIRS)",
   });
   mapInstance.addLayer({
@@ -1351,6 +1351,7 @@ async function applyEnvironmentOverlay() {
   const before = mapInstance.getLayer('jkt-buildings') ? 'jkt-buildings' : undefined;
   mapInstance.addSource('environment-overlay', { type: 'raster', tiles: product.tiles, tileSize: 256, maxzoom: product.maxzoom, attribution: product.source + ' — ' + product.date });
   mapInstance.addLayer({ id: 'environment-overlay', type: 'raster', source: 'environment-overlay', paint: { 'raster-opacity': Number(document.getElementById('atlas-environment-opacity').value) / 100, 'raster-resampling': 'nearest' } }, before);
+  if (mapInstance.getLayer('fire-hotspots')) mapInstance.moveLayer('fire-hotspots');
   if (radar && document.getElementById('atlas-radar-coverage').checked) {
     mapInstance.addSource('radar-coverage', { type: 'raster', tiles: product.coverageTiles, tileSize: 256, maxzoom: 7 });
     mapInstance.addLayer({ id: 'radar-coverage', type: 'raster', source: 'radar-coverage', paint: { 'raster-opacity': 0.65 } }, before);
@@ -2121,7 +2122,7 @@ async function selectCityLens(lens) {
   stopWaterPlayback();
   observationController?.clear();
   airTimelineController?.clear();
-  ['water-scenario-route', 'water-scenario-front', 'water-scenario-stations', 'water-scenario-labels'].forEach(dropInsightLayer);
+  ['water-scenario-labels', 'water-scenario-route', 'water-scenario-front', 'water-scenario-stations'].forEach(dropInsightLayer);
   document.getElementById('water-scenario-location')?.remove();
   document.getElementById('monitoring-location')?.remove();
   document.body.dataset.lens = lens;

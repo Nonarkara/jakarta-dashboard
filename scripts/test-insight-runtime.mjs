@@ -79,7 +79,7 @@ class FakeMap {
   addSource(id, source) { this.sources[id] = { ...source, setData(data) { this.data = data; } }; }
   addLayer(layer) { this.layers[layer.id] = { ...layer, layout: { ...layer.layout } }; }
   removeLayer(id) { this.removed.push(id); delete this.layers[id]; }
-  removeSource(id) { this.removed.push(id); delete this.sources[id]; }
+  removeSource(id) { if(Object.values(this.layers).some(layer=>layer.source===id))throw new Error('source still referenced: '+id); this.removed.push(id); delete this.sources[id]; }
   getLayer(id) { return this.layers[id]; } getSource(id) { return this.sources[id]; }
   getLayoutProperty(id, p) { return this.layers[id]?.layout?.[p]; }
   setPaintProperty(id, p, v) { this.layers[id].paint[p] = v; }
