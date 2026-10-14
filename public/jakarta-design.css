@@ -495,3 +495,4 @@ body.atlas-embedded .atlas-embedded-evidence .atlas-data,
 body.atlas-embedded .atlas-embedded-evidence .atlas-footer { padding-inline:0; }
 
 body.atlas-workbench .atlas-lens-popup a { color:var(--accent); }
+input[type="range"], input[type="checkbox"] { accent-color:var(--accent); }
