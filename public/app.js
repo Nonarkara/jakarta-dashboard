@@ -43,7 +43,7 @@ let mapInstance = null;
 // Build tag sent to an embedding page in the `jakarta-atlas` ready
 // postMessage. `scripts/stamp-build-id.mjs` rewrites this on every
 // deploy so the dashboard can detect a stale iframe bundle.
-const ATLAS_BUILD_TAG = "jakarta-atlas-20261014-1791975405-9a647d9";
+const ATLAS_BUILD_TAG = "jakarta-atlas-20261014-1791988726-394eba1";
 // Append a build-tag query string to the PMTiles URLs so every deploy
 // busts Cloudflare's edge cache. Without this, the first GET (which the
 // protocol handler makes without a Range header) gets cached as 200 OK
@@ -2071,6 +2071,11 @@ function renderLensEvidence() {
   const body = document.getElementById('atlas-lens-body');
   if (['waterways','traffic'].includes(activeLens)) { if (!observationController) body.textContent=lensText('Loading mapped evidence…','Memuat bukti terpetakan…'); return; }
   body.replaceChildren();
+  if (activeLens === 'air') {
+    if (airTimelineController) airTimelineController.render(body);
+    else body.textContent=lensText('Loading the model timeline…','Memuat linimasa model…');
+    return;
+  }
   if (activeLens === 'haze') { renderHazeEvidence(body); return; }
   if (activeLens === 'arrival') { renderWaterScenario(); return; }
   if (INSIGHT_LENSES.includes(activeLens)) {
