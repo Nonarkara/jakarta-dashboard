@@ -349,3 +349,9 @@ await vm.runInContext("selectCityLens('city')",context);
 assert.equal(vm.runInContext('mapInstance.minZoom',context),9,'leaving regional evidence restores city zoom floor');
 assert.equal(vm.runInContext("mapInstance.getLayoutProperty('fire-hotspots','visibility')",context),'none');
 console.log('PASS regional haze: meaningful regional zoom, source limits and direct-exit cleanup');
+
+vm.runInContext("airTimelineController={render(body){const p=document.createElement('p');p.textContent='retained air timeline';body.append(p);}};activeLens='air';renderLensEvidence();",context);
+assert.match(textOf(get('atlas-lens-body')),/retained air timeline/,'air lens renders its controller after a general evidence refresh');
+vm.runInContext('renderLensEvidence()',context);
+assert.equal(textOf(get('atlas-lens-body')),'retained air timeline','repeated evidence refresh preserves exactly one air panel');
+console.log('PASS air evidence refresh: controller delegation preserves the model timeline');

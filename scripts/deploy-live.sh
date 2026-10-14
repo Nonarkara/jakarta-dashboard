@@ -13,7 +13,7 @@ if ! mkdir "$LOCK"; then
   echo "if no deploy is actually running (a SIGKILL left this behind): rmdir $LOCK" >&2
   exit 1
 fi
-trap 'rmdir "$LOCK"' EXIT
+trap 'if [ -f "$LOCK/inputs.json" ]; then unlink "$LOCK/inputs.json"; fi; rmdir "$LOCK"' EXIT
 
 check_clean() {
   if ! git diff --quiet || ! git diff --cached --quiet; then
@@ -30,7 +30,10 @@ npm test
 # tree meanwhile. The committed-work guarantee must hold at the deploy moment,
 # not only at the gate.
 check_clean
-npm run deploy
+npm run stamp
+node scripts/release-snapshot.mjs write "$LOCK/inputs.json"
+npx wrangler deploy
+node scripts/release-snapshot.mjs check "$LOCK/inputs.json"
 ATLAS_URL="${ATLAS_URL:-https://jakarta.nonarkara.org}"
 EXPECTED_BUILD="$(node --input-type=module -e 'import {readFileSync} from "node:fs"; console.log(readFileSync("public/app.js", "utf8").match(/const ATLAS_BUILD_TAG = "([^"]+)"/)[1])')"
 export EXPECTED_BUILD
@@ -40,6 +43,7 @@ ATLAS_BASE="$ATLAS_URL" npm run smoke
 ATLAS_URL="$ATLAS_URL" npm run smoke:api
 
 npm run smoke:dashboard
+node scripts/release-snapshot.mjs check "$LOCK/inputs.json"
 
 # The stamp rewrites the asset cache-busters, so the tree is dirty by design once
 # a deploy runs. Commit exactly those four stamped files, never `git add -A`, and
