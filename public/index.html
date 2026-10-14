@@ -70,7 +70,8 @@
       <button data-lens="cloud" aria-pressed="false">Himawari clouds</button>
       <button data-lens="water" aria-pressed="false">Observed water</button>
       <button data-lens="recurring" aria-pressed="false">Recurring water</button>
-      <button data-lens="air" aria-pressed="false">Aerosol</button>
+      <button data-lens="air" aria-pressed="false">Air & wind</button>
+      <button data-lens="haze" aria-pressed="false">Regional haze</button>
     </nav>
     <section class="atlas-lens-story" aria-live="polite"><strong id="atlas-lens-title">Read the city, from skyline to street</strong><span id="atlas-lens-description">Choose a map lens. Sources and valid times stay with the evidence.</span></section>
     <div class="atlas-map-wrap">
@@ -127,6 +128,10 @@
           <span class="atlas-toggle-swatch atlas-toggle-swatch--aqi"></span>
           <span id="atlas-aqi-label">Air quality · checking</span>
         </button>
+        <button type="button" class="atlas-toggle" aria-pressed="false" data-layer-toggle="fire-hotspots">
+          <span class="atlas-toggle-swatch atlas-toggle-swatch--fire"></span>
+          <span id="atlas-fires-label">Thermal detections · on demand</span>
+        </button>
         <button type="button" class="atlas-toggle atlas-toggle--on" aria-pressed="true" data-layer-toggle="rain-model-samples"><span class="atlas-toggle-swatch atlas-toggle-swatch--poi"></span><span>Weather model sample points</span></button>
         <button type="button" id="atlas-orbit-btn" aria-pressed="false" class="atlas-flyover-btn">Enable orbit</button>
         <p class="atlas-eyebrow atlas-eyebrow--mt">Basemap</p>
@@ -171,7 +176,7 @@
       <div class="atlas-environment-controls">
         <label>Environmental layer <select id="atlas-environment-layer" aria-label="Environmental layer">
           <option value="none">No environmental overlay</option><option value="radar">Rain radar</option>
-          <option value="himawari">Himawari infrared clouds</option><option value="surface-water">Satellite surface water / flood</option><option value="aerosol">Satellite aerosol optical depth</option><option value="satellite-rain">Satellite rainfall estimate</option>
+          <option value="himawari">Himawari infrared clouds</option><option value="surface-water">Satellite surface water / flood</option><option value="aerosol">Satellite aerosol optical depth</option><option value="satellite-rain">Satellite rainfall estimate</option><option value="true-colour">Visible satellite imagery</option>
         </select></label>
         <details class="atlas-extra-controls" id="atlas-extra-controls"><summary>Layer settings</summary><div class="atlas-extra-controls-body">
         <label id="atlas-satellite-date-control" hidden><span id="atlas-satellite-date-label">Satellite day</span> <select id="atlas-satellite-date" aria-label="Satellite day"></select></label>

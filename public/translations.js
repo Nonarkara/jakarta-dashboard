@@ -2,6 +2,11 @@
 // Ported from the hcmc-3d-atlas Vietnamese catalog. Keep keys identical to the
 // English strings in index.html, app.js and the Worker's watch statements.
 window.ATLAS_ID = {
+  "Air & wind": "Udara & angin", "Regional haze": "Kabut asap kawasan",
+  "Thermal detections · checking": "Deteksi termal · memeriksa",
+  "Thermal detections · on demand": "Deteksi termal · sesuai permintaan",
+  "Visible satellite imagery": "Citra satelit tampak",
+  "Visible satellite imagery can show clouds, land and smoke-like features. It does not identify a pollution source or measure surface concentration.": "Citra satelit tampak dapat memperlihatkan awan, daratan dan bentuk menyerupai asap. Tidak mengidentifikasi sumber polusi atau mengukur konsentrasi permukaan.",
   "Waterways & inflow": "Alur air & air masuk", "Traffic cameras": "Kamera lalu lintas",
   "and": "dan", "City dashboard": "Dasbor kota",
   "Himawari clouds": "Awan Himawari",

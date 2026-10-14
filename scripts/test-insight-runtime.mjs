@@ -69,6 +69,7 @@ class FakeMap {
     this.handlers = []; this.removed = [];
     this.buildings = [];
   }
+  setMinZoom(value) { this.minZoom=value; }
   getPitch() { return 60; } getBearing() { return -18; } setMaxPitch() {}
   dragRotate = { enable() {}, disable() {} }; easeTo() {} resize() {} addControl() {} setLight() {}
   fitBounds(bounds,options) { this.bounds={bounds,options}; }
@@ -339,3 +340,12 @@ sizingMap.moving=true;resizeCallback();
 assert.equal(sizingMap.resizes,1,'same viewport does not resize on HUD changes');assert.equal(sizingMap.moving,true,'camera motion survives HUD updates');
 viewportRect={width:390,height:756};resizeCallback();assert.equal(sizingMap.resizes,2,'actual viewport change still resizes');
 console.log('PASS map sizing: initial canvas setup, live-reading stability and responsive resize');
+
+await vm.runInContext("selectCityLens('haze')", context);
+assert.equal(vm.runInContext('mapInstance.minZoom',context),4,'regional haze permits the documented regional view');
+assert.equal(vm.runInContext("mapInstance.getLayoutProperty('fire-hotspots','visibility')",context),'visible');
+assert.match(textOf(get('atlas-lens-body')),/thermal detections|deteksi termal/i,'haze keeps satellite interpretation visible');
+await vm.runInContext("selectCityLens('city')",context);
+assert.equal(vm.runInContext('mapInstance.minZoom',context),9,'leaving regional evidence restores city zoom floor');
+assert.equal(vm.runInContext("mapInstance.getLayoutProperty('fire-hotspots','visibility')",context),'none');
+console.log('PASS regional haze: meaningful regional zoom, source limits and direct-exit cleanup');

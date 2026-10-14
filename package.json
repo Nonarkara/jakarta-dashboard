@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Bahasa Indonesia–English research atlas for Jakarta: 3D urban form with per-building satellite heights, OSM rail and waterways, dated satellite water and aerosols, Himawari clouds, radar and rainfall models.",
+  "description": "Bahasa Indonesia\u2013English research atlas for Jakarta: 3D urban form with per-building satellite heights, OSM rail and waterways, dated satellite water and aerosols, Himawari clouds, radar and rainfall models.",
   "scripts": {
     "dev": "wrangler dev",
     "stamp": "node scripts/stamp-build-id.mjs",
@@ -14,7 +14,7 @@
     "verify": "node scripts/verify-local.mjs",
     "smoke": "node scripts/smoke-atlas.mjs",
     "smoke:api": "node scripts/smoke-atlas-api.mjs",
-    "test": "node scripts/test-release-contract.mjs && node scripts/test-client-contract.mjs && node scripts/test-theme-contract.mjs && node scripts/test-environment-contract.mjs && node scripts/test-i18n-contract.mjs && node scripts/test-browser-forecast.mjs && node scripts/test-jakarta-contract.mjs && node scripts/test-localized-design.mjs && node scripts/test-popup-contract.mjs && node scripts/test-building-filter.mjs && node scripts/test-official-data.mjs && node scripts/test-flood-network.mjs && node scripts/test-insight-views.mjs && node scripts/test-insight-runtime.mjs && node scripts/test-research-paper.mjs && node scripts/test-water-traffic.mjs && node scripts/test-ciliwung-route.mjs && node scripts/test-air-timeline.mjs",
+    "test": "node scripts/test-release-contract.mjs && node scripts/test-client-contract.mjs && node scripts/test-theme-contract.mjs && node scripts/test-environment-contract.mjs && node scripts/test-i18n-contract.mjs && node scripts/test-browser-forecast.mjs && node scripts/test-jakarta-contract.mjs && node scripts/test-localized-design.mjs && node scripts/test-popup-contract.mjs && node scripts/test-building-filter.mjs && node scripts/test-official-data.mjs && node scripts/test-flood-network.mjs && node scripts/test-insight-views.mjs && node scripts/test-insight-runtime.mjs && node scripts/test-research-paper.mjs && node scripts/test-water-traffic.mjs && node scripts/test-ciliwung-route.mjs && node scripts/test-air-timeline.mjs && node scripts/test-fires-air-forecast.mjs && node scripts/test-source-catalog.mjs",
     "bake:buildings": "python3 scripts/bake-buildings.py extract && python3 scripts/bake-buildings.py heights && python3 scripts/bake-buildings.py bake",
     "bake:osm": "python3 scripts/bake-osm-layers.py rail && python3 scripts/bake-osm-layers.py waterways",
     "smoke:dashboard": "node scripts/smoke-dashboard.mjs",

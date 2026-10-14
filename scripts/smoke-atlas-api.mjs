@@ -20,7 +20,7 @@ function soft(name, ok, detail = "") {
 
 async function get(path) {
   const url = `${ATLAS_URL}${path}`;
-  const res = await fetch(url, { headers: { accept: "application/json" } });
+  const res = await fetch(url, { headers: { accept: "application/json" }, signal:AbortSignal.timeout(45000) });
   let body = null;
   try { body = await res.json(); } catch { body = null; }
   return { status: res.status, body };
@@ -68,7 +68,7 @@ async function get(path) {
 
   {
     const r = await get("/api/atlas/environment");
-    check("NASA products expose usable dated imagery", r.status === 200 && r.body?.products?.length === 4 && r.body.products.filter(p => p.id !== "himawari").every(p => p.available && /^\d{4}-\d{2}-\d{2}$/.test(p.date) && p.tiles?.length === 1 && p.dates?.includes(p.date)), `${r.status} products=${r.body?.products?.length}`);
+    check("NASA products expose usable dated imagery", r.status === 200 && r.body?.products?.length === 5 && r.body.products.filter(p => p.id !== "himawari").every(p => p.available && /^\d{4}-\d{2}-\d{2}$/.test(p.date) && p.tiles?.length === 1 && p.dates?.includes(p.date)), `${r.status} products=${r.body?.products?.length}`);
     const himawari = r.body?.products?.find(p => p.id === 'himawari');
     check("Himawari exposes a dated infrared frame", himawari?.available && himawari.date?.includes('T') && himawari.tiles?.length === 1, himawari?.date || 'unavailable');
     check("radar exposes past observations", r.status === 200 && r.body?.radar?.available && r.body.radar.frames?.length > 0 && r.body.radar.frames.every(f => Number.isFinite(Date.parse(f.observedAt))), `frames=${r.body?.radar?.frames?.length}`);
@@ -76,6 +76,17 @@ async function get(path) {
   {
     const r = await get("/api/atlas/rainfall");
     soft("rainfall exposes five valid model samples", r.status === 200 && r.body?.points?.length === 5 && r.body.points.every(p => p.available && Number.isFinite(p.precipitationMm) && Number.isFinite(p.next24hMm) && p.validAt?.endsWith("Z")), `${r.status} points=${r.body?.points?.length}`);
+  }
+
+  {
+    const r=await get('/api/atlas/fires');
+    check('thermal detections are bounded and dated, or explicitly unavailable',
+      r.status===503 && r.body?.error==='fires_unavailable' || r.status===200 && r.body?.type==='FeatureCollection' && r.body.windowHours===24 && r.body.tier==='satellite-detection' && r.body.count===r.body.features?.length && r.body.features.every(f=>Number.isFinite(Date.parse(f.properties.observedAt)) && Date.now()-Date.parse(f.properties.observedAt)<=25*3600000), `HTTP ${r.status} admitted=${r.body?.count??'unavailable'}`);
+  }
+  {
+    const r=await get('/api/atlas/air-timeline');
+    check('air timeline exposes validated model hours or a bounded outage',
+      r.status===503 && r.body?.available===false || r.status===200 && r.body?.available===true && r.body.tier==='model-forecast' && r.body.times?.length===48 && r.body.times.every(row=>row.validAt?.endsWith('Z')), `HTTP ${r.status} hours=${r.body?.times?.length??'unavailable'}`);
   }
 
   let pass = 0, hard = 0;

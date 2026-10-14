@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {gunzipSync} from 'node:zlib';
 import {hydrologyModuleUrl} from './hydrology-test-module.mjs';
-import {volumeM3,approachSector,createController} from '../public/water-traffic.js';
+import {volumeM3,approachSector,createController,readObservationResponse} from '../public/water-traffic.js';
 const {cleanGauge,parseDischargePredictions,handleHydrology}=await import(hydrologyModuleUrl);
 const load=name=>JSON.parse(readFileSync(new URL('../public/data/jakarta-v1/'+name,import.meta.url),'utf8'));
 const water=load('waterways.geojson'),cameras=load('traffic-cameras.geojson');
@@ -100,6 +100,30 @@ mockHydrology(new Error('gauge branch down'),predictionHtml);
 const partial=await handleHydrology(new Request('https://atlas.test/api/atlas/hydrology'),{});
 assert.equal(partial.status,200);const partialBody=await partial.json();
 assert.equal(partialBody.available,true);assert.equal(partialBody.levelsAvailable,false);assert.equal(partialBody.predictionsAvailable,true);
+// Stale-only publisher response retains old observations without claiming current availability.
+store=new Map();
+mockHydrology(JSON.stringify(gaugeEnvelope([{name:'Dated station',level:2.4,at:'2020-01-01T09:00:00'}])),'<ul></ul>');
+const staleOnly=await handleHydrology(new Request('https://atlas.test/api/atlas/hydrology'),{});
+assert.equal(staleOnly.status,503);assert.equal(staleOnly.headers.get('cache-control'),'no-store');
+const datedBody=await readObservationResponse(staleOnly,'/api/atlas/hydrology');
+assert.equal(datedBody.available,false);assert.equal(datedBody.freshLevels,0);assert.equal(datedBody.stations[0].levelM,2.4);assert.equal(datedBody.stations[0].levelState,'stale');
+assert.equal(store.size,0,'stale-only envelope is not cached as current data');
+for(const bad of [{error:'down'}, {...datedBody,freshLevels:1}, {...datedBody,stations:[{...datedBody.stations[0],fresh:true}]}, {...datedBody,stations:[{...datedBody.stations[0],lng:Infinity}]}])await assert.rejects(readObservationResponse(Response.json(bad,{status:503}),'/api/atlas/hydrology'));
+await assert.rejects(readObservationResponse(Response.json(datedBody,{status:404}),'/api/atlas/hydrology'));
+await assert.rejects(readObservationResponse(Response.json(datedBody,{status:503}),'/api/atlas/jaxa-water'));
+// Drive the real water lens to prove stale values stay visible but current count is zero.
+{
+  const oldDocument=globalThis.document,oldOption=globalThis.Option;
+  function node(tag='div'){return {tagName:tag,children:[],textContent:'',value:'',append(...nodes){this.children.push(...nodes);for(const n of nodes)if(n&&typeof n==='object')n.parentElement=this;},replaceChildren(...nodes){this.children=[];this.append(...nodes);},setAttribute(){},addEventListener(){},scrollIntoView(){}};}
+  globalThis.document={createElement:node,getElementById:()=>node()};globalThis.Option=class{constructor(text,value){this.textContent=text;this.value=value;}};
+  globalThis.fetch=async path=>String(path).includes('waterways.geojson')?Response.json(water):String(path)==='/api/atlas/hydrology'?Response.json(datedBody,{status:503}):Response.json({}, {status:503});
+  const testMap={addSource(){},addLayer(){},getLayer(){},getSource(){},on(){},off(){},flyTo(){}};
+  const body=node();const ui=createController(testMap,{text:e=>e,active:()=> 'waterways',buildTag:'test'});
+  await ui.show('waterways',body);
+  const text=n=>(n.textContent||'')+' '+(n.children||[]).map(text).join(' ');
+  assert.match(text(body),/0 current levels/);assert.match(text(body),/1 kept as dated evidence/);assert.match(text(body),/Dated station/);assert.match(text(body),/2.4 m/);
+  ui.clear();globalThis.document=oldDocument;globalThis.Option=oldOption;
+}
 globalThis.fetch=realFetch;delete globalThis.caches;
 // observation client: every request is bounded and cancelled on exit
 {

@@ -49,6 +49,8 @@ async function cached(key: string, fetcher: () => Promise<unknown>) {
   let payload: unknown;
   try { payload = await fetcher(); }
   catch { return Response.json({available:false,checkedAt:new Date().toISOString(),error:'Publisher unavailable; no zero flow is assumed.'},{status:503,headers:{'cache-control':'no-store'}}); }
+  if (payload && typeof payload === 'object' && (payload as {available?:boolean}).available === false)
+    return Response.json(payload,{status:503,headers:{'cache-control':'no-store'}});
   let response: Response;
   try { response = Response.json(payload,{headers:{'cache-control':'public,max-age=300'}}); }
   catch { return Response.json({available:false,checkedAt:new Date().toISOString(),error:'Response could not be serialised.'},{status:503,headers:{'cache-control':'no-store'}}); }
@@ -94,8 +96,7 @@ export async function handleHydrology(request: Request, env: Env) {
     const predictionsAvailable=html.status==='fulfilled'&&predictions.length>0;
     const freshLevels=stations.filter(s=>s?.fresh).length;
     const available=freshLevels>0||predictions.length>0;
-    if(!available) throw new Error('no valid hydrology data');
-    return {available,checkedAt:new Date().toISOString(),stations,predictions,levelsAvailable,predictionsAvailable,freshLevels,freshnessPolicy:FRESHNESS_POLICY,freshnessWindowMs:FRESH_WINDOW_MS,sourceUrl:EWS,levelDatum:'Local gauge datum; not comparable between stations',flowNote:'Predicted discharge is separate from observed gauge levels. Serial stations must not be summed as independent inflows.'};
+    return {contract:'hydrology-v1',available,error:available?null:'No current gauge level or predicted discharge available; dated evidence is retained.',checkedAt:new Date().toISOString(),stations,predictions,levelsAvailable,predictionsAvailable,freshLevels,freshnessPolicy:FRESHNESS_POLICY,freshnessWindowMs:FRESH_WINDOW_MS,sourceUrl:EWS,levelDatum:'Local gauge datum; not comparable between stations',flowNote:'Predicted discharge is separate from observed gauge levels. Serial stations must not be summed as independent inflows.'};
   });
   if(url.pathname==='/api/atlas/jaxa-water')return cached('jaxa-water',async()=>{
     const d=await publicFetch(JAXA+'/latest_global_10km.cgi','json') as {init?:{y:number;m:number;d:number;h:number}};

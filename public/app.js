@@ -534,6 +534,45 @@ async function addAirQuality() {
   });
 }
 
+// ── Fire hotspots (NASA FIRMS via /api/atlas/fires) ──────────────────────
+// NOAA-20 VIIRS thermal detections, last 24 h, Sumatra to Kalimantan. A
+// detection is a hot pixel seen from orbit, not a confirmed fire. The fixed
+// fire colour, like the AQI scale, is a data encoding rather than UI accent.
+function addFires() {
+  mapInstance.addSource("jkt-fires-src", {
+    type: "geojson",
+    data: { type: "FeatureCollection", features: [] },
+    attribution: "Fire detections: NASA FIRMS (NOAA-20 VIIRS)",
+  });
+  mapInstance.addLayer({
+    id: "fire-hotspots",
+    type: "circle",
+    source: "jkt-fires-src",
+    minzoom: 4,
+    paint: {
+      // Small at regional zoom so ~10k detections stay readable; larger by fire radiative power.
+      "circle-radius": ["interpolate", ["linear"], ["zoom"],
+        4, ["interpolate", ["linear"], ["coalesce", ["get", "frp"], 1], 1, 1, 100, 2.5, 500, 4],
+        10, ["interpolate", ["linear"], ["coalesce", ["get", "frp"], 1], 1, 3, 100, 6, 500, 10]],
+      "circle-color": "#ff5a1f",
+      "circle-opacity": ["match", ["get", "confidence"], "low", 0.45, 0.9],
+      "circle-stroke-color": "#1a0a00",
+      "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 4, 0, 8, 0.6],
+    },
+  });
+  setLayerVisible("fire-hotspots", layerVisibility["fire-hotspots"] !== false);
+}
+let firesData = null;
+async function refreshFires(force) {
+  if (force) liveCache.delete("/api/atlas/fires");
+  const data = await fetchLive("/api/atlas/fires", 1800);
+  firesData = data && data.type === "FeatureCollection" && Array.isArray(data.features) ? data : null;
+  const src = mapInstance && mapInstance.getSource("jkt-fires-src");
+  if (src) src.setData(firesData || { type: "FeatureCollection", features: [] });
+  setToggleLabel("atlas-fires-label", firesData ? lensText("Thermal detections · admitted 24 h", "Deteksi termal · lolos 24 jam") : lensText("Thermal detections · unavailable", "Deteksi termal · tidak tersedia"));
+  if (activeLens === "haze") renderLensEvidence();
+}
+
 // ── Hero landmarks — OSM footprints at published or curated heights for
 // Autograph Tower, Gama Tower, Wisma 46, Monas, Istiqlal and the others
 // (jakarta-landmarks.geojson, scripts/curate-landmarks.py). Part geometry
@@ -636,6 +675,7 @@ function applyAllLayers() {
   addWaterways();
   addRail();
   addAirQuality();
+  addFires();
   applyMapTheme();
   // Ground lines go under the extrusions so towers occlude them, instead of
   // the rivers painting across building faces. addRail inserts its own line
@@ -664,6 +704,19 @@ function evidenceCell(source, tier, stamp) {
 // Open-Meteo throttles shared Cloudflare egress, so the Worker route can 503
 // while the provider still answers a visitor's browser. Same gates as the
 // Worker: matching coordinates, fresh UTC time, declared units, no zero-fill.
+// Same rule as the Worker's airForecast: declared units, UTC hours from one
+// hour ago, no zero-fill; any failed gate gives an empty list.
+function browserAirForecast(row, near) {
+  const h = row?.hourly, units = row?.hourly_units || {};
+  if (!near || !Array.isArray(h?.time) || !(units.pm2_5 === "μg/m³" || units.pm2_5 === "µg/m³") || units.us_aqi !== "USAQI") return [];
+  const from = Date.now() - 3600000;
+  return h.time.flatMap((time, i) => {
+    const t = typeof time === "string" && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(time) ? time + "Z" : null;
+    if (!t || !(Date.parse(t) >= from)) return [];
+    const pm25 = boundedReading(h.pm2_5?.[i], 0, 1000), aqi = boundedReading(h.us_aqi?.[i], 0, 500);
+    return pm25 == null && aqi == null ? [] : [{ t, pm25, aqi }];
+  }).slice(0, 72);
+}
 async function fetchBrowserAirQuality() {
   const points = [
     { label: "Central Jakarta", label_id: "Jakarta Pusat", lat: -6.18, lng: 106.83 },
@@ -673,7 +726,7 @@ async function fetchBrowserAirQuality() {
     { label: "East Jakarta", label_id: "Jakarta Timur", lat: -6.23, lng: 106.90 },
   ];
   try {
-    const response = await fetch("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=" + points.map(p => p.lat).join(",") + "&longitude=" + points.map(p => p.lng).join(",") + "&current=pm2_5,us_aqi&timezone=UTC", { signal: AbortSignal.timeout(8000) });
+    const response = await fetch("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=" + points.map(p => p.lat).join(",") + "&longitude=" + points.map(p => p.lng).join(",") + "&current=pm2_5,us_aqi&hourly=pm2_5,us_aqi&forecast_days=3&timezone=UTC", { signal: AbortSignal.timeout(8000) });
     if (!response.ok) return null;
     const rows = await response.json();
     if (!Array.isArray(rows) || rows.length !== points.length) return null;
@@ -683,7 +736,7 @@ async function fetchBrowserAirQuality() {
       const near = row?.utc_offset_seconds === 0 && !!stamp && Number.isFinite(row?.latitude) && Number.isFinite(row?.longitude) && Math.hypot((row.latitude-p.lat)*111,(row.longitude-p.lng)*110.4) <= 35;
       const aqi = near && units.us_aqi === "USAQI" ? boundedReading(row.current?.us_aqi, 0, 500) : null;
       const pm25 = near && (units.pm2_5 === "μg/m³" || units.pm2_5 === "µg/m³") ? boundedReading(row.current?.pm2_5, 0, 1000) : null;
-      return aqi == null ? [] : [{ ...p, aqi, pm25, category: category(aqi), observedAt: stamp, provenance: { source: "Open-Meteo / CAMS", tier: "model-estimate" } }];
+      return aqi == null ? [] : [{ ...p, aqi, pm25, category: category(aqi), observedAt: stamp, forecast: browserAirForecast(row, near), provenance: { source: "Open-Meteo / CAMS", tier: "model-estimate" } }];
     });
     return out.length ? out : null;
   } catch (e) { return null; }
@@ -713,6 +766,7 @@ async function refreshAirQuality() {
   }).join("") : '<tr><td colspan="3">No valid air-quality values available.</td></tr>';
   setToggleLabel("atlas-aqi-label", available && rows.length ? "Air quality · model" : "Air quality · unavailable");
   setToggleLabel("atlas-aqi-status", available && rows.length ? "Model estimates retrieved. Valid time and source appear with each value." : "Air-quality feed unavailable or invalid. Retained values, if any, are marked last retrieved.");
+  if (activeLens === "haze") renderLensEvidence();
 }
 async function loadReferenceText() {
   const landmarks = await fetchLive("/jakarta-landmarks.geojson", 3600);
@@ -1001,7 +1055,7 @@ const LAYER_GROUPS = {
   "jkt-landmarks-3d": ["jkt-landmarks-3d", "jkt-landmarks-outline", "jkt-landmarks-label"],
   "aqi-points": ["aqi-points", "aqi-labels"],
 };
-const layerVisibility = {};
+const layerVisibility = {"fire-hotspots": false};
 function setLayerVisible(layerId, visible) {
   if (!mapInstance) return;
   layerVisibility[layerId] = visible;
@@ -1023,6 +1077,7 @@ function setupLayerToggles() {
       const id = btn.dataset.layerToggle;
       if (!mapInstance.getLayer(id)) { showToast("This layer is unavailable. See Data & sources."); return; }
       setLayerVisible(id, mapInstance.getLayoutProperty(id, "visibility") === "none");
+      if (id === "fire-hotspots" && layerVisibility[id]) refreshFires(false);
     });
   });
 }
@@ -1253,13 +1308,14 @@ function renderEnvironmentEvidence(product) {
     'surface-water': 'Clouds, vegetation and buildings can hide water. The 3-day MODIS product has 250 m pixels; it does not measure depth or establish road safety. Blank pixels are not an all-clear.',
     'aerosol': 'Aerosol optical depth measures the atmospheric column, not surface PM2.5. Cloud gaps are missing observations.',
     'radar': 'Rain radar shows precipitation echoes within provider coverage. It does not measure flood depth. Black coverage-mask areas lack radar coverage.',
+    'true-colour': 'Visible satellite imagery can show clouds, land and smoke-like features. It does not identify a pollution source or measure surface concentration.',
     'satellite-rain': 'IMERG is a satellite rainfall-rate estimate, not ground radar. Daily imagery may lag; check the product date.',
   };
   const categories = [['Surface water', '#32d2f5'], ['Recurring flood', '#ffff00'], ['Flood detected', '#fa1e24'], ['Insufficient data', '#afafaf']];
   legend.innerHTML = '<p>' + escapeHtml(notes[product.id]) + '</p>' + (product.id === 'surface-water'
     ? '<ul class="atlas-environment-legend">' + categories.map(p => '<li><i aria-hidden="true" style="background:' + p[1] + '"></i>' + escapeHtml(p[0]) + '</li>').join('') + '</ul>'
     : product.id === 'radar' ? '<p>Radar reflectivity (dBZ), RainViewer Universal Blue. No echo and no coverage are different.</p><ul class="atlas-environment-legend">' + [['15 dBZ', '#88ddee'], ['25 dBZ', '#0077aa'], ['35 dBZ', '#ffee00'], ['45 dBZ', '#ff4400'], ['55 dBZ', '#ffaaff']].map(p => '<li><i aria-hidden="true" style="background:' + p[1] + '"></i>' + p[0] + '</li>').join('') + '</ul><p><a href="https://www.rainviewer.com/api/color-schemes.html" target="_blank" rel="noopener">Provider legend</a></p>'
-    : '<p><a target="_blank" rel="noopener" href="' + escapeHtml(product.legendUrl) + '">Provider legend</a></p>');
+    : !product.legendUrl ? '' : '<p><a target="_blank" rel="noopener" href="' + escapeHtml(product.legendUrl) + '">Provider legend</a></p>');
 }
 function renderSatelliteDates(product) {
   if (!product || product.id === 'radar') return;
@@ -1486,7 +1542,7 @@ function setupEnvironmentControls() {
     mapInstance.on('error', event => { if (['environment-overlay', 'radar-coverage'].includes(event.sourceId)) { environmentTileError = true; setToggleLabel('atlas-environment-status', 'Imagery request failed. Missing pixels do not mean clear skies or dry ground.'); } });
     mapInstance.on('sourcedata', event => { if (event.sourceId === 'environment-overlay' && event.isSourceLoaded && !environmentTileError) setToggleLabel('atlas-environment-status', 'Imagery loaded; blank areas may be missing observations.'); });
   }
-  refreshEnvironment(); refreshRainfall(); refreshCityWatch();
+  refreshEnvironment(); refreshRainfall(); refreshCityWatch(); refreshAirQuality();
   setInterval(() => { refreshEnvironment(); refreshRainfall(); refreshCityWatch(); }, 600000);
 }
 
@@ -1546,6 +1602,14 @@ async function boot() {
       console.error("[atlas] applyAllLayers failed", e);
     }
     setupLayerToggles();
+    mapInstance.on('click','fire-hotspots',event=>{
+      const f=event.features?.[0];if(!f||activeLens!=='haze')return;
+      renderLensEvidence();
+      const p=f.properties||{},coordinates=f.geometry.coordinates;
+      const row=document.createElement('p');row.className='network-location';
+      row.textContent=coordinates[1].toFixed(6)+', '+coordinates[0].toFixed(6)+' · WGS84 · '+formatLocal(p.observedAt)+' · FRP '+(Number.isFinite(p.frp)?fmtNum(p.frp,1)+' MW':lensText('unknown','tidak diketahui'))+' · '+p.confidence;
+      document.getElementById('atlas-lens-body').append(row);document.getElementById('atlas-lens-evidence').open=true;
+    });
     setBasemap(currentBasemap);
     const view = new URLSearchParams(window.location.search).get("view");
     if (view === "2d") setMapView("2d");
@@ -1613,6 +1677,7 @@ boot().catch(function (e) {
 refreshAirQuality();
 loadReferenceText();
 setInterval(refreshAirQuality, 300000);
+setInterval(() => { if (activeLens === "haze" || layerVisibility["fire-hotspots"]) refreshFires(false); }, 900000);
 document.getElementById("atlas-orbit-btn")?.addEventListener("click", function (e) {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { showToast("Orbit paused for reduced motion."); return; }
   if (currentView === "2d") setMapView("3d");
@@ -1956,6 +2021,16 @@ function renderConfidencePanel(data, share) {
     ' · ' + lensText('checked', 'diperiksa') + ' ' + (data.checkedAt || lensText('undated', 'tanpa tanggal'))));
 }
 
+function renderHazeEvidence(body) {
+  body.append(lensNoteLine(lensText('NASA NOAA-20 VIIRS thermal detections, nominal 375 m. Only valid records within 24 hours are admitted. Clouds and satellite coverage can hide activity; an empty result does not mean no fire or clean air.', 'Deteksi termal NASA NOAA-20 VIIRS, nominal 375 m. Hanya rekaman valid dalam 24 jam yang ditampilkan. Awan dan cakupan satelit dapat menyembunyikan aktivitas; hasil kosong bukan berarti tanpa kebakaran atau udara bersih.')));
+  if (!firesData) body.append(lensNoteLine(lensText('Thermal source unavailable or loading.', 'Sumber termal tidak tersedia atau sedang dimuat.')));
+  else {
+    body.append(lensNoteLine(fmtNum(firesData.features.length,0)+' '+lensText('admitted detections · retrieved ', 'deteksi lolos · diambil ')+formatLocal(firesData.fetchedAt)));
+    body.append(lensNoteLine(lensText('Select a detection for its acquisition time, coordinates and radiative power. Radiative power is not emitted particle mass. Visible imagery has its own observation date.', 'Pilih deteksi untuk waktu akuisisi, koordinat, dan daya radiasi. Daya radiasi bukan massa partikel yang dilepaskan. Citra tampak memiliki tanggal pengamatan sendiri.')));
+  }
+  const source=document.createElement('a');source.href='https://firms.modaps.eosdis.nasa.gov/';source.target='_blank';source.rel='noopener';source.textContent=lensText('NASA FIRMS source ↗','Sumber NASA FIRMS ↗');body.append(source);
+}
+
 function renderLensEvidence() {
   const titles = {
     waterways: ['Mapped waterways, incoming-water evidence', 'Alur air terpetakan, bukti air masuk'],
@@ -1967,7 +2042,8 @@ function renderLensEvidence() {
     rain: ['Where rain is forecast', 'Di mana hujan diprakirakan'],
     water: ['Water the satellite can see', 'Air yang terlihat dari satelit'],
     recurring: ['Where water has recurred', 'Di mana genangan berulang'],
-    air: ['Particles across the region', 'Partikel di seluruh kawasan'],
+    air: ['Air model timeline and satellite aerosol', 'Linimasa model udara dan aerosol satelit'],
+    haze: ['Regional haze evidence', 'Bukti kabut asap kawasan'],
     exposure: ['Population and severe-risk land', 'Penduduk dan lahan risiko berat'],
     confidence: ['How well each height is known', 'Seberapa baik setiap tinggi diketahui'],
     green: ['Where the city keeps its green', 'Di mana kota menyimpan ruang hijaunya'],
@@ -1978,12 +2054,13 @@ function renderLensEvidence() {
     traffic: ['Published camera locations and on-demand provider players. Availability is unverified; camera coverage is not measured congestion.', 'Lokasi kamera terpublikasi dan pemutar penyedia sesuai permintaan. Ketersediaan belum terverifikasi; cakupan kamera bukan kemacetan terukur.'],
     radar: ['RainViewer radar · no echo is not proof of no rain outside radar coverage.', 'Radar RainViewer · tidak ada gema bukan bukti tidak hujan di luar cakupan radar.'],
     cloud: ['Himawari infrared · cloud-top temperature, not rainfall intensity. Check the observation time.', 'Inframerah Himawari · suhu puncak awan, bukan intensitas hujan. Periksa waktu pengamatan.'],
-    arrival: ['Illustrative travel time, not a flood forecast. Dashed route is a station-to-station schematic. Open evidence to play or change assumptions.', 'Waktu tempuh ilustratif, bukan prakiraan banjir. Rute putus-putus adalah skema antarpos. Buka bukti untuk memutar atau mengubah asumsi.'],
+    arrival: ['Illustrative travel time, not a flood forecast. Admitted segments follow mapped Ciliwung geometry; gaps remain schematic. Open evidence to play or change assumptions.', 'Waktu tempuh ilustratif, bukan prakiraan banjir. Segmen lolos mengikuti geometri Ciliwung terpetakan; celah tetap berupa skema. Buka bukti untuk memutar atau mengubah asumsi.'],
     city: ['Choose a map lens. Sources and valid times stay with the evidence.', 'Pilih lensa peta. Sumber dan waktu berlaku selalu menyertai data.'],
     rain: ['Open-Meteo · model forecast at five sample points, one per kota. Select one to explore its hourly outlook.', 'Open-Meteo · prakiraan model di lima titik sampel, satu per kota. Pilih satu untuk melihat prakiraan per jam.'],
     water: ['NASA MODIS · cyan: water; red: detected flood; yellow: recurring flood. Clouds can hide water. Check the observation day.', 'NASA MODIS · biru muda: air; merah: banjir terdeteksi; kuning: banjir berulang. Awan dapat menutupi air. Periksa hari pengamatan.'],
     recurring: ['NASA MODIS · yellow marks recurring flood in the satellite classification. This is not a prediction of how long water will remain.', 'NASA MODIS · kuning menandai banjir berulang dalam klasifikasi satelit. Ini bukan prakiraan berapa lama air bertahan.'],
-    air: ['NASA satellite aerosol optical depth · regional atmosphere, not a street-level PM2.5 measurement.', 'Kedalaman optik aerosol satelit NASA · atmosfer kawasan, bukan pengukuran PM2.5 di tingkat jalan.'],
+    air: ['CAMS model forecast and NASA atmospheric aerosol are distinct evidence. Wind transport is an adjustable illustration, not a pollution plume forecast.', 'Prakiraan model CAMS dan aerosol atmosfer NASA adalah bukti berbeda. Transpor angin adalah ilustrasi, bukan prakiraan sebaran polusi.'],
+    haze: ['Satellite visible imagery and dated thermal detections. A hot pixel is not a confirmed fire or proof of Jakarta pollution.', 'Citra satelit tampak dan deteksi termal bertanggal. Piksel panas bukan kebakaran terkonfirmasi atau bukti polusi Jakarta.'],
     exposure: ['Jakarta Satu flood-risk classes · shaded by weighted risk-class mix (Ringan 1, Sedang 3, Berat 6). Population figures are area-weighted proxies, not located residents.', 'Kelas rawan banjir Jakarta Satu · diarsir menurut campuran kelas berbobot (Ringan 1, Sedang 3, Berat 6). Angka penduduk adalah proksi berbobot luas, bukan penduduk yang terlokasi.'],
     confidence: ['Overture footprints · coloured by height source. Bright is tagged or published; dim is a type default with no measurement and no satellite signal.', 'Tapak Overture · diwarnai menurut asal tinggi. Terang berarti bertag atau terpublikasi; redup berarti nilai bawaan jenis tanpa pengukuran dan tanpa sinyal satelit.'],
     green: ['Jakarta Satu green-space reference · area computed from the published polygons. This is not every park, and not an official green-space total.', 'Referensi ruang hijau Jakarta Satu · luas dihitung dari poligon yang dipublikasikan. Ini bukan semua taman, dan bukan total resmi ruang hijau.'],
@@ -1994,6 +2071,7 @@ function renderLensEvidence() {
   const body = document.getElementById('atlas-lens-body');
   if (['waterways','traffic'].includes(activeLens)) { if (!observationController) body.textContent=lensText('Loading mapped evidence…','Memuat bukti terpetakan…'); return; }
   body.replaceChildren();
+  if (activeLens === 'haze') { renderHazeEvidence(body); return; }
   if (activeLens === 'arrival') { renderWaterScenario(); return; }
   if (INSIGHT_LENSES.includes(activeLens)) {
     if (!insightData) {
@@ -2032,7 +2110,7 @@ function renderLensEvidence() {
     body.textContent = activeLens === 'city' ? lensText('Building heights mix tagged measurements, satellite estimates and defaults. Explore Data & sources below.', 'Tinggi bangunan memadukan pengukuran bertag, perkiraan satelit, dan nilai bawaan. Lihat Data & sumber di bawah.') : (product?.source || 'NASA GIBS') + ' · ' + lensText('See the observation time and legend in the map evidence panel.', 'Lihat waktu pengamatan dan legenda di panel bukti peta.');
   }
 }
-const ALL_LENSES = ['city','waterways','traffic','arrival','exposure','confidence','green','coverage','rain','radar','cloud','water','recurring','air'];
+const ALL_LENSES = ['city','waterways','traffic','arrival','exposure','confidence','green','coverage','rain','radar','cloud','water','recurring','air','haze'];
 async function selectCityLens(lens) {
   if (!ALL_LENSES.includes(lens)) return;
   stopWaterPlayback();
@@ -2047,12 +2125,14 @@ async function selectCityLens(lens) {
   history.replaceState(null, '', shareUrl.toString());
   document.querySelectorAll('[data-lens]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.lens === lens)));
   const selector = document.getElementById('atlas-environment-layer');
-  selector.value = {radar:'radar',cloud:'himawari',water:'surface-water',recurring:'surface-water',air:'aerosol'}[lens] || 'none';
+  selector.value = {radar:'radar',cloud:'himawari',water:'surface-water',recurring:'surface-water',air:'aerosol',haze:'true-colour'}[lens] || 'none';
   selector.dispatchEvent(new Event('change', {bubbles:true}));
   removeInsightLayersWhenLeaving(lens);
   renderLensEvidence();
   await styleReady;
   if (request !== lensRequest || !mapInstance) return;
+  mapInstance.setMinZoom?.(lens === 'haze' ? 4 : 9);
+  setLayerVisible('fire-hotspots', lens === 'haze');
   setLayerVisible('rain-model-samples', lens === 'rain');
   if (lens === 'rain') {
     await refreshRainfall(false);
@@ -2066,6 +2146,10 @@ async function selectCityLens(lens) {
   } else if (lens === 'arrival') {
     await showWaterScenario(request);
     if (request !== lensRequest) return;
+  } else if (lens === 'haze') {
+    await refreshFires(false);
+    if (request !== lensRequest) return;
+    mapInstance.flyTo({center:[106.83,-3.5],zoom:5,pitch:0,bearing:0});
   } else if (lens === 'air') {
     try { const controller = await loadAirTimeline(); if (request !== lensRequest) return; controller.show(document.getElementById('atlas-lens-body')); }
     catch { if (request === lensRequest) document.getElementById('atlas-lens-body').textContent = lensText('The model timeline is unavailable.', 'Linimasa model tidak tersedia.'); }

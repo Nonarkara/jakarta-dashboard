@@ -8,7 +8,7 @@ const worker = (await import('data:text/javascript;base64,' + Buffer.from(compil
 const originalFetch = globalThis.fetch, originalCaches = globalThis.caches;
 let radar, capabilities, weather, air = [], gdacs = { type: 'FeatureCollection', features: [] };
 const date = new Date().toISOString().slice(0,10), now = Date.now();
-const ids = [['MODIS_Combined_Flood_3-Day',9], ['MODIS_Terra_Aerosol',6], ['IMERG_Precipitation_Rate',6]];
+const ids = [['MODIS_Combined_Flood_3-Day',9], ['MODIS_Terra_Aerosol',6], ['IMERG_Precipitation_Rate',6], ['VIIRS_NOAA20_CorrectedReflectance_TrueColor',9]];
 capabilities = '<Capabilities>' + ids.map(([id,z]) => `<Layer><ows:Identifier>${id}</ows:Identifier><Dimension><Default>${date}</Default></Dimension><TileMatrixSet>GoogleMapsCompatible_Level${z}</TileMatrixSet></Layer>`).join('') + '</Capabilities>';
 radar = { host: 'https://tilecache.rainviewer.com', radar: { past: [
   { time: now/1000 - 600, path: '/v2/radar/frame1' }, { time: now/1000, path: '/v2/radar/../../evil' },
@@ -31,8 +31,9 @@ globalThis.fetch = async url => {
 const request = path => worker.fetch(new Request('https://atlas.test'+path), {}, {});
 try {
   let r=await request('/api/atlas/environment'), data=await r.json();
-  assert.equal(data.products.length,4); assert.ok(data.products.slice(0,3).every(p=>p.available && p.date===date));
+  assert.equal(data.products.length,5); assert.ok(data.products.slice(0,3).every(p=>p.available && p.date===date));
   assert.equal(data.products[3].available,false);
+  assert.equal(data.products[4].available,true); assert.match(data.products[4].tiles[0], /\.jpg$/); assert.equal(data.products[4].legendUrl,null);
   assert.equal(data.radar.frames.length,1); assert.ok(data.products[0].tiles[0].includes('Level9/{z}/{y}/{x}.png'));
   assert.equal(data.products[0].windowDays,3);
   capabilities = '<Capabilities>' + ids.map(([id,z]) => `<Layer><ows:Identifier>${id}</ows:Identifier><Dimension><Default>${date}</Default><Value>${date}</Value><Value>${new Date(now-2*86400000).toISOString().slice(0,10)}</Value></Dimension><TileMatrixSet>GoogleMapsCompatible_Level${z}</TileMatrixSet></Layer>`).join('') + '</Capabilities>';

@@ -3,6 +3,7 @@
 // with every figure computed from the shipped data files, never typed in.
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import vm from 'node:vm';
 const html=readFileSync(new URL('../public/dashboard.html',import.meta.url),'utf8');
 const js=readFileSync(new URL('../public/official-data.js',import.meta.url),'utf8');
 const css=readFileSync(new URL('../public/dashboard.css',import.meta.url),'utf8');
@@ -85,8 +86,8 @@ for(const [en,id] of [
  ['A water level belongs to a gauge. A forecast belongs to a time. A satellite image has a resolution. I keep those limits visible because putting them on one map does not make them the same measurement.','Tinggi air berlaku di titik pengukurnya. Prakiraan berlaku pada waktunya. Citra satelit punya batas resolusi. Saya menampilkan batas-batas itu karena menyatukannya dalam satu peta tidak membuatnya menjadi pengukuran yang sama.'],
  ['Compare the evidence. Change the assumptions. See what follows — and keep the difference clear.','Bandingkan buktinya. Ubah asumsinya. Lihat hasilnya — dan tetap bedakan keduanya.']])
  assert.ok(html.includes('data-en="'+en+'"')&&html.includes('>'+id+'</p>'),'purpose voice present bilingually: '+en.slice(0,40));
-assert.match(html,/data-en="Model & scenario"/,'model and scenario are a stated evidence state beside live, dated and unavailable');
-assert.equal((html.match(/<h3 data-en="[^"]+">[^<]+<\/h3><p data-en=/g)||[]).length>=4,true,'four evidence states rendered');
+for(const state of ['Refreshing feeds','Model estimates','Scenarios','Dated reference','Unavailable'])assert.ok(html.includes('data-en="'+state+'"'),'evidence state: '+state);
+assert.equal((html.match(/<h3 data-en="[^"]+">[^<]+<\/h3><p data-en=/g)||[]).length>=5,true,'five distinct evidence states rendered');
 
 // ── charts say what they encode, in both languages ──
 assert.match(js,/Berat:t\('Berat','Heavy'\)/,'risk classes translate for display while publisher identifiers stay intact');
@@ -94,5 +95,27 @@ assert.match(js,/Sedang:t\('Sedang','Moderate'\)/,'moderate class translates');
 assert.match(js,/Ringan:t\('Ringan','Light'\)/,'light class translates');
 assert.match(js,/100\*c\.kelurahanWithPublishedPump\/c\.kelurahanWithRiskMapping/,'the pump bar encodes the displayed coverage fraction');
 for(const c of insight.coverage.byBorough){assert.ok(c.kelurahanWithPublishedPump<=c.kelurahanWithRiskMapping,'pump presence cannot exceed mapped neighbourhoods: '+c.kota);}
+
+// Exercise the real renderer so percentage bars and missing sources cannot hide behind green string checks.
+const nodes=new Map();
+const node=id=>{if(!nodes.has(id))nodes.set(id,{innerHTML:'',value:id==='official-topic'?'paper':'',dataset:{},hidden:false,addEventListener(){}});return nodes.get(id);};
+const context=vm.createContext({lang:'en',DASHBOARD_BUILD:'test',$:node,window:{CivicLanguage:{text:v=>v,cost:v=>v}},t:(id,en)=>context.lang==='en'?en:id,esc:v=>String(v??''),num:v=>String(v),date:v=>v||'Unavailable',evidence:()=>'',unavailable:()=>'<p>Unavailable</p>',fixtures:{insight,flood,projects:data('projects.json'),annual:data('flood-reference.json'),city:data('city-context.json'),references:Object.fromEntries(['waterways-manifest.json','traffic-cameras-manifest.json','hydrology-reference.json','toll-cameras.json','ispu-reference.json'].map(file=>[file,data(file)]))}});
+vm.runInContext(js.slice(0,js.indexOf("$('official-topic').addEventListener")),context);
+vm.runInContext('paperInsight=fixtures.insight;paperFlood=fixtures.flood;officialProjects=fixtures.projects;officialFlood=fixtures.annual;officialContext=fixtures.city;paperReferences=fixtures.references;renderPaper();',context);
+assert.match(node('paper-riskmix').innerHTML,/>Heavy</,'English renderer translates publisher classes');
+const widths=[...node('paper-coverage').innerHTML.matchAll(/width:([0-9.]+)%/g)].map(m=>Number(m[1]));
+const expected=[...insight.coverage.byBorough].sort((a,b)=>b.kelurahanWithoutPublishedPump-a.kelurahanWithoutPublishedPump).map(c=>Number((100*c.kelurahanWithPublishedPump/c.kelurahanWithRiskMapping).toFixed(1)));
+assert.deepEqual(widths,expected,'coverage uses absolute 0–100% scale, never largest-row normalization');
+for(const label of ['Waterway features','Water-gauge locations','Camera references','Public toll video links'])assert.ok(node('paper-inventory').innerHTML.includes(label),'inventory renders source-backed '+label);
+context.lang='id';vm.runInContext('renderPaper();',context);
+assert.match(node('paper-riskmix').innerHTML,/>Berat</,'Indonesian renderer restores publisher classes');
+assert.ok(node('paper-inventory').innerHTML.includes('Fitur jalur air'),'inventory changes language');
+context.lang='en';vm.runInContext('officialContext=null;officialProjects=null;officialFlood=null;paperInsight=null;paperFlood=null;paperReferences={};renderPaper();',context);
+assert.equal((node('paper-inventory').innerHTML.match(/<dd>Unavailable/g)||[]).length,10,'ten missing inventory sources remain unavailable instead of fabricated zero');
+assert.equal(node('paper-exposure').innerHTML,'<p>Unavailable</p>','missing chart data has an explicit state');
+vm.runInContext("paperReferences={'waterways-manifest.json':fixtures.references['waterways-manifest.json']};renderPaper();",context);
+assert.ok(node('paper-inventory').innerHTML.includes('<dd>'+data('waterways-manifest.json').count),'available reference inventory survives unavailable chart feeds');
+for(const format of ['json','csv'])assert.ok(html.includes('/data/jakarta-v1/source-catalog.'+format),'source catalogue download '+format);
+for(const source of ['BBWS Ciliwung Cisadane','JAXA / EORC','Bina Marga / Jasa Marga','hls.js'])assert.ok(html.includes(source),'legal attribution retained: '+source);
 
 console.log('PASS research paper: paper/legal/about panes bilingual, figures computed from shipped data, builder identity with non-affiliation, house presentation rules kept');

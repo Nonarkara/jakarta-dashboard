@@ -137,6 +137,9 @@
       "inRegion": true
     }
   ],
-  "routeGeometry": "Straight station-to-station schematic, not surveyed river centerline",
-  "limitations": "No terrain, discharge, cross-sections, tide, pump capacities or calibrated hydraulics. No inundation depth or street flooding predicted."
+  "routeGeometry": "Mapped OpenStreetMap Ciliwung river geometry for admitted Katulampa–Depok and Depok–Manggarai segments; explicitly labelled straight station-to-station schematic fallback when a mapped segment is unavailable.",
+  "limitations": "No terrain, discharge, cross-sections, tide, pump capacities or calibrated hydraulics. No inundation depth or street flooding predicted.",
+  "sourceRouteGeometry": "Straight station-to-station schematic, not surveyed river centerline",
+  "routeSourceAsset": "/data/jakarta-v1/ciliwung-route.geojson",
+  "routeManifestAsset": "/data/jakarta-v1/ciliwung-manifest.json"
 }

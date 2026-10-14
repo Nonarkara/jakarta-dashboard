@@ -8,11 +8,27 @@ export function approachSector(lng,lat) {
   const names=[['North','Utara'],['North-east','Timur laut'],['East','Timur'],['South-east','Tenggara'],['South','Selatan'],['South-west','Barat daya'],['West','Barat'],['North-west','Barat laut']];
   return names[(Math.round(Math.atan2(dx,dy)*4/Math.PI)+8)%8];
 }
+// Only the known hydrology failure envelope can retain dated observations.
+export function isDatedHydrologyEnvelope(data) {
+  return data?.contract==='hydrology-v1' && data.available===false && data.freshLevels===0 &&
+    typeof data.checkedAt==='string' && Number.isFinite(Date.parse(data.checkedAt)) &&
+    Array.isArray(data.predictions) && data.predictions.length===0 && Array.isArray(data.stations) && data.stations.length<=1000 &&
+    data.stations.every(s=>typeof s.id==='string' && typeof s.name==='string' && typeof s.basin==='string' &&
+      Number.isFinite(s.lng) && s.lng>=106.4 && s.lng<=107.2 && Number.isFinite(s.lat) && s.lat>=-6.9 && s.lat<=-5.9 &&
+      s.fresh===false && ['stale','unknown'].includes(s.levelState) && (s.levelM===null || Number.isFinite(s.levelM)) &&
+      (s.observedAt===null || typeof s.observedAt==='string' && Number.isFinite(Date.parse(s.observedAt))) &&
+      s.tier==='publisher-gauge-level' && s.sourceUrl==='https://ewscilicis.id');
+}
+export async function readObservationResponse(response,path) {
+  if(response.ok)return response.json();
+  if(path==='/api/atlas/hydrology' && response.status===503){const data=await response.json();if(isDatedHydrologyEnvelope(data))return data;}
+  throw new Error('source '+response.status);
+}
 export function createController(map,{text:t,active,buildTag}) {
   let mode=null,epoch=0,water=null,cameras=null,hydrology=null,jaxa=null,nasa=null,lastBody=null;
   const listeners=[]; let player=null, video=null, playRequest=0;
   const pending=new Set();
-  async function get(path){const c=new AbortController();const timer=setTimeout(()=>c.abort(new Error('timeout')),12000);pending.add(c);try{const response=await fetch(path,{headers:{accept:'application/json'},signal:c.signal});if(!response.ok)throw new Error('source '+response.status);return await response.json();}finally{clearTimeout(timer);pending.delete(c);}}
+  async function get(path){const c=new AbortController();const timer=setTimeout(()=>c.abort(new Error('timeout')),12000);pending.add(c);try{const response=await fetch(path,{headers:{accept:'application/json'},signal:c.signal});return await readObservationResponse(response,path);}finally{clearTimeout(timer);pending.delete(c);}}
   function cancelPending(){for(const c of pending)c.abort(new Error('lens closed'));}
   const ids=['network-water-fill','network-water-lines','network-water-labels','network-gauges','network-cameras','network-clusters','network-counts','network-comparison'];
   const safeUrl=u=>{try{const url=new URL(u);return ['https:','http:'].includes(url.protocol)?url.href:null;}catch{return null;}};

@@ -1,6 +1,13 @@
 /* Jakarta's local warm/cool relation, reconstructed from Palette plate 267.
    Digital shades are our UI adaptation, not official city brand specifications. */
 @font-face {
+  font-family: "Universa Civic";
+  src: url("/fonts/universa/universa-civic-v1.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
   font-family: "Source Sans 3";
   src: url("/fonts/SourceSans3-variable.woff2") format("woff2");
   font-style: normal;
@@ -21,6 +28,7 @@
   --accent-hover: #edf7f5;
   --companion: #0c4544;
   --font-sans: "Source Sans 3", "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display: "Universa Civic", "Source Sans 3", sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --mono: var(--font-mono);
   --type-body: 13px;
@@ -440,6 +448,19 @@ body[data-surface="jakarta-dashboard"] footer { padding:1px 8px; font-size:11px;
 
 .network-section video { display:block; width:100%; max-height:36svh; background:#000; margin-top:6px; }
 
+/* Bayer/Holm Universa identifies the desk; long evidence and values stay legible. */
+body[data-surface="jakarta-dashboard"] h2,
+body[data-surface="jakarta-dashboard"] h3,
+.modal-toolbar > span,
+body[data-surface="jakarta-dashboard"] .sections > *,
+.city-navigation > summary,
+.city-controls > summary,
+body.atlas-workbench .atlas-title,
+body.atlas-workbench .atlas-lenses button,
+body.atlas-workbench .atlas-panel-summary .atlas-eyebrow {
+ font-family:var(--font-display); font-weight:400;
+}
+
 /* Shared reading edges: borders create deliberate insets, unframed rows do not. */
 :root { --reading-gutter:12px; --rail-gutter:8px; }
 .modal-toolbar { padding-inline:var(--reading-gutter); }
@@ -472,3 +493,5 @@ body.atlas-embedded .atlas-embedded-evidence { padding:var(--reading-gutter); }
 body.atlas-embedded .atlas-embedded-evidence .atlas-environment,
 body.atlas-embedded .atlas-embedded-evidence .atlas-data,
 body.atlas-embedded .atlas-embedded-evidence .atlas-footer { padding-inline:0; }
+
+body.atlas-workbench .atlas-lens-popup a { color:var(--accent); }

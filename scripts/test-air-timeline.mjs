@@ -62,13 +62,34 @@ assert.equal(shifted.status, 503, 'non-UTC provider output refused');assert.equa
 globalThis.fetch = shape({ ...airGood, latitude: -6.5, longitude: 106.5 }, windGood);
 assert.equal((await call()).status, 503, 'air grid beyond 35 km refused');
 
+function assertAirWithoutWind(result,reason){
+  assert.equal(result.status,200,reason+' retains validated air');assert.equal(result.body.airAvailable,true);assert.equal(result.body.windAvailable,false);assert.equal(result.body.grid.wind,null);
+  assert.equal(result.body.times[0].pm25,12.5);assert.ok(result.body.times.every(r=>r.windMs===null&&r.windFromDeg===null),'unknown wind never becomes calm');assert.match(result.body.windNote,/no calm or transport/i);
+}
+globalThis.fetch=shape(airGood,null);assertAirWithoutWind(await call(),'wind provider outage');
+globalThis.fetch=shape(airGood,{...windGood,hourly_units:{...windGood.hourly_units,wind_speed_10m:'km/h'}});assertAirWithoutWind(await call(),'unexpected wind units');
 globalThis.fetch = shape(airGood, { ...windGood, latitude: -6.5, longitude: 106.5 });
-assert.equal((await call()).status, 503, 'wind grid beyond 20 km refused');
+assertAirWithoutWind(await call(), 'wind grid beyond 20 km refused');
 
 const mismatched = { ...windGood, hourly: { ...windGood.hourly, time: [...hours.slice(1), '2099-01-01T00:00:00Z'] } };
 globalThis.fetch = shape(airGood, mismatched);
-assert.equal((await call()).status, 503, 'wind timestamps must join the air timestamps exactly');
+assertAirWithoutWind(await call(), 'wind timestamps must join the air timestamps exactly');
 
+// A declared unit is not proof that its value array exists or matches the timeline.
+for(const field of ['pm2_5','pm10','dust','aerosol_optical_depth']) {
+  const broken=structuredClone(airGood);delete broken.hourly[field];
+  globalThis.fetch=shape(broken,windGood);const missing=await call();
+  assert.equal(missing.status,503,field+' missing array returns unavailable, not a thrown500');assert.equal(missing.cache,'no-store');
+  broken.hourly[field]=[null];globalThis.fetch=shape(broken,windGood);
+  assert.equal((await call()).status,503,field+' misaligned array rejected');
+}
+for(const field of ['wind_speed_10m','wind_direction_10m']) {
+  const broken=structuredClone(windGood);delete broken.hourly[field];
+  globalThis.fetch=shape(airGood,broken);assertAirWithoutWind(await call(),field+' missing array rejected');
+  broken.hourly[field]=[0];globalThis.fetch=shape(airGood,broken);assertAirWithoutWind(await call(),field+' shortened array rejected');
+}
+const badTimes=Array(48).fill('invalid');globalThis.fetch=shape({...airGood,hourly:{...airGood.hourly,time:badTimes}},{...windGood,hourly:{...windGood.hourly,time:badTimes}});
+assert.equal((await call()).status,503,'matching invalid timestamps do not form a valid join');
 globalThis.fetch = shape(null, windGood);
 let partial = await call();
 assert.equal(partial.status, 503, 'no valid air branch is an outage, never an all-clear');assert.equal(partial.body.windAvailable, true);

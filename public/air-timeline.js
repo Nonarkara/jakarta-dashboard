@@ -36,7 +36,7 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
   function stopTransport() {
     if (timer !== null) clearInterval(timer); timer = null; startedAt = 0;
     const button = document.getElementById('air-transport-button');
-    if (button) { button.textContent = t('Start wind transport · uniform wind', 'Mulai transpor angin · angin seragam'); button.setAttribute('aria-pressed', 'false'); }
+    if (button) { button.textContent = t('Start transport · 1 s = 1 h, up to 6 h', 'Mulai transpor · 1 dtk = 1 jam, hingga 6 jam'); button.setAttribute('aria-pressed', 'false'); }
   }
   function clear() {
     epoch++;
@@ -52,7 +52,7 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
   function transportSection(body, row) {
     const section = el('div', undefined, 'air-transport');
     section.append(el('h3', t('Wind transport · illustration', 'Transpor angin · ilustrasi')));
-    const wind = row?.windMs !== null && Number.isFinite(row?.windMs) ? row : null;
+    const wind = Number.isFinite(row?.windMs) && Number.isFinite(row?.windFromDeg) ? row : null;
     const from = wind ? wind.windFromDeg : null;
     section.append(el('p', wind
       ? t('Uniform wind from the first modelled hour: ' + number(wind.windMs, 1) + ' m/s from ' + number(from, 0) + '°. The marker moves at speed × elapsed time along the downwind bearing. No concentration, plume width or smoke attribution is computed.', 'Angin seragam dari jam model pertama: ' + number(wind.windMs, 1) + ' m/s dari ' + number(from, 0) + '°. Penanda bergerak sebesar kecepatan × waktu pada arah turun angin. Tidak ada konsentrasi, lebar asap atau atribusi asap yang dihitung.')
@@ -60,7 +60,7 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
     if (wind) {
       const start = [data.sample.lng, data.sample.lat];
       anchor = start;
-      const button = el('button', t('Start wind transport · uniform wind', 'Mulai transpor angin · angin seragam'));
+      const button = el('button', t('Start transport · 1 s = 1 h, up to 6 h', 'Mulai transpor · 1 dtk = 1 jam, hingga 6 jam'));
       button.type = 'button'; button.id = 'air-transport-button'; button.setAttribute('aria-pressed', 'false');
       hiddenListener = () => { if (document.hidden) { stopTransport(); render(); } };
       document.addEventListener('visibilitychange', hiddenListener);
@@ -76,12 +76,13 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
         }
         timer = setInterval(() => {
           if (myEpoch !== epoch) { stopTransport(); return; }
-          const elapsedS = (Date.now() - startedAt) / 1000;
-          const point = windTransportPoint(start, wind.windFromDeg, wind.windMs, elapsedS * 3600);
+          const elapsedS = Math.min(6 * 3600, Math.max(0, Date.now() - startedAt) * 3.6);
+          const point = windTransportPoint(start, wind.windFromDeg, wind.windMs, elapsedS);
           if (!point) { stopTransport(); return; }
           map.getSource('air-transport-marker')?.setData({ type: 'FeatureCollection', features: [{ type: 'Feature', properties: {}, geometry: { type: 'Point', coordinates: point } }] });
           if (!locationNode) { locationNode = el('div', undefined, 'water-scenario-location'); document.querySelector('.atlas-map-wrap')?.append(locationNode); }
-          locationNode.textContent = t('marker', 'penanda') + ' · ' + point[1].toFixed(6) + ', ' + point[0].toFixed(6) + ' · WGS84 · ' + number(elapsedS, 0) + ' s × ' + number(wind.windMs, 1) + ' m/s';
+          locationNode.textContent = t('marker', 'penanda') + ' · ' + point[1].toFixed(6) + ', ' + point[0].toFixed(6) + ' · WGS84 · ' + number(elapsedS / 3600, 1) + t(' scenario h · wind ', ' jam skenario · angin ') + number(wind.windMs, 1) + ' m/s · '+t('1 real s = 1 scenario h','1 dtk nyata = 1 jam skenario');
+          if (elapsedS >= 6 * 3600) stopTransport();
         }, 100);
       });
       section.append(button);
@@ -91,6 +92,8 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
 
   function render(body) {
     if (!body || active() !== 'air') return;
+    stopTransport();
+    if (hiddenListener) { document.removeEventListener('visibilitychange',hiddenListener);hiddenListener=null; }
     body.querySelector('#air-timeline-section')?.remove();
     const section = el('div', undefined, 'air-timeline');
     section.id = 'air-timeline-section';
@@ -100,10 +103,11 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
     }
     if (!data.available) {
       section.append(el('p', t('The model timeline is unavailable or failed validation. Nothing is shown as zero.', 'Linimasa model tidak tersedia atau gagal validasi. Tidak ada yang ditampilkan sebagai nol.'), 'note'));
+      const retry=el('button',t('Retry model timeline','Coba lagi linimasa model'));retry.type='button';retry.addEventListener('click',()=>show(body));section.append(retry);
       body.append(section); return;
     }
     section.append(el('h3', t('CAMS 48-hour model timeline', 'Linimasa model CAMS 48 jam')));
-    section.append(el('p', t('Model cell ', 'Sel model ') + data.grid.air.lat.toFixed(4) + ', ' + data.grid.air.lng.toFixed(4) + ' · ' + t('wind cell', 'sel angin') + ' ' + data.grid.wind.lat.toFixed(4) + ', ' + data.grid.wind.lng.toFixed(4) + ' · ' + data.resolution, 'meta'));
+    section.append(el('p', t('Model cell ', 'Sel model ') + data.grid.air.lat.toFixed(4) + ', ' + data.grid.air.lng.toFixed(4) + ' · ' + t('wind cell', 'sel angin') + ' ' + (data.grid.wind ? data.grid.wind.lat.toFixed(4) + ', ' + data.grid.wind.lng.toFixed(4) : t('unavailable','tidak tersedia')) + ' · ' + data.resolution, 'meta'));
     section.append(el('p', t('Valid ', 'Berlaku ') + time(data.firstValidAt) + ' → ' + time(data.lastValidAt) + ' · ' + t('checked', 'diperiksa') + ' ' + time(data.checkedAt) + ' · ' + t('one CAMS cell; five dashboard samples share this cell', 'satu sel CAMS; lima sampel dasbor berbagi sel ini'), 'meta'));
     const peak = data.times.reduce((best, r) => Number.isFinite(r.pm25) && r.pm25 > (best?.pm25 ?? -Infinity) ? r : best, null);
     if (peak) section.append(el('p', t('Peak PM2.5 ', 'Puncak PM2.5 ') + number(peak.pm25, 1) + ' µg/m³ · ' + time(peak.validAt), 'meta'));
@@ -114,7 +118,7 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
     table.append(head);
     for (const row of data.times) {
       const tr = el('tr');
-      tr.append(el('td', new Date(row.validAt).toLocaleTimeString(t('en-GB', 'id-ID'), { timeZone: 'Asia/Jakarta', hour: '2-digit' }) + 'h'));
+      tr.append(el('td', new Date(row.validAt).toLocaleTimeString(t('en-GB', 'id-ID'), { timeZone: 'Asia/Jakarta', day:'2-digit', month:'2-digit',hour: '2-digit',minute:'2-digit' })));
       tr.append(el('td', number(row.pm25, 1)));
       tr.append(el('td', number(row.pm10, 1)));
       tr.append(el('td', number(row.dust, 1)));
@@ -124,22 +128,19 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
       table.append(tr);
     }
     scroll.append(table); section.append(scroll);
-    section.append(el('p', data.note, 'note'));
-    const anchorRow = data.times.find(r => r.windMs !== null) || null;
+    section.append(el('p', t('CAMS global model: approximately 45 km cells; hourly values interpolate a native three-hourly forecast. AOD describes the atmospheric column, not surface particle concentration.', 'Model global CAMS: sel sekitar 45 km; nilai per jam menginterpolasi prakiraan asli tiga-jam. AOD menggambarkan kolom atmosfer, bukan konsentrasi partikel permukaan.'), 'note'));
+    const anchorRow = data.times.find(r => Number.isFinite(r.windMs) && Number.isFinite(r.windFromDeg)) || null;
     transportSection(section, anchorRow);
     body.append(section);
   }
 
   function show(body) {
-    const myEpoch = ++epoch;
-    clear(); epoch = myEpoch;
-    render(body);
-    if (!load) {
-      load = get('/api/atlas/air-timeline')
-        .then(d => { data = d; return d; })
-        .catch(() => { data = null; return null; })
-        .finally(() => { load = null; });
-    }
+    clear();
+    const myEpoch = epoch;
+    data=null;render(body);
+    load = get('/api/atlas/air-timeline')
+      .then(d => { if(myEpoch === epoch) data = d; return d; })
+      .catch(() => { if(myEpoch === epoch) data = {available:false}; return null; });
     load.then(() => { if (myEpoch === epoch) render(body); });
   }
   return { show, clear, render };

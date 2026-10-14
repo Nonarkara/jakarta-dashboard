@@ -360,6 +360,9 @@ const ENV_PRODUCTS = [
   { id: "aerosol", layer: "MODIS_Terra_Aerosol", maxzoom: 6, resolution: "10 km", units: "AOD (unitless)", legend: "MODIS_VIIRS_AOD", tier: "satellite-observation" },
   { id: "satellite-rain", layer: "IMERG_Precipitation_Rate", maxzoom: 6, resolution: "0.1°", units: "mm/h", legend: "GPM_Precipitation_Rate", tier: "satellite-estimate" },
   { id: "himawari", layer: "Himawari_AHI_Band13_Clean_Infrared", maxzoom: 6, resolution: "2 km", units: "K", legend: "Clean_Longwave_Infrared_Window_Band", tier: "satellite-observation" },
+  // True colour shows smoke plumes as seen from orbit — NOAA-20, the same
+  // satellite as the FIRMS fire detections. Visible imagery has no legend.
+  { id: "true-colour", layer: "VIIRS_NOAA20_CorrectedReflectance_TrueColor", maxzoom: 9, ext: "jpg", resolution: "375 m", units: "visible imagery", legend: null, tier: "satellite-observation" },
 ];
 // Five model sample points, one per mainland kota administrasi. Planning
 // locations for weather models, not rain gauges or district averages.
@@ -431,8 +434,8 @@ async function handleEnvironment(): Promise<Response> {
     const available = !!selectedDate && !!layer?.includes(`<TileMatrixSet>${matrix}</TileMatrixSet>`);
     return { ...product, available, source: "NASA GIBS / LANCE", date: available ? selectedDate : null, latestAvailableDate: defaultDate || null, dates,
       fetchedAt: capabilities?.fetchedAt ?? null, timePrecision: "day", windowDays: product.id === "surface-water" ? 3 : 1,
-      tiles: available ? [`${GIBS_BASE}/${product.layer}/default/${selectedDate}/${matrix}/{z}/{y}/{x}.png`] : [],
-      legendUrl: `https://gibs.earthdata.nasa.gov/legends/${product.legend}_H.svg`,
+      tiles: available ? [`${GIBS_BASE}/${product.layer}/default/${selectedDate}/${matrix}/{z}/{y}/{x}.${product.ext || "png"}`] : [],
+      legendUrl: product.legend ? `https://gibs.earthdata.nasa.gov/legends/${product.legend}_H.svg` : null,
       sourceUrl: "https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/" };
   });
   const radarBody = radar?.body;
@@ -519,6 +522,7 @@ const WATCH_WIND_ACTION = "People should secure loose materials and stay off exp
 const WATCH_PRESSURE_ACTION = "Pressure at this sample is below 1000 hPa. Read it beside the storm list. Pressure alone does not name a tropical depression.";
 const WATCH_STORM_ACTION = "A listed tropical cyclone is within 800 km. People should follow the national weather service. An administrator should read the Himawari cloud layer with the official track, not this distance alone.";
 const WATCH_AIR_ACTION = "People should limit long outdoor exertion while this sample stays at or above US AQI 151. An administrator should open the aerosol layer. This point is a model, not a street monitor.";
+const WATCH_AIR_SENSITIVE_ACTION = "Children, older people, pregnant people and anyone with heart or lung disease should reduce long outdoor exertion while this sample stays at US AQI 101 to 150. An administrator should open the haze lens. This point is a model, not a street monitor.";
 
 function gdacsIsCurrent(properties: any): boolean {
   const flag = properties?.iscurrent;
@@ -601,6 +605,11 @@ async function handleCityWatch(): Promise<Response> {
     statement: dirtiest.name + " model US AQI is " + dirtiest.air.usAqi + " and PM2.5 is " + dirtiest.air.pm25 + " µg/m³.",
     action: WATCH_AIR_ACTION, basis: "Open-Meteo US AQI at or above 151. The category may be driven by a pollutant other than PM2.5.",
     source: "Open-Meteo / CAMS", tier: "model-estimate", validAt: dirtiest.air.validAt });
+  const hazy = !dirtiest && places.filter(p => p.air?.usAqi != null && p.air.usAqi >= 101).sort((a, b) => b.air.usAqi - a.air.usAqi)[0];
+  if (hazy) notices.push({ id: "air-" + hazy.id, topic: "air", placeId: hazy.id, level: "advisory",
+    statement: hazy.name + " model US AQI is " + hazy.air.usAqi + " and PM2.5 is " + hazy.air.pm25 + " µg/m³.",
+    action: WATCH_AIR_SENSITIVE_ACTION, basis: "Open-Meteo US AQI from 101 to 150 (unhealthy for sensitive groups).",
+    source: "Open-Meteo / CAMS", tier: "model-estimate", validAt: hazy.air.validAt });
   return jsonResponse({
     places, notices,
     storm: { available: features != null, systems, radiusKm: 800, source: "GDACS", tier: "event-list",
@@ -620,6 +629,8 @@ async function loadAirPoints(): Promise<{ points: any[]; fetchedAt: string | nul
   url.searchParams.set("latitude", RAIN_POINTS.map(p => p.lat).join(","));
   url.searchParams.set("longitude", RAIN_POINTS.map(p => p.lng).join(","));
   url.searchParams.set("current", "pm2_5,pm10,us_aqi");
+  url.searchParams.set("hourly", "pm2_5,us_aqi");
+  url.searchParams.set("forecast_days", "3");
   url.searchParams.set("timezone", "UTC");
   const feed = await fetchEnvironmentProvider(url.toString(), "json", 600);
   const rows = Array.isArray(feed?.body) ? feed.body : [];
@@ -636,10 +647,66 @@ async function loadAirPoints(): Promise<{ points: any[]; fetchedAt: string | nul
       pm10: unitNumber(row, "pm10", ["μg/m³", "µg/m³"], 0, 1000, located),
       observedAt: located ? time : null,
       modelLocation: located ? { lat: row.latitude, lng: row.longitude } : null,
+      forecast: airForecast(row, located),
       provenance: { source: "Open-Meteo / CAMS", tier: "model-estimate" },
     };
   });
   return { points, fetchedAt: feed?.fetchedAt ?? null };
+}
+
+// Hourly CAMS forecast from one hour ago onward. Same gates as the current
+// value; a failed gate yields an empty list, never zeros.
+function airForecast(row: any, located: boolean): { t: string; pm25: number | null; aqi: number | null }[] {
+  const h = row?.hourly, units = row?.hourly_units;
+  if (!located || !Array.isArray(h?.time) || !["μg/m³", "µg/m³"].includes(units?.pm2_5) || units?.us_aqi !== "USAQI") return [];
+  const from = Date.now() - 3600000, until = Date.now() + 72 * 3600000;
+  const seen = new Set<string>();
+  return h.time.slice(0, 168).flatMap((time: unknown, i: number) => {
+    const t = normalizedUtc(time);
+    if (!t || Date.parse(t) < from || Date.parse(t) > until || seen.has(t)) return [];
+    seen.add(t);
+    const pm25 = boundedNumber(h.pm2_5?.[i], 0, 1000), aqi = boundedNumber(h.us_aqi?.[i], 0, 500);
+    return pm25 == null && aqi == null ? [] : [{ t, pm25, aqi }];
+  }).sort((a: { t: string }, b: { t: string }) => Date.parse(a.t) - Date.parse(b.t)).slice(0, 72);
+}
+
+// NASA FIRMS NOAA-20 VIIRS 375 m active fire detections, last 24 h, keyless
+// regional CSV. Satellite thermal anomalies, not confirmed fires.
+const FIRMS_URL = "https://firms.modaps.eosdis.nasa.gov/data/active_fire/noaa-20-viirs-c2/csv/J1_VIIRS_C2_SouthEast_Asia_24h.csv";
+const FIRMS_HEADER = "latitude,longitude,bright_ti4,scan,track,acq_date,acq_time,satellite,confidence,version,bright_ti5,frp,daynight";
+const HAZE_BBOX = { west: 94, south: -9, east: 120, north: 7 }; // Sumatra, Java, Kalimantan
+function parseFires(csv: unknown): any[] | null {
+  if (typeof csv !== "string" || csv.length > 12000000) return null;
+  const lines = csv.trim().split(/\r?\n/);
+  if (lines[0]?.trim() !== FIRMS_HEADER || lines.length > 100001) return null;
+  return lines.slice(1).flatMap((line) => {
+    const c = line.split(",");
+    if (c.length !== 13 || !c[0].trim() || !c[1].trim() || !["D", "N"].includes(c[12])) return [];
+    const lat = Number(c[0]), lng = Number(c[1]), frp = Number(c[11]);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng) || lat < HAZE_BBOX.south || lat > HAZE_BBOX.north || lng < HAZE_BBOX.west || lng > HAZE_BBOX.east) return [];
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(c[5] || "") || !/^\d{4}$/.test(c[6] || "") || !["low", "nominal", "high"].includes(c[8])) return [];
+    const observedAt = `${c[5]}T${c[6].slice(0, 2)}:${c[6].slice(2)}:00Z`;
+    const instant = Date.parse(observedAt);
+    if (!Number.isFinite(instant) || new Date(instant).toISOString().slice(0, 16) !== observedAt.slice(0, 16) || !validObservation(observedAt, 24 * 3600000)) return [];
+    return [{ type: "Feature", geometry: { type: "Point", coordinates: [lng, lat] },
+      properties: { frp: c[11].trim() && Number.isFinite(frp) && frp >= 0 && frp <= 100000 ? frp : null, confidence: c[8], observedAt, daynight: c[12] === "N" ? "night" : "day" } }];
+  });
+}
+// The CSV carries ~10k regional rows in fire season. Cache the parsed result,
+// not just the raw CSV, so each colo parses once per 15 minutes.
+async function handleFires(): Promise<Response> {
+  const cache = (caches as unknown as { default: Cache }).default;
+  const key = new Request("https://jakarta-atlas.internal/api/atlas/fires/v1");
+  try { const hit = await cache.match(key); if (hit) return hit; } catch {}
+  const feed = await fetchEnvironmentProvider(FIRMS_URL, "text", 1800);
+  const features = parseFires(feed?.body);
+  if (!features) return jsonResponse({ error: "fires_unavailable" }, { status: 503 });
+  const response = jsonResponse({ type: "FeatureCollection", features, count: features.length, bbox: HAZE_BBOX,
+    source: "NASA FIRMS (NOAA-20 VIIRS 375 m)", tier: "satellite-detection", windowHours: 24,
+    fetchedAt: feed?.fetchedAt ?? null, sourceUrl: "https://firms.modaps.eosdis.nasa.gov/" },
+    { headers: { "cache-control": "public, max-age=900" } });
+  try { await cache.put(key, response.clone()); } catch {}
+  return response;
 }
 
 function aqiCategory(aqi: number): string {
@@ -689,12 +756,18 @@ async function handleAirTimeline(): Promise<Response> {
     && windRow?.hourly_units?.wind_speed_10m === "m/s" && windRow?.hourly_units?.wind_direction_10m === "°";
   const airTimes = Array.isArray(airRow?.hourly?.time) ? airRow.hourly.time : [];
   const windTimes = Array.isArray(windRow?.hourly?.time) ? windRow.hourly.time : [];
-  const joined = airOk && windOk && airTimes.length === windTimes.length
-    && airTimes.every((t: string, i: number) => normalizedUtc(t) === normalizedUtc(windTimes[i]));
-  if (!joined) {
+  const airArraysValid = ["pm2_5", "pm10", "dust", "aerosol_optical_depth"].every(field =>
+    Array.isArray(airRow?.hourly?.[field]) && airRow.hourly[field].length === airTimes.length);
+  const airValid = airOk && airArraysValid && airTimes.length > 0 && airTimes.length <= 72
+    && airTimes.every((t: string, i: number) => !!normalizedUtc(t) && (!i || Date.parse(normalizedUtc(t)!) - Date.parse(normalizedUtc(airTimes[i - 1])!) === 3600000));
+  const windArraysValid = ["wind_speed_10m", "wind_direction_10m"].every(field =>
+    Array.isArray(windRow?.hourly?.[field]) && windRow.hourly[field].length === windTimes.length);
+  const windJoined = windOk && windArraysValid && airTimes.length === windTimes.length
+    && airTimes.every((t: string, i: number) => !!normalizedUtc(t) && normalizedUtc(t) === normalizedUtc(windTimes[i]));
+  if (!airValid) {
     return jsonResponse({ available: false, checkedAt: new Date().toISOString(),
-      error: "air_timeline_unavailable", airAvailable: Boolean(airOk), windAvailable: Boolean(windOk),
-      note: "Model timeline unavailable or failed validation; no values are assumed." },
+      error: "air_timeline_unavailable", airAvailable: false, windAvailable: Boolean(windOk),
+      note: "Air model timeline unavailable or failed validation; no values are assumed." },
       { status: 503, headers: { "cache-control": "no-store" } });
   }
   const bounded = (v: unknown, max: number) => typeof v === "number" && Number.isFinite(v) && v >= 0 && v <= max ? v : null;
@@ -704,22 +777,24 @@ async function handleAirTimeline(): Promise<Response> {
     pm10: bounded(airRow.hourly.pm10[i], 2000),
     dust: bounded(airRow.hourly.dust[i], 2000),
     aod: bounded(airRow.hourly.aerosol_optical_depth[i], 10),
-    windMs: bounded(windRow.hourly.wind_speed_10m[i], 100),
-    windFromDeg: typeof windRow.hourly.wind_direction_10m[i] === "number" && Number.isFinite(windRow.hourly.wind_direction_10m[i]) ? windRow.hourly.wind_direction_10m[i] : null,
+    windMs: windJoined ? bounded(windRow.hourly.wind_speed_10m[i], 100) : null,
+    windFromDeg: windJoined ? bounded(windRow.hourly.wind_direction_10m[i], 360) : null,
   }));
-  const withValues = times.filter((r: any) => r.pm25 !== null || r.pm10 !== null || r.windMs !== null);
+  const withValues = times.filter((r: any) => r.pm25 !== null || r.pm10 !== null || r.dust !== null || r.aod !== null);
   if (!withValues.length) {
     return jsonResponse({ available: false, checkedAt: new Date().toISOString(), error: "air_timeline_empty",
       note: "The model returned no usable values for the window; nothing is shown as zero." },
       { status: 503, headers: { "cache-control": "no-store" } });
   }
   return jsonResponse({
-    available: true, checkedAt: new Date().toISOString(),
+    available: true, airAvailable: true, windAvailable: windJoined,
+    windNote: windJoined ? "Wind joined by exact model hour." : "Wind unavailable or failed validation; air values retained. No calm or transport is assumed.",
+    checkedAt: new Date().toISOString(),
     sample: { lat: point.lat, lng: point.lng, name: point.name, name_id: point.name_id },
-    grid: { air: { lat: airRow.latitude, lng: airRow.longitude }, wind: { lat: windRow.latitude, lng: windRow.longitude } },
+    grid: { air: { lat: airRow.latitude, lng: airRow.longitude }, wind: windJoined ? { lat: windRow.latitude, lng: windRow.longitude } : null },
     resolution: "CAMS global 0.4° (~45 km); hourly API output interpolated from the native three-hourly model",
     hours: times.length, firstValidAt: times[0].validAt, lastValidAt: times[times.length - 1].validAt,
-    times, source: "Open-Meteo / CAMS + Open-Meteo wind models", sourceUrl: "https://open-meteo.com/en/docs/air-quality-api",
+    times, source: windJoined ? "Open-Meteo / CAMS + Open-Meteo wind models" : "Open-Meteo / CAMS", sourceUrl: "https://open-meteo.com/en/docs/air-quality-api",
     tier: "model-forecast",
     note: "Every value is model output for one CAMS cell, not a measurement. Unknown stays null, never zero. Wind transport drawn from this data is an illustration of speed and bearing, not a concentration or plume.",
   }, { headers: { "cache-control": "public, max-age=600" } });
@@ -795,6 +870,7 @@ async function routeRequest(request: Request, env: Env): Promise<Response> {
   if (path === "/api/atlas/rainfall") return handleRainfall();
   if (path === "/api/atlas/watch") return handleCityWatch();
   if (path === "/api/atlas/air-quality") return handleAirQuality();
+  if (path === "/api/atlas/fires") return handleFires();
   if (path === "/api/atlas/air-timeline") return handleAirTimeline();
   if (path === "/api/atlas/areas") return handleAreas(request, env);
   if (path === "/api/atlas/districts") return handleDistricts();

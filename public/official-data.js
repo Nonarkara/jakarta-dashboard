@@ -59,12 +59,14 @@ function renderCityContext(){
  $('city-context-evidence').textContent=t('Katalog diperiksa','Catalogue checked')+' '+date(d.retrievedAt)+' · '+t('Fakta laporan historis dan sasaran kebijakan dipisahkan dari data langsung.','Historical report facts and policy targets are separate from live data.');
 }
 
-let paperInsight=null,paperFlood=null,paperLoad=null;
+let paperInsight=null,paperFlood=null,paperLoad=null,paperReferences={};
+const PAPER_REFERENCES=['waterways-manifest.json','traffic-cameras-manifest.json','hydrology-reference.json','toll-cameras.json','ispu-reference.json'];
 async function loadPaperData(){
  if(paperInsight&&paperFlood)return;
  if(paperLoad)return paperLoad;
  for(const id of ['paper-exposure','paper-riskmix','paper-green','paper-coverage','paper-inventory'])$(id).innerHTML='<p class="meta">'+t('Memuat tampilan turunan…','Loading the derived view…')+'</p>';
- paperLoad=Promise.all([get('/data/jakarta-v1/insight.json?v='+DASHBOARD_BUILD),get('/data/jakarta-v1/flood-network.json?v='+DASHBOARD_BUILD)]).then(([i,f])=>{
+ paperLoad=Promise.all([get('/data/jakarta-v1/insight.json?v='+DASHBOARD_BUILD),get('/data/jakarta-v1/flood-network.json?v='+DASHBOARD_BUILD),...PAPER_REFERENCES.map(file=>get('/data/jakarta-v1/'+file+'?v='+DASHBOARD_BUILD))]).then(([i,f,...references])=>{
+  paperReferences=Object.fromEntries(PAPER_REFERENCES.map((file,index)=>[file,references[index]]));
   paperInsight=i&&i.derived===true&&Array.isArray(i.exposure?.kelurahan)?i:null;
   paperFlood=f&&Array.isArray(f.riskSummary)&&f.riskSummary.length?f:null;
   window.officialPaperEvidence=paperInsight&&paperFlood?{insightGeneratedAt:paperInsight.generatedAt,checkedAt:paperInsight.checkedAt,counts:paperFlood.counts}:null;
@@ -72,14 +74,15 @@ async function loadPaperData(){
   if(!paperInsight||!paperFlood)paperLoad=null;
  });return paperLoad;
 }
-function paperBars(rows){
- const max=Math.max(0,...rows.map(r=>r[2]));
+function paperBars(rows,ceiling=null){
+ const max=ceiling===null?Math.max(0,...rows.map(r=>r[2])):ceiling;
  return '<div class="paper-bars">'+rows.map(r=>'<div class="paper-bar-row"><span>'+esc(r[0])+'</span><strong class="mono">'+esc(r[1])+'</strong><span class="paper-bar" aria-hidden="true"><i style="width:'+(max>0?(100*r[2]/max).toFixed(1):0)+'%"></i></span>'+(r[3]?'<span class="meta">'+esc(r[3])+'</span>':'')+'</div>').join('')+'</div>';
 }
 function renderPaper(){
  if($('official-topic').value!=='paper')return;
+ renderPaperInventory();
  if(!paperInsight||!paperFlood){
-  for(const id of ['paper-exposure','paper-riskmix','paper-green','paper-coverage','paper-inventory'])$(id).innerHTML=unavailable();
+  for(const id of ['paper-exposure','paper-riskmix','paper-green','paper-coverage'])$(id).innerHTML=unavailable();
   return;
  }
  const kelurahan=[...paperInsight.exposure.kelurahan].sort((a,b)=>(b.population?.residentsOnSevere||0)-(a.population?.residentsOnSevere||0)).slice(0,8);
@@ -90,17 +93,30 @@ function renderPaper(){
  const classLabel=k=>({Berat:t('Berat','Heavy'),Sedang:t('Sedang','Moderate'),Ringan:t('Ringan','Light')})[k]||k;
  $('paper-riskmix').innerHTML=paperBars(Object.keys(classes).map(k=>[classLabel(k),num(classes[k]),classes[k],total>0?num(100*classes[k]/total,1)+'%':null]))+evidence('Jakarta Satu · '+t('referensi risiko banjir','flood-risk reference'),t('turunan bertanggal','dated derived'),paperInsight.checkedAt,num(total)+' '+t('poligon','polygons'));
  const boroughs=[...paperInsight.green.byBorough].sort((a,b)=>b.greenHa-a.greenHa);
- $('paper-green').innerHTML=paperBars(boroughs.map(g=>[(g.kota||'').replace('Kota Adm. Jakarta ','').replace('Kepulauan Seribu',t('Kepulauan Seribu','Seribu Islands')),num(g.greenHa,1)+' ha',g.greenHa,Number.isFinite(g.greenSharePct)?num(g.greenSharePct,2)+'% '+t('luas borough','of borough area'):t('luas borough tidak dipublikasikan','no borough area published')]))+evidence('Jakarta Satu · '+t('referensi ruang hijau','green-space reference'),t('turunan bertanggal','dated derived'),paperInsight.checkedAt,t('dari geometri poligon','from polygon geometry'));
+ $('paper-green').innerHTML=paperBars(boroughs.map(g=>[(g.kota||'').replace('Kota Adm. Jakarta ','').replace('Kepulauan Seribu',t('Kepulauan Seribu','Seribu Islands')),num(g.greenHa,1)+' ha',g.greenHa,Number.isFinite(g.greenSharePct)?num(g.greenSharePct,2)+'% '+t('luas wilayah kota','of borough area'):t('luas wilayah kota tidak dipublikasikan','no borough area published')]))+evidence('Jakarta Satu · '+t('referensi ruang hijau','green-space reference'),t('turunan bertanggal','dated derived'),paperInsight.checkedAt,t('dari geometri poligon','from polygon geometry'));
  const coverage=[...paperInsight.coverage.byBorough].sort((a,b)=>b.kelurahanWithoutPublishedPump-a.kelurahanWithoutPublishedPump);
- $('paper-coverage').innerHTML='<p class="note">'+t('Panjang batang mengikuti porsi kelurahan terpetakan yang memiliki pompa terpublikasi; keberadaan bukan kapasitas atau kondisi operasional.','Bar length follows the share of mapped neighbourhoods with a published pump; presence is not capacity or operation.')+'</p>'+paperBars(coverage.map(c=>[(c.kota||'').replace('Kota Adm. Jakarta ',''),num(c.kelurahanWithPublishedPump)+' / '+num(c.kelurahanWithRiskMapping),c.kelurahanWithRiskMapping>0?100*c.kelurahanWithPublishedPump/c.kelurahanWithRiskMapping:0,num(c.kelurahanWithoutPublishedPump)+' '+t('tanpa pompa terpublikasi','without a published pump')]))+evidence('Jakarta Satu · '+t('jaringan pantauan','monitoring network'),t('turunan bertanggal','dated derived'),paperInsight.checkedAt,t('tidak adanya stasiun terpublikasi bukan berarti aman','no published station is not clearance'));
- const greenTotal=boroughs.reduce((n,g)=>n+(Number.isFinite(g.greenHa)?g.greenHa:0),0);
+ $('paper-coverage').innerHTML='<p class="note">'+t('Panjang batang mengikuti porsi kelurahan terpetakan yang memiliki pompa terpublikasi; keberadaan bukan kapasitas atau kondisi operasional.','Bar length follows the share of mapped neighbourhoods with a published pump; presence is not capacity or operation.')+'</p>'+paperBars(coverage.map(c=>[(c.kota||'').replace('Kota Adm. Jakarta ',''),num(c.kelurahanWithPublishedPump)+' / '+num(c.kelurahanWithRiskMapping),c.kelurahanWithRiskMapping>0?100*c.kelurahanWithPublishedPump/c.kelurahanWithRiskMapping:0,num(c.kelurahanWithoutPublishedPump)+' '+t('tanpa pompa terpublikasi','without a published pump')]),100)+evidence('Jakarta Satu · '+t('jaringan pantauan','monitoring network'),t('turunan bertanggal','dated derived'),paperInsight.checkedAt,t('tidak adanya stasiun terpublikasi bukan berarti aman','no published station is not clearance'));
+}
+function renderPaperInventory(){
+ const missing=t('Tidak tersedia','Unavailable');
+ const counted=value=>Number.isInteger(value)&&value>=0?num(value):missing;
+ const row=(id,en,value,stamp='')=>'<div><dt>'+t(id,en)+'</dt><dd>'+value+(stamp?'<span class="meta">'+stamp+'</span>':'')+'</dd></div>';
+ const checked=(d,tier)=>d?esc(tier)+' · '+t('diperiksa','checked')+' '+esc(date(d.checkedAt||d.retrievedAt)):'';
+ const referenceCount=(file,tier,field='count')=>{const d=paperReferences[file];return d?.tier===tier?counted(d[field]):missing;};
+ const water=paperReferences['waterways-manifest.json'],cameras=paperReferences['traffic-cameras-manifest.json'],gauges=paperReferences['hydrology-reference.json'],toll=paperReferences['toll-cameras.json'],ispu=paperReferences['ispu-reference.json'];
+ const green=paperInsight?.green?.byBorough;
+ const greenTotal=Array.isArray(green)&&green.every(g=>Number.isFinite(g.greenHa)&&g.greenHa>=0)?green.reduce((n,g)=>n+g.greenHa,0):null;
  $('paper-inventory').innerHTML='<dl class="official-project-fields">'
-  +'<div><dt>'+t('Dokumen rencana','Planning documents')+'</dt><dd>'+num(officialContext?.documents?.length||0)+' · '+t('lihat Laporan & visi','see Reports & vision')+'</dd></div>'
-  +'<div><dt>'+t('Usulan investasi','Investment proposals')+'</dt><dd>'+num(officialProjects?.count||0)+' · '+t('diambil','retrieved')+' '+date(officialProjects?.retrievedAt)+'</dd></div>'
-  +'<div><dt>'+t('Baris referensi banjir','Flood reference rows')+'</dt><dd>'+num(officialFlood?.count||0)+' → '+num(officialFlood?.rows?.length||0)+' '+t('kelompok','groups')+'</dd></div>'
-  +'<div><dt>'+t('Poligon risiko banjir','Flood-risk polygons')+'</dt><dd>'+num(paperFlood.counts.riskPolygons)+' · '+num(paperFlood.populationJoin.joined)+'/'+num(paperFlood.populationJoin.riskKelurahan)+' '+t('terhubung populasi','joined to population')+'</dd></div>'
-  +'<div><dt>'+t('Ruang hijau referensi','Reference green space')+'</dt><dd>'+num(Math.round(greenTotal))+' ha '+t('dihitung','computed')+'</dd></div>'
-  +'<div><dt>'+t('Stasiun ISPU','ISPU stations')+'</dt><dd>'+t('lihat Cuaca & udara','see Weather & air')+'</dd></div>'
+  +row('Dokumen rencana','Planning documents',Array.isArray(officialContext?.documents)?counted(officialContext.documents.length):missing,checked(officialContext,t('dokumen penerbit','publisher documents')))
+  +row('Usulan investasi','Investment proposals',counted(officialProjects?.count),checked(officialProjects,t('usulan penerbit','publisher proposal')))
+  +row('Baris referensi banjir','Flood reference rows',officialFlood?counted(officialFlood.count)+' → '+(Array.isArray(officialFlood.rows)?counted(officialFlood.rows.length):missing)+' '+t('kelompok','groups'):missing,checked(officialFlood,t('referensi tahunan','annual reference')))
+  +row('Poligon risiko banjir','Flood-risk polygons',paperFlood?counted(paperFlood.counts?.riskPolygons)+' · '+counted(paperFlood.populationJoin?.joined)+'/'+counted(paperFlood.populationJoin?.riskKelurahan)+' '+t('terhubung populasi','joined to population'):missing,checked(paperInsight,t('turunan bertanggal','dated derived')))
+  +row('Ruang hijau referensi','Reference green space',greenTotal===null?missing:num(Math.round(greenTotal))+' ha '+t('dihitung','computed'),checked(paperInsight,t('geometri terpublikasi','published geometry')))
+  +row('Stasiun ISPU','ISPU stations',ispu?.tier==='official-monitoring-reference'&&Array.isArray(ispu.stations)?counted(ispu.stations.length):missing,checked(ispu,t('referensi pengukuran resmi','official monitoring reference'))+(Array.isArray(ispu?.stations)?' · '+t('batch terakhir','latest batches')+' '+esc([...new Set(ispu.stations.map(station=>station.latest?.period).filter(Boolean))].sort().join(', ')):''))
+  +row('Fitur jalur air','Waterway features',referenceCount('waterways-manifest.json','mapped-reference'),checked(water,'OSM · '+t('referensi terpetakan','mapped reference'))+(water?.sourceAsOf?' · '+t('snapshot','snapshot')+' '+esc(date(water.sourceAsOf)):''))
+  +row('Lokasi pengukur air','Water-gauge locations',Array.isArray(gauges?.stations)?counted(gauges.stations.length):missing,checked(gauges,'BBWS · '+t('katalog lokasi, bukan jumlah bacaan terkini','location catalogue, not a count of current readings')))
+  +row('Referensi kamera','Camera references',referenceCount('traffic-cameras-manifest.json','public-camera-reference'),checked(cameras,t('katalog publik; ketersediaan belum diverifikasi','public catalogue; uptime unverified'))+(cameras?.catalogEditedAt?' · '+t('katalog diperbarui','catalogue edited')+' '+esc(date(cameras.catalogEditedAt)):''))
+  +row('Tautan video tol publik','Public toll video links',Number.isInteger(toll?.count)&&Array.isArray(toll.streams)&&toll.count===toll.streams.length?counted(toll.count):missing,checked(toll,t('tautan penerbit; diputar atas permintaan','publisher links; played on request')))
   +'</dl>';
 }
 $('official-topic').addEventListener('change',renderOfficialData);
