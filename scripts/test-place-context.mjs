@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
 import {validPlace,nearestPoint,distanceM,geometryDistance,nearby,loadReferences} from '../public/place-context.js';
 const p=[106.83,-6.2];
@@ -38,3 +39,15 @@ for(const id of ['waterways','pumps','health','schools']){
  const rows=nearby(p,real);assert.ok(rows.length>0,id+' real nearby references');assert.ok(rows.every(r=>r.distance>=0&&r.distance<=5000));
 }
 console.log('Place context: distance, real reference joins, boundary validation, partial failure, retry and abort passed.');
+
+// Execute the real 3D inspector's location handoff, rather than testing a nearby helper.
+const app=readFileSync(new URL('../public/app.js',import.meta.url),'utf8');
+const fn=app.slice(app.indexOf('function inspectionLocation('),app.indexOf('function closeInspect('));
+const context=vm.createContext({});vm.runInContext(fn,context);
+const landmarks=JSON.parse(readFileSync(new URL('../public/jakarta-landmarks.geojson',import.meta.url)));
+context.tower=landmarks.features.find(f=>f.properties.name==='Autograph Tower');
+const anchor=JSON.parse(JSON.stringify(vm.runInContext('inspectionLocation(tower,{lng:106.82284,lat:-6.20745})',context)));
+assert.deepEqual([anchor.lng,anchor.lat],context.tower.geometry.coordinates[0][0]);
+assert.ok(distanceM([anchor.lng,anchor.lat],[106.82284,-6.20745])>900,'source footprint replaces the displaced ground-plane click');
+assert.equal(vm.runInContext('inspectionLocation({geometry:{type:"Polygon",coordinates:[]}},"fallback")',context),'fallback');
+console.log('PASS 3D place handoff: actual tower footprint replaces the ground-plane click.');

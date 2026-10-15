@@ -962,6 +962,15 @@ function armIdleOrbit() {
 }
 
 // ── Inspect (click any building) ──────────────────────────────────────────
+// Extrusion clicks project onto the ground behind a tower. Use its source footprint.
+function inspectionLocation(feature, fallback) {
+  if (!['Polygon','MultiPolygon'].includes(feature?.geometry?.type)) return fallback;
+  let coordinates = feature.geometry.coordinates;
+  while (Array.isArray(coordinates) && Array.isArray(coordinates[0])) coordinates = coordinates[0];
+  if (!Array.isArray(coordinates) || !coordinates.slice(0,2).every(Number.isFinite) || coordinates.length < 2 ||
+      coordinates[0] < 106.65 || coordinates[0] > 107 || coordinates[1] < -6.4 || coordinates[1] > -6.08) return fallback;
+  return {lng:coordinates[0],lat:coordinates[1]};
+}
 function closeInspect() {
   const panel = document.getElementById("atlas-inspect");
   if (panel) panel.hidden = true;
@@ -1005,9 +1014,9 @@ function setupInspect() {
     const propsEl = document.getElementById("atlas-inspect-props");
     if (!card || !propsEl) return;
 
-    const center = e.lngLat;
+    const center = inspectionLocation(f, e.lngLat);
     document.getElementById('place-inspect').onclick = () => openPlaceContext(center);
-    coords.textContent = "lat " + center.lat.toFixed(4) + " -- lng " + center.lng.toFixed(4);
+    coords.textContent = "lat " + center.lat.toFixed(5) + " -- lng " + center.lng.toFixed(5);
     propsEl.innerHTML =
       '<div class="atlas-inspect-row"><span>Type</span><strong>' + escapeHtml(bldg) + "</strong></div>" +
       '<div class="atlas-inspect-row"><span>Height</span><strong>' + escapeHtml(h ? h.toFixed(1) + " m" : "unknown") + "</strong></div>" +
@@ -1030,8 +1039,9 @@ function setupInspect() {
     const props = e.features?.[0]?.properties;
     if (!props) return;
     closeInspect();
-    document.getElementById('place-inspect').onclick = () => openPlaceContext(e.lngLat);
-    document.getElementById("atlas-inspect-coords").textContent = "lat " + e.lngLat.lat.toFixed(4) + " · lng " + e.lngLat.lng.toFixed(4);
+    const center = inspectionLocation(e.features[0], e.lngLat);
+    document.getElementById('place-inspect').onclick = () => openPlaceContext(center);
+    document.getElementById("atlas-inspect-coords").textContent = "lat " + center.lat.toFixed(5) + " · lng " + center.lng.toFixed(5);
     document.getElementById("atlas-inspect-props").innerHTML =
       '<div class="atlas-inspect-row"><span>Name</span><strong>' + escapeHtml(props.name) + '</strong></div>' +
       '<div class="atlas-inspect-row"><span>Part height</span><strong>' + escapeHtml(props.height) + ' m</strong></div>' +
