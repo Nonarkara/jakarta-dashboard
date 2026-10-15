@@ -17,7 +17,7 @@ const ispuRows={};
 for(const line of ispuRaw.split('\n').slice(1)){ if(!line.trim())continue;
  const cells=line.split(',');
  const code=(cells[5]||'').replace(/"/g,'').match(/^(DKI[1-5])\b/)?.[1]; if(!code)continue;
- const max=Number(cells[12]); ispuRows[code]??=[]; ispuRows[code].push({date:`${cells[2].slice(0,4)}-${String(Number(cells[3])).padStart(2,'0')}-${String(Number(cells[4])).padStart(2,'0')}`,period:cells[2],max:Number.isFinite(max)&&cells[12]!==''?max:null,kategori:cells[1]});}
+ const max=Number(cells[12]),pm25=Number(cells[7]); ispuRows[code]??=[]; ispuRows[code].push({date:`${cells[2].slice(0,4)}-${String(Number(cells[3])).padStart(2,'0')}-${String(Number(cells[4])).padStart(2,'0')}`,period:cells[2],max:Number.isFinite(max)&&cells[12]!==''?max:null,pm25:Number.isFinite(pm25)&&cells[7]!==''?pm25:null,kategori:cells[1].replace(/"/g,'')});}
 assert.equal(Object.values(ispuRows).flat().length,ispu.rowsImported,'every parseable CSV row is accounted for in the bake');
 for(const s of ispu.stations){assert.match(s.code,/^DKI[1-5]$/);
  const rows=ispuRows[s.code];assert.ok(rows?.length,'the CSV contains this station');
@@ -33,6 +33,16 @@ for(const s of ispu.stations){assert.match(s.code,/^DKI[1-5]$/);
  assert.equal(s.latest.worstDay.date,worst.date);assert.equal(s.latest.worstDay.ispu,worst.max);
  assert.ok(ispu.categories.some(k=>k.name===s.latest.worstDay.kategori),'worst-day category is in the regulation legend');}
 assert.ok(ispu.categories.every(k=>k.range[0]<=k.range[1]&&k.range[1]<=500));
+// Monthly aggregates: recompute one station-month from the raw CSV.
+assert.ok(ispu.monthly.length>=100,'monthly aggregates cover the full history');
+const sample=ispu.monthly.find(m=>m.station==='DKI1'&&m.month==='2025-10');
+const csvDays=ispuRows['DKI1'].filter(r=>r.period==='202510');
+assert.equal(sample.days,csvDays.length,'October day count reconciles with the raw CSV');
+const csvPm25=csvDays.map(r=>r.pm25).filter(v=>v!==null).sort((a,b)=>a-b);
+assert.equal(sample.pm25Median,csvPm25[Math.floor(csvPm25.length/2)],'October PM2.5 median recomputes from the raw CSV');
+assert.equal(sample.unhealthyDays,csvDays.filter(r=>['TIDAK SEHAT','SANGAT TIDAK SEHAT','BERBAHAYA'].includes(r.kategori)).length,'unhealthy days recompute from the raw CSV');
+assert.equal(sample.daysWithLevel,csvDays.filter(r=>r.max!==null).length);
+assert.equal(ispu.latestMonth,ispu.observedAt.latestPeriod,'the declared month matches the declared batch period');
 console.log('PASS official data: proposal identity/units/coordinate quarantine, annual-period totals, geometry/field allowlist, historical facts and future targets');
 // Exercise the actual async civic UI functions: typing during fetch remains loading,
 // and a failed fetch clears the old layer's count and provenance.

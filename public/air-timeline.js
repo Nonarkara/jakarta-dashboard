@@ -15,6 +15,28 @@ export function windTransportPoint(start, windFromDeg, speedMs, elapsedS) {
   return [((lambda2 / rad + 540) % 360 - 180), phi2 / rad];
 }
 
+// Piecewise trajectory (HYSPLIT-lite illustration): scenario hour k follows
+// windHours[k] for one hour of travel. An hour with unknown wind pauses the
+// marker — unknown stays unknown, never calm. Uniform winds reduce to the
+// straight bearing; differing hours bend the path.
+export function windTrajectoryPoint(start, windHours, elapsedS) {
+  if (!Array.isArray(start) || start.length < 2 || !Number.isFinite(start[0]) || !Number.isFinite(start[1])
+    || !Array.isArray(windHours) || !Number.isFinite(elapsedS) || elapsedS < 0) return null;
+  const totalHours = elapsedS / 3600;
+  let point = [start[0], start[1]];
+  let lastWind = null, moved = 0;
+  for (const hour of windHours) {
+    if (moved >= totalHours) break;
+    const usable = Number.isFinite(hour?.windMs) && hour.windMs >= 0 && Number.isFinite(hour?.windFromDeg);
+    if (usable) {
+      const step = windTransportPoint(point, hour.windFromDeg, hour.windMs, 3600);
+      if (step) { point = step; lastWind = hour; }
+    }
+    moved += 1;
+  }
+  return { coordinates: point, lastWind, hours: Math.min(totalHours, windHours.length) };
+}
+
 export function createAirTimeline(map, {text: t, active, buildTag}) {
   let data = null, load = null, epoch = 0;
   let timer = null, startedAt = 0, anchor = null, hiddenListener = null, locationNode = null;
@@ -52,10 +74,10 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
   function transportSection(body, row) {
     const section = el('div', undefined, 'air-transport');
     section.append(el('h3', t('Wind transport · illustration', 'Transpor angin · ilustrasi')));
-    const wind = Number.isFinite(row?.windMs) && Number.isFinite(row?.windFromDeg) ? row : null;
-    const from = wind ? wind.windFromDeg : null;
+    const windHours = (data?.times || []).map(r => ({ windMs: r.windMs, windFromDeg: r.windFromDeg }));
+    const wind = windHours.some(h => Number.isFinite(h.windMs) && Number.isFinite(h.windFromDeg));
     section.append(el('p', wind
-      ? t('Uniform wind from the first modelled hour: ' + number(wind.windMs, 1) + ' m/s from ' + number(from, 0) + '°. The marker moves at speed × elapsed time along the downwind bearing. No concentration, plume width or smoke attribution is computed.', 'Angin seragam dari jam model pertama: ' + number(wind.windMs, 1) + ' m/s dari ' + number(from, 0) + '°. Penanda bergerak sebesar kecepatan × waktu pada arah turun angin. Tidak ada konsentrasi, lebar asap atau atribusi asap yang dihitung.')
+      ? t('The marker follows each modelled hour\'s wind in turn (1 real s = 1 scenario h, up to 6 h): distance = that hour\'s speed × one hour, along its downwind bearing. An hour with unknown wind pauses the marker. No concentration, plume width or smoke attribution is computed.', 'Penanda mengikuti angin tiap jam model secara bergantian (1 dtk nyata = 1 jam skenario, hingga 6 jam): jarak = kecepatan jam itu × satu jam, pada arah turun anginnya. Jam dengan angin tidak diketahui menghentikan penanda sementara. Tidak ada konsentrasi, lebar asap atau atribusi asap yang dihitung.')
       : t('No usable wind value in the model window; the transport illustration stays unavailable rather than assume calm.', 'Tidak ada nilai angin terpakai pada jendela model; ilustrasi transpor tetap tidak tersedia daripada mengasumsikan tenang.'), 'note'));
     if (wind) {
       const start = [data.sample.lng, data.sample.lat];
@@ -77,11 +99,12 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
         timer = setInterval(() => {
           if (myEpoch !== epoch) { stopTransport(); return; }
           const elapsedS = Math.min(6 * 3600, Math.max(0, Date.now() - startedAt) * 3.6);
-          const point = windTransportPoint(start, wind.windFromDeg, wind.windMs, elapsedS);
-          if (!point) { stopTransport(); return; }
-          map.getSource('air-transport-marker')?.setData({ type: 'FeatureCollection', features: [{ type: 'Feature', properties: {}, geometry: { type: 'Point', coordinates: point } }] });
+          const step = windTrajectoryPoint(start, windHours, elapsedS);
+          if (!step) { stopTransport(); return; }
+          map.getSource('air-transport-marker')?.setData({ type: 'FeatureCollection', features: [{ type: 'Feature', properties: {}, geometry: { type: 'Point', coordinates: step.coordinates } }] });
           if (!locationNode) { locationNode = el('div', undefined, 'water-scenario-location'); document.querySelector('.atlas-map-wrap')?.append(locationNode); }
-          locationNode.textContent = t('marker', 'penanda') + ' · ' + point[1].toFixed(6) + ', ' + point[0].toFixed(6) + ' · WGS84 · ' + number(elapsedS / 3600, 1) + t(' scenario h · wind ', ' jam skenario · angin ') + number(wind.windMs, 1) + ' m/s · '+t('1 real s = 1 scenario h','1 dtk nyata = 1 jam skenario');
+          const currentHour = windHours[Math.min(windHours.length - 1, Math.max(0, Math.floor(elapsedS / 3600)))];
+          locationNode.textContent = t('marker', 'penanda') + ' · ' + step.coordinates[1].toFixed(6) + ', ' + step.coordinates[0].toFixed(6) + ' · WGS84 · ' + number(elapsedS / 3600, 1) + t(' scenario h · hour wind ', ' jam skenario · angin jam ') + (Number.isFinite(currentHour?.windMs) ? number(currentHour.windMs, 1) + ' m/s' : t('unknown', 'tidak diketahui')) + ' · '+t('1 real s = 1 scenario h','1 dtk nyata = 1 jam skenario');
           if (elapsedS >= 6 * 3600) stopTransport();
         }, 100);
       });

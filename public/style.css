@@ -784,3 +784,5 @@ button:disabled { opacity: 0.55; cursor: not-allowed; }
 .air-tl-table tbody tr:nth-child(2n) { border-top:1px solid rgba(127,127,127,0.18); }
 .air-timeline h3, .air-transport h3 { font-size:13px; margin:10px 0 2px; }
 .air-timeline .meta, .air-transport .meta, .air-timeline .note, .air-transport .note { font-size:11px; margin:2px 0; }
+.lens-haze-guidance { font-weight: 600; }
+.lens-haze-limits { margin-top: 12px; opacity: .8; }

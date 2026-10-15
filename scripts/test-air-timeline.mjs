@@ -5,7 +5,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
-import { windTransportPoint } from '../public/air-timeline.js';
+import { windTransportPoint, windTrajectoryPoint } from '../public/air-timeline.js';
 const source = readFileSync(new URL('../src/index.ts', import.meta.url), 'utf8');
 const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText
   .replace('./hydrology.js', (await import('./hydrology-test-module.mjs')).hydrologyModuleUrl)
@@ -29,6 +29,23 @@ assert.equal(windTransportPoint(start, 0, 10, -1), null, 'negative elapsed refus
 assert.equal(windTransportPoint(null, 0, 10, 10), null, 'missing anchor refused');
 const calm = windTransportPoint(start, 0, 10, 0);
 assert.ok(Math.abs(calm[1] - start[1]) < 1e-9, 'zero elapsed stays exactly at the anchor');
+
+// ── piecewise trajectory: each scenario hour follows that hour's wind ─────
+const uniform=[{windMs:10,windFromDeg:0},{windMs:10,windFromDeg:0},{windMs:10,windFromDeg:0}];
+const straight=windTrajectoryPoint(start,uniform,3*3600);
+assert.ok(straight && straight.coordinates[1] < start[1] - 0.08, 'three uniform hours carry the marker south');
+const dogleg=windTrajectoryPoint(start,[{windMs:10,windFromDeg:0},{windMs:10,windFromDeg:90},{windMs:10,windFromDeg:0}],3*3600);
+assert.ok(dogleg.coordinates[0] < straight.coordinates[0] - 0.02 && dogleg.coordinates[1] < start[1] - 0.04, 'a differing middle hour bends the path west');
+const paused=windTrajectoryPoint(start,[{windMs:null,windFromDeg:null},{windMs:null,windFromDeg:null},{windMs:null,windFromDeg:null}],3*3600);
+assert.ok(paused && Math.abs(paused.coordinates[0]-start[0])<1e-9 && Math.abs(paused.coordinates[1]-start[1])<1e-9, 'all-unknown wind hours pause the marker at the anchor, never assume calm');
+const mixed=windTrajectoryPoint(start,[{windMs:null,windFromDeg:null},{windMs:null,windFromDeg:null},{windMs:10,windFromDeg:0}],3*3600);
+assert.ok(mixed && Math.abs(Math.abs(mixed.coordinates[1]-start[1]) - Math.abs(straight.coordinates[1]-start[1])/3) < 0.02, 'two unknown hours carry the marker only one hour of travel');
+const oneHour=windTrajectoryPoint(start,[{windMs:10,windFromDeg:180}],1*3600);
+assert.ok(oneHour && oneHour.coordinates[1] > start[1], 'wind from the south carries the marker north');
+assert.equal(windTrajectoryPoint(start,uniform,-1),null,'negative elapsed refused');
+assert.equal(windTrajectoryPoint(start,null,3600),null,'missing wind hours refused');
+const capped=windTrajectoryPoint(start,[{windMs:10,windFromDeg:0}],10*3600);
+assert.equal(capped.hours,1,'the trajectory stops at the end of the published hours');
 
 // ── handler fixtures ────────────────────────────────────────────────────────
 const now = Date.now();
@@ -106,4 +123,4 @@ assert.equal(clamped.body.times[0].pm25, null, 'an out-of-range model value stay
 assert.equal(clamped.body.times[0].windMs, 3.2, 'the wind branch still answers beside a rejected pollutant');
 
 globalThis.fetch = originalFetch;
-console.log('PASS air timeline: UTC/grid/unit/timestamp-join validation, outage and null honesty, uniform-wind transport math');
+console.log('PASS air timeline: UTC/grid/unit/timestamp-join validation, outage and null honesty, piecewise wind-trajectory transport math');

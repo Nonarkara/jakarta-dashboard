@@ -50,7 +50,7 @@ for r in csv.DictReader(body.decode('utf-8-sig').splitlines()):
     if not m or len(date)!=10:
         skipped+=1; continue
     rows.append({'code':m.group(1),'date':date,'period':str(r.get('periode_data') or '')[:6],
-        'maxIspu':num(r.get('max')),'kategori':str(r.get('kategori') or '').strip(),
+        'maxIspu':num(r.get('max')),'pm25Ispu':num(r.get('pm_duakomalima')),'kategori':str(r.get('kategori') or '').strip(),
         'critical':str(r.get('parameter_pencemar_kritis') or '').strip()})
 if len(rows)<=3000:
     raise SystemExit(f'refuse to bake: too few rows ({len(rows)})')
@@ -78,6 +78,22 @@ for code,name in STATIONS.items():
             'daysReported':len(latest),
             'daysNoData':len([r for r in mine if r['period']==latest_period and r['maxIspu'] is None])}})
 
+UNHEALTHY=('TIDAK SEHAT','SANGAT TIDAK SEHAT','BERBAHAYA')
+monthly=[]
+for code,name in STATIONS.items():
+    for period in sorted({r['period'] for r in rows if r['code']==code}):
+        days=[r for r in rows if r['code']==code and r['period']==period]
+        if not days: continue
+        pm25=[r['pm25Ispu'] for r in days if r['pm25Ispu'] is not None]
+        pm25.sort()
+        cats={c:len([r for r in days if r['kategori']==c]) for c in CATEGORIES}
+        monthly.append({'station':code,'month':f"{period[:4]}-{period[4:]}",
+            'days':len(days),'daysWithLevel':len([r for r in days if r['maxIspu'] is not None]),
+            'pm25Median':pm25[len(pm25)//2] if pm25 else None,'pm25Max':pm25[-1] if pm25 else None,
+            'categories':cats,'unhealthyDays':sum(cats[c] for c in UNHEALTHY)})
+if not monthly:
+    raise SystemExit('refuse to bake: no monthly aggregates')
+
 obs_start=min(s['coverage']['start'] for s in stations)
 obs_end=max(s['coverage']['end'] for s in stations)
 latest_periods=sorted({s['latest']['period'] for s in stations})
@@ -89,6 +105,7 @@ payload={'publisher':'Dinas Lingkungan Hidup DKI Jakarta · Satu Data Jakarta','
     'tier':'official-monitoring-reference',
     'license':'Publisher attribution; explicit dataset license not stated in inspected metadata',
     'sha256':sha,'rowsImported':len(rows),'rowsSkipped':skipped,
+    'latestMonth':latest_periods[0],'monthly':monthly,
     'evidencePath':'data/source-evidence/ispu-2026-10-12/ispu-export.csv',
     'units':{'ispu':'ISPU index (unitless, Permen LHK 14/2020)'},
     'categories':[{'name':c,'range':BOUNDS[c]} for c in CATEGORIES],

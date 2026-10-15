@@ -1875,9 +1875,9 @@ function lensPanelBody() {
   return body;
 }
 
-function lensNoteLine(text) {
+function lensNoteLine(text, cls) {
   const p = document.createElement('p');
-  p.className = 'lens-note';
+  p.className = cls ? 'lens-note ' + cls : 'lens-note';
   p.textContent = text;
   return p;
 }
@@ -2030,6 +2030,32 @@ function renderHazeEvidence(body) {
     body.append(lensNoteLine(lensText('Select a detection for its acquisition time, coordinates and radiative power. Radiative power is not emitted particle mass. Visible imagery has its own observation date.', 'Pilih deteksi untuk waktu akuisisi, koordinat, dan daya radiasi. Daya radiasi bukan massa partikel yang dilepaskan. Citra tampak memiliki tanggal pengamatan sendiri.')));
   }
   const source=document.createElement('a');source.href='https://firms.modaps.eosdis.nasa.gov/';source.target='_blank';source.rel='noopener';source.textContent=lensText('NASA FIRMS source ↗','Sumber NASA FIRMS ↗');body.append(source);
+  renderOfficialIspu(body);
+}
+// Official ISPU record from the five DLH SPKU stations, read from the same
+// dated ispu-reference.json the dashboard observations use — one bake, one
+// source. A monthly-published baseline, never a live reading.
+let ispuReference = null, ispuReferenceLoad = null;
+function loadIspuReference() {
+  if (!ispuReferenceLoad) ispuReferenceLoad = fetch(insightAsset('ispu-reference', 'json'), { headers: { accept: 'application/json' } })
+    .then(r => r.ok ? r.json() : null)
+    .then(d => { if (!d || !Array.isArray(d.monthly)) { ispuReferenceLoad = null; return null; } ispuReference = d; if (activeLens === 'haze') renderLensEvidence(); return d; })
+    .catch(() => { ispuReferenceLoad = null; return null; });
+  return ispuReferenceLoad;
+}
+function renderOfficialIspu(body) {
+  body.append(lensNoteLine(lensText('Official record · DLH stations (ISPU, Indonesia\'s index)', 'Catatan resmi · stasiun DLH (ISPU, indeks Indonesia)'), 'lens-haze-guidance'));
+  if (!ispuReference) { loadIspuReference(); body.append(lensNoteLine(lensText('Official ISPU station record unavailable or loading.', 'Catatan ISPU stasiun resmi tidak tersedia atau sedang dimuat.'))); return; }
+  const monthName = m => new Date(m + '-01T00:00:00Z').toLocaleDateString(uiLanguage() === 'id' ? 'id-ID' : 'en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+  const octobers = [...new Set(ispuReference.monthly.filter(m => m.month.endsWith('-10')).map(m => m.month))].sort();
+  for (const st of ispuReference.stations) {
+    const latest = ispuReference.monthly.find(m => m.station === st.code && m.month === ispuReference.latestMonth);
+    const octs = ispuReference.monthly.filter(m => m.station === st.code && octobers.includes(m.month));
+    const octText = octs.map(m => monthName(m.month) + ': ' + fmtNum(m.unhealthyDays, 0) + '/' + m.days + lensText(' unhealthy days', ' hari tidak sehat')).join(' · ');
+    const latestText = latest ? monthName(latest.month) + ': ' + lensText('median PM2.5 ISPU ', 'median ISPU PM2.5 ') + (latest.pm25Median ?? '—') + ', ' + fmtNum(latest.unhealthyDays, 0) + '/' + latest.days + lensText(' unhealthy days', ' hari tidak sehat') : lensText('no recent month', 'tidak ada bulan terbaru');
+    body.append(lensNoteLine(st.code + ' ' + st.name + ' · ' + latestText + (octText ? ' · ' + lensText('Octobers ', 'Oktober-Oktober ') + octText : '')));
+  }
+  body.append(lensNoteLine(lensText('Unhealthy = ISPU category Tidak Sehat or worse. Published monthly by DLH DKI Jakarta through Satu Data Jakarta; the record runs through ' + ispuReference.observedAt.latestPeriod + ' and is not live. Live readings: udara.jakarta.go.id and BMKG.', 'Tidak sehat = kategori ISPU Tidak Sehat atau lebih buruk. Diterbitkan bulanan oleh DLH DKI Jakarta melalui Satu Data Jakarta; catatan berlaku hingga ' + ispuReference.observedAt.latestPeriod + ' dan bukan data langsung. Pembacaan langsung: udara.jakarta.go.id dan BMKG.'), 'lens-haze-limits'));
 }
 
 function renderLensEvidence() {
@@ -2154,6 +2180,7 @@ async function selectCityLens(lens) {
     if (request !== lensRequest) return;
   } else if (lens === 'haze') {
     await refreshFires(false);
+    loadIspuReference();
     if (request !== lensRequest) return;
     mapInstance.flyTo({center:[106.83,-3.5],zoom:5,pitch:0,bearing:0});
   } else if (lens === 'air') {
