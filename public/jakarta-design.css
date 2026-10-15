@@ -505,3 +505,8 @@ input[type="range"], input[type="checkbox"] { accent-color:var(--accent); }
 .network-section .network-check input { width:auto; flex:0 0 auto; padding:0; }
 
 #atlas-lens-body button[hidden] { display:none; }
+
+#atlas-lens-body table { width:100%; border-collapse:collapse; }
+#atlas-lens-body table caption { text-align:left; margin-block:6px; }
+#atlas-lens-body table th, #atlas-lens-body table td { text-align:left; vertical-align:top; padding:4px 0; border-bottom:1px solid var(--line); }
+#atlas-lens-body table td:not(:first-child), #atlas-lens-body table th:not(:first-child) { text-align:right; padding-left:6px; font-variant-numeric:tabular-nums; }

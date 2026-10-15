@@ -8,6 +8,7 @@ import ts from 'typescript';
 import { windTransportPoint, windTrajectoryPoint } from '../public/air-timeline.js';
 const source = readFileSync(new URL('../src/index.ts', import.meta.url), 'utf8');
 const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText
+  .replace('./coastal.js', (await import('./coastal-test-module.mjs')).coastalModuleUrl)
   .replace('./hydrology.js', (await import('./hydrology-test-module.mjs')).hydrologyModuleUrl)
   .replace('./jakarta.js', new URL('../src/jakarta.js', import.meta.url).href);
 const worker = (await import('data:text/javascript;base64,' + Buffer.from(compiled).toString('base64'))).default;
