@@ -37,7 +37,7 @@ export function nearby(p, data, radius=5000) {
     // Exact duplicate rows are retained in source files, but occupy one result slot.
     const key=JSON.stringify([feature?.properties?.name,feature?.geometry]);
     if(seen.has(key))return false;seen.add(key);return true;
-  }).map(feature=>{const coordinate=nearestPoint(p,feature.geometry);return {feature,coordinate,distance:coordinate?distanceM(p,coordinate):Infinity};})
+  }).map(feature=>{const coordinate=nearestPoint(p,feature?.geometry);return {feature,coordinate,distance:coordinate?distanceM(p,coordinate):Infinity};})
     .filter(row=>Number.isFinite(row.distance)&&row.distance<=radius).sort((a,b)=>a.distance-b.distance).slice(0,3);
 }
 const SOURCES = [
@@ -57,7 +57,6 @@ export async function loadReferences(fetcher, signal, build, previous=[]) {
       if(data?.type!=='FeatureCollection'||!Array.isArray(data.features)||data.features.length>15000||data.crs!=='EPSG:4326') throw Error('invalid reference');
       return {id,en,idText,data};
     } catch(error) {
-      if(signal.aborted) throw error;
       return {id,en,idText,data:null};
     }
   }));
