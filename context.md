@@ -6,6 +6,11 @@ Around here opens a native keyboard-accessible dialog from the map centre or a s
 
 # Jakarta dashboard release · 11 October 2026
 
+
+Final receipts: feature commits `f3f6c14`, `f985b19` and `082bbad`; final build `jakarta-atlas-20261015-1792048138-082bbad`, Worker `c5f3bed1-6f16-43f9-a9ce-efb3769cd884`. Full tests, typecheck, 12/12 local verification, three consecutive exact-byte probes on both hosts, atlas/dashboard smokes and 16/16 API checks pass. The lazy place module also matches live byte-for-byte (SHA256 `f63f461a945db798f3eeba2e8a30a949285e660404a3cddb482eb5e37489d115`). A deliberately stalled source test confirms three completed references survive the deadline; malformed geometry is skipped. Source data stays intact while identical name-and-geometry rows occupy one display slot.
+
+Live 3D verification exposed a displaced ground-plane click behind Autograph Tower (>900 m from its footprint). The inspector and place handoff now use a validated source-footprint reference coordinate, not an entrance or surveyed address. Executed tests use the actual tower geometry; the same live screen click now shows `-6.19878, 106.82105` in both views. Verified lesson: `Scars/Debug-Logs/2026-10-15-anchor-3d-building-inspection-to-source-footprint-coordinates.md`. Desktop English and phone Indonesian views were visually inspected; phone root is 390 px wide with no horizontal overflow, 390 px map frame and unchanged 23 px masthead. Escape/focus return, repeated entry, result map focus and air-lens handoff were exercised. Proof: `docs/PLACE-CONTEXT-LIVE-2026-10-15.jpg` and `docs/PLACE-CONTEXT-PHONE-LIVE-2026-10-15.jpg`. Real first-time-user testing remains unperformed; no calibrated inundation or pollutant prediction is claimed.
+
 ## Shipability and Bayer typography · 14 October 2026
 
 Reconciled the prior committed river/air release and the pending NASA/forecast additions. Three assigned agents completed adapter hardening, Research/inventory and source-catalogue work; the parent reviewed and integrated the client behavior, typography and release checks. Owner explicitly chose the free CTAN Universa implementation after confirming Herbert Bayer's Universal.
