@@ -1,0 +1,2334 @@
+{
+ "currentVersion": 11.5,
+ "cimVersion": "3.5.0",
+ "id": 0,
+ "name": "Penggunaan Lahan 2021",
+ "type": "Feature Layer",
+ "parentLayer": null,
+ "defaultVisibility": true,
+ "minScale": 0,
+ "maxScale": 0,
+ "canScaleSymbols": false,
+ "geometryType": "esriGeometryPolygon",
+ "description": "",
+ "copyrightText": "",
+ "editFieldsInfo": null,
+ "ownershipBasedAccessControlForFeatures": null,
+ "syncCanReturnChanges": false,
+ "relationships": [],
+ "isDataVersioned": false,
+ "isDataArchived": false,
+ "infoInEstimates": [
+  "extent",
+  "count"
+ ],
+ "isDataBranchVersioned": false,
+ "isDataReplicaTracked": false,
+ "isCoGoEnabled": false,
+ "supportsRollbackOnFailureParameter": true,
+ "archivingInfo": {
+  "supportsQueryWithHistoricMoment": false,
+  "startArchivingMoment": -1
+ },
+ "supportsStatistics": true,
+ "supportsExceedsLimitStatistics": true,
+ "supportsAdvancedQueries": true,
+ "supportsValidateSQL": true,
+ "supportsCoordinatesQuantization": true,
+ "supportsQuantizationEditMode": true,
+ "supportsCalculate": true,
+ "supportsASyncCalculate": true,
+ "hasContingentValuesDefinition": false,
+ "supportsDatumTransformation": true,
+ "advancedQueryCapabilities": {
+  "supportsPagination": true,
+  "supportsQueryWithDistance": true,
+  "supportsReturningQueryExtent": true,
+  "supportsStatistics": true,
+  "supportsPercentileStatistics": true,
+  "supportsHavingClause": true,
+  "supportsOrderBy": true,
+  "supportsDistinct": true,
+  "supportsCountDistinct": true,
+  "supportsAdvancedQueryRelated": true,
+  "supportsQueryRelatedPagination": true,
+  "supportsCurrentUserQueries": true,
+  "supportsFullTextSearch": true,
+  "fullTextSearchCapabilities": {
+   "supportsSearchOperator": true,
+   "supportsOperator": false,
+   "supportsSqlExpressionInFullText": true
+  },
+  "fullTextSearchableFields": [],
+  "supportsQueryWithResultType": true,
+  "supportsReturningGeometryCentroid": true,
+  "supportsReturningGeometryEnvelope": true,
+  "supportsSqlExpression": true,
+  "supportsQueryWithDatumTransformation": true,
+  "supportsLod": false,
+  "supportsQueryWithLodSR": false,
+  "supportsQueryAnalytic": true,
+  "supportsTrueCurve": true,
+  "supportedCurveTypes": [
+   "esriGeometryCircularArc",
+   "esriGeometryEllipticArc",
+   "esriGeometryBezier3Curve"
+  ],
+  "supportsQueryWithCacheHint": false
+ },
+ "advancedQueryAnalyticCapabilities": {
+  "supportsLinearRegression": true,
+  "supportsAsync": true,
+  "supportsPercentileAnalytic": true
+ },
+ "advancedEditingCapabilities": {
+  "supportedSqlFormatsInCalculate": [
+   "standard"
+  ],
+  "supportsAsyncApplyEdits": true,
+  "supportsApplyEditsbyUploadID": true,
+  "supportedApplyEditsUploadIDFormats": "JSON,PBF"
+ },
+ "hasGeometryProperties": true,
+ "geometryProperties": {
+  "shapeAreaFieldName": "Shape__Area",
+  "shapeLengthFieldName": "Shape__Length",
+  "units": "esriDecimalDegrees"
+ },
+ "hasMetadata": true,
+ "extent": {
+  "xmin": 106.6856556400825,
+  "ymin": -6.373317076023456,
+  "xmax": 106.97411786667003,
+  "ymax": -6.0797741038481545,
+  "zmin": 0,
+  "zmax": 0,
+  "mmin": 0,
+  "mmax": 0,
+  "spatialReference": {
+   "wkid": 4326,
+   "latestWkid": 4326,
+   "xyTolerance": 8.98315284119521e-09,
+   "zTolerance": 0.001,
+   "mTolerance": 0.001,
+   "falseX": -400,
+   "falseY": -400,
+   "xyUnits": 999999999.9999999,
+   "falseZ": -100000,
+   "zUnits": 10000,
+   "falseM": -100000,
+   "mUnits": 10000
+  }
+ },
+ "spatialReference": {
+  "wkid": 4326,
+  "latestWkid": 4326,
+  "xyTolerance": 8.98315284119521e-09,
+  "zTolerance": 0.001,
+  "mTolerance": 0.001,
+  "falseX": -400,
+  "falseY": -400,
+  "xyUnits": 999999999.9999999,
+  "falseZ": -100000,
+  "zUnits": 10000,
+  "falseM": -100000,
+  "mUnits": 10000
+ },
+ "sourceSpatialReference": {
+  "wkid": 32748,
+  "latestWkid": 32748,
+  "xyTolerance": 0.001,
+  "zTolerance": 0.001,
+  "mTolerance": 0.001,
+  "falseX": -5120900,
+  "falseY": 1900,
+  "xyUnits": 10000,
+  "falseZ": -100000,
+  "zUnits": 10000,
+  "falseM": -100000,
+  "mUnits": 10000
+ },
+ "drawingInfo": {
+  "renderer": {
+   "type": "uniqueValue",
+   "field1": "D_SUB_PENG",
+   "defaultSymbol": {
+    "type": "esriSFS",
+    "style": "esriSFSSolid",
+    "color": [
+     130,
+     130,
+     130,
+     255
+    ],
+    "outline": {
+     "type": "esriSLS",
+     "style": "esriSLSSolid",
+     "color": [
+      110,
+      110,
+      110,
+      255
+     ],
+     "width": 0.7
+    }
+   },
+   "defaultLabel": "<all other values>",
+   "uniqueValueGroups": [
+    {
+     "heading": "Sub Penggunaan",
+     "classes": [
+      {
+       "label": "BUDAYA",
+       "description": "BUDAYA",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         255,
+         55,
+         205,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "BUDAYA"
+        ]
+       ]
+      },
+      {
+       "label": "CAMPURAN",
+       "description": "CAMPURAN",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         210,
+         85,
+         55,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "CAMPURAN"
+        ]
+       ]
+      },
+      {
+       "label": "HUNIAN",
+       "description": "HUNIAN",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         245,
+         155,
+         30,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "HUNIAN"
+        ]
+       ]
+      },
+      {
+       "label": "INDUSTRI",
+       "description": "INDUSTRI",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         105,
+         0,
+         0,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "INDUSTRI"
+        ]
+       ]
+      },
+      {
+       "label": "JASA",
+       "description": "JASA",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         255,
+         70,
+         70,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "JASA"
+        ]
+       ]
+      },
+      {
+       "label": "KEAGAMAAN",
+       "description": "KEAGAMAAN",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         5,
+         105,
+         40,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "KEAGAMAAN"
+        ]
+       ]
+      },
+      {
+       "label": "KHUSUS",
+       "description": "KHUSUS",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         120,
+         60,
+         205,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "KHUSUS"
+        ]
+       ]
+      },
+      {
+       "label": "LABORATORIUM",
+       "description": "LABORATORIUM",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         168,
+         0,
+         132,
+         255
+        ],
+        "outline": {
+         "type": "esriSLS",
+         "style": "esriSLSSolid",
+         "color": [
+          110,
+          110,
+          110,
+          255
+         ],
+         "width": 0.4
+        }
+       },
+       "values": [
+        [
+         "LABORATORIUM"
+        ]
+       ]
+      },
+      {
+       "label": "LAIN-LAIN",
+       "description": "LAIN-LAIN",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         230,
+         255,
+         75,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "LAIN-LAIN"
+        ]
+       ]
+      },
+      {
+       "label": "LAYANAN PENDIDIKAN",
+       "description": "LAYANAN PENDIDIKAN",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         205,
+         55,
+         255,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "LAYANAN PENDIDIKAN"
+        ]
+       ]
+      },
+      {
+       "label": "PASAR TRADISIONAL",
+       "description": "PASAR TRADISIONAL",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         125,
+         25,
+         125,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "PASAR TRADISIONAL"
+        ]
+       ]
+      },
+      {
+       "label": "PELAYANAN KESEHATAN",
+       "description": "PELAYANAN KESEHATAN",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         185,
+         75,
+         185,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "PELAYANAN KESEHATAN"
+        ]
+       ]
+      },
+      {
+       "label": "PELAYANAN PENDIDIKAN",
+       "description": "PELAYANAN PENDIDIKAN",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         155,
+         50,
+         155,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "PELAYANAN PENDIDIKAN"
+        ]
+       ]
+      },
+      {
+       "label": "PELAYANAN UMUM",
+       "description": "PELAYANAN UMUM",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         95,
+         0,
+         95,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "PELAYANAN UMUM"
+        ]
+       ]
+      },
+      {
+       "label": "PEMERINTAHAN",
+       "description": "PEMERINTAHAN",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         120,
+         135,
+         130,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "PEMERINTAHAN"
+        ]
+       ]
+      },
+      {
+       "label": "PENGGUNAAN LAIN",
+       "description": "PENGGUNAAN LAIN",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         180,
+         150,
+         120,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "PENGGUNAAN LAIN"
+        ]
+       ]
+      },
+      {
+       "label": "PENYIMPANAN",
+       "description": "PENYIMPANAN",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         30,
+         185,
+         125,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "PENYIMPANAN"
+        ]
+       ]
+      },
+      {
+       "label": "PERHOTELAN",
+       "description": "PERHOTELAN",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         255,
+         70,
+         70,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "PERHOTELAN"
+        ]
+       ]
+      },
+      {
+       "label": "PERIKANAN",
+       "description": "PERIKANAN",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         80,
+         125,
+         210,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "PERIKANAN"
+        ]
+       ]
+      },
+      {
+       "label": "PERKANTORAN DAN PERDAGANGAN",
+       "description": "PERKANTORAN DAN PERDAGANGAN",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         155,
+         155,
+         155,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "PERKANTORAN DAN PERDAGANGAN"
+        ]
+       ]
+      },
+      {
+       "label": "PERTANIAN",
+       "description": "PERTANIAN",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         200,
+         200,
+         60,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "PERTANIAN"
+        ]
+       ]
+      },
+      {
+       "label": "PETERNAKAN",
+       "description": "PETERNAKAN",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         185,
+         235,
+         185,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "PETERNAKAN"
+        ]
+       ]
+      },
+      {
+       "label": "TERMINAL",
+       "description": "TERMINAL",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         215,
+         55,
+         0,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "TERMINAL"
+        ]
+       ]
+      },
+      {
+       "label": "WISATA",
+       "description": "WISATA",
+       "symbol": {
+        "type": "esriSFS",
+        "style": "esriSFSSolid",
+        "color": [
+         210,
+         190,
+         255,
+         255
+        ],
+        "outline": null
+       },
+       "values": [
+        [
+         "WISATA"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "uniqueValueInfos": [
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       255,
+       55,
+       205,
+       255
+      ],
+      "outline": null
+     },
+     "value": "BUDAYA",
+     "label": "BUDAYA"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       210,
+       85,
+       55,
+       255
+      ],
+      "outline": null
+     },
+     "value": "CAMPURAN",
+     "label": "CAMPURAN"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       245,
+       155,
+       30,
+       255
+      ],
+      "outline": null
+     },
+     "value": "HUNIAN",
+     "label": "HUNIAN"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       105,
+       0,
+       0,
+       255
+      ],
+      "outline": null
+     },
+     "value": "INDUSTRI",
+     "label": "INDUSTRI"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       255,
+       70,
+       70,
+       255
+      ],
+      "outline": null
+     },
+     "value": "JASA",
+     "label": "JASA"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       5,
+       105,
+       40,
+       255
+      ],
+      "outline": null
+     },
+     "value": "KEAGAMAAN",
+     "label": "KEAGAMAAN"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       120,
+       60,
+       205,
+       255
+      ],
+      "outline": null
+     },
+     "value": "KHUSUS",
+     "label": "KHUSUS"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       168,
+       0,
+       132,
+       255
+      ],
+      "outline": {
+       "type": "esriSLS",
+       "style": "esriSLSSolid",
+       "color": [
+        110,
+        110,
+        110,
+        255
+       ],
+       "width": 0.4
+      }
+     },
+     "value": "LABORATORIUM",
+     "label": "LABORATORIUM"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       230,
+       255,
+       75,
+       255
+      ],
+      "outline": null
+     },
+     "value": "LAIN-LAIN",
+     "label": "LAIN-LAIN"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       205,
+       55,
+       255,
+       255
+      ],
+      "outline": null
+     },
+     "value": "LAYANAN PENDIDIKAN",
+     "label": "LAYANAN PENDIDIKAN"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       125,
+       25,
+       125,
+       255
+      ],
+      "outline": null
+     },
+     "value": "PASAR TRADISIONAL",
+     "label": "PASAR TRADISIONAL"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       185,
+       75,
+       185,
+       255
+      ],
+      "outline": null
+     },
+     "value": "PELAYANAN KESEHATAN",
+     "label": "PELAYANAN KESEHATAN"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       155,
+       50,
+       155,
+       255
+      ],
+      "outline": null
+     },
+     "value": "PELAYANAN PENDIDIKAN",
+     "label": "PELAYANAN PENDIDIKAN"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       95,
+       0,
+       95,
+       255
+      ],
+      "outline": null
+     },
+     "value": "PELAYANAN UMUM",
+     "label": "PELAYANAN UMUM"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       120,
+       135,
+       130,
+       255
+      ],
+      "outline": null
+     },
+     "value": "PEMERINTAHAN",
+     "label": "PEMERINTAHAN"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       180,
+       150,
+       120,
+       255
+      ],
+      "outline": null
+     },
+     "value": "PENGGUNAAN LAIN",
+     "label": "PENGGUNAAN LAIN"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       30,
+       185,
+       125,
+       255
+      ],
+      "outline": null
+     },
+     "value": "PENYIMPANAN",
+     "label": "PENYIMPANAN"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       255,
+       70,
+       70,
+       255
+      ],
+      "outline": null
+     },
+     "value": "PERHOTELAN",
+     "label": "PERHOTELAN"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       80,
+       125,
+       210,
+       255
+      ],
+      "outline": null
+     },
+     "value": "PERIKANAN",
+     "label": "PERIKANAN"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       155,
+       155,
+       155,
+       255
+      ],
+      "outline": null
+     },
+     "value": "PERKANTORAN DAN PERDAGANGAN",
+     "label": "PERKANTORAN DAN PERDAGANGAN"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       200,
+       200,
+       60,
+       255
+      ],
+      "outline": null
+     },
+     "value": "PERTANIAN",
+     "label": "PERTANIAN"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       185,
+       235,
+       185,
+       255
+      ],
+      "outline": null
+     },
+     "value": "PETERNAKAN",
+     "label": "PETERNAKAN"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       215,
+       55,
+       0,
+       255
+      ],
+      "outline": null
+     },
+     "value": "TERMINAL",
+     "label": "TERMINAL"
+    },
+    {
+     "symbol": {
+      "type": "esriSFS",
+      "style": "esriSFSSolid",
+      "color": [
+       210,
+       190,
+       255,
+       255
+      ],
+      "outline": null
+     },
+     "value": "WISATA",
+     "label": "WISATA"
+    }
+   ],
+   "fieldDelimiter": ",",
+   "authoringInfo": {
+    "colorRamp": {
+     "type": "multipart",
+     "colorRamps": [
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        236,
+        204,
+        252,
+        255
+       ],
+       "toColor": [
+        236,
+        204,
+        252,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        188,
+        252,
+        179,
+        255
+       ],
+       "toColor": [
+        188,
+        252,
+        179,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        252,
+        216,
+        184,
+        255
+       ],
+       "toColor": [
+        252,
+        216,
+        184,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        197,
+        252,
+        252,
+        255
+       ],
+       "toColor": [
+        197,
+        252,
+        252,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        252,
+        179,
+        194,
+        255
+       ],
+       "toColor": [
+        252,
+        179,
+        194,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        245,
+        252,
+        182,
+        255
+       ],
+       "toColor": [
+        245,
+        252,
+        182,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        189,
+        220,
+        252,
+        255
+       ],
+       "toColor": [
+        189,
+        220,
+        252,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        179,
+        179,
+        252,
+        255
+       ],
+       "toColor": [
+        179,
+        179,
+        252,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        184,
+        252,
+        216,
+        255
+       ],
+       "toColor": [
+        184,
+        252,
+        216,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        252,
+        179,
+        250,
+        255
+       ],
+       "toColor": [
+        252,
+        179,
+        250,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        252,
+        215,
+        228,
+        255
+       ],
+       "toColor": [
+        252,
+        215,
+        228,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        231,
+        252,
+        212,
+        255
+       ],
+       "toColor": [
+        231,
+        252,
+        212,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        252,
+        200,
+        194,
+        255
+       ],
+       "toColor": [
+        252,
+        200,
+        194,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        252,
+        182,
+        228,
+        255
+       ],
+       "toColor": [
+        252,
+        182,
+        228,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        252,
+        227,
+        215,
+        255
+       ],
+       "toColor": [
+        252,
+        227,
+        215,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        252,
+        239,
+        192,
+        255
+       ],
+       "toColor": [
+        252,
+        239,
+        192,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        194,
+        204,
+        252,
+        255
+       ],
+       "toColor": [
+        194,
+        204,
+        252,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        179,
+        229,
+        252,
+        255
+       ],
+       "toColor": [
+        179,
+        229,
+        252,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        252,
+        202,
+        236,
+        255
+       ],
+       "toColor": [
+        252,
+        202,
+        236,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        212,
+        252,
+        182,
+        255
+       ],
+       "toColor": [
+        212,
+        252,
+        182,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        207,
+        252,
+        231,
+        255
+       ],
+       "toColor": [
+        207,
+        252,
+        231,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        215,
+        230,
+        252,
+        255
+       ],
+       "toColor": [
+        215,
+        230,
+        252,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        212,
+        179,
+        252,
+        255
+       ],
+       "toColor": [
+        212,
+        179,
+        252,
+        255
+       ]
+      },
+      {
+       "type": "algorithmic",
+       "algorithm": "esriCIELabAlgorithm",
+       "fromColor": [
+        205,
+        192,
+        252,
+        255
+       ],
+       "toColor": [
+        205,
+        192,
+        252,
+        255
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "scaleSymbols": true,
+  "transparency": 0,
+  "labelingInfo": [
+   {
+    "labelExpressionInfo": {
+     "expression": "$feature.D_KEGIATAN",
+     "title": "Custom"
+    },
+    "labelPlacement": "esriServerPolygonPlacementAlwaysHorizontal",
+    "multiPart": "labelLargest",
+    "allowOverrun": true,
+    "deconflictionStrategy": "dynamic",
+    "repeatLabel": false,
+    "useClippedGeometry": true,
+    "stackLabel": true,
+    "stackAlignment": "dynamic",
+    "removeDuplicates": "all",
+    "removeDuplicatesDistance": 150,
+    "stackRowLength": 24,
+    "useCodedValues": true,
+    "maxScale": 0,
+    "minScale": 10000,
+    "name": "Class 1",
+    "priority": -1,
+    "symbol": {
+     "type": "esriTS",
+     "color": [
+      0,
+      0,
+      0,
+      255
+     ],
+     "backgroundColor": null,
+     "borderLineColor": null,
+     "borderLineSize": null,
+     "verticalAlignment": "bottom",
+     "horizontalAlignment": "left",
+     "rightToLeft": false,
+     "angle": 0,
+     "xoffset": 0,
+     "yoffset": 0,
+     "kerning": true,
+     "haloColor": null,
+     "haloSize": null,
+     "font": {
+      "family": "Tahoma",
+      "size": 6,
+      "style": "normal",
+      "weight": "normal",
+      "decoration": "none"
+     }
+    }
+   }
+  ]
+ },
+ "hasM": true,
+ "hasZ": true,
+ "enableZDefaults": false,
+ "supportsVCSProjection": true,
+ "allowUpdateWithoutMValues": false,
+ "allowGeometryUpdates": true,
+ "allowTrueCurvesUpdates": true,
+ "onlyAllowTrueCurveUpdatesByTrueCurveClients": true,
+ "hasAttachments": false,
+ "supportsApplyEditsWithGlobalIds": false,
+ "htmlPopupType": "esriServerHTMLPopupTypeAsHTMLText",
+ "objectIdField": "OBJECTID",
+ "globalIdField": "",
+ "displayField": "D_PENGGUNA",
+ "typeIdField": "D_SUB_PENG",
+ "subtypeField": "",
+ "fields": [
+  {
+   "name": "OBJECTID",
+   "type": "esriFieldTypeOID",
+   "alias": "OBJECTID",
+   "domain": null,
+   "editable": false,
+   "nullable": false,
+   "defaultValue": null,
+   "modelName": "OBJECTID"
+  },
+  {
+   "name": "JOIN_COUNT",
+   "type": "esriFieldTypeInteger",
+   "alias": "Join_Count",
+   "domain": null,
+   "editable": true,
+   "nullable": true,
+   "defaultValue": null,
+   "modelName": "JOIN_COUNT"
+  },
+  {
+   "name": "TARGET_FID",
+   "type": "esriFieldTypeInteger",
+   "alias": "TARGET_FID",
+   "domain": null,
+   "editable": true,
+   "nullable": true,
+   "defaultValue": null,
+   "modelName": "TARGET_FID"
+  },
+  {
+   "name": "D_PENGGUNA",
+   "type": "esriFieldTypeString",
+   "alias": "D_PENGGUNA",
+   "domain": null,
+   "editable": true,
+   "nullable": true,
+   "length": 254,
+   "defaultValue": null,
+   "modelName": "D_PENGGUNA"
+  },
+  {
+   "name": "D_SUB_PENG",
+   "type": "esriFieldTypeString",
+   "alias": "D_SUB_PENG",
+   "domain": null,
+   "editable": true,
+   "nullable": true,
+   "length": 254,
+   "defaultValue": null,
+   "modelName": "D_SUB_PENG"
+  },
+  {
+   "name": "D_KEGIATAN",
+   "type": "esriFieldTypeString",
+   "alias": "D_KEGIATAN",
+   "domain": null,
+   "editable": true,
+   "nullable": true,
+   "length": 254,
+   "defaultValue": null,
+   "modelName": "D_KEGIATAN"
+  },
+  {
+   "name": "SHAPE_LENG",
+   "type": "esriFieldTypeDouble",
+   "alias": "Shape_Leng",
+   "domain": null,
+   "editable": true,
+   "nullable": true,
+   "defaultValue": null,
+   "modelName": "SHAPE_LENG"
+  },
+  {
+   "name": "WADMKK",
+   "type": "esriFieldTypeString",
+   "alias": "WILAYAH",
+   "domain": null,
+   "editable": true,
+   "nullable": true,
+   "length": 50,
+   "defaultValue": null,
+   "modelName": "WADMKK"
+  },
+  {
+   "name": "KDPKAB",
+   "type": "esriFieldTypeString",
+   "alias": "KODE_WILAYAH",
+   "domain": null,
+   "editable": true,
+   "nullable": true,
+   "length": 50,
+   "defaultValue": null,
+   "modelName": "KDPKAB"
+  },
+  {
+   "name": "LUASWH",
+   "type": "esriFieldTypeDouble",
+   "alias": "LUAS_WILAYAH_ha",
+   "domain": null,
+   "editable": true,
+   "nullable": true,
+   "defaultValue": null,
+   "modelName": "LUASWH"
+  },
+  {
+   "name": "SRS_ID",
+   "type": "esriFieldTypeString",
+   "alias": "REFERENSI_SPASIAL",
+   "domain": null,
+   "editable": true,
+   "nullable": true,
+   "length": 50,
+   "defaultValue": null,
+   "modelName": "SRS_ID"
+  },
+  {
+   "name": "Shape__Area",
+   "type": "esriFieldTypeDouble",
+   "alias": "SHAPE.AREA",
+   "domain": null,
+   "editable": false,
+   "nullable": true,
+   "defaultValue": null,
+   "modelName": "SHAPE.AREA",
+   "required": true
+  },
+  {
+   "name": "Shape__Length",
+   "type": "esriFieldTypeDouble",
+   "alias": "SHAPE.LEN",
+   "domain": null,
+   "editable": false,
+   "nullable": true,
+   "defaultValue": null,
+   "modelName": "SHAPE.LEN",
+   "required": true
+  }
+ ],
+ "geometryField": {
+  "name": "SHAPE",
+  "type": "esriFieldTypeGeometry",
+  "alias": "SHAPE",
+  "domain": null,
+  "editable": true,
+  "nullable": true,
+  "defaultValue": null,
+  "modelName": "SHAPE"
+ },
+ "indexes": [
+  {
+   "name": "R78610_SDE_ROWID_UK",
+   "isAscending": true,
+   "isUnique": true,
+   "description": "",
+   "fields": "OBJECTID"
+  },
+  {
+   "name": "A950_IX1",
+   "isAscending": true,
+   "isUnique": true,
+   "description": "",
+   "fields": "SHAPE"
+  }
+ ],
+ "datesInUnknownTimezone": false,
+ "dateFieldsTimeReference": {
+  "timeZone": "UTC",
+  "timeZoneIANA": "Etc/UTC",
+  "respectsDaylightSaving": false
+ },
+ "preferredTimeReference": null,
+ "types": [
+  {
+   "id": "BUDAYA",
+   "name": "BUDAYA",
+   "domains": {},
+   "templates": [
+    {
+     "name": "BUDAYA",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "BUDAYA",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "CAMPURAN",
+   "name": "CAMPURAN",
+   "domains": {},
+   "templates": [
+    {
+     "name": "CAMPURAN",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "CAMPURAN",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "HUNIAN",
+   "name": "HUNIAN",
+   "domains": {},
+   "templates": [
+    {
+     "name": "HUNIAN",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "HUNIAN",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "INDUSTRI",
+   "name": "INDUSTRI",
+   "domains": {},
+   "templates": [
+    {
+     "name": "INDUSTRI",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "INDUSTRI",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "JASA",
+   "name": "JASA",
+   "domains": {},
+   "templates": [
+    {
+     "name": "JASA",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "JASA",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "KEAGAMAAN",
+   "name": "KEAGAMAAN",
+   "domains": {},
+   "templates": [
+    {
+     "name": "KEAGAMAAN",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "KEAGAMAAN",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "KHUSUS",
+   "name": "KHUSUS",
+   "domains": {},
+   "templates": [
+    {
+     "name": "KHUSUS",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "KHUSUS",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "LABORATORIUM",
+   "name": "LABORATORIUM",
+   "domains": {},
+   "templates": [
+    {
+     "name": "LABORATORIUM",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "LABORATORIUM",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "LAIN-LAIN",
+   "name": "LAIN-LAIN",
+   "domains": {},
+   "templates": [
+    {
+     "name": "LAIN-LAIN",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "LAIN-LAIN",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "LAYANAN PENDIDIKAN",
+   "name": "LAYANAN PENDIDIKAN",
+   "domains": {},
+   "templates": [
+    {
+     "name": "LAYANAN PENDIDIKAN",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "LAYANAN PENDIDIKAN",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "PASAR TRADISIONAL",
+   "name": "PASAR TRADISIONAL",
+   "domains": {},
+   "templates": [
+    {
+     "name": "PASAR TRADISIONAL",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "PASAR TRADISIONAL",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "PELAYANAN KESEHATAN",
+   "name": "PELAYANAN KESEHATAN",
+   "domains": {},
+   "templates": [
+    {
+     "name": "PELAYANAN KESEHATAN",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "PELAYANAN KESEHATAN",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "PELAYANAN PENDIDIKAN",
+   "name": "PELAYANAN PENDIDIKAN",
+   "domains": {},
+   "templates": [
+    {
+     "name": "PELAYANAN PENDIDIKAN",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "PELAYANAN PENDIDIKAN",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "PELAYANAN UMUM",
+   "name": "PELAYANAN UMUM",
+   "domains": {},
+   "templates": [
+    {
+     "name": "PELAYANAN UMUM",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "PELAYANAN UMUM",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "PEMERINTAHAN",
+   "name": "PEMERINTAHAN",
+   "domains": {},
+   "templates": [
+    {
+     "name": "PEMERINTAHAN",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "PEMERINTAHAN",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "PENGGUNAAN LAIN",
+   "name": "PENGGUNAAN LAIN",
+   "domains": {},
+   "templates": [
+    {
+     "name": "PENGGUNAAN LAIN",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "PENGGUNAAN LAIN",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "PENYIMPANAN",
+   "name": "PENYIMPANAN",
+   "domains": {},
+   "templates": [
+    {
+     "name": "PENYIMPANAN",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "PENYIMPANAN",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "PERHOTELAN",
+   "name": "PERHOTELAN",
+   "domains": {},
+   "templates": [
+    {
+     "name": "PERHOTELAN",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "PERHOTELAN",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "PERIKANAN",
+   "name": "PERIKANAN",
+   "domains": {},
+   "templates": [
+    {
+     "name": "PERIKANAN",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "PERIKANAN",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "PERKANTORAN DAN PERDAGANGAN",
+   "name": "PERKANTORAN DAN PERDAGANGAN",
+   "domains": {},
+   "templates": [
+    {
+     "name": "PERKANTORAN DAN PERDAGANGAN",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "PERKANTORAN DAN PERDAGANGAN",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "PERTANIAN",
+   "name": "PERTANIAN",
+   "domains": {},
+   "templates": [
+    {
+     "name": "PERTANIAN",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "PERTANIAN",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "PETERNAKAN",
+   "name": "PETERNAKAN",
+   "domains": {},
+   "templates": [
+    {
+     "name": "PETERNAKAN",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "PETERNAKAN",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "TERMINAL",
+   "name": "TERMINAL",
+   "domains": {},
+   "templates": [
+    {
+     "name": "TERMINAL",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "TERMINAL",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  },
+  {
+   "id": "WISATA",
+   "name": "WISATA",
+   "domains": {},
+   "templates": [
+    {
+     "name": "WISATA",
+     "description": "",
+     "prototype": {
+      "attributes": {
+       "SRS_ID": null,
+       "LUASWH": null,
+       "JOIN_COUNT": null,
+       "TARGET_FID": null,
+       "D_PENGGUNA": null,
+       "D_SUB_PENG": "WISATA",
+       "D_KEGIATAN": null,
+       "SHAPE_LENG": null,
+       "WADMKK": null,
+       "KDPKAB": null
+      }
+     },
+     "drawingTool": "esriFeatureEditToolPolygon"
+    }
+   ]
+  }
+ ],
+ "templates": [],
+ "maxRecordCount": 2000,
+ "supportedQueryFormats": "JSON, geoJSON, PBF",
+ "supportedExportFormats": "sqlite,filegdb,shapefile,csv,geojson",
+ "capabilities": "Query",
+ "useStandardizedQueries": true,
+ "bigIntegerRestrictedTo53Bits": true,
+ "supportedSpatialRelationships": [
+  "esriSpatialRelIntersects",
+  "esriSpatialRelContains",
+  "esriSpatialRelCrosses",
+  "esriSpatialRelEnvelopeIntersects",
+  "esriSpatialRelIndexIntersects",
+  "esriSpatialRelOverlaps",
+  "esriSpatialRelTouches",
+  "esriSpatialRelWithin",
+  "esriSpatialRelRelation"
+ ],
+ "supportsAppend": true,
+ "supportedAppendFormats": "FILEGDB,PBF",
+ "standardMaxRecordCount": 4000,
+ "tileMaxRecordCount": 4000,
+ "standardMaxRecordCountNoGeometry": 32000,
+ "maxRecordCountFactor": 1,
+ "serviceItemId": "681f32329c244f1ea44cceb1ceea1e68"
+}

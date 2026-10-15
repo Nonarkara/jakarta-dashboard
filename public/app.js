@@ -1302,8 +1302,8 @@ function renderObservationHud(product) {
   const hud = document.getElementById('atlas-observation-hud');
   if (!hud) return;
   hud.hidden = !product;
-  const names = { himawari: 'Himawari infrared clouds', radar: 'Rain radar', 'surface-water': 'Satellite surface water / flood', aerosol: 'Satellite aerosol optical depth', 'satellite-rain': 'Satellite rainfall estimate' };
-  hud.innerHTML = product ? '<details class="atlas-hud-details"><summary>Observation</summary><div><strong>' + escapeHtml(names[product.id]) + '</strong><span>' + escapeHtml(product.source + ' · ' + product.tier) + '</span><span>' + escapeHtml((product.date || 'unknown') + ' UTC') + '</span><span>Missing pixels are not an all-clear.</span><a href="#atlas-environment">Data &amp; sources</a></div></details>' : '';
+  const names = { himawari: 'Himawari infrared clouds', radar: 'Rain radar', 'surface-water': 'Satellite surface water / flood', aerosol: 'Satellite aerosol optical depth', 'satellite-rain': 'Satellite rainfall estimate', 'true-colour': 'Visible satellite imagery', 'night-lights': 'Night lights · corrected daily', 'night-lights-2016': 'Night lights · 2016 composite', 'aerosol-viirs': 'VIIRS Deep Blue aerosol', 'aerosol-index': 'OMPS absorbing aerosol index' };
+  hud.innerHTML = product ? '<details class="atlas-hud-details"><summary>Observation</summary><div><strong>' + escapeHtml(names[product.id] || product.layer || product.id) + '</strong><span>' + escapeHtml(product.source + ' · ' + product.tier) + '</span><span>' + escapeHtml((product.date || 'unknown') + ' UTC') + '</span><span>Missing pixels are not an all-clear.</span><a href="#atlas-environment">Data &amp; sources</a></div></details>' : '';
   const disclosure = hud.querySelector?.('details');
   if (disclosure) disclosure.open = !window.matchMedia('(max-width: 700px)').matches;
 }
@@ -1312,7 +1312,7 @@ function renderEnvironmentEvidence(product) {
   if (!evidence || !legend) return;
   renderObservationHud(product);
   if (!product) { evidence.innerHTML = ''; legend.innerHTML = ''; return; }
-  const pairs = [['Source', product.source], ['Tier', product.tier], ['Observation date (UTC)', product.date || 'unknown'], ['Retrieved (WIB)', formatLocal(product.fetchedAt)], ['Resolution', product.resolution], ['Units', product.units]];
+  const pairs = [['Source', product.source], ['Tier', product.tier], ['Observation date (UTC)', product.date || 'unknown'], ['Retrieved (WIB)', formatLocal(product.fetchedAt)], ['Resolution', product.resolution], ['Units', product.units], ['Time support', product.timePrecision || 'unknown']];
   if (product.windowDays) pairs.push(['Days in composite', product.windowDays]);
   evidence.innerHTML = '<dl class="atlas-environment-evidence">' + pairs.map(p => '<dt>' + escapeHtml(p[0]) + '</dt><dd>' + escapeHtml(p[1]) + '</dd>').join('') + '</dl><p><a href="' + escapeHtml(product.sourceUrl) + '" target="_blank" rel="noopener">Source documentation</a></p>';
   const notes = {
@@ -1322,6 +1322,11 @@ function renderEnvironmentEvidence(product) {
     'radar': 'Rain radar shows precipitation echoes within provider coverage. It does not measure flood depth. Black coverage-mask areas lack radar coverage.',
     'true-colour': 'Visible satellite imagery can show clouds, land and smoke-like features. It does not identify a pollution source or measure surface concentration.',
     'satellite-rain': 'IMERG is a satellite rainfall-rate estimate, not ground radar. Daily imagery may lag; check the product date.',
+    'night-lights': 'Black Marble is corrected for moonlight and atmosphere, with gaps filled from other nights. The dated daily product can contain older information. Fires and gas flares also glow. Brightness is not population, economic output or proof of a power outage.',
+    'night-lights-2016': 'Fixed 2016 annual night-light composite. Its processing differs from corrected daily radiance. Compare spatial patterns only; brightness differences do not quantify city growth or outages.',
+    'aerosol-viirs': 'VIIRS Deep Blue measures aerosol through the atmospheric column during daytime overpasses. Retrievals are about 6 km at nadir; the 2 km visualization adds no finer measurement. Clouds and swath gaps remain missing, not clean air.',
+    'aerosol-index': 'OMPS detects UV-absorbing aerosol such as dust, smoke or volcanic ash. The index also depends on aerosol height and clouds; it does not identify the source or measure ground-level PM2.5. Native pixels are about 12 × 17 km at nadir.',
+
   };
   const categories = [['Surface water', '#32d2f5'], ['Recurring flood', '#ffff00'], ['Flood detected', '#fa1e24'], ['Insufficient data', '#afafaf']];
   legend.innerHTML = '<p>' + escapeHtml(notes[product.id]) + '</p>' + (product.id === 'surface-water'
@@ -2082,6 +2087,7 @@ function renderLensEvidence() {
     water: ['Water the satellite can see', 'Air yang terlihat dari satelit'],
     recurring: ['Where water has recurred', 'Di mana genangan berulang'],
     air: ['Air model timeline and satellite aerosol', 'Linimasa model udara dan aerosol satelit'],
+    night: ['The city at night', 'Kota pada malam hari'],
     haze: ['Regional haze evidence', 'Bukti kabut asap kawasan'],
     exposure: ['Population and severe-risk land', 'Penduduk dan lahan risiko berat'],
     confidence: ['How well each height is known', 'Seberapa baik setiap tinggi diketahui'],
@@ -2099,6 +2105,7 @@ function renderLensEvidence() {
     water: ['NASA MODIS · cyan: water; red: detected flood; yellow: recurring flood. Clouds can hide water. Check the observation day.', 'NASA MODIS · biru muda: air; merah: banjir terdeteksi; kuning: banjir berulang. Awan dapat menutupi air. Periksa hari pengamatan.'],
     recurring: ['NASA MODIS · yellow marks recurring flood in the satellite classification. This is not a prediction of how long water will remain.', 'NASA MODIS · kuning menandai banjir berulang dalam klasifikasi satelit. Ini bukan prakiraan berapa lama air bertahan.'],
     air: ['CAMS model forecast and NASA atmospheric aerosol are distinct evidence. Wind transport is an adjustable illustration, not a pollution plume forecast.', 'Prakiraan model CAMS dan aerosol atmosfer NASA adalah bukti berbeda. Transpor angin adalah ilustrasi, bukan prakiraan sebaran polusi.'],
+    night: ['Corrected Black Marble radiance with its product date. Open Layer settings to compare the 2016 composite, VIIRS aerosol or OMPS index. These products do not quantify city growth.', 'Radiansi Black Marble terkoreksi dengan tanggal produk. Buka Pengaturan lapisan untuk membandingkan komposit 2016, aerosol VIIRS atau indeks OMPS. Produk ini tidak mengukur pertumbuhan kota.'],
     haze: ['Satellite visible imagery and dated thermal detections. A hot pixel is not a confirmed fire or proof of Jakarta pollution.', 'Citra satelit tampak dan deteksi termal bertanggal. Piksel panas bukan kebakaran terkonfirmasi atau bukti polusi Jakarta.'],
     exposure: ['Jakarta Satu flood-risk classes · shaded by weighted risk-class mix (Ringan 1, Sedang 3, Berat 6). Population figures are area-weighted proxies, not located residents.', 'Kelas rawan banjir Jakarta Satu · diarsir menurut campuran kelas berbobot (Ringan 1, Sedang 3, Berat 6). Angka penduduk adalah proksi berbobot luas, bukan penduduk yang terlokasi.'],
     confidence: ['Overture footprints · coloured by height source. Bright is tagged or published; dim is a type default with no measurement and no satellite signal.', 'Tapak Overture · diwarnai menurut asal tinggi. Terang berarti bertag atau terpublikasi; redup berarti nilai bawaan jenis tanpa pengukuran dan tanpa sinyal satelit.'],
@@ -2154,7 +2161,7 @@ function renderLensEvidence() {
     body.textContent = activeLens === 'city' ? lensText('Building heights mix tagged measurements, satellite estimates and defaults. Explore Data & sources below.', 'Tinggi bangunan memadukan pengukuran bertag, perkiraan satelit, dan nilai bawaan. Lihat Data & sumber di bawah.') : (product?.source || 'NASA GIBS') + ' · ' + lensText('See the observation time and legend in the map evidence panel.', 'Lihat waktu pengamatan dan legenda di panel bukti peta.');
   }
 }
-const ALL_LENSES = ['city','waterways','traffic','arrival','exposure','confidence','green','coverage','rain','radar','cloud','water','recurring','air','haze'];
+const ALL_LENSES = ['city','waterways','traffic','arrival','exposure','confidence','green','coverage','rain','radar','cloud','water','recurring','air','haze','night'];
 async function selectCityLens(lens) {
   if (!ALL_LENSES.includes(lens)) return;
   stopWaterPlayback();
@@ -2169,13 +2176,13 @@ async function selectCityLens(lens) {
   history.replaceState(null, '', shareUrl.toString());
   document.querySelectorAll('[data-lens]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.lens === lens)));
   const selector = document.getElementById('atlas-environment-layer');
-  selector.value = {radar:'radar',cloud:'himawari',water:'surface-water',recurring:'surface-water',air:'aerosol',haze:'true-colour'}[lens] || 'none';
+  selector.value = {radar:'radar',cloud:'himawari',water:'surface-water',recurring:'surface-water',air:'aerosol',haze:'true-colour',night:'night-lights'}[lens] || 'none';
   selector.dispatchEvent(new Event('change', {bubbles:true}));
   removeInsightLayersWhenLeaving(lens);
   renderLensEvidence();
   await styleReady;
   if (request !== lensRequest || !mapInstance) return;
-  mapInstance.setMinZoom?.(lens === 'haze' ? 4 : 9);
+  mapInstance.setMinZoom?.(lens === 'haze' ? 4 : lens === 'night' ? 7 : 9);
   setLayerVisible('fire-hotspots', lens === 'haze');
   setLayerVisible('rain-model-samples', lens === 'rain');
   if (lens === 'rain') {
@@ -2218,6 +2225,8 @@ async function selectCityLens(lens) {
     await loadStationGeometry(request);
     if (request !== lensRequest) return;
     mapInstance.flyTo({center:[106.83,-6.20], zoom:9.6, pitch:0, bearing:0});
+  } else if (lens === 'night') {
+    mapInstance.flyTo({center:[106.83,-6.20], zoom:9, pitch:0, bearing:0});
   } else if (['radar','cloud','water','recurring'].includes(lens)) {
     mapInstance.flyTo({center:[106.83,-6.20], zoom:9.3, pitch:currentView === '2d' ? 0 : 35, bearing:0});
   } else flyToArea('sudirman-thamrin', {updateHash:false});
@@ -2404,6 +2413,20 @@ async function openPlaceContext(point) {
 }
 document.getElementById('place-open')?.addEventListener('click', () => {
   if (mapInstance) openPlaceContext(mapInstance.getCenter());
+});
+
+// Local reference search loads only when Quick jump is opened.
+let cityToolsPromise = null;
+document.querySelector('#atlas-areas details')?.addEventListener('toggle', event => {
+  if (!event.currentTarget.open || !mapInstance || cityToolsPromise) return;
+  cityToolsPromise = import('./city-tools.js?v=' + encodeURIComponent(ATLAS_BUILD_TAG)).then(module => module.createCityTools(mapInstance, {
+    language: uiLanguage, build: ATLAS_BUILD_TAG, place: openPlaceContext,
+    snapshot: () => ({ build: ATLAS_BUILD_TAG, lens: activeLens, product: selectedEnvironmentProduct(), areas: areasDoc, air: lastAirQuality, fires: firesData,
+      selection: mapInstance.getStyle().sources['place-context']?.data || mapInstance.getStyle().sources['jkt-dashboard-selection']?.data || null })
+  })).catch(() => {
+    cityToolsPromise = null;
+    showToast(lensText('Place search is unavailable. Open Quick jump to retry.', 'Pencarian tempat tidak tersedia. Buka Lompat cepat untuk mencoba lagi.'));
+  });
 });
 
 async function fetchBrowserRainfall() {

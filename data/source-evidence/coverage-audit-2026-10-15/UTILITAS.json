@@ -1,0 +1,14 @@
+{
+ "currentVersion": 11.5,
+ "folders": [],
+ "services": [
+  {
+   "name": "UTILITAS/Data_Utilitas_View",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "UTILITAS/Data_Utilitas_View",
+   "type": "MapServer"
+  }
+ ]
+}

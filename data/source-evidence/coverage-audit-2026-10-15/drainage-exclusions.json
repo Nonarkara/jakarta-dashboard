@@ -1,0 +1,18 @@
+{
+ "94633": {
+  "type": "MultiLineString",
+  "reason": "line collapsed below two distinct points at 1m simplification"
+ },
+ "61719": {
+  "type": "MultiLineString",
+  "reason": "line collapsed below two distinct points at 1m simplification"
+ },
+ "165863": {
+  "type": null,
+  "reason": "missing geometry"
+ },
+ "165972": {
+  "type": null,
+  "reason": "missing geometry"
+ }
+}

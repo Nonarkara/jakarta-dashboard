@@ -1,0 +1,51 @@
+{
+ "schemaVersion": 1,
+ "count": 60714,
+ "sourceRecordCount": 60718,
+ "excluded": 4,
+ "retrievedAt": "2026-10-15T14:32:01.837872+00:00",
+ "dataAsOf": null,
+ "sourceUrl": "https://jakartasatu.jakarta.go.id/server/rest/services/Saluran_Mikro_DSDA_View/MapServer/0/query",
+ "publisher": "Pemprov DKI Jakarta / DSDA / Jakarta Satu",
+ "tier": "official-reference-geometry",
+ "license": "Dataset-specific open license not stated; publisher attribution required; permission to redistribute remains unconfirmed.",
+ "bbox": [
+  106.65,
+  -6.4,
+  107,
+  -6.05
+ ],
+ "sourceCRS": "EPSG:32748",
+ "outputCRS": "EPSG:4326 (publisher outSR conversion)",
+ "sourceFields": [
+  "OBJECTID",
+  "ID",
+  "TOPONIMI",
+  "KELURAHAN",
+  "KECAMATAN",
+  "KOTA",
+  "PANJANG"
+ ],
+ "simplification": "Radial 1 metre; endpoints retained; 6 decimal coordinates. No topology reconstruction.",
+ "verticesBefore": 1827061,
+ "verticesAfter": 1235156,
+ "rawSha256": "5e355f32a890fb10c3943d42c0c07a242997a4ab145f97c1d41ecbd7fe917919",
+ "limitations": "Reference geometry only; no publication epoch, capacity, operating state, measured direction or hydraulic connectivity. PANJANG=0 and TOPONIMI=0 can be source placeholders. Named administrative fields are retained without spatial reconciliation.",
+ "tiles": {
+  "path": "/jakarta-official-drainage.pmtiles",
+  "r2Key": "networks/jakarta-official-drainage-v1.pmtiles",
+  "sourceLayer": "official_drains",
+  "minzoom": 11,
+  "maxzoom": 16,
+  "bytes": 15716446,
+  "sha256": "2ee9f788caf73696d3d1d906fb3af43dcb3f484d3060e6cc05646c1e69ec4d70",
+  "format": "PMTiles v3 / MVT",
+  "lowZoomPolicy": "Tippecanoe drop-densest-as-needed; tiled simplification means not every admitted feature visible at each zoom."
+ },
+ "archiveSha256": "2ee9f788caf73696d3d1d906fb3af43dcb3f484d3060e6cc05646c1e69ec4d70",
+ "excludedReasons": {
+  "missingGeometry": 2,
+  "degenerateLineAfterSimplification": 2
+ },
+ "clipping": "No geometry cropped. Features required wholly within declared bbox; no out-of-bbox exclusions in this snapshot."
+}

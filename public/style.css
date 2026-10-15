@@ -813,3 +813,13 @@ button:disabled { opacity: 0.55; cursor: not-allowed; }
 #place-inspect { color: var(--ink); background: var(--bg); border: 1px solid var(--line); padding: 4px 8px; font: inherit; cursor: pointer; }
 /* Red coordinates identify the selected location, matching existing map evidence. */
 :root[data-theme="light"] .place-coordinates { color: #a32323; }
+/* Search and reproducible exports live inside Quick jump, never in a new bar. */
+.city-tools { padding: 8px 0; max-width: min(540px, calc(100vw - 52px)); }
+.city-tools-search { display: flex; flex-wrap: wrap; gap: 6px; align-items: end; }
+.city-tools-search label { flex-basis: 100%; }
+.city-tools input { min-width: 0; flex: 1; width: 180px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); padding: 5px 8px; font: inherit; }
+.city-tools button { color: var(--ink); background: var(--bg); border: 1px solid var(--line); font: inherit; cursor: pointer; padding: 5px 8px; }
+.city-tools p { margin: 6px 0; }
+.city-place-result { display: block; width: 100%; text-align: left; border: 0 !important; border-bottom: 1px solid var(--line) !important; padding: 7px 0 !important; }
+.city-place-result strong, .city-place-result span { display: block; overflow-wrap: anywhere; }
+.city-place-result span { color: var(--dim); }

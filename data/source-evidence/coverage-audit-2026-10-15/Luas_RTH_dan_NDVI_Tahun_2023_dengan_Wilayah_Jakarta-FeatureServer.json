@@ -1,0 +1,160 @@
+{
+ "currentVersion": 11.5,
+ "cimVersion": "3.5.0",
+ "serviceDescription": "",
+ "hasVersionedData": false,
+ "hasArchivedData": false,
+ "hasBranchVersionedData": false,
+ "supportsDisconnectedEditing": false,
+ "supportsDatumTransformation": true,
+ "supportsReturnServiceEditsOption": true,
+ "returnServiceEditsHaveSR": true,
+ "supportsQueryDataElements": true,
+ "datesInUnknownTimezone": false,
+ "supportsRelationshipsResource": true,
+ "syncEnabled": false,
+ "syncCapabilities": {
+  "supportsRegisterReplicaForServer": true,
+  "supportsSyncDirectionControl": true,
+  "supportsPerLayerSync": true,
+  "supportsPerReplicaSync": true,
+  "supportsAttachmentsSyncDirection": true,
+  "supportsSyncModelNone": true,
+  "supportsDurableUrlForSyncModelNone": false
+ },
+ "supportedExportFormats": "sqlite,filegdb,shapefile,csv,geojson",
+ "extractChangesCapabilities": {
+  "supportsReturnIdsOnly": false,
+  "supportsReturnExtentOnly": false,
+  "supportsReturnAttachments": false,
+  "supportsLayerQueries": false,
+  "supportsGeometry": false,
+  "supportsFeatureReturn": false,
+  "supportsReturnHasGeometryUpdates": false,
+  "supportsFieldsToCompare": false,
+  "supportsServerGens": false
+ },
+ "supportedQueryFormats": "JSON",
+ "maxRecordCount": 2000,
+ "maxRecordCountFactor": 1,
+ "capabilities": "Query,Extract",
+ "description": "",
+ "copyrightText": "",
+ "advancedEditingCapabilities": {
+  "supportsSplit": false,
+  "supportsReturnServiceEditsInSourceSR": true,
+  "supportsAsyncApplyEdits": true,
+  "supportsApplyEditsbyUploadID": true,
+  "supportedApplyEditsUploadIDFormats": "JSON,PBF",
+  "supportsMultipatchOptionForServiceEdits": true,
+  "supportedApplyEditsOptions": {
+   "supportedEditingOptions": 0
+  }
+ },
+ "spatialReference": {
+  "wkid": 4326,
+  "latestWkid": 4326,
+  "xyTolerance": 8.98315284119521e-09,
+  "zTolerance": 0.001,
+  "mTolerance": 0.001,
+  "falseX": -400,
+  "falseY": -400,
+  "xyUnits": 999999999.9999999,
+  "falseZ": -100000,
+  "zUnits": 10000,
+  "falseM": -100000,
+  "mUnits": 10000
+ },
+ "initialExtent": {
+  "xmin": 106.45573581597507,
+  "ymin": -6.442698398333547,
+  "xmax": 107.27984402130103,
+  "ymax": -5.914205781498704,
+  "spatialReference": {
+   "wkid": 4326,
+   "latestWkid": 4326,
+   "xyTolerance": 8.98315284119521e-09,
+   "zTolerance": 0.001,
+   "mTolerance": 0.001,
+   "falseX": -400,
+   "falseY": -400,
+   "xyUnits": 999999999.9999999,
+   "falseZ": -100000,
+   "zUnits": 10000,
+   "falseM": -100000,
+   "mUnits": 10000
+  }
+ },
+ "fullExtent": {
+  "xmin": 106.45920034820102,
+  "ymin": -6.374002008636326,
+  "xmax": 106.97411786667003,
+  "ymax": -5.201033665164109,
+  "zmin": 0,
+  "zmax": 0,
+  "mmin": null,
+  "mmax": null,
+  "spatialReference": {
+   "wkid": 4326,
+   "latestWkid": 4326,
+   "xyTolerance": 8.98315284119521e-09,
+   "zTolerance": 0.001,
+   "mTolerance": 0.001,
+   "falseX": -400,
+   "falseY": -400,
+   "xyUnits": 999999999.9999999,
+   "falseZ": -100000,
+   "zUnits": 10000,
+   "falseM": -100000,
+   "mUnits": 10000
+  }
+ },
+ "allowGeometryUpdates": true,
+ "allowTrueCurvesUpdates": true,
+ "onlyAllowTrueCurveUpdatesByTrueCurveClients": true,
+ "supportsApplyEditsWithGlobalIds": false,
+ "supportsTrueCurve": true,
+ "supportedCurveTypes": [
+  "esriGeometryCircularArc",
+  "esriGeometryEllipticArc",
+  "esriGeometryBezier3Curve"
+ ],
+ "units": "esriDecimalDegrees",
+ "documentInfo": {
+  "Title": "C:\\Users\\Administrator\\Documents\\ArcGIS\\Projects\\Master\\Master.aprx",
+  "Author": "",
+  "Comments": "",
+  "Subject": "",
+  "Category": "",
+  "Keywords": "rth,ndvi,2023,jakarta"
+ },
+ "supportsQueryDomains": true,
+ "supportsQueryContingentValues": true,
+ "layers": [
+  {
+   "id": 0,
+   "name": "Luas RTH dan NDVI Tahun 2023 dengan Wilayah Jakarta",
+   "parentLayerId": -1,
+   "defaultVisibility": true,
+   "subLayerIds": null,
+   "minScale": 0,
+   "maxScale": 0,
+   "type": "Feature Layer",
+   "geometryType": "esriGeometryPolygon"
+  }
+ ],
+ "tables": [],
+ "relationships": [],
+ "enableZDefaults": true,
+ "zDefault": 0,
+ "allowUpdateWithoutMValues": true,
+ "supportsVCSProjection": true,
+ "referenceScale": 0,
+ "infoInEstimates": [
+  "extent",
+  "count"
+ ],
+ "supportsAppend": true,
+ "supportedAppendFormats": "FILEGDB,PBF",
+ "serviceItemId": "6e46900604394fce8f58c6557da6258f"
+}

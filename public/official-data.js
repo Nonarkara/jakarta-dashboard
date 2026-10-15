@@ -60,7 +60,7 @@ function renderCityContext(){
 }
 
 let paperInsight=null,paperFlood=null,paperLoad=null,paperReferences={};
-const PAPER_REFERENCES=['waterways-manifest.json','traffic-cameras-manifest.json','hydrology-reference.json','toll-cameras.json','ispu-reference.json'];
+const PAPER_REFERENCES=['waterways-manifest.json','traffic-cameras-manifest.json','hydrology-reference.json','toll-cameras.json','ispu-reference.json','official-drainage-manifest.json','official-polders-manifest.json'];
 async function loadPaperData(){
  if(paperInsight&&paperFlood)return;
  if(paperLoad)return paperLoad;
@@ -81,6 +81,7 @@ function paperBars(rows,ceiling=null){
 function renderPaper(){
  if($('official-topic').value!=='paper')return;
  renderPaperInventory();
+ renderPaperCatalog();
  if(!paperInsight||!paperFlood){
   for(const id of ['paper-exposure','paper-riskmix','paper-green','paper-coverage'])$(id).innerHTML=unavailable();
   return;
@@ -103,7 +104,7 @@ function renderPaperInventory(){
  const row=(id,en,value,stamp='')=>'<div><dt>'+t(id,en)+'</dt><dd>'+value+(stamp?'<span class="meta">'+stamp+'</span>':'')+'</dd></div>';
  const checked=(d,tier)=>d?esc(tier)+' · '+t('diperiksa','checked')+' '+esc(date(d.checkedAt||d.retrievedAt)):'';
  const referenceCount=(file,tier,field='count')=>{const d=paperReferences[file];return d?.tier===tier?counted(d[field]):missing;};
- const water=paperReferences['waterways-manifest.json'],cameras=paperReferences['traffic-cameras-manifest.json'],gauges=paperReferences['hydrology-reference.json'],toll=paperReferences['toll-cameras.json'],ispu=paperReferences['ispu-reference.json'];
+ const water=paperReferences['waterways-manifest.json'],cameras=paperReferences['traffic-cameras-manifest.json'],gauges=paperReferences['hydrology-reference.json'],toll=paperReferences['toll-cameras.json'],ispu=paperReferences['ispu-reference.json'],drains=paperReferences['official-drainage-manifest.json'],polders=paperReferences['official-polders-manifest.json'];
  const green=paperInsight?.green?.byBorough;
  const greenTotal=Array.isArray(green)&&green.every(g=>Number.isFinite(g.greenHa)&&g.greenHa>=0)?green.reduce((n,g)=>n+g.greenHa,0):null;
  $('paper-inventory').innerHTML='<dl class="official-project-fields">'
@@ -117,7 +118,45 @@ function renderPaperInventory(){
   +row('Lokasi pengukur air','Water-gauge locations',Array.isArray(gauges?.stations)?counted(gauges.stations.length):missing,checked(gauges,'BBWS · '+t('katalog lokasi, bukan jumlah bacaan terkini','location catalogue, not a count of current readings')))
   +row('Referensi kamera','Camera references',referenceCount('traffic-cameras-manifest.json','public-camera-reference'),checked(cameras,t('katalog publik; ketersediaan belum diverifikasi','public catalogue; uptime unverified'))+(cameras?.catalogEditedAt?' · '+t('katalog diperbarui','catalogue edited')+' '+esc(date(cameras.catalogEditedAt)):''))
   +row('Tautan video tol publik','Public toll video links',Number.isInteger(toll?.count)&&Array.isArray(toll.streams)&&toll.count===toll.streams.length?counted(toll.count):missing,checked(toll,t('tautan penerbit; diputar atas permintaan','publisher links; played on request')))
+  +row('Garis saluran mikro resmi','Official micro-drain lines',referenceCount('official-drainage-manifest.json','official-reference-geometry'),checked(drains,'DSDA · '+t('referensi geometri; tanggal sumber tidak diketahui','geometry reference; source date unknown'))+(drains?'<br>'+counted(drains.sourceRecordCount)+' '+t('rekaman sumber','source records')+' · '+counted(drains.excluded)+' '+t('ditahan','withheld'):''))
+  +row('Batas polder resmi','Official polder boundaries',referenceCount('official-polders-manifest.json','official-reference-geometry'),checked(polders,'DSDA · '+t('referensi geometri; tanggal sumber tidak diketahui','geometry reference; source date unknown'))+(polders?'<br>'+counted(polders.sourceInvalidPolygonCount)+' '+t('poligon sumber bermasalah; tidak diperbaiki','source polygons with geometry issues; not repaired'):''))
   +'</dl>';
+}
+let paperCatalog=null,paperCatalogLoad=null,paperCatalogState='idle',paperCatalogRejected=0;
+const PAPER_CATALOG_STATES={'integrated':['Terintegrasi','Integrated'],'candidate':['Kandidat','Candidate'],'blocked':['Terhalang','Blocked'],'registration-required':['Perlu pendaftaran','Registration required']};
+const catalogText=(record,key)=>{const value=record[key+(lang==='id'?'Id':'En')]??record[key];return typeof value==='string'?value:'';};
+function catalogSource(url){return typeof url==='string'&&/^https:\/\/[^\s<>"']+$/.test(url)?url:null;}
+async function loadPaperCatalog(){
+ if(paperCatalog||paperCatalogLoad)return paperCatalogLoad;
+ paperCatalogState='loading';renderPaperCatalog();
+ paperCatalogLoad=(async()=>{try{
+  const data=await get('/data/jakarta-v1/source-catalog.json?v='+DASHBOARD_BUILD);
+  if(data?.schemaVersion!==1||!Array.isArray(data.records)||data.records.length>500)throw new Error('catalogue contract');
+  const seen=new Set();
+  const records=data.records.filter(record=>{if(!record||typeof record.id!=='string'||seen.has(record.id)||typeof record.name!=='string'||!Object.hasOwn(PAPER_CATALOG_STATES,record.status))return false;seen.add(record.id);return true;});
+  paperCatalogRejected=data.records.length-records.length;paperCatalog={...data,records};paperCatalogState='ready';
+ }catch{paperCatalog=null;paperCatalogState='unavailable';}finally{paperCatalogLoad=null;renderPaperCatalog();}})();
+ return paperCatalogLoad;
+}
+function renderPaperCatalog(){
+ const status=$('paper-catalog-status'),results=$('paper-catalog-results');
+ $('paper-catalog-retry').hidden=paperCatalogState!=='unavailable';
+ if(!paperCatalog){status.textContent=paperCatalogState==='loading'?t('Memuat katalog sumber…','Loading source catalogue…'):paperCatalogState==='unavailable'?t('Katalog tidak tersedia. Coba lagi atau unduh berkas sumber.','Catalogue unavailable. Retry or download the source file.'):t('Katalog dimuat saat daftar dibuka.','Catalogue loads when opened.');results.innerHTML='';return;}
+ const q=$('paper-catalog-search').value.trim().toLocaleLowerCase(),state=$('paper-catalog-state').value;
+ const rows=paperCatalog.records.filter(record=>(state==='all'||state===record.status)&&[record.id,record.name,record.nameId,record.nameEn,record.publisher,record.category,record.limitations,record.limitationsId,record.limitationsEn].filter(value=>typeof value==='string').join(' ').toLocaleLowerCase().includes(q));
+ status.textContent=num(rows.length)+'/'+num(paperCatalog.records.length)+' '+t('sumber dalam katalog','catalogue sources')+(paperCatalogRejected?' · '+num(paperCatalogRejected)+' '+t('rekaman ditahan karena tidak valid atau duplikat','invalid or duplicate records withheld'):'');
+ const text=value=>typeof value==='string'&&value?esc(value):t('Tidak diketahui','Unknown');
+ const field=(id,en,value)=>'<div><dt>'+t(id,en)+'</dt><dd>'+text(value)+'</dd></div>';
+ results.innerHTML=rows.map(record=>{
+  const source=catalogSource(record.sourceUrl),name=catalogText(record,'name');
+  const original=(key)=>{const translated=record[key+(lang==='id'?'Id':'En')];return typeof translated==='string'?esc(translated):typeof record[key]==='string'?'<span lang="en">'+esc(record[key])+'</span>':'';};
+  return '<article class="paper-catalog-row"><h3>'+(source?publicLink(source,name):esc(name))+'</h3><p class="meta">'+esc(PAPER_CATALOG_STATES[record.status][lang==='id'?0:1])+' · '+text(record.publisher)+'</p><p>'+original('limitations')+'</p><dl class="official-project-fields">'
+   +field('Periode sumber','Source period',record.dataAsOf)+field('Diperiksa, bukan waktu pengamatan','Checked, not observation time',record.checkedAt)
+   +field('Tingkat data','Data tier',catalogText(record,'tier'))+field('Resolusi','Resolution',catalogText(record,'resolution'))
+   +'<div><dt>'+t('Akses dan lisensi · teks sumber jika belum diterjemahkan','Access and license · source wording if untranslated')+'</dt><dd>'+original('access')+' · '+original('license')+'</dd></div>'
+   +field('Aset rujukan','Reference assets',Array.isArray(record.assets)?record.assets.filter(asset=>typeof asset==='string').join(', '):null)
+   +(record.assetSha256?field('SHA-256 aset','Asset SHA-256',record.assetSha256):'')+'</dl></article>';
+ }).join('')||'<p>'+t('Tidak ada sumber yang cocok.','No matching sources.')+'</p>';
 }
 $('official-topic').addEventListener('change',renderOfficialData);
 $('project-search').addEventListener('input',renderProjects);
@@ -132,3 +171,8 @@ $('project-results').addEventListener('click',e=>{
 document.addEventListener('dashboard:language',renderOfficialData);
 document.addEventListener('click',e=>{if(e.target.closest('[data-open="official-dialog"]'))loadOfficialData();});
 if($('official-dialog').open)loadOfficialData();
+
+$('paper-catalog').addEventListener('toggle',()=>{if($('paper-catalog').open)loadPaperCatalog();});
+$('paper-catalog-retry').addEventListener('click',loadPaperCatalog);
+$('paper-catalog-search').addEventListener('input',renderPaperCatalog);
+$('paper-catalog-state').addEventListener('change',renderPaperCatalog);

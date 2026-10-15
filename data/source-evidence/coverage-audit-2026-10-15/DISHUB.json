@@ -1,0 +1,14 @@
+{
+ "currentVersion": 11.5,
+ "folders": [],
+ "services": [
+  {
+   "name": "DISHUB/Jalur_Sepeda_Garis",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DISHUB/Jalur_Sepeda_Garis",
+   "type": "MapServer"
+  }
+ ]
+}

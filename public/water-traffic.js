@@ -24,13 +24,18 @@ export async function readObservationResponse(response,path) {
   if(path==='/api/atlas/hydrology' && response.status===503){const data=await response.json();if(isDatedHydrologyEnvelope(data))return data;}
   throw new Error('source '+response.status);
 }
+export function validPolderReference(data,manifest) {
+  if(!manifest?.outputCRS?.startsWith('EPSG:4326')||!Number.isInteger(manifest.count)||manifest.count<1||manifest.count>1000||data?.type!=='FeatureCollection'||!Array.isArray(data.features)||data.features.length!==manifest.count)return false;
+  function coordinates(c,depth){if(!Array.isArray(c)||!c.length)return false;if(depth===0)return c.length>=2&&c.every(Number.isFinite)&&c[0]>=105&&c[0]<=108&&c[1]>=-8&&c[1]<=-5;return c.every(child=>coordinates(child,depth-1));}
+  return data.features.every(f=>['Polygon','MultiPolygon'].includes(f?.geometry?.type)&&coordinates(f.geometry.coordinates,f.geometry.type==='Polygon'?2:3));
+}
 export function createController(map,{text:t,active,buildTag}) {
   let mode=null,epoch=0,water=null,cameras=null,hydrology=null,jaxa=null,nasa=null,lastBody=null;
   const listeners=[]; let player=null, video=null, playRequest=0;
   const pending=new Set();
   async function get(path){const c=new AbortController();const timer=setTimeout(()=>c.abort(new Error('timeout')),12000);pending.add(c);try{const response=await fetch(path,{headers:{accept:'application/json'},signal:c.signal});return await readObservationResponse(response,path);}finally{clearTimeout(timer);pending.delete(c);}}
   function cancelPending(){for(const c of pending)c.abort(new Error('lens closed'));}
-  const ids=['network-water-fill','network-water-lines','network-water-labels','network-gauges','network-cameras','network-clusters','network-counts','network-comparison'];
+  const ids=['network-water-fill','network-water-lines','network-water-labels','network-gauges','network-cameras','network-clusters','network-counts','network-comparison','official-drain-lines','official-polder-fill','official-polder-lines'];
   const safeUrl=u=>{try{const url=new URL(u);return ['https:','http:'].includes(url.protocol)?url.href:null;}catch{return null;}};
   const el=(tag,content,cls)=>{const node=document.createElement(tag);if(content!==undefined)node.textContent=content;if(cls)node.className=cls;return node;};
   const number=(n,d=1)=>Number.isFinite(n)?n.toLocaleString(t('en-GB','id-ID'),{maximumFractionDigits:d}):t('Unavailable','Tidak tersedia');
@@ -92,28 +97,69 @@ export function createController(map,{text:t,active,buildTag}) {
       if(select.value==='none'){caption.textContent='';return;}
       const isNasa=select.value==='nasa';const tiles=isNasa?nasa.tiles:[`/api/atlas/jaxa-tile?product=${select.value}&date=${jaxa.date}&z={z}&x={x}&y={y}`];
       map.addSource('network-comparison',{type:'raster',tiles,tileSize:256,maxzoom:isNasa?nasa.maxzoom:9,attribution:isNasa?'NASA LANCE / GIBS':'JAXA/EORC Today’s Earth'});
-      map.addLayer({id:'network-comparison',type:'raster',source:'network-comparison',paint:{'raster-opacity':0.65}},'network-water-lines');
+      map.addLayer({id:'network-comparison',type:'raster',source:'network-comparison',paint:{'raster-opacity':0.65}},map.getLayer('network-water-lines')?'network-water-lines':undefined);
       caption.textContent=isNasa?t('NASA MODIS 3-day classification, 250 m: cyan water, red detected flood, yellow recurring flood. Clouds and narrow drains limit detection; not confirmation of depth or incoming volume.','Klasifikasi 3 hari NASA MODIS, 250 m: biru muda air, merah banjir terdeteksi, kuning banjir berulang. Awan dan saluran sempit membatasi deteksi; bukan konfirmasi kedalaman atau volume masuk.')+' · '+nasa.date:t('JAXA satellite-informed model, approximately 10 km. Not observed water. ','Model JAXA berbasis satelit, sekitar 10 km. Bukan air teramati. ')+time(jaxa.validAt)+' · '+(select.value==='OUTFLW'?'0–1,000 m³/s':t('0–1 flood fraction','Fraksi banjir 0–1'));
     });
     note(parent,'A satellite water extent cannot confirm water volume or flow direction by itself. Compare observation dates and independent gauge readings. Blank or cloudy pixels are unknown.','Luasan air satelit saja tidak dapat memastikan volume atau arah aliran. Bandingkan tanggal pengamatan dan pembacaan pos independen. Piksel kosong atau berawan tidak diketahui.');
     parent.append(link('NASA product ↗','https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/'));parent.append(link('JAXA documentation ↗','https://www.eorc.jaxa.jp/water/documents.html'));
   }
+  async function showOfficialNetworks(parent,selected,token){
+    parent.append(el('p',t('Loading official drainage references…','Memuat referensi drainase resmi…')));
+    const [drains,polders,polygons]=await Promise.allSettled([
+      get('/data/jakarta-v1/official-drainage-manifest.json?v='+buildTag),
+      get('/data/jakarta-v1/official-polders-manifest.json?v='+buildTag),
+      get('/data/jakarta-v1/official-polders.geojson?v='+buildTag)
+    ]);
+    if(token!==epoch)return;
+    parent.replaceChildren();
+    const d=drains.status==='fulfilled'?drains.value:null;
+    const p=polders.status==='fulfilled'?polders.value:null;
+    const data=polygons.status==='fulfilled'?polygons.value:null;
+    function toggle(label,layers){const row=el('label');const input=el('input');input.type='checkbox';input.checked=true;input.addEventListener('change',()=>{for(const id of layers)if(map.getLayer(id))map.setLayoutProperty(id,'visibility',input.checked?'visible':'none');});row.append(input,document.createTextNode(label));parent.append(row);}
+    if(d&&Number.isInteger(d.count)&&d.count>0&&d.count<=100000&&d.outputCRS?.startsWith('EPSG:4326')){
+      map.addSource('official-drain-lines',{type:'vector',url:'pmtiles://'+location.origin+'/jakarta-official-drainage.pmtiles?v='+encodeURIComponent(buildTag),attribution:'Jakarta Satu / DSDA'});
+      map.addLayer({id:'official-drain-lines',type:'line',source:'official-drain-lines','source-layer':'official_drains',minzoom:11,paint:{'line-color':'#79c2d1','line-width':['interpolate',['linear'],['zoom'],11,0.6,16,2],'line-opacity':0.8}},map.getLayer('network-water-lines')?'network-water-lines':undefined);
+      toggle(number(d.count,0)+' '+t('official micro-drain lines · zoom 11+','garis saluran mikro resmi · zoom 11+'),['official-drain-lines']);
+      parent.append(el('p',t('Source date unknown · retrieved ','Tanggal sumber tidak diketahui · diambil ')+time(d.retrievedAt),'meta'));
+      on('click','official-drain-lines',event=>{
+        const f=event.features?.[0];if(!f)return;const props=f.properties||{};selected.replaceChildren();
+        selected.append(el('h3',props.name||t('Official micro-drain','Saluran mikro resmi')));
+        selected.append(el('p','DSDA · OBJECTID '+String(props.OBJECTID??props.id??'—')));
+        note(selected,'Publisher line geometry. Capacity, connectivity, flow direction and operation are unknown. Administrative names have not been spatially reconciled.','Geometri garis penerbit. Kapasitas, konektivitas, arah aliran, dan operasi tidak diketahui. Nama administrasi belum dicocokkan secara spasial.');
+        const coordinates=el('p',event.lngLat.lat.toFixed(5)+', '+event.lngLat.lng.toFixed(5)+' · WGS84','network-location');selected.append(coordinates);
+        selected.append(link('Jakarta Satu / DSDA ↗',d.sourceUrl));selected.parentElement.open=true;document.getElementById('atlas-lens-evidence').open=true;
+      });
+    }else note(parent,'Official drains unavailable. OSM references remain visible.','Saluran resmi tidak tersedia. Referensi OSM tetap terlihat.');
+    if(validPolderReference(data,p)){
+      map.addSource('official-polder-lines',{type:'geojson',data,attribution:'Jakarta Satu / DSDA'});
+      map.addLayer({id:'official-polder-fill',type:'fill',source:'official-polder-lines',paint:{'fill-color':'#79c2d1','fill-opacity':0.08}},map.getLayer('network-water-fill')?'network-water-fill':undefined);
+      map.addLayer({id:'official-polder-lines',type:'line',source:'official-polder-lines',paint:{'line-color':'#79c2d1','line-width':2,'line-dasharray':[3,2]}},map.getLayer('network-water-lines')?'network-water-lines':undefined);
+      toggle(number(p.count,0)+' '+t('publisher polder boundaries','batas polder penerbit'),['official-polder-fill','official-polder-lines']);
+      parent.append(el('p',t('Source date unknown · retrieved ','Tanggal sumber tidak diketahui · diambil ')+time(p.retrievedAt)+' · '+number(p.sourceInvalidPolygonCount||0,0)+' '+t('publisher polygons with geometry issues','poligon penerbit dengan masalah geometri'),'meta'));
+      on('click','official-polder-lines',event=>{const props=event.features?.[0]?.properties;if(!props)return;selected.replaceChildren();selected.append(el('h3',props.NAMOBJ||t('Polder reference','Referensi polder')));selected.append(el('p','OBJECTID '+String(props.OBJECTID??'—')));note(selected,'Publisher reference boundary, not an observed flood or a protection guarantee. Some source geometry is invalid; no flood area or capacity is computed.','Batas referensi penerbit, bukan banjir teramati atau jaminan perlindungan. Sebagian geometri sumber tidak valid; luas banjir atau kapasitas tidak dihitung.');selected.append(link('Jakarta Satu / DSDA ↗',p.sourceUrl));selected.parentElement.open=true;document.getElementById('atlas-lens-evidence').open=true;});
+    }else note(parent,'Polder boundaries unavailable. Other water evidence remains visible.','Batas polder tidak tersedia. Bukti air lain tetap terlihat.');
+    note(parent,'Thin lines: official micro-drains. Dashed boundaries: polders. These references are separate from OSM and are not a connected hydraulic model.','Garis tipis: saluran mikro resmi. Batas putus-putus: polder. Referensi ini terpisah dari OSM dan bukan model hidraulik yang terhubung.');
+  }
   async function showWater(body,token){
-    water ||= await get('/data/jakarta-v1/waterways.geojson?v='+buildTag);if(token!==epoch)return;
+    try{water ||= await get('/data/jakarta-v1/waterways.geojson?v='+buildTag);}catch{water=null;}if(token!==epoch)return;
+    if(water?.type!=='FeatureCollection'||!Array.isArray(water.features)||water.crs!=='EPSG:4326')water=null;
+    if(water){
     map.addSource('network-water-lines',{type:'geojson',data:water,attribution:'© OpenStreetMap contributors'});
     map.addLayer({id:'network-water-fill',type:'fill',source:'network-water-lines',filter:['==',['geometry-type'],'Polygon'],paint:{'fill-color':'#28a8c6','fill-opacity':0.4}});
     map.addLayer({id:'network-water-lines',type:'line',source:'network-water-lines',paint:{'line-color':['match',['get','kind'],'river','#28a8c6','canal','#28a8c6','#79c2d1'],'line-width':['interpolate',['linear'],['zoom'],9,1.2,15,4],'line-opacity':0.9}});
     map.addLayer({id:'network-water-labels',type:'symbol',source:'network-water-lines',minzoom:12,filter:['!=',['get','name'],''],layout:{'symbol-placement':'line','text-field':['get','name'],'text-size':11},paint:{'text-color':'#28a8c6','text-halo-color':'#071f2e','text-halo-width':1}});
     body.replaceChildren();body.append(el('p',number(water.count,0)+' '+t('mapped features','fitur terpetakan')+' · OSM '+water.sourceAsOf));
     note(body,'Rivers, canals, streams, drains, ditches and mapped water bodies. This covers the published OSM ways in the Jakarta extent, not every physical waterway.','Sungai, kanal, anak sungai, saluran, parit, dan badan air terpetakan. Mencakup way OSM yang dipublikasikan pada wilayah Jakarta, bukan setiap alur air fisik.');
+    }else{body.replaceChildren();note(body,'OSM waterways unavailable. Independent official drainage and gauge sources are checked below.','Alur air OSM tidak tersedia. Sumber drainase resmi dan pos independen diperiksa di bawah.');}
     const selected=section(body,'Selected waterway / gauge','Alur air / pos terpilih');
-    on('click','network-water-lines',event=>{const f=event.features?.[0];if(!f)return;renderWaterSelection(selected,f);selected.parentElement.open=true;document.getElementById('atlas-lens-evidence').open=true;});
-    const kinds=el('p',Object.entries(water.kinds).map(([k,n])=>kindLabel(k)+' '+number(n,0)).join(' · '),'note');body.append(kinds);
+    if(water)on('click','network-water-lines',event=>{const f=event.features?.[0];if(!f)return;renderWaterSelection(selected,f);selected.parentElement.open=true;document.getElementById('atlas-lens-evidence').open=true;});
+    showOfficialNetworks(section(body,'Official drainage & polders','Drainase resmi & polder'),selected,token).catch(()=>{if(token===epoch)note(body,'Official network references unavailable; other water sources remain usable.','Referensi jaringan resmi tidak tersedia; sumber air lain tetap dapat digunakan.');});
+    const kinds=el('p',Object.entries(water?.kinds||{}).map(([k,n])=>kindLabel(k)+' '+number(n,0)).join(' · '),'note');body.append(kinds);
     const measure=section(body,'Incoming water · gauges & volume','Air masuk · pos & volume');
     measure.append(el('p',t('Loading publisher readings…','Memuat pembacaan penerbit…')));
     comparison(section(body,'Satellite & model comparison','Perbandingan satelit & model'),token).catch(()=>{});
     try {hydrology=await get('/api/atlas/hydrology');}catch{hydrology={stations:[],predictions:[],available:false};}
-    if(!hydrology.stations?.length){const reference=await get('/data/jakarta-v1/hydrology-reference.json?v='+buildTag);hydrology={...hydrology,stations:reference.stations.map(s=>({...s,levelM:null,observedAt:null,levelState:'unknown',sourceUrl:reference.sourceUrl})),checkedAt:hydrology.checkedAt||reference.checkedAt,predictions:hydrology.predictions||[]};}if(token!==epoch)return;
+    if(!hydrology.stations?.length){let reference;try{reference=await get('/data/jakarta-v1/hydrology-reference.json?v='+buildTag);}catch{reference={stations:[],checkedAt:null};}hydrology={...hydrology,stations:reference.stations.map(s=>({...s,levelM:null,observedAt:null,levelState:'unknown',sourceUrl:reference.sourceUrl})),checkedAt:hydrology.checkedAt||reference.checkedAt,predictions:hydrology.predictions||[]};}if(token!==epoch)return;
     measure.replaceChildren();
     const fresh=hydrology.stations.filter(s=>s.levelState==='fresh').length;
     const dated=hydrology.stations.filter(s=>s.levelM!==null&&s.levelState!=='fresh').length;

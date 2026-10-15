@@ -1,0 +1,20 @@
+{
+ "count": 65,
+ "sourceRecordCount": 65,
+ "excluded": 0,
+ "sourceInvalidPolygonCount": 1,
+ "invalidObjectIds": [
+  48
+ ],
+ "retrievedAt": "2026-10-15T14:31:29.870182+00:00",
+ "dataAsOf": null,
+ "sourceUrl": "https://jakartasatu.jakarta.go.id/server/rest/services/DSDA/Polder_Jakarta/FeatureServer/0/query",
+ "sourceCRS": "EPSG:32748",
+ "outputCRS": "EPSG:4326 via publisher outSR",
+ "tier": "official-reference-geometry",
+ "simplification": "Shapely Douglas-Peucker 0.00001 degrees, topology preserved; not metre-exact.",
+ "license": "Dataset-specific open license not stated; publisher attribution retained.",
+ "assetSha256": "32e3ab5b713e3197b53eae6f5cdafe9946e70f49c9e1c0de3dfd4c73d6ff157e",
+ "rawSha256": "fdd8717fdb05401beacbb1ca3e8910fd53ba6e2a32943669caae6f3ecb4e41ab",
+ "limitations": "65 publisher polygons, not live pump operation or verified hydraulic capacity. Coded fields retained without interpreting unpublished domains. Source invalid polygon count reported; simplification does not repair them. No date or datum assumed."
+}

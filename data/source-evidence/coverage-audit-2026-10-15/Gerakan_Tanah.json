@@ -1,0 +1,22 @@
+{
+ "currentVersion": 11.5,
+ "folders": [],
+ "services": [
+  {
+   "name": "Gerakan_Tanah/Gerakan_Tanah_Per_RW",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Gerakan_Tanah/Gerakan_Tanah_Per_RW",
+   "type": "MapServer"
+  },
+  {
+   "name": "Gerakan_Tanah/Potensi_Gerakan_Tanah",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Gerakan_Tanah/Potensi_Gerakan_Tanah",
+   "type": "MapServer"
+  }
+ ]
+}

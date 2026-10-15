@@ -1,0 +1,1687 @@
+{
+ "currentVersion": 11.5,
+ "cimVersion": "3.5.0",
+ "id": 0,
+ "name": "Saluran Mikro DSDA View",
+ "type": "Feature Layer",
+ "description": "",
+ "geometryType": "esriGeometryPolyline",
+ "sourceSpatialReference": {
+  "wkid": 32748,
+  "latestWkid": 32748,
+  "xyTolerance": 0.001,
+  "zTolerance": 0.001,
+  "mTolerance": 0.001,
+  "falseX": -5120900,
+  "falseY": 1900,
+  "xyUnits": 10000,
+  "falseZ": 0,
+  "zUnits": 1,
+  "falseM": 0,
+  "mUnits": 1
+ },
+ "spatialReference": {
+  "wkid": 32748,
+  "latestWkid": 32748,
+  "xyTolerance": 0.001,
+  "zTolerance": 0.001,
+  "mTolerance": 0.001,
+  "falseX": -5120900,
+  "falseY": 1900,
+  "xyUnits": 10000,
+  "falseZ": -100000,
+  "zUnits": 10000,
+  "falseM": -100000,
+  "mUnits": 10000
+ },
+ "copyrightText": "",
+ "parentLayer": null,
+ "subLayers": [],
+ "minScale": 0,
+ "maxScale": 0,
+ "referenceScale": 0.0,
+ "drawingInfo": {
+  "renderer": {
+   "type": "simple",
+   "symbol": {
+    "type": "esriSLS",
+    "style": "esriSLSSolid",
+    "color": [
+     68,
+     142,
+     147,
+     255
+    ],
+    "width": 1
+   }
+  },
+  "scaleSymbols": true,
+  "transparency": 0,
+  "labelingInfo": null
+ },
+ "defaultVisibility": true,
+ "extent": {
+  "xmin": 686549.4094,
+  "ymin": 9295228.0664,
+  "xmax": 718329.3157,
+  "ymax": 9326614.5028,
+  "spatialReference": {
+   "wkid": 32748,
+   "latestWkid": 32748,
+   "xyTolerance": 0.001,
+   "zTolerance": 0.001,
+   "mTolerance": 0.001,
+   "falseX": -5120900,
+   "falseY": 1900,
+   "xyUnits": 10000,
+   "falseZ": -100000,
+   "zUnits": 10000,
+   "falseM": -100000,
+   "mUnits": 10000
+  }
+ },
+ "hasAttachments": true,
+ "attachmentProperties": [
+  {
+   "name": "id",
+   "fieldName": "ATTACHMENTID",
+   "isEnabled": true
+  },
+  {
+   "name": "globalid",
+   "fieldName": "GLOBALID",
+   "isEnabled": true
+  },
+  {
+   "name": "keywords",
+   "fieldName": "KEYWORDS",
+   "isEnabled": false
+  },
+  {
+   "name": "name",
+   "fieldName": "ATT_NAME",
+   "isEnabled": true
+  },
+  {
+   "name": "contentType",
+   "fieldName": "CONTENT_TYPE",
+   "isEnabled": true
+  },
+  {
+   "name": "size",
+   "fieldName": "DATA_SIZE",
+   "isEnabled": true
+  },
+  {
+   "name": "exifInfo",
+   "fieldName": "EXIFINFO",
+   "isEnabled": false
+  }
+ ],
+ "attachmentFields": [
+  {
+   "name": "ATTACHMENTID",
+   "type": "esriFieldTypeOID",
+   "alias": "ATTACHMENTID",
+   "editable": false,
+   "nullable": false,
+   "length": 4,
+   "domain": null
+  },
+  {
+   "name": "GLOBALID",
+   "type": "esriFieldTypeGlobalID",
+   "alias": "GLOBALID",
+   "editable": false,
+   "nullable": false,
+   "length": 38,
+   "domain": null
+  },
+  {
+   "name": "ATT_NAME",
+   "type": "esriFieldTypeString",
+   "alias": "ATT_NAME",
+   "editable": true,
+   "nullable": false,
+   "length": 250,
+   "domain": null
+  },
+  {
+   "name": "CONTENT_TYPE",
+   "type": "esriFieldTypeString",
+   "alias": "CONTENT_TYPE",
+   "editable": true,
+   "nullable": false,
+   "length": 150,
+   "domain": null
+  },
+  {
+   "name": "DATA_SIZE",
+   "type": "esriFieldTypeInteger",
+   "alias": "DATA_SIZE",
+   "editable": true,
+   "nullable": false,
+   "length": 4,
+   "domain": null
+  }
+ ],
+ "supportsAttachmentsResizing": true,
+ "htmlPopupType": "esriServerHTMLPopupTypeAsHTMLText",
+ "displayField": "TOPONIMI",
+ "typeIdField": null,
+ "subtypeFieldName": null,
+ "subtypeField": null,
+ "defaultSubtypeCode": null,
+ "fields": [
+  {
+   "name": "OBJECTID",
+   "type": "esriFieldTypeOID",
+   "alias": "OBJECTID",
+   "domain": null
+  },
+  {
+   "name": "ID",
+   "type": "esriFieldTypeInteger",
+   "alias": "id",
+   "domain": null
+  },
+  {
+   "name": "TOPONIMI",
+   "type": "esriFieldTypeString",
+   "alias": "toponimi",
+   "length": 254,
+   "domain": null
+  },
+  {
+   "name": "KELURAHAN",
+   "type": "esriFieldTypeString",
+   "alias": "kelurahan",
+   "length": 254,
+   "domain": {
+    "type": "codedValue",
+    "name": "Kelurahan_Kemendagri",
+    "description": "Batas Kelurahan Sesuai Kemendagri",
+    "codedValues": [
+     {
+      "name": "Pulau Panggang",
+      "code": "Pulau Panggang"
+     },
+     {
+      "name": "Pulau Kelapa",
+      "code": "Pulau Kelapa"
+     },
+     {
+      "name": "Pulau Harapan",
+      "code": "Pulau Harapan"
+     },
+     {
+      "name": "Pulau Untung Jawa",
+      "code": "Pulau Untung Jawa"
+     },
+     {
+      "name": "Pulau Tidung",
+      "code": "Pulau Tidung"
+     },
+     {
+      "name": "Pulau Pari",
+      "code": "Pulau Pari"
+     },
+     {
+      "name": "Gambir",
+      "code": "Gambir"
+     },
+     {
+      "name": "Cideng",
+      "code": "Cideng"
+     },
+     {
+      "name": "Petojo Utara",
+      "code": "Petojo Utara"
+     },
+     {
+      "name": "Petojo Selatan",
+      "code": "Petojo Selatan"
+     },
+     {
+      "name": "Kebon Kelapa",
+      "code": "Kebon Kelapa"
+     },
+     {
+      "name": "Duri Pulo",
+      "code": "Duri Pulo"
+     },
+     {
+      "name": "Pasar Baru",
+      "code": "Pasar Baru"
+     },
+     {
+      "name": "Karang Anyar",
+      "code": "Karang Anyar"
+     },
+     {
+      "name": "Kartini",
+      "code": "Kartini"
+     },
+     {
+      "name": "Gunung Sahari Utara",
+      "code": "Gunung Sahari Utara"
+     },
+     {
+      "name": "Mangga Dua Selatan",
+      "code": "Mangga Dua Selatan"
+     },
+     {
+      "name": "Kemayoran",
+      "code": "Kemayoran"
+     },
+     {
+      "name": "Kebon Kosong",
+      "code": "Kebon Kosong"
+     },
+     {
+      "name": "Harapan Mulia",
+      "code": "Harapan Mulia"
+     },
+     {
+      "name": "Serdang",
+      "code": "Serdang"
+     },
+     {
+      "name": "Gunung Sahari Selatan",
+      "code": "Gunung Sahari Selatan"
+     },
+     {
+      "name": "Cempaka Baru",
+      "code": "Cempaka Baru"
+     },
+     {
+      "name": "Sumur Batu",
+      "code": "Sumur Batu"
+     },
+     {
+      "name": "Utan Panjang",
+      "code": "Utan Panjang"
+     },
+     {
+      "name": "Senen",
+      "code": "Senen"
+     },
+     {
+      "name": "Kenari",
+      "code": "Kenari"
+     },
+     {
+      "name": "Paseban",
+      "code": "Paseban"
+     },
+     {
+      "name": "Kramat",
+      "code": "Kramat"
+     },
+     {
+      "name": "Kwitang",
+      "code": "Kwitang"
+     },
+     {
+      "name": "Bungur",
+      "code": "Bungur"
+     },
+     {
+      "name": "Cempaka Putih Timur",
+      "code": "Cempaka Putih Timur"
+     },
+     {
+      "name": "Cempaka Putih Barat",
+      "code": "Cempaka Putih Barat"
+     },
+     {
+      "name": "Rawasari",
+      "code": "Rawasari"
+     },
+     {
+      "name": "Menteng",
+      "code": "Menteng"
+     },
+     {
+      "name": "Pegangsaan",
+      "code": "Pegangsaan"
+     },
+     {
+      "name": "Cikini",
+      "code": "Cikini"
+     },
+     {
+      "name": "Gondangdia",
+      "code": "Gondangdia"
+     },
+     {
+      "name": "Kebon Sirih",
+      "code": "Kebon Sirih"
+     },
+     {
+      "name": "Gelora",
+      "code": "Gelora"
+     },
+     {
+      "name": "Bendungan Hilir",
+      "code": "Bendungan Hilir"
+     },
+     {
+      "name": "Karet Tengsin",
+      "code": "Karet Tengsin"
+     },
+     {
+      "name": "Petamburan",
+      "code": "Petamburan"
+     },
+     {
+      "name": "Kebon Melati",
+      "code": "Kebon Melati"
+     },
+     {
+      "name": "Kebon Kacang",
+      "code": "Kebon Kacang"
+     },
+     {
+      "name": "Kampung Bali",
+      "code": "Kampung Bali"
+     },
+     {
+      "name": "Johar Baru",
+      "code": "Johar Baru"
+     },
+     {
+      "name": "Kampung Rawa",
+      "code": "Kampung Rawa"
+     },
+     {
+      "name": "Galur",
+      "code": "Galur"
+     },
+     {
+      "name": "Tanah Tinggi",
+      "code": "Tanah Tinggi"
+     },
+     {
+      "name": "Penjaringan",
+      "code": "Penjaringan"
+     },
+     {
+      "name": "Kamal Muara",
+      "code": "Kamal Muara"
+     },
+     {
+      "name": "Kapuk Muara",
+      "code": "Kapuk Muara"
+     },
+     {
+      "name": "Pejagalan",
+      "code": "Pejagalan"
+     },
+     {
+      "name": "Pluit",
+      "code": "Pluit"
+     },
+     {
+      "name": "Tanjung Priok",
+      "code": "Tanjung Priok"
+     },
+     {
+      "name": "Sunter Jaya",
+      "code": "Sunter Jaya"
+     },
+     {
+      "name": "Papanggo",
+      "code": "Papanggo"
+     },
+     {
+      "name": "Sungai Bambu",
+      "code": "Sungai Bambu"
+     },
+     {
+      "name": "Kebon Bawang",
+      "code": "Kebon Bawang"
+     },
+     {
+      "name": "Sunter Agung",
+      "code": "Sunter Agung"
+     },
+     {
+      "name": "Warakas",
+      "code": "Warakas"
+     },
+     {
+      "name": "Koja",
+      "code": "Koja"
+     },
+     {
+      "name": "Tugu Utara",
+      "code": "Tugu Utara"
+     },
+     {
+      "name": "Lagoa",
+      "code": "Lagoa"
+     },
+     {
+      "name": "Rawa Badak Utara",
+      "code": "Rawa Badak Utara"
+     },
+     {
+      "name": "Tugu Selatan",
+      "code": "Tugu Selatan"
+     },
+     {
+      "name": "Rawa Badak Selatan",
+      "code": "Rawa Badak Selatan"
+     },
+     {
+      "name": "Cilincing",
+      "code": "Cilincing"
+     },
+     {
+      "name": "Sukapura",
+      "code": "Sukapura"
+     },
+     {
+      "name": "Marunda",
+      "code": "Marunda"
+     },
+     {
+      "name": "Kalibaru",
+      "code": "Kalibaru"
+     },
+     {
+      "name": "Semper Timur",
+      "code": "Semper Timur"
+     },
+     {
+      "name": "Rorotan",
+      "code": "Rorotan"
+     },
+     {
+      "name": "Semper Barat",
+      "code": "Semper Barat"
+     },
+     {
+      "name": "Pademangan Timur",
+      "code": "Pademangan Timur"
+     },
+     {
+      "name": "Pademangan Barat",
+      "code": "Pademangan Barat"
+     },
+     {
+      "name": "Ancol",
+      "code": "Ancol"
+     },
+     {
+      "name": "Kelapa Gading Timur",
+      "code": "Kelapa Gading Timur"
+     },
+     {
+      "name": "Pegangsaan Dua",
+      "code": "Pegangsaan Dua"
+     },
+     {
+      "name": "Kelapa Gading Barat",
+      "code": "Kelapa Gading Barat"
+     },
+     {
+      "name": "Cengkareng Barat",
+      "code": "Cengkareng Barat"
+     },
+     {
+      "name": "Duri Kosambi",
+      "code": "Duri Kosambi"
+     },
+     {
+      "name": "Rawa Buaya",
+      "code": "Rawa Buaya"
+     },
+     {
+      "name": "Kedaung Kali Angke",
+      "code": "Kedaung Kali Angke"
+     },
+     {
+      "name": "Kapuk",
+      "code": "Kapuk"
+     },
+     {
+      "name": "Cengkareng Timur",
+      "code": "Cengkareng Timur"
+     },
+     {
+      "name": "Grogol",
+      "code": "Grogol"
+     },
+     {
+      "name": "Tanjung Duren Utara",
+      "code": "Tanjung Duren Utara"
+     },
+     {
+      "name": "Tomang",
+      "code": "Tomang"
+     },
+     {
+      "name": "Jelambar",
+      "code": "Jelambar"
+     },
+     {
+      "name": "Tanjung Duren Selatan",
+      "code": "Tanjung Duren Selatan"
+     },
+     {
+      "name": "Jelambar Baru",
+      "code": "Jelambar Baru"
+     },
+     {
+      "name": "Wijaya Kusuma",
+      "code": "Wijaya Kusuma"
+     },
+     {
+      "name": "Taman Sari",
+      "code": "Taman Sari"
+     },
+     {
+      "name": "Krukut",
+      "code": "Krukut"
+     },
+     {
+      "name": "Maphar",
+      "code": "Maphar"
+     },
+     {
+      "name": "Tangki",
+      "code": "Tangki"
+     },
+     {
+      "name": "Mangga Besar",
+      "code": "Mangga Besar"
+     },
+     {
+      "name": "Keagungan",
+      "code": "Keagungan"
+     },
+     {
+      "name": "Glodok",
+      "code": "Glodok"
+     },
+     {
+      "name": "Pinangsia",
+      "code": "Pinangsia"
+     },
+     {
+      "name": "Tambora",
+      "code": "Tambora"
+     },
+     {
+      "name": "Kali Anyar",
+      "code": "Kali Anyar"
+     },
+     {
+      "name": "Duri Utara",
+      "code": "Duri Utara"
+     },
+     {
+      "name": "Tanah Sereal",
+      "code": "Tanah Sereal"
+     },
+     {
+      "name": "Krendang",
+      "code": "Krendang"
+     },
+     {
+      "name": "Jembatan Besi",
+      "code": "Jembatan Besi"
+     },
+     {
+      "name": "Angke",
+      "code": "Angke"
+     },
+     {
+      "name": "Jembatan Lima",
+      "code": "Jembatan Lima"
+     },
+     {
+      "name": "Pekojan",
+      "code": "Pekojan"
+     },
+     {
+      "name": "Roa Malaka",
+      "code": "Roa Malaka"
+     },
+     {
+      "name": "Duri Selatan",
+      "code": "Duri Selatan"
+     },
+     {
+      "name": "Kebon Jeruk",
+      "code": "Kebon Jeruk"
+     },
+     {
+      "name": "Sukabumi Utara",
+      "code": "Sukabumi Utara"
+     },
+     {
+      "name": "Sukabumi Selatan",
+      "code": "Sukabumi Selatan"
+     },
+     {
+      "name": "Kelapa Dua",
+      "code": "Kelapa Dua"
+     },
+     {
+      "name": "Duri Kepa",
+      "code": "Duri Kepa"
+     },
+     {
+      "name": "Kedoya Utara",
+      "code": "Kedoya Utara"
+     },
+     {
+      "name": "Kedoya Selatan",
+      "code": "Kedoya Selatan"
+     },
+     {
+      "name": "Kalideres",
+      "code": "Kalideres"
+     },
+     {
+      "name": "Semanan",
+      "code": "Semanan"
+     },
+     {
+      "name": "Tegal Alur",
+      "code": "Tegal Alur"
+     },
+     {
+      "name": "Kamal",
+      "code": "Kamal"
+     },
+     {
+      "name": "Pegadungan",
+      "code": "Pegadungan"
+     },
+     {
+      "name": "Palmerah",
+      "code": "Palmerah"
+     },
+     {
+      "name": "Slipi",
+      "code": "Slipi"
+     },
+     {
+      "name": "Kota Bambu Utara",
+      "code": "Kota Bambu Utara"
+     },
+     {
+      "name": "Jatipulo",
+      "code": "Jatipulo"
+     },
+     {
+      "name": "Kemanggisan",
+      "code": "Kemanggisan"
+     },
+     {
+      "name": "Kota Bambu Selatan",
+      "code": "Kota Bambu Selatan"
+     },
+     {
+      "name": "Kembangan Utara",
+      "code": "Kembangan Utara"
+     },
+     {
+      "name": "Meruya Utara",
+      "code": "Meruya Utara"
+     },
+     {
+      "name": "Meruya Selatan",
+      "code": "Meruya Selatan"
+     },
+     {
+      "name": "Srengseng",
+      "code": "Srengseng"
+     },
+     {
+      "name": "Joglo",
+      "code": "Joglo"
+     },
+     {
+      "name": "Kembangan Selatan",
+      "code": "Kembangan Selatan"
+     },
+     {
+      "name": "Tebet Timur",
+      "code": "Tebet Timur"
+     },
+     {
+      "name": "Tebet Barat",
+      "code": "Tebet Barat"
+     },
+     {
+      "name": "Menteng Dalam",
+      "code": "Menteng Dalam"
+     },
+     {
+      "name": "Kebon Baru",
+      "code": "Kebon Baru"
+     },
+     {
+      "name": "Bukit Duri",
+      "code": "Bukit Duri"
+     },
+     {
+      "name": "Manggarai Selatan",
+      "code": "Manggarai Selatan"
+     },
+     {
+      "name": "Manggarai",
+      "code": "Manggarai"
+     },
+     {
+      "name": "Setia Budi",
+      "code": "Setia Budi"
+     },
+     {
+      "name": "Karet Semanggi",
+      "code": "Karet Semanggi"
+     },
+     {
+      "name": "Karet Kuningan",
+      "code": "Karet Kuningan"
+     },
+     {
+      "name": "Karet",
+      "code": "Karet"
+     },
+     {
+      "name": "Menteng Atas",
+      "code": "Menteng Atas"
+     },
+     {
+      "name": "Pasar Manggis",
+      "code": "Pasar Manggis"
+     },
+     {
+      "name": "Guntur",
+      "code": "Guntur"
+     },
+     {
+      "name": "Kuningan Timur",
+      "code": "Kuningan Timur"
+     },
+     {
+      "name": "Mampang Prapatan",
+      "code": "Mampang Prapatan"
+     },
+     {
+      "name": "Bangka",
+      "code": "Bangka"
+     },
+     {
+      "name": "Pela Mampang",
+      "code": "Pela Mampang"
+     },
+     {
+      "name": "Tegal Parang",
+      "code": "Tegal Parang"
+     },
+     {
+      "name": "Kuningan Barat",
+      "code": "Kuningan Barat"
+     },
+     {
+      "name": "Pasar Minggu",
+      "code": "Pasar Minggu"
+     },
+     {
+      "name": "Jati Padang",
+      "code": "Jati Padang"
+     },
+     {
+      "name": "Cilandak Timur",
+      "code": "Cilandak Timur"
+     },
+     {
+      "name": "Ragunan",
+      "code": "Ragunan"
+     },
+     {
+      "name": "Pejaten Timur",
+      "code": "Pejaten Timur"
+     },
+     {
+      "name": "Pejaten Barat",
+      "code": "Pejaten Barat"
+     },
+     {
+      "name": "Kebagusan",
+      "code": "Kebagusan"
+     },
+     {
+      "name": "Kebayoran Lama Utara",
+      "code": "Kebayoran Lama Utara"
+     },
+     {
+      "name": "Pondok Pinang",
+      "code": "Pondok Pinang"
+     },
+     {
+      "name": "Cipulir",
+      "code": "Cipulir"
+     },
+     {
+      "name": "Grogol Utara",
+      "code": "Grogol Utara"
+     },
+     {
+      "name": "Grogol Selatan",
+      "code": "Grogol Selatan"
+     },
+     {
+      "name": "Kebayoran Lama Selatan",
+      "code": "Kebayoran Lama Selatan"
+     },
+     {
+      "name": "Cilandak Barat",
+      "code": "Cilandak Barat"
+     },
+     {
+      "name": "Lebak Bulus",
+      "code": "Lebak Bulus"
+     },
+     {
+      "name": "Pondok Labu",
+      "code": "Pondok Labu"
+     },
+     {
+      "name": "Gandaria Selatan",
+      "code": "Gandaria Selatan"
+     },
+     {
+      "name": "Cipete Selatan",
+      "code": "Cipete Selatan"
+     },
+     {
+      "name": "Melawai",
+      "code": "Melawai"
+     },
+     {
+      "name": "Gunung",
+      "code": "Gunung"
+     },
+     {
+      "name": "Kramat Pela",
+      "code": "Kramat Pela"
+     },
+     {
+      "name": "Selong",
+      "code": "Selong"
+     },
+     {
+      "name": "Rawa Barat",
+      "code": "Rawa Barat"
+     },
+     {
+      "name": "Senayan",
+      "code": "Senayan"
+     },
+     {
+      "name": "Pulo",
+      "code": "Pulo"
+     },
+     {
+      "name": "Petogogan",
+      "code": "Petogogan"
+     },
+     {
+      "name": "Gandaria Utara",
+      "code": "Gandaria Utara"
+     },
+     {
+      "name": "Cipete Utara",
+      "code": "Cipete Utara"
+     },
+     {
+      "name": "Pancoran",
+      "code": "Pancoran"
+     },
+     {
+      "name": "Kalibata",
+      "code": "Kalibata"
+     },
+     {
+      "name": "Rawajati",
+      "code": "Rawajati"
+     },
+     {
+      "name": "Duren Tiga",
+      "code": "Duren Tiga"
+     },
+     {
+      "name": "Pengadegan",
+      "code": "Pengadegan"
+     },
+     {
+      "name": "Cikoko",
+      "code": "Cikoko"
+     },
+     {
+      "name": "Jagakarsa",
+      "code": "Jagakarsa"
+     },
+     {
+      "name": "Srengseng Sawah",
+      "code": "Srengseng Sawah"
+     },
+     {
+      "name": "Ciganjur",
+      "code": "Ciganjur"
+     },
+     {
+      "name": "Lenteng Agung",
+      "code": "Lenteng Agung"
+     },
+     {
+      "name": "Tanjung Barat",
+      "code": "Tanjung Barat"
+     },
+     {
+      "name": "Cipedak",
+      "code": "Cipedak"
+     },
+     {
+      "name": "Pesanggrahan",
+      "code": "Pesanggrahan"
+     },
+     {
+      "name": "Bintaro",
+      "code": "Bintaro"
+     },
+     {
+      "name": "Petukangan Utara",
+      "code": "Petukangan Utara"
+     },
+     {
+      "name": "Petukangan Selatan",
+      "code": "Petukangan Selatan"
+     },
+     {
+      "name": "Ulujami",
+      "code": "Ulujami"
+     },
+     {
+      "name": "Pisangan Baru",
+      "code": "Pisangan Baru"
+     },
+     {
+      "name": "Utan Kayu Utara",
+      "code": "Utan Kayu Utara"
+     },
+     {
+      "name": "Kayu Manis",
+      "code": "Kayu Manis"
+     },
+     {
+      "name": "Palmeriam",
+      "code": "Palmeriam"
+     },
+     {
+      "name": "Kebon Manggis",
+      "code": "Kebon Manggis"
+     },
+     {
+      "name": "Utan Kayu Selatan",
+      "code": "Utan Kayu Selatan"
+     },
+     {
+      "name": "Pulo Gadung",
+      "code": "Pulo Gadung"
+     },
+     {
+      "name": "Pisangan Timur",
+      "code": "Pisangan Timur"
+     },
+     {
+      "name": "Cipinang",
+      "code": "Cipinang"
+     },
+     {
+      "name": "Jatinegara Kaum",
+      "code": "Jatinegara Kaum"
+     },
+     {
+      "name": "Rawamangun",
+      "code": "Rawamangun"
+     },
+     {
+      "name": "Kayu Putih",
+      "code": "Kayu Putih"
+     },
+     {
+      "name": "Jati",
+      "code": "Jati"
+     },
+     {
+      "name": "Kampung Melayu",
+      "code": "Kampung Melayu"
+     },
+     {
+      "name": "Bidara Cina",
+      "code": "Bidara Cina"
+     },
+     {
+      "name": "Bali Mester",
+      "code": "Bali Mester"
+     },
+     {
+      "name": "Rawa Bunga",
+      "code": "Rawa Bunga"
+     },
+     {
+      "name": "Cipinang Cempedak",
+      "code": "Cipinang Cempedak"
+     },
+     {
+      "name": "Cipinang Muara",
+      "code": "Cipinang Muara"
+     },
+     {
+      "name": "Cipinang Besar Selatan",
+      "code": "Cipinang Besar Selatan"
+     },
+     {
+      "name": "Cipinang Besar Utara",
+      "code": "Cipinang Besar Utara"
+     },
+     {
+      "name": "Kramatjati",
+      "code": "Kramatjati"
+     },
+     {
+      "name": "Tengah",
+      "code": "Tengah"
+     },
+     {
+      "name": "Dukuh",
+      "code": "Dukuh"
+     },
+     {
+      "name": "Batu Ampar",
+      "code": "Batu Ampar"
+     },
+     {
+      "name": "Balekambang",
+      "code": "Balekambang"
+     },
+     {
+      "name": "Cililitan",
+      "code": "Cililitan"
+     },
+     {
+      "name": "Cawang",
+      "code": "Cawang"
+     },
+     {
+      "name": "Gedong",
+      "code": "Gedong"
+     },
+     {
+      "name": "Baru",
+      "code": "Baru"
+     },
+     {
+      "name": "Cijantung",
+      "code": "Cijantung"
+     },
+     {
+      "name": "Kalisari",
+      "code": "Kalisari"
+     },
+     {
+      "name": "Pekayon",
+      "code": "Pekayon"
+     },
+     {
+      "name": "Jatinegara",
+      "code": "Jatinegara"
+     },
+     {
+      "name": "Rawa Terate",
+      "code": "Rawa Terate"
+     },
+     {
+      "name": "Penggilingan",
+      "code": "Penggilingan"
+     },
+     {
+      "name": "Cakung Timur",
+      "code": "Cakung Timur"
+     },
+     {
+      "name": "Pulo Gebang",
+      "code": "Pulo Gebang"
+     },
+     {
+      "name": "Ujung Menteng",
+      "code": "Ujung Menteng"
+     },
+     {
+      "name": "Cakung Barat",
+      "code": "Cakung Barat"
+     },
+     {
+      "name": "Duren Sawit",
+      "code": "Duren Sawit"
+     },
+     {
+      "name": "Pondok Bambu",
+      "code": "Pondok Bambu"
+     },
+     {
+      "name": "Klender",
+      "code": "Klender"
+     },
+     {
+      "name": "Pondok Kelapa",
+      "code": "Pondok Kelapa"
+     },
+     {
+      "name": "Malaka Sari",
+      "code": "Malaka Sari"
+     },
+     {
+      "name": "Malaka Jaya",
+      "code": "Malaka Jaya"
+     },
+     {
+      "name": "Pondok Kopi",
+      "code": "Pondok Kopi"
+     },
+     {
+      "name": "Makasar",
+      "code": "Makasar"
+     },
+     {
+      "name": "Pinangranti",
+      "code": "Pinangranti"
+     },
+     {
+      "name": "Kebon Pala",
+      "code": "Kebon Pala"
+     },
+     {
+      "name": "Halim Perdana Kusuma",
+      "code": "Halim Perdana Kusuma"
+     },
+     {
+      "name": "Cipinang Melayu",
+      "code": "Cipinang Melayu"
+     },
+     {
+      "name": "Ciracas",
+      "code": "Ciracas"
+     },
+     {
+      "name": "Cibubur",
+      "code": "Cibubur"
+     },
+     {
+      "name": "Kelapa Dua Wetan",
+      "code": "Kelapa Dua Wetan"
+     },
+     {
+      "name": "Susukan",
+      "code": "Susukan"
+     },
+     {
+      "name": "Rambutan",
+      "code": "Rambutan"
+     },
+     {
+      "name": "Cipayung",
+      "code": "Cipayung"
+     },
+     {
+      "name": "Cilangkap",
+      "code": "Cilangkap"
+     },
+     {
+      "name": "Pondok Ranggon",
+      "code": "Pondok Ranggon"
+     },
+     {
+      "name": "Munjul",
+      "code": "Munjul"
+     },
+     {
+      "name": "Setu",
+      "code": "Setu"
+     },
+     {
+      "name": "Bambu Apus",
+      "code": "Bambu Apus"
+     },
+     {
+      "name": "Lubang Buaya",
+      "code": "Lubang Buaya"
+     },
+     {
+      "name": "Ceger",
+      "code": "Ceger"
+     }
+    ],
+    "mergePolicy": "esriMPTDefaultValue",
+    "splitPolicy": "esriSPTDuplicate"
+   }
+  },
+  {
+   "name": "KECAMATAN",
+   "type": "esriFieldTypeString",
+   "alias": "kecamatan",
+   "length": 254,
+   "domain": {
+    "type": "codedValue",
+    "name": "Kecamatan_Kemendagri",
+    "description": "Batas Kecamatan Sesuai Kemendagri",
+    "codedValues": [
+     {
+      "name": "Kepulauan Seribu Utara",
+      "code": "Kepulauan Seribu Utara"
+     },
+     {
+      "name": "Kepulauan Seribu Selatan",
+      "code": "Kepulauan Seribu Selatan"
+     },
+     {
+      "name": "Gambir",
+      "code": "Gambir"
+     },
+     {
+      "name": "Sawah Besar",
+      "code": "Sawah Besar"
+     },
+     {
+      "name": "Kemayoran",
+      "code": "Kemayoran"
+     },
+     {
+      "name": "Senen",
+      "code": "Senen"
+     },
+     {
+      "name": "Cempaka Putih",
+      "code": "Cempaka Putih"
+     },
+     {
+      "name": "Menteng",
+      "code": "Menteng"
+     },
+     {
+      "name": "Tanah Abang",
+      "code": "Tanah Abang"
+     },
+     {
+      "name": "Johar Baru",
+      "code": "Johar Baru"
+     },
+     {
+      "name": "Penjaringan",
+      "code": "Penjaringan"
+     },
+     {
+      "name": "Tanjung Priok",
+      "code": "Tanjung Priok"
+     },
+     {
+      "name": "Koja",
+      "code": "Koja"
+     },
+     {
+      "name": "Cilincing",
+      "code": "Cilincing"
+     },
+     {
+      "name": "Pademangan",
+      "code": "Pademangan"
+     },
+     {
+      "name": "Kelapa Gading",
+      "code": "Kelapa Gading"
+     },
+     {
+      "name": "Cengkareng",
+      "code": "Cengkareng"
+     },
+     {
+      "name": "Grogol Petamburan",
+      "code": "Grogol Petamburan"
+     },
+     {
+      "name": "Taman Sari",
+      "code": "Taman Sari"
+     },
+     {
+      "name": "Tambora",
+      "code": "Tambora"
+     },
+     {
+      "name": "Kebon Jeruk",
+      "code": "Kebon Jeruk"
+     },
+     {
+      "name": "Kalideres",
+      "code": "Kalideres"
+     },
+     {
+      "name": "Pal Merah",
+      "code": "Pal Merah"
+     },
+     {
+      "name": "Kembangan",
+      "code": "Kembangan"
+     },
+     {
+      "name": "Tebet",
+      "code": "Tebet"
+     },
+     {
+      "name": "Setiabudi",
+      "code": "Setiabudi"
+     },
+     {
+      "name": "Mampang Prapatan",
+      "code": "Mampang Prapatan"
+     },
+     {
+      "name": "Pasar Minggu",
+      "code": "Pasar Minggu"
+     },
+     {
+      "name": "Kebayoran Lama",
+      "code": "Kebayoran Lama"
+     },
+     {
+      "name": "Cilandak",
+      "code": "Cilandak"
+     },
+     {
+      "name": "Kebayoran Baru",
+      "code": "Kebayoran Baru"
+     },
+     {
+      "name": "Pancoran",
+      "code": "Pancoran"
+     },
+     {
+      "name": "Jagakarsa",
+      "code": "Jagakarsa"
+     },
+     {
+      "name": "Pesanggrahan",
+      "code": "Pesanggrahan"
+     },
+     {
+      "name": "Matraman",
+      "code": "Matraman"
+     },
+     {
+      "name": "Pulogadung",
+      "code": "Pulogadung"
+     },
+     {
+      "name": "Jatinegara",
+      "code": "Jatinegara"
+     },
+     {
+      "name": "Kramatjati",
+      "code": "Kramatjati"
+     },
+     {
+      "name": "Pasar Rebo",
+      "code": "Pasar Rebo"
+     },
+     {
+      "name": "Cakung",
+      "code": "Cakung"
+     },
+     {
+      "name": "Duren Sawit",
+      "code": "Duren Sawit"
+     },
+     {
+      "name": "Makasar",
+      "code": "Makasar"
+     },
+     {
+      "name": "Ciracas",
+      "code": "Ciracas"
+     },
+     {
+      "name": "Cipayung",
+      "code": "Cipayung"
+     }
+    ],
+    "mergePolicy": "esriMPTDefaultValue",
+    "splitPolicy": "esriSPTDuplicate"
+   }
+  },
+  {
+   "name": "KOTA",
+   "type": "esriFieldTypeString",
+   "alias": "kota",
+   "length": 254,
+   "domain": {
+    "type": "codedValue",
+    "name": "Wilayah_Kemendagri",
+    "description": "Batas Wilayah Sesuai Kemendagri",
+    "codedValues": [
+     {
+      "name": "Kab. Adm. Kep. Seribu",
+      "code": "Kab. Adm. Kep. Seribu"
+     },
+     {
+      "name": "Kota Adm. Jakarta Pusat",
+      "code": "Kota Adm. Jakarta Pusat"
+     },
+     {
+      "name": "Kota Adm. Jakarta Utara",
+      "code": "Kota Adm. Jakarta Utara"
+     },
+     {
+      "name": "Kota Adm. Jakarta Barat",
+      "code": "Kota Adm. Jakarta Barat"
+     },
+     {
+      "name": "Kota Adm. Jakarta Selatan",
+      "code": "Kota Adm. Jakarta Selatan"
+     },
+     {
+      "name": "Kota Adm. Jakarta Timur",
+      "code": "Kota Adm. Jakarta Timur"
+     }
+    ],
+    "mergePolicy": "esriMPTDefaultValue",
+    "splitPolicy": "esriSPTDuplicate"
+   }
+  },
+  {
+   "name": "PANJANG",
+   "type": "esriFieldTypeDouble",
+   "alias": "panjang",
+   "domain": null
+  },
+  {
+   "name": "SHAPE",
+   "type": "esriFieldTypeGeometry",
+   "alias": "SHAPE",
+   "domain": null
+  },
+  {
+   "name": "SHAPE.LEN",
+   "type": "esriFieldTypeDouble",
+   "alias": "SHAPE.LEN",
+   "domain": null
+  },
+  {
+   "name": "VERIF_ASET",
+   "type": "esriFieldTypeString",
+   "alias": "Verifikasi Aset",
+   "length": 255,
+   "domain": {
+    "type": "codedValue",
+    "name": "verif_aset_dsda",
+    "description": "",
+    "codedValues": [
+     {
+      "name": "Ganda",
+      "code": "Ganda"
+     },
+     {
+      "name": "Tidak Ganda",
+      "code": "Tidak Ganda"
+     }
+    ],
+    "mergePolicy": "esriMPTDefaultValue",
+    "splitPolicy": "esriSPTDefaultValue"
+   }
+  },
+  {
+   "name": "GUIDID",
+   "type": "esriFieldTypeString",
+   "alias": "GUID ID",
+   "length": 1000,
+   "domain": null
+  },
+  {
+   "name": "GUID_IDK",
+   "type": "esriFieldTypeString",
+   "alias": "GUID ID Induk",
+   "length": 1000,
+   "domain": null
+  },
+  {
+   "name": "KET_ASET",
+   "type": "esriFieldTypeString",
+   "alias": "Keterangan Aset",
+   "length": 255,
+   "domain": {
+    "type": "codedValue",
+    "name": "ket_aset",
+    "description": "",
+    "codedValues": [
+     {
+      "name": "Fasilitas Sosial",
+      "code": "Fasos"
+     },
+     {
+      "name": "Fasilitas Umum",
+      "code": "Fasum"
+     }
+    ],
+    "mergePolicy": "esriMPTDefaultValue",
+    "splitPolicy": "esriSPTDefaultValue"
+   }
+  }
+ ],
+ "geometryField": {
+  "name": "SHAPE",
+  "type": "esriFieldTypeGeometry",
+  "alias": "SHAPE"
+ },
+ "indexes": [
+  {
+   "name": "R78805_SDE_ROWID_UK",
+   "fields": "OBJECTID",
+   "isAscending": true,
+   "isUnique": true,
+   "description": ""
+  },
+  {
+   "name": "A1092_IX1",
+   "fields": "SHAPE",
+   "isAscending": true,
+   "isUnique": true,
+   "description": ""
+  }
+ ],
+ "subtypes": [],
+ "relationships": [],
+ "canModifyLayer": true,
+ "canScaleSymbols": false,
+ "hasLabels": false,
+ "capabilities": "Query,Map,Data",
+ "maxRecordCount": 2000,
+ "maxSelectionCount": 2000,
+ "supportsStatistics": true,
+ "supportsExceedsLimitStatistics": true,
+ "supportsAdvancedQueries": true,
+ "supportedQueryFormats": "JSON, geoJSON, PBF",
+ "isDataVersioned": false,
+ "ownershipBasedAccessControlForFeatures": {
+  "allowOthersToQuery": true
+ },
+ "useStandardizedQueries": true,
+ "supportedSpatialRelationships": [
+  "esriSpatialRelIntersects",
+  "esriSpatialRelContains",
+  "esriSpatialRelCrosses",
+  "esriSpatialRelEnvelopeIntersects",
+  "esriSpatialRelIndexIntersects",
+  "esriSpatialRelOverlaps",
+  "esriSpatialRelTouches",
+  "esriSpatialRelWithin",
+  "esriSpatialRelRelation"
+ ],
+ "advancedQueryCapabilities": {
+  "useStandardizedQueries": true,
+  "supportsStatistics": true,
+  "supportsPercentileStatistics": true,
+  "supportsHavingClause": true,
+  "supportsOrderBy": true,
+  "supportsDistinct": true,
+  "supportsCountDistinct": true,
+  "supportsAdvancedQueryRelated": true,
+  "supportsQueryRelatedPagination": true,
+  "supportsPagination": true,
+  "supportsLod": false,
+  "supportsQueryWithLodSR": false,
+  "supportsTrueCurve": true,
+  "supportsQueryWithDatumTransformation": true,
+  "supportsReturningQueryExtent": true,
+  "supportsQueryWithDistance": true,
+  "supportsSqlExpression": true,
+  "supportsTimeRelation": true,
+  "supportsSqlFormat": false,
+  "supportsQueryAttachments": true,
+  "supportsQueryAttachmentsWithReturnUrl": true,
+  "supportsQueryAnalytic": true,
+  "supportsCurrentUserQueries": true
+ },
+ "supportsDatumTransformation": true,
+ "advancedQueryAnalyticCapabilities": {
+  "supportsLinearRegression": true,
+  "supportsAsync": false,
+  "supportsPercentileAnalytic": true
+ },
+ "dateFieldsTimeReference": null,
+ "preferredTimeReference": null,
+ "datesInUnknownTimezone": false,
+ "hasGeometryProperties": true,
+ "geometryProperties": {
+  "shapeLengthFieldName": "SHAPE.LEN",
+  "units": "esriMeters",
+  "mapUnits": {
+   "uwkid": 9001
+  }
+ },
+ "hasMetadata": true,
+ "isDataArchived": false,
+ "archivingInfo": {
+  "supportsQueryWithHistoricMoment": false,
+  "startArchivingMoment": -1
+ },
+ "supportsCoordinatesQuantization": true,
+ "supportsDynamicLegends": true,
+ "serviceItemId": "afcd0ac7ba5544039d7bc36b01223b7c"
+}

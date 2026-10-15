@@ -1,0 +1,122 @@
+{
+ "currentVersion": 11.5,
+ "cimVersion": "3.5.0",
+ "serviceDescription": "",
+ "mapName": "Map42",
+ "description": "",
+ "copyrightText": "",
+ "supportsDynamicLayers": true,
+ "layers": [
+  {
+   "id": 0,
+   "name": "Peta Ketinggian DKI Jakarta",
+   "parentLayerId": -1,
+   "defaultVisibility": true,
+   "subLayerIds": null,
+   "minScale": 0,
+   "maxScale": 0,
+   "type": "Feature Layer",
+   "geometryType": "esriGeometryPolygon",
+   "supportsDynamicLegends": true
+  }
+ ],
+ "tables": [],
+ "spatialReference": {
+  "wkid": 4326,
+  "latestWkid": 4326,
+  "xyTolerance": 8.983152841195215e-09,
+  "zTolerance": 0.001,
+  "mTolerance": 0.001,
+  "falseX": -400,
+  "falseY": -400,
+  "xyUnits": 999999999.9999999,
+  "falseZ": -100000,
+  "zUnits": 10000,
+  "falseM": -100000,
+  "mUnits": 10000
+ },
+ "singleFusedMapCache": false,
+ "initialExtent": {
+  "xmin": 106.65701190031244,
+  "ymin": -6.399181016550827,
+  "xmax": 107.01164085418658,
+  "ymax": -6.05455099934607,
+  "spatialReference": {
+   "wkid": 4326,
+   "latestWkid": 4326,
+   "xyTolerance": 8.983152841195215e-09,
+   "zTolerance": 0.001,
+   "mTolerance": 0.001,
+   "falseX": -400,
+   "falseY": -400,
+   "xyUnits": 999999999.9999999,
+   "falseZ": -100000,
+   "zUnits": 10000,
+   "falseM": -100000,
+   "mUnits": 10000
+  }
+ },
+ "fullExtent": {
+  "xmin": 106.6762126242259,
+  "ymin": -6.383516015768793,
+  "xmax": 106.99244013027314,
+  "ymax": -6.070216000128103,
+  "spatialReference": {
+   "wkid": 4326,
+   "latestWkid": 4326,
+   "xyTolerance": 8.983152841195215e-09,
+   "zTolerance": 0.001,
+   "mTolerance": 0.001,
+   "falseX": -400,
+   "falseY": -400,
+   "xyUnits": 999999999.9999999,
+   "falseZ": -100000,
+   "zUnits": 10000,
+   "falseM": -100000,
+   "mUnits": 10000
+  }
+ },
+ "datesInUnknownTimezone": false,
+ "minScale": 0,
+ "maxScale": 0,
+ "units": "esriDecimalDegrees",
+ "supportedImageFormatTypes": "PNG32,PNG24,PNG,JPG,DIB,TIFF,EMF,PS,PDF,GIF,SVG,SVGZ,BMP",
+ "documentInfo": {
+  "Title": "C:\\Users\\Administrator\\Documents\\ArcGIS\\Projects\\Master\\Master.aprx",
+  "Author": "",
+  "Comments": "",
+  "Subject": "",
+  "Category": "",
+  "Version": "2.9.0",
+  "AntialiasingMode": "Fast",
+  "TextAntialiasingMode": "Force",
+  "Keywords": "Ketinggian,Lidar,Topografi"
+ },
+ "supportsQueryDomains": true,
+ "capabilities": "Query,Map,Data",
+ "supportedQueryFormats": "JSON, geoJSON, PBF",
+ "exportTilesAllowed": false,
+ "referenceScale": 0.0,
+ "supportsDatumTransformation": true,
+ "floorAwareMapProperties": {
+  "defaultFloorFilterSettings": {
+   "isEnabled": true
+  }
+ },
+ "archivingInfo": {
+  "supportsHistoricMoment": false
+ },
+ "supportsClipping": true,
+ "supportsSpatialFilter": true,
+ "supportsTimeRelation": true,
+ "supportsQueryDataElements": true,
+ "mapUnits": {
+  "uwkid": 9102
+ },
+ "maxSelectionCount": 2000,
+ "maxRecordCount": 2000,
+ "maxImageHeight": 4096,
+ "maxImageWidth": 4096,
+ "supportedExtensions": "",
+ "serviceItemId": "b966066d7fcb4a288b27fe4c52568bd0"
+}

@@ -1,0 +1,299 @@
+{
+ "currentVersion": 11.5,
+ "cimVersion": "3.5.0",
+ "id": 0,
+ "name": "Lokasi Stasiun Banchmark",
+ "type": "Feature Layer",
+ "parentLayer": null,
+ "defaultVisibility": true,
+ "minScale": 0,
+ "maxScale": 0,
+ "canScaleSymbols": false,
+ "geometryType": "esriGeometryPoint",
+ "description": "",
+ "copyrightText": "",
+ "editFieldsInfo": null,
+ "ownershipBasedAccessControlForFeatures": null,
+ "syncCanReturnChanges": false,
+ "relationships": [],
+ "isDataVersioned": false,
+ "isDataArchived": false,
+ "infoInEstimates": [
+  "extent",
+  "count"
+ ],
+ "isDataBranchVersioned": false,
+ "isDataReplicaTracked": false,
+ "isCoGoEnabled": false,
+ "supportsRollbackOnFailureParameter": true,
+ "archivingInfo": {
+  "supportsQueryWithHistoricMoment": false,
+  "startArchivingMoment": -1
+ },
+ "supportsStatistics": true,
+ "supportsExceedsLimitStatistics": true,
+ "supportsAdvancedQueries": true,
+ "supportsValidateSQL": true,
+ "supportsCoordinatesQuantization": true,
+ "supportsQuantizationEditMode": true,
+ "supportsCalculate": true,
+ "supportsASyncCalculate": true,
+ "hasContingentValuesDefinition": false,
+ "supportsDurableUrlForSyncModelNone": false,
+ "supportsDatumTransformation": true,
+ "advancedQueryCapabilities": {
+  "supportsPagination": true,
+  "supportsQueryWithDistance": true,
+  "supportsReturningQueryExtent": true,
+  "supportsStatistics": true,
+  "supportsPercentileStatistics": true,
+  "supportsHavingClause": true,
+  "supportsOrderBy": true,
+  "supportsDistinct": true,
+  "supportsCountDistinct": true,
+  "supportsAdvancedQueryRelated": true,
+  "supportsQueryRelatedPagination": true,
+  "supportsCurrentUserQueries": true,
+  "supportsFullTextSearch": true,
+  "fullTextSearchCapabilities": {
+   "supportsSearchOperator": true,
+   "supportsOperator": false,
+   "supportsSqlExpressionInFullText": true
+  },
+  "fullTextSearchableFields": [],
+  "supportsQueryWithResultType": true,
+  "supportsReturningGeometryCentroid": false,
+  "supportsReturningGeometryEnvelope": false,
+  "supportsSqlExpression": true,
+  "supportsQueryWithDatumTransformation": true,
+  "supportsLod": false,
+  "supportsQueryWithLodSR": false,
+  "supportsQueryAnalytic": true,
+  "supportsQueryWithCacheHint": false
+ },
+ "advancedQueryAnalyticCapabilities": {
+  "supportsLinearRegression": true,
+  "supportsAsync": true,
+  "supportsPercentileAnalytic": true
+ },
+ "advancedEditingCapabilities": {
+  "supportedSqlFormatsInCalculate": [
+   "standard"
+  ],
+  "supportsAsyncApplyEdits": true,
+  "supportsApplyEditsbyUploadID": true,
+  "supportedApplyEditsUploadIDFormats": "JSON,PBF"
+ },
+ "hasMetadata": true,
+ "extent": {
+  "xmin": 687552.6962510599,
+  "ymin": 9297449.52792902,
+  "xmax": 716364.8315499402,
+  "ymax": 9326967.327704417,
+  "spatialReference": {
+   "wkid": 32748,
+   "latestWkid": 32748,
+   "xyTolerance": 0.001,
+   "zTolerance": 0.001,
+   "mTolerance": 0.001,
+   "falseX": -5120900,
+   "falseY": 1900,
+   "xyUnits": 10000,
+   "falseZ": -100000,
+   "zUnits": 10000,
+   "falseM": -100000,
+   "mUnits": 10000
+  }
+ },
+ "spatialReference": {
+  "wkid": 32748,
+  "latestWkid": 32748,
+  "xyTolerance": 0.001,
+  "zTolerance": 0.001,
+  "mTolerance": 0.001,
+  "falseX": -5120900,
+  "falseY": 1900,
+  "xyUnits": 10000,
+  "falseZ": -100000,
+  "zUnits": 10000,
+  "falseM": -100000,
+  "mUnits": 10000
+ },
+ "sourceSpatialReference": {
+  "wkid": 102100,
+  "latestWkid": 3857,
+  "xyTolerance": 0.001,
+  "zTolerance": 0.001,
+  "mTolerance": 0.001,
+  "falseX": -20037700,
+  "falseY": -30241100,
+  "xyUnits": 10000,
+  "falseZ": 0,
+  "zUnits": 1,
+  "falseM": 0,
+  "mUnits": 1
+ },
+ "drawingInfo": {
+  "renderer": {
+   "type": "simple",
+   "symbol": {
+    "type": "esriSMS",
+    "style": "esriSMSCircle",
+    "color": [
+     45,
+     70,
+     153,
+     255
+    ],
+    "size": 4,
+    "angle": 0,
+    "xoffset": 0,
+    "yoffset": 0,
+    "outline": {
+     "color": [
+      0,
+      0,
+      0,
+      255
+     ],
+     "width": 0.7
+    }
+   }
+  },
+  "scaleSymbols": true,
+  "transparency": 0,
+  "labelingInfo": null
+ },
+ "hasM": false,
+ "hasZ": false,
+ "allowGeometryUpdates": true,
+ "allowTrueCurvesUpdates": true,
+ "onlyAllowTrueCurveUpdatesByTrueCurveClients": true,
+ "hasAttachments": false,
+ "supportsApplyEditsWithGlobalIds": false,
+ "htmlPopupType": "esriServerHTMLPopupTypeAsHTMLText",
+ "objectIdField": "OBJECTID",
+ "globalIdField": "",
+ "displayField": "NAMA",
+ "typeIdField": "",
+ "subtypeField": "",
+ "fields": [
+  {
+   "name": "OBJECTID",
+   "type": "esriFieldTypeOID",
+   "alias": "OBJECTID",
+   "domain": null,
+   "editable": false,
+   "nullable": false,
+   "defaultValue": null,
+   "modelName": "OBJECTID"
+  },
+  {
+   "name": "NAMA",
+   "type": "esriFieldTypeString",
+   "alias": "Nama",
+   "domain": null,
+   "editable": true,
+   "nullable": true,
+   "length": 254,
+   "defaultValue": null,
+   "modelName": "NAMA"
+  },
+  {
+   "name": "LATITUDE",
+   "type": "esriFieldTypeDouble",
+   "alias": "Latitude",
+   "domain": null,
+   "editable": true,
+   "nullable": true,
+   "defaultValue": null,
+   "modelName": "LATITUDE"
+  },
+  {
+   "name": "LONGITUDE",
+   "type": "esriFieldTypeDouble",
+   "alias": "Longitude",
+   "domain": null,
+   "editable": true,
+   "nullable": true,
+   "defaultValue": null,
+   "modelName": "LONGITUDE"
+  }
+ ],
+ "geometryField": {
+  "name": "SHAPE",
+  "type": "esriFieldTypeGeometry",
+  "alias": "SHAPE",
+  "domain": null,
+  "editable": true,
+  "nullable": true,
+  "defaultValue": null,
+  "modelName": "SHAPE"
+ },
+ "indexes": [
+  {
+   "name": "R79118_SDE_ROWID_UK",
+   "isAscending": true,
+   "isUnique": true,
+   "description": "",
+   "fields": "OBJECTID"
+  },
+  {
+   "name": "A1302_IX1",
+   "isAscending": true,
+   "isUnique": true,
+   "description": "",
+   "fields": "SHAPE"
+  }
+ ],
+ "datesInUnknownTimezone": false,
+ "dateFieldsTimeReference": {
+  "timeZone": "SE Asia Standard Time",
+  "timeZoneIANA": "Etc/GMT-7",
+  "respectsDaylightSaving": false
+ },
+ "preferredTimeReference": {
+  "timeZone": "SE Asia Standard Time",
+  "timeZoneIANA": "Etc/GMT-7",
+  "respectsDaylightSaving": false
+ },
+ "types": [],
+ "templates": [
+  {
+   "name": "Lokasi Stasiun Banchmark",
+   "description": "",
+   "prototype": {
+    "attributes": {
+     "LATITUDE": null,
+     "LONGITUDE": null,
+     "NAMA": null
+    }
+   },
+   "drawingTool": "esriFeatureEditToolPoint"
+  }
+ ],
+ "maxRecordCount": 2000,
+ "supportedQueryFormats": "JSON, geoJSON, PBF",
+ "supportedExportFormats": "sqlite,filegdb,shapefile,csv,geojson",
+ "capabilities": "Query,Create,Update,Delete,Uploads,Editing,Extract",
+ "useStandardizedQueries": true,
+ "bigIntegerRestrictedTo53Bits": true,
+ "supportedSpatialRelationships": [
+  "esriSpatialRelIntersects",
+  "esriSpatialRelContains",
+  "esriSpatialRelCrosses",
+  "esriSpatialRelEnvelopeIntersects",
+  "esriSpatialRelIndexIntersects",
+  "esriSpatialRelOverlaps",
+  "esriSpatialRelTouches",
+  "esriSpatialRelWithin",
+  "esriSpatialRelRelation"
+ ],
+ "supportsAppend": true,
+ "supportedAppendFormats": "FILEGDB,PBF",
+ "standardMaxRecordCount": 32000,
+ "tileMaxRecordCount": 8000,
+ "standardMaxRecordCountNoGeometry": 32000,
+ "maxRecordCountFactor": 1,
+ "serviceItemId": "c25c34edd4a84628a7fd55aa58688222"
+}

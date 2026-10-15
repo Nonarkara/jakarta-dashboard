@@ -31,11 +31,25 @@ globalThis.fetch = async url => {
 const request = path => worker.fetch(new Request('https://atlas.test'+path), {}, {});
 try {
   let r=await request('/api/atlas/environment'), data=await r.json();
-  assert.equal(data.products.length,5); assert.ok(data.products.slice(0,3).every(p=>p.available && p.date===date));
+  assert.equal(data.products.length,9); assert.ok(data.products.slice(0,3).every(p=>p.available && p.date===date));
   assert.equal(data.products[3].available,false);
   assert.equal(data.products[4].available,true); assert.match(data.products[4].tiles[0], /\.jpg$/); assert.equal(data.products[4].legendUrl,null);
   assert.equal(data.radar.frames.length,1); assert.ok(data.products[0].tiles[0].includes('Level9/{z}/{y}/{x}.png'));
   assert.equal(data.products[0].windowDays,3);
+  {
+    const saved=capabilities, past='2016-01-01', gapDay=new Date(now-2*86400000).toISOString().slice(0,10);
+    const products=[['VIIRS_NOAA20_GapFilled_BRDF_Corrected_DayNightBand_Radiance',8,gapDay],['VIIRS_NOAA20_AOD_Deep_Blue_Land_Ocean',6,date],['OMPS_NOAA20_NadirMapper_AerosolIndex_380',6,date],['VIIRS_Night_Lights',8,past]];
+    capabilities='<Capabilities>'+products.map(([id,z,day])=>`<Layer><ows:Identifier>${id}</ows:Identifier><Dimension><Default>${day}</Default><Value>${day}</Value></Dimension><Format>image/png</Format><TileMatrixSet>GoogleMapsCompatible_Level${z}</TileMatrixSet></Layer>`).join('')+'</Capabilities>';
+    const satellite=(await (await request('/api/atlas/environment')).json()).products;
+    for(const id of ['night-lights','aerosol-viirs','aerosol-index','night-lights-2016']){const p=satellite.find(p=>p.id===id);assert.equal(p.available,true,id);assert.ok(p.tiles[0].endsWith('.png'));assert.ok(p.date<=date);}
+    const night=satellite.find(p=>p.id==='night-lights');assert.equal(night.date,gapDay);assert.equal(night.tier,'satellite-corrected-gap-filled');assert.match(night.units,/nW/);assert.match(night.resolution,/750 m sensor/);
+    const old=satellite.find(p=>p.id==='night-lights-2016');assert.equal(old.date,past);assert.equal(old.timePrecision,'annual composite');assert.equal(old.windowDays,null);assert.equal(old.legendUrl,null);
+    assert.match(satellite.find(p=>p.id==='aerosol-index').resolution,/12 × 17/);
+    capabilities=capabilities.replaceAll('GoogleMapsCompatible_Level8','GoogleMapsCompatible_Level7');
+    const wrong=(await (await request('/api/atlas/environment')).json()).products.find(p=>p.id==='night-lights');assert.equal(wrong.available,false);assert.deepEqual(wrong.tiles,[]);
+    capabilities=saved;
+  }
+
   capabilities = '<Capabilities>' + ids.map(([id,z]) => `<Layer><ows:Identifier>${id}</ows:Identifier><Dimension><Default>${date}</Default><Value>${date}</Value><Value>${new Date(now-2*86400000).toISOString().slice(0,10)}</Value></Dimension><TileMatrixSet>GoogleMapsCompatible_Level${z}</TileMatrixSet></Layer>`).join('') + '</Capabilities>';
   data=await (await request('/api/atlas/environment')).json();
   assert.equal(data.products[0].dates.length,2,'unpublished days must not be guessed');

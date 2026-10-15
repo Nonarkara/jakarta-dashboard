@@ -99,23 +99,62 @@ for(const c of insight.coverage.byBorough){assert.ok(c.kelurahanWithPublishedPum
 // Exercise the real renderer so percentage bars and missing sources cannot hide behind green string checks.
 const nodes=new Map();
 const node=id=>{if(!nodes.has(id))nodes.set(id,{innerHTML:'',value:id==='official-topic'?'paper':'',dataset:{},hidden:false,addEventListener(){}});return nodes.get(id);};
-const context=vm.createContext({lang:'en',DASHBOARD_BUILD:'test',$:node,window:{CivicLanguage:{text:v=>v,cost:v=>v}},t:(id,en)=>context.lang==='en'?en:id,esc:v=>String(v??''),num:v=>String(v),date:v=>v||'Unavailable',evidence:()=>'',unavailable:()=>'<p>Unavailable</p>',fixtures:{insight,flood,projects:data('projects.json'),annual:data('flood-reference.json'),city:data('city-context.json'),references:Object.fromEntries(['waterways-manifest.json','traffic-cameras-manifest.json','hydrology-reference.json','toll-cameras.json','ispu-reference.json'].map(file=>[file,data(file)]))}});
+const context=vm.createContext({lang:'en',DASHBOARD_BUILD:'test',$:node,window:{CivicLanguage:{text:v=>v,cost:v=>v}},t:(id,en)=>context.lang==='en'?en:id,esc:v=>String(v??''),num:v=>String(v),date:v=>v||'Unavailable',evidence:()=>'',unavailable:()=>'<p>Unavailable</p>',fixtures:{insight,flood,projects:data('projects.json'),annual:data('flood-reference.json'),city:data('city-context.json'),references:Object.fromEntries(['waterways-manifest.json','traffic-cameras-manifest.json','hydrology-reference.json','toll-cameras.json','ispu-reference.json','official-drainage-manifest.json','official-polders-manifest.json'].map(file=>[file,data(file)]))}});
 vm.runInContext(js.slice(0,js.indexOf("$('official-topic').addEventListener")),context);
 vm.runInContext('paperInsight=fixtures.insight;paperFlood=fixtures.flood;officialProjects=fixtures.projects;officialFlood=fixtures.annual;officialContext=fixtures.city;paperReferences=fixtures.references;renderPaper();',context);
 assert.match(node('paper-riskmix').innerHTML,/>Heavy</,'English renderer translates publisher classes');
 const widths=[...node('paper-coverage').innerHTML.matchAll(/width:([0-9.]+)%/g)].map(m=>Number(m[1]));
 const expected=[...insight.coverage.byBorough].sort((a,b)=>b.kelurahanWithoutPublishedPump-a.kelurahanWithoutPublishedPump).map(c=>Number((100*c.kelurahanWithPublishedPump/c.kelurahanWithRiskMapping).toFixed(1)));
 assert.deepEqual(widths,expected,'coverage uses absolute 0–100% scale, never largest-row normalization');
-for(const label of ['Waterway features','Water-gauge locations','Camera references','Public toll video links'])assert.ok(node('paper-inventory').innerHTML.includes(label),'inventory renders source-backed '+label);
+for(const label of ['Waterway features','Water-gauge locations','Camera references','Public toll video links','Official micro-drain lines','Official polder boundaries'])assert.ok(node('paper-inventory').innerHTML.includes(label),'inventory renders source-backed '+label);
 context.lang='id';vm.runInContext('renderPaper();',context);
 assert.match(node('paper-riskmix').innerHTML,/>Berat</,'Indonesian renderer restores publisher classes');
 assert.ok(node('paper-inventory').innerHTML.includes('Fitur jalur air'),'inventory changes language');
 context.lang='en';vm.runInContext('officialContext=null;officialProjects=null;officialFlood=null;paperInsight=null;paperFlood=null;paperReferences={};renderPaper();',context);
-assert.equal((node('paper-inventory').innerHTML.match(/<dd>Unavailable/g)||[]).length,10,'ten missing inventory sources remain unavailable instead of fabricated zero');
+assert.equal((node('paper-inventory').innerHTML.match(/<dd>Unavailable/g)||[]).length,12,'twelve missing inventory sources remain unavailable instead of fabricated zero');
 assert.equal(node('paper-exposure').innerHTML,'<p>Unavailable</p>','missing chart data has an explicit state');
 vm.runInContext("paperReferences={'waterways-manifest.json':fixtures.references['waterways-manifest.json']};renderPaper();",context);
 assert.ok(node('paper-inventory').innerHTML.includes('<dd>'+data('waterways-manifest.json').count),'available reference inventory survives unavailable chart feeds');
 for(const format of ['json','csv'])assert.ok(html.includes('/data/jakarta-v1/source-catalog.'+format),'source catalogue download '+format);
 for(const source of ['BBWS Ciliwung Cisadane','JAXA / EORC','Bina Marga / Jasa Marga','hls.js'])assert.ok(html.includes(source),'legal attribution retained: '+source);
+
+// Manifest-specific inventory counts and defects are derived, not hand-entered.
+vm.runInContext('paperReferences=fixtures.references;renderPaperInventory();',context);
+const drainage=data('official-drainage-manifest.json'),polders=data('official-polders-manifest.json');
+for(const value of [drainage.count,drainage.sourceRecordCount,drainage.excluded,polders.count])assert.ok(node('paper-inventory').innerHTML.includes(String(value)),'inventory reflects manifest count '+value);
+assert.ok(node('paper-inventory').innerHTML.includes(polders.sourceInvalidPolygonCount+' source polygons with geometry issues; not repaired'),'unrepaired publisher defects stay visible');
+assert.ok(node('paper-inventory').innerHTML.includes('source date unknown'),'retrieval never becomes a fabricated source epoch');
+assert.ok(html.includes('an evidence selection')&&html.includes('pilihan bukti'),'export described as evidence selection in both languages');
+
+// The public coverage ledger is genuinely on demand, searchable, bilingual and retryable.
+let catalogueRequests=0;
+const sourceCatalogue=data('source-catalog.json');
+const first=sourceCatalogue.records[0];
+const ledgerFixture={...sourceCatalogue,records:[{...first,nameId:'Rute terjadwal',nameEn:'Scheduled routes',limitationsId:'Referensi jadwal, bukan posisi bus.'},{...first},{id:'invalid',name:'Invalid status',status:'__proto__'},{id:'unsafe-link',name:'Untrusted link',status:'candidate',sourceUrl:'javascript:alert(1)',limitations:'No executable URL allowed.'}]};
+node('paper-catalog-state').value='all';
+context.get=async()=>{catalogueRequests++;return ledgerFixture;};
+vm.runInContext('renderPaperCatalog();',context);
+assert.equal(catalogueRequests,0,'closed/unloaded ledger never fetches on paper rendering');
+await Promise.all([vm.runInContext('loadPaperCatalog()',context),vm.runInContext('loadPaperCatalog()',context)]);
+assert.equal(catalogueRequests,1,'concurrent opening/search uses one catalogue request');
+assert.ok(node('paper-catalog-status').textContent.includes('2/2'),'duplicate and unsupported status records are withheld');
+assert.ok(!node('paper-catalog-results').innerHTML.includes('javascript:'),'unsafe source URLs never become links');
+node('paper-catalog-state').value='candidate';vm.runInContext('renderPaperCatalog();',context);
+assert.ok(node('paper-catalog-results').innerHTML.includes('Untrusted link'),'candidate filtering works');
+assert.ok(!node('paper-catalog-results').innerHTML.includes('Scheduled routes'),'filter excludes integrated references');
+node('paper-catalog-state').value='all';node('paper-catalog-search').value='Rute terjadwal';context.lang='id';vm.runInContext('renderPaperCatalog();',context);
+assert.ok(node('paper-catalog-results').innerHTML.includes('Rute terjadwal'),'search indexes both native names');
+assert.ok(node('paper-catalog-results').innerHTML.includes('Referensi jadwal, bukan posisi bus.'),'native limitation rendered');
+context.lang='en';node('paper-catalog-search').value='no possible source';vm.runInContext('renderPaperCatalog();',context);
+assert.match(node('paper-catalog-results').innerHTML,/No matching sources/,'search has an explicit empty state');
+context.get=async()=>({schemaVersion:1,records:null});vm.runInContext('paperCatalog=null;',context);await vm.runInContext('loadPaperCatalog()',context);
+assert.equal(node('paper-catalog-retry').hidden,false,'malformed source has a retry action');
+assert.match(node('paper-catalog-status').textContent,/Catalogue unavailable/,'malformed source is never called zero coverage');
+context.get=async()=>({schemaVersion:1,records:[]});await vm.runInContext('loadPaperCatalog()',context);
+assert.equal(node('paper-catalog-retry').hidden,true,'successful retry clears failure');
+assert.match(node('paper-catalog-status').textContent,/0\/0/,'valid empty catalogue differs from unavailable');
+for(const heading of ['What this digital twin represents','Scale, time and water datums','Combined views and computed relationships','Around here · scope and distance','Reproduce and inspect the evidence','Official drains and polder boundaries','Find mapped places and export evidence'])assert.ok(html.includes('data-en="'+heading+'"'),'bilingual method disclosure: '+heading);
+assert.ok(!/<details id="paper-catalog"[^>]*\bopen\b/.test(html),'source ledger occupies space only on request');
+assert.ok(html.includes('5 km')&&html.includes('12-second')&&html.includes('12 detik'),'Around here exact scope and loading deadline remain stated');
 
 console.log('PASS research paper: paper/legal/about panes bilingual, figures computed from shipped data, builder identity with non-affiliation, house presentation rules kept');

@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "title": "Jakarta source contracts",
- "generatedAt": "2026-10-14T14:09:47.796629+00:00",
+ "generatedAt": "2026-10-15T14:39:07.067849+00:00",
  "scope": "Selected integrated capabilities and inspected candidates. Not a count of all Jakarta open datasets.",
  "datePolicy": "dataAsOf is publisher observation/snapshot period where known; checkedAt is retrieval/probe only. Unknown epochs remain null.",
  "statusDefinitions": {
@@ -31,7 +31,11 @@
     "transit.json"
    ],
    "recordCount": 240,
-   "assetSha256": "fab81a2b06140b13b15857a08d9e44cc54bcc73b1181e65a91c74dafa65881ab"
+   "assetSha256": "fab81a2b06140b13b15857a08d9e44cc54bcc73b1181e65a91c74dafa65881ab",
+   "nameEn": "TransJakarta scheduled routes",
+   "nameId": "Rute terjadwal TransJakarta",
+   "limitationsEn": "Dated public reference; retrieval date is not an observation date. No live capacity or operation inferred.",
+   "limitationsId": "Referensi publik bertanggal; tanggal pengambilan data bukan tanggal pengamatan. Kapasitas atau operasi langsung tidak disimpulkan."
   },
   {
    "id": "jakarta-health",
@@ -53,7 +57,11 @@
     "health.geojson"
    ],
    "recordCount": 678,
-   "assetSha256": "871883982c56091e7dc9d889fc45e601646ae3e44676fdc42c596804f8a72f02"
+   "assetSha256": "871883982c56091e7dc9d889fc45e601646ae3e44676fdc42c596804f8a72f02",
+   "nameEn": "Health facility locations",
+   "nameId": "Lokasi fasilitas kesehatan",
+   "limitationsEn": "Dated public reference; retrieval date is not an observation date. No live capacity or operation inferred.",
+   "limitationsId": "Referensi publik bertanggal; tanggal pengambilan data bukan tanggal pengamatan. Kapasitas atau operasi langsung tidak disimpulkan."
   },
   {
    "id": "jakarta-schools",
@@ -75,7 +83,11 @@
     "schools.geojson"
    ],
    "recordCount": 3525,
-   "assetSha256": "95118a74296c53651621f9cf69c6a61eb070ce6ecd4da87e87715494d5066e10"
+   "assetSha256": "95118a74296c53651621f9cf69c6a61eb070ce6ecd4da87e87715494d5066e10",
+   "nameEn": "School locations",
+   "nameId": "Lokasi sekolah",
+   "limitationsEn": "Dated public reference; retrieval date is not an observation date. No live capacity or operation inferred.",
+   "limitationsId": "Referensi publik bertanggal; tanggal pengambilan data bukan tanggal pengamatan. Kapasitas atau operasi langsung tidak disimpulkan."
   },
   {
    "id": "jakarta-green",
@@ -97,7 +109,11 @@
     "green.geojson"
    ],
    "recordCount": 5842,
-   "assetSha256": "87289b733ac7777d248273c2f16ed12f651a93aec2f74e4e273f59c40bd1acda"
+   "assetSha256": "87289b733ac7777d248273c2f16ed12f651a93aec2f74e4e273f59c40bd1acda",
+   "nameEn": "Green-space geometry",
+   "nameId": "Geometri ruang terbuka hijau",
+   "limitationsEn": "Dated public reference; retrieval date is not an observation date. No live capacity or operation inferred.",
+   "limitationsId": "Referensi publik bertanggal; tanggal pengambilan data bukan tanggal pengamatan. Kapasitas atau operasi langsung tidak disimpulkan."
   },
   {
    "id": "jakarta-risk",
@@ -119,7 +135,11 @@
     "risk.geojson"
    ],
    "recordCount": 1900,
-   "assetSha256": "36a3498233f2250be1cbfeba2fd771e279a257e6b1115ea5421b332e577eeaf0"
+   "assetSha256": "36a3498233f2250be1cbfeba2fd771e279a257e6b1115ea5421b332e577eeaf0",
+   "nameEn": "Official flood-risk reference",
+   "nameId": "Referensi resmi risiko banjir",
+   "limitationsEn": "Official flood-risk reference classes (Kelas) per polygon; observation date not published by the service.",
+   "limitationsId": "Kelas risiko banjir resmi (Kelas) dicantumkan per poligon; layanan tidak menerbitkan tanggal pengamatan."
   },
   {
    "id": "jakarta-awlr",
@@ -141,7 +161,11 @@
     "awlr.geojson"
    ],
    "recordCount": 25,
-   "assetSha256": "af4187b996026d5d0b27d3e970ca00f07a14521bef71bb63d06f0dcab92387e4"
+   "assetSha256": "af4187b996026d5d0b27d3e970ca00f07a14521bef71bb63d06f0dcab92387e4",
+   "nameEn": "Water-level station inventory",
+   "nameId": "Inventaris stasiun tinggi muka air",
+   "limitationsEn": "Official SIAGA 1–4 water-level alert bands in cm as published per station; no live readings.",
+   "limitationsId": "Pita peringatan tinggi muka air resmi SIAGA 1–4 dalam cm sesuai publikasi tiap stasiun; tidak memuat pembacaan langsung."
   },
   {
    "id": "jakarta-arr",
@@ -163,7 +187,11 @@
     "arr.geojson"
    ],
    "recordCount": 47,
-   "assetSha256": "aefc8cee5450b7cd5bf61057fd2a40bae365ee12ea99abebb8f5b4c4c5f95c94"
+   "assetSha256": "aefc8cee5450b7cd5bf61057fd2a40bae365ee12ea99abebb8f5b4c4c5f95c94",
+   "nameEn": "Rainfall station inventory",
+   "nameId": "Inventaris stasiun curah hujan",
+   "limitationsEn": "Automatic rain-gauge reference points incl. river basin; no live rainfall values.",
+   "limitationsId": "Titik referensi penakar hujan otomatis, termasuk daerah aliran sungai; tidak memuat nilai curah hujan langsung."
   },
   {
    "id": "jakarta-pumps",
@@ -185,7 +213,11 @@
     "pumps.geojson"
    ],
    "recordCount": 999,
-   "assetSha256": "ae3ad86ca3173d16b34478b549d94a31fede9c3a505c63146de4cb6e155a0584"
+   "assetSha256": "ae3ad86ca3173d16b34478b549d94a31fede9c3a505c63146de4cb6e155a0584",
+   "nameEn": "Pump, gate and reservoir inventory",
+   "nameId": "Inventaris pompa, pintu air, dan waduk",
+   "limitationsEn": "Flood-control infrastructure reference: pumps, floodgates (pintu air) and reservoirs (waduk/embung).",
+   "limitationsId": "Referensi infrastruktur pengendalian banjir: pompa, pintu air, serta waduk dan embung."
   },
   {
    "id": "jakarta-situ",
@@ -207,7 +239,11 @@
     "situ.geojson"
    ],
    "recordCount": 28,
-   "assetSha256": "673bfb4a13f49adb2d2d948adf4fc7dacd1b5d50758adbafcaf4ffe411c168ba"
+   "assetSha256": "673bfb4a13f49adb2d2d948adf4fc7dacd1b5d50758adbafcaf4ffe411c168ba",
+   "nameEn": "Situ water-body inventory",
+   "nameId": "Inventaris badan air situ",
+   "limitationsEn": "Retention lakes with published condition; silted (pendangkalan) states are publisher records.",
+   "limitationsId": "Danau retensi dengan kondisi yang dipublikasikan; status pendangkalan berasal dari catatan penerbit."
   },
   {
    "id": "jakarta-population",
@@ -229,7 +265,11 @@
     "population.json"
    ],
    "recordCount": null,
-   "assetSha256": "2d45333ff5727f84b54183e677565d47cc6694c96b32a752b33da257ee599236"
+   "assetSha256": "2d45333ff5727f84b54183e677565d47cc6694c96b32a752b33da257ee599236",
+   "nameEn": "Population reference",
+   "nameId": "Referensi kependudukan",
+   "limitationsEn": "WNI residents only; density is WNI per km². Codes are PUM administrative codes (KDEPUM).",
+   "limitationsId": "Hanya penduduk WNI; kepadatan adalah jumlah WNI per km². Kode yang digunakan ialah kode administrasi PUM (KDEPUM)."
   },
   {
    "id": "jakarta-ispu",
@@ -251,7 +291,11 @@
     "ispu-reference.json"
    ],
    "recordCount": 3501,
-   "assetSha256": "ea6bf7a1559f52dbcb3823c10ea51e3254b4f90fee5d777457717cfb79a07442"
+   "assetSha256": "ea6bf7a1559f52dbcb3823c10ea51e3254b4f90fee5d777457717cfb79a07442",
+   "nameEn": "Five-station ISPU historical batches",
+   "nameId": "Batch historis ISPU lima stasiun",
+   "limitationsEn": "Daily SPKU measurements republished by the publisher in monthly batches; the latest batch is dated, not live. No values are interpolated for no-data days. Latest publisher batch: 2025-11.",
+   "limitationsId": "Pengukuran harian SPKU diterbitkan ulang dalam batch bulanan; batch terbaru bertanggal dan bukan data langsung. Nilai tidak diinterpolasi untuk hari tanpa data. Batch penerbit terbaru: 2025-11."
   },
   {
    "id": "jakarta-projects",
@@ -273,7 +317,11 @@
     "projects.json"
    ],
    "recordCount": 37,
-   "assetSha256": "f8492c958c1fe3f15c54de4c5dbeab07d25985a2941e1273945f18a22a852273"
+   "assetSha256": "f8492c958c1fe3f15c54de4c5dbeab07d25985a2941e1273945f18a22a852273",
+   "nameEn": "Investment project proposals",
+   "nameId": "Usulan proyek investasi",
+   "limitationsEn": "Dated public reference; retrieval date is not an observation date. No live capacity or operation inferred.",
+   "limitationsId": "Referensi publik bertanggal; tanggal pengambilan data bukan tanggal pengamatan. Kapasitas atau operasi langsung tidak disimpulkan."
   },
   {
    "id": "jakarta-flood-history",
@@ -295,7 +343,11 @@
     "flood-reference.json"
    ],
    "recordCount": 154,
-   "assetSha256": "548b7fb0a54dcbab5ef6573d3043109d7f740866f0892b8b5f20f9edb495c1ef"
+   "assetSha256": "548b7fb0a54dcbab5ef6573d3043109d7f740866f0892b8b5f20f9edb495c1ef",
+   "nameEn": "Annual flood-prone-point reference",
+   "nameId": "Referensi tahunan titik rawan banjir",
+   "limitationsEn": "Dated public reference; retrieval date is not an observation date. No live capacity or operation inferred.",
+   "limitationsId": "Referensi publik bertanggal; tanggal pengambilan data bukan tanggal pengamatan. Kapasitas atau operasi langsung tidak disimpulkan."
   },
   {
    "id": "osm-waterways",
@@ -317,7 +369,11 @@
     "waterways.geojson"
    ],
    "recordCount": 3885,
-   "assetSha256": "d9bb0c57207cd2672b6172155371abac4e646176b5fba985949bad05648ce20b"
+   "assetSha256": "d9bb0c57207cd2672b6172155371abac4e646176b5fba985949bad05648ce20b",
+   "nameEn": "Mapped city waterways",
+   "nameId": "Jalur air kota yang dipetakan",
+   "limitationsEn": "All returned mapped river/canal/stream/drain/ditch ways and natural-water ways in bbox. Not every physical drain; multipolygon relations and upstream geometry outside bbox are not included. OSM way order is not measured flow direction.",
+   "limitationsId": "Mencakup semua jalur sungai, kanal, aliran, drainase, parit, dan unsur perairan alami yang dipetakan dalam kotak batas. Tidak mencakup semua drainase fisik; relasi multipoligon dan geometri hulu di luar kotak batas tidak disertakan. Urutan jalur OSM bukan arah aliran terukur."
   },
   {
    "id": "osm-ciliwung",
@@ -339,7 +395,11 @@
     "ciliwung-route.geojson"
    ],
    "recordCount": 2,
-   "assetSha256": "1f4464ad2f176a7802395ec612a09059657ce86003b21fa05266fe7606aee739"
+   "assetSha256": "1f4464ad2f176a7802395ec612a09059657ce86003b21fa05266fe7606aee739",
+   "nameEn": "Connected Ciliwung scenario corridor",
+   "nameId": "Koridor skenario Ciliwung yang terhubung",
+   "limitationsEn": "Endpoint tolerance is how far a scenario station may sit from the nearest mapped river node; the chord bound keeps a path near the station-to-station line. No invented connectors; gaps remain schematic and labelled. Scenario timing is a separate historical assumption, not derived hydraulic speed.",
+   "limitationsId": "Toleransi titik ujung menunjukkan jarak maksimum stasiun skenario dari simpul sungai terdekat yang dipetakan; batas tali busur menjaga jalur dekat garis antarstasiun. Tidak ada penghubung rekaan; celah tetap skematis dan diberi label. Waktu skenario merupakan asumsi historis terpisah, bukan hasil perhitungan kecepatan hidraulis."
   },
   {
    "id": "camera-reference",
@@ -361,7 +421,11 @@
     "traffic-cameras.geojson"
    ],
    "recordCount": 4340,
-   "assetSha256": "f991fdafa23063e19ef1b9490c7a6d87c7dc76917b4a7a7775c454188edd6ce7"
+   "assetSha256": "f991fdafa23063e19ef1b9490c7a6d87c7dc76917b4a7a7775c454188edd6ce7",
+   "nameEn": "Public camera location references",
+   "nameId": "Referensi lokasi kamera publik",
+   "limitationsEn": "Coordinates are catalog locations, not verified current camera positions. Links do not establish uptime; HTTPS playback may fail. No congestion/speed measurement.",
+   "limitationsId": "Koordinat adalah lokasi dalam katalog, bukan posisi kamera terkini yang telah diverifikasi. Tautan tidak membuktikan kamera aktif; pemutaran HTTPS dapat gagal. Tidak ada pengukuran kemacetan atau kecepatan."
   },
   {
    "id": "bpbd-level-history",
@@ -383,7 +447,11 @@
     "bpbd-water-reference.json"
    ],
    "recordCount": null,
-   "assetSha256": "ac5a8b922169253ac9e033f0d3f1fc7a7fc880fadb7131526498278b87a5355f"
+   "assetSha256": "ac5a8b922169253ac9e033f0d3f1fc7a7fc880fadb7131526498278b87a5355f",
+   "nameEn": "BPBD hourly gauge reference",
+   "nameId": "Referensi tinggi muka air per jam BPBD",
+   "limitationsEn": "Dated public reference; retrieval date is not an observation date. No live capacity or operation inferred.",
+   "limitationsId": "Referensi publik bertanggal; tanggal pengambilan data bukan tanggal pengamatan. Kapasitas atau operasi langsung tidak disimpulkan."
   },
   {
    "id": "bmkg-weather",
@@ -402,7 +470,11 @@
    "useCase": "Map evidence and comparison",
    "limitations": "Issue and valid times separate; forecast is not an observed rain gauge",
    "assets": [],
-   "recordCount": null
+   "recordCount": null,
+   "nameEn": "Official kelurahan weather forecast",
+   "nameId": "Prakiraan cuaca resmi per kelurahan",
+   "limitationsEn": "Issue and valid times separate; forecast is not an observed rain gauge",
+   "limitationsId": "Waktu penerbitan dan waktu berlaku dicantumkan terpisah; prakiraan bukan pengukuran dari penakar hujan."
   },
   {
    "id": "bmkg-alerts",
@@ -421,7 +493,11 @@
    "useCase": "Map evidence and comparison",
    "limitations": "DKI/Jawa Barat/Banten scope; expired or incomplete alerts rejected",
    "assets": [],
-   "recordCount": null
+   "recordCount": null,
+   "nameEn": "Official regional weather warnings",
+   "nameId": "Peringatan cuaca regional resmi",
+   "limitationsEn": "DKI/Jawa Barat/Banten scope; expired or incomplete alerts rejected",
+   "limitationsId": "Cakupan DKI/Jawa Barat/Banten; peringatan kedaluwarsa atau tidak lengkap ditolak."
   },
   {
    "id": "cams-air",
@@ -440,7 +516,11 @@
    "useCase": "Map evidence and comparison",
    "limitations": "Global CAMS approximately 45km; API interpolation is not measured hourly street data; US AQI is not ISPU",
    "assets": [],
-   "recordCount": null
+   "recordCount": null,
+   "nameEn": "CAMS modeled current air quality",
+   "nameId": "Kualitas udara terkini dari pemodelan CAMS",
+   "limitationsEn": "Global CAMS approximately 45km; API interpolation is not measured hourly street data; US AQI is not ISPU",
+   "limitationsId": "CAMS global beresolusi sekitar 45 km; interpolasi API bukan pengukuran jalan per jam. US AQI bukan ISPU."
   },
   {
    "id": "weather-wind",
@@ -459,7 +539,11 @@
    "useCase": "Map evidence and comparison",
    "limitations": "Returned model grid and units validated; wind FROM bearing is inverted for illustrative transport",
    "assets": [],
-   "recordCount": null
+   "recordCount": null,
+   "nameEn": "Modeled weather and wind",
+   "nameId": "Pemodelan cuaca dan angin",
+   "limitationsEn": "Returned model grid and units validated; wind FROM bearing is inverted for illustrative transport",
+   "limitationsId": "Grid dan satuan model yang dikembalikan divalidasi; arah asal angin dibalik untuk menggambarkan perpindahan."
   },
   {
    "id": "ews-levels",
@@ -478,7 +562,11 @@
    "useCase": "Map evidence and comparison",
    "limitations": "Local-datum levels are not discharge; serial predicted sections are never summed; no credential-bearing endpoints",
    "assets": [],
-   "recordCount": null
+   "recordCount": null,
+   "nameEn": "Public river gauges and separate discharge predictions",
+   "nameId": "Pengukur sungai publik dan prakiraan debit terpisah",
+   "limitationsEn": "Local-datum levels are not discharge; serial predicted sections are never summed; no credential-bearing endpoints",
+   "limitationsId": "Tinggi muka air memakai datum lokal dan bukan debit; bagian prakiraan berurutan tidak boleh dijumlahkan; tidak ada endpoint yang memuat kredensial."
   },
   {
    "id": "jaxa-water",
@@ -497,7 +585,11 @@
    "useCase": "Map evidence and comparison",
    "limitations": "Approximately 0.1° / 10 km; satellite-informed model, not observed urban flood extent",
    "assets": [],
-   "recordCount": null
+   "recordCount": null,
+   "nameEn": "TE-Global discharge/flood fraction",
+   "nameId": "Debit dan fraksi banjir TE-Global",
+   "limitationsEn": "Approximately 0.1° / 10 km; satellite-informed model, not observed urban flood extent",
+   "limitationsId": "Resolusi sekitar 0,1° / 10 km; model berbasis satelit, bukan luas genangan perkotaan hasil pengamatan."
   },
   {
    "id": "nasa-gibs",
@@ -516,7 +608,11 @@
    "useCase": "Map evidence and comparison",
    "limitations": "MODIS flood classification 250 m; clouds/narrow water limit detection; AOD is column aerosol, not surface PM concentration",
    "assets": [],
-   "recordCount": null
+   "recordCount": null,
+   "nameEn": "Dated aerosol, precipitation, surface-water and cloud images",
+   "nameId": "Citra aerosol, presipitasi, air permukaan, dan awan bertanggal",
+   "limitationsEn": "MODIS flood classification 250 m; clouds/narrow water limit detection; AOD is column aerosol, not surface PM concentration",
+   "limitationsId": "Klasifikasi banjir MODIS beresolusi 250 m; awan dan badan air sempit membatasi deteksi. AOD adalah aerosol dalam kolom atmosfer, bukan konsentrasi PM di permukaan."
   },
   {
    "id": "petabencana-reports",
@@ -535,7 +631,11 @@
    "useCase": "Map evidence and comparison",
    "limitations": "No report does not establish dry streets; no resident text/photos copied",
    "assets": [],
-   "recordCount": null
+   "recordCount": null,
+   "nameEn": "Recent aggregate flood reports",
+   "nameId": "Laporan banjir agregat terbaru",
+   "limitationsEn": "No report does not establish dry streets; no resident text/photos copied",
+   "limitationsId": "Tidak adanya laporan tidak membuktikan jalan kering; teks atau foto warga tidak disalin."
   },
   {
    "id": "crm",
@@ -554,7 +654,11 @@
    "useCase": "Map evidence and comparison",
    "limitations": "On-demand official iframe/links; private complaints are not imported",
    "assets": [],
-   "recordCount": null
+   "recordCount": null,
+   "nameEn": "Official citizen-response hosted reports",
+   "nameId": "Laporan resmi yang dihosting untuk tanggapan warga",
+   "limitationsEn": "On-demand official iframe/links; private complaints are not imported",
+   "limitationsId": "Tersedia melalui iframe atau tautan resmi saat diminta; pengaduan privat tidak diimpor."
   },
   {
    "id": "bina-marga-cameras",
@@ -573,7 +677,11 @@
    "useCase": "Map evidence and comparison",
    "limitations": "21 unique catalogue streams; uptime and framecapture time vary; no recording or invented coordinates",
    "assets": [],
-   "recordCount": null
+   "recordCount": null,
+   "nameEn": "Public toll-camera video catalogue",
+   "nameId": "Katalog video kamera jalan tol publik",
+   "limitationsEn": "21 unique catalogue streams; uptime and framecapture time vary; no recording or invented coordinates",
+   "limitationsId": "Terdapat 21 siaran katalog unik; status aktif dan waktu pengambilan bingkai bervariasi. Tidak ada rekaman atau koordinat rekaan."
   },
   {
    "id": "petabencana-area",
@@ -592,7 +700,11 @@
    "useCase": "Compare reported affected areas with satellite extent",
    "limitations": "One state 2 feature returned, last updated 2024-09-27. Not current flood evidence. State1unknown; state 2=10–70cm; state 3=71–150cm; state 4>150cm. Reject stale/future records for current view.",
    "assets": [],
-   "recordCount": 1
+   "recordCount": 1,
+   "nameEn": "Reported flood-area polygons",
+   "nameId": "Poligon area banjir yang dilaporkan",
+   "limitationsEn": "One state 2 feature returned, last updated 2024-09-27. Not current flood evidence. State1unknown; state 2=10–70cm; state 3=71–150cm; state 4>150cm. Reject stale/future records for current view.",
+   "limitationsId": "Satu fitur status 2 dikembalikan, terakhir diperbarui 2024-09-27. Ini bukan bukti banjir terkini. Status 1 tidak diketahui; status 2 = 10–70 cm; status 3 = 71–150 cm; status 4 >150 cm. Data kedaluwarsa atau bertanggal mendatang ditolak untuk tampilan terkini."
   },
   {
    "id": "satudata-ridership",
@@ -611,7 +723,11 @@
    "useCase": "Compare scheduled network with dated ridership",
    "limitations": "Landing page access does not verify export endpoint, period, units, operator breakdown or license; no metrics imported.",
    "assets": [],
-   "recordCount": null
+   "recordCount": null,
+   "nameEn": "Passengers served per day",
+   "nameId": "Jumlah penumpang yang dilayani per hari",
+   "limitationsEn": "Landing page access does not verify export endpoint, period, units, operator breakdown or license; no metrics imported.",
+   "limitationsId": "Akses ke halaman sumber tidak memverifikasi endpoint ekspor, periode, satuan, rincian operator, atau lisensi; tidak ada metrik yang diimpor."
   },
   {
    "id": "smartapbd",
@@ -630,7 +746,11 @@
    "useCase": "Trace infrastructure investment to dated budget records",
    "limitations": "No numerical budget records imported; API/download contract and fiscal basis remain unverified.",
    "assets": [],
-   "recordCount": null
+   "recordCount": null,
+   "nameEn": "Budget and public planning portal",
+   "nameId": "Portal anggaran dan perencanaan publik",
+   "limitationsEn": "No numerical budget records imported; API/download contract and fiscal basis remain unverified.",
+   "limitationsId": "Tidak ada catatan anggaran numerik yang diimpor; kontrak API/unduhan dan dasar tahun fiskal belum diverifikasi."
   },
   {
    "id": "pantau-banjir",
@@ -649,7 +769,11 @@
    "useCase": "Official current levels and operations if access resumes",
    "limitations": "Earlier HTTP/HTTPS checks timed out; no current feed imported. Blocked access is not no-flood.",
    "assets": [],
-   "recordCount": null
+   "recordCount": null,
+   "nameEn": "Official flood monitoring portal",
+   "nameId": "Portal pemantauan banjir resmi",
+   "limitationsEn": "Earlier HTTP/HTTPS checks timed out; no current feed imported. Blocked access is not no-flood.",
+   "limitationsId": "Pemeriksaan HTTP/HTTPS sebelumnya mengalami timeout; tidak ada feed terkini yang diimpor. Akses yang terhambat bukan bukti tidak ada banjir."
   },
   {
    "id": "openaq",
@@ -668,7 +792,11 @@
    "useCase": "Independent measured station comparison",
    "limitations": "No verified Jakarta coverage, uptime or current readings. Do not label integrated or live.",
    "assets": [],
-   "recordCount": null
+   "recordCount": null,
+   "nameEn": "Normalized air-monitoring observations",
+   "nameId": "Pengamatan kualitas udara yang dinormalisasi",
+   "limitationsEn": "No verified Jakarta coverage, uptime or current readings. Do not label integrated or live.",
+   "limitationsId": "Cakupan, status aktif, dan pembacaan terkini di Jakarta belum terverifikasi. Jangan beri label terintegrasi atau langsung."
   },
   {
    "id": "firms-hotspots",
@@ -688,7 +816,11 @@
    "limitations": "Nominal 375 m anomalies may be industrial heat. FRP MW is not PM mass. Only validated records within 24 hours are admitted; each detection retains its observation time. Endpoint availability does not confirm fire, smoke source or clean air. Local adapter/UI verified; deployment verification is separate.",
    "assets": [],
    "recordCount": null,
-   "providerEndpoint": "https://firms.modaps.eosdis.nasa.gov/data/active_fire/noaa-20-viirs-c2/csv/J1_VIIRS_C2_SouthEast_Asia_24h.csv"
+   "providerEndpoint": "https://firms.modaps.eosdis.nasa.gov/data/active_fire/noaa-20-viirs-c2/csv/J1_VIIRS_C2_SouthEast_Asia_24h.csv",
+   "nameEn": "NOAA-20 VIIRS regional thermal anomalies",
+   "nameId": "Anomali termal regional NOAA-20 VIIRS",
+   "limitationsEn": "Nominal 375 m anomalies may be industrial heat. FRP MW is not PM mass. Only validated records within 24 hours are admitted; each detection retains its observation time. Endpoint availability does not confirm fire, smoke source or clean air. Local adapter/UI verified; deployment verification is separate.",
+   "limitationsId": "Anomali nominal 375 m dapat berasal dari panas industri. FRP dalam MW bukan massa PM. Hanya catatan tervalidasi dalam 24 jam yang diterima; setiap deteksi mempertahankan waktu pengamatannya. Ketersediaan endpoint tidak memastikan adanya kebakaran, sumber asap, atau udara bersih. Adaptor lokal dan UI telah diverifikasi; verifikasi deployment dilakukan terpisah."
   },
   {
    "id": "cams-air-timeline",
@@ -707,7 +839,11 @@
    "useCase": "Compare time-varying PM2.5/PM10/AOD/dust with wind scenario",
    "limitations": "Global CAMS approximately 45 km. Hourly output is interpolated from a coarser native model cadence; AOD is not surface PM concentration. Valid times are returned dynamically.",
    "assets": [],
-   "recordCount": null
+   "recordCount": null,
+   "nameEn": "CAMS modeled 48-hour air timeline",
+   "nameId": "Linimasa udara CAMS hasil pemodelan 48 jam",
+   "limitationsEn": "Global CAMS approximately 45 km. Hourly output is interpolated from a coarser native model cadence; AOD is not surface PM concentration. Valid times are returned dynamically.",
+   "limitationsId": "CAMS global beresolusi sekitar 45 km. Keluaran per jam diinterpolasi dari frekuensi asli model yang lebih jarang; AOD bukan konsentrasi PM di permukaan. Waktu berlaku dikembalikan secara dinamis."
   },
   {
    "id": "water-arrival-scenario",
@@ -729,7 +865,505 @@
     "water-scenario.json"
    ],
    "recordCount": 3,
-   "assetSha256": "a1403c9b5b3f2f3d9ed30bf956df1ec37f3559a1c6c13979a6ede757bacfe0b4"
+   "assetSha256": "a1403c9b5b3f2f3d9ed30bf956df1ec37f3559a1c6c13979a6ede757bacfe0b4",
+   "nameEn": "Historical water-arrival preparedness scenario",
+   "nameId": "Skenario kesiapsiagaan waktu kedatangan air historis",
+   "limitationsEn": "No terrain, discharge, cross-sections, tide, pump capacities or calibrated hydraulics. No inundation depth or street flooding predicted. Timing assumptions remain separate from mapped river length. Schematic fallback stays labelled.",
+   "limitationsId": "Tidak tersedia medan, debit, penampang, pasang surut, kapasitas pompa, atau hidraulika terkalibrasi. Skenario tidak memprediksi kedalaman genangan atau banjir jalan. Asumsi waktu tetap terpisah dari panjang sungai yang dipetakan. Fallback skematis tetap diberi label."
+  },
+  {
+   "id": "official-micro-drainage",
+   "name": "Official micro-drainage inventory",
+   "nameEn": "Official micro-drainage inventory",
+   "nameId": "Inventaris drainase mikro resmi",
+   "category": "water",
+   "publisher": "Pemprov DKI Jakarta / Jakarta Satu / DSDA",
+   "status": "integrated",
+   "sourceUrl": "https://jakartasatu.jakarta.go.id/server/rest/services/Saluran_Mikro_DSDA_View/MapServer/0",
+   "endpoint": "https://jakartasatu.jakarta.go.id/server/rest/services/Saluran_Mikro_DSDA_View/MapServer/0",
+   "license": "Dataset-specific open license not stated; attribution and redistribution permission need checking.",
+   "dataAsOf": null,
+   "checkedAt": "2026-10-15T14:33:37.719993+00:00",
+   "access": "anonymous ArcGIS Query",
+   "verification": "prepared-reference-and-range-tile-capability",
+   "tier": "official-reference-geometry",
+   "useCase": "Prioritised candidate; see DATA-COVERAGE-AUDIT-2026-10-15.md",
+   "limitations": "60,718 source polylines; UTM48S converted by outSR. Epoch, capacity, flow direction and hydraulic connectivity unavailable. Publisher administrative labels may disagree with geometry. Source60718; admitted60714;2missing geometry and2degenerate excluded. Tileszoom11–16; lowzoom selection/simplification.",
+   "limitationsEn": "60,718 source polylines; UTM48S converted by outSR. Epoch, capacity, flow direction and hydraulic connectivity unavailable. Publisher administrative labels may disagree with geometry. Source60718; admitted60714;2missing geometry and2degenerate excluded. Tileszoom11–16; lowzoom selection/simplification.",
+   "limitationsId": "60.718 garis sumber; UTM48S dikonversi melalui outSR. Tahun, kapasitas, arah aliran, dan konektivitas hidraulis tidak tersedia. Label wilayah penerbit dapat berbeda dari geometri.",
+   "assets": [
+    "official-drainage-manifest.json"
+   ],
+   "recordCount": 60714,
+   "assetSha256": "73c04bb79e3e675563cd5696171ef28c20afe9c3b97e5b1342ba4c53df908faf"
+  },
+  {
+   "id": "official-polders",
+   "name": "Official polder reference",
+   "nameEn": "Official polder reference",
+   "nameId": "Referensi polder resmi",
+   "category": "water",
+   "publisher": "Pemprov DKI Jakarta / Jakarta Satu / DSDA",
+   "status": "integrated",
+   "sourceUrl": "https://jakartasatu.jakarta.go.id/server/rest/services/DSDA/Polder_Jakarta/FeatureServer/0",
+   "endpoint": "https://jakartasatu.jakarta.go.id/server/rest/services/DSDA/Polder_Jakarta/FeatureServer/0",
+   "license": "Dataset-specific open license not stated; attribution and redistribution permission need checking.",
+   "dataAsOf": null,
+   "checkedAt": "2026-10-15T14:33:37.719993+00:00",
+   "access": "anonymous ArcGIS Query",
+   "verification": "prepared-reference-and-map-capability",
+   "tier": "official-reference-geometry",
+   "useCase": "Prioritised candidate; see DATA-COVERAGE-AUDIT-2026-10-15.md",
+   "limitations": "65 polygons; operational status codes not decoded; no current pump capacity or verified connectivity. Source invalid polygon count retained in manifest.",
+   "limitationsEn": "65 polygons; operational status codes not decoded; no current pump capacity or verified connectivity. Source invalid polygon count retained in manifest.",
+   "limitationsId": "65 poligon; kode status operasi belum ditafsirkan; kapasitas pompa terkini dan konektivitas belum diverifikasi. Jumlah poligon sumber tidak valid dicatat dalam manifes.",
+   "assets": [
+    "official-polders.geojson"
+   ],
+   "recordCount": 65,
+   "assetSha256": "32e3ab5b713e3197b53eae6f5cdafe9946e70f49c9e1c0de3dfd4c73d6ff157e"
+  },
+  {
+   "id": "jakarta-elevation-bands",
+   "name": "Official elevation bands",
+   "nameEn": "Official elevation bands",
+   "nameId": "Kelas ketinggian resmi",
+   "category": "terrain",
+   "publisher": "Pemprov DKI Jakarta / Jakarta Satu / DSDA",
+   "status": "candidate",
+   "sourceUrl": "https://jakartasatu.jakarta.go.id/server/rest/services/Peta_Ketinggian_DKI_Jakarta/MapServer/0",
+   "endpoint": "https://jakartasatu.jakarta.go.id/server/rest/services/Peta_Ketinggian_DKI_Jakarta/MapServer/0",
+   "license": "Dataset-specific open license not stated; attribution and redistribution permission need checking.",
+   "dataAsOf": null,
+   "checkedAt": "2026-10-15T14:33:37.719993+00:00",
+   "access": "anonymous ArcGIS Query",
+   "verification": "anonymous-metadata-and-count-probe",
+   "tier": "official-reference-classification",
+   "useCase": "Prioritised candidate; see DATA-COVERAGE-AUDIT-2026-10-15.md",
+   "limitations": "17 polygons with KETINGGIAN field. No vertical datum or epoch stated. Classification cannot replace a terrain raster or predict street depth.",
+   "limitationsEn": "17 polygons with KETINGGIAN field. No vertical datum or epoch stated. Classification cannot replace a terrain raster or predict street depth.",
+   "limitationsId": "17 poligon dengan kolom KETINGGIAN. Datum vertikal dan tahun tidak dinyatakan. Kelas tidak dapat menggantikan raster medan atau memprediksi kedalaman jalan.",
+   "assets": [],
+   "recordCount": 17
+  },
+  {
+   "id": "jakarta-dtm-pupr",
+   "name": "PUPR local terrain patch",
+   "nameEn": "PUPR local terrain patch",
+   "nameId": "Potongan medan PUPR setempat",
+   "category": "terrain",
+   "publisher": "Pemprov DKI Jakarta / Jakarta Satu / DSDA",
+   "status": "candidate",
+   "sourceUrl": "https://jakartasatu.jakarta.go.id/server/rest/services/DTM_PUPR/ImageServer",
+   "endpoint": "https://jakartasatu.jakarta.go.id/server/rest/services/DTM_PUPR/ImageServer",
+   "license": "Dataset-specific open license not stated; attribution and redistribution permission need checking.",
+   "dataAsOf": null,
+   "checkedAt": "2026-10-15T14:33:37.719993+00:00",
+   "access": "anonymous image service metadata",
+   "verification": "anonymous-metadata-and-count-probe",
+   "tier": "local-terrain-reference",
+   "useCase": "Prioritised candidate; see DATA-COVERAGE-AUDIT-2026-10-15.md",
+   "limitations": "0.5 map-unit pixels but extent only about449 by756m; not citywide terrain. Datum, acquisition year and vertical units unconfirmed.",
+   "limitationsEn": "0.5 map-unit pixels but extent only about449 by756m; not citywide terrain. Datum, acquisition year and vertical units unconfirmed.",
+   "limitationsId": "Piksel 0,5 satuan peta tetapi cakupan hanya sekitar449 kali756m; bukan medan seluruh kota. Datum, tahun, dan satuan vertikal belum dipastikan.",
+   "assets": [],
+   "recordCount": null
+  },
+  {
+   "id": "jakarta-landuse-2021",
+   "name": "Official land use 2021",
+   "nameEn": "Official land use 2021",
+   "nameId": "Penggunaan lahan resmi 2021",
+   "category": "land-cover",
+   "publisher": "Pemprov DKI Jakarta / Jakarta Satu / DSDA",
+   "status": "candidate",
+   "sourceUrl": "https://jakartasatu.jakarta.go.id/server/rest/services/Penggunaan_Lahan_2021/FeatureServer/0",
+   "endpoint": "https://jakartasatu.jakarta.go.id/server/rest/services/Penggunaan_Lahan_2021/FeatureServer/0",
+   "license": "Dataset-specific open license not stated; attribution and redistribution permission need checking.",
+   "dataAsOf": "2021",
+   "checkedAt": "2026-10-15T14:33:37.719993+00:00",
+   "access": "anonymous ArcGIS Query",
+   "verification": "anonymous-metadata-and-count-probe",
+   "tier": "official-reference-classification",
+   "useCase": "Prioritised candidate; see DATA-COVERAGE-AUDIT-2026-10-15.md",
+   "limitations": "124,965 polygons; land-use classes are not measured impermeable fractions. Large source needs tiles and class-domain admission.",
+   "limitationsEn": "124,965 polygons; land-use classes are not measured impermeable fractions. Large source needs tiles and class-domain admission.",
+   "limitationsId": "124.965 poligon; kelas penggunaan lahan bukan fraksi kedap air terukur. Sumber besar memerlukan ubin dan pemeriksaan domain kelas.",
+   "assets": [],
+   "recordCount": 124965
+  },
+  {
+   "id": "jakarta-manual-rain-network",
+   "name": "Manual rain-gauge inventory",
+   "nameEn": "Manual rain-gauge inventory",
+   "nameId": "Inventaris penakar hujan manual",
+   "category": "water",
+   "publisher": "Pemprov DKI Jakarta / Jakarta Satu / DSDA",
+   "status": "candidate",
+   "sourceUrl": "https://jakartasatu.jakarta.go.id/server/rest/services/DSDA/Manual_Rain_Gauge/FeatureServer/0",
+   "endpoint": "https://jakartasatu.jakarta.go.id/server/rest/services/DSDA/Manual_Rain_Gauge/FeatureServer/0",
+   "license": "Dataset-specific open license not stated; attribution and redistribution permission need checking.",
+   "dataAsOf": null,
+   "checkedAt": "2026-10-15T14:33:37.719993+00:00",
+   "access": "anonymous ArcGIS Query",
+   "verification": "anonymous-metadata-and-count-probe",
+   "tier": "official-reference-locations",
+   "useCase": "Prioritised candidate; see DATA-COVERAGE-AUDIT-2026-10-15.md",
+   "limitations": "50 locations, some upstream of DKI. No rainfall observation series in fields; editor identities must be excluded from exports.",
+   "limitationsEn": "50 locations, some upstream of DKI. No rainfall observation series in fields; editor identities must be excluded from exports.",
+   "limitationsId": "50 lokasi, sebagian di hulu DKI. Tidak ada seri pengamatan hujan dalam kolom; identitas penyunting harus dikeluarkan dari ekspor.",
+   "assets": [],
+   "recordCount": 50
+  },
+  {
+   "id": "jakarta-benchmark-network",
+   "name": "Survey benchmark inventory",
+   "nameEn": "Survey benchmark inventory",
+   "nameId": "Inventaris titik kontrol survei",
+   "category": "terrain",
+   "publisher": "Pemprov DKI Jakarta / Jakarta Satu / DSDA",
+   "status": "candidate",
+   "sourceUrl": "https://jakartasatu.jakarta.go.id/server/rest/services/DSDA/Lokasi_Stasiun_Banchmark/FeatureServer/0",
+   "endpoint": "https://jakartasatu.jakarta.go.id/server/rest/services/DSDA/Lokasi_Stasiun_Banchmark/FeatureServer/0",
+   "license": "Dataset-specific open license not stated; attribution and redistribution permission need checking.",
+   "dataAsOf": null,
+   "checkedAt": "2026-10-15T14:33:37.719993+00:00",
+   "access": "anonymous ArcGIS Query",
+   "verification": "anonymous-metadata-and-count-probe",
+   "tier": "official-reference-locations",
+   "useCase": "Prioritised candidate; see DATA-COVERAGE-AUDIT-2026-10-15.md",
+   "limitations": "156 positions with name/latitude/longitude, no surveyed height or subsidence velocity. A benchmark position is not an elevation observation.",
+   "limitationsEn": "156 positions with name/latitude/longitude, no surveyed height or subsidence velocity. A benchmark position is not an elevation observation.",
+   "limitationsId": "156 posisi dengan nama/lintang/bujur, tanpa tinggi survei atau kecepatan amblesan. Posisi titik kontrol bukan pengamatan ketinggian.",
+   "assets": [],
+   "recordCount": 156
+  },
+  {
+   "id": "jakarta-water-utilities-access",
+   "name": "Water utility folder access",
+   "nameEn": "Water utility folder access",
+   "nameId": "Akses folder utilitas air",
+   "category": "utilities",
+   "publisher": "Pemprov DKI Jakarta / Jakarta Satu / DSDA",
+   "status": "registration-required",
+   "sourceUrl": "https://jakartasatu.jakarta.go.id/server/rest/services/Data_AirBersih?f=pjson",
+   "endpoint": "https://jakartasatu.jakarta.go.id/server/rest/services/Data_AirBersih?f=pjson",
+   "license": "Dataset-specific open license not stated; attribution and redistribution permission need checking.",
+   "dataAsOf": null,
+   "checkedAt": "2026-10-15T14:33:37.719993+00:00",
+   "access": "ArcGIS499 Token Required",
+   "verification": "anonymous-metadata-and-count-probe",
+   "tier": "unverified-access",
+   "useCase": "Prioritised candidate; see DATA-COVERAGE-AUDIT-2026-10-15.md",
+   "limitations": "HTTP200 contains ArcGIS error499. No token requested or supplied; no service data admitted.",
+   "limitationsEn": "HTTP200 contains ArcGIS error499. No token requested or supplied; no service data admitted.",
+   "limitationsId": "HTTP200 berisi galat ArcGIS499. Tidak meminta atau memberikan token; tidak ada data layanan yang dimasukkan.",
+   "assets": [],
+   "recordCount": null
+  },
+  {
+   "id": "big-demnas",
+   "name": "BIG DEMNAS terrain",
+   "nameEn": "BIG DEMNAS terrain",
+   "nameId": "Medan DEMNAS BIG",
+   "category": "terrain",
+   "publisher": "BIG DEMNAS terrain",
+   "status": "candidate",
+   "sourceUrl": "https://big.go.id/content/produk/demnas",
+   "endpoint": "",
+   "license": "Dataset-specific open license not stated; attribution and redistribution permission need checking.",
+   "dataAsOf": null,
+   "checkedAt": "2026-10-15T14:33:37.719993+00:00",
+   "access": "public documentation; download endpoint returned empty200",
+   "verification": "publisher-documentation-and-recorded-access-probe",
+   "tier": "terrain-candidate",
+   "useCase": "Prioritised candidate; see DATA-COVERAGE-AUDIT-2026-10-15.md",
+   "limitations": "0.27arcsecond EGM2008. Jakarta tile not acquired; acquisition epoch, local accuracy and redistribution terms need admission. Public download link returned empty200.",
+   "limitationsEn": "0.27arcsecond EGM2008. Jakarta tile not acquired; acquisition epoch, local accuracy and redistribution terms need admission. Public download link returned empty200.",
+   "limitationsId": "0,27detik busur EGM2008. Ubin Jakarta belum diperoleh; tahun, akurasi setempat, dan syarat distribusi perlu diperiksa. Tautan unduh publik mengembalikan200kosong.",
+   "assets": [],
+   "recordCount": null
+  },
+  {
+   "id": "big-tides",
+   "name": "BIG tide stations and prediction",
+   "nameEn": "BIG tide stations and prediction",
+   "nameId": "Pos dan prediksi pasut BIG",
+   "category": "coast",
+   "publisher": "BIG tide stations and prediction",
+   "status": "registration-required",
+   "sourceUrl": "https://srgi.big.go.id/tides",
+   "endpoint": "",
+   "license": "Dataset-specific open license not stated; attribution and redistribution permission need checking.",
+   "dataAsOf": null,
+   "checkedAt": "2026-10-15T14:33:37.719993+00:00",
+   "access": "public metadata; download/prediction UI login",
+   "verification": "publisher-documentation-and-recorded-access-probe",
+   "tier": "coastal-boundary-candidate",
+   "useCase": "Prioritised candidate; see DATA-COVERAGE-AUDIT-2026-10-15.md",
+   "limitations": "Metadata page200. Station water level uses metres; prediction/download gated by login and terms. TanjungPriok station datum and current series not acquired; Sebesi is not Jakarta.",
+   "limitationsEn": "Metadata page200. Station water level uses metres; prediction/download gated by login and terms. TanjungPriok station datum and current series not acquired; Sebesi is not Jakarta.",
+   "limitationsId": "Halaman metadata200. Tinggi air pos dalam meter; prediksi/unduh memerlukan masuk dan persetujuan syarat. Datum serta seri terkini TanjungPriok belum diperoleh; Sebesi bukan Jakarta.",
+   "assets": [],
+   "recordCount": null
+  },
+  {
+   "id": "bmkg-priok-coastal-forecast",
+   "name": "BMKG Tanjung Priok port forecast",
+   "nameEn": "BMKG Tanjung Priok port forecast",
+   "nameId": "Prakiraan pelabuhan Tanjung Priok BMKG",
+   "category": "coast",
+   "publisher": "BMKG Tanjung Priok port forecast",
+   "status": "candidate",
+   "sourceUrl": "https://www.bmkg.go.id/cuaca/maritim/pelabuhan/XJ001",
+   "endpoint": "",
+   "license": "Dataset-specific open license not stated; attribution and redistribution permission need checking.",
+   "dataAsOf": null,
+   "checkedAt": "2026-10-15T14:33:37.719993+00:00",
+   "access": "public publisher page",
+   "verification": "publisher-documentation-and-recorded-access-probe",
+   "tier": "official-forecast-candidate",
+   "useCase": "Prioritised candidate; see DATA-COVERAGE-AUDIT-2026-10-15.md",
+   "limitations": "Publisher page exposes tidal forecast in metres. No stable JSON contract, station datum or automated retrieval verified. Do not join forecast level to local river gauges.",
+   "limitationsEn": "Publisher page exposes tidal forecast in metres. No stable JSON contract, station datum or automated retrieval verified. Do not join forecast level to local river gauges.",
+   "limitationsId": "Halaman penerbit menampilkan prakiraan pasut dalam meter. Kontrak JSON stabil, datum pos, dan pengambilan otomatis belum diverifikasi. Jangan gabungkan tinggi prakiraan dengan datum pos sungai.",
+   "assets": [],
+   "recordCount": null
+  },
+  {
+   "id": "tudelft-jakarta-displacement",
+   "name": "TU Delft Jakarta 3D displacement",
+   "nameEn": "TU Delft Jakarta 3D displacement",
+   "nameId": "Perpindahan 3D Jakarta TU Delft",
+   "category": "subsidence",
+   "publisher": "TU Delft Jakarta 3D displacement",
+   "status": "candidate",
+   "sourceUrl": "https://github.com/TUDelftGeodesy/3D-Jakarta",
+   "endpoint": "",
+   "license": "Apache-2.0 code; referenced dataset license unverified",
+   "dataAsOf": null,
+   "checkedAt": "2026-10-15T14:33:37.719993+00:00",
+   "access": "public research code; data repository not acquired",
+   "verification": "publisher-documentation-and-recorded-access-probe",
+   "tier": "research-reference-candidate",
+   "useCase": "Prioritised candidate; see DATA-COVERAGE-AUDIT-2026-10-15.md",
+   "limitations": "2014–2025 research velocities and covariance referenced. Code Apache2; 4TU data license/download unverified. Preserve coordinate frame, vector components, units and uncertainty; not live subsidence.",
+   "limitationsEn": "2014–2025 research velocities and covariance referenced. Code Apache2; 4TU data license/download unverified. Preserve coordinate frame, vector components, units and uncertainty; not live subsidence.",
+   "limitationsId": "Merujuk kecepatan dan kovarians riset2014–2025. Kode Apache2; lisensi/unduhan data4TU belum diverifikasi. Pertahankan kerangka koordinat, komponen vektor, satuan, ketidakpastian; bukan amblesan langsung.",
+   "assets": [],
+   "recordCount": null
+  },
+  {
+   "id": "worldcover-2021",
+   "name": "ESA WorldCover 2021",
+   "nameEn": "ESA WorldCover 2021",
+   "nameId": "Tutupan lahan ESA WorldCover 2021",
+   "category": "land-cover",
+   "publisher": "ESA WorldCover 2021",
+   "status": "candidate",
+   "sourceUrl": "https://esa-worldcover.org/en/data-access",
+   "endpoint": "",
+   "license": "CC BY 4.0; required publisher attribution",
+   "dataAsOf": "2021",
+   "checkedAt": "2026-10-15T14:33:37.719993+00:00",
+   "access": "public dataset documentation/download options",
+   "verification": "publisher-documentation-and-recorded-access-probe",
+   "tier": "satellite-classification-candidate",
+   "useCase": "Prioritised candidate; see DATA-COVERAGE-AUDIT-2026-10-15.md",
+   "limitations": "10m historical land-cover classification; CC BY4.0. Jakarta crop not acquired. Built-up class is not directly an imperviousness percentage or runoff coefficient.",
+   "limitationsEn": "10m historical land-cover classification; CC BY4.0. Jakarta crop not acquired. Built-up class is not directly an imperviousness percentage or runoff coefficient.",
+   "limitationsId": "Klasifikasi tutupan lahan historis10m; CC BY4.0. Potongan Jakarta belum diperoleh. Kelas terbangun bukan persentase kedap air atau koefisien limpasan langsung.",
+   "assets": [],
+   "recordCount": null
+  },
+  {
+   "id": "dynamic-world",
+   "name": "Dynamic World land-cover probabilities",
+   "nameEn": "Dynamic World land-cover probabilities",
+   "nameId": "Probabilitas tutupan lahan Dynamic World",
+   "category": "land-cover",
+   "publisher": "Dynamic World land-cover probabilities",
+   "status": "candidate",
+   "sourceUrl": "https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_DYNAMICWORLD_V1",
+   "endpoint": "",
+   "license": "CC BY 4.0; required publisher attribution",
+   "dataAsOf": null,
+   "checkedAt": "2026-10-15T14:33:37.719993+00:00",
+   "access": "public catalog; EarthEngine processing registration",
+   "verification": "publisher-documentation-and-recorded-access-probe",
+   "tier": "satellite-classification-candidate",
+   "useCase": "Prioritised candidate; see DATA-COVERAGE-AUDIT-2026-10-15.md",
+   "limitations": "10m Sentinel2 class probabilities, CC BY4.0. Dates/cloud masks matter; no Jakarta export obtained. EarthEngine access approval is separate from data license.",
+   "limitationsEn": "10m Sentinel2 class probabilities, CC BY4.0. Dates/cloud masks matter; no Jakarta export obtained. EarthEngine access approval is separate from data license.",
+   "limitationsId": "Probabilitas kelas Sentinel2 10m, CC BY4.0. Tanggal/masker awan penting; ekspor Jakarta belum diperoleh. Persetujuan akses EarthEngine terpisah dari lisensi data.",
+   "assets": [],
+   "recordCount": null
+  },
+  {
+   "id": "copernicus-dem30",
+   "name": "Copernicus GLO30 surface elevation",
+   "nameEn": "Copernicus GLO30 surface elevation",
+   "nameId": "Ketinggian permukaan Copernicus GLO30",
+   "category": "terrain",
+   "publisher": "Copernicus GLO30 surface elevation",
+   "status": "candidate",
+   "sourceUrl": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_DEM_GLO30_2024_1",
+   "endpoint": "",
+   "license": "Copernicus WorldDEM-30 free license; mandatory attribution and liability notices",
+   "dataAsOf": null,
+   "checkedAt": "2026-10-15T14:33:37.719993+00:00",
+   "access": "public catalog; data acquisition not attempted",
+   "verification": "publisher-documentation-and-recorded-access-probe",
+   "tier": "surface-model-candidate",
+   "useCase": "Prioritised candidate; see DATA-COVERAGE-AUDIT-2026-10-15.md",
+   "limitations": "30m DSM includes buildings/vegetation; EGM2008 zero is not local MSL. Free license with mandatory notices; source2010–2020, not current street terrain.",
+   "limitationsEn": "30m DSM includes buildings/vegetation; EGM2008 zero is not local MSL. Free license with mandatory notices; source2010–2020, not current street terrain.",
+   "limitationsId": "DSM30m mencakup bangunan/vegetasi; nolEGM2008 bukan MSLsetempat. Lisensi bebas dengan pemberitahuan wajib; sumber2010–2020, bukan medan jalan terkini.",
+   "assets": [],
+   "recordCount": null
+  },
+  {
+   "id": "bps-jakarta-api",
+   "name": "BPS Jakarta statistics API",
+   "nameEn": "BPS Jakarta statistics API",
+   "nameId": "API statistik BPS Jakarta",
+   "category": "population",
+   "publisher": "BPS Jakarta statistics API",
+   "status": "registration-required",
+   "sourceUrl": "https://webapi.bps.go.id/developer/",
+   "endpoint": "",
+   "license": "Dataset-specific open license not stated; attribution and redistribution permission need checking.",
+   "dataAsOf": null,
+   "checkedAt": "2026-10-15T14:33:37.719993+00:00",
+   "access": "API token registration; public statistical tables",
+   "verification": "publisher-documentation-and-recorded-access-probe",
+   "tier": "official-statistics-candidate",
+   "useCase": "Prioritised candidate; see DATA-COVERAGE-AUDIT-2026-10-15.md",
+   "limitations": "Developer portal200; token required by official client. Public Jakarta tables remain accessible separately; demographic period/geography and redistribution terms must be checked per table.",
+   "limitationsEn": "Developer portal200; token required by official client. Public Jakarta tables remain accessible separately; demographic period/geography and redistribution terms must be checked per table.",
+   "limitationsId": "Portal pengembang200; klien resmi memerlukan token. Tabel publik Jakarta tersedia terpisah; periode/wilayah demografi dan syarat distribusi perlu diperiksa per tabel.",
+   "assets": [],
+   "recordCount": null
+  },
+  {
+   "id": "soil-moisture-model",
+   "name": "Open-Meteo soil-moisture model",
+   "nameEn": "Open-Meteo soil-moisture model",
+   "nameId": "Model kelembapan tanah Open-Meteo",
+   "category": "water",
+   "publisher": "Open-Meteo soil-moisture model",
+   "status": "blocked",
+   "sourceUrl": "https://open-meteo.com/en/docs",
+   "endpoint": "",
+   "license": "Dataset-specific open license not stated; attribution and redistribution permission need checking.",
+   "dataAsOf": null,
+   "checkedAt": "2026-10-15T14:33:37.719993+00:00",
+   "access": "documented anonymous API; probeHTTP429",
+   "verification": "publisher-documentation-and-recorded-access-probe",
+   "tier": "model-candidate",
+   "useCase": "Prioritised candidate; see DATA-COVERAGE-AUDIT-2026-10-15.md",
+   "limitations": "Hourly volumetric soil moisture m³/m³; anonymous Jakarta probe429 on15Oct2026. Model cells are not observed urban infiltration; no values admitted.",
+   "limitationsEn": "Hourly volumetric soil moisture m³/m³; anonymous Jakarta probe429 on15Oct2026. Model cells are not observed urban infiltration; no values admitted.",
+   "limitationsId": "Kelembapan tanah volumetrik perjam m³/m³; probe anonim Jakarta429pada15Okt2026. Sel model bukan pengamatan infiltrasi kota; tidak ada nilai dimasukkan.",
+   "assets": [],
+   "recordCount": null
+  },
+  {
+   "id": "night-lights",
+   "name": "NOAA20 corrected Black Marble",
+   "nameEn": "NOAA20 corrected Black Marble",
+   "nameId": "Black Marble terkoreksi NOAA20",
+   "category": "satellite",
+   "publisher": "NASA GIBS / NOAA / NASA Black Marble",
+   "status": "integrated",
+   "sourceUrl": "https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/",
+   "endpoint": "/api/atlas/environment",
+   "providerEndpoint": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_GapFilled_BRDF_Corrected_DayNightBand_Radiance/default/{date}/{matrix}/{z}/{y}/{x}.png",
+   "license": "NASA Earth science open-data access; retain product attribution; dataset-specific terms remain applicable",
+   "dataAsOf": "2026-10-13",
+   "checkedAt": "2026-10-15T14:39:07.067849+00:00",
+   "access": "anonymous NASA GIBS WMTS",
+   "verification": "publisher-metadata-and-team-Jakarta-tile-probe",
+   "tier": "satellite-corrected-gap-filled",
+   "useCase": "Dated map imagery comparison; no causal attribution",
+   "limitations": "750m sensor;500m imagery; corrected and gap-filled radiance nW/(cm²sr), log10 display. A daily label is not a guarantee of acquisition that day. No outage/economic inference.",
+   "limitationsEn": "750m sensor;500m imagery; corrected and gap-filled radiance nW/(cm²sr), log10 display. A daily label is not a guarantee of acquisition that day. No outage/economic inference.",
+   "limitationsId": "Sensor750m; citra500m; radiansi terkoreksi dan terisi celah nW/(cm²sr), tampilan log10. Label harian tidak menjamin akuisisi hari itu. Tidak menyimpulkan pemadaman/ekonomi.",
+   "assets": [],
+   "recordCount": null
+  },
+  {
+   "id": "aerosol-viirs",
+   "name": "NOAA20 VIIRS Deep Blue AOD",
+   "nameEn": "NOAA20 VIIRS Deep Blue AOD",
+   "nameId": "AOD Deep Blue VIIRS NOAA20",
+   "category": "satellite",
+   "publisher": "NASA GIBS / NOAA",
+   "status": "integrated",
+   "sourceUrl": "https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/",
+   "endpoint": "/api/atlas/environment",
+   "providerEndpoint": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_AOD_Deep_Blue_Land_Ocean/default/{date}/{matrix}/{z}/{y}/{x}.png",
+   "license": "NASA Earth science open-data access; retain product attribution; dataset-specific terms remain applicable",
+   "dataAsOf": "2026-10-14",
+   "checkedAt": "2026-10-15T14:39:07.067849+00:00",
+   "access": "anonymous NASA GIBS WMTS",
+   "verification": "publisher-metadata-and-team-Jakarta-tile-probe",
+   "tier": "satellite-observation",
+   "useCase": "Dated map imagery comparison; no causal attribution",
+   "limitations": "6km retrieval;2km imagery at nadir; coarser swath edges. Atmospheric optical depth, not ground PM2.5 or source attribution. Sparse/missing pixels stay unknown.",
+   "limitationsEn": "6km retrieval;2km imagery at nadir; coarser swath edges. Atmospheric optical depth, not ground PM2.5 or source attribution. Sparse/missing pixels stay unknown.",
+   "limitationsId": "Retrieval6km; citra2km di nadir; tepi lintasan lebih kasar. Kedalaman optik atmosfer, bukan PM2.5 permukaan atau atribusi sumber. Piksel kosong tetap tidak diketahui.",
+   "assets": [],
+   "recordCount": null
+  },
+  {
+   "id": "aerosol-index",
+   "name": "NOAA20 OMPS 380nm aerosol index",
+   "nameEn": "NOAA20 OMPS 380nm aerosol index",
+   "nameId": "Indeks aerosol OMPS NOAA20 380nm",
+   "category": "satellite",
+   "publisher": "NASA GIBS / NOAA",
+   "status": "integrated",
+   "sourceUrl": "https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/",
+   "endpoint": "/api/atlas/environment",
+   "providerEndpoint": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/OMPS_NOAA20_NadirMapper_AerosolIndex_380/default/{date}/{matrix}/{z}/{y}/{x}.png",
+   "license": "NASA Earth science open-data access; retain product attribution; dataset-specific terms remain applicable",
+   "dataAsOf": "2026-10-14",
+   "checkedAt": "2026-10-15T14:39:07.067849+00:00",
+   "access": "anonymous NASA GIBS WMTS",
+   "verification": "publisher-metadata-and-team-Jakarta-tile-probe",
+   "tier": "satellite-observation",
+   "useCase": "Dated map imagery comparison; no causal attribution",
+   "limitations": "12×17km nadir; dimensionless UV-absorbing aerosol index. Smoke, ash and dust can contribute; not a particle concentration or pollution-source proof.",
+   "limitationsEn": "12×17km nadir; dimensionless UV-absorbing aerosol index. Smoke, ash and dust can contribute; not a particle concentration or pollution-source proof.",
+   "limitationsId": "Nadir12×17km; indeks aerosol penyerap UV tanpa satuan. Asap, abu, debu dapat berkontribusi; bukan konsentrasi partikel atau bukti sumber polusi.",
+   "assets": [],
+   "recordCount": null
+  },
+  {
+   "id": "night-lights-2016",
+   "name": "VIIRS fixed 2016 night-light composite",
+   "nameEn": "VIIRS fixed 2016 night-light composite",
+   "nameId": "Komposit cahaya malam VIIRS 2016",
+   "category": "satellite",
+   "publisher": "NASA GIBS / NOAA / NASA Black Marble",
+   "status": "integrated",
+   "sourceUrl": "https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/",
+   "endpoint": "/api/atlas/environment",
+   "providerEndpoint": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_Night_Lights/default/{date}/{matrix}/{z}/{y}/{x}.png",
+   "license": "NASA Earth science open-data access; retain product attribution; dataset-specific terms remain applicable",
+   "dataAsOf": "2016-01-01",
+   "checkedAt": "2026-10-15T14:39:07.067849+00:00",
+   "access": "anonymous NASA GIBS WMTS",
+   "verification": "publisher-metadata-and-team-Jakarta-tile-probe",
+   "tier": "satellite-historical-composite",
+   "useCase": "Dated map imagery comparison; no causal attribution",
+   "limitations": "500m visual annual composite;2016 fixed reference, not live. Not directly comparable to a corrected daily BlackMarble tile as a quantified growth estimate.",
+   "limitationsEn": "500m visual annual composite;2016 fixed reference, not live. Not directly comparable to a corrected daily BlackMarble tile as a quantified growth estimate.",
+   "limitationsId": "Komposit visual tahunan500m; referensi tetap2016, bukan langsung. Tidak dapat langsung dibandingkan dengan ubin harian BlackMarble terkoreksi sebagai estimasi pertumbuhan kuantitatif.",
+   "assets": [],
+   "recordCount": null
   }
- ]
+ ],
+ "auditScope": "15 October2026 bounded audit:35prior contracts +17new source candidates/access states +4satellite product contracts. Official drainage/polders integrated as dated references during this round; not all available public data."
 }

@@ -1,0 +1,134 @@
+{
+ "currentVersion": 11.5,
+ "folders": [],
+ "services": [
+  {
+   "name": "JakartaSatu/batas_kelurahan_vs_dukcapil",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "JakartaSatu/batas_kelurahan_vs_dukcapil",
+   "type": "MapServer"
+  },
+  {
+   "name": "JakartaSatu/Fasilitas_Kesehatan",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "JakartaSatu/Fasilitas_Kesehatan",
+   "type": "MapServer"
+  },
+  {
+   "name": "JakartaSatu/Jalur_Kereta_Api",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "JakartaSatu/Jalur_Kereta_Api",
+   "type": "MapServer"
+  },
+  {
+   "name": "JakartaSatu/Jalur_Transjakarta",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "JakartaSatu/Jalur_Transjakarta",
+   "type": "MapServer"
+  },
+  {
+   "name": "JakartaSatu/js_subblock_dashboard",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "JakartaSatu/js_subblock_dashboard",
+   "type": "MapServer"
+  },
+  {
+   "name": "JakartaSatu/Laporan_air_Tanah_Jakartasatu",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "JakartaSatu/Laporan_air_Tanah_Jakartasatu",
+   "type": "MapServer"
+  },
+  {
+   "name": "JakartaSatu/Lapor",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "JakartaSatu/Lapor",
+   "type": "MapServer"
+  },
+  {
+   "name": "JakartaSatu/model_gab_rth",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "JakartaSatu/model_gab_rth",
+   "type": "MapServer"
+  },
+  {
+   "name": "JakartaSatu/Peta_Aset_KIB_A",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "JakartaSatu/Peta_Aset_KIB_A",
+   "type": "MapServer"
+  },
+  {
+   "name": "JakartaSatu/Peta_Aset_KIB_D",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "JakartaSatu/Peta_Aset_KIB_D",
+   "type": "MapServer"
+  },
+  {
+   "name": "JakartaSatu/Peta_Jalan",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "JakartaSatu/Peta_Jalan",
+   "type": "MapServer"
+  },
+  {
+   "name": "JakartaSatu/Peta_Ops_V2_Garis_View",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "JakartaSatu/Peta_Ops_V2_Garis_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "JakartaSatu/Peta_Ops_V2_View",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "JakartaSatu/Peta_Ops_V2_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "JakartaSatu/Peta_Rekomendasi_Pengelolaan_Limbah",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "JakartaSatu/Peta_Rekomendasi_Pengelolaan_Limbah",
+   "type": "MapServer"
+  },
+  {
+   "name": "JakartaSatu/Sekolah",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "JakartaSatu/Sekolah",
+   "type": "MapServer"
+  },
+  {
+   "name": "JakartaSatu/Transjakarta",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "JakartaSatu/Transjakarta",
+   "type": "MapServer"
+  }
+ ]
+}

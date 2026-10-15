@@ -1,0 +1,316 @@
+[
+  {
+    "path": "Peta_Ketinggian_DKI_Jakarta/MapServer/0",
+    "checkedAt": "2026-10-15T14:29:28.801429+00:00",
+    "name": "Peta Ketinggian DKI Jakarta",
+    "error": null,
+    "fields": [
+      "OBJECTID",
+      "KETINGGIAN",
+      "SHAPE",
+      "SHAPE.AREA",
+      "SHAPE.LEN"
+    ],
+    "extent": {
+      "xmin": 106.6762126242259,
+      "ymin": -6.383516015768793,
+      "xmax": 106.99244013027314,
+      "ymax": -6.070216000128103,
+      "spatialReference": {
+        "wkid": 4326,
+        "latestWkid": 4326,
+        "xyTolerance": 8.983152841195215e-09,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -400,
+        "falseY": -400,
+        "xyUnits": 999999999.9999999,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      }
+    },
+    "editingInfo": null,
+    "copyrightText": "",
+    "count": {
+      "count": 17
+    }
+  },
+  {
+    "path": "Penggunaan_Lahan_2021/FeatureServer/0",
+    "checkedAt": "2026-10-15T14:29:28.802394+00:00",
+    "name": "Penggunaan Lahan 2021",
+    "error": null,
+    "fields": [
+      "OBJECTID",
+      "JOIN_COUNT",
+      "TARGET_FID",
+      "D_PENGGUNA",
+      "D_SUB_PENG",
+      "D_KEGIATAN",
+      "SHAPE_LENG",
+      "WADMKK",
+      "KDPKAB",
+      "LUASWH",
+      "SRS_ID",
+      "Shape__Area",
+      "Shape__Length"
+    ],
+    "extent": {
+      "xmin": 106.6856556400825,
+      "ymin": -6.373317076023456,
+      "xmax": 106.97411786667003,
+      "ymax": -6.0797741038481545,
+      "zmin": 0,
+      "zmax": 0,
+      "mmin": 0,
+      "mmax": 0,
+      "spatialReference": {
+        "wkid": 4326,
+        "latestWkid": 4326,
+        "xyTolerance": 8.98315284119521e-09,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -400,
+        "falseY": -400,
+        "xyUnits": 999999999.9999999,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      }
+    },
+    "editingInfo": null,
+    "copyrightText": "",
+    "count": {
+      "count": 124965
+    }
+  },
+  {
+    "path": "Saluran_Mikro_DSDA_View/MapServer/0",
+    "checkedAt": "2026-10-15T14:29:28.802599+00:00",
+    "name": "Saluran Mikro DSDA View",
+    "error": null,
+    "fields": [
+      "OBJECTID",
+      "ID",
+      "TOPONIMI",
+      "KELURAHAN",
+      "KECAMATAN",
+      "KOTA",
+      "PANJANG",
+      "SHAPE",
+      "SHAPE.LEN",
+      "VERIF_ASET",
+      "GUIDID",
+      "GUID_IDK",
+      "KET_ASET"
+    ],
+    "extent": {
+      "xmin": 686549.4094,
+      "ymin": 9295228.0664,
+      "xmax": 718329.3157,
+      "ymax": 9326614.5028,
+      "spatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      }
+    },
+    "editingInfo": null,
+    "copyrightText": "",
+    "count": {
+      "count": 60718
+    }
+  },
+  {
+    "path": "DSDA/Polder_Jakarta/FeatureServer/0",
+    "checkedAt": "2026-10-15T14:29:28.802835+00:00",
+    "name": "Polder Jakarta",
+    "error": null,
+    "fields": [
+      "OBJECTID",
+      "IDPOLDER",
+      "NAMOBJ",
+      "JNSALR",
+      "LPOLDER",
+      "TGKTKMN",
+      "LGNGN",
+      "STSPOLDER"
+    ],
+    "extent": {
+      "xmin": 686549.4095,
+      "ymin": 9306754.6922,
+      "xmax": 718216.5601,
+      "ymax": 9326719.3695,
+      "zmin": 0,
+      "zmax": 0,
+      "mmin": -9.999e+35,
+      "mmax": -9.999e+35,
+      "spatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      }
+    },
+    "editingInfo": null,
+    "copyrightText": "",
+    "count": {
+      "count": 65
+    }
+  },
+  {
+    "path": "DSDA/Lokasi_Stasiun_Banchmark/FeatureServer/0",
+    "checkedAt": "2026-10-15T14:29:28.804141+00:00",
+    "name": "Lokasi Stasiun Banchmark",
+    "error": null,
+    "fields": [
+      "OBJECTID",
+      "NAMA",
+      "LATITUDE",
+      "LONGITUDE"
+    ],
+    "extent": {
+      "xmin": 687552.6962510599,
+      "ymin": 9297449.52792902,
+      "xmax": 716364.8315499402,
+      "ymax": 9326967.327704417,
+      "spatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      }
+    },
+    "editingInfo": null,
+    "copyrightText": "",
+    "count": {
+      "count": 156
+    }
+  },
+  {
+    "path": "DSDA/Manual_Rain_Gauge/FeatureServer/0",
+    "checkedAt": "2026-10-15T14:29:28.804808+00:00",
+    "name": "Manual Rain Gauge",
+    "error": null,
+    "fields": [
+      "OBJECTID",
+      "NO",
+      "NAMOBJ",
+      "JENIS",
+      "WADMKK",
+      "ALAMAT",
+      "LAT",
+      "LONG_",
+      "GLOBALID",
+      "CREATED_USER",
+      "CREATED_DATE",
+      "LAST_EDITED_USER",
+      "LAST_EDITED_DATE",
+      "DAS"
+    ],
+    "extent": {
+      "xmin": 106.69411306308336,
+      "ymin": -6.633675117096693,
+      "xmax": 106.94552509782093,
+      "ymax": -6.105945626617662,
+      "spatialReference": {
+        "wkid": 4326,
+        "latestWkid": 4326,
+        "xyTolerance": 8.983152841195215e-09,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -400,
+        "falseY": -400,
+        "xyUnits": 999999999.9999999,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      }
+    },
+    "editingInfo": null,
+    "copyrightText": "",
+    "count": {
+      "count": 50
+    }
+  },
+  {
+    "path": "UTILITAS/Data_Utilitas_View/FeatureServer/0",
+    "checkedAt": "2026-10-15T14:29:28.812550+00:00",
+    "name": "TELEKOMUNIKASI",
+    "error": null,
+    "fields": [
+      "OBJECTID",
+      "NAMA_TIM",
+      "KENDALA",
+      "KODE",
+      "KEDALAMAN",
+      "LANDMARK",
+      "KETERANGAN",
+      "PROVIDER",
+      "JENIS_OBJEK",
+      "CREATED_USER",
+      "CREATED_DATE",
+      "LAST_EDITED_USER",
+      "LAST_EDITED_DATE",
+      "JENIS_UTILITAS",
+      "GLOBALID",
+      "COUNT('OBJECTID')"
+    ],
+    "extent": {
+      "xmin": 686708.2835,
+      "ymin": 9295537.9214,
+      "xmax": 718094.837,
+      "ymax": 9329868.5282,
+      "zmin": 0,
+      "zmax": 0,
+      "spatialReference": {
+        "wkid": 32748,
+        "latestWkid": 32748,
+        "xyTolerance": 0.001,
+        "zTolerance": 0.001,
+        "mTolerance": 0.001,
+        "falseX": -5120900,
+        "falseY": 1900,
+        "xyUnits": 10000,
+        "falseZ": -100000,
+        "zUnits": 10000,
+        "falseM": -100000,
+        "mUnits": 10000
+      }
+    },
+    "editingInfo": null,
+    "copyrightText": "",
+    "count": {
+      "count": 15964
+    }
+  }
+]

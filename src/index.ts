@@ -363,6 +363,10 @@ const ENV_PRODUCTS = [
   // True colour shows smoke plumes as seen from orbit — NOAA-20, the same
   // satellite as the FIRMS fire detections. Visible imagery has no legend.
   { id: "true-colour", layer: "VIIRS_NOAA20_CorrectedReflectance_TrueColor", maxzoom: 9, ext: "jpg", resolution: "375 m", units: "visible imagery", legend: null, tier: "satellite-observation" },
+  { id: "night-lights", layer: "VIIRS_NOAA20_GapFilled_BRDF_Corrected_DayNightBand_Radiance", maxzoom: 8, resolution: "750 m sensor / 500 m imagery", units: "nW/(cm² sr), log10 visualization", legend: "VIIRS_DayNightBand_At_Sensor_Radiance", tier: "satellite-corrected-gap-filled", documentation: "https://doi.org/10.5067/VIIRS/VJ146A2_NRT.002" },
+  { id: "aerosol-viirs", layer: "VIIRS_NOAA20_AOD_Deep_Blue_Land_Ocean", maxzoom: 6, resolution: "6 km retrieval / 2 km imagery", units: "AOD (unitless)", legend: "MODIS_VIIRS_AOD", tier: "satellite-observation", documentation: "https://cmr.earthdata.nasa.gov/search/concepts/C2600305692-LAADS.html" },
+  { id: "aerosol-index", layer: "OMPS_NOAA20_NadirMapper_AerosolIndex_380", maxzoom: 6, resolution: "12 × 17 km at nadir", units: "UV aerosol index (unitless)", legend: "OMPS_Aerosol_Index", tier: "satellite-observation", documentation: "https://cmr.earthdata.nasa.gov/search/concepts/C3307847314-OMINRT.html" },
+  { id: "night-lights-2016", layer: "VIIRS_Night_Lights", maxzoom: 8, resolution: "500 m imagery", units: "visual annual composite", legend: null, tier: "satellite-historical-composite", documentation: "https://earthobservatory.nasa.gov/features/NightLights" },
 ];
 // Five model sample points, one per mainland kota administrasi. Planning
 // locations for weather models, not rain gauges or district averages.
@@ -433,10 +437,10 @@ async function handleEnvironment(): Promise<Response> {
     const selectedDate = dates.find(day => day < today) || dates[0] || null;
     const available = !!selectedDate && !!layer?.includes(`<TileMatrixSet>${matrix}</TileMatrixSet>`);
     return { ...product, available, source: "NASA GIBS / LANCE", date: available ? selectedDate : null, latestAvailableDate: defaultDate || null, dates,
-      fetchedAt: capabilities?.fetchedAt ?? null, timePrecision: "day", windowDays: product.id === "surface-water" ? 3 : 1,
+      fetchedAt: capabilities?.fetchedAt ?? null, timePrecision: product.id === "night-lights-2016" ? "annual composite" : "day", windowDays: product.id === "surface-water" ? 3 : product.id === "night-lights-2016" ? null : 1,
       tiles: available ? [`${GIBS_BASE}/${product.layer}/default/${selectedDate}/${matrix}/{z}/{y}/{x}.${product.ext || "png"}`] : [],
       legendUrl: product.legend ? `https://gibs.earthdata.nasa.gov/legends/${product.legend}_H.svg` : null,
-      sourceUrl: "https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/" };
+      sourceUrl: product.documentation || "https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/" };
   });
   const radarBody = radar?.body;
   const frames = radarBody?.host === "https://tilecache.rainviewer.com" && Array.isArray(radarBody?.radar?.past)
@@ -865,6 +869,7 @@ async function routeRequest(request: Request, env: Env): Promise<Response> {
   // route by pathname only.
   if (path === PMTILES_PATH) return servePmtilesFromR2(request, env, PMTILES_R2_KEY);
   if (path === WATERWAYS_PMTILES_PATH) return servePmtilesFromR2(request, env, WATERWAYS_PMTILES_R2_KEY);
+  if (path === "/jakarta-official-drainage.pmtiles") return servePmtilesFromR2(request, env, "networks/jakarta-official-drainage-v1.pmtiles");
 
   if (path === "/api/atlas/environment") return handleEnvironment();
   if (path === "/api/atlas/rainfall") return handleRainfall();

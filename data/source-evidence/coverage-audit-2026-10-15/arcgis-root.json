@@ -1,0 +1,464 @@
+{
+ "currentVersion": 11.5,
+ "folders": [
+  "AuditBangunan",
+  "Bangunan_Tinggi",
+  "Bangunan_Tinggi_Suku_Dinas",
+  "Banjir_Jakarta",
+  "Bapenda",
+  "Bappeda",
+  "Batas_Administrasi_Update",
+  "BINAMARGA",
+  "Biro_ORB",
+  "Biro_PLH",
+  "BPAD",
+  "BPBD",
+  "BPKD",
+  "BPN",
+  "BPRD",
+  "CAGAR_BUDAYA",
+  "Citra_DKI",
+  "Cluster",
+  "Damkar",
+  "dasawisma",
+  "DASMAMPANG",
+  "Data_AirBersih",
+  "DATA_JAKARTASATU",
+  "Data_JakBar",
+  "Data_Master",
+  "Data_Pospol_Transport_Disdik_Rs_TempatIbadah",
+  "Data_Reklame",
+  "Data_SmartCity",
+  "Data_Tata_Air",
+  "Database_Bangunan",
+  "DataPenindakan",
+  "DataRptra",
+  "db_patroli",
+  "DCKTRP",
+  "Development",
+  "DIKMENTAL",
+  "Dinas_Bina_Marga",
+  "Dinas_Kebudayaan",
+  "Dinas_Kesehatan",
+  "Dinas_Pariwisata",
+  "Dinas_Perindustrian",
+  "Dinas_Sosial",
+  "DISDIK",
+  "Disgulkarmat",
+  "DISHUB",
+  "Diskominfo",
+  "DISPERUM",
+  "DISPORA",
+  "Distako",
+  "Distamhut",
+  "DJKN",
+  "DKPKP",
+  "DLH",
+  "DPE",
+  "DPMPTSP",
+  "DPPAPP",
+  "DPPKUKMP",
+  "DPRKP",
+  "DSDA",
+  "DSDA_Selatan",
+  "DV",
+  "EVALUASI_LURAH",
+  "Gedung_Pemda",
+  "Gerakan_Tanah",
+  "GISTARU",
+  "Hosted",
+  "IUTS",
+  "jakartagis",
+  "JakartaSatu",
+  "Jaklingko",
+  "JSC",
+  "Kemenkes",
+  "kependudukan",
+  "KPK",
+  "KPLDH",
+  "KSBB",
+  "Lahan_Kosong",
+  "Master_Bangunan",
+  "PALJAYA",
+  "Pangdam",
+  "Patroli",
+  "Pelangggaran_Ruang",
+  "Permohonan_IRK",
+  "Persil_BPN_DKI",
+  "PERTANAHAN",
+  "Peta_Batas_Administrasi_View",
+  "Peta_Dasar",
+  "PETA_JAKARTA",
+  "Peta_Kerja_TA",
+  "Peta_Operasional_UTM",
+  "Peta_Ops_Edit",
+  "Peta_OPS_Permen14_2020",
+  "PKRDTR",
+  "Publik",
+  "PUPR",
+  "query",
+  "RDTR",
+  "RisetJakartaSatu",
+  "RRTRWC",
+  "RTH_SKPD_DKI",
+  "Satpol_Politik",
+  "SATPOLPP",
+  "SDI",
+  "Sekolah_PPDB_2021",
+  "SiapppBang",
+  "SIPPT",
+  "Skdp_Ptsp",
+  "SmartCity",
+  "Struktur_Ruang",
+  "Tdg_Ptsp",
+  "TESTING_SERVICE",
+  "Training_Citata",
+  "UDGL",
+  "Unduh_Data",
+  "UTILITAS",
+  "Utilities",
+  "WIFI"
+ ],
+ "services": [
+  {
+   "name": "Analisis_Kawasan_Bebas_Air_Tanah",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Analisis_Kawasan_Bebas_Air_Tanah",
+   "type": "MapServer"
+  },
+  {
+   "name": "Aset_HPL_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "Automatic_Rainfall_Recorder_ARR",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Automatic_Rainfall_Recorder_ARR",
+   "type": "MapServer"
+  },
+  {
+   "name": "Automatic_Water_Level_Recorder_AWLR",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Automatic_Water_Level_Recorder_AWLR",
+   "type": "MapServer"
+  },
+  {
+   "name": "Bangunan_banjir_kebakaran",
+   "type": "MapServer"
+  },
+  {
+   "name": "BAST_PT_Sumarecon_Agung",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "BAST_PT_Sumarecon_Agung",
+   "type": "MapServer"
+  },
+  {
+   "name": "BATAS_ADMINSTRASI_RW_DKI_JAKARTA",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "BATAS_ADMINSTRASI_RW_DKI_JAKARTA",
+   "type": "MapServer"
+  },
+  {
+   "name": "Bulky_Waste",
+   "type": "MapServer"
+  },
+  {
+   "name": "Concrete_Batching_Plant_View",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Concrete_Batching_Plant_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "Data_Pembebasan_Lahan",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Data_Pembebasan_Lahan",
+   "type": "MapServer"
+  },
+  {
+   "name": "DATA_SIP_JAKARTA",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DATA_SIP_JAKARTA",
+   "type": "MapServer"
+  },
+  {
+   "name": "DBM_JALAN_BARAT_VIEW_ONLY",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DBM_JALAN_BARAT_VIEW_ONLY",
+   "type": "MapServer"
+  },
+  {
+   "name": "DBM_JALAN_BARAT",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DBM_JALAN_BARAT",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA_DV_Perusahaan_Penyedia",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA_DV_Perusahaan_Penyedia",
+   "type": "MapServer"
+  },
+  {
+   "name": "DTM_PUPR",
+   "type": "ImageServer"
+  },
+  {
+   "name": "Fasos_Fasum_Aset_HPL",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Fasos_Fasum_Aset_HPL",
+   "type": "MapServer"
+  },
+  {
+   "name": "JPO_Bina_Marga",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "JPO_Bina_Marga",
+   "type": "MapServer"
+  },
+  {
+   "name": "Kawasan_Keselamatan_Operasi_Penerbangan",
+   "type": "MapServer"
+  },
+  {
+   "name": "Kemenkes_Data_Kesehatan",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Kemenkes_Data_Kesehatan",
+   "type": "MapServer"
+  },
+  {
+   "name": "Kependudukan_Kota_2022",
+   "type": "MapServer"
+  },
+  {
+   "name": "Kependudukan_Tahun_2022_Semester_2",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Kependudukan_Tahun_2022_Semester_2",
+   "type": "MapServer"
+  },
+  {
+   "name": "Kependudukan_Tahun_2023_Semester_2",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Kependudukan_Tahun_2023_Semester_2",
+   "type": "MapServer"
+  },
+  {
+   "name": "KIB_A_BINAMARGA",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "KIB_A_BINAMARGA",
+   "type": "MapServer"
+  },
+  {
+   "name": "Lahan_Daftar_Nominatif",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Lahan_Daftar_Nominatif",
+   "type": "MapServer"
+  },
+  {
+   "name": "Lokasi_Bank_DKI",
+   "type": "MapServer"
+  },
+  {
+   "name": "Lokasi_Perpustakaan",
+   "type": "MapServer"
+  },
+  {
+   "name": "Loksem_dan_Lokbin",
+   "type": "MapServer"
+  },
+  {
+   "name": "LST",
+   "type": "MapServer"
+  },
+  {
+   "name": "Luas_RTH_dan_NDVI_Tahun_2023_dengan_Wilayah_Jakarta",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Luas_RTH_dan_NDVI_Tahun_2023_dengan_Wilayah_Jakarta",
+   "type": "MapServer"
+  },
+  {
+   "name": "NDVI_Jakarta_2022",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "NDVI_Jakarta_2022",
+   "type": "MapServer"
+  },
+  {
+   "name": "Pelengkap_Peta_Dasar_P1000",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Pelengkap_Peta_Dasar_P1000",
+   "type": "MapServer"
+  },
+  {
+   "name": "Pengelolaan_Air_Limbah_DSDA",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Pengelolaan_Air_Limbah_DSDA",
+   "type": "MapServer"
+  },
+  {
+   "name": "Penggunaan_Lahan_2021",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Penggunaan_Lahan_2021",
+   "type": "MapServer"
+  },
+  {
+   "name": "Penggunaan_Lahan",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Penggunaan_Lahan",
+   "type": "MapServer"
+  },
+  {
+   "name": "Peta_HPL_Atas_HGB",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Peta_HPL_Atas_HGB",
+   "type": "MapServer"
+  },
+  {
+   "name": "Peta_Kerja_BPAD",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Peta_Kerja_BPAD",
+   "type": "MapServer"
+  },
+  {
+   "name": "Peta_Ketinggian_DKI_Jakarta",
+   "type": "MapServer"
+  },
+  {
+   "name": "Peta_Perizinan_DPMPTSP",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Peta_Perizinan_DPMPTSP",
+   "type": "MapServer"
+  },
+  {
+   "name": "PETA_SITU",
+   "type": "MapServer"
+  },
+  {
+   "name": "Rencana_Kota_Pulau_Seribu",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Rencana_Kota_Pulau_Seribu",
+   "type": "MapServer"
+  },
+  {
+   "name": "Rencana_Pola_Ruang_RDTR_2022",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Rencana_Pola_Ruang_RDTR_2022",
+   "type": "MapServer"
+  },
+  {
+   "name": "Rencana_Struktur_Ruang",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Rencana_Struktur_Ruang",
+   "type": "MapServer"
+  },
+  {
+   "name": "Resiko_Bencana",
+   "type": "MapServer"
+  },
+  {
+   "name": "RPTRA_DKI_Jakarta",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "RPTRA_DKI_Jakarta",
+   "type": "MapServer"
+  },
+  {
+   "name": "Saluran_Mikro_DSDA_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "Sarana_Penyimpanan_Bahan_Bakar",
+   "type": "MapServer"
+  },
+  {
+   "name": "Survei_Penanggulangan_Banjir",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Survei_Penanggulangan_Banjir",
+   "type": "MapServer"
+  },
+  {
+   "name": "Temuan_Jalan",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Temuan_Jalan",
+   "type": "MapServer"
+  },
+  {
+   "name": "Tugu_Batas",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "Tugu_Batas",
+   "type": "MapServer"
+  },
+  {
+   "name": "Udara_lebih_dari_70",
+   "type": "MapServer"
+  },
+  {
+   "name": "UHI",
+   "type": "MapServer"
+  }
+ ]
+}

@@ -1,0 +1,75 @@
+[
+  {
+    "url": "https://jakartasatu.jakarta.go.id/server/rest/services?f=pjson",
+    "status": 200,
+    "contentType": "text/plain;charset=UTF-8",
+    "bytesRead": 7993,
+    "checkedAt": "2026-10-15T14:28:03.162913+00:00",
+    "finalUrl": "https://jakartasatu.jakarta.go.id/server/rest/services?f=pjson",
+    "preview": "{\n \"currentVersion\": 11.5,\n \"folders\": [\n  \"AuditBangunan\",\n  \"Bangunan_Tinggi\",\n  \"Bangun"
+  },
+  {
+    "url": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu?f=pjson",
+    "status": 200,
+    "contentType": "text/plain;charset=UTF-8",
+    "bytesRead": 2573,
+    "checkedAt": "2026-10-15T14:28:03.147964+00:00",
+    "finalUrl": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu?f=pjson",
+    "preview": "{\n \"currentVersion\": 11.5,\n \"folders\": [],\n \"services\": [\n  {\n   \"name\": \"JakartaSatu/bata"
+  },
+  {
+    "url": "https://srgi.big.go.id/tides",
+    "status": 200,
+    "contentType": "text/html; charset=UTF-8",
+    "bytesRead": 218795,
+    "checkedAt": "2026-10-15T14:28:04.136916+00:00",
+    "finalUrl": "https://srgi.big.go.id/tides",
+    "preview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>Sistem Referensi Geospasial Indonesia</"
+  },
+  {
+    "url": "https://srgi.big.go.id/tides/sbsi",
+    "status": 200,
+    "contentType": "text/html; charset=UTF-8",
+    "bytesRead": 318512,
+    "checkedAt": "2026-10-15T14:28:04.331899+00:00",
+    "finalUrl": "https://srgi.big.go.id/tides/sbsi",
+    "preview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>Sistem Referensi Geospasial Indonesia</"
+  },
+  {
+    "url": "https://tanahair.indonesia.go.id/demnas/",
+    "status": 200,
+    "contentType": "text/html",
+    "bytesRead": 0,
+    "checkedAt": "2026-10-15T14:28:03.832592+00:00",
+    "finalUrl": "https://tanahair.indonesia.go.id/demnas/",
+    "preview": ""
+  },
+  {
+    "url": "https://pantaubanjir.jakarta.go.id",
+    "error": "<urlopen error timed out>",
+    "checkedAt": "2026-10-15T14:28:20.647166+00:00"
+  },
+  {
+    "url": "https://dataonline.bmkg.go.id",
+    "status": 200,
+    "contentType": "text/html; charset=UTF-8",
+    "bytesRead": 60884,
+    "checkedAt": "2026-10-15T14:28:05.593399+00:00",
+    "finalUrl": "https://dataonline.bmkg.go.id/dataonline-home",
+    "preview": "<!DOCTYPE html>\n<!--\nAuthor: Keenthemes\nProduct Name: Metronic\nProduct Version: 8.1.7\nPurc"
+  },
+  {
+    "url": "https://webapi.bps.go.id",
+    "status": 200,
+    "contentType": "text/html; charset=UTF-8",
+    "bytesRead": 23798,
+    "checkedAt": "2026-10-15T14:28:03.922799+00:00",
+    "finalUrl": "https://webapi.bps.go.id/developer/",
+    "preview": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/"
+  },
+  {
+    "url": "https://api.open-meteo.com/v1/forecast?latitude=-6.18&longitude=106.83&hourly=soil_moisture_0_to_1cm&forecast_days=1&timezone=UTC",
+    "error": "HTTP Error 429: Too Many Requests",
+    "checkedAt": "2026-10-15T14:28:03.737454+00:00"
+  }
+]

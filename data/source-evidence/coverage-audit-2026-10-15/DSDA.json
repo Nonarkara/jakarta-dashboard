@@ -1,0 +1,294 @@
+{
+ "currentVersion": 11.5,
+ "folders": [],
+ "services": [
+  {
+   "name": "DSDA/Analisis_Kawasan_Bebas_Air_Tanah_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Arah_Aliran_Air_Tanah_Dangkal_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/DSDA_Pembebasan_Lahan",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/DSDA_Pembebasan_Lahan",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/DSDA_Pengelolaan_Air_Bersih",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/DSDA_Pengelolaan_Air_Bersih",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Genangan_Berulang",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Genangan_Berulang",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Genangan",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Isodepth_Air_Tanah_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Isodepth_Air_Tanah",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Isodepth_Air_Tanah",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Kesesuaian_Lahan_edit",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Kesesuaian_Lahan_edit",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Kontur_Muka_Air_Tanah_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Kontur_Muka_Air_Tanah",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Kontur_Muka_Air_Tanah",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Lokasi_Stasiun_Banchmark_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Lokasi_Stasiun_Banchmark",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Lokasi_Stasiun_Banchmark",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Lokasi_Stasiun_Point_Mounting_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Lokasi_Stasiun_Point_Mounting",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Lokasi_Stasiun_Point_Mounting",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Lokasi_Sumur_Pantau_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Lokasi_Sumur_Pantau",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Lokasi_Sumur_Pantau",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Manual_Rain_Gauge",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Manual_Rain_Gauge",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Peil_Lantai_Banjir",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Peil_Lantai_Banjir",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Pelanggan_PAM_Jakarta_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Pelanggan_PAM_Jakarta",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Pelanggan_PAM_Jakarta",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Pengelolaan_Air_Limbah",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Pengelolaan_Air_Limbah",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Peta_Kerja_Pembebasan_Lahan_Kali_Sunter",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Peta_Kerja_Pembebasan_Lahan_Kali_Sunter",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Polder_Jakarta",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Polder_Jakarta",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Pompa__Pintu__Sistem_Polder_View",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Pompa__Pintu__Sistem_Polder_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Pos_Pengamatan_Tinggi_Muka_Air_TMA",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Pos_Pengamatan_Tinggi_Muka_Air_TMA",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Revitalisasi_Tangki_Septik_View",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Revitalisasi_Tangki_Septik_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Saluran_Drainase",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Saluran_Drainase",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Saluran_Mikro",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Saluran_Mikro",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Satuan_Geologi_Regional_CAT_Jakarta",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Satuan_Geologi_Regional_CAT_Jakarta",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Sistem_Aliran_View",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Sistem_Aliran_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Sistem_Pengolahan_Air_Minum",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/SPALD_Terpusat_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/SPALD_Terpusat",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/SPALD_Terpusat",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Stasiun_Pemantauan_Penurunan_Muka_Tanah",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Stasiun_Pemantauan_Penurunan_Muka_Tanah",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Sungai_Jakarta",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Sungai_Jakarta",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Survey_Kontur_Muka_Air_Tanah",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Tanggul_NCICD_Jakarta",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Tanggul_NCICD_Jakarta",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Tanggul_Sungai_Jakarta",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Tanggul_Sungai_Jakarta",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Trase_Pengadaan_Tanah",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Waduk_View",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Waduk_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Zona_Konservasi_Air_Tanah_Jakarta_View",
+   "type": "MapServer"
+  },
+  {
+   "name": "DSDA/Zona_Konservasi_Air_Tanah_Jakarta",
+   "type": "FeatureServer"
+  },
+  {
+   "name": "DSDA/Zona_Konservasi_Air_Tanah_Jakarta",
+   "type": "MapServer"
+  }
+ ]
+}

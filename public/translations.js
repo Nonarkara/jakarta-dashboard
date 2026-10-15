@@ -2,6 +2,27 @@
 // Ported from the hcmc-3d-atlas Vietnamese catalog. Keep keys identical to the
 // English strings in index.html, app.js and the Worker's watch statements.
 window.ATLAS_ID = {
+  "day": "hari", "500 m imagery": "citra 500 m",
+  "Night lights": "Cahaya malam",
+  "Night lights · corrected daily": "Cahaya malam · harian terkoreksi",
+  "Night lights · 2016 composite": "Cahaya malam · komposit 2016",
+  "VIIRS Deep Blue aerosol": "Aerosol VIIRS Deep Blue",
+  "OMPS absorbing aerosol index": "Indeks aerosol penyerap OMPS",
+  "Time support": "Cakupan waktu",
+  "annual composite": "komposit tahunan",
+  "satellite-corrected-gap-filled": "satelit terkoreksi dan terisi celah",
+  "satellite-historical-composite": "komposit historis satelit",
+  "nW/(cm² sr), log10 visualization": "nW/(cm² sr), visualisasi log10",
+  "UV aerosol index (unitless)": "indeks aerosol UV (tanpa satuan)",
+  "visual annual composite": "komposit visual tahunan",
+  "750 m sensor / 500 m imagery": "sensor 750 m / citra 500 m",
+  "6 km retrieval / 2 km imagery": "pengambilan 6 km / citra 2 km",
+  "12 × 17 km at nadir": "12 × 17 km pada nadir",
+  "Black Marble is corrected for moonlight and atmosphere, with gaps filled from other nights. The dated daily product can contain older information. Fires and gas flares also glow. Brightness is not population, economic output or proof of a power outage.": "Black Marble dikoreksi terhadap cahaya bulan dan atmosfer; celah diisi dari malam lain. Produk harian bertanggal dapat memuat informasi lama. Kebakaran dan suar gas juga bercahaya. Kecerahan bukan jumlah penduduk, keluaran ekonomi atau bukti listrik padam.",
+  "Fixed 2016 annual night-light composite. Its processing differs from corrected daily radiance. Compare spatial patterns only; brightness differences do not quantify city growth or outages.": "Komposit tahunan cahaya malam tetap dari 2016. Pengolahannya berbeda dari radiansi harian terkoreksi. Bandingkan hanya pola spasial; perbedaan kecerahan tidak mengukur pertumbuhan kota atau pemadaman.",
+  "VIIRS Deep Blue measures aerosol through the atmospheric column during daytime overpasses. Retrievals are about 6 km at nadir; the 2 km visualization adds no finer measurement. Clouds and swath gaps remain missing, not clean air.": "VIIRS Deep Blue mengukur aerosol dalam kolom atmosfer saat lintasan siang. Pengambilan sekitar 6 km pada nadir; visualisasi 2 km tidak menambah ketelitian pengukuran. Awan dan celah lintasan berarti data hilang, bukan udara bersih.",
+  "OMPS detects UV-absorbing aerosol such as dust, smoke or volcanic ash. The index also depends on aerosol height and clouds; it does not identify the source or measure ground-level PM2.5. Native pixels are about 12 × 17 km at nadir.": "OMPS mendeteksi aerosol penyerap UV seperti debu, asap atau abu vulkanik. Indeks juga bergantung pada ketinggian aerosol dan awan; tidak mengidentifikasi sumber atau mengukur PM2.5 permukaan. Piksel asli sekitar 12 × 17 km pada nadir.",
+
   "Explore around the map centre": "Jelajahi sekitar pusat peta", "Around here": "Sekitar sini", "Around this place": "Di sekitar lokasi ini", "Back to map": "Kembali ke peta",
   "Air & wind": "Udara & angin", "Regional haze": "Kabut asap kawasan",
   "Thermal detections · checking": "Deteksi termal · memeriksa",

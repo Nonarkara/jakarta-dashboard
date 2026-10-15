@@ -40,6 +40,7 @@ export EXPECTED_BUILD
 # Require matching bytes on the canonical hostname and then the custom domain.
 node scripts/verify-deployed-bytes.mjs
 ATLAS_BASE="$ATLAS_URL" npm run smoke
+ATLAS_URL="$ATLAS_URL" node scripts/smoke-official-networks.mjs
 ATLAS_URL="$ATLAS_URL" npm run smoke:api
 
 npm run smoke:dashboard

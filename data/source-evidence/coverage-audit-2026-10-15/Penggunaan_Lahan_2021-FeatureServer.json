@@ -1,0 +1,159 @@
+{
+ "currentVersion": 11.5,
+ "cimVersion": "3.5.0",
+ "serviceDescription": "",
+ "hasVersionedData": false,
+ "hasArchivedData": false,
+ "hasBranchVersionedData": false,
+ "supportsDisconnectedEditing": false,
+ "supportsDatumTransformation": true,
+ "supportsReturnServiceEditsOption": true,
+ "returnServiceEditsHaveSR": true,
+ "supportsQueryDataElements": true,
+ "datesInUnknownTimezone": false,
+ "supportsRelationshipsResource": true,
+ "syncEnabled": false,
+ "syncCapabilities": {
+  "supportsRegisterReplicaForServer": true,
+  "supportsSyncDirectionControl": true,
+  "supportsPerLayerSync": true,
+  "supportsPerReplicaSync": true,
+  "supportsAttachmentsSyncDirection": true,
+  "supportsSyncModelNone": true,
+  "supportsDurableUrlForSyncModelNone": false
+ },
+ "supportedExportFormats": "sqlite,filegdb,shapefile,csv,geojson",
+ "extractChangesCapabilities": {
+  "supportsReturnIdsOnly": false,
+  "supportsReturnExtentOnly": false,
+  "supportsReturnAttachments": false,
+  "supportsLayerQueries": false,
+  "supportsGeometry": false,
+  "supportsFeatureReturn": false,
+  "supportsReturnHasGeometryUpdates": false,
+  "supportsFieldsToCompare": false,
+  "supportsServerGens": false
+ },
+ "supportedQueryFormats": "JSON",
+ "maxRecordCount": 2000,
+ "maxRecordCountFactor": 1,
+ "capabilities": "Query",
+ "description": "",
+ "copyrightText": "",
+ "advancedEditingCapabilities": {
+  "supportsSplit": false,
+  "supportsReturnServiceEditsInSourceSR": true,
+  "supportsAsyncApplyEdits": true,
+  "supportsApplyEditsbyUploadID": true,
+  "supportedApplyEditsUploadIDFormats": "JSON,PBF",
+  "supportsMultipatchOptionForServiceEdits": true,
+  "supportedApplyEditsOptions": {
+   "supportedEditingOptions": 0
+  }
+ },
+ "spatialReference": {
+  "wkid": 4326,
+  "latestWkid": 4326,
+  "xyTolerance": 8.98315284119521e-09,
+  "zTolerance": 0.001,
+  "mTolerance": 0.001,
+  "falseX": -400,
+  "falseY": -400,
+  "xyUnits": 999999999.9999999,
+  "falseZ": -100000,
+  "zUnits": 10000,
+  "falseM": -100000,
+  "mUnits": 10000
+ },
+ "initialExtent": {
+  "xmin": 106.81790709922113,
+  "ymin": -6.18339252415521,
+  "xmax": 106.8371088238513,
+  "ymax": -6.169184970056663,
+  "spatialReference": {
+   "wkid": 4326,
+   "latestWkid": 4326,
+   "xyTolerance": 8.98315284119521e-09,
+   "zTolerance": 0.001,
+   "mTolerance": 0.001,
+   "falseX": -400,
+   "falseY": -400,
+   "xyUnits": 999999999.9999999,
+   "falseZ": -100000,
+   "zUnits": 10000,
+   "falseM": -100000,
+   "mUnits": 10000
+  }
+ },
+ "fullExtent": {
+  "xmin": 106.6856556400825,
+  "ymin": -6.373317076023456,
+  "xmax": 106.97411786667003,
+  "ymax": -6.0797741038481545,
+  "zmin": 0,
+  "zmax": 0,
+  "mmin": 0,
+  "mmax": 0,
+  "spatialReference": {
+   "wkid": 4326,
+   "latestWkid": 4326,
+   "xyTolerance": 8.98315284119521e-09,
+   "zTolerance": 0.001,
+   "mTolerance": 0.001,
+   "falseX": -400,
+   "falseY": -400,
+   "xyUnits": 999999999.9999999,
+   "falseZ": -100000,
+   "zUnits": 10000,
+   "falseM": -100000,
+   "mUnits": 10000
+  }
+ },
+ "allowGeometryUpdates": true,
+ "allowTrueCurvesUpdates": true,
+ "onlyAllowTrueCurveUpdatesByTrueCurveClients": true,
+ "supportsApplyEditsWithGlobalIds": false,
+ "supportsTrueCurve": true,
+ "supportedCurveTypes": [
+  "esriGeometryCircularArc",
+  "esriGeometryEllipticArc",
+  "esriGeometryBezier3Curve"
+ ],
+ "units": "esriDecimalDegrees",
+ "documentInfo": {
+  "Title": "Insentif dan Disinsentif",
+  "Author": "",
+  "Comments": "",
+  "Subject": "",
+  "Category": "",
+  "Keywords": "Penggunaan Lahan"
+ },
+ "supportsQueryDomains": true,
+ "supportsQueryContingentValues": true,
+ "layers": [
+  {
+   "id": 0,
+   "name": "Penggunaan Lahan 2021",
+   "parentLayerId": -1,
+   "defaultVisibility": true,
+   "subLayerIds": null,
+   "minScale": 0,
+   "maxScale": 0,
+   "type": "Feature Layer",
+   "geometryType": "esriGeometryPolygon"
+  }
+ ],
+ "tables": [],
+ "relationships": [],
+ "enableZDefaults": false,
+ "allowUpdateWithoutMValues": false,
+ "supportsVCSProjection": true,
+ "referenceScale": 0,
+ "infoInEstimates": [
+  "extent",
+  "count"
+ ],
+ "supportsAppend": true,
+ "supportedAppendFormats": "FILEGDB,PBF",
+ "serviceItemId": "681f32329c244f1ea44cceb1ceea1e68"
+}

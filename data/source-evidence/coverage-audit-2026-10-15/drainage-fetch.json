@@ -1,0 +1,1 @@
+{"retrievedAt":"2026-10-15T14:32:01.837872+00:00","count":60718,"sourceUrl":"https://jakartasatu.jakarta.go.id/server/rest/services/Saluran_Mikro_DSDA_View/MapServer/0/query","fields":"OBJECTID,ID,TOPONIMI,KELURAHAN,KECAMATAN,KOTA,PANJANG","pageSize":1000,"orderBy":"OBJECTID ASC","outSR":4326}
