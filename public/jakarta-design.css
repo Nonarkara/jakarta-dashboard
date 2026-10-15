@@ -375,7 +375,10 @@ body[data-surface="jakarta-dashboard"] .map-panel > .note[hidden] { display:none
  body[data-surface="jakarta-dashboard"] .masthead { grid-template-columns:auto minmax(0,1fr) auto; }
  .city-navigation { grid-column:2; grid-row:1; position:relative; justify-self:end; }
  .city-navigation > summary { display:block; min-height:36px; padding:8px; cursor:pointer; }
- body[data-surface="jakarta-dashboard"] .city-navigation .sections { position:absolute; top:100%; left:0; min-width:180px; max-width:calc(100vw - 16px); max-height:70svh; overflow:auto; display:grid; z-index:70; background:var(--bg-raised); border:1px solid var(--line); }
+ /* Anchor the drawer to the trigger's trailing edge and cap it with the inline
+    space the viewport actually has. Anchoring at left:0 let a min-width panel
+    start at the trigger and end past the viewport at 390px. */
+ body[data-surface="jakarta-dashboard"] .city-navigation .sections { position:absolute; top:100%; right:0; width:min(180px,calc(100vw - 16px)); max-height:70svh; overflow:auto; display:grid; z-index:70; background:var(--bg-raised); border:1px solid var(--line); }
  body[data-surface="jakarta-dashboard"] .city-navigation .sections > * { min-height:44px; padding:8px 12px; }
  .city-preferences { grid-column:3; grid-row:1; }
  body[data-surface="jakarta-dashboard"] .map-panel > .note { left:8px; top:100px; }
