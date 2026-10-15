@@ -1006,6 +1006,7 @@ function setupInspect() {
     if (!card || !propsEl) return;
 
     const center = e.lngLat;
+    document.getElementById('place-inspect').onclick = () => openPlaceContext(center);
     coords.textContent = "lat " + center.lat.toFixed(4) + " -- lng " + center.lng.toFixed(4);
     propsEl.innerHTML =
       '<div class="atlas-inspect-row"><span>Type</span><strong>' + escapeHtml(bldg) + "</strong></div>" +
@@ -1029,6 +1030,7 @@ function setupInspect() {
     const props = e.features?.[0]?.properties;
     if (!props) return;
     closeInspect();
+    document.getElementById('place-inspect').onclick = () => openPlaceContext(e.lngLat);
     document.getElementById("atlas-inspect-coords").textContent = "lat " + e.lngLat.lat.toFixed(4) + " · lng " + e.lngLat.lng.toFixed(4);
     document.getElementById("atlas-inspect-props").innerHTML =
       '<div class="atlas-inspect-row"><span>Name</span><strong>' + escapeHtml(props.name) + '</strong></div>' +
@@ -2374,6 +2376,25 @@ function showMonitoringLocation(feature) {
   node.textContent=(p.name||'—')+' · '+(p.kind||'')+' · '+coords[1].toFixed(6)+', '+coords[0].toFixed(6)+' · WGS84 · '+lensText('reference location','lokasi referensi');
 }
 mapInstance?.on('click','insight-stations',e=>{if(activeLens==='coverage'&&e.features?.[0])showMonitoringLocation(e.features[0]);});
+
+// Place context loads reference geometry only when requested; existing lenses remain intact.
+let placeContext, placeContextLoading;
+async function openPlaceContext(point) {
+  try {
+    if (!placeContext) {
+      placeContextLoading ||= import('/place-context.js?v=' + ATLAS_BUILD_TAG).then(async module => {
+        await styleReady;
+        return module.createPlaceContext(mapInstance, {language: uiLanguage, build: ATLAS_BUILD_TAG,
+          accent: () => mapTheme().accent, ground: () => getComputedStyle(document.documentElement).getPropertyValue('--bg').trim(), lens: selectCityLens, toast: showToast});
+      }).catch(error => { placeContextLoading = null; throw error; });
+      placeContext = await placeContextLoading;
+    }
+    placeContext.show(point);
+  } catch (error) { showToast(lensText('Place references are unavailable. Try again.', 'Referensi lokasi tidak tersedia. Coba lagi.')); }
+}
+document.getElementById('place-open')?.addEventListener('click', () => {
+  if (mapInstance) openPlaceContext(mapInstance.getCenter());
+});
 
 async function fetchBrowserRainfall() {
   const points = [

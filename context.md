@@ -1,3 +1,9 @@
+## Place context · 15 October 2026
+
+Design read: a resident places Jakarta's public references around one location, with the map dominant and detail requested. Reference: Vignelli's 1972 subway diagram, connecting a place to useful systems through short named choices. The existing Console register, Universa display face and compact bar heights remain; the dialog uses a 2 px header rule and 1 px reference rows. Invariant: proximity describes geometry only; it never proves drainage connectivity, flood protection, facility capacity or current conditions.
+
+Around here opens a native keyboard-accessible dialog from the map centre or a selected building/landmark. It lazily joins four existing attributed public datasets within 5 km, returning up to three nearest features per source. Waterway distances use the nearest mapped line segment, not the nearest vertex; point references use great-circle distances, rounded to 10 m. Polygon waterbodies are excluded from this line-distance view. The dialog preserves observation-date unknowns and retrieval dates, with independent failures/retry and a 12 s abort bound. Source geometries and dates remain unchanged. Buttons open the existing water readings, satellite-water and air/wind views; each keeps its original model/source resolution. A marker and selected reference can be cleared. No personal geolocation, new provider, calibration or predictive capability is introduced. This is a place-centric step toward a public-data research twin and remains a Pilot.
+
 # Jakarta dashboard release · 11 October 2026
 
 ## Shipability and Bayer typography · 14 October 2026

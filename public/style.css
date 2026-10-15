@@ -786,3 +786,30 @@ button:disabled { opacity: 0.55; cursor: not-allowed; }
 .air-timeline .meta, .air-transport .meta, .air-timeline .note, .air-transport .note { font-size:11px; margin:2px 0; }
 .lens-haze-guidance { font-weight: 600; }
 .lens-haze-limits { margin-top: 12px; opacity: .8; }
+
+/* Place context is requested on demand; it consumes no extra map rows. */
+.place-open { min-height: 26px; padding: 0 8px; border: 0; border-right: 1px solid var(--line); background: transparent; color: var(--ink); font: inherit; cursor: pointer; white-space: nowrap; }
+.place-dialog { box-sizing: border-box; width: min(640px, calc(100vw - 24px)); max-height: calc(100svh - 24px); padding: 0; border: 1px solid var(--line-bright); background: var(--bg); color: var(--ink); font: 14px/1.45 var(--font-sans); }
+.place-dialog::backdrop { background: rgb(0 0 0 / .55); }
+.place-dialog header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 12px; border-bottom: 2px solid var(--line-bright); }
+.place-dialog h2, .place-dialog h3 { font-size: 16px; margin: 0; }
+#place-body { padding: 0 12px 12px; }
+#place-body section { border-top: 1px solid var(--line); padding: 10px 0; }
+#place-body p { margin: 8px 0; }
+.place-dialog button { color: inherit; background: transparent; font: inherit; cursor: pointer; }
+.place-dialog header button, .place-actions button, #place-body > button { border: 1px solid var(--line-bright); padding: 5px 8px; }
+.place-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.place-result { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; width: 100%; text-align: left; border: 0; border-bottom: 1px solid var(--line); padding: 8px 0; }
+.place-result span:first-child { flex: 1; overflow-wrap: anywhere; }
+.place-result span:last-child { flex: 0 0 auto; color: var(--accent); }
+.place-coordinates { color: var(--warn); font-family: var(--font-mono, monospace); }
+.place-source { color: var(--dim); }
+@media(max-width: 480px) { .place-result { flex-wrap: wrap; gap: 2px; } .place-result span:first-child { flex-basis: 100%; } }
+
+.place-dialog h2, .place-dialog h3 { font-family: var(--font-display); font-weight: 400; }
+
+.place-dialog a { color: var(--accent); }
+.place-dialog header { position: sticky; top: 0; background: var(--bg); z-index: 1; }
+#place-inspect { color: var(--ink); background: var(--bg); border: 1px solid var(--line); padding: 4px 8px; font: inherit; cursor: pointer; }
+/* Red coordinates identify the selected location, matching existing map evidence. */
+:root[data-theme="light"] .place-coordinates { color: #a32323; }

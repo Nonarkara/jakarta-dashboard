@@ -153,11 +153,13 @@
         <div class="atlas-inspect-card" id="atlas-inspect-card" hidden>
           <p class="atlas-inspect-coords" id="atlas-inspect-coords"></p>
           <div class="atlas-inspect-props" id="atlas-inspect-props"></div>
+          <button type="button" id="place-inspect">Around here</button>
         </div>
       </aside>
 
       <!-- Quick-jump area grid (bottom of map) -->
       <section class="atlas-quick" id="atlas-areas">
+        <button type="button" id="place-open" title="Explore around the map centre" class="place-open" aria-haspopup="dialog">Around here</button>
         <details class="atlas-quick-details">
           <summary class="atlas-panel-summary">
             <span class="atlas-eyebrow">Quick jump</span>
@@ -238,6 +240,10 @@
     </footer>
   </main>
 
+  <dialog id="place-dialog" class="place-dialog" aria-labelledby="place-title">
+    <header><h2 id="place-title">Around this place</h2><button type="button" id="place-close">Back to map</button></header>
+    <div id="place-body"></div>
+  </dialog>
   <script src="https://unpkg.com/pmtiles@4.4.1/dist/pmtiles.js" integrity="sha384-iS2/cbFYol4NsEeda4mW6N/8wPMOT6pv2eY+GNYSJRqVC4nbJECP1+mg6D2T8wT/" crossorigin="anonymous" defer></script>
   <script src="/loader.js?v=jakarta-atlas-20261015-1792041721-9488935" data-app="/app.js?v=jakarta-atlas-20261015-1792041721-9488935" defer></script>
 </body>

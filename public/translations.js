@@ -2,6 +2,7 @@
 // Ported from the hcmc-3d-atlas Vietnamese catalog. Keep keys identical to the
 // English strings in index.html, app.js and the Worker's watch statements.
 window.ATLAS_ID = {
+  "Explore around the map centre": "Jelajahi sekitar pusat peta", "Around here": "Sekitar sini", "Around this place": "Di sekitar lokasi ini", "Back to map": "Kembali ke peta",
   "Air & wind": "Udara & angin", "Regional haze": "Kabut asap kawasan",
   "Thermal detections · checking": "Deteksi termal · memeriksa",
   "Thermal detections · on demand": "Deteksi termal · sesuai permintaan",

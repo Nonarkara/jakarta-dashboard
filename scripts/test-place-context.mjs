@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {validPlace,nearestPoint,distanceM,geometryDistance,nearby,loadReferences} from '../public/place-context.js';
+const p=[106.83,-6.2];
+assert.ok(validPlace(p));
+for(const bad of [[-6.2,106.83],[null,-6.2],[106.83,NaN],[120,-6.2]])assert.equal(validPlace(bad),false);
+assert.equal(distanceM(p,p),0);
+assert.ok(Math.abs(distanceM(p,[106.83,-6.21])-1111.95)<1);
+const crossing={type:'LineString',coordinates:[[106.82,-6.2],[106.84,-6.2]]};
+assert.deepEqual(nearestPoint(p,crossing),p,'map handoff uses nearest segment point');
+assert.ok(geometryDistance(p,crossing)<0.001,'nearest river segment, not distant vertices');
+assert.ok(geometryDistance([106.85,-6.2],crossing)>1100,'projection clamps to segment end');
+assert.equal(geometryDistance(p,{type:'Polygon',coordinates:[]}),Infinity,'no invented polygon distance');
+const point=(x,name)=>({type:'Feature',properties:{name},geometry:{type:'Point',coordinates:[x,-6.2]}});
+const dataset={type:'FeatureCollection',crs:'EPSG:4326',features:[point(106.87,'far'),point(106.831,'near'),point(106.84,'middle'),point(106.83,'exact'),point(107,'outside')]};
+assert.deepEqual(nearby(p,dataset).map(r=>r.feature.properties.name),['exact','near','middle']);
+const duplicates={...dataset,features:[point(106.831,'near'),point(106.831,'near'),point(106.84,'middle')]};
+assert.equal(nearby(p,duplicates).length,2,'exact duplicate source rows do not crowd out useful references');
+assert.equal(nearby([120,-6.2],dataset).length,0);
+let count=0;
+const fakeFetch=async url=>{count++;if(url.includes('schools'))throw Error('outage');return Response.json(dataset);};
+const results=await loadReferences(fakeFetch,new AbortController().signal,'test');
+assert.equal(results.filter(r=>r.data).length,3,'failed provider does not hide others');
+assert.equal(results.find(r=>r.id==='schools').data,null,'missing is not zero');
+count=0;await loadReferences(fakeFetch,new AbortController().signal,'test',results);assert.equal(count,1,'retry retains valid datasets');
+const invalid=await loadReferences(async()=>Response.json({...dataset,crs:'EPSG:3857'}),new AbortController().signal,'test');assert.ok(invalid.every(r=>r.data===null));
+const aborted=new AbortController();aborted.abort();await assert.rejects(loadReferences(async()=>{throw Error('aborted');},aborted.signal,'test'));
+for(const id of ['waterways','pumps','health','schools']){
+ const real=JSON.parse(readFileSync(new URL('../public/data/jakarta-v1/'+id+'.geojson',import.meta.url)));
+ const rows=nearby(p,real);assert.ok(rows.length>0,id+' real nearby references');assert.ok(rows.every(r=>r.distance>=0&&r.distance<=5000));
+}
+console.log('Place context: distance, real reference joins, boundary validation, partial failure, retry and abort passed.');
