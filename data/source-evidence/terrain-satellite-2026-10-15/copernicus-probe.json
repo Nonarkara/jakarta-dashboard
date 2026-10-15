@@ -1,0 +1,7 @@
+{
+  "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_S07_00_E106_00_DEM/Copernicus_DSM_COG_10_S07_00_E106_00_DEM.tif",
+  "status": 206,
+  "bytes": 16384,
+  "contentRange": "bytes 0-16383/45527867",
+  "result": "Access probe only, no terrain crop admitted"
+}

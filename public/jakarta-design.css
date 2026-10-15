@@ -499,3 +499,9 @@ body.atlas-embedded .atlas-embedded-evidence .atlas-footer { padding-inline:0; }
 
 body.atlas-workbench .atlas-lens-popup a { color:var(--accent); }
 input[type="range"], input[type="checkbox"] { accent-color:var(--accent); }
+
+/* A reference-layer checkbox fits the existing evidence gutter. */
+.network-section .network-check { display:flex; align-items:center; gap:6px; }
+.network-section .network-check input { width:auto; flex:0 0 auto; padding:0; }
+
+#atlas-lens-body button[hidden] { display:none; }

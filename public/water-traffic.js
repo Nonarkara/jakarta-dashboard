@@ -1,3 +1,4 @@
+import {createWaterContext} from './water-context.js?v=coastal-worldcover-v1';
 // Lazy map lenses: mapped hydrography, dated gauges/model flow, public traffic-camera references.
 export function volumeM3(dischargeM3s,hours) {
   return Number.isFinite(dischargeM3s)&&dischargeM3s>=0&&Number.isFinite(hours)&&hours>0&&hours<=168?dischargeM3s*hours*3600:null;
@@ -30,12 +31,13 @@ export function validPolderReference(data,manifest) {
   return data.features.every(f=>['Polygon','MultiPolygon'].includes(f?.geometry?.type)&&coordinates(f.geometry.coordinates,f.geometry.type==='Polygon'?2:3));
 }
 export function createController(map,{text:t,active,buildTag}) {
+  let waterContext=null;
   let mode=null,epoch=0,water=null,cameras=null,hydrology=null,jaxa=null,nasa=null,lastBody=null;
   const listeners=[]; let player=null, video=null, playRequest=0;
   const pending=new Set();
   async function get(path){const c=new AbortController();const timer=setTimeout(()=>c.abort(new Error('timeout')),12000);pending.add(c);try{const response=await fetch(path,{headers:{accept:'application/json'},signal:c.signal});return await readObservationResponse(response,path);}finally{clearTimeout(timer);pending.delete(c);}}
   function cancelPending(){for(const c of pending)c.abort(new Error('lens closed'));}
-  const ids=['network-water-fill','network-water-lines','network-water-labels','network-gauges','network-cameras','network-clusters','network-counts','network-comparison','official-drain-lines','official-polder-fill','official-polder-lines'];
+  const ids=['network-water-fill','network-water-lines','network-water-labels','network-gauges','network-cameras','network-clusters','network-counts','network-comparison','official-drain-lines','official-polder-fill','official-polder-lines','network-landcover'];
   const safeUrl=u=>{try{const url=new URL(u);return ['https:','http:'].includes(url.protocol)?url.href:null;}catch{return null;}};
   const el=(tag,content,cls)=>{const node=document.createElement(tag);if(content!==undefined)node.textContent=content;if(cls)node.className=cls;return node;};
   const number=(n,d=1)=>Number.isFinite(n)?n.toLocaleString(t('en-GB','id-ID'),{maximumFractionDigits:d}):t('Unavailable','Tidak tersedia');
@@ -47,7 +49,7 @@ export function createController(map,{text:t,active,buildTag}) {
   function on(event,id,callback){map.on(event,id,callback);listeners.push([event,id,callback]);}
   function focusFeature(feature,body){const c=feature.geometry.type==='Point'?feature.geometry.coordinates:null;if(c)map.flyTo({center:c,zoom:14,pitch:35});document.getElementById('atlas-lens-evidence').open=true;body.scrollIntoView({block:'nearest'});}
   function removeLayers(){for(const id of ids)if(map.getLayer(id))map.removeLayer(id);for(const id of ids)if(map.getSource(id))map.removeSource(id);for(const [event,id,callback] of listeners)map.off(event,id,callback);listeners.length=0;}
-  function clear(){epoch++;playRequest++;mode=null;cancelPending();removeLayers();lastBody=null;player?.destroy();player=null;if(video){video.pause();video.removeAttribute("src");video.load();video=null;}}
+  function clear(){epoch++;waterContext?.clear();waterContext=null;playRequest++;mode=null;cancelPending();removeLayers();lastBody=null;player?.destroy();player=null;if(video){video.pause();video.removeAttribute("src");video.load();video=null;}}
   function pointLayer(id,data,paint,cluster=false){map.addSource(id,{type:'geojson',data,cluster,clusterRadius:40,clusterMaxZoom:14});const layer={id,type:'circle',source:id,paint};if(cluster)layer.filter=['!', ['has','point_count']];map.addLayer(layer);}
   function gaugeFeature(row){return {type:'Feature',geometry:{type:'Point',coordinates:[row.lng,row.lat]},properties:{id:row.id,name:row.name,levelM:row.levelM,observedAt:row.observedAt,basin:row.basin}};}
   function featureCollection(features){return {type:'FeatureCollection',features};}
@@ -154,6 +156,9 @@ export function createController(map,{text:t,active,buildTag}) {
     const selected=section(body,'Selected waterway / gauge','Alur air / pos terpilih');
     if(water)on('click','network-water-lines',event=>{const f=event.features?.[0];if(!f)return;renderWaterSelection(selected,f);selected.parentElement.open=true;document.getElementById('atlas-lens-evidence').open=true;});
     showOfficialNetworks(section(body,'Official drainage & polders','Drainase resmi & polder'),selected,token).catch(()=>{if(token===epoch)note(body,'Official network references unavailable; other water sources remain usable.','Referensi jaringan resmi tidak tersedia; sumber air lain tetap dapat digunakan.');});
+    const context=waterContext=createWaterContext(map,{text:t,get,isCurrent:()=>token===epoch,buildTag});
+    context.coastal(section(body,'Coastal tide forecast · Priok','Prakiraan pasang surut pesisir · Priok'));
+    context.landCover(section(body,'Land cover · WorldCover 2021','Tutupan lahan · WorldCover 2021'));
     const kinds=el('p',Object.entries(water?.kinds||{}).map(([k,n])=>kindLabel(k)+' '+number(n,0)).join(' · '),'note');body.append(kinds);
     const measure=section(body,'Incoming water · gauges & volume','Air masuk · pos & volume');
     measure.append(el('p',t('Loading publisher readings…','Memuat pembacaan penerbit…')));

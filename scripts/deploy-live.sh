@@ -41,6 +41,7 @@ export EXPECTED_BUILD
 node scripts/verify-deployed-bytes.mjs
 ATLAS_BASE="$ATLAS_URL" npm run smoke
 ATLAS_URL="$ATLAS_URL" node scripts/smoke-official-networks.mjs
+ATLAS_URL="$ATLAS_URL" node scripts/smoke-water-context.mjs
 ATLAS_URL="$ATLAS_URL" npm run smoke:api
 
 npm run smoke:dashboard

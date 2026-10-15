@@ -6,13 +6,19 @@ Live: **https://jakarta.nonarkara.org** · complete atlas: **https://jakarta.non
 
 Private repository: https://github.com/Nonarkara/jakarta-dashboard. The original atlas history and documentation below are retained. Deploy this repository for the main domain; the separate atlas repository remains a source archive and should not overwrite the dashboard Worker.
 
-The Bahasa Indonesia / English dashboard follows the HCMC observation–map–bulletin arrangement, with Jakarta's Palette 267 coastal/green/yellow relationship and self-hosted Plus Jakarta Sans. It adds five official BMKG kelurahan forecasts, dated weather warnings for DKI/Jawa Barat/Banten, the latest Indonesia earthquake, PetaBencana report counts, searchable official TransJakarta scheduled routes and stops, and dated Jakarta Satu health/school reference points. Source, tier and time remain visible; missing inputs never become a safety claim.
+The Bahasa Indonesia / English dashboard follows the HCMC observation–map–bulletin arrangement, with Jakarta's Palette 267 coastal/green/yellow relationship and the owner-selected CTAN Universa display face with Source Sans 3 for reading. It adds five official BMKG kelurahan forecasts, dated weather warnings for DKI/Jawa Barat/Banten, the latest Indonesia earthquake, PetaBencana report counts, searchable official TransJakarta scheduled routes and stops, and dated Jakarta Satu health/school reference points. Source, tier and time remain visible; missing inputs never become a safety claim.
 
 Search a route and select it to draw the scheduled alignment. Select a stop or civic facility to locate its reference point. Language/theme changes retain the same map instance. The forecast chart has a complete text table. Export evidence JSON for source payloads and selected geometry. The complete atlas retains all building, environment, inspection and navigation controls.
 
 The Research dialog now has three more tabs beside the project, flood and report data: how the system was built (method, live/dated/unavailable states, charts computed from the shipped records, build inventory), the legal basis (independent demo, source licenses, no personal data, non-affiliation), and the builder (bio and contact).
 
 The Banjir / Flood desk popup couples those live signals with the dated Jakarta Satu monitoring network: AWLR water-level stations with official SIAGA 1–4 alert thresholds grouped by river, ARR rain gauges, pumps, floodgates and reservoirs, flood-risk reference polygons joined to 2023 kelurahan population, and the situ inventory. No live water level is shown anywhere; stations publish thresholds, not readings, and unavailable feeds stay explicit states with official links.
+
+## Water context acquired · 15 October 2026
+
+The waterways evidence panel now includes an independent BMKG Tanjung Priok coastal forecast and an optional ESA WorldCover 2021 land-cover overlay. Tide and wave heights retain their forecast times and metre units; the unknown vertical datum prevents a river/terrain join. WorldCover is a 10 m historical classification, displayed at 20 m using nearest-neighbour sampling, with full-native cell composition in a mainland rectangle. Built-up is not measured impermeability; permanent water is not current flood extent. Full publisher attribution, raw crop, checksums and reproduction scripts are retained.
+
+`/api/atlas/coastal` validates one fixed anonymous BMKG port feed with time, size and row bounds and explicit outages. `npm run prepare:landcover` regenerates WorldCover assets offline from the hash-checked acquired crop; `-- --fetch` explicitly refreshes it. The Research ledger has 57 contracts; public river/rain readings with contradictory UTC/WIB timestamps remain a candidate. Detailed acquisition receipts are in `docs/WATER-CANDIDATE-PROBES-2026-10-15.md` and `docs/TERRAIN-SATELLITE-PROBES-2026-10-15.md`. A distinct live Depok southern-route capture replaces reliance on the reported duplicate evidence, without changing route geometry or claiming calibrated flow.
 
 ## Map insight lenses
 

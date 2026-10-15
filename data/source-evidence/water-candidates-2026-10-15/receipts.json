@@ -1,0 +1,101 @@
+{
+  "bmkg-api-doc": {
+    "url": "https://maritim.bmkg.go.id/apidoc",
+    "checkedAt": "2026-10-15T15:48:43.931546+00:00",
+    "status": 200,
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 15:48:45 GMT",
+      "Content-Type": "text/html;charset=utf-8"
+    },
+    "bytes": 148260,
+    "finalUrl": "https://maritim.bmkg.go.id/apidoc"
+  },
+  "bmkg-priok": {
+    "url": "https://maritim.bmkg.go.id/marine2026-data/pelabuhan/XJ001.json",
+    "checkedAt": "2026-10-15T15:48:43.939237+00:00",
+    "status": 200,
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 15:48:45 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "11387",
+      "Access-Control-Allow-Origin": "*",
+      "Last-Modified": "Thu, 15 Oct 2026 00:02:26 GMT",
+      "access-control-allow-headers": "*"
+    },
+    "bytes": 11387,
+    "finalUrl": "https://maritim.bmkg.go.id/marine2026-data/pelabuhan/XJ001.json"
+  },
+  "bmkg-port-meta": {
+    "url": "https://maritim.bmkg.go.id/marine2026-data/meta/pelabuhan.json",
+    "checkedAt": "2026-10-15T15:48:43.946210+00:00",
+    "status": 200,
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 15:48:45 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "127670",
+      "Access-Control-Allow-Origin": "*",
+      "Last-Modified": "Wed, 09 Sep 2026 08:31:50 GMT",
+      "access-control-allow-headers": "*"
+    },
+    "bytes": 127670,
+    "finalUrl": "https://maritim.bmkg.go.id/marine2026-data/meta/pelabuhan.json"
+  },
+  "bmkg-tide-page": {
+    "url": "https://maritim.bmkg.go.id/cuaca/pasut",
+    "checkedAt": "2026-10-15T15:48:43.949830+00:00",
+    "status": 200,
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 15:48:45 GMT",
+      "Content-Type": "text/html;charset=utf-8"
+    },
+    "bytes": 148254,
+    "finalUrl": "https://maritim.bmkg.go.id/cuaca/pasut"
+  },
+  "bbws-monitor": {
+    "url": "https://hkabbwscc.higertech.com/Home/TabelMonitoring",
+    "checkedAt": "2026-10-15T15:48:43.955862+00:00",
+    "status": 200,
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 15:48:44 GMT",
+      "Content-Type": "text/html; charset=utf-8"
+    },
+    "bytes": 68789,
+    "finalUrl": "https://hkabbwscc.higertech.com/Home/TabelMonitoring",
+    "sanitization": "HTML browser map key redacted. Relevant HTTP headers retained; cookies omitted from all receipts."
+  },
+  "bbws-home": {
+    "url": "https://sda.pu.go.id/balai/bbwscilicis/page/home",
+    "checkedAt": "2026-10-15T15:48:43.956470+00:00",
+    "error": "<urlopen error [Errno 54] Connection reset by peer>"
+  },
+  "bbws-awlr": {
+    "url": "https://hkabbwscc.higertech.com/Home/GetAwlrLastReading",
+    "checkedAt": "2026-10-15T15:49:51.248069+00:00",
+    "status": 200,
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 15:49:51 GMT",
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    "bytes": 4708
+  },
+  "bbws-arr": {
+    "url": "https://hkabbwscc.higertech.com/Home/GetArrLastReading",
+    "checkedAt": "2026-10-15T15:49:51.251183+00:00",
+    "status": 200,
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 15:49:51 GMT",
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    "bytes": 2524
+  },
+  "bbws-combined": {
+    "url": "https://hkabbwscc.higertech.com/Home/GetAwlrArrLastReading",
+    "checkedAt": "2026-10-15T15:49:51.252243+00:00",
+    "status": 200,
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 15:49:51 GMT",
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    "bytes": 730
+  }
+}

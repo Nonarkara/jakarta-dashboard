@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "id": "esa-worldcover-2021-jakarta",
+  "name": "ESA WorldCover 2021 v200",
+  "tier": "satellite-classification-reference",
+  "sourceUrl": "https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/ESA_WorldCover_10m_2021_v200_S09E105_Map.tif",
+  "sourceTile": "S09E105",
+  "sourceCrs": "EPSG:4326",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "doi": "https://doi.org/10.5281/zenodo.7254221",
+  "attribution": "© ESA WorldCover project 2021 / Contains modified Copernicus Sentinel data (2021) processed by ESA WorldCover consortium",
+  "periodStart": "2021-01-01T00:00:00Z",
+  "periodEnd": "2021-12-31T23:59:59Z",
+  "retrievedAt": "2026-10-15T15:50:12.907824+00:00",
+  "requestedBounds": [
+    106.65,
+    -6.4,
+    107.0,
+    -6.08
+  ],
+  "bounds": [
+    106.65,
+    -6.4,
+    107.0,
+    -6.08
+  ],
+  "imageCoordinates": [
+    [
+      106.65,
+      -6.08
+    ],
+    [
+      107.0,
+      -6.08
+    ],
+    [
+      107.0,
+      -6.4
+    ],
+    [
+      106.65,
+      -6.4
+    ]
+  ],
+  "scope": "Rectangular mainland Jakarta reference window; not administrative DKI totals; offshore islands excluded.",
+  "nativeResolutionMetres": 10,
+  "nativePixelDegrees": 8.333333333333333e-05,
+  "nativeWidth": 4200,
+  "nativeHeight": 3840,
+  "nativeCells": 16128000,
+  "nodataValue": 0,
+  "nodataCells": 0,
+  "validCells": 16128000,
+  "classes": [
+    {
+      "value": 10,
+      "nameEn": "Tree cover",
+      "nameId": "Tutupan pohon",
+      "color": "#006400",
+      "cells": 2907416
+    },
+    {
+      "value": 20,
+      "nameEn": "Shrubland",
+      "nameId": "Semak",
+      "color": "#ffbb22",
+      "cells": 1183
+    },
+    {
+      "value": 30,
+      "nameEn": "Grassland",
+      "nameId": "Padang rumput",
+      "color": "#ffff4c",
+      "cells": 648046
+    },
+    {
+      "value": 40,
+      "nameEn": "Cropland",
+      "nameId": "Lahan pertanian",
+      "color": "#f096ff",
+      "cells": 288161
+    },
+    {
+      "value": 50,
+      "nameEn": "Built-up",
+      "nameId": "Area terbangun",
+      "color": "#fa0000",
+      "cells": 11169514
+    },
+    {
+      "value": 60,
+      "nameEn": "Bare / sparse vegetation",
+      "nameId": "Tanah terbuka / vegetasi jarang",
+      "color": "#b4b4b4",
+      "cells": 50468
+    },
+    {
+      "value": 70,
+      "nameEn": "Snow and ice",
+      "nameId": "Salju dan es",
+      "color": "#f0f0f0",
+      "cells": 0
+    },
+    {
+      "value": 80,
+      "nameEn": "Permanent water bodies",
+      "nameId": "Perairan permanen",
+      "color": "#0064c8",
+      "cells": 1038171
+    },
+    {
+      "value": 90,
+      "nameEn": "Herbaceous wetland",
+      "nameId": "Lahan basah herba",
+      "color": "#0096a0",
+      "cells": 20407
+    },
+    {
+      "value": 95,
+      "nameEn": "Mangroves",
+      "nameId": "Mangrove",
+      "color": "#00cf75",
+      "cells": 4634
+    },
+    {
+      "value": 100,
+      "nameEn": "Moss and lichen",
+      "nameId": "Lumut dan liken",
+      "color": "#fae6a0",
+      "cells": 0
+    }
+  ],
+  "display": {
+    "path": "/data/jakarta-v1/worldcover-2021-reference.png",
+    "width": 2100,
+    "height": 1920,
+    "resampling": "nearest-neighbour 2:1 categorical display only",
+    "nominalResolutionMetres": 20,
+    "sha256": "649ab1f7cfa5b384e88950723a0ce66db02f2ecf191828538c22c42a6ebe538e",
+    "bytes": 660089
+  },
+  "rawCrop": {
+    "evidencePath": "data/source-evidence/terrain-satellite-2026-10-15/worldcover-2021-jakarta-native.tif",
+    "sha256": "4f926e3f19c6d437eb74dde957f845b7de032b19dff4bca6e1f50e70dcafaa1f",
+    "bytes": 1116794
+  },
+  "limitationsEn": "Historical 2021 land-cover classification, not current flood extent, ground elevation, measured impermeability or hydraulic capacity. Counts are native cells within a rectangular window, not area estimates or DKI administrative totals. Water class is permanent water, not a dated flood observation. Display uses nearest-neighbour resampling; source classifications can be wrong.",
+  "limitationsId": "Klasifikasi tutupan lahan historis 2021, bukan genangan terkini, elevasi tanah, kedap air terukur, atau kapasitas hidraulik. Jumlah sel asli berasal dari jendela persegi panjang, bukan luas atau total administratif DKI. Kelas air menunjukkan perairan permanen, bukan pengamatan banjir bertanggal. Tampilan memakai resampling tetangga terdekat; klasifikasi sumber dapat keliru."
+}

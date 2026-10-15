@@ -60,7 +60,7 @@ function renderCityContext(){
 }
 
 let paperInsight=null,paperFlood=null,paperLoad=null,paperReferences={};
-const PAPER_REFERENCES=['waterways-manifest.json','traffic-cameras-manifest.json','hydrology-reference.json','toll-cameras.json','ispu-reference.json','official-drainage-manifest.json','official-polders-manifest.json'];
+const PAPER_REFERENCES=['waterways-manifest.json','traffic-cameras-manifest.json','hydrology-reference.json','toll-cameras.json','ispu-reference.json','official-drainage-manifest.json','official-polders-manifest.json','worldcover-2021-reference.json'];
 async function loadPaperData(){
  if(paperInsight&&paperFlood)return;
  if(paperLoad)return paperLoad;
@@ -120,6 +120,7 @@ function renderPaperInventory(){
   +row('Tautan video tol publik','Public toll video links',Number.isInteger(toll?.count)&&Array.isArray(toll.streams)&&toll.count===toll.streams.length?counted(toll.count):missing,checked(toll,t('tautan penerbit; diputar atas permintaan','publisher links; played on request')))
   +row('Garis saluran mikro resmi','Official micro-drain lines',referenceCount('official-drainage-manifest.json','official-reference-geometry'),checked(drains,'DSDA · '+t('referensi geometri; tanggal sumber tidak diketahui','geometry reference; source date unknown'))+(drains?'<br>'+counted(drains.sourceRecordCount)+' '+t('rekaman sumber','source records')+' · '+counted(drains.excluded)+' '+t('ditahan','withheld'):''))
   +row('Batas polder resmi','Official polder boundaries',referenceCount('official-polders-manifest.json','official-reference-geometry'),checked(polders,'DSDA · '+t('referensi geometri; tanggal sumber tidak diketahui','geometry reference; source date unknown'))+(polders?'<br>'+counted(polders.sourceInvalidPolygonCount)+' '+t('poligon sumber bermasalah; tidak diperbaiki','source polygons with geometry issues; not repaired'):''))
+  +row('Tutupan lahan WorldCover','WorldCover land cover',paperReferences['worldcover-2021-reference.json']?.tier==='satellite-classification-reference'?counted(paperReferences['worldcover-2021-reference.json'].nativeCells)+' '+t('sel asli · 2021','native cells · 2021'):missing,checked(paperReferences['worldcover-2021-reference.json'],t('klasifikasi satelit historis; persegi panjang daratan, bukan total DKI','historical satellite classification; mainland rectangle, not DKI totals')))
   +'</dl>';
 }
 let paperCatalog=null,paperCatalogLoad=null,paperCatalogState='idle',paperCatalogRejected=0;

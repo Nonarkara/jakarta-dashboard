@@ -1,3 +1,4 @@
+import { handleCoastal } from "./coastal.js";
 import { handleHydrology } from "./hydrology.js";
 import { handleJakarta } from "./jakarta.js";
 // Cloudflare Worker entry for jakarta-3d-atlas.
@@ -871,6 +872,7 @@ async function routeRequest(request: Request, env: Env): Promise<Response> {
   if (path === WATERWAYS_PMTILES_PATH) return servePmtilesFromR2(request, env, WATERWAYS_PMTILES_R2_KEY);
   if (path === "/jakarta-official-drainage.pmtiles") return servePmtilesFromR2(request, env, "networks/jakarta-official-drainage-v1.pmtiles");
 
+  if (path === "/api/atlas/coastal") return handleCoastal();
   if (path === "/api/atlas/environment") return handleEnvironment();
   if (path === "/api/atlas/rainfall") return handleRainfall();
   if (path === "/api/atlas/watch") return handleCityWatch();

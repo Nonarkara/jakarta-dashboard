@@ -111,7 +111,7 @@ context.lang='id';vm.runInContext('renderPaper();',context);
 assert.match(node('paper-riskmix').innerHTML,/>Berat</,'Indonesian renderer restores publisher classes');
 assert.ok(node('paper-inventory').innerHTML.includes('Fitur jalur air'),'inventory changes language');
 context.lang='en';vm.runInContext('officialContext=null;officialProjects=null;officialFlood=null;paperInsight=null;paperFlood=null;paperReferences={};renderPaper();',context);
-assert.equal((node('paper-inventory').innerHTML.match(/<dd>Unavailable/g)||[]).length,12,'twelve missing inventory sources remain unavailable instead of fabricated zero');
+assert.equal((node('paper-inventory').innerHTML.match(/<dd>Unavailable/g)||[]).length,13,'thirteen missing inventory sources remain unavailable instead of fabricated zero');
 assert.equal(node('paper-exposure').innerHTML,'<p>Unavailable</p>','missing chart data has an explicit state');
 vm.runInContext("paperReferences={'waterways-manifest.json':fixtures.references['waterways-manifest.json']};renderPaper();",context);
 assert.ok(node('paper-inventory').innerHTML.includes('<dd>'+data('waterways-manifest.json').count),'available reference inventory survives unavailable chart feeds');
@@ -158,3 +158,10 @@ assert.ok(!/<details id="paper-catalog"[^>]*\bopen\b/.test(html),'source ledger 
 assert.ok(html.includes('5 km')&&html.includes('12-second')&&html.includes('12 detik'),'Around here exact scope and loading deadline remain stated');
 
 console.log('PASS research paper: paper/legal/about panes bilingual, figures computed from shipped data, builder identity with non-affiliation, house presentation rules kept');
+
+// New historical reference is source-backed and survives missing chart data.
+vm.runInContext('paperInsight=null;paperFlood=null;renderPaperInventory();',context);
+assert.ok(node('paper-inventory').innerHTML.includes('WorldCover land cover'));
+assert.match(html,/Coastal tide and historical land cover/);
+assert.match(html,/vertical datum is not published/);
+assert.match(html,/Built-up does not measure impermeability/);
