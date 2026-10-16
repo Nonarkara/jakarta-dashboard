@@ -266,6 +266,9 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
 
   function render(body) {
     if (active() !== 'rain' || !body) return;
+    // Every control redraws the map and then repaints the panel from the same
+    // module, because renderLensEvidence() clears this body wholesale.
+    const repaint = () => render(body.parentElement?.querySelector('#atlas-lens-body') || body);
     if (!data) { body.append(el('p', t('Loading the pressure model…', 'Memuat model tekanan…'), 'synoptic-note')); return; }
     if (!data.available) {
       body.append(el('p', t('The pressure model returned no usable field. No isobar is drawn and no low is implied.', 'Model tekanan tidak mengembalikan medan yang dapat dipakai. Tidak ada isobar yang digambar dan tidak ada rendah yang diasumsikan.'), 'synoptic-note'));
@@ -305,22 +308,23 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
     label.textContent = Number.isFinite(rel)
       ? (rel === 0 ? t('now', 'sekarang') : (rel > 0 ? '+' + rel + ' h' : rel + ' h'))
       : '—';
-    back.addEventListener('click', () => { state.index = Math.max(0, state.index - 6); draw(); render(body.parentElement?.querySelector('#atlas-lens-body') || body); });
-    fwd.addEventListener('click', () => { state.index = Math.min((data.hours?.length || 1) - 1, state.index + 6); draw(); render(body.parentElement?.querySelector('#atlas-lens-body') || body); });
+    back.addEventListener('click', () => { state.index = Math.max(0, state.index - 6); draw(); repaint(); });
+    fwd.addEventListener('click', () => { state.index = Math.min((data.hours?.length || 1) - 1, state.index + 6); draw(); repaint(); });
     scrub.append(back, label, fwd);
     section.append(scrub);
 
     const toggles = el('div', undefined, 'synoptic-toggles');
-    const toggle = (on, en, id, click) => {
-      const b = el('button', t(on ? en[1] : en[0])); b.type = 'button';
+    // Both languages for BOTH states. lensText(en, id) returns undefined when
+    const toggle = (id, off, on, click) => {
+      const b = el('button', t(...(state[id] ? on : off))); b.type = 'button';
       b.dataset.synopticToggle = id;
-      b.setAttribute('aria-pressed', String(on));
+      b.setAttribute('aria-pressed', String(state[id]));
       b.addEventListener('click', click);
       toggles.append(b);
       return b;
     };
-    toggle(state.isobars, ['Isobars', 'Isobar (on)'], 'isobars', () => { state.isobars = !state.isobars; draw(); render(body.parentElement?.querySelector('#atlas-lens-body') || body); });
-    toggle(state.wind850, ['850 hPa wind', 'Angin 850 hPa (nyala)'], 'wind850', () => { state.wind850 = !state.wind850; draw(); render(body.parentElement?.querySelector('#atlas-lens-body') || body); });
+    toggle('isobars', ['Isobars', 'Isobar'], ['Isobars on', 'Isobar nyala'], () => { state.isobars = !state.isobars; draw(); repaint(); });
+    toggle('wind850', ['850 hPa wind', 'Angin 850 hPa'], ['850 hPa wind on', 'Angin 850 hPa nyala'], () => { state.wind850 = !state.wind850; draw(); repaint(); });
     section.append(toggles);
 
     section.append(el('p', t(

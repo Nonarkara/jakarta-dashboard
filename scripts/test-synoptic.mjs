@@ -164,6 +164,30 @@ assert.match(app, /pick\('satellite-rain'/, 'IMERG satellite rain is one button 
 // Both languages. A missing Indonesian string is a silent blank.
 assert.ok(client.includes('Konteks sinoptik'), 'the panel has an Indonesian title');
 assert.ok(client.includes('Tidak ada isobar'), 'the Indonesian failure copy says no isobar is drawn');
+
+// lensText(en, id) returns `id` — undefined when called with ONE argument — on
+// the Bahasa page. It fails by rendering an empty control with no console
+// error, so every call in this module is checked for a second argument.
+const singleArg = [];
+for (const m of client.matchAll(/(?<![.\w])t\(([^()]*)\)/g)) {
+  // A spread of a bilingual pair counts; a bare literal does not.
+  if (!m[1].includes(',') && !m[1].includes('...')) singleArg.push(m[0].slice(0, 60));
+}
+assert.deepEqual(singleArg, [], 'every t() call passes both languages: ' + singleArg.join(' | '));
+// The same trap in the lens wiring it owns.
+const appSingle = [];
+for (const m of app.matchAll(/lensText\(([^()]*)\)/g)) {
+  if (!m[1].includes(',') && !m[1].includes('...')) appSingle.push(m[0].slice(0, 60));
+}
+assert.deepEqual(appSingle, [], 'every lensText() call passes both languages: ' + appSingle.join(' | '));
+// And the exact defect that shipped an empty button on the live site.
+assert.doesNotMatch(client, /t\(on \? en\[1\] : en\[0\]\)/,
+  'a toggle must not pass only its on-label: that renders an empty button in Bahasa');
+// Both states of both toggles exist in Bahasa, not just the English default.
+for (const label of ["'Isobar'", "'Isobar nyala'", "'Angin 850 hPa'", "'Angin 850 hPa nyala'"]) {
+  assert.ok(client.includes(label), `the toggle labels are bilingual: ${label}`);
+}
+assert.ok(client.includes('Tidak ada isobar'), 'the Indonesian failure copy says no isobar is drawn');
 assert.match(app, /rain: \['The rain system, from city to region', 'Sistem hujan, dari kota ke kawasan'\]/,
   'the rain lens title exists in both languages');
 
