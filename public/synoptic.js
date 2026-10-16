@@ -285,7 +285,8 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
     const facts = el('dl', undefined, 'synoptic-facts');
     const fact = (k, v) => { facts.append(el('dt', k)); facts.append(el('dd', v)); };
     fact(t('Valid', 'Berlaku'), hour ? clock(hour) : '—');
-    fact(t('Cells', 'Sel'), data.cellCount + ' ' + t('of', 'dari') + ' ' + data.requestedPoints + ' · ' + number(data.spacingKm, 0) + ' km ' + t('apart', 'jarak'));
+    fact(t('Cells', 'Sel'), data.cellCount + ' ' + t('of', 'dari') + ' ' + data.requestedPoints + ' · ' + number(data.spacingKm, 0) + ' km ' + t('grid step', 'langkah kisi'));
+    if (data.extentKm) fact(t('Box', 'Kotak'), number(data.extentKm.eastWest, 0) + ' × ' + number(data.extentKm.northSouth, 0) + ' km');
     const low = lowCentre(data.cells, state.index);
     fact(t('Lowest pressure', 'Tekanan terendah'), low
       ? number(low.mslpHpa, 0) + ' hPa ' + (Number.isFinite(low.tendencyHpa)

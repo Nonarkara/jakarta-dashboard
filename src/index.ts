@@ -986,7 +986,12 @@ async function handleSynoptic(): Promise<Response> {
     available: true, contract: "synoptic-v1", checkedAt: new Date().toISOString(),
     requestedPoints: SYNOPTIC_POINTS.length,
     cellCount: cells.length,
-    spacingKm: medianSpacingKm(cells),
+    spacingKm: gridStepKm(cells),
+    nearestPairKm: medianSpacingKm(cells),
+    extentKm: {
+      northSouth: Math.round(distanceKm(Math.min(...cells.map((c: any) => c.lat)), 106, Math.max(...cells.map((c: any) => c.lat)), 106) * 10) / 10,
+      eastWest: Math.round(distanceKm(-6, Math.min(...cells.map((c: any) => c.lng)), -6, Math.max(...cells.map((c: any) => c.lng))) * 10) / 10,
+    },
     bbox: {
       minLat: Math.min(...cells.map((c: any) => c.lat)), maxLat: Math.max(...cells.map((c: any) => c.lat)),
       minLng: Math.min(...cells.map((c: any) => c.lng)), maxLng: Math.max(...cells.map((c: any) => c.lng)),
@@ -1002,6 +1007,28 @@ async function handleSynoptic(): Promise<Response> {
     isobarNote: "Isobars are interpolated between the provider's own cells, not measured on the lines. A contour between two cells carries no more accuracy than the spacing between them.",
     note: "Pressure pattern and mid-level flow only. No rainfall, no cloud height and no storm is inferred from them.",
   }, { headers: { "cache-control": "public, max-age=600" } });
+}
+
+// The gap to a cell's own NEAREST neighbour. medianSpacingKm() measures every
+// pairwise distance, which on a regular 5×5 grid is dominated by the diagonals
+// and the corners — it reported ~499 km for a grid whose actual step is ~175 km.
+// That number bounds how far an interpolated isobar can be trusted, so it has
+// to be the step, and the extent is reported separately.
+function gridStepKm(cells: { lat: number; lng: number }[]): number | null {
+  if (cells.length < 2) return null;
+  const steps: number[] = [];
+  for (let i = 0; i < cells.length; i++) {
+    let nearest = Infinity;
+    for (let j = 0; j < cells.length; j++) {
+      if (i === j) continue;
+      nearest = Math.min(nearest, distanceKm(cells[i].lat, cells[i].lng, cells[j].lat, cells[j].lng));
+    }
+    if (Number.isFinite(nearest)) steps.push(nearest);
+  }
+  if (!steps.length) return null;
+  steps.sort((a, b) => a - b);
+  const mid = steps.length >> 1;
+  return Math.round((steps.length % 2 ? steps[mid] : (steps[mid - 1] + steps[mid]) / 2) * 10) / 10;
 }
 
 function medianSpacingKm(cells: { lat: number; lng: number }[]): number | null {

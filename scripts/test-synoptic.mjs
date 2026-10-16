@@ -171,4 +171,17 @@ assert.match(app, /rain: \['The rain system, from city to region', 'Sistem hujan
 // line, and a line drawn from two points is not a field.
 assert.match(server, /cells\.length < 4/, 'too few cells is an explicit outage, not a contour');
 
+// The number that bounds contour accuracy is the gap to a cell's own NEAREST
+// neighbour. A median over ALL pairs is dominated by the diagonals: on a 5×5
+// grid it reported ~499 km for a grid whose step is ~175 km, which tells the
+// reader the field is coarser than it is.
+assert.match(server, /spacingKm: gridStepKm\(cells\)/, 'the reported spacing is the grid step, not the median pairwise distance');
+const gridStepBody = server.match(/function gridStepKm[\s\S]*?\n\}/)?.[0] || '';
+assert.match(gridStepBody, /if \(i === j\) continue;/, 'gridStepKm compares every other cell, so it really finds the nearest');
+// Any index arithmetic ("only look at the next cell") silently turns a
+// nearest-neighbour search into a positional guess.
+assert.doesNotMatch(gridStepBody, /j\s*[!=]==?\s*i\s*[+-]/, 'gridStepKm must not shortcut the neighbour search by index');
+assert.match(server, /nearestPairKm: medianSpacingKm\(cells\)/, 'the wider pairwise figure is still reported, not hidden');
+assert.match(client, /grid step/, 'the panel labels the number as the grid step');
+
 console.log('test-synoptic: ok');
