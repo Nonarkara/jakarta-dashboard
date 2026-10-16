@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="id" data-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cara dibuat · JKTx</title>
+<meta name="description" content="How the Jakarta atlas is built from open public data, satellites and arithmetic. Every figure is read from the files the site ships.">
+<link rel="icon" href="/brand/jktx-symbol-v2.png">
+<style>
+:root{--bg:#0f1b33;--raised:#16264a;--strong:#1e3260;--line:#8590ad;--ink:#f1e7d0;--dim:#c3bba7;--accent:#d8a24a;--lacquer:#c9644a;
+  --display:32px;--body:14px;--micro:11px;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,"Noto Sans Thai",sans-serif;--w:1080px}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f1e7d0;--raised:#fbf5e6;--strong:#e5d8b8;--line:#776c58;--ink:#0f1b33;--dim:#3f4660;--accent:#7a3e1d;--lacquer:#9c3d24}}
+*{box-sizing:border-box;margin:0;padding:0}
+html[data-lang="id"] [lang="en"]:not(html),html[data-lang="en"] [lang="id"]:not(html){display:none}
+body{background:var(--bg);color:var(--ink);font:var(--body)/1.55 var(--sans);-webkit-text-size-adjust:100%}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{width:min(var(--w),calc(100% - 32px));margin:0 auto}
+.bar{border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:2}
+.bar .wrap{display:flex;align-items:center;gap:8px;min-height:48px}
+.bar .brand{font:700 var(--body) var(--sans);letter-spacing:.06em;color:var(--ink);text-decoration:none;margin-right:auto}
+.bar a,.bar button{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;font:var(--micro) var(--mono);text-transform:uppercase;letter-spacing:.08em;text-decoration:none}
+.bar button{background:none;border:1px solid var(--line);color:var(--ink);cursor:pointer}
+.eyebrow{font:var(--micro) var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--dim)}
+h1,h2{font:700 var(--display)/1.1 var(--sans);letter-spacing:-.01em;text-wrap:balance}
+h2{margin:0 0 12px}
+h3{font:700 var(--body) var(--sans)}
+section{padding:40px 0;border-bottom:1px solid var(--line)}
+.lede{max-width:68ch;color:var(--dim);margin-top:12px}
+.hero{display:grid;gap:24px;padding:32px 0 40px}
+.big{font:700 var(--display)/1 var(--mono);color:var(--accent)}
+.figures{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.figures div{padding:12px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.figures b{display:block;font:700 var(--body) var(--mono);color:var(--ink)}
+.figures span{font:var(--micro) var(--mono);color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
+.live{display:grid;gap:16px}
+.stage{position:relative;border:1px solid var(--line);background:var(--raised)}
+.stage{aspect-ratio:1/1;overflow:hidden}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.caption{font:var(--micro)/1.6 var(--mono);color:var(--dim)}
+.formula{font:var(--body)/1.7 var(--mono);color:var(--ink);background:var(--raised);border-left:2px solid var(--accent);padding:10px 12px;overflow-x:auto;white-space:pre}
+.pipe{list-style:none;display:grid;gap:0;counter-reset:s;border-top:1px solid var(--line)}
+.pipe li{display:grid;grid-template-columns:40px 1fr;gap:4px 12px;padding:12px 0;border-bottom:1px solid var(--line);counter-increment:s}
+.pipe li::before{content:counter(s,decimal-leading-zero);grid-row:1/4;font:var(--micro) var(--mono);color:var(--accent);padding-top:2px}
+.pipe code,.maths code,td code{font:var(--micro) var(--mono);color:var(--dim)}
+.table{overflow-x:auto;border-top:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th,td{text-align:left;vertical-align:top;padding:8px 12px 8px 0;border-bottom:1px solid var(--line)}
+th{font:var(--micro) var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--dim);font-weight:400}
+.stack{display:flex;height:28px;border:1px solid var(--line);margin:8px 0}
+.stack i{display:block;height:100%;border-right:1px solid var(--bg)}
+.legend{list-style:none;display:grid;gap:4px;font:var(--micro) var(--mono);color:var(--dim)}
+.legend li{display:flex;gap:8px;align-items:center}
+.legend s{display:inline-block;width:10px;height:10px;text-decoration:none}
+.maths{display:grid;gap:24px}
+.maths article{display:grid;gap:8px}
+.rules{list-style:none;display:grid;border-top:1px solid var(--line)}
+.rules li{padding:12px 0;border-bottom:1px solid var(--line);display:grid;gap:4px}
+.status{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line);margin:12px 0}
+.status div{padding:12px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+footer{padding:32px 0 48px;color:var(--dim)}
+@media (min-width:760px){
+  .hero{grid-template-columns:2fr 1fr;align-items:end}
+  .figures,.status{grid-template-columns:repeat(4,1fr)}
+  .live{grid-template-columns:2fr 1fr;align-items:start}
+  .maths{grid-template-columns:1fr 1fr}
+  .pipe{grid-template-columns:repeat(7,1fr);border-top:0}
+  .pipe li{grid-template-columns:1fr;border-bottom:0;border-top:2px solid var(--line);padding:12px 12px 0 0}
+  .pipe li::before{grid-row:auto}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="bar"><div class="wrap">
+  <a class="brand" href="/">JKTx</a>
+  <a href="/"><span lang="id">Dasbor</span><span lang="en">Dashboard</span></a>
+  <a href="/atlas">Atlas</a>
+  <button type="button" id="lang" aria-label="Switch language"><span lang="id">English</span><span lang="en">Bahasa</span></button>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <div>
+      <p class="eyebrow"><span lang="id">Riset · metode</span><span lang="en">Research · method</span></p>
+      <h1><span lang="id">Cara atlas ini dibuat</span><span lang="en">How this atlas is built</span></h1>
+      <p class="lede"><span lang="id">Data publik terbuka, produk satelit, dan beberapa halaman aritmetika. Setiap angka di halaman ini dibaca dari berkas yang dikirim situs ini atau dari API langsungnya, saat Anda membukanya. Tidak ada yang diketik tangan.</span><span lang="en">Open public data, satellite products and a few pages of arithmetic. Every number on this page is read from the files this site ships, or from its live API, at the moment you open it. None of it is typed in by hand.</span></p>
+    </div>
+    <div>
+      <p class="big" id="fig-buildings">—</p>
+      <p class="eyebrow"><span lang="id">bangunan, masing-masing dengan sumber tingginya</span><span lang="en">buildings, each with the source of its height</span></p>
+    </div>
+  </section>
+
+  <div class="figures" id="figures" aria-live="polite"></div>
+
+  <section aria-labelledby="h-live">
+    <p class="eyebrow"><span lang="id">Langsung · model Open-Meteo</span><span lang="en">Live · Open-Meteo model</span></p>
+    <h2 id="h-live"><span lang="id">Matematika yang sedang berjalan</span><span lang="en">The maths, running now</span></h2>
+    <div class="live">
+      <div>
+        <div class="stage"><canvas id="field" width="720" height="720" role="img" aria-label="Isobars, 850 hPa air flow and a 24 hour trajectory from Jakarta"></canvas><canvas id="flow" width="720" height="720" aria-hidden="true"></canvas></div>
+        <p class="caption" id="live-caption">…</p>
+      </div>
+      <div>
+        <p><span lang="id">Medan ini dihitung di peramban Anda, dari sel model yang sama yang digunakan lensa hujan dan kabut di atlas. Garis tipis adalah isobar tekanan permukaan laut setiap 2 hPa. Partikel bergerak mengikuti angin 850 hPa (sekitar 1,5 km di atas tanah). Garis emas adalah lintasan sebuah parsel udara yang dilepas dari Jakarta sekarang, dengan tanda setiap 6 jam.</span><span lang="en">This field is computed in your browser, from the same model cells the atlas rain and haze lenses use. Thin lines are sea-level isobars every 2 hPa. Particles move with the 850 hPa wind (about 1.5 km up). The gold line is the path of one air parcel released from Jakarta now, marked every 6 hours.</span></p>
+        <p class="formula" style="margin-top:12px">θ = from + 180°
+u = s · sin θ     v = s · cos θ
+Δφ = v·Δt / 110.574 km
+Δλ = u·Δt / (111.32 km · cos φ)</p>
+        <p class="caption" style="margin-top:8px"><span lang="id">Langkah Euler maju, Δt = 1 jam, angin dari jam tempat parsel berada. Berhenti di tepi data. Lintasan bukan gumpalan asap: tanpa konsentrasi, tanpa pencampuran.</span><span lang="en">Forward Euler, Δt = 1 hour, using the wind of the hour the parcel is in. It stops at the edge of the data. A path is not a plume: no concentration, no mixing.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-pipe">
+    <h2 id="h-pipe"><span lang="id">Dari penerbit ke layar</span><span lang="en">From publisher to screen</span></h2>
+    <ol class="pipe">
+      <li><h3><span lang="id">Ambil</span><span lang="en">Fetch</span></h3><p><span lang="id">Skrip bertanggal mengunduh dari penerbit; tangkapan mentah disimpan.</span><span lang="en">Dated scripts download from the publisher; raw captures are kept.</span></p><code>scripts/prepare-*.py</code></li>
+      <li><h3><span lang="id">Saring</span><span lang="en">Gate</span></h3><p><span lang="id">Kotak wilayah, daftar kolom, sha256. Baris gagal dihitung, bukan dibuang diam-diam.</span><span lang="en">Region box, field allow-lists, sha256. Failed rows are counted, not dropped silently.</span></p><code>quarantine counts</code></li>
+      <li><h3><span lang="id">Turunkan</span><span lang="en">Derive</span></h3><p><span lang="id">Tampilan gabungan dihitung luring, dengan sidik input.</span><span lang="en">Combined views are computed offline, with input digests.</span></p><code>prepare-insight-views.py</code></li>
+      <li><h3><span lang="id">Panggang</span><span lang="en">Bake</span></h3><p><span lang="id">JSON berversi dan PMTiles di R2, dibaca per rentang byte.</span><span lang="en">Versioned JSON and PMTiles on R2, read by byte range.</span></p><code>jakarta-v1.pmtiles</code></li>
+      <li><h3><span lang="id">Gerbang rilis</span><span lang="en">Release gate</span></h3><p><span lang="id">Tipe, verifikasi, semua uji; hanya byte yang di-commit yang dikirim, lalu dicek di situs langsung.</span><span lang="en">Types, verify, every test; only committed bytes ship, then are checked on the live site.</span></p><code>deploy-live.sh</code></li>
+      <li><h3><span lang="id">Layani</span><span lang="en">Serve</span></h3><p><span lang="id">Satu Cloudflare Worker: rute API dengan gerbang waktu, satuan dan jarak.</span><span lang="en">One Cloudflare Worker: API routes with time, unit and distance gates.</span></p><code>src/index.ts</code></li>
+      <li><h3><span lang="id">Tampilkan</span><span lang="en">Render</span></h3><p><span lang="id">MapLibre dan modul lensa; setiap panel menyebut sumber, tingkat, tanggal.</span><span lang="en">MapLibre and lens modules; every panel names source, tier, date.</span></p><code>public/*.js</code></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="h-sat">
+    <h2 id="h-sat"><span lang="id">Satelit dan instrumen</span><span lang="en">Satellites and instruments</span></h2>
+    <p class="lede"><span lang="id">Citra dibaca dari NASA GIBS dan JMA, dengan tanggal terbit masing-masing. Tanggal yang belum terjadi tidak pernah ditampilkan sebagai terkini. Piksel kosong bukan tanda aman.</span><span lang="en">Imagery is read from NASA GIBS and JMA, each with its own publication date. A date that has not happened yet is never shown as current. A missing pixel is not an all-clear.</span></p>
+    <div class="table" style="margin-top:16px"><table>
+      <thead><tr><th><span lang="id">Produk</span><span lang="en">Product</span></th><th><span lang="id">Wahana · sensor</span><span lang="en">Platform · sensor</span></th><th><span lang="id">Resolusi</span><span lang="en">Resolution</span></th><th><span lang="id">Yang ditunjukkan</span><span lang="en">What it shows</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="id">Deteksi termal</span><span lang="en">Thermal detections</span></td><td>NOAA-20 VIIRS · FIRMS</td><td>375 m</td><td><span lang="id">Titik panas 24 jam, daya radiatif api (MW). Deteksi, bukan kebakaran terkonfirmasi.</span><span lang="en">24 h hotspots, fire radiative power (MW). A detection, not a confirmed fire.</span></td></tr>
+        <tr><td><span lang="id">Warna asli</span><span lang="en">True colour</span></td><td>NOAA-20 VIIRS</td><td>375 m</td><td><span lang="id">Asap sebagaimana terlihat, satelit yang sama dengan FIRMS.</span><span lang="en">Smoke as seen, from the same satellite as FIRMS.</span></td></tr>
+        <tr><td><span lang="id">Aerosol Deep Blue</span><span lang="en">Deep Blue aerosol</span></td><td>NOAA-20 VIIRS</td><td>6 km</td><td><span lang="id">Kedalaman optik aerosol kolom, bukan PM2.5 di permukaan.</span><span lang="en">Column aerosol optical depth, not surface PM2.5.</span></td></tr>
+        <tr><td><span lang="id">Indeks aerosol UV</span><span lang="en">UV aerosol index</span></td><td>NOAA-20 OMPS</td><td>12 × 17 km</td><td><span lang="id">Aerosol penyerap seperti asap, juga di atas awan.</span><span lang="en">Absorbing aerosol such as smoke, also above cloud.</span></td></tr>
+        <tr><td><span lang="id">Aerosol MODIS</span><span lang="en">MODIS aerosol</span></td><td>Terra MODIS</td><td>10 km</td><td><span lang="id">Kedalaman optik aerosol harian.</span><span lang="en">Daily aerosol optical depth.</span></td></tr>
+        <tr><td><span lang="id">Air permukaan</span><span lang="en">Surface water</span></td><td>Terra + Aqua MODIS</td><td>250 m</td><td><span lang="id">Komposit banjir 3 hari.</span><span lang="en">3-day flood composite.</span></td></tr>
+        <tr><td><span lang="id">Cahaya malam</span><span lang="en">Night lights</span></td><td>NOAA-20 VIIRS DNB · Black Marble</td><td>500 m</td><td><span lang="id">Radiansi harian terkoreksi, dibandingkan dengan komposit 2016.</span><span lang="en">Corrected daily radiance, compared with the 2016 composite.</span></td></tr>
+        <tr><td><span lang="id">Hujan satelit</span><span lang="en">Satellite rain</span></td><td>GPM IMERG</td><td>0.1°</td><td><span lang="id">Laju dalam mm/jam, bukan akumulasi harian.</span><span lang="en">Rate in mm/h, not a daily total.</span></td></tr>
+        <tr><td><span lang="id">Puncak awan</span><span lang="en">Cloud tops</span></td><td>Himawari AHI band 13</td><td>2 km</td><td><span lang="id">Suhu kecerahan (K), bingkai 10 menit, maksimal 3 jam lalu.</span><span lang="en">Brightness temperature (K), 10-minute frames, at most 3 h old.</span></td></tr>
+        <tr><td>NDVI</td><td>NOAA-20 VIIRS</td><td>~450 m</td><td><span lang="id">Indeks vegetasi 8 hari, produk NASA.</span><span lang="en">8-day vegetation index, NASA's product.</span></td></tr>
+        <tr><td><span lang="id">Tutupan lahan</span><span lang="en">Land cover</span></td><td>ESA WorldCover 2021 · Sentinel-1/2</td><td>10 m</td><td><span lang="id">11 kelas. Terbangun tidak sama dengan kedap air.</span><span lang="en">11 classes. Built-up does not measure impermeability.</span></td></tr>
+        <tr><td><span lang="id">Tinggi bangunan</span><span lang="en">Building height</span></td><td>Google Open Buildings 2.5D · GHSL</td><td>~4 m · 100 m</td><td><span lang="id">Tinggi per bangunan dan rata-rata area.</span><span lang="en">Per-building and area-average heights.</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="caption" style="margin-top:8px"><span lang="id">Semua angin yang digambar adalah angin model. GIBS tidak menerbitkan produk angin Himawari.</span><span lang="en">All drawn wind is model wind. GIBS publishes no Himawari wind product.</span></p>
+  </section>
+
+  <section aria-labelledby="h-height">
+    <h2 id="h-height"><span lang="id">Dari mana tinggi setiap bangunan berasal</span><span lang="en">Where each building's height comes from</span></h2>
+    <div class="stack" id="height-stack" role="img" aria-label="Height source shares"></div>
+    <ul class="legend" id="height-legend"></ul>
+    <p class="formula" style="margin-top:16px">h = tagged          if 1 ≤ h ≤ 500 m
+  | floors × 3.3 m    if 3 ≤ h ≤ 400 m
+  | min(p75 Google, cap)
+  | min(GHSL, 60 m, cap)
+  | min(type default, cap)
+cap = max(6 m, 4·√A)</p>
+    <p class="caption" style="margin-top:8px"><span lang="id">p75 = persentil ke-75 piksel 2 m di dalam tapak, bukan maksimum: model 4 m membocorkan tetangga yang tinggi ke tepi. Batas cap menghentikan tapak kecil berdiri seperti tiang. Tinggi tidak pernah diskalakan.</span><span lang="en">p75 = the 75th percentile of 2 m pixels inside the footprint, not the maximum: the 4 m model bleeds a tall neighbour into the edges. The cap stops a sliver standing like a pole. Heights are never scaled.</span></p>
+  </section>
+
+  <section aria-labelledby="h-maths">
+    <h2 id="h-maths"><span lang="id">Matematika lainnya</span><span lang="en">The rest of the maths</span></h2>
+    <div class="maths">
+      <article><h3><span lang="id">Isobar · marching squares</span><span lang="en">Isobars · marching squares</span></h3><p class="formula">t = (L − p) / (q − p)
+x = p + t·(q − p)</p><p><span lang="id">Satu titik di setiap sisi kisi yang dilintasi level L. Hanya kotak dengan empat sudut nyata; tidak pernah melintasi sel yang tidak menjawab.</span><span lang="en">One point on each grid edge that level L crosses. Only quads with four real corners; never across a cell that did not answer.</span></p><code>synoptic.js contour()</code></article>
+      <article><h3><span lang="id">Pusat tekanan rendah</span><span lang="en">Low centre</span></h3><p class="formula">isLow = interior ∧ p₀ &lt; p(N,S,E,W)
+Δp = p(t) − p(t − 24 h)</p><p><span lang="id">Minimum di tepi kotak bukan pusat rendah. Kecenderungan 24 jam, karena pasang atmosfer harian menggeser tekanan tropis sekitar 3 hPa dua kali sehari.</span><span lang="en">A minimum on the box edge is not a low. Tendency over 24 h, because the daily atmospheric tide swings tropical pressure about 3 hPa twice a day.</span></p><code>synoptic.js lowCentre()</code></article>
+      <article><h3><span lang="id">Interpolasi jarak terbalik</span><span lang="en">Inverse-distance interpolation</span></h3><p class="formula">w = 1 / d²   (k = 4 nearest)
+reach = 1.6 × grid step</p><p><span lang="id">Di luar jangkauan, nilainya tidak diketahui. Tidak ada ekstrapolasi.</span><span lang="en">Beyond reach the value is unknown. No extrapolation.</span></p><code>flow-canvas.js makeSampler()</code></article>
+      <article><h3><span lang="id">Matahari langsung</span><span lang="en">Live sun</span></h3><p class="formula">alt = asin(sin φ sin δ + cos φ cos δ cos H)</p><p><span lang="id">Algoritma NOAA presisi rendah (sekitar 0,5°) untuk Monas; cahaya kota 3D mengikuti posisi matahari yang dihitung.</span><span lang="en">NOAA low-precision algorithm (about 0.5°) for Monas; the 3D city is lit from the computed sun.</span></p><code>app.js</code></article>
+      <article><h3><span lang="id">Hujan 24 jam, hanya jika lengkap</span><span lang="en">24 h rain, only when complete</span></h3><p class="formula">Σ mm  iff n = 24 ∧ no null ∧ hourly</p><p><span lang="id">Satu jam hilang menjadikan totalnya null, bukan jumlah yang lebih kecil.</span><span lang="en">One missing hour makes the total null, not a smaller sum.</span></p><code>src/index.ts</code></article>
+      <article><h3><span lang="id">Luas poligon bola</span><span lang="en">Spherical polygon area</span></h3><p class="formula">A = R²/2 · |Σ (λ₂ − λ₁)(2 + sin φ₁ + sin φ₂)|</p><p><span lang="id">R = 6 371 008,8 m; lubang dikurangi.</span><span lang="en">R = 6,371,008.8 m; holes subtracted.</span></p><code>prepare-insight-views.py</code></article>
+      <article><h3><span lang="id">Proksi penduduk di lahan berat</span><span lang="en">Residents-on-severe-land proxy</span></h3><p class="formula">P_kel × A_berat / A_terpeta</p><p><span lang="id">Penyebutnya lahan berisiko yang terpetakan, bukan seluruh kelurahan. Tidak pernah dijumlah menjadi total kota.</span><span lang="en">The denominator is risk-mapped land, not the whole kelurahan. Never summed into a city total.</span></p><code>prepare-insight-views.py</code></article>
+      <article><h3><span lang="id">Gerbang jarak dan waktu</span><span lang="en">Distance and time gates</span></h3><p class="formula">haversine(req, cell) ≤ 20 km (35 km air)
+now − t ≤ 3 h ; t ≤ now + 5 min</p><p><span lang="id">Model memetakan permintaan ke selnya sendiri. Sel yang terlalu jauh atau terlalu tua ditolak, dan layar mengatakan "tidak tersedia".</span><span lang="en">A model snaps a request to its own cell. A cell too far away or too old is rejected, and the screen says "unavailable".</span></p><code>src/index.ts</code></article>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-rules">
+    <h2 id="h-rules"><span lang="id">Aturan kejujuran, ditegakkan oleh uji</span><span lang="en">Honesty rules, enforced by tests</span></h2>
+    <ul class="rules">
+      <li><h3><span lang="id">Tidak diketahui adalah null, tidak pernah nol.</span><span lang="en">Unknown is null, never zero.</span></h3><span lang="id">Gerbang yang gagal memberi daftar kosong, bukan nol.</span><span lang="en">A failed gate gives an empty list, not zeros.</span></li>
+      <li><h3><span lang="id">Setiap angka membawa sumber, tingkat, dan tanggal.</span><span lang="en">Every number carries source, tier and date.</span></h3><span lang="id">Tanggal pengambilan bukan tanggal pengamatan; epoch yang tidak diketahui tetap null.</span><span lang="en">Retrieval date is not observation date; an unknown epoch stays null.</span></li>
+      <li><h3><span lang="id">Lintasan bukan gumpalan asap.</span><span lang="en">A path is not a plume.</span></h3><span lang="id">Tanpa konsentrasi, lebar atau massa; berhenti di tepi data.</span><span lang="en">No concentration, width or mass; it stops at the edge of the data.</span></li>
+      <li><h3><span lang="id">Tiga jenis "hijau" tidak pernah dijumlah.</span><span lang="en">The three kinds of "green" are never summed.</span></h3><span lang="id">Indeks NDVI, kelas WorldCover, dan poligon bernama menjawab pertanyaan yang berbeda.</span><span lang="en">An NDVI index, WorldCover classes and named polygons answer different questions.</span></li>
+      <li><h3><span lang="id">Tidak adanya stasiun bukan berarti aman.</span><span lang="en">An absent station is not clearance.</span></h3><span lang="id">Cakupan digambar pada skala mutlak 0–100 %.</span><span lang="en">Coverage is drawn on an absolute 0–100 % scale.</span></li>
+      <li><h3><span lang="id">Muka air memakai datum lokal.</span><span lang="en">Gauge levels are on a local datum.</span></h3><span lang="id">Tidak dikurangkan antarstasiun; pasang tidak digabung dengan sungai karena datum vertikalnya tidak diterbitkan.</span><span lang="en">Never subtracted across stations; tide is never joined to rivers because its vertical datum is not published.</span></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="h-src">
+    <h2 id="h-src"><span lang="id">Daftar sumber</span><span lang="en">The source register</span></h2>
+    <div class="status" id="src-status" aria-live="polite"></div>
+    <p><span lang="id">Buku besar lengkap, dengan lisensi, batasan, dan tanggal per sumber, ada di dasbor (Menu → Riset). Unduh: </span><span lang="en">The full ledger, with licence, limits and dates per source, is on the dashboard (Menu → Research). Download: </span><a href="/data/jakarta-v1/source-catalog.json">JSON</a> · <a href="/data/jakarta-v1/source-catalog.csv">CSV</a> · <a href="/data/jakarta-v1/buildings-stats.json">buildings</a></p>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p class="caption"><span lang="id">Demo riset publik independen, tidak berafiliasi dengan atau didukung oleh Pemprov DKI Jakarta. Untuk peringatan, ikuti BMKG dan BPBD DKI Jakarta.</span><span lang="en">An independent public research demo, not affiliated with or endorsed by the Jakarta provincial government. For warnings follow BMKG and BPBD DKI Jakarta.</span></p>
+</footer>
+<script type="module" src="/research.js"></script>
+</body>
+</html>
