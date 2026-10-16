@@ -1752,6 +1752,14 @@ async function loadObservationController() {
     .finally(() => { observationPending = null; });
   return observationPending;
 }
+let windFieldController = null, windFieldPending = null;
+async function loadWindField() {
+  if (windFieldController) return windFieldController;
+  if (!windFieldPending) windFieldPending = import('./wind-field.js?v=' + encodeURIComponent(ATLAS_BUILD_TAG))
+    .then(module => { windFieldController = module.createWindField(mapInstance, {text:lensText,active:()=>activeLens,buildTag:ATLAS_BUILD_TAG}); return windFieldController; })
+    .finally(() => { windFieldPending = null; });
+  return windFieldPending;
+}
 let airTimelineController = null, airTimelinePending = null;
 async function loadAirTimeline() {
   if (airTimelineController) return airTimelineController;
@@ -2167,6 +2175,7 @@ async function selectCityLens(lens) {
   stopWaterPlayback();
   observationController?.clear();
   airTimelineController?.clear();
+  windFieldController?.clear();
   ['water-scenario-labels', 'water-scenario-route', 'water-scenario-front', 'water-scenario-stations'].forEach(dropInsightLayer);
   document.getElementById('water-scenario-location')?.remove();
   document.getElementById('monitoring-location')?.remove();
@@ -2203,6 +2212,9 @@ async function selectCityLens(lens) {
     if (request !== lensRequest) return;
     mapInstance.flyTo({center:[106.83,-3.5],zoom:5,pitch:0,bearing:0});
   } else if (lens === 'air') {
+    try { const controller = await loadWindField(); if (request !== lensRequest) return; controller.show(document.getElementById('atlas-lens-body')); }
+    catch { if (request === lensRequest) document.getElementById('atlas-lens-body').textContent = lensText('The wind model is unavailable.', 'Model angin tidak tersedia.'); }
+    if (request !== lensRequest) return;
     try { const controller = await loadAirTimeline(); if (request !== lensRequest) return; controller.show(document.getElementById('atlas-lens-body')); }
     catch { if (request === lensRequest) document.getElementById('atlas-lens-body').textContent = lensText('The model timeline is unavailable.', 'Linimasa model tidak tersedia.'); }
     mapInstance.flyTo({center:[106.83,-6.20], zoom:9.3, pitch:currentView === '2d' ? 0 : 35, bearing:0});

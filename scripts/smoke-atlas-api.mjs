@@ -161,6 +161,35 @@ async function get(path) {
       `HTTP ${w.status} validAt=${w.body?.validAt ?? 'unavailable'}`);
   }
 
+  {
+    const r = await get('/api/atlas/wind-field');
+    // The wind layer is the one place motion is drawn. The contract that keeps it
+    // honest: cells are the ones the provider returned, the count can be smaller
+    // than requested, and an absent field never reads as calm.
+    soft('wind field exposes the provider model cells, or an explicit outage',
+      r.status === 503 && r.body?.available === false || r.status === 200 && r.body?.available === true
+      && r.body.cells?.length > 0 && r.body.cellCount === r.body.cells.length
+      && r.body.cellCount <= r.body.requestedPoints
+      && r.body.cells.every(c => Number.isFinite(c.lat) && Number.isFinite(c.lng) && c.hours?.length > 0),
+      `HTTP ${r.status} cells=${r.body?.cells?.length ?? 'unavailable'} of ${r.body?.requestedPoints ?? '?'} requested`);
+    if (r.status === 200) {
+      const cells = r.body.cells;
+      const keys = cells.map(c => `${c.lat.toFixed(3)},${c.lng.toFixed(3)}`);
+      check('wind cells are the provider cells, deduplicated',
+        new Set(keys).size === keys.length, `unique=${new Set(keys).size} of ${keys.length}`);
+      check('every wind cell keeps only validated hours',
+        cells.every(c => c.hours.every(h => h.validAt?.endsWith('Z')
+          && (h.windMs === null || (h.windMs >= 0 && h.windMs <= 100))
+          && (h.windFromDeg === null || (h.windFromDeg >= 0 && h.windFromDeg <= 360)))),
+        `bad=${cells.reduce((n, c) => n + c.hours.filter(h => h.validAt && !h.validAt.endsWith('Z')).length, 0)}`);
+      check('wind field carries no concentration or plume field',
+        !('concentration' in r.body) && !('plume' in r.body) && r.body.tier === 'model-estimate',
+        Object.keys(r.body).join(','));
+      check('wind cells are inside the Jakarta rectangle',
+        cells.every(c => c.lat >= -6.6 && c.lat <= -5.88 && c.lng >= 106.45 && c.lng <= 107.20), 'outside');
+    }
+  }
+
   let pass = 0, hard = 0;
   for (const c of CHECKS) {
     const sym = c.ok ? "✓" : c.soft ? "⚠" : "✗";

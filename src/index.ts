@@ -21,6 +21,7 @@ import { handleJakarta } from "./jakarta.js";
 //   /api/atlas/air-quality               Open-Meteo / CAMS at five samples
 //   /api/atlas/watch                     flood/air/wind/storm watch strip
 //   /api/atlas/fires, /air-timeline      NASA FIRMS detections; CAMS air timeline
+//   /api/atlas/wind-field                Open-Meteo 10 m wind cells over the rectangle
 //   /api/atlas/hydrology, /jaxa-*        BBWS gauges + predictions; JAXA model water (src/hydrology.ts)
 //   /api/atlas/coastal                   BMKG Priok tide forecast (src/coastal.ts)
 //   /api/jakarta/*                       dashboard feeds: BMKG, PetaBencana, official layers (src/jakarta.ts)
@@ -384,6 +385,19 @@ const RAIN_POINTS = [
   { id: "timur", name: "East Jakarta", name_id: "Jakarta Timur", lat: -6.23, lng: 106.90 },
 ];
 const CITY_CENTRE = { lat: -6.1754, lng: 106.8272 }; // Monas
+
+// A coarse wind sample over the same rectangle. These are REQUEST positions only:
+// Open-Meteo snaps each one to its own model cell and returns the cell, so the
+// response reports the cells the provider actually returned, deduplicated. The
+// count can therefore be smaller than this list, and that number is shown rather
+// than padded.
+const WIND_SAMPLE_POINTS = [
+  { lat: -6.12, lng: 106.72 }, { lat: -6.12, lng: 106.82 }, { lat: -6.12, lng: 106.92 },
+  { lat: -6.19, lng: 106.72 }, { lat: -6.19, lng: 106.82 }, { lat: -6.19, lng: 106.92 },
+  { lat: -6.26, lng: 106.72 }, { lat: -6.26, lng: 106.82 }, { lat: -6.26, lng: 106.92 },
+  { lat: -6.33, lng: 106.77 }, { lat: -6.33, lng: 106.87 },
+];
+const WIND_FIELD_MAX_CELLS = 12;
 async function fetchEnvironmentProvider(url: string, format: "json" | "text", ttl: number): Promise<{ body: any; fetchedAt: string } | null> {
   const cache = (caches as unknown as { default: Cache }).default;
   const key = new Request(url);
@@ -812,6 +826,83 @@ async function handleAirTimeline(): Promise<Response> {
   }, { headers: { "cache-control": "public, max-age=600" } });
 }
 
+// ── /api/atlas/wind-field — the model's own wind cells over the rectangle ──
+
+async function handleWindField(): Promise<Response> {
+  const url = new URL("https://api.open-meteo.com/v1/forecast");
+  url.searchParams.set("latitude", WIND_SAMPLE_POINTS.map((p) => String(p.lat)).join(","));
+  url.searchParams.set("longitude", WIND_SAMPLE_POINTS.map((p) => String(p.lng)).join(","));
+  url.searchParams.set("hourly", "wind_speed_10m,wind_direction_10m");
+  url.searchParams.set("wind_speed_unit", "ms");
+  url.searchParams.set("forecast_days", "2");
+  url.searchParams.set("timezone", "UTC");
+  const payload = await fetchEnvironmentProvider(url.toString(), "json", 600).then((d) => d?.body ?? null).catch(() => null);
+  const rows = Array.isArray(payload) ? payload : payload ? [payload] : [];
+  const cells: any[] = [];
+  const seen = new Set<string>();
+  for (const row of rows) {
+    // The provider snaps a request to a model cell and returns that cell. Trust
+    // the returned coordinates; a row that fails validation is dropped, not
+    // repaired, and never contributes a position we did not actually receive.
+    if (row?.utc_offset_seconds !== 0) continue;
+    if (!Number.isFinite(row?.latitude) || !Number.isFinite(row?.longitude)) continue;
+    if (row.latitude < CITY_BBOX.minLat - 0.2 || row.latitude > CITY_BBOX.maxLat + 0.2) continue;
+    if (row.longitude < CITY_BBOX.minLon - 0.2 || row.longitude > CITY_BBOX.maxLon + 0.2) continue;
+    if (row?.hourly_units?.wind_speed_10m !== "m/s" || row?.hourly_units?.wind_direction_10m !== "°") continue;
+    const times = Array.isArray(row?.hourly?.time) ? row.hourly.time : [];
+    const speeds = Array.isArray(row?.hourly?.wind_speed_10m) ? row.hourly.wind_speed_10m : [];
+    const directions = Array.isArray(row?.hourly?.wind_direction_10m) ? row.hourly.wind_direction_10m : [];
+    if (!times.length || times.length > 72) continue;
+    if (speeds.length !== times.length || directions.length !== times.length) continue;
+    const hours = times.map((t: string, i: number) => {
+      const at = normalizedUtc(t);
+      if (!at || (i && Date.parse(at) - Date.parse(normalizedUtc(times[i - 1])!) !== 3600000)) return null;
+      return { validAt: at, windMs: boundedNumber(speeds[i], 0, 100), windFromDeg: boundedNumber(directions[i], 0, 360) };
+    });
+    if (hours.some((h: any) => !h)) continue;
+    if (!hours.some((h: any) => h.windMs !== null && h.windFromDeg !== null)) continue;
+    // Dedupe on the cell the provider returned, not the point we asked for.
+    const key = `${row.latitude.toFixed(3)},${row.longitude.toFixed(3)}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    cells.push({ lat: row.latitude, lng: row.longitude, hours });
+    if (cells.length >= WIND_FIELD_MAX_CELLS) break;
+  }
+  if (!cells.length) {
+    return jsonResponse({ available: false, checkedAt: new Date().toISOString(), error: "wind_field_unavailable",
+      note: "The wind model returned no usable cell over this rectangle. No wind is drawn and no calm is implied." },
+      { status: 503, headers: { "cache-control": "no-store" } });
+  }
+  const allTimes = Array.from(new Set(cells.flatMap((c: any) => c.hours.map((h: any) => h.validAt)))).sort();
+  return jsonResponse({
+    available: true, contract: "wind-field-v1", checkedAt: new Date().toISOString(),
+    requestedPoints: WIND_SAMPLE_POINTS.length,
+    cellCount: cells.length,
+    // Open-Meteo snapped the requests onto fewer model cells than were asked
+    // for. Saying so is the point: the field is as coarse as the provider is.
+    cellNote: `${cells.length} distinct model cells answered ${WIND_SAMPLE_POINTS.length} requested points. Each cell is one model value covering its whole neighbourhood; nothing here is street-level.`,
+    spacingKm: medianSpacingKm(cells),
+    hours: allTimes,
+    cells: cells.map((c: any) => ({ lat: c.lat, lng: c.lng, hours: c.hours })),
+    source: "Open-Meteo 10 m wind model", sourceUrl: "https://open-meteo.com/en/docs",
+    tier: "model-estimate",
+    units: { windMs: "m/s", windFromDeg: "° meteorological FROM" },
+    freshnessPolicy: "Forecast hours only. A hour more than 48h ahead or before the current hour is not drawn.",
+    note: "Wind speed and bearing, nothing else. Motion drawn from this is the wind, not pollution: no concentration, plume width, source or exposure is derived here.",
+  }, { headers: { "cache-control": "public, max-age=600" } });
+}
+
+function medianSpacingKm(cells: { lat: number; lng: number }[]): number | null {
+  if (cells.length < 2) return null;
+  const gaps: number[] = [];
+  for (let i = 0; i < cells.length; i++) {
+    for (let j = i + 1; j < cells.length; j++) gaps.push(distanceKm(cells[i].lat, cells[i].lng, cells[j].lat, cells[j].lng));
+  }
+  gaps.sort((a, b) => a - b);
+  const mid = gaps.length >> 1;
+  return Math.round((gaps.length % 2 ? gaps[mid] : (gaps[mid - 1] + gaps[mid]) / 2) * 10) / 10;
+}
+
 // ── /api/health — quick liveness probe ────────────────────────────────────
 
 async function handleHealth(env: Env): Promise<Response> {
@@ -886,6 +977,7 @@ async function routeRequest(request: Request, env: Env): Promise<Response> {
   if (path === "/api/atlas/air-quality") return handleAirQuality();
   if (path === "/api/atlas/fires") return handleFires();
   if (path === "/api/atlas/air-timeline") return handleAirTimeline();
+  if (path === "/api/atlas/wind-field") return handleWindField();
   if (path === "/api/atlas/areas") return handleAreas(request, env);
   if (path === "/api/atlas/districts") return handleDistricts();
   if (path === "/api/atlas/at-this-point") return handleAtThisPoint(request, env);
