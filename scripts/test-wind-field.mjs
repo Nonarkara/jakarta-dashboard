@@ -137,3 +137,12 @@ console.log('PASS wind field: bearing conversion, bounded interpolation, the no-
 assert.match(app, /getElementById\('atlas-lens-evidence'\); if \(ev\) ev\.open = true;/, 'the air lens opens its evidence so the wind panel and disclaimer are visible');
 assert.match(app, /lone red square is one high reading, not a mapped plume/, 'a single AOD pixel is explained, not hidden');
 console.log('PASS wind arrowheads, open panel and AOD pixel note');
+{
+  const tl = read('public/air-timeline.js'), css = read('public/jakarta-design.css'), tr = read('public/translations.js');
+  assert.match(tl, /el\('details', undefined, 'air-timeline'\)/, 'the CAMS table is folded behind a summary, not open by default');
+  assert.match(client, /t\('Wind, not pollution', 'Angin, bukan pencemaran'\)/, 'the phone chip states the rule in both languages');
+  assert.match(client, /getElementById\('wind-not-pollution-chip'\)\?\.remove\(\)/, 'the chip leaves with the lens');
+  assert.match(css, /\[data-lens="air"\] \.atlas-lens-popup \{ width:min\(300px, 21vw\); \}/, 'the air panel stays a slim rail');
+  assert.match(tr, /Setiap kotak adalah satu pengambilan ~10 km/, 'the AOD square note is translated');
+}
+console.log('PASS air lens slim panel, folded CAMS, phone chip, ID/EN AOD note');

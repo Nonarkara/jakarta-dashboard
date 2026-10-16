@@ -101,7 +101,17 @@ export function createWindField(map, { text: t, active, buildTag }) {
     if (b) { b.textContent = t('Play wind field', 'Putar medan angin'); b.setAttribute('aria-pressed', 'false'); }
   }
 
+  // Phones keep the evidence panel folded, so the rule rides on the map itself.
+  function showChip() {
+    let chip = document.getElementById('wind-not-pollution-chip');
+    const wrap = document.querySelector('.atlas-map-wrap');
+    if (!wrap) return;
+    if (!chip) { chip = el('div', undefined, 'wind-chip'); chip.id = 'wind-not-pollution-chip'; chip.setAttribute('role', 'note'); wrap.append(chip); }
+    chip.textContent = t('Wind, not pollution', 'Angin, bukan pencemaran');
+  }
+
   function hide() {
+    document.getElementById('wind-not-pollution-chip')?.remove();
     stop();
     if (layer && map.getLayer(layer)) map.removeLayer(layer);
     layer = null;
@@ -146,6 +156,7 @@ export function createWindField(map, { text: t, active, buildTag }) {
     } else map.setPaintProperty(layer, 'line-opacity', 0.95);
     frameNodes.forEach((n) => n.remove());
     frameNodes = [];
+    showChip();
     if (!reduced) seedParticles(cells);
     updateReadout(data, cells);
   }

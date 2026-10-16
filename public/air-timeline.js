@@ -118,8 +118,11 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
     stopTransport();
     if (hiddenListener) { document.removeEventListener('visibilitychange',hiddenListener);hiddenListener=null; }
     body.querySelector('#air-timeline-section')?.remove();
-    const section = el('div', undefined, 'air-timeline');
+    // Folded by default: the wind section leads the air lens and the map keeps the
+    // screen (surgical-table rule). The CAMS table opens on request.
+    const section = el('details', undefined, 'air-timeline');
     section.id = 'air-timeline-section';
+    section.append(el('summary', t('CAMS 48-hour model timeline', 'Linimasa model CAMS 48 jam')));
     if (!data) {
       section.append(el('p', t('Loading the model timeline…', 'Memuat linimasa model…'), 'note'));
       body.append(section); return;

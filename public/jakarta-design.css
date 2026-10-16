@@ -510,3 +510,12 @@ input[type="range"], input[type="checkbox"] { accent-color:var(--accent); }
 #atlas-lens-body table caption { text-align:left; margin-block:6px; }
 #atlas-lens-body table th, #atlas-lens-body table td { text-align:left; vertical-align:top; padding:4px 0; border-bottom:1px solid var(--line); }
 #atlas-lens-body table td:not(:first-child), #atlas-lens-body table th:not(:first-child) { text-align:right; padding-left:6px; font-variant-numeric:tabular-nums; }
+
+/* Air lens: the evidence panel stays a slim side rail (≤ ~21% of a 1440 map). */
+@media (min-width: 701px) {
+  body.atlas-workbench[data-lens="air"] .atlas-lens-popup { width:min(300px, 21vw); }
+}
+.wind-chip { display:none; }
+@media (max-width: 700px) {
+  body[data-lens="air"] .wind-chip { display:block; position:absolute; left:8px; bottom:64px; z-index:40; padding:2px 8px; font-size:11px; line-height:18px; white-space:nowrap; background:var(--bg); color:var(--fg, inherit); border:1px solid var(--line); }
+}
