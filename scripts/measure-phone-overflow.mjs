@@ -102,6 +102,23 @@ if (wantNav) {
   await new Promise((r) => setTimeout(r, 1200));
 }
 
+// Open any selector's owning dialog or details, for surfaces that only exist
+// after a user action. "--open=#some-dialog" opens the dialog itself.
+const openSel = args.find((a) => a.startsWith("--open="))?.slice("--open=".length);
+if (openSel) {
+  await evaluate(`(() => {
+    const el = document.querySelector(${JSON.stringify(openSel)});
+    if (!el) return false;
+    if (typeof el.showModal === 'function') { el.showModal(); return true; }
+    if ('open' in el) { el.open = true; return true; }
+    const host = el.closest('dialog, details');
+    if (host) { if (host.showModal) host.showModal(); else host.open = true; return true; }
+    el.click();
+    return true;
+  })()`);
+  await new Promise((r) => setTimeout(r, 2000));
+}
+
 // Read the panel's own rect as well as the document overflow. A panel that stays
 // closed renders nothing, so "no offender" alone does not prove the fix landed.
 const panel = await evaluate(`(() => {

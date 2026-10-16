@@ -89,6 +89,80 @@ async function get(path) {
       r.status===503 && r.body?.available===false || r.status===200 && r.body?.available===true && r.body.tier==='model-forecast' && r.body.times?.length===48 && r.body.times.every(row=>row.validAt?.endsWith('Z')), `HTTP ${r.status} hours=${r.body?.times?.length??'unavailable'}`);
   }
 
+  {
+    const r = await get('/api/atlas/hydrology');
+    // The audit round made a publisher prediction count as current only inside
+    // the gauge freshness window. Check the edge is actually enforcing it, not
+    // just the local contract test: a row flagged current must be inside the
+    // window, and nothing else may claim to be current.
+    const window = r.body?.freshnessWindowMs;
+    const now = Date.now();
+    check('hydrology exposes gauge levels with a stated freshness window',
+      r.status === 200 && typeof r.body?.freshnessWindowMs === 'number' && window > 0 && typeof r.body?.freshnessPolicy === 'string'
+      && r.body.freshLevels === r.body.stations.filter(s => s.fresh).length,
+      `${r.status} fresh=${r.body?.freshLevels}/${r.body?.stations?.length} window=${window ? window/3600000 : '?'}h`);
+    check('every fresh gauge is inside the freshness window and every stale one is not',
+      r.status === 200 && r.body.stations.every(s => {
+        // The contract is a level, not a clock: a station with a current
+        // timestamp but no reading is "unknown", never "fresh". cleanGauge
+        // admits a reading only when the value is finite and in metres, then
+        // calls it fresh only inside the window.
+        const at = Date.parse(s.observedAt);
+        const usable = Number.isFinite(s.levelM) && s.levelM !== null && !s.rejectedTimestamp;
+        const inside = usable && Number.isFinite(at) && now - at <= window;
+        if (s.fresh !== inside) return false;
+        const expected = !usable ? 'unknown' : inside ? 'fresh' : 'stale';
+        return s.levelState === expected;
+      }),
+      r.status === 200
+        ? `mismatched=${r.body.stations.filter(s => {
+            const at = Date.parse(s.observedAt);
+            const usable = Number.isFinite(s.levelM) && s.levelM !== null && !s.rejectedTimestamp;
+            return s.fresh !== (usable && Number.isFinite(at) && now - at <= window);
+          }).length} states=${['fresh', 'stale', 'unknown'].map(k => `${k}=${r.body.stations.filter(s => s.levelState === k).length}`).join(' ')}`
+        : `${r.status}`);
+    check('no prediction outside the window claims to be current',
+      r.status === 200 && r.body.predictions.every(p =>
+        p.current === (Number.isFinite(Date.parse(p.validAt)) && now - Date.parse(p.validAt) <= window)),
+      `predictions=${r.body?.predictions?.length} current=${r.body?.predictions?.filter(p => p.current).length}`);
+    check('a route with no current reading is an explicit outage, not an empty 200',
+      (r.status === 503 && r.body?.available === false) || (r.status === 200 && r.body?.available === true && (r.body.freshLevels > 0 || r.body.predictions.some(p => p.current))),
+      `HTTP ${r.status} available=${r.body?.available}`);
+  }
+  {
+    const r = await get('/api/atlas/coastal');
+    check('coastal forecast exposes published BMKG points or an explicit outage',
+      r.status === 503 && r.body?.available === false || r.status === 200 && r.body?.available === true
+      && r.body.tier === 'official-coastal-forecast' && r.body.points.length > 0,
+      `HTTP ${r.status} points=${r.body?.points?.length ?? 'unavailable'}`);
+    if (r.status === 200) {
+      const pts = r.body.points;
+      const stamps = pts.map(p => Date.parse(p.validAt));
+      check('coastal points are sorted, deduplicated and strictly increasing',
+        pts.every(p => p.validAt?.endsWith('Z')) && stamps.every((t, i) => i === 0 || t > stamps[i - 1]),
+        `first=${pts[0]?.validAt} last=${pts[pts.length - 1]?.validAt} rows=${pts.length}`);
+      // A tide forecast with no published vertical datum must say so; it cannot
+      // be joined to river-gauge heights or terrain.
+      check('coastal states its vertical datum is unpublished',
+        typeof r.body.datumNote === 'string' && /datum/i.test(r.body.datumNote) && /cannot|not comparable|tidak/i.test(r.body.datumNote),
+        (r.body.datumNote || 'missing').slice(0, 60));
+      check('coastal issuance is not from the future', Number.isFinite(Date.parse(r.body.issuedAt)) && Date.parse(r.body.issuedAt) <= Date.now() + 5 * 60000, `issuedAt=${r.body.issuedAt}`);
+    }
+  }
+  {
+    // The audit round rejected model runs older than 72h and narrowed the tile
+    // window to 4 days. Both must reject on the edge, not only in unit tests.
+    const stale = new Date(Date.now() - 10 * 86400000).toISOString().slice(0, 10).replace(/-/g, '');
+    const r = await get(`/api/atlas/jaxa-tile?product=OUTFLW&date=${stale}&z=4&x=8&y=8`);
+    check('jaxa-tile rejects a date outside its 4-day window', r.status === 400, `${r.status}`);
+    const bad = await get('/api/atlas/jaxa-tile?product=NOT_A_PRODUCT&date=' + new Date().toISOString().slice(0, 10).replace(/-/g, '') + '&z=4&x=8&y=8');
+    check('jaxa-tile rejects an unknown product', bad.status === 400, `${bad.status}`);
+    const w = await get('/api/atlas/jaxa-water');
+    check('jaxa-water answers with a bounded model run or an explicit outage',
+      w.status === 503 || w.status === 200 && w.body?.tier === 'hydrological-model' && Number.isFinite(Date.parse(w.body.validAt)),
+      `HTTP ${w.status} validAt=${w.body?.validAt ?? 'unavailable'}`);
+  }
+
   let pass = 0, hard = 0;
   for (const c of CHECKS) {
     const sym = c.ok ? "✓" : c.soft ? "⚠" : "✗";
