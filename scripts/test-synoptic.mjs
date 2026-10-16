@@ -138,7 +138,34 @@ assert.ok(mod.contour(jRows, 1000).length > 0, 'a jittered scatter still produce
 const far = [mkCell(0, 0, 1000, [1000]), mkCell(0, 2, 1000, [1000]), mkCell(2, 0, 1000, [1000]), mkCell(2, 2, 1000, [1000])];
 assert.equal(mod.gridOf(far)[0].cells.length, 2, 'genuinely separated cells stay separate columns');
 
-// ── The honest claim, in words the code actually ships ────────────────────
+// ── The real payload ──────────────────────────────────────────────────────
+// A frozen live response. Synthetic fixtures are tidy: every cell present, the
+// grid rectangular. The real one is not — it carries the ragged scatter, two
+// latitudes 0.07° apart, and one of the 25 requested cells missing entirely.
+// Every defect below was invisible to a tidy fixture and threw or rendered
+// nothing on the deployed map.
+const live = JSON.parse(read('test/fixtures/synoptic-response.json'));
+assert.ok(live.cells.length > 4, 'the fixture is a real field, not a stub');
+const liveRows = mod.gridOf(mod.hoursOf(live.cells, 0));
+assert.equal(liveRows.length, 5, 'seven jittered latitudes collapse into five rows');
+assert.equal(liveRows[0].cells.length, 5, 'the lattice is five columns wide');
+assert.equal(liveRows.flatMap((r) => r.cells).filter((c) => !c).length, 1,
+  'the cell the provider did not answer is a null node, not a shifted column');
+// This is the line that threw on the live map: a null node read for a pressure.
+const livePressures = liveRows.flatMap((r) => r.cells.filter(Boolean).map((c) => c.mslpHpa));
+assert.ok(livePressures.length > 0 && livePressures.every(Number.isFinite),
+  'every pressure read comes from a node backed by a real cell');
+// And the field it produces must actually contain lines.
+const lo = Math.ceil(Math.min(...livePressures) / 2) * 2;
+const hi = Math.floor(Math.max(...livePressures) / 2) * 2;
+let liveLines = 0;
+for (let v = lo; v <= hi; v += 2) liveLines += mod.stitch(mod.contour(liveRows, v)).length;
+assert.ok(liveLines > 0, `the real field produces isobars (got ${liveLines})`);
+const liveLow = mod.lowCentre(live.cells, 0);
+assert.ok(liveLow && Number.isFinite(liveLow.mslpHpa), 'the real field has a low centre');
+// No draw path may read through a null node.
+assert.doesNotMatch(client, /\.cells\.map\(\(c\) => c\.mslpHpa\)/,
+  'no path maps over cells unguarded, which throws on a gap in the field');
 assert.match(server, /\/api\/atlas\/synoptic",?\s*return handleSynoptic|\/api\/atlas\/synoptic/, 'the route is registered');
 assert.match(server, /boundedNumber\(mslp\[i\], 870, 1085\)/,
   'MSLP is bounded to a real sea-level observation before it is used');

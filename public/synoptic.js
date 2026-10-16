@@ -230,7 +230,10 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
     state.index = index;
     const live = hoursOf(data.cells, index);
     const rows = gridOf(live);
-    const pressures = rows.flatMap((r) => r.cells.map((c) => c.mslpHpa));
+    // Only nodes backed by a real cell have a pressure. A null cluster is a gap,
+    // and reading through it throws — which took the whole layer down on the
+    // live payload, where one of the 25 requested cells did not answer.
+    const pressures = rows.flatMap((r) => r.cells.filter(Boolean).map((c) => c.mslpHpa));
 
     // Levels span only the pressure the provider actually returned here, so an
     // isobar is never drawn at a level the field never reaches.
