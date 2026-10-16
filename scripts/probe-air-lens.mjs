@@ -67,7 +67,9 @@ const report = await evaluate(`(() => {
   const range = document.getElementById('wind-timeline');
   const play = document.getElementById('wind-play');
   const readout = document.querySelector('[data-wind-readout]');
-  const text = section ? section.innerText : '';
+  // textContent, not innerText: innerText is empty for a node inside a
+  // collapsed <details>, which makes every content assertion silently false.
+  const text = section ? section.textContent : '';
   const map = window.__atlasMap || window.mapInstance || null;
   let layers = [];
   try {
@@ -86,10 +88,12 @@ const report = await evaluate(`(() => {
     playPresent: !!play,
     playPressed: play ? play.getAttribute('aria-pressed') : null,
     readout: readout ? readout.textContent : null,
-    mentionsCellNote: /distinct model cells answered/.test(text),
-    mentionsNoPlume: /No concentration, plume width, source or exposure/.test(text),
-    mentionsInterpolation: /inverse-distance interpolation/.test(text),
-    mentionsWindNotPollution: /wind, not pollution/.test(text),
+    // Accept either language: the page defaults to Bahasa, so an English-only
+    // pattern reports absence when the copy is actually present and correct.
+    mentionsCellNote: /distinct model cells answered|sel model berbeda/.test(text),
+    mentionsNoPlume: /No concentration, plume width, source or exposure|Tidak ada konsentrasi, lebar plume/.test(text),
+    mentionsInterpolation: /inverse-distance interpolation|interpolasi jarak terbalik/.test(text),
+    mentionsWindNotPollution: /wind, not pollution|angin, bukan pencemaran/.test(text),
     airTimelineAlsoPresent: !!document.getElementById('air-timeline-section'),
     lensBodyExists: !!document.getElementById('atlas-lens-body'),
     lensBodyFirstText: (document.getElementById('atlas-lens-body')?.innerText || '').replace(/\s+/g,' ').slice(0, 200),

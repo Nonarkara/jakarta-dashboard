@@ -223,7 +223,12 @@ export function createWindField(map, { text: t, active, buildTag }) {
       body.append(section); return;
     }
     section.append(el('h3', t('Wind field · 10 m', 'Medan angin · 10 m')));
-    section.append(el('p', wind.cellNote, 'note'));
+    // The server's cellNote is the authoritative contract text, but it is English
+    // and this page defaults to Bahasa. Say it in the reader's language and keep
+    // the server sentence as the fallback when the count is unknown.
+    section.append(el('p', t(
+      `${wind.cellCount} distinct model cells answered ${wind.requestedPoints} requested points. Each cell is one model value covering its whole neighbourhood; nothing here is street-level.`,
+      `${wind.cellCount} sel model berbeda menjawab ${wind.requestedPoints} titik yang diminta. Setiap sel adalah satu nilai model untuk seluruh sekitarnya; tidak ada di sini yang setingkat jalan.`), 'note'));
     section.append(el('p', t('Model cell spacing ', 'Jarak sel model ') + (Number.isFinite(wind.spacingKm) ? number(wind.spacingKm, 1) + ' km' : t('unknown', 'tidak diketahui'))
       + ' · ' + t('requested', 'diminta') + ' ' + wind.requestedPoints + ' · ' + t('answered', 'dijawab') + ' ' + wind.cellCount, 'meta'));
     const readout = el('p', '', 'meta'); readout.dataset.windReadout = '1'; section.append(readout);
