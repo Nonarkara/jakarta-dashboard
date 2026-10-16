@@ -3,9 +3,28 @@
 // longitude by cos(latitude).
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-const { makeSampler, stepLngLat } = await import(new URL('../public/flow-canvas.js', import.meta.url));
+const { makeSampler, stepLngLat, particleBudget } = await import(new URL('../public/flow-canvas.js', import.meta.url));
+
+// The particle budget was previously pinned by matching the source text for
+// `Math.min(850, Math.round(area / 1800))`, which passes whether or not the
+// renderer calls it. These drive the real function.
+assert.equal(particleBudget(1600, 900), 800, 'a 1600x900 map carries 800 streaks');
+assert.equal(particleBudget(390, 844), 183, 'a 390x844 phone carries 183 streaks');
+assert.ok(particleBudget(3840, 2160) === 850, 'a 4K window is capped at 850 streaks so a frame stays affordable');
+assert.ok(particleBudget(2560, 1440) > particleBudget(1280, 720), 'a larger window carries more streaks');
+assert.ok(particleBudget(390, 844) > 0, 'a phone still carries a field, not an empty canvas');
+// The budget is a function of CSS pixels: a retina display must not draw twice
+// the streaks of a non-retina one showing the same map.
+assert.equal(particleBudget(780, 1688, 2), particleBudget(390, 844, 1), 'device pixel ratio does not change how many streaks are drawn');
+
+// Everything above tests the VALUE. It cannot see a renderer that stopped
+// calling the function — swapping `return particleBudget(...)` for a literal
+// left this whole block green. This one check is deliberately structural: it
+// asserts the wiring, and only the wiring.
 const flowSrc = readFileSync(new URL('../public/flow-canvas.js', import.meta.url), 'utf8');
-assert.match(flowSrc, /return Math\.min\(850, Math\.round\(area \/ 1800\)\);/, 'particle population is retuned to keep streamlines balanced with isobars');
+const population = flowSrc.match(/function population\(\) \{([\s\S]*?)\n  \}/)?.[1] || '';
+assert.match(population, /particleBudget\(/, 'the renderer derives its particle count from particleBudget, not from a private literal');
+assert.ok(population.length > 0, 'population() was located, so the wiring check cannot pass vacuously');
 
 // A 0.25° grid of identical 10 m/s easterlies (air moving west: u = -10).
 const cells = [];

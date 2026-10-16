@@ -60,6 +60,19 @@ export function stepLngLat(lng, lat, u, v, seconds) {
   return [lng + (u * seconds) / (R_LNG * cos), lat + (v * seconds) / R_LAT];
 }
 
+// How many streaks the canvas carries, from its own pixel area.
+//
+// Density exists to stop the 850 hPa particle field from drowning the isobars,
+// which are the part of this lens that carries real numbers. The divisor is
+// therefore a readability choice, not a physical one, and it is capped: a large
+// 4K window must not cost thousands of particles a frame. The budget is a
+// function of CSS pixels, so a retina display shows the same field as a
+// non-retina one instead of twice the streaks.
+export function particleBudget(width, height, dpr = 1) {
+  const area = (width * height) / (dpr * dpr);
+  return Math.min(850, Math.round(area / 1800));
+}
+
 export function createFlowCanvas(map, { colors = ['#8fb7c9', '#f1e7d0', '#d8a24a', '#e0663d'] } = {}) {
   const container = map.getContainer();
   const canvas = document.createElement('canvas');
@@ -101,8 +114,7 @@ export function createFlowCanvas(map, { colors = ['#8fb7c9', '#f1e7d0', '#d8a24a
     return null;
   }
   function population() {
-    const area = (canvas.width * canvas.height) / (dpr * dpr);
-    return Math.min(850, Math.round(area / 1800));
+  return particleBudget(canvas.width, canvas.height, dpr);
   }
   function frame() {
     raf = null;

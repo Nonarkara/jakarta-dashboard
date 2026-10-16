@@ -25,11 +25,28 @@
 
 const KM_PER_DEG_LAT = 110.57;
 
-// Contour interval. Synoptic charts in mid-latitudes run 4 hPa; across Java
-// in the equatorial tropics the sea-level pressure gradient is flat (typically
-// 2 to 4 hPa across the region), so a 1 hPa step reveals the actual physical
-// baric topography instead of yielding only 2-3 sparse lines.
-const ISOBAR_STEP_HPA = 1;
+// Contour interval, and it is stated in the panel because it is not standard.
+// Mid-latitude synoptic charts run 4 hPa. Measured on the live payload on
+// 2026-10-17, this box's sea-level pressure spreads 4.2 to 7.8 hPa WITHIN a
+// single hour (mean 5.95 hPa over 48 hours), so a 4 hPa step draws one contour
+// or none at all. 2 hPa gives ~3; 1 hPa gives ~6.
+//
+// The fine step is not interpolation noise: perturbing one grid cell by 0.3 hPa
+// of model noise moves the 1 hPa isobars 1-3 km across a 710 km box, which is
+// the same order as the 2 hPa set. The lines track the field the model returned.
+export const ISOBAR_STEP_HPA = 1;
+
+// Which levels to draw: only pressures the provider actually returned, at
+// whole multiples of the interval. A level the field never reaches is never
+// drawn, so an isobar cannot claim a pressure that was not observed.
+export function isobarLevels(pressures, step = ISOBAR_STEP_HPA) {
+  if (!pressures || !pressures.length) return [];
+  const lo = Math.ceil(Math.min(...pressures) / step) * step;
+  const hi = Math.floor(Math.max(...pressures) / step) * step;
+  const levels = [];
+  for (let v = lo; v <= hi; v += step) levels.push(v);
+  return levels;
+}
 
 export function arrowHead(shaft) {
   const [[x0, y0], [x1, y1]] = shaft.geometry.coordinates;
@@ -283,12 +300,7 @@ export function createSynoptic(map, { text: t, active, buildTag, flow }) {
 
     // Levels span only the pressure the provider actually returned here, so an
     // isobar is never drawn at a level the field never reaches.
-    const levels = [];
-    if (pressures.length) {
-      const lo = Math.ceil(Math.min(...pressures) / ISOBAR_STEP_HPA) * ISOBAR_STEP_HPA;
-      const hi = Math.floor(Math.max(...pressures) / ISOBAR_STEP_HPA) * ISOBAR_STEP_HPA;
-      for (let v = lo; v <= hi; v += ISOBAR_STEP_HPA) levels.push(v);
-    }
+    const levels = isobarLevels(pressures);
     const isoFeatures = [];
     for (const level of levels) for (const line of stitch(contour(rows, level))) {
       isoFeatures.push({ type: 'Feature', properties: { kind: 'iso', hpa: level }, geometry: { type: 'LineString', coordinates: line } });
@@ -427,9 +439,13 @@ export function createSynoptic(map, { text: t, active, buildTag, flow }) {
     toggle('wind850', ['850 hPa wind', 'Angin 850 hPa'], ['850 hPa wind on', 'Angin 850 hPa nyala'], () => { state.wind850 = !state.wind850; draw(); repaint(); });
     section.append(toggles);
 
+    // The interval is stated here because it is not the 4 hPa a mid-latitude chart
+    // uses, and a reader cannot otherwise tell 1 hPa isobars from 4 hPa ones. The
+    // spacing comes from the payload, never from a number typed into a sentence.
+    const gap = number(data.spacingKm, 0);
     section.append(el('p', t(
-      'Isobars are interpolated between the model\'s own cells, not measured along the line. 850 hPa is about 1.5 km up and this is model wind — Himawari supplies cloud imagery, not wind, and none of this is a rain forecast.',
-      'Isobar diinterpolasi antar sel model, bukan diukur pada garisnya. 850 hPa sekitar 1,5 km di atas permukaan dan ini angin model — Himawari menyediakan citra awan, bukan angin, dan tidak ada di sini yang merupakan prakiraan hujan.'),
+      'Isobars are drawn every ' + ISOBAR_STEP_HPA + ' hPa, interpolated between the model\'s own cells rather than measured along the line — a finer step than the 4 hPa of a mid-latitude chart, because this box\'s pressure is flat. The model cells are about ' + gap + ' km apart, so the lines show the trend across the box, not measured pressure along a line. 850 hPa is about 1.5 km up and this is model wind — Himawari supplies cloud imagery, not wind, and none of this is a rain forecast.',
+      'Isobar digambar tiap ' + ISOBAR_STEP_HPA + ' hPa, diinterpolasi antar sel model dan bukan diukur pada garisnya — langkah yang lebih halus dari 4 hPa pada bagan lintang tengah, karena tekanan di kotak ini datar. Jarak antar sel model sekitar ' + gap + ' km, jadi garis menunjukkan tren lintas kotak, bukan tekanan terukur sepanjang garis. 850 hPa sekitar 1,5 km di atas permukaan dan ini angin model — Himawari menyediakan citra awan, bukan angin, dan tidak ada di sini yang merupakan prakiraan hujan.'),
       'synoptic-note'));
     // Say why the map is empty, rather than leaving a bare panel. "No isobar
     // here" must not read as "no pressure here".

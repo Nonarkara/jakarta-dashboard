@@ -182,10 +182,10 @@ return legacyFetch(request);
 The atlas service binding means the dashboard reads atlas APIs over the
 Workers internal network — no CORS, no extra latency, no public exposure.
 
-**Failure this prevents:** Jakarta, KL, HCMC all started as two URLs
-(`nonarkara.org` + `atlas.nonarkara.org`). The 308 redirect worked but
-the iframe inside the dashboard couldn't share cookies or auth with its
-own atlas backend. The service binding fixed that.
+**Failure this prevents:** Jakarta, KL, HCMC all started as two deployments
+— a dashboard and a separate atlas — served from two URLs. The 308 redirect
+worked but the iframe inside the dashboard couldn't share cookies or auth with
+its own atlas backend. The service binding fixed that.
 
 ---
 
@@ -419,29 +419,30 @@ fine; it wasn't.
 
 ## 16 · One canonical hostname per system, every other URL is a 308
 
-The atlas lives at `atlas.host`, the dashboard lives at `host` (the
-canonical one). All requests to `atlas.host` 308-redirect to
-`host?atlas=1` (or equivalent) with the query preserved. The
-service binding handles internal atlas traffic; the public alias exists
-only for backwards compatibility with shared links.
+Each system has ONE canonical hostname. Any other URL that resolves to the
+same content must 308 to it with the query preserved, or be removed — never
+left serving its own copy of the bytes.
 
 ```ts
-// atlas wrangler.toml routes
-{ "pattern": "atlas.nonarkara.org", "custom_domain": true }
-// atlas src/index.ts
-if (url.hostname === "atlas.nonarkara.org") {
-  return Response.redirect(
-    `https://nonarkara.org/?atlas=1${url.search}`,
-    308
-  );
+// alias wrangler.toml / route
+if (url.hostname === "jakarta-3d-atlas.drnon.workers.dev") {
+  return Response.redirect(`https://jakarta.nonarkara.org${url.pathname}${url.search}`, 308);
 }
 ```
 
 Use 308 (not 301) so the method and body are preserved on redirect.
 
-**Failure this prevents:** HCMC, Jakarta, KL all had `atlas.*` aliases
-that diverged from the main entry. Users with stale bookmarks saw an
-older version of the atlas.
+**Naming:** canonical hosts are named after the **city**, never `atlas.*` —
+`jakarta.nonarkara.org`, `hcmc.nonarkara.org`, `kl.nonarkara.org`.
+`atlas.nonarkara.org` is **BKKx (Bangkok)** and is not a generic alias. A rule
+doc that calls `atlas.*` a Jakarta or HCMC URL is wrong about this workspace,
+and a reader who trusts it will go looking for a redirect that does not exist.
+
+**Failure this prevents:** HCMC, Jakarta, KL each had `atlas.*`-style aliases
+that diverged from the main entry, so users with stale bookmarks were served an
+older build of the atlas. (Verified 2026-10-17: `atlas.nonarkara.org` returns
+200 serving BKKx, and Jakarta's canonical host serves the current build — the
+collision here was in the *documentation*, not in production.)
 
 ---
 
@@ -465,6 +466,28 @@ older version of the atlas.
 | 14 (force-dynamic) | KL, HCMC | Prerendered pages referenced dead chunk hashes |
 | 15 (render failures) | Kuching IOC | 12-hour outage looked like empty news |
 | 16 (canonical hostname) | HCMC, Jakarta, KL | Stale bookmarks served older code |
+
+### A word about citing identifiers
+
+Every OSM id, way number and height in a proposal is a **claim about the
+world**, not a plausible-looking string. Check them before anyone pastes them
+into a loader — a 3D atlas that reads `way/38743781` for Wisma 46 gets a street
+in Buenos Aires and renders it as a Jakarta skyscraper.
+
+Verified 2026-10-17 against the OSM API:
+
+| Landmark | Verified id | Height in OSM |
+|---|---|---|
+| Wisma 46 | `way/334982528` | 261.9 m, 46 levels |
+| Treasury Tower | `way/513330873` | 280 m, 61 levels |
+| Masjid Istiqlal | `relation/9627236` | not tagged |
+| Katedral Jakarta | `way/97196698` | not tagged |
+| Gama Tower | `way/227727799` | 22 m — this is the **podium**, not the 285.5 m tower |
+| Museum Sejarah Jakarta | `node/4243812179` | not tagged |
+
+A height absent from OSM needs a named published source, or it does not ship.
+And stepped geometry needs `building:part` to exist: Jakarta has exactly **7**
+such relations, all unnamed, none on the landmarks above.
 
 When a new system is born in this workspace, copy this file into it as
 `BEST-PRACTICES.md` and reference it from the project's `CLAUDE.md`.

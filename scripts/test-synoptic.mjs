@@ -467,6 +467,56 @@ assert.ok(covBranch.includes('loadSynoptic()'), 'the flood lens loads the pressu
 assert.ok(covBranch.includes('refreshRainfall(false)'), 'the flood lens loads the 24 h forecast');
 assert.ok(covBranch.includes('ev.open = true'), 'the flood lens opens its evidence panel on desktop');
 assert.match(app, /night:'night-lights',rain:'radar',coverage:'radar'/, 'the flood lens opens on radar, not on nothing');
-assert.match(client, /const ISOBAR_STEP_HPA = 1;/, 'isobar step is 1 hPa for the flat equatorial pressure field');
+// ── The contour interval ─────────────────────────────────────────────────
+// This replaces a source-text match on `ISOBAR_STEP_HPA = 1`, which passed
+// while proving nothing: the literal could sit in a comment, in dead code, or
+// in a constant the renderer never reads. These drive the real module.
+assert.equal(typeof mod.ISOBAR_STEP_HPA, 'number', 'the contour interval is exported as a number, not a literal in a file');
+assert.ok(Number.isFinite(mod.ISOBAR_STEP_HPA) && mod.ISOBAR_STEP_HPA > 0, 'the contour interval is a positive finite number');
+assert.equal(mod.ISOBAR_STEP_HPA, 1, '1 hPa: a 4 hPa step draws one line or none across this field');
+
+// Levels come only from pressures the provider actually returned.
+{
+  const p = [1008.1, 1009.4, 1011.5, 1010.2];
+  const lv = mod.isobarLevels(p);
+  assert.deepEqual(lv, [1009, 1010, 1011], 'levels are whole multiples of the interval inside the observed range');
+  assert.equal(lv[0], 1009, 'the first level is rounded UP, so no isobar claims a pressure below anything observed');
+  assert.equal(lv[lv.length - 1], 1011, 'the last level is rounded DOWN, so no isobar claims a pressure above anything observed');
+  for (let i = 1; i < lv.length; i++) {
+    assert.equal(lv[i] - lv[i - 1], mod.ISOBAR_STEP_HPA, 'consecutive levels are exactly one interval apart');
+  }
+  assert.ok(lv.every((v) => v >= Math.min(...p) && v <= Math.max(...p)), 'no level falls outside the observed pressures');
+  assert.deepEqual(mod.isobarLevels([]), [], 'an empty field draws no isobar and does not throw');
+  assert.deepEqual(mod.isobarLevels(null), [], 'a missing field draws no isobar and does not throw');
+  // A perfectly flat field does reach one level, and the level must produce no
+  // LINE: marching squares cannot cross a field that never crosses anything.
+  const flatRows = mod.gridOf([[{ lat: -6, lng: 104, mslpHpa: 1010 }, { lat: -6, lng: 106, mslpHpa: 1010 }, { lat: -6, lng: 108, mslpHpa: 1010 }]]);
+  assert.deepEqual(mod.contour(flatRows, 1010), [], 'a uniform field draws no isobar line rather than inventing one');
+  assert.deepEqual(mod.contour(flatRows, 1011), [], 'a level the flat field never reaches draws nothing');
+  // The interval is honoured, not assumed: a caller-supplied step must change
+  // the spacing, which is what the old string match could never see.
+  assert.deepEqual(mod.isobarLevels([1008.1, 1011.5], 2), [1010], 'a 2 hPa step yields fewer levels from the same field');
+  assert.deepEqual(mod.isobarLevels([1008.1, 1011.5], 4), [], 'a 4 hPa step yields none from this field, which is why it was not used');
+}
+
+// On the frozen LIVE payload the interval must actually produce a readable
+// field — otherwise the lens shows an empty map and nobody can tell why.
+// Every hour is checked, not one hand-picked hour: the shipped lens draws
+// whichever hour the scrubber is on, and a blank hour is a blank map.
+{
+  const perHour = live.hours.map((_, i) => {
+    const rows = mod.gridOf(mod.hoursOf(live.cells, i));
+    const pressures = rows.flatMap((r) => r.cells.filter(Boolean).map((c) => c.mslpHpa));
+    if (!pressures.length) return null;
+    const levels = mod.isobarLevels(pressures);
+    const lines = levels.flatMap((v) => mod.stitch(mod.contour(rows, v)));
+    return { levels: levels.length, lines: lines.length };
+  });
+  assert.ok(perHour.every(Boolean), 'every frozen hour carries real pressure');
+  const withPressure = perHour.filter(Boolean);
+  assert.ok(withPressure.every((h) => h.levels >= 1), 'every hour yields at least one isobar at the shipped interval, so the lens is never silently empty');
+  assert.ok(withPressure.some((h) => h.levels >= 3), 'and at least some hours yield a readable field of three or more isobars');
+  assert.ok(withPressure.reduce((s, h) => s + h.lines, 0) > 0, 'the field produces drawn lines, not just levels');
+}
 
 console.log('test-synoptic: ok');
