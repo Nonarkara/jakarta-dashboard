@@ -98,4 +98,25 @@ assert.doesNotMatch(client, /drop\('insight-green'\)|removeLayer\('insight-green
   'this module must never destroy the layer it does not own');
 assert.match(app, /await loadGreenGeometry\(request\)/, 'the published polygons are still added by the atlas');
 
+// The legend must write into the element it was handed. Querying the document
+// for '#green-legend' found nothing because the section is still detached at
+// that point, so the legend rendered empty while every other check stayed green.
+assert.match(client, /function legend\(wrap, kind\)/,
+  'legend writes into a passed box, not a document lookup of a detached node');
+assert.doesNotMatch(client, /document\.querySelector\('#green-legend'\)/,
+  'the legend must never look itself up in a document where it may not be attached yet');
+assert.match(client, /legend\(legendBox, mode\)/, 'render passes the box it just created');
+
+// Controls are not the view: rendering three mode buttons without applying the
+// active one leaves the reader with choices and an empty map.
+// Scope to render's own body. A loose window after `body.append(section)` also
+// catches the `function apply()` definition that follows, so the assertion
+// passed even with the call deleted.
+const renderStart = client.indexOf('function render(body)');
+const renderEnd = client.indexOf('\n  function ', renderStart + 10);
+const renderBody = client.slice(renderStart, renderEnd);
+assert.match(renderBody, /\n    apply\(\);/, 'render applies the mode it advertises');
+assert.match(client, /function apply\(\)/, 'apply() is the single place a mode reaches the map');
+assert.match(client, /if \(mode === 'ndvi'\) showNdvi/, 'apply covers every mode');
+
 console.log('PASS green space: NDVI tile/classification, the never-summed law, own dates, baked-overlay pattern and zoom scale');

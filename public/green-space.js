@@ -163,8 +163,10 @@ export function createGreenSpace(map, { text: t, active, buildTag }) {
     nodes.forEach((n) => { n.textContent = text; });
   }
 
-  function legend(kind) {
-    const wrap = document.querySelector('#green-legend');
+  // The legend writes into the box it is handed. Querying the document for it
+  // found nothing, because the section is still detached at this point — the
+  // legend silently rendered empty while everything else looked fine.
+  function legend(wrap, kind) {
     if (!wrap) return;
     wrap.replaceChildren();
     const head = el('b', t('Land cover', 'Tutupan lahan'));
@@ -210,10 +212,9 @@ export function createGreenSpace(map, { text: t, active, buildTag }) {
   function choose(next, body) {
     mode = next;
     document.querySelectorAll('[data-green-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.greenMode === next)));
-    legend(next);
-    if (next === 'ndvi') showNdvi(dates[0] || '2026-10-15');
-    else if (next === 'cover') showCover();
-    else showSites();
+    const box = document.getElementById('green-legend');
+    if (box) legend(box, next);
+    apply();
   }
 
   function render(body) {
@@ -243,11 +244,22 @@ export function createGreenSpace(map, { text: t, active, buildTag }) {
 
     const legendBox = el('div', undefined, 'green-legend'); legendBox.id = 'green-legend';
     section.append(legendBox);
-    legend(mode);
+    legend(legendBox, mode);
 
     section.append(el('p', t('These three are never added together. An index, a land-cover class and a published polygon answer different questions, and none of them is a measured green-space area.',
       'Ketiganya tidak pernah dijumlahkan. Indeks, kelas tutupan lahan, dan poligon terpublikasi menjawab pertanyaan berbeda, dan tidak ada yang merupakan luas ruang hijau terukur.'), 'note'));
     body.append(section);
+    // Apply the mode the panel is advertising. Rendering the controls without
+    // putting the layer on the map is how a lens ends up showing three choices
+    // and an empty view.
+    apply();
+  }
+
+  function apply() {
+    if (active() !== 'green') return;
+    if (mode === 'ndvi') showNdvi(dates[0] || '2026-10-15');
+    else if (mode === 'cover') showCover();
+    else showSites();
   }
 
   function show(body) {
