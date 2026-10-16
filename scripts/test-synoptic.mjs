@@ -109,18 +109,34 @@ assert.equal(mod.stitch([[[0, 0], [1, 0]], [[5, 5], [6, 6]]]).length, 2,
 const holed = grid.map(c => (c.lat === -8 && c.lng === 106 ? { ...c, mslpHpa: null, hours: [{ validAt: 'h0', mslpHpa: null }] } : c));
 assert.equal(mod.contour(mod.gridOf(holed), 1000).length, 0,
   'no contour is drawn across a cell whose pressure is unknown');
-// The row is now missing its MIDDLE column, so the remaining columns shift.
-// Without an alignment guard the algorithm pairs 104 with 108 and draws an
-// isobar straight across the 106 gap — a line through a place nothing was
-// measured.
-const shifted = mod.gridOf(grid.filter(c => !(c.lat === -8 && c.lng === 106)));
-assert.equal(shifted[1].cells.length, 2, 'the row with the hole really is short a column');
-// 1005 hPa is the level that exposes the mispairing: the surviving columns are
-// 1008/1006 above and 1004/1004 below, so a wrong pairing bridges 106 to 108
-// with a line through the gap. A level that never crosses would pass whether
-// the guard exists or not.
-assert.equal(mod.contour(shifted, 1005).length, 0, 'a row that lost a column is not contoured at all');
+// The row KEEPS its column slot, as null. Dropping the cell entirely would
+// shift the columns and marching squares would pair the wrong neighbours,
+// drawing an isobar across the gap.
+const gapped = mod.gridOf(grid.filter(c => !(c.lat === -8 && c.lng === 106)));
+assert.equal(gapped[1].cells.length, 3, 'the row keeps all three column slots');
+assert.equal(gapped[1].cells.filter(c => c === null).length, 1, 'the missing cell is a null slot, not a shift');
+assert.equal(mod.contour(gapped, 1005).length, 0, 'a gap in the field is never contoured across');
 assert.ok(mod.contour(rows, 1005).length > 0, 'the intact grid does contour at that same level');
+
+// The provider does NOT answer a rectangular grid. Against the live 5×5 request
+// it returned seven latitudes, two of them 0.07° apart, and dropped a column
+// from one row. A lattice built by exact-coordinate grouping therefore has no
+// rows at all, and the isobar field comes back empty — which is what the first
+// deployed screenshot showed: a low marker and wind arrows, no isobars.
+const jittered = [
+  mkCell(-9.00, 103.00, 1010, [1010]), mkCell(-9.03, 104.60, 1010, [1010]), mkCell(-8.96, 106.20, 1010, [1010]),
+  mkCell(-7.40, 103.00, 1006, [1006]), mkCell(-7.42, 104.60, 1004, [1004]), mkCell(-7.40, 106.20, 1004, [1004]),
+  mkCell(-5.80, 103.00, 1002, [1002]), mkCell(-5.80, 104.60, 1000, [1000]), mkCell(-5.80, 106.20, 1000, [1000]),
+  mkCell(-4.20, 103.00, 998, [998]), mkCell(-4.18, 104.60, 990, [990]), mkCell(-4.20, 106.20, 998, [998]),
+  mkCell(-2.60, 103.00, 1002, [1002]), mkCell(-2.64, 104.60, 1004, [1004]), mkCell(-2.57, 106.20, 1002, [1002]),
+];
+const jRows = mod.gridOf(jittered);
+assert.equal(jRows.length, 5, 'sub-tolerance jitter collapses into one row per requested latitude');
+assert.ok(jRows.every(r => r.cells.length === 3 && r.cells.every(Boolean)), 'the jittered scatter becomes a full lattice');
+assert.ok(mod.contour(jRows, 1000).length > 0, 'a jittered scatter still produces isobars');
+// Cells an order of magnitude apart are two columns, never one.
+const far = [mkCell(0, 0, 1000, [1000]), mkCell(0, 2, 1000, [1000]), mkCell(2, 0, 1000, [1000]), mkCell(2, 2, 1000, [1000])];
+assert.equal(mod.gridOf(far)[0].cells.length, 2, 'genuinely separated cells stay separate columns');
 
 // ── The honest claim, in words the code actually ships ────────────────────
 assert.match(server, /\/api\/atlas\/synoptic",?\s*return handleSynoptic|\/api\/atlas\/synoptic/, 'the route is registered');
@@ -161,7 +177,10 @@ assert.match(app, /rainfallData\?\.points \|\| \[\]/, 'the five sample points st
 assert.match(app, /pick\('himawari'/, 'Himawari IR is one button away on the lens');
 assert.match(app, /pick\('satellite-rain'/, 'IMERG satellite rain is one button away on the lens');
 
-// Both languages. A missing Indonesian string is a silent blank.
+// The panel carries the spacing, the low's pressure and its tendency. Folded
+// shut, the map shows isobars with nothing to interpret them against.
+assert.match(app, /lens === 'rain'[\s\S]{0,900}atlas-lens-evidence'\); if \(ev\) ev\.open = true/,
+  'the rain lens opens its evidence panel on desktop');
 assert.ok(client.includes('Konteks sinoptik'), 'the panel has an Indonesian title');
 assert.ok(client.includes('Tidak ada isobar'), 'the Indonesian failure copy says no isobar is drawn');
 

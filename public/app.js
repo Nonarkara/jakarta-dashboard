@@ -2264,6 +2264,11 @@ async function selectCityLens(lens) {
     catch { if (request === lensRequest) { /* the synoptic panel reports its own failure; the point list below still renders */ } }
     if (request !== lensRequest) return;
     setLayerVisible('rain-model-samples', true);
+    // The synoptic panel carries the grid spacing, the low's pressure and its
+    // tendency — the numbers that make the isobars readable. Folded shut behind
+    // "Explore evidence" the map shows lines nobody can interpret, so it opens
+    // on desktop. On a phone it stays folded so the map keeps the screen.
+    if (!window.matchMedia('(max-width: 700px)').matches) { const ev = document.getElementById('atlas-lens-evidence'); if (ev) ev.open = true; }
     // ~7.2 is about 900 km across: wide enough to hold a low-pressure system,
     // and the same frame the synoptic grid was requested over.
     mapInstance.flyTo({center:[106.8,-6.0], zoom:7.2, pitch:currentView === '2d' ? 0 : 30, bearing:0});

@@ -51,18 +51,53 @@ export function flowVector(windFromDeg, windMs) {
   return { u: Math.sin(rad) * windMs, v: Math.cos(rad) * windMs, toward, speed: windMs, from: windFromDeg };
 }
 
-// Rows and columns of the returned cells, sorted. The grid is whatever the
-// provider answered; these helpers only organise it, they never add a node.
-export function gridOf(cells) {
-  const rows = [];
-  for (const c of cells || []) {
-    if (!Number.isFinite(c?.lat) || !Number.isFinite(c?.lng) || !Number.isFinite(c.mslpHpa)) continue;
-    let row = rows.find((r) => Math.abs(r.lat - c.lat) < 1e-3);
-    if (!row) { row = { lat: c.lat, cells: [] }; rows.push(row); }
-    if (!row.cells.some((x) => Math.abs(x.lng - c.lng) < 1e-3)) row.cells.push(c);
+// The provider does NOT answer a rectangular grid. Asking for a 5×5 lattice
+// over Java returned seven distinct latitudes — two of them 0.07° apart, i.e.
+// 8 km — and the 107.8° column missing from one row entirely. Treating those as
+// seven rows produces a ragged scatter that cannot be contoured at all.
+//
+// So the lattice is reconstructed by CLUSTERING: positions within this
+// tolerance belong to the same row or column. Measured jitter against the
+// requested grid is ≤0.07°, so 0.35° is five times that and still under a
+// quarter of the grid step. A node's POSITION is the cluster mean, so a shared
+// corner is bit-identical between rows and segments stitch; its VALUE is the
+// real cell that answered. A cluster with no cell behind it stays null, and a
+// contour never bridges that gap.
+const CLUSTER_TOLERANCE_DEG = 0.35;
+
+function clusterBy(values, tol) {
+  const out = [];
+  for (const v of values.slice().sort((a, b) => a - b)) {
+    const hit = out.find((c) => Math.abs(c.mean - v) <= tol);
+    if (hit) { hit.sum += v; hit.n += 1; hit.mean = hit.sum / hit.n; }
+    else out.push({ mean: v, sum: v, n: 1 });
   }
-  rows.forEach((r) => r.cells.sort((a, b) => a.lng - b.lng));
-  return rows.sort((a, b) => b.lat - a.lat);
+  return out.sort((a, b) => a.mean - b.mean);
+}
+
+export function gridOf(cells) {
+  const usable = (cells || []).filter((c) => Number.isFinite(c?.lat) && Number.isFinite(c?.lng) && Number.isFinite(c.mslpHpa));
+  if (!usable.length) return [];
+  const latBands = clusterBy(usable.map((c) => c.lat), CLUSTER_TOLERANCE_DEG);
+  const lngBands = clusterBy(usable.map((c) => c.lng), CLUSTER_TOLERANCE_DEG);
+  const matrix = latBands.map(() => new Array(lngBands.length).fill(null));
+  for (const c of usable) {
+    let ri = 0, ci = 0, bestLat = Infinity, bestLng = Infinity;
+    latBands.forEach((b, i) => { const d = Math.abs(b.mean - c.lat); if (d < bestLat) { bestLat = d; ri = i; } });
+    lngBands.forEach((b, i) => { const d = Math.abs(b.mean - c.lng); if (d < bestLng) { bestLng = d; ci = i; } });
+    // A real cell always lands in its own cluster, so a collision here would
+    // mean two cells share a node. Keep the one already placed rather than
+    // silently averaging two pressures into an invented value.
+    if (matrix[ri][ci] === null) matrix[ri][ci] = { lat: latBands[ri].mean, lng: lngBands[ci].mean, mslpHpa: c.mslpHpa };
+  }
+  // Rows run north to south and columns west to east, which is how marching
+  // squares and stitching both expect to walk. Reverse the MATRIX itself, not
+  // just the row label: reversing only the label pairs every latitude with
+  // another latitude's pressures and draws the field from the wrong rows.
+  return matrix.slice().reverse().map((row, ri) => ({
+    lat: latBands[latBands.length - 1 - ri].mean,
+    cells: row.slice().reverse(),
+  }));
 }
 
 // Marching squares over the returned cells, one segment per crossing, at every
@@ -72,21 +107,16 @@ export function contour(rows, level) {
   const segments = [];
   for (let r = 0; r < rows.length - 1; r++) {
     const top = rows[r], bot = rows[r + 1];
-    // A quad needs c AND c+1, so the column count is the span, not the length.
-    // Looping to the length reads one cell past the row end and throws.
-    const cols = Math.min(top.cells.length, bot.cells.length);
-    // The rows must actually be stacked: same longitudes, same columns. If a
-    // cell is missing from the middle of one row, the remaining columns SHIFT,
-    // and marching squares would pair the wrong neighbours and bridge the gap
-    // with an isobar drawn through a place nothing was measured.
+        // The columns now come from shared cluster positions, so a quad's corners
+    // are bit-identical to its neighbour's and the segments stitch. All that is
+    // left is to refuse a quad with any corner unbacked by a real cell — a null
+    // cluster is a gap in the field, not a value to interpolate across.
+    const cols = top.cells.length;
     if (cols < 2) continue;
-    let aligned = true;
-    for (let c = 0; c < cols; c++) if (Math.abs(top.cells[c].lng - bot.cells[c].lng) > 1e-3) aligned = false;
-    if (!aligned) continue;
     for (let c = 0; c + 1 < cols; c++) {
       const a = top.cells[c], b = top.cells[c + 1], d = bot.cells[c + 1], e = bot.cells[c];
       const quad = [a, b, d, e];
-      if (quad.some((q) => !Number.isFinite(q.mslpHpa))) continue;
+      if (quad.some((q) => !q || !Number.isFinite(q.mslpHpa))) continue;
       const pts = [];
       const edges = [[a, b], [b, d], [d, e], [e, a]];
       for (const [p, q] of edges) {
