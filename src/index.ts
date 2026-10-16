@@ -887,7 +887,7 @@ async function handleWindField(): Promise<Response> {
     // Open-Meteo snapped the requests onto fewer model cells than were asked
     // for. Saying so is the point: the field is as coarse as the provider is.
     cellNote: `${cells.length} distinct model cells answered ${WIND_SAMPLE_POINTS.length} requested points. Each cell is one model value covering its whole neighbourhood; nothing here is street-level.`,
-    spacingKm: medianSpacingKm(cells),
+    spacingKm: gridStepKm(cells), // nearest-neighbour step (8 km live), not the 18 km median of all pairs
     hours: allTimes,
     cells: cells.map((c: any) => ({ lat: c.lat, lng: c.lng, hours: c.hours })),
     source: "Open-Meteo 10 m wind model", sourceUrl: "https://open-meteo.com/en/docs",
@@ -923,7 +923,9 @@ async function handleSynoptic(): Promise<Response> {
   const url = new URL("https://api.open-meteo.com/v1/forecast");
   url.searchParams.set("latitude", SYNOPTIC_POINTS.map((p) => String(p.lat)).join(","));
   url.searchParams.set("longitude", SYNOPTIC_POINTS.map((p) => String(p.lng)).join(","));
-  url.searchParams.set("hourly", "surface_pressure,wind_speed_850hPa,wind_direction_850hPa");
+  // pressure_msl, not surface_pressure: surface pressure over the Bukit Barisan
+  // read 962 hPa and drew a "low" on a mountain. Isobars need sea-level pressure.
+  url.searchParams.set("hourly", "pressure_msl,wind_speed_850hPa,wind_direction_850hPa");
   url.searchParams.set("wind_speed_unit", "ms");
   url.searchParams.set("forecast_days", "2");
   url.searchParams.set("timezone", "UTC");
@@ -942,10 +944,10 @@ async function handleSynoptic(): Promise<Response> {
     if (!Number.isFinite(row?.latitude) || !Number.isFinite(row?.longitude)) continue;
     if (row.latitude < -10.5 || row.latitude > -1.5) continue;
     if (row.longitude < 101.5 || row.longitude > 112.5) continue;
-    if (row?.hourly_units?.surface_pressure !== "hPa") continue;
+    if (row?.hourly_units?.pressure_msl !== "hPa") continue;
     if (row?.hourly_units?.wind_speed_850hPa !== "m/s" || row?.hourly_units?.wind_direction_850hPa !== "°") continue;
     const times = Array.isArray(row?.hourly?.time) ? row.hourly.time : [];
-    const mslp = Array.isArray(row?.hourly?.surface_pressure) ? row.hourly.surface_pressure : [];
+    const mslp = Array.isArray(row?.hourly?.pressure_msl) ? row.hourly.pressure_msl : [];
     const speeds = Array.isArray(row?.hourly?.wind_speed_850hPa) ? row.hourly.wind_speed_850hPa : [];
     const directions = Array.isArray(row?.hourly?.wind_direction_850hPa) ? row.hourly.wind_direction_850hPa : [];
     if (!times.length || times.length > 72) continue;
@@ -987,7 +989,6 @@ async function handleSynoptic(): Promise<Response> {
     requestedPoints: SYNOPTIC_POINTS.length,
     cellCount: cells.length,
     spacingKm: gridStepKm(cells),
-    nearestPairKm: medianSpacingKm(cells),
     extentKm: {
       northSouth: Math.round(distanceKm(Math.min(...cells.map((c: any) => c.lat)), 106, Math.max(...cells.map((c: any) => c.lat)), 106) * 10) / 10,
       eastWest: Math.round(distanceKm(-6, Math.min(...cells.map((c: any) => c.lng)), -6, Math.max(...cells.map((c: any) => c.lng))) * 10) / 10,
@@ -1009,7 +1010,7 @@ async function handleSynoptic(): Promise<Response> {
   }, { headers: { "cache-control": "public, max-age=600" } });
 }
 
-// The gap to a cell's own NEAREST neighbour. medianSpacingKm() measures every
+// The gap to a cell's own NEAREST neighbour. A median of every
 // pairwise distance, which on a regular 5×5 grid is dominated by the diagonals
 // and the corners — it reported ~499 km for a grid whose actual step is ~175 km.
 // That number bounds how far an interpolated isobar can be trusted, so it has
@@ -1031,16 +1032,6 @@ function gridStepKm(cells: { lat: number; lng: number }[]): number | null {
   return Math.round((steps.length % 2 ? steps[mid] : (steps[mid - 1] + steps[mid]) / 2) * 10) / 10;
 }
 
-function medianSpacingKm(cells: { lat: number; lng: number }[]): number | null {
-  if (cells.length < 2) return null;
-  const gaps: number[] = [];
-  for (let i = 0; i < cells.length; i++) {
-    for (let j = i + 1; j < cells.length; j++) gaps.push(distanceKm(cells[i].lat, cells[i].lng, cells[j].lat, cells[j].lng));
-  }
-  gaps.sort((a, b) => a - b);
-  const mid = gaps.length >> 1;
-  return Math.round((gaps.length % 2 ? gaps[mid] : (gaps[mid - 1] + gaps[mid]) / 2) * 10) / 10;
-}
 
 // ── /api/health — quick liveness probe ────────────────────────────────────
 
@@ -1064,7 +1055,7 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const response = await routeRequest(request, env);
     const headers = new Headers(response.headers);
-    if (["/", "/index.html", "/atlas", "/atlas/"].includes(new URL(request.url).pathname)) headers.set("cache-control", "no-cache");
+    if (["/", "/index.html", "/atlas", "/atlas/", "/research", "/research/"].includes(new URL(request.url).pathname)) headers.set("cache-control", "no-cache");
     if (response.status >= 500) headers.set("cache-control", "no-store");
     headers.set("x-content-type-options", "nosniff");
     headers.set("referrer-policy", "strict-origin-when-cross-origin");
@@ -1097,6 +1088,10 @@ async function routeRequest(request: Request, env: Env): Promise<Response> {
   if (path.startsWith("/api/atlas/traffic-stream/")) return handleHydrology(request, env);
   if (["/api/atlas/hydrology", "/api/atlas/jaxa-water", "/api/atlas/jaxa-tile", "/api/atlas/traffic-stream"].includes(path)) return handleHydrology(request, env);
   if (path.startsWith("/api/jakarta/")) return handleJakarta(request);
+  if (path === "/research" || path === "/research/") {
+    const target = new URL(request.url); target.pathname = "/research.html";
+    return env.ASSETS.fetch(new Request(target, request));
+  }
   if (["/", "/index.html", "/atlas", "/atlas/"].includes(path)) {
     const target = new URL(request.url);
     target.pathname = path.startsWith("/atlas") ? "/index.html" : "/dashboard.html";

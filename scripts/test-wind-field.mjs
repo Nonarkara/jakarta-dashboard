@@ -74,7 +74,10 @@ assert.doesNotMatch(client, /pm25\s*[:=].*interpolat|interpolat[a-z]*.*pm25/i,
 assert.match(client, /prefers-reduced-motion:\s*reduce/, 'reduced motion is honoured');
 assert.match(app, /windFieldController\?\.clear\(\)/, 'leaving the lens must clear the wind layer');
 assert.match(client, /visibilitychange/, 'a hidden document must stop the animation');
-assert.match(client, /cancelAnimationFrame/, 'the animation frame must be cancellable');
+// Animation lives in the shared flow canvas; wind-field keeps no loop of its own
+// (its old one referenced removed state and crashed on Play).
+assert.doesNotMatch(client, /requestAnimationFrame/, 'wind-field runs no animation loop of its own');
+assert.match(readFileSync(new URL('../public/flow-canvas.js', import.meta.url), 'utf8'), /cancelAnimationFrame/, 'the flow canvas frame must be cancellable');
 assert.match(app, /import\('\.\/wind-field\.js\?v='/, 'the module is loaded lazily with the build tag');
 
 // The evidence panel wipes and repaints the lens body on every refresh. When

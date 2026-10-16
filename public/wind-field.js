@@ -51,7 +51,7 @@ export function sampleField(cells, lng, lat) {
   for (const cell of cells) {
     if (!Number.isFinite(cell?.lng) || !Number.isFinite(cell?.lat)) continue;
     const dx = cell.lng - lng, dy = cell.lat - lat;
-    const km = Math.sqrt(dx * dx * 111 * 111 + dy * dy * 110);
+    const km = Math.hypot(dx * 111.32 * Math.cos(lat * Math.PI / 180), dy * 110.574);
     nearest = Math.min(nearest, km);
     if (km > 60) continue;               // too far to call: stays unknown
     const w = 1 / Math.max(km * km, 0.01);
@@ -62,10 +62,10 @@ export function sampleField(cells, lng, lat) {
   return { u: uu, v: vv, speed: Math.hypot(uu, vv), toward: (Math.atan2(uu, vv) * 180 / Math.PI + 360) % 360, used, nearestKm: nearest };
 }
 
-export function createWindField(map, { text: t, active, buildTag }) {
+export function createWindField(map, { text: t, active, buildTag, flow }) {
   let wind = null, air = null, epoch = 0;
-  let raf = null, source = null, layer = null, markers = null, frameNodes = [];
-  let particles = [], reduced = false, hiddenListener = null, visibility = null;
+  let timer = null, source = null, layer = null, markers = null, frameNodes = [];
+  let reduced = false, hiddenListener = null;
   const panel = { playing: false, index: 0 };
 
   // MapLibre throws if the before-id does not exist in the current style, and
@@ -94,8 +94,8 @@ export function createWindField(map, { text: t, active, buildTag }) {
   }
 
   function stop() {
-    if (raf !== null) cancelAnimationFrame(raf);
-    raf = null;
+    if (timer !== null) clearInterval(timer);
+    timer = null;
     panel.playing = false;
     const b = document.getElementById('wind-play');
     if (b) { b.textContent = t('Play wind field', 'Putar medan angin'); b.setAttribute('aria-pressed', 'false'); }
@@ -117,12 +117,10 @@ export function createWindField(map, { text: t, active, buildTag }) {
     layer = null;
     if (markers && map.getLayer(markers)) map.removeLayer(markers);
     markers = null;
-    if (source && map.getLayer(source + '-p') && map.getLayer(source + '-p')) map.removeLayer(source + '-p');
-    if (source && map.getSource(source + '-p')) map.removeSource(source + '-p');
     if (source && map.getSource(source)) map.removeSource(source);
     source = null;
     frameNodes = [];
-    particles = [];
+    if (flow?.label === 'wind10') flow.setField(null);
   }
 
   function drawField(index) {
@@ -152,55 +150,16 @@ export function createWindField(map, { text: t, active, buildTag }) {
     else { source = 'wind-field-' + epoch; map.addSource(source, { type: 'geojson', data: feature }); }
     if (!map.getLayer(layer || 'wind-field-line')) {
       layer = layer || 'wind-field-line';
-      map.addLayer({ id: layer, type: 'line', source: source, paint: { 'line-color': '#d8a24a', 'line-width': 2.2, 'line-opacity': 0.95 } }, anchor());
-    } else map.setPaintProperty(layer, 'line-opacity', 0.95);
+      // The arrows mark where the model actually has a cell; the flow canvas
+      // draws the motion between them, so the arrows step back.
+      map.addLayer({ id: layer, type: 'line', source: source, paint: { 'line-color': '#d8a24a', 'line-width': 1.4, 'line-opacity': flow ? 0.5 : 0.95 } }, anchor());
+    } else map.setPaintProperty(layer, 'line-opacity', flow ? 0.5 : 0.95);
     frameNodes.forEach((n) => n.remove());
     frameNodes = [];
     showChip();
-    if (!reduced) seedParticles(cells);
+    // Particles: one shared canvas, reading the same cells (u, v in m/s).
+    flow?.setField(cells, { label: 'wind10' });
     updateReadout(data, cells);
-  }
-
-  function seedParticles(cells) {
-    const pts = [];
-    for (const c of cells) {
-      const rad = c.toward * Math.PI / 180;
-      for (let k = -2; k <= 2; k++) {
-        const off = (k * 4) / 111.32 / Math.cos(c.lat * Math.PI / 180); // ~4 km steps
-        pts.push([c.lng - Math.sin(rad) * off, c.lat - Math.cos(rad) * off]);
-      }
-    }
-    particles = pts.map((p, i) => ({ lng: p[0], lat: p[1], life: (i * 0.13) % 1 }));
-  }
-
-  // Particles are only a reading of the field. They are redrawn from the live
-  // cell values on every frame, so they can never outlive the hour they came from.
-  function tick() {
-    if (active() !== 'air' || document.hidden) { raf = requestAnimationFrame(tick); return; }
-    const index = panel.index;
-    const cells = cellsAt(index);
-    if (cells.length) {
-      const next = [];
-      for (const p of particles) {
-        const f = sampleField(cells, p.lng, p.lat);
-        if (!f || f.speed < 0.05) continue;
-        const dt = 0.00035; // ~ one animation frame of model advection
-        next.push({ lng: p.lng + f.u * dt, lat: p.lat + f.v * dt, life: p.life });
-      }
-      // Seed around cells when the set thins out, so the field keeps reading.
-      if (next.length < cells.length * 4) seedParticles(cells).forEach((p) => next.push(p));
-      particles = next.slice(0, 260);
-      const line = {
-        type: 'FeatureCollection',
-        features: [{ type: 'Feature', geometry: { type: 'MultiPoint', coordinates: particles.map((p) => [p.lng, p.lat]) } }],
-      };
-      if (source && map.getSource(source + '-p')) map.getSource(source + '-p').setData(line);
-      else {
-        map.addSource(source + '-p', { type: 'geojson', data: line });
-        map.addLayer({ id: source + '-p', type: 'circle', source: source + '-p', paint: { 'circle-color': '#f1e7d0', 'circle-radius': 1.6, 'circle-opacity': 0.55 } }, anchor());
-      }
-    }
-    raf = requestAnimationFrame(tick);
   }
 
   function updateReadout(frame, cells) {
@@ -224,8 +183,15 @@ export function createWindField(map, { text: t, active, buildTag }) {
     panel.playing = !panel.playing;
     const b = document.getElementById('wind-play');
     if (b) { b.textContent = panel.playing ? t('Pause', 'Jeda') : t('Play wind field', 'Putar medan angin'); b.setAttribute('aria-pressed', String(panel.playing)); }
-    if (panel.playing && !raf) { panel.index = currentIndex(); raf = requestAnimationFrame(tick); }
-    if (!panel.playing) { stop(); }
+    if (!panel.playing) { stop(); return; }
+    // Play steps through the forecast hours, one per second, and loops.
+    timer = setInterval(() => {
+      if (active() !== 'air' || document.hidden) return;
+      const next = (panel.index + 1) % wind.hours.length;
+      scrubTo(next);
+      const range = document.getElementById('wind-timeline');
+      if (range) range.value = String(next);
+    }, 1000);
   }
 
   function scrubTo(index) {
@@ -284,8 +250,8 @@ export function createWindField(map, { text: t, active, buildTag }) {
     reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
     hiddenListener = () => { if (document.hidden) stop(); };
     document.addEventListener('visibilitychange', hiddenListener);
-    drawField(currentIndex());
-    if (!reduced) { raf = requestAnimationFrame(tick); }
+    panel.index = currentIndex();
+    drawField(panel.index);
   }
 
   function show(body) {

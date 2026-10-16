@@ -91,7 +91,8 @@ export function trajectory(cellsByHour, startIndex, origin, steps) {
     const idx = startIndex + s;
     if (idx >= cellsByHour.length) { stopped = 'forecast-ends'; break; }
     const [lng, lat] = path[path.length - 1];
-    const w = sampleWind(cellsByHour[idx], lng, lat);
+    // Euler step from hour idx-1 to idx uses the wind of the hour the parcel is IN.
+    const w = sampleWind(cellsByHour[idx - 1], lng, lat);
     if (!w) { stopped = 'no-wind'; break; }
     const dLat = ((w.v / 1000) * SECONDS_PER_HOUR) / KM_PER_DEG_LAT;
     const dLng = ((w.u / 1000) * SECONDS_PER_HOUR) / kmPerDegLng(lat);
@@ -120,20 +121,25 @@ const JAKARTA_ORIGINS = [
 // drawing 2619 lines is not.
 const MAX_FIRE_PATHS = 12;
 
-export function fireOrigins(features) {
+// Only fires inside the wind field can be advected; a detection in Borneo with
+// no wind cell around it would draw a one-point "path". The strongest (FRP)
+// go first, so the capped set is the fires most likely to matter.
+export function fireOrigins(features, bounds = null) {
   const list = Array.isArray(features) ? features : [];
   const mapped = list
     .filter((f) => Number.isFinite(f?.geometry?.coordinates?.[1]) && Number.isFinite(f?.geometry?.coordinates?.[0]))
+    .filter((f) => !bounds || insideField(bounds, f.geometry.coordinates[0], f.geometry.coordinates[1]))
     .map((f) => ({
       lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0],
       frp: Number.isFinite(f?.properties?.frp) ? f.properties.frp : null,
       observedAt: f?.properties?.observedAt || null,
       label: 'Thermal detection',
-    }));
-  return { paths: mapped.slice(0, MAX_FIRE_PATHS), total: mapped.length, capped: mapped.length > MAX_FIRE_PATHS };
+    }))
+    .sort((a, b) => (b.frp ?? -1) - (a.frp ?? -1));
+  return { paths: mapped.slice(0, MAX_FIRE_PATHS), total: mapped.length, outside: list.length - mapped.length, capped: mapped.length > MAX_FIRE_PATHS };
 }
 
-export function createHazeTransport(map, { text: t, active, buildTag }) {
+export function createHazeTransport(map, { text: t, active, buildTag, flow }) {
   let synoptic = null, fires = null, epoch = 0;
   let source = null, pathLayer = null, seedLayer = null, hourLayer = null, lastBody = null, fitted = false;
   const state = { origins: 'jakarta', hours: 24 };
@@ -143,7 +149,7 @@ export function createHazeTransport(map, { text: t, active, buildTag }) {
     const now = Date.now();
     let best = 0, delta = Infinity;
     synoptic.hours.forEach((h, i) => { const d = Math.abs(Date.parse(h) - now); if (d < delta) { delta = d; best = i; } });
-    return Math.max(0, synoptic.hours.length - best);
+    return Math.max(0, synoptic.hours.length - best - 1); // steps, not hours: N hours give N-1 steps
   };
   const startIndex = () => {
     if (!synoptic?.hours?.length) return 0;
@@ -177,7 +183,7 @@ export function createHazeTransport(map, { text: t, active, buildTag }) {
 
   function originsNow() {
     if (state.origins === 'fires') {
-      const f = fireOrigins(fires?.features);
+      const f = fireOrigins(fires?.features, synoptic?.available ? fieldBounds(cellsAt(startIndex())) : null);
       return { list: f.paths, note: f, kind: 'fires' };
     }
     return { list: JAKARTA_ORIGINS, note: { total: JAKARTA_ORIGINS.length, capped: false }, kind: 'jakarta' };
@@ -189,7 +195,8 @@ export function createHazeTransport(map, { text: t, active, buildTag }) {
     if (!list.length) return { lines: [], seeds: [], hours: [], paths: 0, note, kind };
     const byHour = [];
     for (let i = 0; i < synoptic.hours.length; i++) byHour.push(cellsAt(i));
-    const runs = list.map((o) => trajectory(byHour, startIndex(), o, state.hours)).filter(Boolean);
+    // A run that never left its seed is not a path; it is counted, not drawn as a dot-line.
+    const runs = list.map((o) => trajectory(byHour, startIndex(), o, state.hours)).filter((r) => r && r.path.length > 1);
     const lines = [];
     const seeds = runs.map((r) => ({ type: 'Feature', properties: { role: 'seed', kind }, geometry: { type: 'Point', coordinates: r.path[0] } }));
     const hours = [];
@@ -210,11 +217,14 @@ export function createHazeTransport(map, { text: t, active, buildTag }) {
     for (const id of [pathLayer, seedLayer, hourLayer]) if (id && map.getLayer(id)) map.removeLayer(id);
     if (source && map.getSource(source)) map.removeSource(source);
     pathLayer = seedLayer = hourLayer = source = null;
+    if (flow?.label === 'haze850') flow.setField(null);
   }
 
   function draw() {
     if (!map || active() !== 'haze' || !synoptic?.available) { hide(); return; }
     const b = build();
+    // The air the paths ride on, moving: same 850 hPa cells, current hour.
+    flow?.setField(cellsAt(startIndex()), { label: 'haze850', key: synoptic.checkedAt + ':' + startIndex() });
     const bundle = { type: 'FeatureCollection', features: [...b.lines, ...b.seeds, ...b.hours] };
     if (!bundle.features.length) { hide(); renderPanel(); return; }
     if (source && map.getSource(source)) map.getSource(source).setData(bundle);
@@ -240,7 +250,8 @@ export function createHazeTransport(map, { text: t, active, buildTag }) {
     if (pts.length < 2) return;
     let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
     for (const [x, y] of pts) { minX = Math.min(minX, x); maxX = Math.max(maxX, x); minY = Math.min(minY, y); maxY = Math.max(maxY, y); }
-    map.fitBounds([[minX, minY], [maxX, maxY]], { padding: 70, duration: 900, maxZoom: 8 });
+    const still = globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
+    map.fitBounds([[minX, minY], [maxX, maxY]], { padding: 70, duration: still ? 0 : 900, maxZoom: 8 });
     fitted = true;
   }
 
@@ -273,9 +284,9 @@ export function createHazeTransport(map, { text: t, active, buildTag }) {
     fact(t('Wind', 'Angin'), '850 hPa · ' + t('about 1.5 km up, not the ground', 'sekitar 1,5 km di atas permukaan'));
     fact(t('Cells', 'Sel'), synoptic.cellCount + ' ' + t('of', 'dari') + ' ' + synoptic.requestedPoints + ' · ' + synoptic.spacingKm + ' km ' + t('grid step', 'langkah kisi'));
     fact(t('Seeds', 'Titik asal'), state.origins === 'fires'
-      ? note.total + ' ' + t('admitted thermal detections', 'deteksi termal lolos') + (note.capped ? ' · ' + t('showing', 'menampilkan') + ' ' + b.paths : '')
+      ? note.total + ' ' + t('thermal detections inside the wind field', 'deteksi termal di dalam medan angin') + (note.outside ? ' (' + note.outside + ' ' + t('outside it, not advected', 'di luar, tidak dilacak') + ')' : '') + ' · ' + t('paths drawn', 'jalur digambar') + ' ' + b.paths + (note.capped ? ' ' + t('strongest by FRP', 'terkuat menurut FRP') : '')
       : b.paths + ' ' + t('Jakarta origins, planning points not emission sources', 'titik asal Jakarta, titik perencanaan bukan sumber emisi'));
-    fact(t('Horizon', 'Horizon'), Math.min(state.hours, available) + ' h' + (b.endedEarly ? ' · ' + t('some paths stop sooner where the wind data ends', 'sebagian jalur berhenti lebih awal di/data angin berakhir') : ''));
+    fact(t('Horizon', 'Horizon'), Math.min(state.hours, available) + ' h' + (b.endedEarly ? ' · ' + t('some paths stop sooner where the wind data ends', 'sebagian jalur berhenti lebih awal di tempat data angin berakhir') : ''));
     section.append(facts);
 
     const toggles = el('div', undefined, 'synoptic-toggles');
@@ -304,7 +315,7 @@ export function createHazeTransport(map, { text: t, active, buildTag }) {
 
     section.append(el('p', t(
       'This is a trajectory from mean wind at one level, not a dispersion model. It ignores boundary-layer depth, mixing, stability and deposition, so it shows where air would go — not how much would arrive, or whether it would arrive at all.',
-      'Ini adalah trajektori dari angin rata-rata pada satu level, bukan model dispersi. Mengabaikan kedalaman lapisan batas, Pencampuran, kestabilan, dan pengendapan, sehingga menunjukkan ke mana udara akan pergi — bukan berapa yang akan tiba, atau apakah akan tiba.'),
+      'Ini adalah trajektori dari angin rata-rata pada satu level, bukan model dispersi. Mengabaikan kedalaman lapisan batas, pencampuran, kestabilan, dan pengendapan, sehingga menunjukkan ke mana udara akan pergi — bukan berapa yang akan tiba, atau apakah akan tiba.'),
       'synoptic-note'));
     host.append(section);
   }

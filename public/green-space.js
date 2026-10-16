@@ -261,7 +261,8 @@ export function createGreenSpace(map, { text: t, active, buildTag }) {
 
   function apply() {
     if (active() !== 'green') return;
-    if (mode === 'ndvi') showNdvi(dates[0] || '2026-10-15');
+    // No published date means no NDVI layer, never a hard-coded day the satellite may not have.
+    if (mode === 'ndvi') { if (dates[0]) showNdvi(dates[0]); }
     else if (mode === 'cover') showCover();
     else showSites();
   }

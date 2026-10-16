@@ -103,7 +103,21 @@ assert.doesNotMatch(client, /pm25|concentration\s*[:=]\s*[0-9]|plumeWidth|AOD\s*
   assert.equal(f.total, 40, 'every detection is counted');
   assert.equal(f.paths.length, 12, 'only a readable number is drawn');
   assert.equal(f.capped, true, 'and the cap is reported, not hidden');
-  assert.deepEqual(mod.fireOrigins(null), { paths: [], total: 0, capped: false }, 'no data is no paths');
+  assert.deepEqual(mod.fireOrigins(null), { paths: [], total: 0, outside: 0, capped: false }, 'no data is no paths');
+  // Seeds outside the wind field cannot be advected (the live case: all twelve
+  // in Borneo, east of the box), and the strongest fires are drawn first.
+  const pt = (lng, lat, frp) => ({ geometry: { coordinates: [lng, lat] }, properties: { frp } });
+  const box = { minLat: -9, maxLat: -2.5, minLng: 103, maxLng: 109.4 };
+  const b = mod.fireOrigins([pt(114, -1, 900), pt(105, -4, 5), pt(106, -3, 80), pt(104, -5, null)], box);
+  assert.equal(b.total, 3, 'only detections inside the field are seeds');
+  assert.equal(b.outside, 1, 'and the rest are counted as outside, not dropped silently');
+  assert.deepEqual(b.paths.map((p) => p.frp), [80, 5, null], 'ranked by fire radiative power, unknown last');
+}
+// Forward Euler: the step out of hour i uses hour i's wind, not hour i+1's.
+{
+  const at = (u) => [100, 103, 106, 109, 112].map((lng) => ({ lat: -6, lng, u, v: 0 }));
+  const r = mod.trajectory([at(-10), at(10)], 0, { lat: -6, lng: 106 }, 1);
+  assert.ok(r.path[1][0] < 106, 'the first step moves with the starting hour\'s easterly, not the next hour\'s westerly');
   assert.deepEqual(mod.fireOrigins([{ geometry: { coordinates: [NaN, 6] } }]).paths, [],
     'a detection with no coordinates is not an origin');
 }
@@ -153,6 +167,9 @@ globalThis.fetch = async (url) => {
   return { ok: false, json: async () => ({ available: false }) };
 };
 try {
+  // Pin "now" to three hours before the fixture ends (two steps left): a wall-clock test passes on the day
+  // the fixture was captured and fails forever after.
+  globalThis.Date = class extends realDate { static now() { return realDate.parse(synFixture.hours.at(-3)); } };
   // The haze lens draws it; no other lens does.
   for (const lens of ['haze', 'rain', 'green']) {
     const map = stubMap();

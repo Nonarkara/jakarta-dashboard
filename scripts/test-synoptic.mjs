@@ -294,7 +294,8 @@ assert.match(gridStepBody, /if \(i === j\) continue;/, 'gridStepKm compares ever
 // Any index arithmetic ("only look at the next cell") silently turns a
 // nearest-neighbour search into a positional guess.
 assert.doesNotMatch(gridStepBody, /j\s*[!=]==?\s*i\s*[+-]/, 'gridStepKm must not shortcut the neighbour search by index');
-assert.match(server, /nearestPairKm: medianSpacingKm\(cells\)/, 'the wider pairwise figure is still reported, not hidden');
+// "nearestPairKm" used to carry the median of ALL pairs: a mislabelled number is removed, not kept.
+assert.doesNotMatch(server, /nearestPairKm/, 'no field may claim to be the nearest pair while holding a median of all pairs');
 assert.match(client, /grid step/, 'the panel labels the number as the grid step');
 
 // ── The flood-monitoring lens ─────────────────────────────────────────────
@@ -430,6 +431,13 @@ try {
   if (realDocument === undefined) delete globalThis.document; else globalThis.document = realDocument;
 }
 
+// Real-estate law: chips in the lens panel are sized to their label, not the panel.
+{
+  const design = readFileSync(new URL('../public/jakarta-design.css', import.meta.url), 'utf8');
+  const rule = design.match(/#atlas-lens-body \.synoptic-toggles button, #atlas-lens-body \.synoptic-scrub button \{([^}]*)\}/)?.[1] || '';
+  assert.match(rule, /width:auto/, 'lens chips are as wide as their label');
+  assert.match(design, /\.synoptic-toggles button\[aria-pressed="true"\] \{ background:var\(--ink\); color:var\(--bg\)/, 'selected chip is solid ink, not coloured text on a pale fill');
+}
 console.log('test-synoptic: ok');
 
 // ── What else sees this ───────────────────────────────────────────────────

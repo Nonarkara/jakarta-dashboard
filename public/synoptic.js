@@ -176,10 +176,27 @@ export function lowCentre(cells, index) {
     if (!best || h.mslpHpa < best.mslpHpa) best = { lat: c.lat, lng: c.lng, mslpHpa: h.mslpHpa, validAt: h.validAt };
   }
   if (!best) return null;
-  const priorIndex = index - 6;
-  const prior = priorIndex >= 0 ? cells.find((c) => Math.abs(c.lat - best.lat) < 1e-3 && Math.abs(c.lng - best.lng) < 1e-3)?.hours?.[priorIndex] : null;
-  const tendencyHpa = prior && Number.isFinite(prior.mslpHpa) ? Math.round((best.mslpHpa - prior.mslpHpa) * 10) / 10 : null;
-  return { ...best, tendencyHpa, tendencyHours: prior ? 6 : null };
+  // A box minimum is only a low centre when it is an INTERIOR node lower than
+  // every neighbour around it. A minimum on the box edge is just the
+  // down-gradient side of the field, and is labelled as that, not as "L".
+  const km = (a, b) => Math.hypot((a.lng - b.lng) * 111.32 * Math.cos(a.lat * Math.PI / 180), (a.lat - b.lat) * 110.57);
+  const valued = (cells || []).filter((c) => Number.isFinite(c.hours?.[index]?.mslpHpa));
+  const others = valued.filter((c) => c.lat !== best.lat || c.lng !== best.lng);
+  const step = others.length ? Math.min(...others.map((c) => km(c, best))) : Infinity;
+  const ring = others.filter((c) => km(c, best) <= step * 1.6);
+  const surrounded = ['n', 's', 'e', 'w'].every((side) => ring.some((c) =>
+    side === 'n' ? c.lat > best.lat + 1e-6 : side === 's' ? c.lat < best.lat - 1e-6 : side === 'e' ? c.lng > best.lng + 1e-6 : c.lng < best.lng - 1e-6));
+  const isLow = surrounded && ring.every((c) => c.hours[index].mslpHpa > best.mslpHpa);
+  // Tendency over 24 h first: tropical pressure swings ~3 hPa twice a day with
+  // the atmospheric tide, so a 6 h change mostly measures the clock. 6 h is
+  // used only when 24 h is not available, and is flagged as tide-dominated.
+  const same = (c) => Math.abs(c.lat - best.lat) < 1e-3 && Math.abs(c.lng - best.lng) < 1e-3;
+  const cell = cells.find(same);
+  const at = (h) => (index - h >= 0 ? cell?.hours?.[index - h] : null);
+  const prior24 = at(24), prior6 = at(6);
+  const prior = Number.isFinite(prior24?.mslpHpa) ? prior24 : Number.isFinite(prior6?.mslpHpa) ? prior6 : null;
+  const tendencyHpa = prior ? Math.round((best.mslpHpa - prior.mslpHpa) * 10) / 10 : null;
+  return { ...best, isLow, tendencyHpa, tendencyHours: prior ? (prior === prior24 ? 24 : 6) : null };
 }
 
 // Hoists ONE hour's values onto each cell. mslpHpa must be lifted here:
@@ -208,7 +225,7 @@ const PAINTS_ON = ['rain', 'coverage'];
 // can hold the field; above it the field is only visible as a stray fragment.
 const MAX_ZOOM_FOR_FIELD = 8.3;
 
-export function createSynoptic(map, { text: t, active, buildTag }) {
+export function createSynoptic(map, { text: t, active, buildTag, flow }) {
   // Inside the factory, because `active` only exists here. At module scope this
   // reads an undefined binding and every call throws "active is not a
   // function" — which is exactly what the live page did.
@@ -239,6 +256,7 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
     for (const id of [isoLayer, windLayer, lowLayer, lowLabelLayer]) if (id && map.getLayer(id)) map.removeLayer(id);
     if (source && map.getSource(source)) map.removeSource(source);
     isoLayer = windLayer = lowLayer = lowLabelLayer = source = null;
+    if (flow?.label === 'syn850') flow.setField(null);
   }
 
   function draw() {
@@ -253,6 +271,9 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
     state.index = index;
     const live = hoursOf(data.cells, index);
     const rows = gridOf(live);
+    // 850 hPa flow as moving air; the arrows stay as the honest per-cell record.
+    if (state.wind850) flow?.setField(live.filter((c) => Number.isFinite(c.u)), { label: 'syn850', key: data.checkedAt + ':' + index });
+    else if (flow?.label === 'syn850') flow.setField(null);
     // Only nodes backed by a real cell have a pressure. A null cluster is a gap,
     // and reading through it throws — which took the whole layer down on the
     // live payload, where one of the 25 requested cells did not answer.
@@ -288,7 +309,7 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
     }
 
     const low = lowCentre(data.cells, index);
-    const lowFeatures = low ? [{ type: 'Feature', properties: { kind: 'low', hpa: low.mslpHpa }, geometry: { type: 'Point', coordinates: [low.lng, low.lat] } }] : [];
+    const lowFeatures = low ? [{ type: 'Feature', properties: { kind: 'low', hpa: low.mslpHpa, mark: low.isLow ? 'L ' : '' }, geometry: { type: 'Point', coordinates: [low.lng, low.lat] } }] : [];
 
     const bundle = { type: 'FeatureCollection', features: [...isoFeatures, ...windFeatures, ...lowFeatures] };
     const key = 'synoptic-' + epoch;
@@ -313,7 +334,7 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
     lowLayer = map.getLayer('synoptic-low') ? 'synoptic-low' : null;
     if (added.length) added.forEach(() => {});
     if (low && !map.getLayer('synoptic-low-label')) {
-      map.addLayer({ id: 'synoptic-low-label', type: 'symbol', source, filter: ['==', ['get', 'kind'], 'low'], layout: { 'text-field': ['concat', 'L ', ['to-string', ['get', 'hpa']]], 'text-size': 12, 'text-offset': [0, 1.6], 'text-anchor': 'top' }, paint: { 'text-color': '#ffd9c2', 'text-halo-color': '#1a1208', 'text-halo-width': 2 } }, anchor());
+      map.addLayer({ id: 'synoptic-low-label', type: 'symbol', source, filter: ['==', ['get', 'kind'], 'low'], layout: { 'text-field': ['concat', ['get', 'mark'], ['to-string', ['get', 'hpa']]], 'text-size': 12, 'text-offset': [0, 1.6], 'text-anchor': 'top' }, paint: { 'text-color': '#ffd9c2', 'text-halo-color': '#1a1208', 'text-halo-width': 2 } }, anchor());
     } else if (!low && map.getLayer('synoptic-low-label')) {
       // No low in this hour's box: the label has nothing to point at.
       map.removeLayer('synoptic-low-label');
@@ -351,8 +372,8 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
 
     const lead = el('p', undefined, 'synoptic-note');
     lead.textContent = t(
-      'Surface pressure and 850 hPa wind on a box wide enough to hold a weather system. A low-pressure centre is hundreds of kilometres across, so it cannot be seen from a city view.',
-      'Tekanan permukaan dan angin 850 hPa pada kotak yang cukup luas untuk memuat sistem cuaca. Pusat tekanan rendah beratus-ratus kilometer, sehingga tidak terlihat dari tampilan kota.');
+      'Sea-level pressure and 850 hPa wind on a box wide enough to hold a weather system. A low-pressure centre is hundreds of kilometres across, so it cannot be seen from a city view.',
+      'Tekanan permukaan laut dan angin 850 hPa pada kotak yang cukup luas untuk memuat sistem cuaca. Pusat tekanan rendah beratus-ratus kilometer, sehingga tidak terlihat dari tampilan kota.');
     section.append(lead);
 
     const facts = el('dl', undefined, 'synoptic-facts');
@@ -365,9 +386,12 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
     // sits where the model put it, which at this zoom is often behind the
     // evidence panel — and a number with no place attached is not a location.
     const where = (c) => Math.abs(c.lat).toFixed(2) + '°' + (c.lat < 0 ? 'S' : 'N') + ' ' + Math.abs(c.lng).toFixed(2) + '°' + (c.lng < 0 ? 'W' : 'E');
-    fact(t('Lowest pressure', 'Tekanan terendah'), low
+    // Wording follows the sign: falling is deepening, rising is filling.
+    const trend = (v) => v < 0 ? t('deepening', 'mendalam') : v > 0 ? t('filling', 'mendangkal') : t('steady', 'stabil');
+    fact(low?.isLow ? t('Low centre', 'Pusat tekanan rendah') : t('Lowest in box (edge or open, not a closed low)', 'Terendah di kotak (tepi atau terbuka, bukan pusat tertutup)'), low
       ? number(low.mslpHpa, 0) + ' hPa · ' + where(low) + ' ' + (Number.isFinite(low.tendencyHpa)
-        ? '(' + (low.tendencyHpa <= 0 ? '▼ ' : '▲ ') + number(Math.abs(low.tendencyHpa), 1) + ' hPa / 6 h ' + t('— deepening', '— menguat') + ')'
+        ? '(' + (low.tendencyHpa < 0 ? '▼ ' : low.tendencyHpa > 0 ? '▲ ' : '= ') + number(Math.abs(low.tendencyHpa), 1) + ' hPa / ' + low.tendencyHours + ' h, ' + trend(low.tendencyHpa)
+          + (low.tendencyHours === 6 ? t('; mostly the daily pressure tide', '; sebagian besar pasang tekanan harian') : '') + ')'
         : t('tendency unknown', 'tendensi tidak diketahui'))
       : t('none in this box', 'tidak ada di kotak ini'));
     section.append(facts);

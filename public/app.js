@@ -567,6 +567,8 @@ async function refreshFires(force) {
   if (force) liveCache.delete("/api/atlas/fires");
   const data = await fetchLive("/api/atlas/fires", 1800);
   firesData = data && data.type === "FeatureCollection" && Array.isArray(data.features) ? data : null;
+  // A failed load retries in a minute, not at the next scheduled refresh.
+  if (!firesData && !refreshFires.retry) refreshFires.retry = setTimeout(() => { refreshFires.retry = null; refreshFires(true); }, 60000);
   const src = mapInstance && mapInstance.getSource("jkt-fires-src");
   if (src) src.setData(firesData || { type: "FeatureCollection", features: [] });
   setToggleLabel("atlas-fires-label", firesData ? lensText("Thermal detections · admitted 24 h", "Deteksi termal · lolos 24 jam") : lensText("Thermal detections · unavailable", "Deteksi termal · tidak tersedia"));
@@ -793,7 +795,7 @@ async function fetchLive(endpoint, ttl) {
   const pending = (async function () {
     try {
       const r = await fetch(ATLAS_BASE + endpoint, {
-        headers: { accept: "application/json" }, signal: AbortSignal.timeout(endpoint.startsWith("/api/atlas/environment") || endpoint.startsWith("/api/atlas/rainfall") || endpoint.startsWith("/api/atlas/watch") ? 35000 : 8000),
+        headers: { accept: "application/json" }, signal: AbortSignal.timeout(endpoint.startsWith("/api/") ? 35000 : 8000), // Worker routes can parse a provider on a cold edge (FIRMS ~0.8 MB CSV); 8 s aborted them
       });
       if (!r.ok) return null;
       const data = await r.json();
@@ -1767,11 +1769,20 @@ async function loadGreenSpace() {
     .finally(() => { greenSpacePending = null; });
   return greenSpacePending;
 }
+// One shared particle canvas for every wind lens. Loaded once; a lens that
+// cannot load it still draws its arrows and paths.
+let flowCanvas = null, flowCanvasPending = null;
+function loadFlow() {
+  if (flowCanvas || !mapInstance) return Promise.resolve(flowCanvas);
+  return flowCanvasPending ||= import('./flow-canvas.js?v=' + encodeURIComponent(ATLAS_BUILD_TAG))
+    .then(module => (flowCanvas = module.createFlowCanvas(mapInstance)))
+    .catch(() => null);
+}
 let windFieldController = null, windFieldPending = null;
 async function loadWindField() {
   if (windFieldController) return windFieldController;
   if (!windFieldPending) windFieldPending = import('./wind-field.js?v=' + encodeURIComponent(ATLAS_BUILD_TAG))
-    .then(module => { windFieldController = module.createWindField(mapInstance, {text:lensText,active:()=>activeLens,buildTag:ATLAS_BUILD_TAG}); return windFieldController; })
+    .then(module => loadFlow().then(flow => { windFieldController = module.createWindField(mapInstance, {text:lensText,active:()=>activeLens,buildTag:ATLAS_BUILD_TAG,flow}); return windFieldController; }))
     .finally(() => { windFieldPending = null; });
   return windFieldPending;
 }
@@ -1779,7 +1790,7 @@ let hazeTransportController = null, hazeTransportPending = null;
 async function loadHazeTransport() {
   if (hazeTransportController) return hazeTransportController;
   if (!hazeTransportPending) hazeTransportPending = import('./haze-transport.js?v=' + encodeURIComponent(ATLAS_BUILD_TAG))
-    .then(module => { hazeTransportController = module.createHazeTransport(mapInstance, {text:lensText,active:()=>activeLens,buildTag:ATLAS_BUILD_TAG}); return hazeTransportController; })
+    .then(module => loadFlow().then(flow => { hazeTransportController = module.createHazeTransport(mapInstance, {text:lensText,active:()=>activeLens,buildTag:ATLAS_BUILD_TAG,flow}); return hazeTransportController; }))
     .finally(() => { hazeTransportPending = null; });
   return hazeTransportPending;
 }
@@ -1787,7 +1798,7 @@ let synopticController = null, synopticPending = null;
 async function loadSynoptic() {
   if (synopticController) return synopticController;
   if (!synopticPending) synopticPending = import('./synoptic.js?v=' + encodeURIComponent(ATLAS_BUILD_TAG))
-    .then(module => { synopticController = module.createSynoptic(mapInstance, {text:lensText,active:()=>activeLens,buildTag:ATLAS_BUILD_TAG}); return synopticController; })
+    .then(module => loadFlow().then(flow => { synopticController = module.createSynoptic(mapInstance, {text:lensText,active:()=>activeLens,buildTag:ATLAS_BUILD_TAG,flow}); return synopticController; }))
     .finally(() => { synopticPending = null; });
   return synopticPending;
 }
@@ -2344,6 +2355,7 @@ async function selectCityLens(lens) {
   hazeTransportController?.clear();
   synopticController?.clear();
   greenSpaceController?.clear();
+  flowCanvas?.setField(null);
   ['water-scenario-labels', 'water-scenario-route', 'water-scenario-front', 'water-scenario-stations'].forEach(dropInsightLayer);
   document.getElementById('water-scenario-location')?.remove();
   document.getElementById('monitoring-location')?.remove();

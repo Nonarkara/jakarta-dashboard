@@ -123,6 +123,7 @@ const renderEnd = client.indexOf('\n  function ', renderStart + 10);
 const renderBody = client.slice(renderStart, renderEnd);
 assert.match(renderBody, /\n    apply\(\);/, 'render applies the mode it advertises');
 assert.match(client, /function apply\(\)/, 'apply() is the single place a mode reaches the map');
-assert.match(client, /if \(mode === 'ndvi'\) showNdvi/, 'apply covers every mode');
+assert.match(client, /if \(mode === 'ndvi'\) \{ if \(dates\[0\]\) showNdvi\(dates\[0\]\)/, 'apply covers every mode');
+assert.doesNotMatch(client, /showNdvi\([^)]*'20\d\d-/, 'NDVI never falls back to a hard-coded date');
 
 console.log('PASS green space: NDVI tile/classification, the never-summed law, own dates, baked-overlay pattern and zoom scale');
