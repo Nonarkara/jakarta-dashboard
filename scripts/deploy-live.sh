@@ -13,7 +13,21 @@ if ! mkdir "$LOCK"; then
   echo "if no deploy is actually running (a SIGKILL left this behind): rmdir $LOCK" >&2
   exit 1
 fi
-trap 'if [ -f "$LOCK/inputs.json" ]; then unlink "$LOCK/inputs.json"; fi; rmdir "$LOCK"' EXIT
+# After the deploy step, any failure leaves the edge live with an unverified
+# stamp; the operator must see that state, not just a bare non-zero exit.
+DEPLOYED_BUILD=""
+on_exit() {
+  local code=$?
+  if [ -f "$LOCK/inputs.json" ]; then unlink "$LOCK/inputs.json"; fi
+  rmdir "$LOCK" 2>/dev/null || true
+  if [ "$code" -ne 0 ] && [ -n "$DEPLOYED_BUILD" ]; then
+    echo "release FAILED after the bytes went live at ${DEPLOYED_BUILD}." >&2
+    echo "The stamp commit records what reached the edge; it is not a verdict." >&2
+    echo "Fix the failing check, then release again — do not redeploy by hand." >&2
+  fi
+  exit "$code"
+}
+trap on_exit EXIT
 
 check_clean() {
   # Untracked files under public/ and src/ ship with `wrangler deploy` too, so
@@ -35,6 +49,9 @@ check_clean
 npm run stamp
 node scripts/release-snapshot.mjs write "$LOCK/inputs.json"
 npx wrangler deploy
+
+# From here on the edge is live: remember the build so a later failure can say so.
+DEPLOYED_BUILD="$(node --input-type=module -e 'import {readFileSync} from "node:fs"; console.log(readFileSync("public/app.js", "utf8").match(/const ATLAS_BUILD_TAG = "([^"]+)"/)[1])')"
 
 # The stamp rewrites the asset cache-busters, so the tree is dirty by design once
 # a deploy runs. Commit exactly those four stamped files now, straight after the
