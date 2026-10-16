@@ -149,3 +149,18 @@ console.log('PASS wind arrowheads, open panel and AOD pixel note');
   assert.match(tr, /Setiap kotak adalah satu pengambilan ~10 km/, 'the AOD square note is translated');
 }
 console.log('PASS air lens slim panel, folded CAMS, phone chip, ID/EN AOD note');
+
+// ── City wind compass ─────────────────────────────────────────────────────
+{
+  const near = mod.citySummary([{ u: Math.sin(Math.PI*10/180), v: Math.cos(Math.PI*10/180) }, { u: Math.sin(-Math.PI*10/180), v: Math.cos(-Math.PI*10/180) }].map(c => ({ u: c.u*5, v: c.v*5 })));
+  assert.ok(near.toward < 1 || near.toward > 359, 'vector mean of 10° and 350° is north, not 180°');
+  assert.equal(mod.compassPoint(near.from), 'S', 'air going north comes from the south');
+  assert.equal(mod.citySummary([{ u: 2, v: 0 }, { u: -2, v: 0 }]).calm, true, 'opposed cells read as near calm, not a direction');
+  assert.equal(mod.citySummary([]), null, 'no cells means no compass');
+  assert.equal(mod.compassPoint(225), 'SW'); assert.equal(mod.compassPoint(225, 'id'), 'BD');
+  const e = mod.citySummary([{ u: -5, v: 0 }]);
+  assert.equal(mod.compassPoint(e.from), 'E', 'westward air is an easterly'); assert.equal(Math.round(e.kmh), 18, '5 m/s is 18 km/h');
+  assert.match(client, /showCompass\(cells\)/, 'the compass redraws with every frame of the field');
+  assert.match(client, /getElementById\('wind-compass'\)\?\.remove\(\)/, 'leaving the lens removes the compass');
+  console.log('PASS wind compass: vector mean, calm, compass points, km/h');
+}
