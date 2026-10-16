@@ -49,7 +49,12 @@ console.log('PASS local identity: three-theme contrast including green fields, l
  // Narrowing the panel has to keep its content legible. .synoptic-facts sizes its
  // label track to the label, so at 380px the value track was squeezed to its longest
  // word and the pressure row wrapped to nine lines. In the rail it stacks instead.
+ const stackedSel=read('public/style.css').match(/([^{}]*\.atlas-lens-popup \.synoptic-facts) \{([^}]*)\}/)?.[1]||'';
  const stacked=read('public/style.css').match(/atlas-lens-popup \.synoptic-facts \{([^}]*)\}/)?.[1]||'';
  assert.ok(stacked,'the narrow-rail fact list rule was located');
  assert.match(stacked,/grid-template-columns:minmax\(0,1fr\)/,'the fact list stacks in the narrow rail so a long label cannot starve the value');
+ // The embedded popup is 520px wide and keeps the two-column form, so the rule
+ // must not reach it. A selector that quietly covers both widths makes the
+ // comment above it a lie, which is the same class of bug this guard exists for.
+ assert.match(stackedSel,/:not\(\.atlas-embedded\)/,'the stacking rule is scoped to the narrow rail, not the wide embedded popup');
 }
