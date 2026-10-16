@@ -203,15 +203,18 @@ export function hoursOf(cells, index) {
 // the two lenses that asked for it. It is NOT every lens: a pressure field over
 // the green-space lens would imply the isobars say something about vegetation.
 const PAINTS_ON = ['rain', 'coverage'];
-const activeIsOneOf = (active) => PAINTS_ON.includes(active());
 
 // ~520 km across, which is three times the grid step. Below this zoom the map
 // can hold the field; above it the field is only visible as a stray fragment.
 const MAX_ZOOM_FOR_FIELD = 8.3;
 
 export function createSynoptic(map, { text: t, active, buildTag }) {
+  // Inside the factory, because `active` only exists here. At module scope this
+  // reads an undefined binding and every call throws "active is not a
+  // function" — which is exactly what the live page did.
+  const activeIsOneOf = () => PAINTS_ON.includes(active());
   let data = null, epoch = 0;
-  let source = null, isoLayer = null, windLayer = null, lowLayer = null;
+  let source = null, isoLayer = null, windLayer = null, lowLayer = null, lowLabelLayer = null;
   const state = { index: 0, isobars: true, wind850: true };
   let lastBody = null, drawnLastRender = null, zoomListener = null;
 
@@ -231,13 +234,15 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
   }
 
   function hide() {
-    for (const id of [isoLayer, windLayer, lowLayer]) if (id && map.getLayer(id)) map.removeLayer(id);
+    // The label is a layer too. Leaving it behind points an "L 961" label at a
+    // location on the next lens, from a field that lens never asked for.
+    for (const id of [isoLayer, windLayer, lowLayer, lowLabelLayer]) if (id && map.getLayer(id)) map.removeLayer(id);
     if (source && map.getSource(source)) map.removeSource(source);
-    isoLayer = windLayer = lowLayer = source = null;
+    isoLayer = windLayer = lowLayer = lowLabelLayer = source = null;
   }
 
   function draw() {
-    if (!map || !activeIsOneOf(active()) || !data?.cells?.length) { hide(); return; }
+    if (!map || !activeIsOneOf() || !data?.cells?.length) { hide(); return; }
     // A contour between two cells 174 km apart says nothing about the 300 m in
     // front of it. At a city zoom the field would draw a fragmentary line
     // across a neighbourhood and imply it meant something there, so the layers
@@ -307,12 +312,13 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
     windLayer = map.getLayer('synoptic-wind850') ? 'synoptic-wind850' : null;
     lowLayer = map.getLayer('synoptic-low') ? 'synoptic-low' : null;
     if (added.length) added.forEach(() => {});
-    if (low) {
-      const pt = [low.lng, low.lat];
-      if (!map.getLayer('synoptic-low-label')) {
-        map.addLayer({ id: 'synoptic-low-label', type: 'symbol', source, filter: ['==', ['get', 'kind'], 'low'], layout: { 'text-field': ['concat', 'L ', ['to-string', ['get', 'hpa']]], 'text-size': 12, 'text-offset': [0, 1.6], 'text-anchor': 'top' }, paint: { 'text-color': '#ffd9c2', 'text-halo-color': '#1a1208', 'text-halo-width': 2 } }, anchor());
-      }
+    if (low && !map.getLayer('synoptic-low-label')) {
+      map.addLayer({ id: 'synoptic-low-label', type: 'symbol', source, filter: ['==', ['get', 'kind'], 'low'], layout: { 'text-field': ['concat', 'L ', ['to-string', ['get', 'hpa']]], 'text-size': 12, 'text-offset': [0, 1.6], 'text-anchor': 'top' }, paint: { 'text-color': '#ffd9c2', 'text-halo-color': '#1a1208', 'text-halo-width': 2 } }, anchor());
+    } else if (!low && map.getLayer('synoptic-low-label')) {
+      // No low in this hour's box: the label has nothing to point at.
+      map.removeLayer('synoptic-low-label');
     }
+    lowLabelLayer = map.getLayer('synoptic-low-label') ? 'synoptic-low-label' : null;
   }
 
   // The module owns one container inside the shared lens body. Repainting
@@ -328,7 +334,7 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
   }
 
   function render(body) {
-    if (!activeIsOneOf(active()) || !body) return;
+    if (!activeIsOneOf() || !body) return;
     // Every control redraws the map and then repaints the panel from the same
     // module, because renderLensEvidence() clears this body wholesale.
     const repaint = () => render(body.parentElement?.querySelector('#atlas-lens-body') || body);
@@ -420,7 +426,7 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
       // Only a change in that state repaints: repainting on every zoomend
       // would rebuild the panel under the user's pointer mid-gesture.
       zoomListener = () => {
-        if (!activeIsOneOf(active()) || !lastBody || !data) return;
+        if (!activeIsOneOf() || !lastBody || !data) return;
         const drawn = map.getZoom() <= MAX_ZOOM_FOR_FIELD;
         if (drawn === drawnLastRender) return;
         drawnLastRender = drawn;

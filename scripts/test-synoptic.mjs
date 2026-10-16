@@ -303,8 +303,11 @@ assert.match(client, /grid step/, 'the panel labels the number as the grid step'
 // something about vegetation.
 assert.match(client, /const PAINTS_ON = \['rain', 'coverage'\]/, 'the field is scoped to exactly two lenses');
 assert.ok(!/PAINTS_ON = \[[^\]]*'green'/.test(client), 'the field never paints on the green-space lens');
-assert.ok((client.match(/activeIsOneOf\(active\(\)\)/g) || []).length >= 2,
-  'both the draw path and the panel check the lens list');
+// The lens predicate must be built where `active` exists. At module scope it
+// reads an undefined binding and every call throws — which is exactly what the
+// live page did, behind a suite that only matched strings.
+assert.match(client, /export function createSynoptic\([\s\S]{0,300}?const activeIsOneOf = \(\) => PAINTS_ON\.includes\(active\(\)\)/,
+  'the lens predicate is constructed inside the factory, where active exists');
 
 // A contour between cells 174 km apart says nothing about the 300 m in front
 // of it. At city zoom it would draw a stray fragment that reads as a
@@ -316,7 +319,118 @@ assert.match(client, /Not drawn on the map at this zoom/, 'the panel says why th
 assert.match(client, /Tidak digambar di peta pada zoom ini/, 'and says so in Bahasa');
 assert.match(client, /map\.on\('zoomend', zoomListener\)/, 'the note follows the camera');
 assert.match(client, /map\.off\('zoomend', zoomListener\)/, 'and the listener is removed on clear');
-assert.ok(zoomListener => true, 'listener lifecycle asserted above');
+// ── The module, actually run ──────────────────────────────────────────────
+// Everything above reads the source. This drives the real factory against a
+// stub map and a stub DOM, because the bug that shipped — a lens predicate
+// reading `active` from module scope — is invisible to every string match and
+// throws the moment the panel renders.
+function stubMap(zoom = 7.2) {
+  const layers = new Set(), sources = new Map(), handlers = {};
+  // getZoom must read the object's own property: a closure copy would keep
+  // returning the construction value and the test could never zoom.
+  const map = {
+    layers, sources, handlers, zoom,
+    getLayer: (id) => (layers.has(id) ? { id } : undefined),
+    addLayer: (l) => layers.add(l.id),
+    removeLayer: (id) => layers.delete(id),
+    getSource: (id) => sources.get(id),
+    addSource: (id, s) => sources.set(id, s),
+    removeSource: (id) => sources.delete(id),
+    on: (ev, fn) => { (handlers[ev] ||= []).push(fn); },
+    off: (ev, fn) => { handlers[ev] = (handlers[ev] || []).filter((f) => f !== fn); },
+    getZoom: () => map.zoom,
+    fire: (ev) => (handlers[ev] || []).forEach((f) => f()),
+  };
+  return map;
+}
+function stubBody() {
+  const kids = [];
+  const node = (tag = 'DIV', cls = '') => ({
+    tagName: tag, className: cls, textContent: '', dataset: {}, children: [],
+    append(...c) { this.children.push(...c); }, appendChild(c) { this.children.push(c); },
+    setAttribute() {}, addEventListener() {}, replaceChildren() { this.children.length = 0; },
+    querySelector: () => null, querySelectorAll: () => [],
+  });
+  const body = node('DIV');
+  body.querySelector = (sel) => body.children.find((c) => c.className === sel.replace(/[.:>]/g, '')) || null;
+  body.querySelectorAll = () => [];
+  return body;
+}
+
+const realFetch = globalThis.fetch;
+const realDocument = globalThis.document;
+// The module builds nodes with document.createElement. Node has no DOM, so the
+// stub is just enough to exercise the real render path.
+globalThis.document = {
+  createElement(tag) {
+    return {
+      tagName: String(tag).toUpperCase(), className: '', textContent: '', dataset: {}, children: [],
+      append(...c) { this.children.push(...c); }, setAttribute() {}, addEventListener() {},
+      replaceChildren() { this.children.length = 0; }, querySelector: () => null, querySelectorAll: () => [],
+    };
+  },
+};
+globalThis.fetch = async (url) => {
+  if (String(url).includes('/api/atlas/synoptic')) {
+    return { ok: true, json: async () => JSON.parse(read('test/fixtures/synoptic-response.json')) };
+  }
+  return { ok: false, json: async () => ({ available: false }) };
+};
+try {
+  for (const lens of ['rain', 'coverage']) {
+    let current = lens;
+    const map = stubMap();
+    const body = stubBody();
+    const ctl = mod.createSynoptic(map, { text: (en) => en, active: () => current, buildTag: 'test' });
+    ctl.show(body);
+    await new Promise((r) => setTimeout(r, 30));
+    ctl.render(body);
+    assert.ok(body.children.length > 0, `${lens}: the panel renders without throwing`);
+    assert.ok(map.layers.has('synoptic-isobars'), `${lens}: isobars are added at a regional zoom`);
+    assert.ok(map.layers.has('synoptic-wind850'), `${lens}: the 850 hPa layer is added`);
+    assert.ok(map.layers.has('synoptic-low'), `${lens}: the low centre is marked`);
+    // The exact defect: the panel must not throw on either lens.
+    assert.ok(!body.textContent.includes('is not a function'), `${lens}: no scope error in the panel`);
+    ctl.clear();
+    assert.equal(map.layers.size, 0, `${lens}: clear removes every layer`);
+  }
+
+  // A lens that did not ask for it must stay untouched.
+  {
+    const map = stubMap();
+    const body = stubBody();
+    const ctl = mod.createSynoptic(map, { text: (en) => en, active: () => 'green', buildTag: 'test' });
+    ctl.show(body);
+    await new Promise((r) => setTimeout(r, 30));
+    assert.equal(map.layers.size, 0, 'the field never paints on a lens that did not ask for it');
+    assert.ok(body.textContent === '' || !/Isobar/.test(body.textContent), 'and says nothing on that lens');
+    ctl.clear();
+  }
+
+  // Too close: layers off, and the panel must say so rather than go blank.
+  {
+    const map = stubMap(9.6);
+    const body = stubBody();
+    const ctl = mod.createSynoptic(map, { text: (en) => en, active: () => 'coverage', buildTag: 'test' });
+    ctl.show(body);
+    await new Promise((r) => setTimeout(r, 30));
+    ctl.render(body);
+    assert.equal(map.layers.size, 0, 'at city zoom the field is not drawn');
+    const said = JSON.stringify(body.children);
+    assert.ok(/Not drawn on the map at this zoom/.test(said), 'and the panel says why, in English');
+    // Zoom out and the field comes back, with the note gone.
+    map.zoom = 7.2;
+    map.fire('zoomend');
+    assert.ok(map.layers.has('synoptic-isobars'), 'zooming out draws the field');
+    ctl.clear();
+    assert.equal((map.handlers.zoomend || []).length, 0, 'clear removes the zoom listener it added');
+  }
+} finally {
+  globalThis.fetch = realFetch;
+  if (realDocument === undefined) delete globalThis.document; else globalThis.document = realDocument;
+}
+
+console.log('test-synoptic: ok');
 
 // ── What else sees this ───────────────────────────────────────────────────
 // Every row the flood-monitoring lens adds has to name its own date and its own
@@ -346,4 +460,4 @@ assert.ok(covBranch.includes('loadSynoptic()'), 'the flood lens loads the pressu
 assert.ok(covBranch.includes('refreshRainfall(false)'), 'the flood lens loads the 24 h forecast');
 assert.ok(covBranch.includes('ev.open = true'), 'the flood lens opens its evidence panel on desktop');
 assert.match(app, /night:'night-lights',rain:'radar',coverage:'radar'/, 'the flood lens opens on radar, not on nothing');
-console.log('test-synoptic: ok');
+
