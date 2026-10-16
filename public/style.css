@@ -809,6 +809,13 @@ button:disabled { opacity: 0.55; cursor: not-allowed; }
 .synoptic-facts { display: grid; grid-template-columns: auto 1fr; gap: 1px 10px; margin: 8px 0; font-size: 12px; font-variant-numeric: tabular-nums; }
 .synoptic-facts dt { opacity: .7; }
 .synoptic-facts dd { margin: 0; }
+/* The label track above is sized to its content, so a long label starves the
+   value track down to its longest word: in the 380px rail the pressure/tendency
+   pair wrapped to nine lines of "mendang; sebagian besar pasang surut harian".
+   In that rail the label sits above the value instead, which is both legible and
+   shorter. The wide embedded popup keeps the two-column form. */
+body.atlas-workbench .atlas-lens-popup .synoptic-facts { grid-template-columns:minmax(0,1fr); gap:0; }
+body.atlas-workbench .atlas-lens-popup .synoptic-facts dd { margin:0 0 8px; }
 .synoptic-scrub { display: flex; align-items: center; gap: 6px; margin: 8px 0; }
 .synoptic-hour { min-width: 62px; font-size: 12px; font-variant-numeric: tabular-nums; }
 .synoptic-toggles { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }

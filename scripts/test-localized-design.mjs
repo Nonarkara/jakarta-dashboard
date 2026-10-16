@@ -45,4 +45,11 @@ console.log('PASS local identity: three-theme contrast including green fields, l
  const bodyRule=base.match(/#atlas-lens-body \{([^}]*)\}/)?.[1]||'';
  assert.ok(bodyRule,'the base lens body rule was located');
  assert.ok(!/\b(position|width|height|min-height|max-height|top|right|left)\s*:/.test(bodyRule),'the static body declares no geometry; only .atlas-lens-popup positions the panel');
+
+ // Narrowing the panel has to keep its content legible. .synoptic-facts sizes its
+ // label track to the label, so at 380px the value track was squeezed to its longest
+ // word and the pressure row wrapped to nine lines. In the rail it stacks instead.
+ const stacked=read('public/style.css').match(/atlas-lens-popup \.synoptic-facts \{([^}]*)\}/)?.[1]||'';
+ assert.ok(stacked,'the narrow-rail fact list rule was located');
+ assert.match(stacked,/grid-template-columns:minmax\(0,1fr\)/,'the fact list stacks in the narrow rail so a long label cannot starve the value');
 }
