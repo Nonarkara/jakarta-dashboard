@@ -2094,7 +2094,7 @@ function renderLensEvidence() {
     rain: ['Where rain is forecast', 'Di mana hujan diprakirakan'],
     water: ['Water the satellite can see', 'Air yang terlihat dari satelit'],
     recurring: ['Where water has recurred', 'Di mana genangan berulang'],
-    air: ['Air model timeline and satellite aerosol', 'Linimasa model udara dan aerosol satelit'],
+    air: ['Wind field, air model timeline and satellite aerosol', 'Medan angin, linimasa model udara dan aerosol satelit'],
     night: ['The city at night', 'Kota pada malam hari'],
     haze: ['Regional haze evidence', 'Bukti kabut asap kawasan'],
     exposure: ['Population and severe-risk land', 'Penduduk dan lahan risiko berat'],
@@ -2112,7 +2112,7 @@ function renderLensEvidence() {
     rain: ['Open-Meteo · model forecast at five sample points, one per kota. Select one to explore its hourly outlook.', 'Open-Meteo · prakiraan model di lima titik sampel, satu per kota. Pilih satu untuk melihat prakiraan per jam.'],
     water: ['NASA MODIS · cyan: water; red: detected flood; yellow: recurring flood. Clouds can hide water. Check the observation day.', 'NASA MODIS · biru muda: air; merah: banjir terdeteksi; kuning: banjir berulang. Awan dapat menutupi air. Periksa hari pengamatan.'],
     recurring: ['NASA MODIS · yellow marks recurring flood in the satellite classification. This is not a prediction of how long water will remain.', 'NASA MODIS · kuning menandai banjir berulang dalam klasifikasi satelit. Ini bukan prakiraan berapa lama air bertahan.'],
-    air: ['CAMS model forecast and NASA atmospheric aerosol are distinct evidence. Wind transport is an adjustable illustration, not a pollution plume forecast.', 'Prakiraan model CAMS dan aerosol atmosfer NASA adalah bukti berbeda. Transpor angin adalah ilustrasi, bukan prakiraan sebaran polusi.'],
+    air: ['An animated 10 m wind field, the CAMS model timeline and NASA atmospheric aerosol are three distinct kinds of evidence. Motion shows wind speed and bearing between the provider\'s own model cells — it is not a pollution plume and carries no concentration.', 'Medan angin 10 m yang bergerak, linimasa model CAMS, dan aerosol atmosfer NASA adalah tiga jenis bukti yang berbeda. Gerak menunjukkan kecepatan dan arah angin antar sel model penyedia — ini bukan sebaran polusi dan tidak membawa konsentrasi.'],
     night: ['Corrected Black Marble radiance with its product date. Open Layer settings to compare the 2016 composite, VIIRS aerosol or OMPS index. These products do not quantify city growth.', 'Radiansi Black Marble terkoreksi dengan tanggal produk. Buka Pengaturan lapisan untuk membandingkan komposit 2016, aerosol VIIRS atau indeks OMPS. Produk ini tidak mengukur pertumbuhan kota.'],
     haze: ['Satellite visible imagery and dated thermal detections. A hot pixel is not a confirmed fire or proof of Jakarta pollution.', 'Citra satelit tampak dan deteksi termal bertanggal. Piksel panas bukan kebakaran terkonfirmasi atau bukti polusi Jakarta.'],
     exposure: ['Jakarta Satu flood-risk classes · shaded by weighted risk-class mix (Ringan 1, Sedang 3, Berat 6). Population figures are area-weighted proxies, not located residents.', 'Kelas rawan banjir Jakarta Satu · diarsir menurut campuran kelas berbobot (Ringan 1, Sedang 3, Berat 6). Angka penduduk adalah proksi berbobot luas, bukan penduduk yang terlokasi.'],
@@ -2126,8 +2126,13 @@ function renderLensEvidence() {
   if (['waterways','traffic'].includes(activeLens)) { if (!observationController) body.textContent=lensText('Loading mapped evidence…','Memuat bukti terpetakan…'); return; }
   body.replaceChildren();
   if (activeLens === 'air') {
+    // Wind field first, then the timeline: same order as selectCityLens builds
+    // them, so a repaint here does not reorder what the user is reading. Each
+    // controller renders its own loading state inside show(), so a repaint must
+    // not append another placeholder or the panel grows a line every refresh.
+    if (windFieldController) windFieldController.render(body);
     if (airTimelineController) airTimelineController.render(body);
-    else body.textContent=lensText('Loading the model timeline…','Memuat linimasa model…');
+    else if (!windFieldController) body.textContent = lensText('Loading the model timeline…', 'Memuat linimasa model…');
     return;
   }
   if (activeLens === 'haze') { renderHazeEvidence(body); return; }

@@ -77,6 +77,25 @@ assert.match(client, /visibilitychange/, 'a hidden document must stop the animat
 assert.match(client, /cancelAnimationFrame/, 'the animation frame must be cancellable');
 assert.match(app, /import\('\.\/wind-field\.js\?v='/, 'the module is loaded lazily with the build tag');
 
+// The evidence panel wipes and repaints the lens body on every refresh. When
+// the wind field rendered only from selectCityLens, the first repaint destroyed
+// it and the panel silently vanished. It must repaint from renderLensEvidence,
+// and it must not append a second loading placeholder each time.
+// Slice from the air branch forward to the NEXT haze branch; an earlier haze
+// check exists elsewhere in the file and would make the slice run backwards.
+const airAt = app.indexOf("if (activeLens === 'air')");
+const hazeAt = app.indexOf("if (activeLens === 'haze')", airAt);
+assert.ok(airAt > 0 && hazeAt > airAt, 'the air branch sits before the haze branch in renderLensEvidence');
+const airBranch = app.slice(airAt, hazeAt);
+assert.match(airBranch, /windFieldController\.render\(body\)/, 'a general evidence refresh must repaint the wind field, not delete it');
+assert.match(airBranch, /airTimelineController\.render\(body\)/, 'and still the timeline');
+assert.doesNotMatch(airBranch, /body\.append\(el/, 'a repaint must not append another loading placeholder');
+assert.ok(
+  airBranch.indexOf('windFieldController.render') < airBranch.indexOf('airTimelineController.render'),
+  'wind renders first, matching the order selectCityLens builds them in',
+);
+assert.doesNotMatch(airBranch, /windFieldController\.show\(/, 'a refresh repaints from the loaded module; it must not re-fetch the model');
+
 // ── The endpoint ──────────────────────────────────────────────────────────
 assert.match(server, /\/api\/atlas\/wind-field/, 'the wind-field route is registered');
 assert.match(server, /dedupe on the cell the provider returned/i,

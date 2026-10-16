@@ -279,5 +279,7 @@ export function createWindField(map, { text: t, active, buildTag }) {
     if (hiddenListener) { document.removeEventListener('visibilitychange', hiddenListener); hiddenListener = null; }
   }
 
-  return { show, clear, play, scrubTo };
+  // render is exported separately from show so the lens evidence panel can
+  // repaint after body.replaceChildren() without refetching the model.
+  return { show, render, clear, play, scrubTo };
 }
