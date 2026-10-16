@@ -787,6 +787,18 @@ button:disabled { opacity: 0.55; cursor: not-allowed; }
 .lens-haze-guidance { font-weight: 600; }
 .lens-haze-limits { margin-top: 12px; opacity: .8; }
 
+/* Rain lens: the synoptic stack and the regional context around it. */
+.synoptic-panel { margin: 10px 0 14px; padding-top: 8px; border-top: 1px solid var(--line); }
+.synoptic-title { display: block; font-size: 13px; }
+.synoptic-note { margin: 4px 0; font-size: 11px; line-height: 1.45; opacity: .78; }
+.synoptic-facts { display: grid; grid-template-columns: auto 1fr; gap: 1px 10px; margin: 8px 0; font-size: 12px; font-variant-numeric: tabular-nums; }
+.synoptic-facts dt { opacity: .7; }
+.synoptic-facts dd { margin: 0; }
+.synoptic-scrub { display: flex; align-items: center; gap: 6px; margin: 8px 0; }
+.synoptic-hour { min-width: 62px; font-size: 12px; font-variant-numeric: tabular-nums; }
+.synoptic-toggles { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.synoptic-toggles button[aria-pressed="true"] { border-color: var(--amber); color: var(--amber); }
+
 /* Place context is requested on demand; it consumes no extra map rows. */
 .place-open { min-height: 26px; padding: 0 8px; border: 0; border-right: 1px solid var(--line); background: transparent; color: var(--ink); font: inherit; cursor: pointer; white-space: nowrap; }
 .place-dialog { box-sizing: border-box; width: min(640px, calc(100vw - 24px)); max-height: calc(100svh - 24px); padding: 0; border: 1px solid var(--line-bright); background: var(--bg); color: var(--ink); font: 14px/1.45 var(--font-sans); }

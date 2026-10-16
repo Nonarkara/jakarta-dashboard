@@ -169,6 +169,42 @@ async function get(path) {
   }
 
   {
+    const s = await get('/api/atlas/synoptic');
+    // The synoptic layer draws isobars, so the contract that keeps it honest:
+    // cells are the ones the provider returned, pressure is bounded to real
+    // observations, and a too-small field is an explicit outage rather than a
+    // contour drawn through nothing.
+    soft('synoptic field exposes the provider grid, or an explicit outage',
+      s.status === 503 && s.body?.available === false || s.status === 200 && s.body?.available === true
+      && s.body.cells?.length >= 4 && s.body.cellCount === s.body.cells.length
+      && s.body.cellCount <= s.body.requestedPoints
+      && s.body.cells.every(c => Number.isFinite(c.lat) && Number.isFinite(c.lng) && c.hours?.length > 0),
+      `HTTP ${s.status} cells=${s.body?.cells?.length ?? 'unavailable'} of ${s.body?.requestedPoints ?? '?'} requested`);
+    if (s.status === 200) {
+      const cells = s.body.cells;
+      const keys = cells.map(c => `${c.lat.toFixed(3)},${c.lng.toFixed(3)}`);
+      check('synoptic cells are the provider cells, deduplicated',
+        new Set(keys).size === keys.length, `unique=${new Set(keys).size} of ${keys.length}`);
+      check('every synoptic pressure stays inside a real sea-level observation',
+        cells.every(c => c.hours.every(h => h.mslpHpa === null || (h.mslpHpa >= 870 && h.mslpHpa <= 1085))),
+        'out-of-range hPa');
+      check('synoptic wind stays a valid bearing and speed',
+        cells.every(c => c.hours.every(h =>
+          (h.wind850Ms === null || (h.wind850Ms >= 0 && h.wind850Ms <= 150))
+          && (h.wind850FromDeg === null || (h.wind850FromDeg >= 0 && h.wind850FromDeg <= 360)))), 'bad wind');
+      // The panel says 850 hPa is model wind because Himawari ships no wind
+      // product. If that wording is dropped the layer starts implying a
+      // satellite wind vector that does not exist.
+      check('synoptic states 850 hPa is model wind, not a Himawari product',
+        typeof s.body.windNote === 'string' && /Himawari/.test(s.body.windNote)
+        && /model wind/i.test(s.body.windNote), String(s.body.windNote).slice(0, 60));
+      check('synoptic carries no rainfall or cloud claim',
+        !('rainMm' in s.body) && !('precipitationMm' in s.body) && !('cloudTopK' in s.body),
+        Object.keys(s.body).join(','));
+    }
+  }
+
+  {
     const r = await get('/api/atlas/wind-field');
     // The wind layer is the one place motion is drawn. The contract that keeps it
     // honest: cells are the ones the provider returned, the count can be smaller

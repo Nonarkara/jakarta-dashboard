@@ -22,6 +22,7 @@ import { handleJakarta } from "./jakarta.js";
 //   /api/atlas/watch                     flood/air/wind/storm watch strip
 //   /api/atlas/fires, /air-timeline      NASA FIRMS detections; CAMS air timeline
 //   /api/atlas/wind-field                Open-Meteo 10 m wind cells over the rectangle
+//   /api/atlas/synoptic                  MSLP + 850 hPa wind grid around Java (isobars, low centre)
 //   /api/atlas/hydrology, /jaxa-*        BBWS gauges + predictions; JAXA model water (src/hydrology.ts)
 //   /api/atlas/coastal                   BMKG Priok tide forecast (src/coastal.ts)
 //   /api/jakarta/*                       dashboard feeds: BMKG, PetaBencana, official layers (src/jakarta.ts)
@@ -403,12 +404,12 @@ const WIND_SAMPLE_POINTS = [
   { lat: -6.33, lng: 106.77 }, { lat: -6.33, lng: 106.87 },
 ];
 const WIND_FIELD_MAX_CELLS = 12;
-async function fetchEnvironmentProvider(url: string, format: "json" | "text", ttl: number): Promise<{ body: any; fetchedAt: string } | null> {
+async function fetchEnvironmentProvider(url: string, format: "json" | "text", ttl: number, timeoutMs?: number): Promise<{ body: any; fetchedAt: string } | null> {
   const cache = (caches as unknown as { default: Cache }).default;
   const key = new Request(url);
   try { const hit = await cache.match(key); if (hit) return await hit.json(); } catch {}
   try {
-    const response = await fetch(url, { signal: AbortSignal.timeout(format === "text" ? 30000 : 20000) });
+    const response = await fetch(url, { signal: AbortSignal.timeout(timeoutMs ?? (format === "text" ? 30000 : 20000)) });
     if (!response.ok) return null;
     const data = { body: format === "json" ? await response.json() : await response.text(), fetchedAt: new Date().toISOString() };
     try { await cache.put(key, Response.json(data, { headers: { "cache-control": `public, max-age=${ttl}` } })); } catch {}
@@ -897,6 +898,112 @@ async function handleWindField(): Promise<Response> {
   }, { headers: { "cache-control": "public, max-age=600" } });
 }
 
+// ── /api/atlas/synoptic — the pressure pattern and mid-level flow around Java ──
+//
+// A synoptic system is hundreds of kilometres across. The rain lens shows it on
+// a deliberately wide box, because a low-pressure centre cannot be seen from a
+// 100 km city view and pretending otherwise would be the whole error.
+//
+// Grid spacing is ~1.6° (~175 km). That is the honest scale for contouring a
+// pressure field: a finer request returns more points, not more information,
+// and Open-Meteo answers each one from its own model grid regardless.
+//
+// The provider is asked for MSLP and 850 hPa wind, NOT for anything derived from
+// Himawari. GIBS ships Himawari as Air Mass, Band 13 infrared and Band 3 red
+// visible — there is no Himawari wind product to draw, so the wind here is
+// model wind and the panel says so.
+
+const SYNOPTIC_POINTS: { lat: number; lng: number }[] = [];
+for (const lat of [-9.0, -7.4, -5.8, -4.2, -2.6]) {
+  for (const lng of [103.0, 104.6, 106.2, 107.8, 109.4]) SYNOPTIC_POINTS.push({ lat, lng });
+}
+const SYNOPTIC_MAX_CELLS = 40;
+
+async function handleSynoptic(): Promise<Response> {
+  const url = new URL("https://api.open-meteo.com/v1/forecast");
+  url.searchParams.set("latitude", SYNOPTIC_POINTS.map((p) => String(p.lat)).join(","));
+  url.searchParams.set("longitude", SYNOPTIC_POINTS.map((p) => String(p.lng)).join(","));
+  url.searchParams.set("hourly", "surface_pressure,wind_speed_850hPa,wind_direction_850hPa");
+  url.searchParams.set("wind_speed_unit", "ms");
+  url.searchParams.set("forecast_days", "2");
+  url.searchParams.set("timezone", "UTC");
+  // A 25-point grid is ~11 s at the provider, which does not fit the default
+  // 20 s JSON budget with margin for a cold edge. This call gets its own
+  // timeout; it is still bounded, so a hung provider returns an explicit
+  // outage rather than holding the request open.
+  const payload = await fetchEnvironmentProvider(url.toString(), "json", 600, 45000).then((d) => d?.body ?? null).catch(() => null);
+  const rows: any[] = Array.isArray(payload) ? payload : payload ? [payload] : [];
+  const cells: any[] = [];
+  const seen = new Set<string>();
+  for (const row of rows) {
+    // Trust the returned coordinates. A row that fails validation is dropped,
+    // never repaired, and never contributes a position we did not receive.
+    if (row?.utc_offset_seconds !== 0) continue;
+    if (!Number.isFinite(row?.latitude) || !Number.isFinite(row?.longitude)) continue;
+    if (row.latitude < -10.5 || row.latitude > -1.5) continue;
+    if (row.longitude < 101.5 || row.longitude > 112.5) continue;
+    if (row?.hourly_units?.surface_pressure !== "hPa") continue;
+    if (row?.hourly_units?.wind_speed_850hPa !== "m/s" || row?.hourly_units?.wind_direction_850hPa !== "°") continue;
+    const times = Array.isArray(row?.hourly?.time) ? row.hourly.time : [];
+    const mslp = Array.isArray(row?.hourly?.surface_pressure) ? row.hourly.surface_pressure : [];
+    const speeds = Array.isArray(row?.hourly?.wind_speed_850hPa) ? row.hourly.wind_speed_850hPa : [];
+    const directions = Array.isArray(row?.hourly?.wind_direction_850hPa) ? row.hourly.wind_direction_850hPa : [];
+    if (!times.length || times.length > 72) continue;
+    if (mslp.length !== times.length || speeds.length !== times.length || directions.length !== times.length) continue;
+    const hours = times.map((t: string, i: number) => {
+      const at = normalizedUtc(t);
+      if (!at || (i && Date.parse(at) - Date.parse(normalizedUtc(times[i - 1])!) !== 3600000)) return null;
+      // MSLP is bounded the way a real sea-level pressure observation is:
+      // below ~870 hPa nothing on Earth reads, above ~1085 hPa the record is
+      // over. A value outside that is a parsing fault, so it stays null and the
+      // isobar is never drawn through it.
+      const pressure = boundedNumber(mslp[i], 870, 1085);
+      return {
+        validAt: at,
+        mslpHpa: pressure === null ? null : Math.round(pressure * 10) / 10,
+        wind850Ms: boundedNumber(speeds[i], 0, 150),
+        wind850FromDeg: boundedNumber(directions[i], 0, 360),
+      };
+    });
+    if (hours.some((h: any) => !h)) continue;
+    if (!hours.some((h: any) => h.mslpHpa !== null)) continue;
+    // Dedupe on the cell the provider returned, not the point we asked for.
+    const key = `${row.latitude.toFixed(3)},${row.longitude.toFixed(3)}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    cells.push({ lat: row.latitude, lng: row.longitude, hours });
+    if (cells.length >= SYNOPTIC_MAX_CELLS) break;
+  }
+  if (cells.length < 4) {
+    // Fewer than four cells cannot bound a contour surface. Saying "no field"
+    // is the honest answer; drawing one isobar from two points is not a field.
+    return jsonResponse({ available: false, checkedAt: new Date().toISOString(), error: "synoptic_unavailable", cellCount: cells.length,
+      note: "The pressure model returned too few usable cells to bound a field. No isobar is drawn and no low is implied." },
+      { status: 503, headers: { "cache-control": "no-store" } });
+  }
+  const hours = Array.from(new Set(cells.flatMap((c: any) => c.hours.map((h: any) => h.validAt)))).sort();
+  return jsonResponse({
+    available: true, contract: "synoptic-v1", checkedAt: new Date().toISOString(),
+    requestedPoints: SYNOPTIC_POINTS.length,
+    cellCount: cells.length,
+    spacingKm: medianSpacingKm(cells),
+    bbox: {
+      minLat: Math.min(...cells.map((c: any) => c.lat)), maxLat: Math.max(...cells.map((c: any) => c.lat)),
+      minLng: Math.min(...cells.map((c: any) => c.lng)), maxLng: Math.max(...cells.map((c: any) => c.lng)),
+    },
+    hours,
+    cells: cells.map((c: any) => ({ lat: c.lat, lng: c.lng, hours: c.hours })),
+    source: "Open-Meteo sea-level pressure and 850 hPa wind model",
+    sourceUrl: "https://open-meteo.com/en/docs",
+    tier: "model-estimate",
+    units: { mslpHpa: "hPa reduced to mean sea level", wind850Ms: "m/s", wind850FromDeg: "° meteorological FROM" },
+    freshnessPolicy: "Forecast hours only. An hour more than 36h ahead or before the current hour is not drawn.",
+    windNote: "850 hPa is roughly 1.5 km up, not the ground. This is model wind. GIBS publishes Himawari as Air Mass, Band 13 infrared and Band 3 red visible only — there is no Himawari wind product, and nothing here is derived from one.",
+    isobarNote: "Isobars are interpolated between the provider's own cells, not measured on the lines. A contour between two cells carries no more accuracy than the spacing between them.",
+    note: "Pressure pattern and mid-level flow only. No rainfall, no cloud height and no storm is inferred from them.",
+  }, { headers: { "cache-control": "public, max-age=600" } });
+}
+
 function medianSpacingKm(cells: { lat: number; lng: number }[]): number | null {
   if (cells.length < 2) return null;
   const gaps: number[] = [];
@@ -983,6 +1090,7 @@ async function routeRequest(request: Request, env: Env): Promise<Response> {
   if (path === "/api/atlas/fires") return handleFires();
   if (path === "/api/atlas/air-timeline") return handleAirTimeline();
   if (path === "/api/atlas/wind-field") return handleWindField();
+  if (path === "/api/atlas/synoptic") return handleSynoptic();
   if (path === "/api/atlas/areas") return handleAreas(request, env);
   if (path === "/api/atlas/districts") return handleDistricts();
   if (path === "/api/atlas/at-this-point") return handleAtThisPoint(request, env);

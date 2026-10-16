@@ -1768,6 +1768,14 @@ async function loadWindField() {
     .finally(() => { windFieldPending = null; });
   return windFieldPending;
 }
+let synopticController = null, synopticPending = null;
+async function loadSynoptic() {
+  if (synopticController) return synopticController;
+  if (!synopticPending) synopticPending = import('./synoptic.js?v=' + encodeURIComponent(ATLAS_BUILD_TAG))
+    .then(module => { synopticController = module.createSynoptic(mapInstance, {text:lensText,active:()=>activeLens,buildTag:ATLAS_BUILD_TAG}); return synopticController; })
+    .finally(() => { synopticPending = null; });
+  return synopticPending;
+}
 let airTimelineController = null, airTimelinePending = null;
 async function loadAirTimeline() {
   if (airTimelineController) return airTimelineController;
@@ -2099,7 +2107,7 @@ function renderLensEvidence() {
     cloud: ['Watch the cloud system', 'Pantau sistem awan'],
     arrival: ['Upstream → Jakarta · an adjustable scenario', 'Hulu → Jakarta · skenario yang dapat diatur'],
     city: ['Read the city, from skyline to street', 'Baca kota, dari cakrawala hingga jalan'],
-    rain: ['Where rain is forecast', 'Di mana hujan diprakirakan'],
+    rain: ['The rain system, from city to region', 'Sistem hujan, dari kota ke kawasan'],
     water: ['Water the satellite can see', 'Air yang terlihat dari satelit'],
     recurring: ['Where water has recurred', 'Di mana genangan berulang'],
     air: ['Wind field, air model timeline and satellite aerosol', 'Medan angin, linimasa model udara dan aerosol satelit'],
@@ -2117,7 +2125,8 @@ function renderLensEvidence() {
     cloud: ['Himawari infrared · cloud-top temperature, not rainfall intensity. Check the observation time.', 'Inframerah Himawari · suhu puncak awan, bukan intensitas hujan. Periksa waktu pengamatan.'],
     arrival: ['Illustrative travel time, not a flood forecast. Admitted segments follow mapped Ciliwung geometry; gaps remain schematic. Open evidence to play or change assumptions.', 'Waktu tempuh ilustratif, bukan prakiraan banjir. Segmen lolos mengikuti geometri Ciliwung terpetakan; celah tetap berupa skema. Buka bukti untuk memutar atau mengubah asumsi.'],
     city: ['Choose a map lens. Sources and valid times stay with the evidence.', 'Pilih lensa peta. Sumber dan waktu berlaku selalu menyertai data.'],
-    rain: ['Open-Meteo · model forecast at five sample points, one per kota. Select one to explore its hourly outlook.', 'Open-Meteo · prakiraan model di lima titik sampel, satu per kota. Pilih satu untuk melihat prakiraan per jam.'],
+    rain: ['Radar, Himawari infrared and IMERG are three different measurements. Over them sit the pressure pattern and 850 hPa wind on a box wide enough to hold a weather system — a low-pressure centre is hundreds of kilometres across and cannot be seen from a city view. Select a point for its hourly outlook.',
+      'Radar, inframerah Himawari, dan IMERG adalah tiga pengukuran berbeda. Di atasnya terdapat pola tekanan dan angin 850 hPa pada kotak yang cukup luas untuk memuat sistem cuaca — pusat tekanan rendah beratus-ratus kilometer dan tidak terlihat dari tampilan kota. Pilih satu titik untuk melihat prakiraan per jam.'],
     water: ['NASA MODIS · cyan: water; red: detected flood; yellow: recurring flood. Clouds can hide water. Check the observation day.', 'NASA MODIS · biru muda: air; merah: banjir terdeteksi; kuning: banjir berulang. Awan dapat menutupi air. Periksa hari pengamatan.'],
     recurring: ['NASA MODIS · yellow marks recurring flood in the satellite classification. This is not a prediction of how long water will remain.', 'NASA MODIS · kuning menandai banjir berulang dalam klasifikasi satelit. Ini bukan prakiraan berapa lama air bertahan.'],
     air: ['An animated 10 m wind field, the CAMS model timeline and NASA atmospheric aerosol are three distinct kinds of evidence. Motion shows wind speed and bearing between the provider\'s own model cells — it is not a pollution plume and carries no concentration.', 'Medan angin 10 m yang bergerak, linimasa model CAMS, dan aerosol atmosfer NASA adalah tiga jenis bukti yang berbeda. Gerak menunjukkan kecepatan dan arah angin antar sel model penyedia — ini bukan sebaran polusi dan tidak membawa konsentrasi.'],
@@ -2168,6 +2177,34 @@ function renderLensEvidence() {
     return;
   }
   if (activeLens === 'rain') {
+    // What the lens actually shows, as buttons rather than a hidden dropdown:
+    // radar measured by an instrument that sees precipitation, Himawari
+    // cloud-top temperature, and IMERG's satellite rainfall estimate. Three
+    // different things, each with its own date, so each is named here.
+    const stack = document.createElement('div'); stack.className = 'synoptic-toggles';
+    const pick = (product, en, id) => {
+      const b = document.createElement('button'); b.type = 'button'; b.textContent = lensText(en[0], en[1]); b.dataset.rainProduct = id;
+      b.setAttribute('aria-pressed', String(document.getElementById('atlas-environment-layer')?.value === product));
+      b.addEventListener('click', () => {
+        const selector = document.getElementById('atlas-environment-layer');
+        if (!selector) return;
+        selector.value = product;
+        selector.dispatchEvent(new Event('change', { bubbles: true }));
+        renderLensEvidence();
+      });
+      stack.append(b);
+    };
+    pick('radar', ['Radar', 'Radar'], 'radar');
+    pick('himawari', ['Himawari IR', 'IR Himawari'], 'himawari');
+    pick('satellite-rain', ['IMERG satellite rain', 'Hujan satelit IMERG'], 'satellite-rain');
+    const city = document.createElement('button'); city.type = 'button'; city.textContent = lensText('City view', 'Tampilan kota');
+    city.addEventListener('click', () => mapInstance?.flyTo({ center: [106.83, -6.20], zoom: 10.6, pitch: currentView === '2d' ? 0 : 45, bearing: 0 }));
+    stack.append(city);
+    body.append(stack);
+    // Repaint-safe: this branch runs after body.replaceChildren(), so the
+    // synoptic panel is re-rendered here or it disappears on every repaint.
+    if (synopticController) synopticController.render(body);
+    else body.append(document.createTextNode(lensText('Loading the pressure model…', 'Memuat model tekanan…')));
     for (const p of rainfallData?.points || []) {
       const button = document.createElement('button'); button.type = 'button';
       button.textContent = (uiLanguage() === 'id' ? p.name_id : p.name) + ' · ' + (Number.isFinite(p.next24hMm) ? fmtNum(p.next24hMm, 1) + ' mm / 24 h' : lensText('Unavailable', 'Tidak tersedia'));
@@ -2182,7 +2219,7 @@ function renderLensEvidence() {
       });
       body.append(button);
     }
-    if (!rainfallData?.points?.length) body.textContent = lensText('Rainfall unavailable. No zero rainfall is assumed.', 'Data hujan tidak tersedia. Tidak diasumsikan hujan nol.');
+    if (!rainfallData?.points?.length) body.append(document.createTextNode(lensText('Rainfall unavailable. No zero rainfall is assumed.', 'Data hujan tidak tersedia. Tidak diasumsikan hujan nol.')));
   } else {
     const product = selectedEnvironmentProduct();
     body.textContent = activeLens === 'city' ? lensText('Building heights mix tagged measurements, satellite estimates and defaults. Explore Data & sources below.', 'Tinggi bangunan memadukan pengukuran bertag, perkiraan satelit, dan nilai bawaan. Lihat Data & sumber di bawah.') : (product?.source || 'NASA GIBS') + ' · ' + lensText('See the observation time and legend in the map evidence panel.', 'Lihat waktu pengamatan dan legenda di panel bukti peta.');
@@ -2195,6 +2232,7 @@ async function selectCityLens(lens) {
   observationController?.clear();
   airTimelineController?.clear();
   windFieldController?.clear();
+  synopticController?.clear();
   greenSpaceController?.clear();
   ['water-scenario-labels', 'water-scenario-route', 'water-scenario-front', 'water-scenario-stations'].forEach(dropInsightLayer);
   document.getElementById('water-scenario-location')?.remove();
@@ -2205,20 +2243,30 @@ async function selectCityLens(lens) {
   history.replaceState(null, '', shareUrl.toString());
   document.querySelectorAll('[data-lens]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.lens === lens)));
   const selector = document.getElementById('atlas-environment-layer');
-  selector.value = {radar:'radar',cloud:'himawari',water:'surface-water',recurring:'surface-water',air:'aerosol',haze:'true-colour',night:'night-lights'}[lens] || 'none';
+  // Rain is rain radar first: it is the only product here measured by an
+  // instrument that sees precipitation directly. Himawari infrared and IMERG
+  // remain one button away in the lens panel.
+  selector.value = {radar:'radar',cloud:'himawari',water:'surface-water',recurring:'surface-water',air:'aerosol',haze:'true-colour',night:'night-lights',rain:'radar'}[lens] || 'none';
   selector.dispatchEvent(new Event('change', {bubbles:true}));
   removeInsightLayersWhenLeaving(lens);
   renderLensEvidence();
   await styleReady;
   if (request !== lensRequest || !mapInstance) return;
-  mapInstance.setMinZoom?.(lens === 'haze' ? 4 : lens === 'night' ? 7 : 9);
+  // A synoptic system is hundreds of kilometres across, so the rain lens has
+  // to be allowed out to regional scale or the isobars have nothing to show.
+  mapInstance.setMinZoom?.(lens === 'haze' ? 4 : lens === 'rain' ? 5 : lens === 'night' ? 7 : 9);
   setLayerVisible('fire-hotspots', lens === 'haze');
   setLayerVisible('rain-model-samples', lens === 'rain');
   if (lens === 'rain') {
     await refreshRainfall(false);
     if (request !== lensRequest) return;
+    try { const controller = await loadSynoptic(); if (request !== lensRequest) return; controller.show(document.getElementById('atlas-lens-body')); }
+    catch { if (request === lensRequest) { /* the synoptic panel reports its own failure; the point list below still renders */ } }
+    if (request !== lensRequest) return;
     setLayerVisible('rain-model-samples', true);
-    mapInstance.flyTo({center:[106.83,-6.20], zoom:10.6, pitch:currentView === '2d' ? 0 : 45, bearing:0});
+    // ~7.2 is about 900 km across: wide enough to hold a low-pressure system,
+    // and the same frame the synoptic grid was requested over.
+    mapInstance.flyTo({center:[106.8,-6.0], zoom:7.2, pitch:currentView === '2d' ? 0 : 30, bearing:0});
   } else if (['waterways','traffic'].includes(lens)) {
     try { const controller=await loadObservationController(); if(request!==lensRequest)return; await controller.show(lens,document.getElementById('atlas-lens-body')); }
     catch { if(request===lensRequest)document.getElementById('atlas-lens-body').textContent=lensText('Mapped evidence is unavailable.','Bukti terpetakan tidak tersedia.'); }
