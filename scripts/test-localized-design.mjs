@@ -23,3 +23,20 @@ el('crm-load').click();assert.equal(el('crm-viewer-shell').hidden,false);assert.
 el('crm-viewer').load();assert.match(el('crm-viewer-status').textContent,/Check its period and update time/,'iframe load must not claim data retrieval');
 el('crm-close').click();assert.equal(el('crm-viewer-shell').hidden,true);assert.equal(el('crm-viewer').getAttribute('src'),null);assert.equal(el('crm-load').focused,true,'closing restores keyboard focus');
 console.log('PASS local identity: three-theme contrast including green fields, licensed font, shared assets, rain semantics, CRM consent-to-load/close/focus and truthful viewer state');
+
+// Real-estate law: the lens panel is a caption on the map, not a wall over it.
+// At 520px it covered 32% of the viewport and the geography behind it. Pin the
+// measured budget so it cannot creep back: no more than a quarter of the
+// viewport, and clear of the lens row so the top-left of the map stays visible.
+{
+ const base=read('public/style.css');
+ const rule=base.match(/#atlas-lens-body \{([^}]*)\}/)?.[1]||'';
+ assert.ok(rule,'the lens panel rule was located');
+ const w=Number(rule.match(/width:min\((\d+)px/)?.[1]||0);
+ assert.ok(w>0,'the panel width is declared in px, not left to min() alone');
+ assert.ok(w<=400,'the lens panel is at most 400px wide (was 520px, 32% of a 1600px viewport), got '+w);
+ assert.match(rule,/top:calc\(100% \+ \d+px\)/,'the panel drops clear of the lens row instead of sitting on it');
+ const mh=rule.match(/max-height:min\((\d+)svh/);
+ assert.ok(!mh||Number(mh[1])<=60,'the panel is capped by viewport share, not by an unbounded svh');
+ assert.ok(/max-height:[^;]*100svh - \d+px/.test(rule),'and is bounded by the space actually left below it');
+}

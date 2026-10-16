@@ -438,7 +438,6 @@ try {
   assert.match(rule, /width:auto/, 'lens chips are as wide as their label');
   assert.match(design, /\.synoptic-toggles button\[aria-pressed="true"\] \{ background:var\(--ink\); color:var\(--bg\)/, 'selected chip is solid ink, not coloured text on a pale fill');
 }
-console.log('test-synoptic: ok');
 
 // ── What else sees this ───────────────────────────────────────────────────
 // Every row the flood-monitoring lens adds has to name its own date and its own
@@ -469,3 +468,4 @@ assert.ok(covBranch.includes('refreshRainfall(false)'), 'the flood lens loads th
 assert.ok(covBranch.includes('ev.open = true'), 'the flood lens opens its evidence panel on desktop');
 assert.match(app, /night:'night-lights',rain:'radar',coverage:'radar'/, 'the flood lens opens on radar, not on nothing');
 
+console.log('test-synoptic: ok');
