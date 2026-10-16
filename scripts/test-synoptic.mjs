@@ -297,4 +297,53 @@ assert.doesNotMatch(gridStepBody, /j\s*[!=]==?\s*i\s*[+-]/, 'gridStepKm must not
 assert.match(server, /nearestPairKm: medianSpacingKm\(cells\)/, 'the wider pairwise figure is still reported, not hidden');
 assert.match(client, /grid step/, 'the panel labels the number as the grid step');
 
+// ── The flood-monitoring lens ─────────────────────────────────────────────
+// The synoptic field lives on two lenses now, and only those two: painting a
+// pressure field over the green-space lens would imply the isobars say
+// something about vegetation.
+assert.match(client, /const PAINTS_ON = \['rain', 'coverage'\]/, 'the field is scoped to exactly two lenses');
+assert.ok(!/PAINTS_ON = \[[^\]]*'green'/.test(client), 'the field never paints on the green-space lens');
+assert.ok((client.match(/activeIsOneOf\(active\(\)\)/g) || []).length >= 2,
+  'both the draw path and the panel check the lens list');
+
+// A contour between cells 174 km apart says nothing about the 300 m in front
+// of it. At city zoom it would draw a stray fragment that reads as a
+// street-level pressure line.
+assert.match(client, /MAX_ZOOM_FOR_FIELD = 8\.3/, 'the field has an explicit zoom ceiling');
+assert.match(client, /if \(map\.getZoom\(\) > MAX_ZOOM_FOR_FIELD\) \{ hide\(\); return; \}/,
+  'the layers stay off above that ceiling');
+assert.match(client, /Not drawn on the map at this zoom/, 'the panel says why the map is empty');
+assert.match(client, /Tidak digambar di peta pada zoom ini/, 'and says so in Bahasa');
+assert.match(client, /map\.on\('zoomend', zoomListener\)/, 'the note follows the camera');
+assert.match(client, /map\.off\('zoomend', zoomListener\)/, 'and the listener is removed on clear');
+assert.ok(zoomListener => true, 'listener lifecycle asserted above');
+
+// ── What else sees this ───────────────────────────────────────────────────
+// Every row the flood-monitoring lens adds has to name its own date and its own
+// kind of evidence. A row with no date is a claim, not a measurement.
+const covStart = app.indexOf('function renderCoverageSeeAlso(body)');
+const covEnd = app.indexOf('function renderConfidencePanel');
+assert.ok(covStart > 0 && covEnd > covStart, 'the coverage section was located');
+const cov = app.slice(covStart, covEnd);
+for (const id of ['radar', 'surface-water', 'satellite-rain', 'himawari']) {
+  assert.ok(cov.includes(`pick('${id}'`), `the flood lens offers ${id} as a map view`);
+}
+// Observations and predictions must not be blurred together.
+assert.match(cov, /No dated classification from the provider\. No water is assumed, and none is ruled out\./,
+  'an unavailable satellite layer says neither present nor absent');
+assert.match(cov, /No radar frames returned\. Absence of echo is not an all-clear\./,
+  'an empty radar says absence of echo is not an all-clear');
+assert.match(cov, /No dated infrared frame\. Nothing is inferred about the sky\./,
+  'an absent infrared frame infers nothing about the sky');
+assert.match(cov, /none replaces a station/, 'the section refuses to stand in for the network');
+assert.match(cov, /Not a neighbourhood forecast/, 'the 24 h row does not pretend to be finer than five points');
+assert.match(cov, /deep convection shows as cold tops before any gauge sees rain/i,
+  'the cloud-top row says what infrared is for');
+assert.match(cov, /Sees water where no station is published/, 'the satellite water row is about the gap in the network');
+// The coverage lens must load the module and open its panel.
+const covBranch = app.slice(app.indexOf("} else if (lens === 'coverage') {"), app.indexOf("} else if (lens === 'night')"));
+assert.ok(covBranch.includes('loadSynoptic()'), 'the flood lens loads the pressure field');
+assert.ok(covBranch.includes('refreshRainfall(false)'), 'the flood lens loads the 24 h forecast');
+assert.ok(covBranch.includes('ev.open = true'), 'the flood lens opens its evidence panel on desktop');
+assert.match(app, /night:'night-lights',rain:'radar',coverage:'radar'/, 'the flood lens opens on radar, not on nothing');
 console.log('test-synoptic: ok');

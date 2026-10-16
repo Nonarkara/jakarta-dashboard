@@ -2009,6 +2009,7 @@ function renderCoveragePanel(data) {
   body.append(lensNoteLine(lensText(
     'A neighbourhood with no published station is not a cleared neighbourhood. This is the inventory the publisher publishes, not a survey of what exists.',
     'Kelurahan tanpa stasiun yang dipublikasikan bukan kelurahan yang aman. Ini inventaris yang dipublikasikan penerbit, bukan survei apa yang ada.')));
+  renderCoverageSeeAlso(body);
   const table = lensTable();
   for (const row of data.coverage.byBorough) {
     table.append(lensRow(
@@ -2032,6 +2033,93 @@ function renderCoveragePanel(data) {
   if(stationGeometryState?.length)body.append(lensNoteLine(lensText('Map inventory unavailable: ', 'Inventaris peta tidak tersedia: ')+stationGeometryState.join(', ')));
   body.append(lensSource('Jakarta Satu monitoring network · checked ' + (data.checkedAt || 'undated') +
     ' · ' + lensText('water-level and rain records publish no neighbourhood', 'stasiun tinggi air dan hujan tidak menyebut kelurahan')));
+}
+
+// The flood-monitoring lens is about what the network does and does not reach.
+// So the overlays here are exactly the instruments that see past it — each one
+// paired with what it adds, and each carrying its own date. None of them is a
+// substitute for a gauge, and none is called one.
+function renderCoverageSeeAlso(body) {
+  const products = environmentData?.products || [];
+  const find = (id) => products.find((p) => p.id === id);
+  const radar = environmentData?.radar;
+  const frames = radar?.frames || [];
+
+  const head = document.createElement('h3');
+  head.className = 'lens-subhead';
+  head.textContent = lensText('What else sees this', 'Apa lagi yang melihat ini');
+  body.append(head);
+
+  const stack = document.createElement('div'); stack.className = 'synoptic-toggles';
+  const pick = (product, en, id) => {
+    const b = document.createElement('button'); b.type = 'button';
+    b.textContent = lensText(en[0], en[1]); b.dataset.coverageProduct = id;
+    b.setAttribute('aria-pressed', String(document.getElementById('atlas-environment-layer')?.value === product));
+    b.addEventListener('click', () => {
+      const selector = document.getElementById('atlas-environment-layer');
+      if (!selector) return;
+      selector.value = product;
+      selector.dispatchEvent(new Event('change', { bubbles: true }));
+      renderLensEvidence();
+    });
+    stack.append(b);
+  };
+  pick('radar', ['Radar', 'Radar'], 'radar');
+  pick('surface-water', ['Satellite water', 'Air dari satelit'], 'surface-water');
+  pick('satellite-rain', ['Satellite rain', 'Hujan satelit'], 'satellite-rain');
+  pick('himawari', ['Cloud tops', 'Puncak awan'], 'himawari');
+  body.append(stack);
+
+  // The map switcher can only pick imagery. The rows below are the record:
+  // what each source actually is, when it was measured, and at what scale.
+  const seen = lensTable();
+  const row = (name, when, extra) => {
+    const r = lensRow(name, when, extra);
+    seen.append(r);
+    return r;
+  };
+  const water = find('surface-water');
+  if (water?.available) row(lensText('Standing water', 'Air tergenang'),
+    water.date + ' · ' + water.resolution,
+    lensText('Satellite classification. Sees water where no station is published — and clouds can hide it.',
+      'Klasifikasi satelit. Melihat air di tempat tanpa stasiun terpublikasi — dan awan dapat menyembunyikannya.'));
+  else row(lensText('Standing water', 'Air tergenang'), lensText('unavailable', 'tidak tersedia'),
+    lensText('No dated classification from the provider. No water is assumed, and none is ruled out.',
+      'Tidak ada klasifikasi bertanggal dari penyedia. Air tidak diasumsikan, dan tidak juga disingkirkan.'));
+
+  if (radar?.available && frames.length) row(lensText('Rain, last 2 hours', 'Hujan, 2 jam terakhir'),
+    formatLocal(frames[frames.length - 1].observedAt) + ' · ' + frames.length + ' ' + lensText('frames', 'frame'),
+    lensText('Radar composite. Sees rain beyond every published gauge. No echo is not proof of no rain outside coverage.',
+      'Komposit radar. Melihat hujan di luar setiap pos terpublikasi. Tidak ada gema bukan bukti tidak hujan di luar cakupan.'));
+  else row(lensText('Rain, last 2 hours', 'Hujan, 2 jam terakhir'), lensText('unavailable', 'tidak tersedia'),
+    lensText('No radar frames returned. Absence of echo is not an all-clear.',
+      'Tidak ada frame radar. Tidak adanya gema bukan berarti aman.'));
+
+  const imerg = find('satellite-rain');
+  if (imerg?.available) row(lensText('Satellite rain estimate', 'Perkiraan hujan satelit'),
+    imerg.date + ' · ' + imerg.resolution,
+    lensText('A satellite rate, not a ground radar. Rainfall estimate over areas with no gauge.',
+      'Laju dari satelit, bukan radar darat. Perkiraan hujan di area tanpa pos.'));
+  else row(lensText('Satellite rain estimate', 'Perkiraan hujan satelit'), lensText('unavailable', 'tidak tersedia'),
+    lensText('No dated estimate from the provider. No rain is assumed.', 'Tidak ada perkiraan bertanggal. Hujan tidak diasumsikan.'));
+
+  const ir = find('himawari');
+  if (ir?.available) row(lensText('Cloud tops', 'Puncak awan'),
+    formatLocal(ir.date) + ' · ' + ir.resolution,
+    lensText('Infrared cloud-top temperature, not rainfall. Deep convection shows as cold tops before any gauge sees rain.',
+      'Suhu puncak awan inframerah, bukan hujan. Konveksi dalam tampak sebagai puncak dingin sebelum pos mana pun melihat hujan.'));
+  else row(lensText('Cloud tops', 'Puncak awan'), lensText('unavailable', 'tidak tersedia'),
+    lensText('No dated infrared frame. Nothing is inferred about the sky.', 'Tidak ada frame inframerah bertanggal. Tidak ada yang disimpulkan tentang langit.'));
+
+  const wettest = (rainfallData?.points || []).filter((p) => Number.isFinite(p.next24hMm)).sort((a, b) => b.next24hMm - a.next24hMm)[0];
+  row(lensText('Rain, next 24 h', 'Hujan, 24 jam ke depan'),
+    wettest ? fmtNum(wettest.next24hMm, 1) + ' mm ' + lensText('wettest of', 'terbasah dari') + ' 5 ' + lensText('points', 'titik') : lensText('unavailable', 'tidak tersedia'),
+    lensText('Model forecast at five sample points, one per kota. Not a neighbourhood forecast.',
+      'Prakiraan model di lima titik sampel, satu per kota. Bukan prakiraan per kelurahan.'));
+  body.append(seen);
+  body.append(lensNoteLine(lensText(
+    'All five are separate kinds of evidence and none replaces a station. A blank cell in this lens means nobody has published a station there — not that nothing is happening.',
+    'Kelima ini adalah bukti yang berbeda dan tidak ada yang menggantikan stasiun. Sel kosong di lensa ini berarti tidak ada stasiun terpublikasi — bukan berarti tidak ada yang terjadi.')));
 }
 
 function renderConfidencePanel(data, share) {
@@ -2172,7 +2260,7 @@ function renderLensEvidence() {
       renderGreenPanel(insightData);
       if (greenSpaceController) greenSpaceController.render(body);
     }
-    else if (activeLens === 'coverage') renderCoveragePanel(insightData);
+    else if (activeLens === 'coverage') { renderCoveragePanel(insightData); if (synopticController) synopticController.render(document.getElementById('atlas-lens-body')); }
     else renderConfidencePanel(insightData, buildingShare);
     return;
   }
@@ -2246,7 +2334,7 @@ async function selectCityLens(lens) {
   // Rain is rain radar first: it is the only product here measured by an
   // instrument that sees precipitation directly. Himawari infrared and IMERG
   // remain one button away in the lens panel.
-  selector.value = {radar:'radar',cloud:'himawari',water:'surface-water',recurring:'surface-water',air:'aerosol',haze:'true-colour',night:'night-lights',rain:'radar'}[lens] || 'none';
+  selector.value = {radar:'radar',cloud:'himawari',water:'surface-water',recurring:'surface-water',air:'aerosol',haze:'true-colour',night:'night-lights',rain:'radar',coverage:'radar'}[lens] || 'none';
   selector.dispatchEvent(new Event('change', {bubbles:true}));
   removeInsightLayersWhenLeaving(lens);
   renderLensEvidence();
@@ -2328,6 +2416,14 @@ async function selectCityLens(lens) {
   } else if (lens === 'coverage') {
     await loadStationGeometry(request);
     if (request !== lensRequest) return;
+    // The forecast row and the pressure field are the "what else sees this"
+    // half of this lens. Both are cached fetches shared with the rain lens.
+    await refreshRainfall(false);
+    if (request !== lensRequest) return;
+    try { const controller = await loadSynoptic(); if (request !== lensRequest) return; controller.show(document.getElementById('atlas-lens-body')); }
+    catch { /* the panel reports its own failure; the inventory below still renders */ }
+    if (request !== lensRequest) return;
+    if (!window.matchMedia('(max-width: 700px)').matches) { const ev = document.getElementById('atlas-lens-evidence'); if (ev) ev.open = true; }
     mapInstance.flyTo({center:[106.83,-6.20], zoom:9.6, pitch:0, bearing:0});
   } else if (lens === 'night') {
     mapInstance.flyTo({center:[106.83,-6.20], zoom:9, pitch:0, bearing:0});

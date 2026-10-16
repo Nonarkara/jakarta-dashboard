@@ -786,6 +786,7 @@ button:disabled { opacity: 0.55; cursor: not-allowed; }
 .air-timeline .meta, .air-transport .meta, .air-timeline .note, .air-transport .note { font-size:11px; margin:2px 0; }
 .lens-haze-guidance { font-weight: 600; }
 .lens-haze-limits { margin-top: 12px; opacity: .8; }
+.lens-subhead { font-size: 13px; margin: 14px 0 2px; }
 
 /* Rain lens: the synoptic stack and the regional context around it. */
 .synoptic-panel { margin: 10px 0 14px; padding-top: 8px; border-top: 1px solid var(--line); }

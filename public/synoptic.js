@@ -1,5 +1,6 @@
-// Synoptic layer for the rain lens: the pressure pattern and mid-level flow
-// around Java, at the scale those features actually live on.
+// Synoptic layer for the rain and flood-monitoring lenses: the pressure
+// pattern and mid-level flow around Java, at the scale those features actually
+// live on.
 //
 // Three things are deliberately kept apart:
 //
@@ -198,10 +199,21 @@ export function hoursOf(cells, index) {
   }).filter(Boolean);
 }
 
+// The lens owns its camera and its meaning, so the module only ever paints on
+// the two lenses that asked for it. It is NOT every lens: a pressure field over
+// the green-space lens would imply the isobars say something about vegetation.
+const PAINTS_ON = ['rain', 'coverage'];
+const activeIsOneOf = (active) => PAINTS_ON.includes(active());
+
+// ~520 km across, which is three times the grid step. Below this zoom the map
+// can hold the field; above it the field is only visible as a stray fragment.
+const MAX_ZOOM_FOR_FIELD = 8.3;
+
 export function createSynoptic(map, { text: t, active, buildTag }) {
   let data = null, epoch = 0;
   let source = null, isoLayer = null, windLayer = null, lowLayer = null;
   const state = { index: 0, isobars: true, wind850: true };
+  let lastBody = null, drawnLastRender = null, zoomListener = null;
 
   const el = (tag, content, cls) => { const n = document.createElement(tag); if (content !== undefined) n.textContent = content; if (cls) n.className = cls; return n; };
   const number = (n, d = 1) => Number.isFinite(n) ? n.toLocaleString(t('en-GB', 'id-ID'), { maximumFractionDigits: d }) : '—';
@@ -225,7 +237,13 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
   }
 
   function draw() {
-    if (!map || active() !== 'rain' || !data?.cells?.length) { hide(); return; }
+    if (!map || !activeIsOneOf(active()) || !data?.cells?.length) { hide(); return; }
+    // A contour between two cells 174 km apart says nothing about the 300 m in
+    // front of it. At a city zoom the field would draw a fragmentary line
+    // across a neighbourhood and imply it meant something there, so the layers
+    // stay off until the view is wide enough to hold the field. The panel
+    // keeps reporting the pressure, the low and its tendency either way.
+    if (map.getZoom() > MAX_ZOOM_FOR_FIELD) { hide(); return; }
     const index = Math.max(0, Math.min(state.index, (data.hours?.length || 1) - 1));
     state.index = index;
     const live = hoursOf(data.cells, index);
@@ -310,7 +328,7 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
   }
 
   function render(body) {
-    if (active() !== 'rain' || !body) return;
+    if (!activeIsOneOf(active()) || !body) return;
     // Every control redraws the map and then repaints the panel from the same
     // module, because renderLensEvidence() clears this body wholesale.
     const repaint = () => render(body.parentElement?.querySelector('#atlas-lens-body') || body);
@@ -381,6 +399,14 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
       'Isobars are interpolated between the model\'s own cells, not measured along the line. 850 hPa is about 1.5 km up and this is model wind — Himawari supplies cloud imagery, not wind, and none of this is a rain forecast.',
       'Isobar diinterpolasi antar sel model, bukan diukur pada garisnya. 850 hPa sekitar 1,5 km di atas permukaan dan ini angin model — Himawari menyediakan citra awan, bukan angin, dan tidak ada di sini yang merupakan prakiraan hujan.'),
       'synoptic-note'));
+    // Say why the map is empty, rather than leaving a bare panel. "No isobar
+    // here" must not read as "no pressure here".
+    if (map && map.getZoom() > MAX_ZOOM_FOR_FIELD) {
+      section.append(el('p', t(
+        'Not drawn on the map at this zoom: the model cells are far wider than this view, so a line would imply street-level accuracy it does not have. Zoom out to about 520 km to see the field.',
+        'Tidak digambar di peta pada zoom ini: sel model jauh lebih lebar daripada tampilan ini, jadi garis akan menyiratkan akurasi tingkat jalan yang tidak dimiliki. Perlebar ke sekitar 520 km untuk melihat medannya.'),
+        'synoptic-note'));
+    }
     host.append(section);
   }
 
@@ -388,6 +414,21 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
     hide();
     const myEpoch = ++epoch;
     data = null; state.index = 0; state.isobars = true; state.wind850 = true;
+    lastBody = body;
+    if (!zoomListener) {
+      // The note that says the field is not drawn has to follow the camera.
+      // Only a change in that state repaints: repainting on every zoomend
+      // would rebuild the panel under the user's pointer mid-gesture.
+      zoomListener = () => {
+        if (!activeIsOneOf(active()) || !lastBody || !data) return;
+        const drawn = map.getZoom() <= MAX_ZOOM_FOR_FIELD;
+        if (drawn === drawnLastRender) return;
+        drawnLastRender = drawn;
+        draw();
+        render(lastBody);
+      };
+      map.on('zoomend', zoomListener);
+    }
     render(body);
     fetch('/api/atlas/synoptic' + (buildTag ? '?v=' + encodeURIComponent(buildTag) : ''), { headers: { accept: 'application/json' }, signal: AbortSignal.timeout(20000) })
       .then((r) => (r.ok ? r.json() : { available: false }))
@@ -401,7 +442,11 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
       });
   }
 
-  function clear() { epoch++; data = null; state.index = 0; hide(); }
+  function clear() {
+    epoch++; data = null; state.index = 0; lastBody = null; drawnLastRender = null;
+    if (zoomListener) { map.off('zoomend', zoomListener); zoomListener = null; }
+    hide();
+  }
 
   // render is exported separately from show so the lens evidence panel can
   // repaint after body.replaceChildren() without refetching the model.
