@@ -219,6 +219,27 @@ assert.match(app, /synopticController\?\.clear\(\)/, 'the layer is cleared when 
 assert.match(app, /if \(synopticController\) synopticController\.render\(body\);/,
   'the synoptic panel repaints from renderLensEvidence, not only from selectCityLens');
 assert.match(app, /lens === 'rain' \? 5/, 'the rain lens may zoom out far enough to hold a weather system');
+// refreshRainfall() does not repaint, so without a second pass the five points
+// are built from a null rainfallData and the lens shows no points at all.
+const rainStart = app.indexOf("if (lens === 'rain') {");
+// The terminator must exist, or slice() silently returns the whole file and
+// every `includes` below passes no matter what is in it.
+const rainEnd = app.indexOf("} else if (['waterways','traffic'].includes(lens))");
+assert.ok(rainStart > 0 && rainEnd > rainStart, 'the rain branch boundaries were located');
+const rainBranch = app.slice(rainStart, rainEnd);
+assert.ok(rainBranch.length > 200, 'the rain branch was located');
+// The repaint must sit BETWEEN the rainfall refresh and the synoptic module.
+// The product buttons also call renderLensEvidence(), so an indexOf anywhere
+// in the branch matches those instead and passes even when this one is gone.
+const between = rainBranch.slice(
+  rainBranch.indexOf('await refreshRainfall(false)'),
+  rainBranch.indexOf('await loadSynoptic()'));
+assert.ok(between.length > 0, 'the rainfall-to-synoptic span was located');
+assert.ok(between.includes('renderLensEvidence();'),
+  'the rain lens repaints after the forecast points arrive, before the synoptic slot is built');
+// The map marks the low, but the marker is often behind the evidence panel.
+assert.match(client, /const where = \(c\) =>/, 'the low\'s position is stated in the panel');
+assert.match(client, /hPa · ' \+ where\(low\)/, 'the pressure fact carries its position');
 assert.ok(/zoom:\s*7\.2/.test(app), 'the rain lens opens on the regional frame its grid was requested over');
 // The five forecast points must survive: this lens is still "where rain is
 // forecast", and the synoptic layer is added evidence, not a replacement.
@@ -228,7 +249,7 @@ assert.match(app, /pick\('satellite-rain'/, 'IMERG satellite rain is one button 
 
 // The panel carries the spacing, the low's pressure and its tendency. Folded
 // shut, the map shows isobars with nothing to interpret them against.
-assert.match(app, /lens === 'rain'[\s\S]{0,900}atlas-lens-evidence'\); if \(ev\) ev\.open = true/,
+assert.ok(rainBranch.includes("document.getElementById('atlas-lens-evidence'); if (ev) ev.open = true"),
   'the rain lens opens its evidence panel on desktop');
 assert.ok(client.includes('Konteks sinoptik'), 'the panel has an Indonesian title');
 assert.ok(client.includes('Tidak ada isobar'), 'the Indonesian failure copy says no isobar is drawn');

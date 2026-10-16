@@ -2260,6 +2260,10 @@ async function selectCityLens(lens) {
   if (lens === 'rain') {
     await refreshRainfall(false);
     if (request !== lensRequest) return;
+    // renderLensEvidence() already ran above, before the forecast points had
+    // arrived, so the lens showed no points at all. Repaint now that they are
+    // in, and the synoptic slot is rebuilt inside the same pass.
+    renderLensEvidence();
     try { const controller = await loadSynoptic(); if (request !== lensRequest) return; controller.show(document.getElementById('atlas-lens-body')); }
     catch { if (request === lensRequest) { /* the synoptic panel reports its own failure; the point list below still renders */ } }
     if (request !== lensRequest) return;

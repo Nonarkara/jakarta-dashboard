@@ -337,8 +337,12 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
     fact(t('Cells', 'Sel'), data.cellCount + ' ' + t('of', 'dari') + ' ' + data.requestedPoints + ' · ' + number(data.spacingKm, 0) + ' km ' + t('grid step', 'langkah kisi'));
     if (data.extentKm) fact(t('Box', 'Kotak'), number(data.extentKm.eastWest, 0) + ' × ' + number(data.extentKm.northSouth, 0) + ' km');
     const low = lowCentre(data.cells, state.index);
+    // The low's position belongs here even though the map marks it. The marker
+    // sits where the model put it, which at this zoom is often behind the
+    // evidence panel — and a number with no place attached is not a location.
+    const where = (c) => Math.abs(c.lat).toFixed(2) + '°' + (c.lat < 0 ? 'S' : 'N') + ' ' + Math.abs(c.lng).toFixed(2) + '°' + (c.lng < 0 ? 'W' : 'E');
     fact(t('Lowest pressure', 'Tekanan terendah'), low
-      ? number(low.mslpHpa, 0) + ' hPa ' + (Number.isFinite(low.tendencyHpa)
+      ? number(low.mslpHpa, 0) + ' hPa · ' + where(low) + ' ' + (Number.isFinite(low.tendencyHpa)
         ? '(' + (low.tendencyHpa <= 0 ? '▼ ' : '▲ ') + number(Math.abs(low.tendencyHpa), 1) + ' hPa / 6 h ' + t('— deepening', '— menguat') + ')'
         : t('tendency unknown', 'tendensi tidak diketahui'))
       : t('none in this box', 'tidak ada di kotak ini'));
