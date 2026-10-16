@@ -160,7 +160,17 @@ console.log('PASS air lens slim panel, folded CAMS, phone chip, ID/EN AOD note')
   assert.equal(mod.compassPoint(225), 'SW'); assert.equal(mod.compassPoint(225, 'id'), 'BD');
   const e = mod.citySummary([{ u: -5, v: 0 }]);
   assert.equal(mod.compassPoint(e.from), 'E', 'westward air is an easterly'); assert.equal(Math.round(e.kmh), 18, '5 m/s is 18 km/h');
-  assert.match(client, /showCompass\(cells\)/, 'the compass redraws with every frame of the field');
+  // The trailing `;` matters: `function showCompass(cells, hour) {` matches a bare
+  // /showCompass\(cells, hour\)/, so a pattern without it would happily pass on the
+  // SIGNATURE while the call site passes a null hour.
+  assert.match(client, /showCompass\(cells, hour\);/, 'the compass is redrawn per frame WITH that frame\'s hour, not a null one');
   assert.match(client, /getElementById\('wind-compass'\)\?\.remove\(\)/, 'leaving the lens removes the compass');
-  console.log('PASS wind compass: vector mean, calm, compass points, km/h');
+  // The compass is the only wind number drawn straight onto the map, and the
+  // lens animates through forecast hours. Without the valid time it is a bare
+  // km/h that could belong to any hour. The two steps are asserted together, so
+  // breaking either end of the chain fails: `const tail = ''` still interpolates
+  // ${tail}, and a null hour still produces `const at = ''`.
+  assert.match(client, /const at = hour \? clock\(hour\) : '';[\s\S]{0,200}?const tail = at \? ' · ' \+ at : '';/, 'the compass derives its label time from the frame hour, and the label from that time');
+  assert.match(client, /\$\{tail\}/, 'the compass label prints the time it derived');
+  console.log('PASS wind compass: vector mean, calm, compass points, km/h, valid time');
 }

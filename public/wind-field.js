@@ -134,7 +134,7 @@ export function createWindField(map, { text: t, active, buildTag, flow }) {
 
   // A compass on the map itself: the arrow points where the air is going, the
   // words say where it comes from. Desktop and phone alike.
-  function showCompass(cells) {
+  function showCompass(cells, hour) {
     const wrap = document.querySelector('.atlas-map-wrap');
     if (!wrap) return;
     const sum = citySummary(cells);
@@ -146,15 +146,20 @@ export function createWindField(map, { text: t, active, buildTag, flow }) {
       wrap.append(box);
     }
     const arrow = box.querySelector('.wind-compass-arrow'), label = box.querySelector('.wind-compass-text');
+    // The compass is the one wind number drawn straight onto the map, and the
+    // lens animates through forecast hours — so without the time it is a bare
+    // number with no way to know which hour it belongs to.
+    const at = hour ? clock(hour) : '';
+    const tail = at ? ' · ' + at : '';
     const kmh = number(sum.kmh, 0), lang = t('en', 'id');
     if (sum.calm) {
       arrow.style.display = 'none';
-      label.textContent = t(`Near calm · ${kmh} km/h · ${sum.cells} model cells`, `Hampir tenang · ${kmh} km/jam · ${sum.cells} sel model`);
+      label.textContent = t(`Near calm · ${kmh} km/h mean of cells · ${sum.cells} model cells${tail}`, `Hampir tenang · ${kmh} km/jam rerata sel · ${sum.cells} sel model${tail}`);
     } else {
       arrow.style.display = '';
       arrow.setAttribute('transform', `rotate(${sum.toward.toFixed(0)})`);
-      label.textContent = t(`Wind from ${compassPoint(sum.from, lang)}, blowing ${compassPoint(sum.toward, lang)} · ${kmh} km/h · city mean of ${sum.cells} model cells`,
-        `Angin dari ${compassPoint(sum.from, lang)}, bertiup ke ${compassPoint(sum.toward, lang)} · ${kmh} km/jam · rerata kota dari ${sum.cells} sel model`);
+      label.textContent = t(`Wind from ${compassPoint(sum.from, lang)}, blowing ${compassPoint(sum.toward, lang)} · ${kmh} km/h · city mean of ${sum.cells} model cells${tail}`,
+        `Angin dari ${compassPoint(sum.from, lang)}, bertiup ke ${compassPoint(sum.toward, lang)} · ${kmh} km/jam · rerata kota dari ${sum.cells} sel model${tail}`);
     }
   }
 
@@ -206,7 +211,7 @@ export function createWindField(map, { text: t, active, buildTag, flow }) {
     frameNodes.forEach((n) => n.remove());
     frameNodes = [];
     showChip();
-    showCompass(cells);
+    showCompass(cells, hour);
     // Particles: one shared canvas, reading the same cells (u, v in m/s).
     flow?.setField(cells, { label: 'wind10' });
     updateReadout(data, cells);
