@@ -16,6 +16,21 @@
 
 const TAU = Math.PI * 2;
 
+// Arrowhead at the TOWARD end: the data stays FROM-bearing (meteorological
+// convention); only the drawing points where the air is going.
+export function arrowHead(shaft) {
+  const [[x0, y0], [x1, y1]] = shaft.geometry.coordinates;
+  const lat = (y0 + y1) / 2, kx = 111.32 * Math.cos(lat * Math.PI / 180), ky = 110.57;
+  const ex = (x1 - x0) * kx, ny = (y1 - y0) * ky, len = Math.hypot(ex, ny) || 1;
+  const head = Math.min(2.5, len * 0.35), ux = ex / len, uy = ny / len, s = Math.SQRT1_2;
+  const barb = (sign) => {
+    const bx = -(ux * s - sign * uy * s) * head, by = -(uy * s + sign * ux * s) * head;
+    return [x1 + bx / kx, y1 + by / ky];
+  };
+  return { type: 'Feature', properties: { ...shaft.properties, head: true }, geometry: { type: 'LineString', coordinates: [barb(1), [x1, y1], barb(-1)] } };
+}
+
+
 export function flowVector(windFromDeg, windMs) {
   // A meteorological FROM bearing is 0..360. An out-of-range value is a parsing
   // fault, not a direction: letting -1 through yields a confident-looking 179°
@@ -120,7 +135,7 @@ export function createWindField(map, { text: t, active, buildTag }) {
           properties: { i, speed: c.speed, from: c.from, lengthKm: km },
           geometry: { type: 'LineString', coordinates: [[c.lng - dLng, c.lat - dLat], [c.lng + dLng, c.lat + dLat]] },
         };
-      }),
+      }).flatMap((shaft) => [shaft, arrowHead(shaft)]),
     };
     const data = { arrows: feature, at: hour, cells: cells.length };
     if (source && map.getSource(source)) map.getSource(source).setData(feature);

@@ -1318,7 +1318,7 @@ function renderEnvironmentEvidence(product) {
   const notes = {
     'himawari': 'Himawari infrared observes cloud-top temperature, not measured rain. Cold clouds can support storm monitoring; use radar or IMERG to inspect rainfall.',
     'surface-water': 'Clouds, vegetation and buildings can hide water. The 3-day MODIS product has 250 m pixels; it does not measure depth or establish road safety. Blank pixels are not an all-clear.',
-    'aerosol': 'Aerosol optical depth measures the atmospheric column, not surface PM2.5. Cloud gaps are missing observations.',
+    'aerosol': 'Aerosol optical depth measures the atmospheric column, not surface PM2.5. Each square is one ~10 km retrieval, so a lone red square is one high reading, not a mapped plume. Cloud gaps are missing observations.',
     'radar': 'Rain radar shows precipitation echoes within provider coverage. It does not measure flood depth. Black coverage-mask areas lack radar coverage.',
     'true-colour': 'Visible satellite imagery can show clouds, land and smoke-like features. It does not identify a pollution source or measure surface concentration.',
     'satellite-rain': 'IMERG is a satellite rainfall-rate estimate, not ground radar. Daily imagery may lag; check the product date.',
@@ -2219,6 +2219,13 @@ async function selectCityLens(lens) {
   } else if (lens === 'air') {
     try { const controller = await loadWindField(); if (request !== lensRequest) return; controller.show(document.getElementById('atlas-lens-body')); }
     catch { if (request === lensRequest) document.getElementById('atlas-lens-body').textContent = lensText('The wind model is unavailable.', 'Model angin tidak tersedia.'); }
+    // The wind panel carries the cell count and the wind-not-pollution rule, so it
+    // must be visible, not folded shut behind "Explore evidence". On a phone it stays
+    // folded so the map keeps the screen; the lens description carries the rule there.
+    if (request === lensRequest && !window.matchMedia('(max-width: 700px)').matches) { const ev = document.getElementById('atlas-lens-evidence'); if (ev) ev.open = true; }
+    // A 10 km AOD retrieval is one value per square; at full strength a single high
+    // pixel reads as a solid block and competes with the wind. Soften, never hide.
+    { const o = document.getElementById('atlas-environment-opacity'); if (o && Number(o.value) > 45) { o.value = '45'; o.dispatchEvent(new Event('input')); } }
     if (request !== lensRequest) return;
     try { const controller = await loadAirTimeline(); if (request !== lensRequest) return; controller.show(document.getElementById('atlas-lens-body')); }
     catch { if (request === lensRequest) document.getElementById('atlas-lens-body').textContent = lensText('The model timeline is unavailable.', 'Linimasa model tidak tersedia.'); }

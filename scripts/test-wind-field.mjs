@@ -120,3 +120,20 @@ assert.ok(kmAt(0) >= 3 && kmAt(1.5) > 0 && kmAt(6) <= 21, `arrow span stays in 3
 assert.ok(kmAt(50) === kmAt(6), 'a gust is capped, not extrapolated');
 
 console.log('PASS wind field: bearing conversion, bounded interpolation, the no-concentration law, lifecycle and endpoint validation');
+// ── Arrowheads point TOWARD, data stays FROM ─────────────────────────────
+{
+  // Wind FROM the west (270°) blows east: shaft runs west→east, tip at east end.
+  const shaft = { type: 'Feature', properties: { from: 270 }, geometry: { type: 'LineString', coordinates: [[106.80, -6.2], [106.86, -6.2]] } };
+  const head = mod.arrowHead(shaft);
+  const [b1, tip, b2] = head.geometry.coordinates;
+  assert.deepEqual(tip, [106.86, -6.2], 'the head sits on the TOWARD end of the shaft');
+  assert.ok(b1[0] < tip[0] && b2[0] < tip[0], 'both barbs trail behind the tip');
+  assert.ok((b1[1] - tip[1]) * (b2[1] - tip[1]) < 0, 'barbs fan out on either side');
+  assert.equal(head.properties.from, 270, 'the head keeps the FROM bearing as data');
+  assert.ok(Math.hypot((b1[0]-tip[0])*110.7, (b1[1]-tip[1])*110.57) <= 2.6, 'a head is short (≤2.5 km), not another shaft');
+  assert.match(client, /flatMap\(\(shaft\) => \[shaft, arrowHead\(shaft\)\]\)/, 'every drawn shaft carries a head');
+}
+// ── The panel is opened, not folded shut, on the air lens (desktop) ───────
+assert.match(app, /getElementById\('atlas-lens-evidence'\); if \(ev\) ev\.open = true;/, 'the air lens opens its evidence so the wind panel and disclaimer are visible');
+assert.match(app, /lone red square is one high reading, not a mapped plume/, 'a single AOD pixel is explained, not hidden');
+console.log('PASS wind arrowheads, open panel and AOD pixel note');
