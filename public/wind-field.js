@@ -108,15 +108,17 @@ export function createWindField(map, { text: t, active, buildTag }) {
     const feature = {
       type: 'FeatureCollection',
       features: cells.map((c, i) => {
+        // Length is built in KILOMETRES, then converted at this cell's latitude.
+        // Working in degrees directly is how a 1.5 m/s wind became a 166 km line
+        // across a 50 km city: 0.75° of longitude at 6°S is 83 km.
+        const km = 3 + Math.min(c.speed, 6) * 3;            // 3..21 km
         const rad = c.toward * Math.PI / 180;
-        // Arrow length encodes speed: 0.5 degrees per m/s, capped so a gust does
-        // not become a city-spanning line.
-        const len = Math.min(0.5 * c.speed, 2.2);
-        const dx = Math.sin(rad) * len, dy = Math.cos(rad) * len;
+        const dLat = (Math.cos(rad) * km / 2) / 110.57;
+        const dLng = (Math.sin(rad) * km / 2) / (111.32 * Math.cos(c.lat * Math.PI / 180));
         return {
           type: 'Feature',
-          properties: { i, speed: c.speed, from: c.from },
-          geometry: { type: 'LineString', coordinates: [[c.lng - dx / 2, c.lat - dy / 2], [c.lng + dx / 2, c.lat + dy / 2]] },
+          properties: { i, speed: c.speed, from: c.from, lengthKm: km },
+          geometry: { type: 'LineString', coordinates: [[c.lng - dLng, c.lat - dLat], [c.lng + dLng, c.lat + dLat]] },
         };
       }),
     };
@@ -138,7 +140,7 @@ export function createWindField(map, { text: t, active, buildTag }) {
     for (const c of cells) {
       const rad = c.toward * Math.PI / 180;
       for (let k = -2; k <= 2; k++) {
-        const off = k * 0.035;
+        const off = (k * 4) / 111.32 / Math.cos(c.lat * Math.PI / 180); // ~4 km steps
         pts.push([c.lng - Math.sin(rad) * off, c.lat - Math.cos(rad) * off]);
       }
     }

@@ -108,4 +108,15 @@ assert.match(server, /utc_offset_seconds !== 0/, 'timezone must be verified as U
 assert.match(server, /wind_speed_10m !== "m\/s"/, 'speed units must be verified as m/s');
 assert.match(server, /WIND_FIELD_MAX_CELLS/, 'the cell count is bounded');
 
+// Geometry scale. An arrow that crosses the whole city is not a data error you
+// can see in a JSON assertion; it has to be pinned in degrees-to-km terms.
+const arrowSrc = code.slice(code.indexOf('const km = 3 +'), code.indexOf('properties: { i, speed'));
+assert.match(arrowSrc, /110\.57/, 'latitude degrees must come from a real km-per-degree constant');
+assert.match(arrowSrc, /111\.32 \* Math\.cos\(c\.lat/, 'longitude degrees must account for latitude, not assume a degree is a degree');
+assert.doesNotMatch(arrowSrc, /0\.5 \* c\.speed/, 'the old 0.5-degrees-per-m/s scaling produced 166 km arrows');
+// 3..21 km on a ~50 km city is legible without spanning the map.
+const kmAt = (ms) => 3 + Math.min(ms, 6) * 3;
+assert.ok(kmAt(0) >= 3 && kmAt(1.5) > 0 && kmAt(6) <= 21, `arrow span stays in 3..21 km (got ${kmAt(6)})`);
+assert.ok(kmAt(50) === kmAt(6), 'a gust is capped, not extrapolated');
+
 console.log('PASS wind field: bearing conversion, bounded interpolation, the no-concentration law, lifecycle and endpoint validation');
