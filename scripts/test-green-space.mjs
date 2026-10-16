@@ -71,6 +71,12 @@ assert.equal(meta.display.sha256.length, 64, 'the overlay carries a hash');
 assert.ok(meta.periodStart.startsWith('2021') && meta.periodEnd.startsWith('2021'),
   'WorldCover is historical and must be labelled as such');
 assert.match(client, /ESA WorldCover 2021/, 'the readout names the product and its year');
+// The provider publishes levels 0-8. A higher maxzoom makes the map request
+// level-13 tiles that do not exist, and every tile returns 400 while the panel
+// and the API both look correct.
+assert.match(client, /const NDVI_MAXZOOM = 8;/,
+  'maxzoom must equal the published matrix level, not the view zoom');
+assert.match(client, /GoogleMapsCompatible_Level8/, 'the tile matrix and the declared level must agree');
 assert.match(client, /ndviBandSwatches\(\)/, 'the NDVI legend is built from the same anchors used to classify');
 assert.match(client, /historical/, 'the historical nature is stated');
 

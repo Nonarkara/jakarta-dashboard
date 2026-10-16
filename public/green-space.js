@@ -21,7 +21,11 @@ const NDVI_LAYER = 'VIIRS_NOAA20_NDVI_8Day';
 const NDVI_TMS = 'GoogleMapsCompatible_Level8';
 const NDVI_ZOOM = 8;
 const NDVI_TILE = 256;
-const NDVI_MAXZOOM = 13;
+// GoogleMapsCompatible_Level8 publishes levels 0-8 only. maxzoom must equal the
+// matrix level: declaring 13 makes MapLibre ask for level-13 tiles, which the
+// provider does not hold, and every tile comes back 400. Beyond level 8 the map
+// overzooms the level-8 tiles, which is the intended behaviour.
+const NDVI_MAXZOOM = 8;
 
 export function ndviTile(z, x, y, date) {
   return `https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/${NDVI_LAYER}/default/${date}/${NDVI_TMS}/${z}/${y}/${x}.png`;
