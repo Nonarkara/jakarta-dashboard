@@ -166,6 +166,28 @@ assert.ok(liveLow && Number.isFinite(liveLow.mslpHpa), 'the real field has a low
 // No draw path may read through a null node.
 assert.doesNotMatch(client, /\.cells\.map\(\(c\) => c\.mslpHpa\)/,
   'no path maps over cells unguarded, which throws on a gap in the field');
+
+// ── Three feature kinds in one source ─────────────────────────────────────
+// Isobars, wind arrows and the low centre share a GeoJSON source, so the layers
+// must be told apart by an explicit key. The deployed map drew an orange dot at
+// every isobar VERTEX and labelled them as lows: the low layer filtered on
+// `has hpa`, which isobar lines also carry, and a circle layer on a LineString
+// renders a circle per vertex.
+assert.match(client, /properties: \{ kind: 'iso'/, 'isobar features carry an explicit kind');
+assert.match(client, /properties: \{ kind: 'wind'/, 'wind features carry an explicit kind');
+assert.match(client, /properties: \{ kind: 'low'/, 'the low centre carries an explicit kind');
+assert.doesNotMatch(client, /filter: \['has', 'hpa'\]/, 'no layer filters on a property two kinds share');
+const layerFilters = [...client.matchAll(/id: 'synoptic-[a-z0-9-]+'[\s\S]{0,140}?filter: (\[[^\]]*\]|\[\s*\[[^\]]*\][\s\S]{0,60}?\])/g)].map((m) => m[1]);
+assert.ok(layerFilters.length >= 3, 'every synoptic layer states a filter');
+assert.ok(layerFilters.every((f) => /\['==',\s*\['get',\s*'kind'\]/.test(f)),
+  'every synoptic layer filters on kind: ' + layerFilters.join(' | '));
+
+// The module owns one container, so repainting cannot leave the loading line
+// sitting above the panel that replaced it.
+assert.match(client, /function slot\(body\)/, 'the module builds into its own slot');
+assert.match(client, /host\.replaceChildren\(\)/, 'a repaint clears the slot');
+assert.match(client, /host\.append\(section\)/, 'the panel is appended to the slot');
+assert.doesNotMatch(client, /body\.append\(section\)/, 'the module never appends into the shared body directly');
 assert.match(server, /\/api\/atlas\/synoptic",?\s*return handleSynoptic|\/api\/atlas\/synoptic/, 'the route is registered');
 assert.match(server, /boundedNumber\(mslp\[i\], 870, 1085\)/,
   'MSLP is bounded to a real sea-level observation before it is used');

@@ -245,7 +245,7 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
     }
     const isoFeatures = [];
     for (const level of levels) for (const line of stitch(contour(rows, level))) {
-      isoFeatures.push({ type: 'Feature', properties: { hpa: level }, geometry: { type: 'LineString', coordinates: line } });
+      isoFeatures.push({ type: 'Feature', properties: { kind: 'iso', hpa: level }, geometry: { type: 'LineString', coordinates: line } });
     }
 
     const windFeatures = [];
@@ -258,14 +258,14 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
       const dLat = (Math.cos(rad) * km / 2) / KM_PER_DEG_LAT;
       const dLng = (Math.sin(rad) * km / 2) / (111.32 * Math.cos(c.lat * Math.PI / 180));
       const shaft = {
-        type: 'Feature', properties: { speed: c.speed, from: c.from, lengthKm: km },
+        type: 'Feature', properties: { kind: 'wind', speed: c.speed, from: c.from, lengthKm: km },
         geometry: { type: 'LineString', coordinates: [[c.lng - dLng, c.lat - dLat], [c.lng + dLng, c.lat + dLat]] },
       };
       windFeatures.push(shaft, arrowHead(shaft));
     }
 
     const low = lowCentre(data.cells, index);
-    const lowFeatures = low ? [{ type: 'Feature', properties: { hpa: low.mslpHpa }, geometry: { type: 'Point', coordinates: [low.lng, low.lat] } }] : [];
+    const lowFeatures = low ? [{ type: 'Feature', properties: { kind: 'low', hpa: low.mslpHpa }, geometry: { type: 'Point', coordinates: [low.lng, low.lat] } }] : [];
 
     const bundle = { type: 'FeatureCollection', features: [...isoFeatures, ...windFeatures, ...lowFeatures] };
     const key = 'synoptic-' + epoch;
@@ -274,15 +274,15 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
 
     const added = [];
     if (state.isobars && !map.getLayer('synoptic-isobars')) {
-      map.addLayer({ id: 'synoptic-isobars', type: 'line', source, filter: ['all', ['!', ['has', 'head']], ['!', ['has', 'lengthKm']]], paint: { 'line-color': '#e8eef7', 'line-width': 1.4, 'line-opacity': 0.62 } }, anchor());
+      map.addLayer({ id: 'synoptic-isobars', type: 'line', source, filter: ['==', ['get', 'kind'], 'iso'], paint: { 'line-color': '#e8eef7', 'line-width': 1.4, 'line-opacity': 0.62 } }, anchor());
       added.push('synoptic-isobars');
     } else if (!state.isobars && map.getLayer('synoptic-isobars')) { map.removeLayer('synoptic-isobars'); isoLayer = null; }
     if (state.wind850 && !map.getLayer('synoptic-wind850')) {
-      map.addLayer({ id: 'synoptic-wind850', type: 'line', source, filter: ['has', 'lengthKm'], paint: { 'line-color': '#f0b429', 'line-width': 2, 'line-opacity': 0.9 } }, anchor());
+      map.addLayer({ id: 'synoptic-wind850', type: 'line', source, filter: ['==', ['get', 'kind'], 'wind'], paint: { 'line-color': '#f0b429', 'line-width': 2, 'line-opacity': 0.9 } }, anchor());
       added.push('synoptic-wind850');
     } else if (!state.wind850 && map.getLayer('synoptic-wind850')) { map.removeLayer('synoptic-wind850'); windLayer = null; }
     if (!map.getLayer('synoptic-low')) {
-      map.addLayer({ id: 'synoptic-low', type: 'circle', source, filter: ['has', 'hpa'], paint: { 'circle-radius': 7, 'circle-color': '#e4572e', 'circle-stroke-color': '#fff4e6', 'circle-stroke-width': 2 } }, anchor());
+      map.addLayer({ id: 'synoptic-low', type: 'circle', source, filter: ['==', ['get', 'kind'], 'low'], paint: { 'circle-radius': 7, 'circle-color': '#e4572e', 'circle-stroke-color': '#fff4e6', 'circle-stroke-width': 2 } }, anchor());
       added.push('synoptic-low');
     }
     isoLayer = map.getLayer('synoptic-isobars') ? 'synoptic-isobars' : null;
@@ -292,9 +292,21 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
     if (low) {
       const pt = [low.lng, low.lat];
       if (!map.getLayer('synoptic-low-label')) {
-        map.addLayer({ id: 'synoptic-low-label', type: 'symbol', source, filter: ['has', 'hpa'], layout: { 'text-field': ['concat', 'L ', ['to-string', ['get', 'hpa']]], 'text-size': 12, 'text-offset': [0, 1.6], 'text-anchor': 'top' }, paint: { 'text-color': '#ffd9c2', 'text-halo-color': '#1a1208', 'text-halo-width': 2 } }, anchor());
+        map.addLayer({ id: 'synoptic-low-label', type: 'symbol', source, filter: ['==', ['get', 'kind'], 'low'], layout: { 'text-field': ['concat', 'L ', ['to-string', ['get', 'hpa']]], 'text-size': 12, 'text-offset': [0, 1.6], 'text-anchor': 'top' }, paint: { 'text-color': '#ffd9c2', 'text-halo-color': '#1a1208', 'text-halo-width': 2 } }, anchor());
       }
     }
+  }
+
+  // The module owns one container inside the shared lens body. Repainting
+  // clears THAT, never the whole body: renderLensEvidence() puts the product
+  // buttons and the five forecast points in the same parent, and the loading
+  // line has to go when the data arrives or it sits above the real panel
+  // forever saying the model is still loading.
+  function slot(body) {
+    let host = body.querySelector(':scope > .synoptic-root');
+    if (!host) { host = el('div', undefined, 'synoptic-root'); body.append(host); }
+    host.replaceChildren();
+    return host;
   }
 
   function render(body) {
@@ -302,9 +314,10 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
     // Every control redraws the map and then repaints the panel from the same
     // module, because renderLensEvidence() clears this body wholesale.
     const repaint = () => render(body.parentElement?.querySelector('#atlas-lens-body') || body);
-    if (!data) { body.append(el('p', t('Loading the pressure model…', 'Memuat model tekanan…'), 'synoptic-note')); return; }
+    const host = slot(body);
+    if (!data) { host.append(el('p', t('Loading the pressure model…', 'Memuat model tekanan…'), 'synoptic-note')); return; }
     if (!data.available) {
-      body.append(el('p', t('The pressure model returned no usable field. No isobar is drawn and no low is implied.', 'Model tekanan tidak mengembalikan medan yang dapat dipakai. Tidak ada isobar yang digambar dan tidak ada rendah yang diasumsikan.'), 'synoptic-note'));
+      host.append(el('p', t('The pressure model returned no usable field. No isobar is drawn and no low is implied.', 'Model tekanan tidak mengembalikan medan yang dapat dipakai. Tidak ada isobar yang digambar dan tidak ada rendah yang diasumsikan.'), 'synoptic-note'));
       return;
     }
     const hour = data.hours[state.index];
@@ -364,7 +377,7 @@ export function createSynoptic(map, { text: t, active, buildTag }) {
       'Isobars are interpolated between the model\'s own cells, not measured along the line. 850 hPa is about 1.5 km up and this is model wind — Himawari supplies cloud imagery, not wind, and none of this is a rain forecast.',
       'Isobar diinterpolasi antar sel model, bukan diukur pada garisnya. 850 hPa sekitar 1,5 km di atas permukaan dan ini angin model — Himawari menyediakan citra awan, bukan angin, dan tidak ada di sini yang merupakan prakiraan hujan.'),
       'synoptic-note'));
-    body.append(section);
+    host.append(section);
   }
 
   function show(body) {
