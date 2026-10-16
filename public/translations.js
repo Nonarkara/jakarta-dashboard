@@ -40,6 +40,7 @@ window.ATLAS_ID = {
 
   "Observation": "Pengamatan",
   "Controls": "Kontrol",
+  "Where the wind carries the haze": "Ke mana angin membawa kabut asap",
   "Tools & appearance": "Alat dan tampilan", "Layer settings": "Pengaturan lapisan", "Guidance & limits": "Panduan dan batasan",
   "Skip to map controls": "Langsung ke kontrol peta", "Private repository": "Repositori privat", "Access requires repository permission": "Akses memerlukan izin repositori",
   "These are research screening rules, not official warnings. For warnings follow BMKG and BPBD DKI Jakarta. Check the source and observation time before acting.": "Ini adalah aturan penyaringan riset, bukan peringatan resmi. Untuk peringatan, ikuti BMKG dan BPBD DKI Jakarta. Periksa sumber dan waktu pengamatan sebelum bertindak.",

@@ -788,6 +788,14 @@ button:disabled { opacity: 0.55; cursor: not-allowed; }
 .lens-haze-limits { margin-top: 12px; opacity: .8; }
 .lens-subhead { font-size: 13px; margin: 14px 0 2px; }
 
+/* Controls menu: a direct route to a lens, not another settings field. */
+.atlas-menu-action {
+  display: block; width: 100%; margin-top: 10px; padding: 8px 10px;
+  border: 1px solid var(--line-bright); background: transparent;
+  color: var(--ink); font: inherit; text-align: left; cursor: pointer;
+}
+.atlas-menu-action:hover, .atlas-menu-action:focus-visible { border-color: var(--amber); color: var(--amber); }
+
 /* Rain lens: the synoptic stack and the regional context around it. */
 .synoptic-panel { margin: 10px 0 14px; padding-top: 8px; border-top: 1px solid var(--line); }
 .synoptic-title { display: block; font-size: 13px; }

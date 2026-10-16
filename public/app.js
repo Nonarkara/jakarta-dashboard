@@ -1534,6 +1534,13 @@ function focusWatch(topic) {
 function setupEnvironmentControls() {
   document.getElementById('atlas-view')?.addEventListener('change', event => setMapView(event.target.value));
   document.getElementById('atlas-basemap')?.addEventListener('change', event => setBasemap(event.target.value));
+  // From the power menu, jump straight to the transport answer. It is a lens,
+  // but the question gets asked from here, so it is reachable from here.
+  document.getElementById('atlas-haze-transport')?.addEventListener('click', () => {
+    selectCityLens('haze');
+    document.getElementById('atlas-menu')?.removeAttribute('open');
+    document.getElementById('atlas-lens-evidence')?.scrollIntoView({ block: 'nearest' });
+  });
   document.getElementById('atlas-rainfall-rows')?.addEventListener('click', event => {
     const id = event.target.closest('[data-rain-point]')?.dataset.rainPoint;
     const point = rainfallData?.points.find(p => p.id === id);
@@ -1767,6 +1774,14 @@ async function loadWindField() {
     .then(module => { windFieldController = module.createWindField(mapInstance, {text:lensText,active:()=>activeLens,buildTag:ATLAS_BUILD_TAG}); return windFieldController; })
     .finally(() => { windFieldPending = null; });
   return windFieldPending;
+}
+let hazeTransportController = null, hazeTransportPending = null;
+async function loadHazeTransport() {
+  if (hazeTransportController) return hazeTransportController;
+  if (!hazeTransportPending) hazeTransportPending = import('./haze-transport.js?v=' + encodeURIComponent(ATLAS_BUILD_TAG))
+    .then(module => { hazeTransportController = module.createHazeTransport(mapInstance, {text:lensText,active:()=>activeLens,buildTag:ATLAS_BUILD_TAG}); return hazeTransportController; })
+    .finally(() => { hazeTransportPending = null; });
+  return hazeTransportPending;
 }
 let synopticController = null, synopticPending = null;
 async function loadSynoptic() {
@@ -2240,7 +2255,13 @@ function renderLensEvidence() {
     else if (!windFieldController) body.textContent = lensText('Loading the model timeline…', 'Memuat linimasa model…');
     return;
   }
-  if (activeLens === 'haze') { renderHazeEvidence(body); return; }
+  if (activeLens === 'haze') {
+    renderHazeEvidence(body);
+    // Repaint-safe: this branch runs after body.replaceChildren(), so the
+    // transport panel is rebuilt here or it vanishes on every repaint.
+    if (hazeTransportController) hazeTransportController.render(body);
+    return;
+  }
   if (activeLens === 'arrival') { renderWaterScenario(); return; }
   if (INSIGHT_LENSES.includes(activeLens)) {
     if (!insightData) {
@@ -2320,6 +2341,7 @@ async function selectCityLens(lens) {
   observationController?.clear();
   airTimelineController?.clear();
   windFieldController?.clear();
+  hazeTransportController?.clear();
   synopticController?.clear();
   greenSpaceController?.clear();
   ['water-scenario-labels', 'water-scenario-route', 'water-scenario-front', 'water-scenario-stations'].forEach(dropInsightLayer);
@@ -2375,6 +2397,12 @@ async function selectCityLens(lens) {
     await refreshFires(false);
     loadIspuReference();
     if (request !== lensRequest) return;
+    // Where the wind would carry it. Reachable from the haze lens and from the
+    // Controls menu, because the question is asked from the power panel too.
+    try { const controller = await loadHazeTransport(); if (request !== lensRequest) return; controller.show(document.getElementById('atlas-lens-body')); }
+    catch { if (request === lensRequest) { /* the transport panel reports its own failure; the fire evidence below still renders */ } }
+    if (request !== lensRequest) return;
+    if (!window.matchMedia('(max-width: 700px)').matches) { const ev = document.getElementById('atlas-lens-evidence'); if (ev) ev.open = true; }
     mapInstance.flyTo({center:[106.83,-3.5],zoom:5,pitch:0,bearing:0});
   } else if (lens === 'air') {
     try { const controller = await loadWindField(); if (request !== lensRequest) return; controller.show(document.getElementById('atlas-lens-body')); }
