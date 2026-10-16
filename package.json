@@ -29,7 +29,7 @@
     "prepare:landcover": "python3 scripts/prepare-worldcover-reference.py"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^5.20261002.1",
+    "@cloudflare/workers-types": "^5.20261013.1",
     "typescript": "5.9.3",
     "wrangler": "4.149.0"
   },
