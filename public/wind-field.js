@@ -31,6 +31,28 @@ export function arrowHead(shaft) {
 }
 
 
+
+// One plain sentence for the whole city: the vector mean of the real cells.
+// Vector, not bearing, mean: averaging 350° and 10° by number gives 180°, the
+// exact opposite of the wind. Calm or opposed cells return a null bearing.
+const COMPASS = ['N','NE','E','SE','S','SW','W','NW'];
+const COMPASS_ID = ['U','TL','T','TG','S','BD','B','BL'];
+export function compassPoint(deg, lang = 'en') {
+  if (!Number.isFinite(deg)) return null;
+  const i = Math.round((((deg % 360) + 360) % 360) / 45) % 8;
+  return (lang === 'id' ? COMPASS_ID : COMPASS)[i];
+}
+export function citySummary(cells) {
+  const ok = (cells || []).filter((c) => Number.isFinite(c?.u) && Number.isFinite(c?.v));
+  if (!ok.length) return null;
+  const u = ok.reduce((a, c) => a + c.u, 0) / ok.length, v = ok.reduce((a, c) => a + c.v, 0) / ok.length;
+  const speed = Math.hypot(u, v);
+  const meanSpeed = ok.reduce((a, c) => a + Math.hypot(c.u, c.v), 0) / ok.length;
+  if (speed < 0.3) return { calm: true, cells: ok.length, kmh: meanSpeed * 3.6 };
+  const toward = (Math.atan2(u, v) * 180 / Math.PI + 360) % 360;
+  return { calm: false, cells: ok.length, toward, from: (toward + 180) % 360, kmh: speed * 3.6 };
+}
+
 export function flowVector(windFromDeg, windMs) {
   // A meteorological FROM bearing is 0..360. An out-of-range value is a parsing
   // fault, not a direction: letting -1 through yields a confident-looking 179°
@@ -110,8 +132,35 @@ export function createWindField(map, { text: t, active, buildTag, flow }) {
     chip.textContent = t('Wind, not pollution', 'Angin, bukan pencemaran');
   }
 
+  // A compass on the map itself: the arrow points where the air is going, the
+  // words say where it comes from. Desktop and phone alike.
+  function showCompass(cells) {
+    const wrap = document.querySelector('.atlas-map-wrap');
+    if (!wrap) return;
+    const sum = citySummary(cells);
+    let box = document.getElementById('wind-compass');
+    if (!sum) { box?.remove(); return; }
+    if (!box) {
+      box = el('div', undefined, 'wind-compass'); box.id = 'wind-compass'; box.setAttribute('role', 'status');
+      box.innerHTML = '<svg viewBox="-20 -20 40 40" width="40" height="40" aria-hidden="true"><circle r="18" fill="none" stroke="currentColor" stroke-opacity=".35"/><text y="-11" text-anchor="middle" font-size="7" fill="currentColor">N</text><g class="wind-compass-arrow"><line y1="12" y2="-12" stroke="#d8a24a" stroke-width="2.5"/><path d="M-5 -6 L0 -14 L5 -6" fill="none" stroke="#d8a24a" stroke-width="2.5"/></g></svg><span class="wind-compass-text"></span>';
+      wrap.append(box);
+    }
+    const arrow = box.querySelector('.wind-compass-arrow'), label = box.querySelector('.wind-compass-text');
+    const kmh = number(sum.kmh, 0), lang = t('en', 'id');
+    if (sum.calm) {
+      arrow.style.display = 'none';
+      label.textContent = t(`Near calm · ${kmh} km/h · ${sum.cells} model cells`, `Hampir tenang · ${kmh} km/jam · ${sum.cells} sel model`);
+    } else {
+      arrow.style.display = '';
+      arrow.setAttribute('transform', `rotate(${sum.toward.toFixed(0)})`);
+      label.textContent = t(`Wind from ${compassPoint(sum.from, lang)}, blowing ${compassPoint(sum.toward, lang)} · ${kmh} km/h · city mean of ${sum.cells} model cells`,
+        `Angin dari ${compassPoint(sum.from, lang)}, bertiup ke ${compassPoint(sum.toward, lang)} · ${kmh} km/jam · rerata kota dari ${sum.cells} sel model`);
+    }
+  }
+
   function hide() {
     document.getElementById('wind-not-pollution-chip')?.remove();
+    document.getElementById('wind-compass')?.remove();
     stop();
     if (layer && map.getLayer(layer)) map.removeLayer(layer);
     layer = null;
@@ -157,6 +206,7 @@ export function createWindField(map, { text: t, active, buildTag, flow }) {
     frameNodes.forEach((n) => n.remove());
     frameNodes = [];
     showChip();
+    showCompass(cells);
     // Particles: one shared canvas, reading the same cells (u, v in m/s).
     flow?.setField(cells, { label: 'wind10' });
     updateReadout(data, cells);
