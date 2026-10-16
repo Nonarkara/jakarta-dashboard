@@ -68,7 +68,14 @@ async function get(path) {
 
   {
     const r = await get("/api/atlas/environment");
-    check("NASA products expose usable dated imagery", r.status === 200 && r.body?.products?.length === 9 && r.body.products.filter(p => p.id !== "himawari").every(p => p.available && /^\d{4}-\d{2}-\d{2}$/.test(p.date) && p.tiles?.length === 1 && p.dates?.includes(p.date)), `${r.status} products=${r.body?.products?.length}`);
+    const satellite = r.body?.products ?? [];
+    // Assert the identity of the catalogue, not a count: a new product should
+    // make this check name itself rather than fail on an arithmetic mismatch.
+    check("NASA products expose usable dated imagery",
+      r.status === 200
+      && ['surface-water','aerosol','satellite-rain','himawari','true-colour','night-lights','aerosol-viirs','aerosol-index','night-lights-2016','ndvi'].every(id => satellite.some(p => p.id === id))
+      && satellite.filter(p => p.id !== "himawari").every(p => p.available && /^\d{4}-\d{2}-\d{2}$/.test(p.date) && p.tiles?.length === 1 && p.dates?.includes(p.date)),
+      `${r.status} products=${satellite.length} ids=${satellite.map(p => p.id).join(',')}`);
     const himawari = r.body?.products?.find(p => p.id === 'himawari');
     check("Himawari exposes a dated infrared frame", himawari?.available && himawari.date?.includes('T') && himawari.tiles?.length === 1, himawari?.date || 'unavailable');
     check("radar exposes past observations", r.status === 200 && r.body?.radar?.available && r.body.radar.frames?.length > 0 && r.body.radar.frames.every(f => Number.isFinite(Date.parse(f.observedAt))), `frames=${r.body?.radar?.frames?.length}`);
