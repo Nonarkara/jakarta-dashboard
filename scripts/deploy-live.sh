@@ -35,6 +35,23 @@ check_clean
 npm run stamp
 node scripts/release-snapshot.mjs write "$LOCK/inputs.json"
 npx wrangler deploy
+
+# The stamp rewrites the asset cache-busters, so the tree is dirty by design once
+# a deploy runs. Commit exactly those four stamped files now, straight after the
+# deploy and BEFORE verification, so that the commit that records what went to
+# the edge exists even when a later check fails. Verification used to run first,
+# so a single failing smoke aborted the run after the bytes were already live and
+# left the stamp uncommitted — a dirty tree that refused the next release. The
+# stamp is a fact about the deploy, not a verdict on it.
+#
+# Commit with a pathspec, never `git add -A`: a bare commit would sweep anything a
+# parallel agent staged mid-release. RELEASE_AGENT names the runner.
+STAMPED=(public/app.js public/index.html public/dashboard.html public/dashboard.js)
+if ! git diff --quiet HEAD -- "${STAMPED[@]}"; then
+  git add -- "${STAMPED[@]}"
+  git commit -q -m "chore: stamp build $(node --input-type=module -e 'import {readFileSync} from "node:fs"; console.log(readFileSync("public/app.js", "utf8").match(/const ATLAS_BUILD_TAG = "([^"]+)"/)[1])')" -m "Agent: ${RELEASE_AGENT:-unattributed-release}" -- "${STAMPED[@]}"
+fi
+
 node scripts/release-snapshot.mjs check "$LOCK/inputs.json"
 ATLAS_URL="${ATLAS_URL:-https://jakarta.nonarkara.org}"
 EXPECTED_BUILD="$(node --input-type=module -e 'import {readFileSync} from "node:fs"; console.log(readFileSync("public/app.js", "utf8").match(/const ATLAS_BUILD_TAG = "([^"]+)"/)[1])')"
@@ -49,15 +66,5 @@ ATLAS_URL="$ATLAS_URL" npm run smoke:api
 npm run smoke:dashboard
 node scripts/release-snapshot.mjs check "$LOCK/inputs.json"
 
-# The stamp rewrites the asset cache-busters, so the tree is dirty by design once
-# a deploy runs. Commit exactly those four stamped files, never `git add -A`, and
-# commit WITH a pathspec too: a bare `git commit` would commit the whole index,
-# sweeping anything a parallel agent staged mid-release. RELEASE_AGENT names the
-# runner in the audit trail. This leaves a clean tree for the next release.
-STAMPED=(public/app.js public/index.html public/dashboard.html public/dashboard.js)
-if ! git diff --quiet HEAD -- "${STAMPED[@]}"; then
-  git add -- "${STAMPED[@]}"
-  git commit -q -m "chore: stamp build ${EXPECTED_BUILD}" -m "Agent: ${RELEASE_AGENT:-unattributed-release}" -- "${STAMPED[@]}"
-  echo "stamped ${EXPECTED_BUILD} committed"
-fi
+echo "released ${EXPECTED_BUILD}; working tree:"
 git status --short
