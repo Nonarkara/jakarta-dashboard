@@ -87,8 +87,8 @@ design history; this file records what differs.
 
 - Worker: `jakarta-3d-atlas` on account `74ad6bf8dfaaccf82de6f0847f7d2d54`
 - Domains: `jakarta.nonarkara.org` (custom domain), `jakarta-3d-atlas.drnon.workers.dev`
-- R2: bucket `jakarta-tiles`, keys `buildings/jakarta-v1.pmtiles`, `buildings/jakarta-waterways.pmtiles`
-- Repo: `github.com/Nonarkara/jakarta-3d-atlas` (private)
+- R2: bucket `jakarta-tiles`, keys `buildings/jakarta-v1.pmtiles`, `buildings/jakarta-waterways.pmtiles`, `networks/jakarta-official-drainage-v1.pmtiles`
+- Repo: `github.com/Nonarkara/jakarta-dashboard` (private). `Nonarkara/jakarta-3d-atlas` is the retired fork: never deploy from it (its wrangler.toml now names a route-less Worker).
 - Bbox: 106.65–107.00 E, 6.40–6.08 S (DKI mainland; Kepulauan Seribu excluded). UTM 48S, EPSG:32748.
 - Google 2.5D manifest cell `2f` (EPSG_32748, 2023); GHSL tile R10_C29.
 

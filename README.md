@@ -93,9 +93,8 @@ showing a colour.
 ```bash
 npm install
 npm run verify && npm run typecheck && npm test
-npx wrangler dev --compatibility-date 2026-05-22   # local; seed the preview bucket first
-npm run deploy                                      # stamp build id + wrangler deploy
-node scripts/smoke-atlas.mjs && node scripts/smoke-atlas-api.mjs
+npx wrangler dev                                    # local; seed the preview bucket first
+npm run release                                     # the only deploy path: gates, deploy, byte checks, live smokes
 ```
 
 Rebuilding data (one-off, ~30 min, network heavy):

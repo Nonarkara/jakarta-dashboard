@@ -8,8 +8,9 @@ import { handleJakarta } from "./jakarta.js";
 // PMTiles archives (the Workers [assets] binding does not honor Range, so
 // every GET would return the whole archive), and (3) answer a small
 // AI-readable mirror at /api/atlas/*. Ported from hcmc-3d-atlas; everything
-// here reads open providers directly -- Jakarta has no operations dashboard
-// behind it, so there are no sensor, bus or incident feeds.
+// here reads open providers directly (BMKG, BBWS, PetaBencana, GDACS, NASA,
+// Open-Meteo, JAXA and the prepared official layers); it does not invent
+// sensor, bus or incident feeds.
 //
 //   /api/atlas/areas?bbox=&category=     the 12 curated places
 //   /api/atlas/districts                 the five mainland kota (reference)
@@ -19,6 +20,10 @@ import { handleJakarta } from "./jakarta.js";
 //   /api/atlas/rainfall                  Open-Meteo rain at five samples
 //   /api/atlas/air-quality               Open-Meteo / CAMS at five samples
 //   /api/atlas/watch                     flood/air/wind/storm watch strip
+//   /api/atlas/fires, /air-timeline      NASA FIRMS detections; CAMS air timeline
+//   /api/atlas/hydrology, /jaxa-*        BBWS gauges + predictions; JAXA model water (src/hydrology.ts)
+//   /api/atlas/coastal                   BMKG Priok tide forecast (src/coastal.ts)
+//   /api/jakarta/*                       dashboard feeds: BMKG, PetaBencana, official layers (src/jakarta.ts)
 //   /api/health                          liveness + tile archive presence
 
 export interface Env {
@@ -131,7 +136,7 @@ async function servePmtilesFromR2(request: Request, env: Env, key: string): Prom
   }
   const obj = await env.JAKARTA_TILES.get(key);
   if (obj === null) return new Response("not found", { status: 404 });
-  if (!("body" in obj) || obj.body === null) return new Response(null, { status: 304 });
+  if (!("body" in obj) || obj.body === null) return new Response("not found", { status: 404 }); // no conditional request is made, so a bodiless object is missing data, not a 304
   const headers = new Headers();
   headers.set("content-type", "application/octet-stream");
   headers.set("accept-ranges", "bytes");
@@ -146,7 +151,7 @@ async function servePmtilesFromR2(request: Request, env: Env, key: string): Prom
 async function streamRange(env: Env, key: string, offset: number, length: number, totalSize: number): Promise<Response> {
   const obj = await env.JAKARTA_TILES.get(key, { range: { offset, length } });
   if (obj === null || !("body" in obj) || obj.body === null) {
-    return new Response(null, { status: 304 });
+    return new Response("not found", { status: 404 });
   }
   const headers = new Headers();
   headers.set("content-type", "application/octet-stream");
@@ -588,7 +593,9 @@ async function handleCityWatch(): Promise<Response> {
     || (p.next24hMm != null && p.next24hMm >= 50)));
   const wettest = rainy.sort((a, b) => (b.next24hMm ?? -1) - (a.next24hMm ?? -1))[0];
   if (wettest) notices.push({ id: "rain-" + wettest.id, topic: "rain", placeId: wettest.id, level: "watch",
-    statement: wettest.name + " model rain is " + wettest.precipitationMm + " mm in the current interval and " + wettest.next24hMm + " mm over the next 24 hours.",
+    // A place qualifies on either value; say only the ones that exist.
+    statement: wettest.name + " model rain is " + [wettest.precipitationMm != null ? wettest.precipitationMm + " mm in the current interval" : null,
+      wettest.next24hMm != null ? wettest.next24hMm + " mm over the next 24 hours" : null].filter(Boolean).join(" and ") + ".",
     action: WATCH_RAIN_ACTION, basis: "10 mm in a model interval of at most one hour, or 50 mm across the next complete 24 model hours.",
     source: "Open-Meteo weather models", tier: "model-estimate-and-forecast", validAt: wettest.validAt });
   const gusty = places.filter(p => p.gustKph != null && p.gustKph >= 75).sort((a, b) => b.gustKph - a.gustKph)[0];
@@ -607,12 +614,12 @@ async function handleCityWatch(): Promise<Response> {
     source: "GDACS", tier: "event-list", validAt: system.validTo });
   const dirtiest = places.filter(p => p.air?.usAqi != null && p.air.usAqi >= 151).sort((a, b) => b.air.usAqi - a.air.usAqi)[0];
   if (dirtiest) notices.push({ id: "air-" + dirtiest.id, topic: "air", placeId: dirtiest.id, level: "watch",
-    statement: dirtiest.name + " model US AQI is " + dirtiest.air.usAqi + " and PM2.5 is " + dirtiest.air.pm25 + " µg/m³.",
+    statement: dirtiest.name + " model US AQI is " + dirtiest.air.usAqi + (dirtiest.air.pm25 != null ? " and PM2.5 is " + dirtiest.air.pm25 + " µg/m³." : "."),
     action: WATCH_AIR_ACTION, basis: "Open-Meteo US AQI at or above 151. The category may be driven by a pollutant other than PM2.5.",
     source: "Open-Meteo / CAMS", tier: "model-estimate", validAt: dirtiest.air.validAt });
   const hazy = !dirtiest && places.filter(p => p.air?.usAqi != null && p.air.usAqi >= 101).sort((a, b) => b.air.usAqi - a.air.usAqi)[0];
   if (hazy) notices.push({ id: "air-" + hazy.id, topic: "air", placeId: hazy.id, level: "advisory",
-    statement: hazy.name + " model US AQI is " + hazy.air.usAqi + " and PM2.5 is " + hazy.air.pm25 + " µg/m³.",
+    statement: hazy.name + " model US AQI is " + hazy.air.usAqi + (hazy.air.pm25 != null ? " and PM2.5 is " + hazy.air.pm25 + " µg/m³." : "."),
     action: WATCH_AIR_SENSITIVE_ACTION, basis: "Open-Meteo US AQI from 101 to 150 (unhealthy for sensitive groups).",
     source: "Open-Meteo / CAMS", tier: "model-estimate", validAt: hazy.air.validAt });
   return jsonResponse({

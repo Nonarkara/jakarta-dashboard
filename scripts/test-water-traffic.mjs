@@ -47,7 +47,11 @@ globalThis.fetch=originalFetch;
 // ── hydrology envelope reliability: outage, partial, malformed, cache faults ──
 const gaugeEnvelope=rows=>({response:rows.map((r,i)=>({id:'s'+i,name:r.name||'Gauge '+(i+1),longitude:106.83,latitude:-6.2,water_level:r.level,unit_display:'m',reading_at:r.at}))});
 const wibNow=()=>new Date(Date.now()+7*3600000).toISOString().slice(0,16);
-const predictionHtml='<li class="completed"><h4>PDA PANUS DEPOK</h4><span>13 Oktober 2026 05.00</span><h4>49.78<sup>m<sup>3</sup>/s</sup></h4></li>';
+// Prediction cards are WIB; build one an hour ahead so it is current, and keep a dated one to prove age is gated.
+const ID_MONTHS=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const wibCard=(ms,flow)=>{const d=new Date(ms+7*3600000);return '<li class="completed"><h4>PDA PANUS DEPOK</h4><span>'+d.getUTCDate()+' '+ID_MONTHS[d.getUTCMonth()]+' '+d.getUTCFullYear()+' '+String(d.getUTCHours()).padStart(2,'0')+'.'+String(d.getUTCMinutes()).padStart(2,'0')+'</span><h4>'+flow+'<sup>m<sup>3</sup>/s</sup></h4></li>';};
+const predictionHtml=wibCard(Date.now()+3600000,'49.78');
+const stalePredictionHtml=wibCard(Date.now()-3*86400000,'49.78');
 let store=new Map(),cacheReadFault=false,cacheWriteFault=false;
 globalThis.caches={default:{
   match:async key=>{if(cacheReadFault)throw Error('cache read fault');const hit=store.get(String(key));return hit?hit.clone():undefined;},
@@ -72,6 +76,12 @@ assert.equal(fullBody.freshLevels,1,'only the fresh reading counts as current');
 assert.equal(fullBody.stations[1].levelState,'stale');
 assert.match(fullBody.freshnessPolicy,/three hours/i);
 assert.equal(full.headers.get('cache-control'),'public,max-age=300');
+// a days-old cached prediction page with no fresh gauge must not read as available
+const savedStore=store; store=new Map();
+mockHydrology(JSON.stringify(gaugeEnvelope([{name:'Depok',level:2.4,at:'2020-01-01T09:00:00'}])),stalePredictionHtml);
+const stalePredictionOnly=await (await handleHydrology(new Request('https://atlas.test/api/atlas/hydrology'),{})).json();
+assert.equal(stalePredictionOnly.available,false,"stale predictions alone are not current"); assert.equal(stalePredictionOnly.predictions[0].current,false);
+store=savedStore;
 assert.equal(store.size,1,'a valid response is cached');
 // publisher down again → the cached copy still serves
 const callsBefore=fetchCalls;mockHydrology(new Error('publisher down'),new Error('publisher down'));

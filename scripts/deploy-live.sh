@@ -16,7 +16,9 @@ fi
 trap 'if [ -f "$LOCK/inputs.json" ]; then unlink "$LOCK/inputs.json"; fi; rmdir "$LOCK"' EXIT
 
 check_clean() {
-  if ! git diff --quiet || ! git diff --cached --quiet; then
+  # Untracked files under public/ and src/ ship with `wrangler deploy` too, so
+  # they count as uncommitted: the edge must match a commit exactly.
+  if ! git diff --quiet || ! git diff --cached --quiet || [ -n "$(git status --porcelain --untracked-files=all -- public src)" ]; then
     echo "release refused: uncommitted changes. Commit, then deploy." >&2
     git diff --stat >&2
     exit 1

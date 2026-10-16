@@ -87,15 +87,20 @@ export async function handleHydrology(request: Request, env: Env) {
     const stations=Array.isArray(raw)?raw.map(x=>cleanGauge(x)).filter(Boolean):[];
     const predictions=(html.status==='fulfilled'?parseDischargePredictions(typeof html.value==='string'?html.value:''):[]).map(prediction=>{
       const station=stations.find(row=>row?.name===prediction.name);
-      return {...prediction,lng:station?.lng??null,lat:station?.lat??null,basin:station?.basin??null,coordinateMatch:station?'exact-publisher-name':'not-published'};
+      // A publisher prediction counts as current only inside the gauge freshness
+      // window; an old cached page must not keep the route "available".
+      const at=Date.parse(prediction.validAt);
+      const current=Number.isFinite(at)&&at>=Date.now()-FRESH_WINDOW_MS;
+      return {...prediction,current,lng:station?.lng??null,lat:station?.lat??null,basin:station?.basin??null,coordinateMatch:station?'exact-publisher-name':'not-published'};
     });
     // HTTP access is separate from validated availability: a fetched page that
     // parses to nothing must not set an availability flag, and no valid data at
     // all is an outage, not an empty 200.
     const levelsAvailable=gauges.status==='fulfilled'&&stations.length>0;
-    const predictionsAvailable=html.status==='fulfilled'&&predictions.length>0;
+    const currentPredictions=predictions.filter(p=>p.current).length;
+    const predictionsAvailable=html.status==='fulfilled'&&currentPredictions>0;
     const freshLevels=stations.filter(s=>s?.fresh).length;
-    const available=freshLevels>0||predictions.length>0;
+    const available=freshLevels>0||currentPredictions>0;
     return {contract:'hydrology-v1',available,error:available?null:'No current gauge level or predicted discharge available; dated evidence is retained.',checkedAt:new Date().toISOString(),stations,predictions,levelsAvailable,predictionsAvailable,freshLevels,freshnessPolicy:FRESHNESS_POLICY,freshnessWindowMs:FRESH_WINDOW_MS,sourceUrl:EWS,levelDatum:'Local gauge datum; not comparable between stations',flowNote:'Predicted discharge is separate from observed gauge levels. Serial stations must not be summed as independent inflows.'};
   });
   if(url.pathname==='/api/atlas/jaxa-water')return cached('jaxa-water',async()=>{
@@ -104,6 +109,7 @@ export async function handleHydrology(request: Request, env: Env) {
     const date=`${init.y}${String(init.m).padStart(2,'0')}${String(init.d).padStart(2,'0')}${String(init.h).padStart(2,'0')}`;
     const validAt=`${date.slice(0,4)}-${date.slice(4,6)}-${date.slice(6,8)}T${date.slice(8,10)}:00:00Z`;
     if(!Number.isFinite(Date.parse(validAt))||Date.parse(validAt)>Date.now()+6*3600000)throw new Error('invalid run time');
+    if(Date.parse(validAt)<Date.now()-72*3600000)throw new Error('stale model run');
     return {available:true,date,validAt,checkedAt:new Date().toISOString(),tier:'hydrological-model',source:'JAXA Today’s Earth TE-Global v2 monitor',sourceUrl:'https://www.eorc.jaxa.jp/water/map/index.html?area=global',resolution:'0.1° / approximately 10 km',products:[{id:'OUTFLW',units:'m³/s',name:'Model discharge'},{id:'FLDFRC',units:'fraction',name:'Model flood fraction'}],note:'Satellite-informed model; not a satellite observation or street-level inundation confirmation.'};
   });
   if(url.pathname==='/api/atlas/jaxa-tile'){
@@ -111,7 +117,9 @@ export async function handleHydrology(request: Request, env: Env) {
     const z=Number(url.searchParams.get('z')),x=Number(url.searchParams.get('x')),y=Number(url.searchParams.get('y'));
     if(!['OUTFLW','FLDFRC'].includes(product||'')||!/^\d{10}$/.test(date||'')||![z,x,y].every(Number.isInteger)||z<0||z>9||x<0||y<0||x>=2**z||y>=2**z)return new Response('invalid tile',{status:400});
     const stamp=Date.parse(`${date!.slice(0,4)}-${date!.slice(4,6)}-${date!.slice(6,8)}T${date!.slice(8,10)}:00:00Z`);
-    if(!Number.isFinite(stamp)||stamp<Date.now()-45*86400000||stamp>Date.now()+6*86400000)return new Response('invalid date',{status:400});
+    // Only recent runs: every distinct date is a fresh upstream fetch, so the
+    // window stays narrow (the client only ever asks for the current run).
+    if(!Number.isFinite(stamp)||stamp<Date.now()-4*86400000||stamp>Date.now()+6*3600000)return new Response('invalid date',{status:400});
     const upstream=`${JAXA}/tilemap_global_H_10km_v2r3.py?prod=${product}&date=${date}&min=0&max=${product==='OUTFLW'?1000:1}&z=${z}&x=${x}&y=${2**z-1-y}`;
     try{const response=await fetch(upstream,{signal:AbortSignal.timeout(12000),cf:{cacheTtl:3600,cacheEverything:true}});if(!response.ok||!response.headers.get('content-type')?.includes('image/png'))throw new Error('tile unavailable');return new Response(response.body,{headers:{'content-type':'image/png','cache-control':'public,max-age=3600'}});}catch{return new Response('JAXA tile unavailable',{status:502});}
   }
