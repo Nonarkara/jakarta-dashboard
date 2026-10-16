@@ -26,9 +26,13 @@ jobs:
             exit 1
           fi
 
+      # Must match the Node major that scripts/deploy-live.sh actually runs on.
+      # A gate that tests a different runtime than the one that ships is not a
+      # mirror of the gate; it is a second, untested one. package.json declares
+      # the same major under engines so a drifting operator is warned at install.
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 26
           cache: npm
 
       - run: npm ci --ignore-scripts

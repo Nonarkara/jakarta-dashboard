@@ -36,5 +36,8 @@
   "dependencies": {
     "fast-xml-parser": "5.11.2",
     "pmtiles": "^4.4.1"
+  },
+  "engines": {
+    "node": "26.x"
   }
 }
