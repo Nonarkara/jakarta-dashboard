@@ -374,6 +374,11 @@ const ENV_PRODUCTS = [
   { id: "aerosol-viirs", layer: "VIIRS_NOAA20_AOD_Deep_Blue_Land_Ocean", maxzoom: 6, resolution: "6 km retrieval / 2 km imagery", units: "AOD (unitless)", legend: "MODIS_VIIRS_AOD", tier: "satellite-observation", documentation: "https://cmr.earthdata.nasa.gov/search/concepts/C2600305692-LAADS.html" },
   { id: "aerosol-index", layer: "OMPS_NOAA20_NadirMapper_AerosolIndex_380", maxzoom: 6, resolution: "12 × 17 km at nadir", units: "UV aerosol index (unitless)", legend: "OMPS_Aerosol_Index", tier: "satellite-observation", documentation: "https://cmr.earthdata.nasa.gov/search/concepts/C3307847314-OMINRT.html" },
   { id: "night-lights-2016", layer: "VIIRS_Night_Lights", maxzoom: 8, resolution: "500 m imagery", units: "visual annual composite", legend: null, tier: "satellite-historical-composite", documentation: "https://earthobservatory.nasa.gov/features/NightLights" },
+  // Vegetation index for the green-space lens. An INDEX, not an area: it
+  // measures how vigorously plants are photosynthesising and cannot separate a
+  // forest from a lawn. NOAA-20 is the same satellite as the night-lights and
+  // aerosol products already used here.
+  { id: "ndvi", layer: "VIIRS_NOAA20_NDVI_8Day", maxzoom: 8, dateWindow: 60, resolution: "~450 m", units: "NDVI (unitless index)", legend: "MODIS_NDVI", tier: "satellite-observation", documentation: "https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/" },
 ];
 // Five model sample points, one per mainland kota administrasi. Planning
 // locations for weather models, not rain gauges or district averages.
@@ -453,7 +458,7 @@ async function handleEnvironment(): Promise<Response> {
     // serve the newest published day that is not in the future. A future date is
     // never presented as current.
     const listDate = defaultDate && defaultDate <= today ? defaultDate : today;
-    const dates = Array.from({ length: 7 }, (_, i) => new Date(Date.parse(listDate) - i * 86400000).toISOString().slice(0, 10)).filter(published);
+    const dates = Array.from({ length: product.dateWindow || 7 }, (_, i) => new Date(Date.parse(listDate) - i * 86400000).toISOString().slice(0, 10)).filter(published);
     const selectedDate = dates.find(day => day < today) || dates[0] || null;
     const available = !!selectedDate && !!layer?.includes(`<TileMatrixSet>${matrix}</TileMatrixSet>`);
     return { ...product, available, source: "NASA GIBS / LANCE", date: available ? selectedDate : null, latestAvailableDate: defaultDate || null, dates,

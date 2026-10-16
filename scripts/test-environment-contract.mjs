@@ -32,17 +32,38 @@ globalThis.fetch = async url => {
 const request = path => worker.fetch(new Request('https://atlas.test'+path), {}, {});
 try {
   let r=await request('/api/atlas/environment'), data=await r.json();
-  assert.equal(data.products.length,9); assert.ok(data.products.slice(0,3).every(p=>p.available && p.date===date));
+  // Assert the SET, not a bare count: a new product should make this test say
+  // which product appeared, instead of failing on an arithmetic mismatch.
+  assert.deepEqual(data.products.map(p=>p.id).slice(0,9),
+    ['surface-water','aerosol','satellite-rain','himawari','true-colour','night-lights','aerosol-viirs','aerosol-index','night-lights-2016'],
+    'the first nine satellite products keep their order and identity');
+  assert.equal(data.products.length,10);
+  assert.ok(data.products.slice(0,3).every(p=>p.available && p.date===date));
   assert.equal(data.products[3].available,false);
   assert.equal(data.products[4].available,true); assert.match(data.products[4].tiles[0], /\.jpg$/); assert.equal(data.products[4].legendUrl,null);
   assert.equal(data.radar.frames.length,1); assert.ok(data.products[0].tiles[0].includes('Level9/{z}/{y}/{x}.png'));
   assert.equal(data.products[0].windowDays,3);
   {
     const saved=capabilities, past='2016-01-01', gapDay=new Date(now-2*86400000).toISOString().slice(0,10);
-    const products=[['VIIRS_NOAA20_GapFilled_BRDF_Corrected_DayNightBand_Radiance',8,gapDay],['VIIRS_NOAA20_AOD_Deep_Blue_Land_Ocean',6,date],['OMPS_NOAA20_NadirMapper_AerosolIndex_380',6,date],['VIIRS_Night_Lights',8,past]];
-    capabilities='<Capabilities>'+products.map(([id,z,day])=>`<Layer><ows:Identifier>${id}</ows:Identifier><Dimension><Default>${day}</Default><Value>${day}</Value></Dimension><Format>image/png</Format><TileMatrixSet>GoogleMapsCompatible_Level${z}</TileMatrixSet></Layer>`).join('')+'</Capabilities>';
+    const products=[['VIIRS_NOAA20_GapFilled_BRDF_Corrected_DayNightBand_Radiance',8,gapDay],['VIIRS_NOAA20_AOD_Deep_Blue_Land_Ocean',6,date],['OMPS_NOAA20_NadirMapper_AerosolIndex_380',6,date],['VIIRS_Night_Lights',8,past],['VIIRS_NOAA20_NDVI_8Day',8,gapDay]];
+    // GIBS publishes most products as a date RANGE, not a single day. Give NDVI
+    // that shape so the longer window is actually exercised.
+    capabilities='<Capabilities>'+products.map(([id,z,day])=>{
+      const range = id==='VIIRS_NOAA20_NDVI_8Day'
+        ? `<Value>${new Date(Date.parse(day)-40*86400000).toISOString().slice(0,10)}/${day}/P1D</Value>`
+        : `<Value>${day}</Value>`;
+      return `<Layer><ows:Identifier>${id}</ows:Identifier><Dimension><Default>${day}</Default>${range}</Dimension><Format>image/png</Format><TileMatrixSet>GoogleMapsCompatible_Level${z}</TileMatrixSet></Layer>`;
+    }).join('')+'</Capabilities>';
     const satellite=(await (await request('/api/atlas/environment')).json()).products;
     for(const id of ['night-lights','aerosol-viirs','aerosol-index','night-lights-2016']){const p=satellite.find(p=>p.id===id);assert.equal(p.available,true,id);assert.ok(p.tiles[0].endsWith('.png'));assert.ok(p.date<=date);}
+    // NDVI declares a longer history, so it keeps its own date window.
+    const ndviFound=satellite.find(p=>p.id==='ndvi');
+    assert.ok(ndviFound,'ndvi is a declared product');
+    assert.equal(ndviFound.available,true,'ndvi is available when the provider lists its layer');
+    assert.match(ndviFound.tiles[0],/VIIRS_NOAA20_NDVI_8Day/,'ndvi tiles name its own layer');
+    assert.match(ndviFound.tiles[0],/GoogleMapsCompatible_Level8/,'ndvi uses the tile matrix the provider declares');
+    assert.equal(ndviFound.units,'NDVI (unitless index)','ndvi units say index, not area');
+    assert.ok(ndviFound.dates.length>7,'ndvi keeps a longer history than a 7-day daily product: got '+ndviFound.dates.length);
     const night=satellite.find(p=>p.id==='night-lights');assert.equal(night.date,gapDay);assert.equal(night.tier,'satellite-corrected-gap-filled');assert.match(night.units,/nW/);assert.match(night.resolution,/750 m sensor/);
     const old=satellite.find(p=>p.id==='night-lights-2016');assert.equal(old.date,past);assert.equal(old.timePrecision,'annual composite');assert.equal(old.windowDays,null);assert.equal(old.legendUrl,null);
     assert.match(satellite.find(p=>p.id==='aerosol-index').resolution,/12 × 17/);

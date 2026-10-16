@@ -1752,6 +1752,14 @@ async function loadObservationController() {
     .finally(() => { observationPending = null; });
   return observationPending;
 }
+let greenSpaceController = null, greenSpacePending = null;
+async function loadGreenSpace() {
+  if (greenSpaceController) return greenSpaceController;
+  if (!greenSpacePending) greenSpacePending = import('./green-space.js?v=' + encodeURIComponent(ATLAS_BUILD_TAG))
+    .then(module => { greenSpaceController = module.createGreenSpace(mapInstance, {text:lensText,active:()=>activeLens,buildTag:ATLAS_BUILD_TAG}); return greenSpaceController; })
+    .finally(() => { greenSpacePending = null; });
+  return greenSpacePending;
+}
 let windFieldController = null, windFieldPending = null;
 async function loadWindField() {
   if (windFieldController) return windFieldController;
@@ -2148,7 +2156,13 @@ function renderLensEvidence() {
       return;
     }
     if (activeLens === 'exposure') renderExposurePanel(insightData);
-    else if (activeLens === 'green') renderGreenPanel(insightData);
+    else if (activeLens === 'green') {
+      // The derived borough table and the map layers answer different questions:
+      // hectares per borough from published polygons, and what the satellite
+      // actually sees. Both belong on this lens, table first.
+      renderGreenPanel(insightData);
+      if (greenSpaceController) greenSpaceController.render(body);
+    }
     else if (activeLens === 'coverage') renderCoveragePanel(insightData);
     else renderConfidencePanel(insightData, buildingShare);
     return;
@@ -2181,6 +2195,7 @@ async function selectCityLens(lens) {
   observationController?.clear();
   airTimelineController?.clear();
   windFieldController?.clear();
+  greenSpaceController?.clear();
   ['water-scenario-labels', 'water-scenario-route', 'water-scenario-front', 'water-scenario-stations'].forEach(dropInsightLayer);
   document.getElementById('water-scenario-location')?.remove();
   document.getElementById('monitoring-location')?.remove();
@@ -2242,9 +2257,17 @@ async function selectCityLens(lens) {
     if (request !== lensRequest) return;
     mapInstance.flyTo({center:[106.83,-6.20], zoom:9.8, pitch:0, bearing:0});
   } else if (lens === 'green') {
+    // The published polygons stay as the atlas's own insight-green layer, with
+    // its click handling; this module chooses which satellite view sits above it.
     await loadGreenGeometry(request);
     if (request !== lensRequest) return;
-    mapInstance.flyTo({center:[106.83,-6.20], zoom:9.8, pitch:0, bearing:0});
+    try { const controller = await loadGreenSpace(); if (request !== lensRequest) return; controller.show(document.getElementById('atlas-lens-body')); }
+    catch { if (request === lensRequest) document.getElementById('atlas-lens-body').textContent = lensText('The green-space evidence is unavailable.', 'Bukti ruang hijau tidak tersedia.'); }
+    if (request !== lensRequest) return;
+    // Close enough that the published polygons are more than a pixel wide: the
+    // median site is about four metres across, so at a city-wide zoom this
+    // layer is empty by construction and looks broken rather than absent.
+    mapInstance.flyTo({center:[106.83,-6.20], zoom:13.2, pitch:currentView === '2d' ? 0 : 40, bearing:0});
   } else if (lens === 'coverage') {
     await loadStationGeometry(request);
     if (request !== lensRequest) return;
