@@ -467,5 +467,6 @@ assert.ok(covBranch.includes('loadSynoptic()'), 'the flood lens loads the pressu
 assert.ok(covBranch.includes('refreshRainfall(false)'), 'the flood lens loads the 24 h forecast');
 assert.ok(covBranch.includes('ev.open = true'), 'the flood lens opens its evidence panel on desktop');
 assert.match(app, /night:'night-lights',rain:'radar',coverage:'radar'/, 'the flood lens opens on radar, not on nothing');
+assert.match(client, /const ISOBAR_STEP_HPA = 1;/, 'isobar step is 1 hPa for the flat equatorial pressure field');
 
 console.log('test-synoptic: ok');

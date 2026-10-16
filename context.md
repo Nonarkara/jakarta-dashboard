@@ -1,5 +1,7 @@
 ## Coastal forecast and land-cover evidence · 15 October 2026
 
+> **Code playbook:** `BEST-PRACTICES.md` in this directory — 16 cross-project code rules every codebase follows. Read on first open.
+
 Plan: replace the duplicated Ciliwung visual claim with a distinct dated live cutoff receipt; acquire an anonymous BMKG Priok coastal forecast and a bounded WorldCover 2021 crop; admit only validated source fields; update bilingual Research and catalogue; run the canonical release and live verification. Invariant: observed levels, publisher forecasts, land-cover classes and user assumptions retain separate datums, dates and meanings. No tide-to-river join or land-cover-to-runoff coefficient is invented.
 
 Design read: a resident compares water evidence in the existing map without losing screen space. Reference: Vignelli's 1972 subway diagram, with distinct named systems meeting at a place. The map remains dominant; new context lives in the existing on-demand waterways evidence panel and Research methods/inventory. Existing Universa/Source Sans typography, Palette 267, compact masthead, gutter alignment and all live layers remain. Scientific WorldCover class colors retain their publisher meaning rather than becoming interface accents. Existing evidence rows use the current hierarchy and line weights; no new permanent bar.

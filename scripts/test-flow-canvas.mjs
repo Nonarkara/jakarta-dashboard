@@ -2,7 +2,10 @@
 // field, nothing past the grid's reach, and geographic steps that scale
 // longitude by cos(latitude).
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 const { makeSampler, stepLngLat } = await import(new URL('../public/flow-canvas.js', import.meta.url));
+const flowSrc = readFileSync(new URL('../public/flow-canvas.js', import.meta.url), 'utf8');
+assert.match(flowSrc, /return Math\.min\(850, Math\.round\(area \/ 1800\)\);/, 'particle population is retuned to keep streamlines balanced with isobars');
 
 // A 0.25° grid of identical 10 m/s easterlies (air moving west: u = -10).
 const cells = [];

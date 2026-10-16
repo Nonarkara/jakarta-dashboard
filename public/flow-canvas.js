@@ -102,7 +102,7 @@ export function createFlowCanvas(map, { colors = ['#8fb7c9', '#f1e7d0', '#d8a24a
   }
   function population() {
     const area = (canvas.width * canvas.height) / (dpr * dpr);
-    return Math.min(2600, Math.round(area / 650));
+    return Math.min(850, Math.round(area / 1800));
   }
   function frame() {
     raf = null;
@@ -112,7 +112,7 @@ export function createFlowCanvas(map, { colors = ['#8fb7c9', '#f1e7d0', '#d8a24a
     ctx.fillStyle = 'rgba(0,0,0,0.9)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.globalCompositeOperation = 'source-over';
-    ctx.lineWidth = 1.25 * dpr;
+    ctx.lineWidth = 1.0 * dpr;
     ctx.lineCap = 'round';
     const target = population();
     while (particles.length < target) { const p = spawn(); if (!p) break; particles.push(p); }
@@ -135,8 +135,8 @@ export function createFlowCanvas(map, { colors = ['#8fb7c9', '#f1e7d0', '#d8a24a
   function still() {
     clear();
     if (!sampler || !ctx) return;
-    ctx.lineWidth = 1.2 * dpr; ctx.globalAlpha = 0.8;
-    for (let i = 0; i < Math.min(500, population()); i++) {
+    ctx.lineWidth = 1.0 * dpr; ctx.globalAlpha = 0.8;
+    for (let i = 0; i < Math.min(180, population()); i++) {
       let p = spawn(); if (!p) break;
       ctx.beginPath(); let a = map.project([p.lng, p.lat]); ctx.moveTo(a.x * dpr, a.y * dpr);
       for (let s = 0; s < 14; s++) {

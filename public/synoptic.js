@@ -25,9 +25,11 @@
 
 const KM_PER_DEG_LAT = 110.57;
 
-// Contour interval. Synoptic charts run 4 hPa; a 4 hPa step over this box
-// gives only a handful of lines, so 2 hPa is used and the value is shown.
-const ISOBAR_STEP_HPA = 2;
+// Contour interval. Synoptic charts in mid-latitudes run 4 hPa; across Java
+// in the equatorial tropics the sea-level pressure gradient is flat (typically
+// 2 to 4 hPa across the region), so a 1 hPa step reveals the actual physical
+// baric topography instead of yielding only 2-3 sparse lines.
+const ISOBAR_STEP_HPA = 1;
 
 export function arrowHead(shaft) {
   const [[x0, y0], [x1, y1]] = shaft.geometry.coordinates;
