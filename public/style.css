@@ -726,11 +726,13 @@ button:disabled { opacity: 0.55; cursor: not-allowed; }
 .atlas-lens-story strong { font-size:16px; }
 .atlas-lens-story details { position:relative; }
 .atlas-lens-story summary { min-height:44px; display:flex; align-items:center; cursor:pointer; }
-/* The map is the product. A wide panel stops being a caption and starts
-   being the thing you are looking at: at 520px this covered a third of the
-   width and hid the geography behind it. Narrower, and dropped clear of the
-   lens row, so the top-left of the map — where Jakarta is — stays visible. */
-#atlas-lens-body { position:absolute; right:0; top:calc(100% + 56px); width:min(380px,calc(100vw - 24px)); max-height:min(58svh, calc(100svh - 300px)); overflow:auto; z-index:45; background:var(--bg); color:var(--ink); border:1px solid var(--line-bright); padding:14px; }
+/* The map is the product: the panel is a caption on it, not a wall over it.
+   This rule deliberately carries NO geometry. #atlas-lens-body is position:static
+   inside .atlas-lens-popup, so width/top/right declared here are dead — but they
+   read exactly like they place the panel. That is how a 520px narrowing once
+   landed here, passed its own test, and changed nothing on screen. Only the popup
+   is sized; the real-estate budget is pinned against it in jakarta-design.css. */
+#atlas-lens-body { background:var(--bg); color:var(--ink); }
 #atlas-lens-body button { display:block; width:100%; text-align:left; min-height:44px; margin-bottom:4px; }
 .lens-note { margin:0 0 12px; color:var(--dim); font-size:12px; line-height:1.5; }
 .lens-note--detail { margin:12px 0 0; padding-top:12px; border-top:1px solid var(--line); color:var(--ink); }

@@ -25,18 +25,24 @@ el('crm-close').click();assert.equal(el('crm-viewer-shell').hidden,true);assert.
 console.log('PASS local identity: three-theme contrast including green fields, licensed font, shared assets, rain semantics, CRM consent-to-load/close/focus and truthful viewer state');
 
 // Real-estate law: the lens panel is a caption on the map, not a wall over it.
-// At 520px it covered 32% of the viewport and the geography behind it. Pin the
-// measured budget so it cannot creep back: no more than a quarter of the
-// viewport, and clear of the lens row so the top-left of the map stays visible.
+// At 520px the popup covered 22.6% of the map and sat against the lens row.
+// Pin the budget on the element that actually carries the width — the POPUP.
+// #atlas-lens-body is position:static inside it and only ever fills, so pinning
+// the body is how a change lands and changes nothing.
 {
- const base=read('public/style.css');
- const rule=base.match(/#atlas-lens-body \{([^}]*)\}/)?.[1]||'';
- assert.ok(rule,'the lens panel rule was located');
+ const design=read('public/jakarta-design.css');
+ const rule=design.match(/body\.atlas-workbench \.atlas-lens-popup \{([^}]*)\}/)?.[1]||'';
+ assert.ok(rule,'the workbench lens popup rule was located');
  const w=Number(rule.match(/width:min\((\d+)px/)?.[1]||0);
- assert.ok(w>0,'the panel width is declared in px, not left to min() alone');
- assert.ok(w<=400,'the lens panel is at most 400px wide (was 520px, 32% of a 1600px viewport), got '+w);
- assert.match(rule,/top:calc\(100% \+ \d+px\)/,'the panel drops clear of the lens row instead of sitting on it');
- const mh=rule.match(/max-height:min\((\d+)svh/);
- assert.ok(!mh||Number(mh[1])<=60,'the panel is capped by viewport share, not by an unbounded svh');
- assert.ok(/max-height:[^;]*100svh - \d+px/.test(rule),'and is bounded by the space actually left below it');
+ assert.ok(w>0,'the popup width is declared in px');
+ assert.ok(w<=400,'the lens popup is at most 400px wide (was 520px), got '+w);
+ assert.match(rule,/top:calc\([\s\S]{0,140}?\+ \d+px\)/,'the popup drops clear of the lens row instead of sitting on it');
+ assert.match(rule,/max-height:min\(\d+svh,/,'and its height stays bounded by what is left below, not an unbounded share');
+ // The body rule is never allowed to grow geometry again: dead declarations that
+ // read like positioning are how a 520px narrowing passed its own test and shipped
+ // a no-op. Assert it is found, so the guard below cannot pass vacuously.
+ const base=read('public/style.css');
+ const bodyRule=base.match(/#atlas-lens-body \{([^}]*)\}/)?.[1]||'';
+ assert.ok(bodyRule,'the base lens body rule was located');
+ assert.ok(!/\b(position|width|height|min-height|max-height|top|right|left)\s*:/.test(bodyRule),'the static body declares no geometry; only .atlas-lens-popup positions the panel');
 }

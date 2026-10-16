@@ -322,7 +322,14 @@ body.atlas-workbench .atlas-lenses { min-height:0; align-items:center; padding:0
 body.atlas-workbench .atlas-lenses button { min-height:30px; padding:4px 8px; font-size:12px; }
 body.atlas-workbench #atlas-lens-evidence { position:sticky; left:0; order:-1; flex:none; background:var(--bg); z-index:60; margin:0; border:0; padding:0; }
 body.atlas-workbench #atlas-lens-evidence > summary { display:flex; align-items:center; min-height:30px; padding:4px 8px; font-size:12px; white-space:nowrap; cursor:pointer; border-right:1px solid var(--line); }
-body.atlas-workbench .atlas-lens-popup { position:fixed; top:calc(var(--atlas-header-row) + var(--atlas-lenses-row)); left:8px; width:min(520px,calc(100vw - 16px)); max-height:65svh; overflow:auto; z-index:65; border:1px solid var(--line); background:var(--bg); }
+/* The map is the product. At 520px this popup covered 22.6% of the map and sat
+   hard against the lens row, so it read as the screen rather than as evidence
+   about it. Narrower, and dropped clear of the row so the top-left of the map -
+   where Jakarta is - stays visible. A narrower column wraps, so the height is
+   spent on avoiding scroll rather than saved: the popup opens 128px down
+   (36 header + 36 lenses + 56), which leaves 100svh - 208px before it would run
+   off the bottom, and 68svh keeps the map dominant on a tall screen. */
+body.atlas-workbench .atlas-lens-popup { position:fixed; top:calc(var(--atlas-header-row) + var(--atlas-lenses-row) + 56px); left:8px; width:min(380px,calc(100vw - 16px)); max-height:min(68svh,calc(100svh - 208px)); overflow:auto; z-index:65; border:1px solid var(--line); background:var(--bg); }
 body.atlas-workbench.atlas-embedded .atlas-lens-popup { top:var(--atlas-lenses-row); }
 body.atlas-workbench #atlas-lens-evidence[open] .atlas-lens-popup .atlas-lens-context { display:block; position:static; width:auto; padding:8px; border:0; border-bottom:1px solid var(--line); background:var(--bg-raised); }
 body.atlas-workbench .atlas-lens-context > * { display:block; font-size:12px; }
