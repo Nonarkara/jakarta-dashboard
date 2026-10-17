@@ -104,7 +104,12 @@ test("landmarks use real OSM footprints with a cited height", () => {
     const p = f.properties;
     if (!p.source || !p.osm) throw new Error(`${p.name}: missing source/osm`);
     if (!/^(way|relation)\/\d+$/.test(p.osm)) throw new Error(`${p.name}: osm ref "${p.osm}" is not an OSM element`);
+    if (/Istiqlal|Katedral/i.test(p.name)) throw new Error(`${p.name}: dome/spire height must not be applied to a whole civic outline`);
   }
+  const wisma = lm.features.filter(f => f.properties.name === "Wisma 46");
+  if (wisma.length !== 3) throw new Error(`Wisma 46 must use its 3 stepped OSM building:part ways, got ${wisma.length}`);
+  const heights = wisma.map(f => f.properties.height).sort((a, b) => a - b);
+  if (heights.join(",") !== "169.6,230,261.9") throw new Error(`Wisma 46 stepped heights mismatch: ${heights.join(",")}`);
 });
 
 test("index.html does not preload whole PMTiles archives", () => {

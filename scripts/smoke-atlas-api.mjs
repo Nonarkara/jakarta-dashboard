@@ -59,7 +59,13 @@ async function get(path) {
   }
   {
     const r = await get("/api/atlas/air-quality");
-    soft("air quality returns model AQI with valid time", r.status === 200 && Array.isArray(r.body) && r.body.length > 0 && r.body.every(p => Number.isFinite(p.aqi) && p.observedAt), `${r.status} rows=${Array.isArray(r.body) ? r.body.length : 0}`);
+    const ok200 = r.status === 200 && Array.isArray(r.body) && r.body.length > 0 && r.body.every(p => Number.isFinite(p.aqi) && p.observedAt);
+    const outage503 = r.status === 503 && r.body?.error === "air_quality_unavailable";
+    if (outage503) {
+      soft("air quality returns model AQI with valid time", false, `HTTP 503 explicit outage (error=${r.body.error})`);
+    } else {
+      check("air quality returns model AQI with valid time", ok200, `${r.status}${r.error ? ' ' + r.error : ''} rows=${Array.isArray(r.body) ? r.body.length : 0}`);
+    }
   }
   {
     const r = await get("/api/atlas/watch");
@@ -94,7 +100,13 @@ async function get(path) {
   }
   {
     const r = await get("/api/atlas/rainfall");
-    soft("rainfall exposes five valid model samples", r.status === 200 && r.body?.points?.length === 5 && r.body.points.every(p => p.available && Number.isFinite(p.precipitationMm) && Number.isFinite(p.next24hMm) && p.validAt?.endsWith("Z")), `${r.status} points=${r.body?.points?.length}`);
+    const ok200 = r.status === 200 && r.body?.points?.length === 5 && r.body.points.every(p => p.available && Number.isFinite(p.precipitationMm) && Number.isFinite(p.next24hMm) && p.validAt?.endsWith("Z"));
+    const outage503 = r.status === 503 && Array.isArray(r.body?.points);
+    if (outage503) {
+      soft("rainfall exposes five valid model samples", false, `HTTP 503 explicit outage (points=${r.body.points.length})`);
+    } else {
+      check("rainfall exposes five valid model samples", ok200, `${r.status}${r.error ? ' ' + r.error : ''} points=${r.body?.points?.length}`);
+    }
   }
 
   {
@@ -111,40 +123,39 @@ async function get(path) {
   {
     const r = await get('/api/atlas/hydrology');
     // ewscilicis.id intermittently fails, so an explicit 503 is a valid state of
-    // this contract, not a defect — the same treatment air-quality and rainfall
-    // get. What must never pass is a 200 whose freshness contract is broken.
+    // this contract, not a defect. What must never pass is a 200 whose freshness
+    // contract is broken, or a 503 that prints ✓ for 200-only freshness checks.
     const outage = r.status === 503 && r.body?.available === false;
-    const window = r.body?.freshnessWindowMs;
-    const now = Date.now();
-    // cleanGauge's real contract: a reading is usable only with a finite value
-    // in metres and a valid stamp; it is fresh only if also inside the window.
-    // A station with a current timestamp but no reading is "unknown".
-    const stateHolds = s => {
-      const at = Date.parse(s.observedAt);
-      const usable = Number.isFinite(s.levelM) && s.levelM !== null && !s.rejectedTimestamp;
-      const inside = usable && Number.isFinite(at) && now - at <= window;
-      return s.fresh === inside && s.levelState === (!usable ? 'unknown' : inside ? 'fresh' : 'stale');
-    };
-    const ok = outage || r.status === 200;
-    const detail = outage
-      ? `HTTP 503 explicit outage (upstream gauge fetch failed)`
-      : `${r.status} fresh=${r.body?.freshLevels}/${r.body?.stations?.length} window=${window ? window / 3600000 : '?'}h`
-        + (r.status === 200
-          ? ` states=${['fresh', 'stale', 'unknown'].map(k => `${k}=${r.body.stations.filter(s => s.levelState === k).length}`).join(' ')}`
-          : '');
-
-    soft('hydrology states a freshness window and its gauge states match the contract',
-      ok && (outage || (typeof window === 'number' && window > 0 && typeof r.body?.freshnessPolicy === 'string'
-        && r.body.freshLevels === r.body.stations.filter(s => s.fresh).length
-        && r.body.stations.every(stateHolds))),
-      detail);
-    soft('no prediction outside the window claims to be current',
-      ok && (outage || r.body.predictions.every(p =>
-        p.current === (Number.isFinite(Date.parse(p.validAt)) && now - Date.parse(p.validAt) <= window))),
-      `predictions=${r.body?.predictions?.length ?? 0} current=${r.body?.predictions?.filter(p => p.current).length ?? 0}`);
     check('a route with no current reading is an explicit outage, not an empty 200',
-      outage || r.status === 200 && r.body?.available === true && (r.body.freshLevels > 0 || r.body.predictions.some(p => p.current)),
-      `HTTP ${r.status} available=${r.body?.available}`);
+      outage || r.status === 200 && r.body?.available === true && (r.body.freshLevels > 0 || r.body.predictions?.some(p => p.current)),
+      `HTTP ${r.status}${r.error ? ' ' + r.error : ''} available=${r.body?.available}`);
+    if (r.status === 200 && Array.isArray(r.body?.stations) && Array.isArray(r.body?.predictions)) {
+      const window = r.body.freshnessWindowMs;
+      const now = Date.now();
+      // cleanGauge's real contract: a reading is usable only with a finite value
+      // in metres and a valid stamp; it is fresh only if also inside the window.
+      // A station with a current timestamp but no reading is "unknown".
+      const stateHolds = s => {
+        const at = Date.parse(s.observedAt);
+        const usable = Number.isFinite(s.levelM) && s.levelM !== null && !s.rejectedTimestamp;
+        const inside = usable && Number.isFinite(at) && now - at <= window;
+        return s.fresh === inside && s.levelState === (!usable ? 'unknown' : inside ? 'fresh' : 'stale');
+      };
+      const detail = `${r.status} fresh=${r.body.freshLevels}/${r.body.stations.length} window=${window ? window / 3600000 : '?'}h states=${['fresh', 'stale', 'unknown'].map(k => `${k}=${r.body.stations.filter(s => s.levelState === k).length}`).join(' ')}`;
+      check('hydrology states a freshness window and its gauge states match the contract',
+        typeof window === 'number' && window > 0 && typeof r.body.freshnessPolicy === 'string'
+        && r.body.freshLevels === r.body.stations.filter(s => s.fresh).length
+        && r.body.stations.every(stateHolds),
+        detail);
+      check('no prediction outside the window claims to be current',
+        r.body.predictions.every(p =>
+          p.current === (Number.isFinite(Date.parse(p.validAt)) && now - Date.parse(p.validAt) <= window)),
+        `predictions=${r.body.predictions.length} current=${r.body.predictions.filter(p => p.current).length}`);
+    } else {
+      const why = `upstream HTTP ${r.status}${r.error ? ' ' + r.error : ''}`;
+      notRun('hydrology states a freshness window and its gauge states match the contract', why);
+      notRun('no prediction outside the window claims to be current', why);
+    }
   }
   {
     const r = await get('/api/atlas/coastal');
@@ -191,7 +202,7 @@ async function get(path) {
     // cells are the ones the provider returned, pressure is bounded to real
     // observations, and a too-small field is an explicit outage rather than a
     // contour drawn through nothing.
-    soft('synoptic field exposes the provider grid, or an explicit outage',
+    check('synoptic field exposes the provider grid, or an explicit outage',
       s.status === 503 && s.body?.available === false || s.status === 200 && s.body?.available === true
       && s.body.cells?.length >= 4 && s.body.cellCount === s.body.cells.length
       && s.body.cellCount <= s.body.requestedPoints
@@ -233,7 +244,7 @@ async function get(path) {
     // The wind layer is the one place motion is drawn. The contract that keeps it
     // honest: cells are the ones the provider returned, the count can be smaller
     // than requested, and an absent field never reads as calm.
-    soft('wind field exposes the provider model cells, or an explicit outage',
+    check('wind field exposes the provider model cells, or an explicit outage',
       r.status === 503 && r.body?.available === false || r.status === 200 && r.body?.available === true
       && r.body.cells?.length > 0 && r.body.cellCount === r.body.cells.length
       && r.body.cellCount <= r.body.requestedPoints

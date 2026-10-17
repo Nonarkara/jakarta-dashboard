@@ -986,8 +986,20 @@ function setupInspect() {
   document.getElementById("atlas-inspect-close")?.addEventListener("click", closeInspect);
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") { closeInspect(); stopFlyover(); } });
   let hoveredFeature = null;
+  function hasLandmarkAt(point) {
+    return mapInstance.getLayer("jkt-landmarks-3d") &&
+      mapInstance.queryRenderedFeatures(point, { layers: ["jkt-landmarks-3d"] }).length > 0;
+  }
   mapInstance.on("mousemove", "jkt-buildings", function (e) {
     if (!e.features || !e.features[0]) return;
+    if (hasLandmarkAt(e.point)) {
+      if (hoveredFeature) {
+        mapInstance.setFeatureState({ source: "jkt-buildings-src", sourceLayer: "buildings", id: hoveredFeature.id }, { hover: false });
+        hoveredFeature = null;
+      }
+      mapInstance.getCanvas().style.cursor = "pointer";
+      return;
+    }
     if (hoveredFeature && hoveredFeature.id !== e.features[0].id) {
       mapInstance.setFeatureState({ source: "jkt-buildings-src", sourceLayer: "buildings", id: hoveredFeature.id }, { hover: false });
     }
@@ -1004,6 +1016,7 @@ function setupInspect() {
   });
 
   mapInstance.on("click", "jkt-buildings", function (e) {
+    if (hasLandmarkAt(e.point)) return;
     const f = e.features && e.features[0];
     if (!f) return;
     const props = f.properties || {};

@@ -106,6 +106,35 @@ def osm_api_polygon(kind, osm_id):
     return max(polys, key=lambda p: p.area) if polys else None
 
 
+def osm_api_parts(poly):
+    """All building:part ways with a tagged height inside a pinned building outline."""
+    minx, miny, maxx, maxy = poly.bounds
+    pad = 0.0002
+    url = f"https://api.openstreetmap.org/api/0.6/map.json?bbox={minx-pad:.6f},{miny-pad:.6f},{maxx+pad:.6f},{maxy+pad:.6f}"
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        els = json.load(r)["elements"]
+    nodes = {e["id"]: (e["lon"], e["lat"]) for e in els if e["type"] == "node"}
+    parts = []
+    buf = poly.buffer(0.00002)
+    for e in els:
+        if e["type"] != "way":
+            continue
+        tags = e.get("tags", {})
+        if "building:part" not in tags or "building" in tags:
+            continue
+        if not num(tags.get("height")):
+            continue
+        pts = [nodes[n] for n in e.get("nodes", []) if n in nodes]
+        if len(pts) < 4:
+            continue
+        ppoly = Polygon(pts)
+        ppoly = ppoly if ppoly.is_valid and ppoly.area > 0 else ppoly.buffer(0)
+        if ppoly.area > 0 and buf.contains(ppoly.representative_point()):
+            parts.append((e, ppoly, tags))
+    return parts
+
+
 def curate(name, pattern, anchor, height, category, source):
     lat, lon = anchor
     if name in PINNED:
@@ -113,6 +142,18 @@ def curate(name, pattern, anchor, height, category, source):
         poly = osm_api_polygon(kind, osm_id)
         if poly is None:
             return None, f"pinned {kind}/{osm_id} has no outline"
+        tall_parts = osm_api_parts(poly)
+        if tall_parts:
+            top = max(num(p[2]["height"]) for p in tall_parts)
+            scale = height / top if top else 1
+            feats = []
+            for pel, ppoly, ptags in sorted(tall_parts, key=lambda p: (num(p[2]["height"]), p[0]["id"])):
+                h = num(ptags["height"]) * scale
+                base = (num(ptags.get("min_height")) or 0) * scale
+                feats.append(feature(ppoly, name, category, round(h, 1), round(base, 1), source,
+                                     f"{pel['type']}/{pel['id']}", part=True))
+            max(feats, key=lambda f: f["properties"]["height"])["properties"].pop("part")
+            return feats, f"pinned {kind}/{osm_id} ({len(poly.exterior.coords)} vertices, {len(feats)} stepped part(s))"
         return [feature(poly, name, category, height, 0, source, f"{kind}/{osm_id}")], f"pinned {kind}/{osm_id} ({len(poly.exterior.coords)} vertices)"
     q = (
         "[out:json][timeout:60];("

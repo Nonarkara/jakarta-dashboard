@@ -478,7 +478,7 @@ Verified 2026-10-17 against the OSM API:
 
 | Landmark | Verified id | Height in OSM |
 |---|---|---|
-| Wisma 46 | `way/334982528` | 261.9 m, 46 levels |
+| Wisma 46 | `way/334982528` (outline) · stepped parts `way/369448294` (169.6 m, 39 levels), `way/849992573` (230 m, 46 levels), `way/880335130` (261.9 m spire) | 261.9 m, 46 levels (3 stepped S3DB parts) |
 | Treasury Tower | `way/513330873` | 280 m, 61 levels |
 | Masjid Istiqlal | `relation/9627236` | not tagged |
 | Katedral Jakarta | `way/97196698` | not tagged |
@@ -486,8 +486,15 @@ Verified 2026-10-17 against the OSM API:
 | Museum Sejarah Jakarta | `node/4243812179` | not tagged |
 
 A height absent from OSM needs a named published source, or it does not ship.
-And stepped geometry needs `building:part` to exist: Jakarta has exactly **7**
-such relations, all unnamed, none on the landmarks above.
+And stepped geometry needs `building:part` to exist: under OSM's Simple 3D
+Buildings (S3DB) specification, `building:part` ways are mapped **spatially
+inside** the `building=*` outline even when no `type=building` relation binds
+them. Querying only for `type=building` relations finds 7 unnamed relations in
+Jakarta and misses the 3 stepped `building:part` ways inside Wisma 46
+(`way/334982528`) and the 28 stepped parts inside Monas (`way/154422284`). Always
+query the bounding box of a pinned building outline for `building:part` ways with
+tagged `height` before falling back to the outer ring, or the outer ring will
+flatten a stepped tower into a slab at its spire height.
 
 When a new system is born in this workspace, copy this file into it as
 `BEST-PRACTICES.md` and reference it from the project's `CLAUDE.md`.
