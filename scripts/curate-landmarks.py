@@ -32,13 +32,10 @@ UA = "jakarta-3d-atlas/0.1 (https://jakarta.nonarkara.org; landmark curation)"
 LANDMARKS = [
     ("Autograph Tower", "Autograph|Thamrin Nine", (-6.1972, 106.8207), 382.9, "tower", "CTBUH Skyscraper Center"),
     ("Monumen Nasional", "Monumen Nasional|Monas", (-6.1754, 106.8272), 132.0, "civic", "published monument height"),
-    # Everything else is deliberately left to the Overture fabric. Jakarta's
-    # OSM tags real heights on most towers (Luminary 300 m, Trinity 246 m,
-    # Menara BCA 230 m) and Gama Tower is mapped as stepped parts, which the
-    # bake carries through as measured heights. Curating a single published
-    # height over a whole outline was wrong here: Gama's outline is its 22 m
-    # podium; Istiqlal's and the Cathedral's heights belong to a dome and two
-    # spires, not to the whole footprint.
+    ("Wisma 46", "Wisma 46", (-6.2045, 106.8226), 261.9, "tower", "OSM tag (height=261.9 m) / CTBUH Skyscraper Center"),
+    ("Treasury Tower", "Treasury Tower", (-6.2272, 106.8080), 280.0, "tower", "OSM tag (height=280 m) / CTBUH Skyscraper Center"),
+    ("Masjid Istiqlal", "Masjid Istiqlal", (-6.1702, 106.8314), 60.0, "civic", "Badan Pengelola Masjid Istiqlal (kubah 60 m)"),
+    ("Katedral Jakarta", "Katedral Jakarta", (-6.1692, 106.8331), 60.0, "civic", "Keuskupan Agung Jakarta (menara 60 m)"),
 ]
 
 
@@ -47,11 +44,11 @@ def overpass(query):
     for url in OVERPASS:
         try:
             req = urllib.request.Request(url, data=body, headers={"User-Agent": UA})
-            with urllib.request.urlopen(req, timeout=90) as r:
+            with urllib.request.urlopen(req, timeout=12) as r:
                 return json.load(r)["elements"]
         except Exception as e:  # try the next mirror
             print("   overpass", url.split("/")[2], "failed:", e)
-            time.sleep(2)
+            time.sleep(1)
     return []
 
 
@@ -79,11 +76,14 @@ def num(v):
         return None
 
 
-# Name search is ambiguous inside one complex; pin the exact OSM way.
-# Name search is ambiguous ("Halte Istiqlal" is a bus shelter), so pin the
-# exact OSM element. Pinned elements come from the OSM API, not Overpass.
+# Name search is ambiguous inside one complex; pin the exact OSM element.
+# Pinned elements come directly from the OSM API, not Overpass.
 PINNED = {
     "Autograph Tower": ("way", 851599141),
+    "Wisma 46": ("way", 334982528),
+    "Treasury Tower": ("way", 513330873),
+    "Masjid Istiqlal": ("relation", 9627236),
+    "Katedral Jakarta": ("way", 97196698),
 }
 
 
@@ -98,7 +98,7 @@ def osm_api_polygon(kind, osm_id):
     if kind == "way":
         rings = [ways[osm_id]["nodes"]]
     else:
-        rel = next(e for e in els if e["type"] == "relation")
+        rel = next(e for e in els if e["type"] == kind and e["id"] == osm_id)
         rings = [ways[m["ref"]]["nodes"] for m in rel["members"] if m["type"] == "way" and m.get("role") == "outer" and m["ref"] in ways]
     polys = [Polygon([nodes[n] for n in ring]) for ring in rings if len(ring) >= 4]
     polys = [p if p.is_valid else p.buffer(0) for p in polys]
@@ -179,9 +179,15 @@ def main():
     # `curate-landmarks.py "Name" ...` re-curates only those, keeping the rest.
     only = set(sys.argv[1:])
     feats, missing = [], []
-    if only and OUT.exists():
-        old = json.loads(OUT.read_text())
-        feats = [f for f in old["features"] if f["properties"]["name"] not in only]
+    old_features = []
+    if OUT.exists():
+        try:
+            old = json.loads(OUT.read_text())
+            old_features = old.get("features", [])
+        except Exception:
+            pass
+    if only and old_features:
+        feats = [f for f in old_features if f["properties"]["name"] not in only]
     for spec in LANDMARKS:
         if only and spec[0] not in only:
             continue
@@ -190,9 +196,16 @@ def main():
         print("  ", note)
         if got:
             feats.extend(got)
+        elif old_features:
+            retained = [f for f in old_features if f["properties"].get("name") == spec[0]]
+            if retained:
+                feats.extend(retained)
+                print(f"   retained {len(retained)} existing feature(s) from {OUT.name}")
+            else:
+                missing.append({"name": spec[0], "reason": note})
         else:
             missing.append({"name": spec[0], "reason": note})
-        time.sleep(1.5)
+        time.sleep(1.0)
     doc = {
         "type": "FeatureCollection",
         "name": "jakarta-landmarks",
