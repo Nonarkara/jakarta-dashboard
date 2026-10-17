@@ -17,13 +17,25 @@ function check(name, ok, detail = "") {
 function soft(name, ok, detail = "") {
   CHECKS.push({ name: name + " (Worker egress; browser fallback covers it)", ok, detail, soft: true });
 }
+// A section behind a 200-gate must still be counted when the gate is closed.
+// A green run that quietly covered fewer checks is how an upstream outage
+// hides a broken contract: the denominator itself is part of the result.
+function notRun(name, why) {
+  CHECKS.push({ name: name + " — NOT RUN", ok: false, detail: why, soft: true });
+}
 
 async function get(path) {
   const url = `${ATLAS_URL}${path}`;
-  const res = await fetch(url, { headers: { accept: "application/json" }, signal:AbortSignal.timeout(45000) });
-  let body = null;
-  try { body = await res.json(); } catch { body = null; }
-  return { status: res.status, body };
+  try {
+    const res = await fetch(url, { headers: { accept: "application/json" }, signal: AbortSignal.timeout(45000) });
+    let body = null;
+    try { body = await res.json(); } catch { body = null; }
+    return { status: res.status, body };
+  } catch (e) {
+    // A network error is a failed check with a reason, not an unhandled
+    // rejection that kills the run before the later checks register.
+    return { status: 0, body: null, error: e?.name === "TimeoutError" ? "timeout" : String(e?.cause?.code || e?.message || e) };
+  }
 }
 
 (async () => {
@@ -152,6 +164,11 @@ async function get(path) {
         typeof r.body.datumNote === 'string' && /datum/i.test(r.body.datumNote) && /cannot|not comparable|tidak/i.test(r.body.datumNote),
         (r.body.datumNote || 'missing').slice(0, 60));
       check('coastal issuance is not from the future', Number.isFinite(Date.parse(r.body.issuedAt)) && Date.parse(r.body.issuedAt) <= Date.now() + 5 * 60000, `issuedAt=${r.body.issuedAt}`);
+    } else {
+      const why = `upstream HTTP ${r.status}${r.error ? ' ' + r.error : ''}`;
+      notRun('coastal points are sorted, deduplicated and strictly increasing', why);
+      notRun('coastal states its vertical datum is unpublished', why);
+      notRun('coastal issuance is not from the future', why);
     }
   }
   {
@@ -201,6 +218,13 @@ async function get(path) {
       check('synoptic carries no rainfall or cloud claim',
         !('rainMm' in s.body) && !('precipitationMm' in s.body) && !('cloudTopK' in s.body),
         Object.keys(s.body).join(','));
+    } else {
+      const why = `upstream HTTP ${s.status}${s.error ? ' ' + s.error : ''}`;
+      notRun('synoptic cells are the provider cells, deduplicated', why);
+      notRun('every synoptic pressure stays inside a real sea-level observation', why);
+      notRun('synoptic wind stays a valid bearing and speed', why);
+      notRun('synoptic states 850 hPa is model wind, not a Himawari product', why);
+      notRun('synoptic carries no rainfall or cloud claim', why);
     }
   }
 
@@ -230,17 +254,24 @@ async function get(path) {
         Object.keys(r.body).join(','));
       check('wind cells are inside the Jakarta rectangle',
         cells.every(c => c.lat >= -6.6 && c.lat <= -5.88 && c.lng >= 106.45 && c.lng <= 107.20), 'outside');
+    } else {
+      const why = `upstream HTTP ${r.status}${r.error ? ' ' + r.error : ''}`;
+      notRun('wind cells are the provider cells, deduplicated', why);
+      notRun('every wind cell keeps only validated hours', why);
+      notRun('wind field carries no concentration or plume field', why);
+      notRun('wind cells are inside the Jakarta rectangle', why);
     }
   }
 
-  let pass = 0, hard = 0;
+  let pass = 0, hard = 0, absent = 0;
   for (const c of CHECKS) {
     const sym = c.ok ? "✓" : c.soft ? "⚠" : "✗";
     const detail = c.detail ? `  ${c.detail}` : "";
     console.log(`  ${sym} ${c.name}${detail}`);
     if (c.ok) pass++;
-    else if (!c.soft) hard++;
+    else if (c.soft) absent++;
+    else hard++;
   }
-  console.log(`\n${pass}/${CHECKS.length} passed${hard ? "" : " (no hard failures)"}`);
+  console.log(`\n${pass}/${CHECKS.length} passed${absent ? `, ${absent} degraded or not run` : ""}${hard ? "" : " (no hard failures)"}`);
   if (hard) process.exit(1);
 })();
