@@ -34,8 +34,11 @@ LANDMARKS = [
     ("Monumen Nasional", "Monumen Nasional|Monas", (-6.1754, 106.8272), 132.0, "civic", "published monument height"),
     ("Wisma 46", "Wisma 46", (-6.2045, 106.8226), 261.9, "tower", "OSM tag (height=261.9 m) / CTBUH Skyscraper Center"),
     ("Treasury Tower", "Treasury Tower", (-6.2272, 106.8080), 280.0, "tower", "OSM tag (height=280 m) / CTBUH Skyscraper Center"),
-    ("Masjid Istiqlal", "Masjid Istiqlal", (-6.1702, 106.8314), 60.0, "civic", "Badan Pengelola Masjid Istiqlal (kubah 60 m)"),
-    ("Katedral Jakarta", "Katedral Jakarta", (-6.1692, 106.8331), 60.0, "civic", "Keuskupan Agung Jakarta (menara 60 m)"),
+    # Civic monuments stay out, per the 2026-10-10 landmark decision: Istiqlal's
+    # published 60 m is the dome and the Cathedral's is a spire — neither is the
+    # height of the whole footprint, and a published height over a whole outline
+    # was wrong for Gama Tower too (its outline is the 22 m podium). They stay
+    # out of this curated set; the general Overture bake is a separate asset.
 ]
 
 
@@ -82,8 +85,6 @@ PINNED = {
     "Autograph Tower": ("way", 851599141),
     "Wisma 46": ("way", 334982528),
     "Treasury Tower": ("way", 513330873),
-    "Masjid Istiqlal": ("relation", 9627236),
-    "Katedral Jakarta": ("way", 97196698),
 }
 
 
