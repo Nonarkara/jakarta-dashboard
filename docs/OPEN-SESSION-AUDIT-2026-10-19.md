@@ -21,4 +21,9 @@ This release improves temporal correctness; it does not increase the model grid 
 
 Verified lesson: Scars/Debug-Logs/2026-10-19-wind-transport-must-integrate-partial-hours-and-preserve-missing-hour-time-slots.md.
 
-Live release receipt follows after canonical release.
+## Live release receipt
+
+Canonical `RELEASE_AGENT=codex npm run release` completed successfully. Build `jakarta-atlas-20261018-1792343175-bd1a259`, stamp commit `c8e9a80`, Worker version `b76ccb6a-5434-46a3-8613-03c04d8f48e5`. Three consecutive exact-byte probes passed on both Worker and custom host; atlas, official-network, water-context, 37/37 API, and dashboard smokes passed. Date in the build is UTC, before local midnight.
+
+Live browser: English Research play → refresh returned aria-pressed from true to false and loaded checked 00:06:34 WIB/current model hour 19 October 00:00 WIB. At 390px, document scrollWidth=390, no captured console errors. Production water panel rendered 47 current / 8 dated / 2 unusable readings across 57 gauges, preserving explicit local-datum limits; no console errors. Actual exact three-hour transition is covered by the controlled-clock controller test rather than a claim of waiting three hours in the browser. Receipts: `session-audit-2026-10-18/research-live-390.png`, `waterways-live.png`. Temporary viewport reset; local dev process stopped after verification.
+
