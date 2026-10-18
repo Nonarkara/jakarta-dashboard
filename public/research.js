@@ -3,7 +3,7 @@
 // panel runs the atlas's own modules (isobars, low centre, particle sampler,
 // parcel trajectory) on the real synoptic payload, so what you read about is
 // what is running.
-import { gridOf, contour, stitch, lowCentre, hoursOf } from './synoptic.js';
+import { gridOf, contour, stitch, lowCentre, hoursOf, isobarLevels, ISOBAR_STEP_HPA } from './synoptic.js';
 import { trajectory } from './haze-transport.js';
 import { makeSampler, stepLngLat } from './flow-canvas.js';
 import { labelPosition } from './research-labels.js';
@@ -25,6 +25,9 @@ function applyLang() {
   document.title = t('How it is built · JKTx', 'Cara dibuat · JKTx');
   document.querySelectorAll('[data-city-link]').forEach((a) => { const u = new URL(a.href); u.searchParams.set('lang', lang); a.href = u.href; });
   document.getElementById('lang').setAttribute('aria-label', t('Switch to Bahasa Indonesia', 'Ganti bahasa ke Inggris'));
+  // The prose states the contour interval. Read it from the module that draws
+  // it, so the sentence and the canvas cannot disagree in a later release.
+  document.querySelectorAll('[data-isobar-step]').forEach((n) => { n.textContent = String(ISOBAR_STEP_HPA); });
   renders.forEach((r) => r());
 }
 document.getElementById('lang').addEventListener('click', () => {
@@ -125,10 +128,13 @@ Promise.all([live.syn, live.fires]).then(([syn, fires]) => {
     g.strokeStyle = css('--strong'); g.lineWidth = 1; g.fillStyle = css('--dim');
     for (let lng = Math.ceil(w / 2) * 2; lng <= e; lng += 2) { g.beginPath(); g.moveTo(x(lng), 0); g.lineTo(x(lng), H); g.stroke(); fixedText(lng + '°E', x(lng) + 6, H - 16); }
     for (let lat = Math.ceil(s / 2) * 2; lat <= n; lat += 2) { g.beginPath(); g.moveTo(0, y(lat)); g.lineTo(W, y(lat)); g.stroke(); fixedText(Math.abs(lat) + '°S', 8, y(lat) - 14); }
-    // Isobars every 2 hPa between the pressures the provider returned.
+    // Isobars at the atlas's own interval. This page documents the atlas, so it
+    // must not carry a second, drifting copy of the contour interval — it used
+    // to hardcode 2 hPa while the rain lens drew 1 hPa, and the prose below
+    // described the wrong number in both languages.
     const rows = gridOf(cells), p = cells.map((c) => c.mslpHpa);
     g.strokeStyle = css('--ink'); g.globalAlpha = 0.55; g.lineWidth = 1.5;
-    for (let L = Math.ceil(Math.min(...p) / 2) * 2; L <= Math.floor(Math.max(...p) / 2) * 2; L += 2) {
+    for (const L of isobarLevels(p)) {
       for (const line of stitch(contour(rows, L))) {
         g.beginPath(); line.forEach(([lng, lat], i) => (i ? g.lineTo(x(lng), y(lat)) : g.moveTo(x(lng), y(lat)))); g.stroke();
         const mid = line[Math.floor(line.length / 2)];

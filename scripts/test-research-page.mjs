@@ -29,4 +29,24 @@ const stats = JSON.parse(read('public/data/jakarta-v1/buildings-stats.json'));
 const sum = (o) => Object.values(o).reduce((a, b) => a + b, 0);
 assert.equal(sum(stats.height), stats.count, 'every building has exactly one height source');
 assert.equal(sum(stats.source), stats.count, 'and exactly one footprint source');
+// The Research page documents the atlas, so it must draw the atlas's contour
+// interval rather than a second hardcoded copy. It did carry its own 2 hPa loop
+// while the rain lens drew 1 hPa, and the prose then described the wrong number
+// in BOTH languages — a bilingual-parity guard cannot catch that, because the
+// two languages agree with each other and are both wrong.
+{
+  const syn = await import('../public/synoptic.js');
+  assert.match(js, /isobarLevels/, 'Research draws isobars through the shared isobarLevels()');
+  assert.match(js, /ISOBAR_STEP_HPA/, 'Research reads the interval from the module that draws it');
+  assert.doesNotMatch(js, /\/\s*2\s*\)\s*\*\s*2;\s*L\s*\+=\s*2/, 'Research carries no second hardcoded contour interval');
+  for (const [lang, re] of [['id', /tiap[^<]*<span data-isobar-step>/], ['en', /every[^<]*<span data-isobar-step>/]]) {
+    assert.match(html, re, `the ${lang} prose states the interval from the module, not a typed-in number`);
+  }
+  assert.equal(html.match(/data-isobar-step/g).length, 2, 'both languages mark the interval span');
+  // Matching the identifier alone is not enough: it also appears in the import,
+  // so deleting the stamping line would leave the HTML's literal in charge with
+  // every check still green. Tie the selector to the constant itself.
+  assert.match(js, /\[data-isobar-step\][\s\S]{0,140}ISOBAR_STEP_HPA/, 'the prose span is stamped from ISOBAR_STEP_HPA at runtime, not left as an HTML literal');
+  assert.ok(Number.isInteger(syn.ISOBAR_STEP_HPA), 'the exported interval is an integer this page can print');
+}
 console.log('test-research-page: ok');
