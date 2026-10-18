@@ -30,4 +30,12 @@ Saved before/after receipts are in `docs/design-audit-2026-10-18/`. Source and t
 
 ## Limits
 
-This is a design/integration release, not new calibrated flood or pollution forecasting. Angular isobars remain the honest shape of the existing sparse model grid. Public feed availability can vary. The pre-existing remote CI budget block is not resolved by a local green gate.
+This is a design/integration release, not new calibrated flood or pollution forecasting. Angular isobars remain the honest shape of the existing sparse model grid. Public feed availability can vary. The previous project record reports a remote CI budget block. This release proves the canonical local gate; it does not claim a new remote CI run.
+
+## Live release receipt
+
+Implementation `014ecdc`; stamp `97f8a7f`; build `jakarta-atlas-20261018-1792334510-014ecdc`; Worker `4c6517af-a7d4-4be2-975e-8ab838df4f3a`. Canonical release exited0. Typecheck,12/12verification,36test commands, exact bytes on both hosts, archive/source smoke checks,37/37API checks and all four dashboard provider envelopes passed. No soft availability failures were reported in this run.
+
+Parent verified live Research play/pause (aria-pressed true→false), EN/ID section links (heading top52.09px under37pxbar), shared reading font and responsive widths1440/1024/390. Live source catalogue/diagram loaded; main dashboard retained the dominant map and compact phone bars. Independent reviewer inspected live screenshots and independently matched Research HTML bytes; their fresh postdeploy browser interaction was unavailable, so independent interaction evidence is from the identical implementation before deploy. Parent performed the postdeploy interactions.
+
+The final evidence check caught four mislabeled-width after screenshots from the initial batched resize/capture pass. They were re-captured from the live build with resize and capture separated, along with the other after views. `dimensions.json` records all27actual pixel sizes; every filename width was checked against the image. Baseline capture heights vary and are retained as captured. All final after views are900px tall. No image was rescaled or edited to make it pass.

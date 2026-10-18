@@ -1,0 +1,137 @@
+[
+  {
+    "file": "atlas-after-1024.png",
+    "width": 1024,
+    "height": 900
+  },
+  {
+    "file": "atlas-after-1440.png",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "atlas-after-390.png",
+    "width": 390,
+    "height": 900
+  },
+  {
+    "file": "atlas-before-1024.png",
+    "width": 1024,
+    "height": 640
+  },
+  {
+    "file": "atlas-before-1440.png",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "atlas-before-390.png",
+    "width": 390,
+    "height": 343
+  },
+  {
+    "file": "dashboard-after-1024.png",
+    "width": 1024,
+    "height": 900
+  },
+  {
+    "file": "dashboard-after-1440.png",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "dashboard-after-390.png",
+    "width": 390,
+    "height": 900
+  },
+  {
+    "file": "dashboard-before-1024.png",
+    "width": 1024,
+    "height": 640
+  },
+  {
+    "file": "dashboard-before-1440.png",
+    "width": 1440,
+    "height": 810
+  },
+  {
+    "file": "dashboard-before-390.png",
+    "width": 390,
+    "height": 343
+  },
+  {
+    "file": "dashboard-live-1024.png",
+    "width": 1024,
+    "height": 640
+  },
+  {
+    "file": "dashboard-live-1440.png",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "dashboard-live-390.png",
+    "width": 390,
+    "height": 343
+  },
+  {
+    "file": "diagram-after-1440.png",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "diagram-live-1440.png",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "research-after-1024.png",
+    "width": 1024,
+    "height": 900
+  },
+  {
+    "file": "research-after-1440.png",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "research-after-390.png",
+    "width": 390,
+    "height": 900
+  },
+  {
+    "file": "research-before-1024.png",
+    "width": 1024,
+    "height": 640
+  },
+  {
+    "file": "research-before-1440.png",
+    "width": 1440,
+    "height": 810
+  },
+  {
+    "file": "research-before-390.png",
+    "width": 390,
+    "height": 343
+  },
+  {
+    "file": "research-live-1024.png",
+    "width": 1024,
+    "height": 900
+  },
+  {
+    "file": "research-live-1440.png",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "research-live-390.png",
+    "width": 390,
+    "height": 900
+  },
+  {
+    "file": "research-live-id-390.png",
+    "width": 390,
+    "height": 900
+  }
+]
