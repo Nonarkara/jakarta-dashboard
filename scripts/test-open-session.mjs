@@ -1,0 +1,33 @@
+import assert from 'node:assert/strict';
+import {currentResearchField,createResearchSession,researchFires} from '../public/research-session.js';
+import {gaugeState} from '../public/water-traffic.js';
+let now=Date.UTC(2026,9,18,15,20);
+const row={levelM:0,observedAt:new Date(now-3*3600000+60000).toISOString(),levelState:'fresh'};
+assert.equal(gaugeState(row,now),'fresh');
+assert.equal(gaugeState(row,now+60000),'stale','exact3h boundary expires');
+assert.equal(gaugeState({...row,levelM:null},now),'unknown','null is not a zero level');
+assert.equal(gaugeState({...row,observedAt:new Date(now+600000).toISOString()},now),'unknown','future gauge rejected');
+const payload=()=>({available:true,checkedAt:new Date(now).toISOString(),hours:[new Date(Math.floor(now/3600000)*3600000).toISOString()],cells:[{}]});
+const field=payload();assert.equal(currentResearchField(field,now),true);
+assert.equal(currentResearchField(field,now+600001),false,'old checkedAt expires');
+assert.equal(currentResearchField({...field,checkedAt:new Date(now+600000).toISOString()},now),false);
+assert.equal(currentResearchField({...field,hours:[]},now),false);
+let tick,listener,loads=0,disposals=0,rendered=0,resolve,signal;
+const doc={hidden:false,addEventListener(k,f){listener=f},removeEventListener(k,f){assert.equal(f,listener);listener=null}};
+const states=[];
+const session=createResearchSession({document:doc,now:()=>now,setTimer:f=>(tick=f,1),clearTimer:id=>assert.equal(id,1),status:s=>states.push(s),
+ load:async s=>{loads++;signal=s;return new Promise(r=>resolve=r)},render:()=>{rendered++;return()=>disposals++}});
+assert.equal(loads,1);tick();assert.equal(loads,1,'no overlapping fetches');
+resolve(field);await new Promise(r=>setImmediate(r));assert.equal(rendered,1);
+now+=300001;tick();assert.equal(loads,2,'refresh after5min');assert.equal(disposals,1,'previous animation removed before refresh');
+doc.hidden=true;listener();assert.equal(signal.aborted,true,'hidden cancels in-flight fetch');
+resolve(payload());await new Promise(r=>setImmediate(r));assert.equal(rendered,1,'late hidden response cannot repaint');
+now+=86400000;doc.hidden=false;listener();assert.equal(loads,3,'returning day-old tab fetches before resuming');
+resolve(payload());await new Promise(r=>setImmediate(r));assert.equal(rendered,2);
+session.clear();assert.equal(disposals,2);assert.equal(listener,null);tick();assert.equal(loads,3,'disposed timer cannot fetch');
+console.log('PASS open-session expiry, visibility refresh, abort/late replies, cleanup and live gauge ageing');
+
+const fires={type:'FeatureCollection',fetchedAt:new Date(now-1800000).toISOString(),windowHours:24,features:[{properties:{observedAt:new Date(now-3600000).toISOString()}},{properties:{observedAt:new Date(now-86400001).toISOString()}}]};
+assert.equal(researchFires(fires,now).count,1,'real FIRMS contract keeps healthy dots and re-ages detections');
+assert.equal(researchFires({...fires,fetchedAt:new Date(now-2700001).toISOString()},now),null,'expired FIRMS cache not relabelled current');
+console.log('PASS real FIRMS FeatureCollection/fetchedAt and24h detection age');

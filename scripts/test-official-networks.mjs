@@ -11,7 +11,7 @@ class Element {
  scrollIntoView(){}
 }
 const evidence=new Element('details');
-globalThis.document={createElement:tag=>new Element(tag),createTextNode:text=>({textContent:text}),getElementById:()=>evidence};
+globalThis.document={createElement:tag=>new Element(tag),createTextNode:text=>({textContent:text}),getElementById:()=>evidence,addEventListener(){},removeEventListener(){}};
 globalThis.location={origin:'https://atlas.test'};
 const originalFetch=globalThis.fetch;
 const feeds={

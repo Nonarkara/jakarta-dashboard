@@ -29,12 +29,22 @@ export function windTrajectoryPoint(start, windHours, elapsedS) {
     if (moved >= totalHours) break;
     const usable = Number.isFinite(hour?.windMs) && hour.windMs >= 0 && Number.isFinite(hour?.windFromDeg);
     if (usable) {
-      const step = windTransportPoint(point, hour.windFromDeg, hour.windMs, 3600);
+      const step = windTransportPoint(point, hour.windFromDeg, hour.windMs, Math.min(3600, elapsedS - moved * 3600));
       if (step) { point = step; lastWind = hour; }
     }
     moved += 1;
   }
   return { coordinates: point, lastWind, hours: Math.min(totalHours, windHours.length) };
+}
+
+// Start at the displayed model hour; gaps stay unknown and consume scenario time.
+export function currentTransportRow(rows, now=Date.now()) {
+  return Array.isArray(rows)?rows.find(r=>Date.parse(r.validAt)===Math.floor(now/3600000)*3600000)||null:null;
+}
+export function transportWindow(rows, validAt, limit = 6) {
+  const at=Date.parse(validAt);
+  if(!Array.isArray(rows)||!Number.isFinite(at))return [];
+  return Array.from({length:limit},(_,i)=>rows.find(r=>Date.parse(r.validAt)===at+i*3600000)||{windMs:null,windFromDeg:null});
 }
 
 export function createAirTimeline(map, {text: t, active, buildTag}) {
@@ -74,8 +84,10 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
   function transportSection(body, row) {
     const section = el('div', undefined, 'air-transport');
     section.append(el('h3', t('Wind transport · illustration', 'Transpor angin · ilustrasi')));
-    const windHours = (data?.times || []).map(r => ({ windMs: r.windMs, windFromDeg: r.windFromDeg }));
+    let windHours = transportWindow(data?.times, row?.validAt);
     const wind = windHours.some(h => Number.isFinite(h.windMs) && Number.isFinite(h.windFromDeg));
+    const startLabel=el('p',t('Scenario starts at model hour ', 'Skenario mulai pada jam model ')+time(row?.validAt),'meta');
+    section.append(startLabel);
     section.append(el('p', wind
       ? t('The marker follows each modelled hour\'s wind in turn (1 real s = 1 scenario h, up to 6 h): distance = that hour\'s speed × one hour, along its downwind bearing. An hour with unknown wind pauses the marker. No concentration, plume width or smoke attribution is computed.', 'Penanda mengikuti angin tiap jam model secara bergantian (1 dtk nyata = 1 jam skenario, hingga 6 jam): jarak = kecepatan jam itu × satu jam, pada arah turun anginnya. Jam dengan angin tidak diketahui menghentikan penanda sementara. Tidak ada konsentrasi, lebar asap atau atribusi asap yang dihitung.')
       : t('No usable wind value in the model window; the transport illustration stays unavailable rather than assume calm.', 'Tidak ada nilai angin terpakai pada jendela model; ilustrasi transpor tetap tidak tersedia daripada mengasumsikan tenang.'), 'note'));
@@ -89,6 +101,13 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
       button.addEventListener('click', () => {
         const myEpoch = epoch;
         if (timer !== null) { stopTransport(); return; }
+        row=currentTransportRow(data?.times);
+        const checked=Date.parse(data?.checkedAt);
+        if(!row||!Number.isFinite(checked)||Date.now()-checked>600000||checked>Date.now()+300000){
+          button.textContent=t('Model window expired · reopen this lens to refresh','Jendela model kedaluwarsa · buka kembali lensa untuk memperbarui');return;
+        }
+        windHours=transportWindow(data.times,row.validAt);
+        startLabel.textContent=t('Scenario starts at model hour ', 'Skenario mulai pada jam model ')+time(row.validAt);
         startedAt = Date.now();
         button.textContent = t('Stop wind transport', 'Hentikan transpor angin');
         button.setAttribute('aria-pressed', 'true');
@@ -156,7 +175,7 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
     }
     scroll.append(table); section.append(scroll);
     section.append(el('p', t('CAMS global model: approximately 45 km cells; hourly values interpolate a native three-hourly forecast. AOD describes the atmospheric column, not surface particle concentration.', 'Model global CAMS: sel sekitar 45 km; nilai per jam menginterpolasi prakiraan asli tiga-jam. AOD menggambarkan kolom atmosfer, bukan konsentrasi partikel permukaan.'), 'note'));
-    const anchorRow = data.times.find(r => Number.isFinite(r.windMs) && Number.isFinite(r.windFromDeg)) || null;
+    const anchorRow = currentTransportRow(data.times);
     transportSection(section, anchorRow);
     body.append(section);
   }

@@ -7,6 +7,7 @@ import { gridOf, contour, stitch, lowCentre, hoursOf, isobarLevels, ISOBAR_STEP_
 import { trajectory } from './haze-transport.js';
 import { makeSampler, stepLngLat } from './flow-canvas.js';
 import { labelPosition } from './research-labels.js';
+import {currentResearchField,createResearchSession,researchFires} from './research-session.js';
 
 const JAKARTA = { lng: 106.8272, lat: -6.1754 };
 const root = document.documentElement;
@@ -46,7 +47,7 @@ const files = [
   json('/data/jakarta-v1/flood-network.json'),
 ];
 const fileState = [null, null, null, null];
-const live = { fires: json('/api/atlas/fires'), syn: json('/api/atlas/synoptic') };
+
 
 function renderFiles([buildings, transit, catalog, flood]) {
   const records = Array.isArray(catalog?.records) ? catalog.records : [];
@@ -89,19 +90,20 @@ files.forEach((request, index) => request.then((value) => { fileState[index] = v
 const base = document.getElementById('field'), top = document.getElementById('flow');
 const caption = document.getElementById('live-caption');
 const motion = document.getElementById('field-motion');
+const refreshButton=document.getElementById('field-refresh');
 const reduced = () => globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
 
-Promise.all([live.syn, live.fires]).then(([syn, fires]) => {
-  if (!syn?.available || !syn.cells?.length) {
+function renderField([syn, fires]) {
+  if (!currentResearchField(syn)) {
     base.parentElement.hidden = true;
     motion.hidden = true;
     const say = () => { caption.textContent = t('The pressure model did not answer. Nothing is drawn in its place.', 'Model tekanan tidak menjawab. Tidak ada yang digambar sebagai gantinya.'); };
-    renders.push(say); say(); return;
+    renders.push(say); say(); return () => { const i=renders.indexOf(say); if(i>=0)renders.splice(i,1); };
   }
-  base.parentElement.hidden = false;
+  base.parentElement.hidden = false; motion.hidden = false;
+  fires=researchFires(fires);
   const now = Date.now();
-  let index = 0, best = Infinity;
-  syn.hours.forEach((h, i) => { const d = Math.abs(Date.parse(h) - now); if (d < best) { best = d; index = i; } });
+  const index = syn.hours.findIndex(h => Date.parse(h) === Math.floor(now/3600000)*3600000);
   const cells = hoursOf(syn.cells, index);
   const winds = cells.filter((c) => Number.isFinite(c.u));
   const byHour = syn.hours.map((_, i) => hoursOf(syn.cells, i).filter((c) => Number.isFinite(c.u)));
@@ -138,7 +140,11 @@ Promise.all([live.syn, live.fires]).then(([syn, fires]) => {
       for (const line of stitch(contour(rows, L))) {
         g.beginPath(); line.forEach(([lng, lat], i) => (i ? g.lineTo(x(lng), y(lat)) : g.moveTo(x(lng), y(lat)))); g.stroke();
         const mid = line[Math.floor(line.length / 2)];
-        g.globalAlpha = 1; g.fillStyle = css('--dim'); fixedText(String(L), x(mid[0]) + 4, y(mid[1])); g.globalAlpha = 0.55;
+        g.globalAlpha = 1; g.fillStyle = css('--dim');
+        const px=x(mid[0]), py=y(mid[1]), text=String(L);
+        const box=labelPosition(px,py,g.measureText(text).width+24,44,{width:W,height:H},occupied);
+        if(box) { occupied.push(box); g.beginPath(); g.moveTo(px,py); g.lineTo(box.x,box.y+18); g.stroke(); g.fillText(text,box.x,box.y+18); }
+        g.globalAlpha = 0.55;
       }
     }
     g.globalAlpha = 1;
@@ -215,19 +221,21 @@ Promise.all([live.syn, live.fires]).then(([syn, fires]) => {
     motion.setAttribute('aria-pressed', String(playing));
   };
   motion.disabled = !sampler || reduced();
-  motion.addEventListener('click', () => {
+  const toggleMotion = () => {
     playing = !playing; motionLabel();
     if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
     start();
-  });
+  };
+  motion.addEventListener('click',toggleMotion);
   renders.push(motionLabel); motionLabel();
-  window.addEventListener('atlas:theme', () => { drawBase(); if (sampler && (!playing || reduced())) still(); });
-  document.addEventListener('visibilitychange', () => { if (document.hidden && raf !== null) { cancelAnimationFrame(raf); raf = null; } else start(); });
+  const themeChanged=()=>{drawBase();if(sampler&&(!playing||reduced()))still();};
+  window.addEventListener('atlas:theme',themeChanged);
 
   const say = () => {
     const at = new Date(syn.hours[index]).toLocaleString(lang === 'en' ? 'en-GB' : 'id-ID', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short' });
     const parts = [
       t('Model hour', 'Jam model') + ' ' + at + ' WIB',
+      t('checked ', 'diperiksa ') + new Date(syn.checkedAt).toLocaleTimeString(lang==='en'?'en-GB':'id-ID',{timeZone:'Asia/Jakarta'})+' WIB · '+t('refresh every 5 min','diperbarui tiap 5 menit'),
       winds.length + ' / ' + syn.requestedPoints + ' ' + t('cells answered', 'sel menjawab'),
       t('grid step', 'langkah kisi') + ' ' + fmt(syn.spacingKm) + ' km',
       low ? (low.isLow ? t('closed low', 'pusat rendah tertutup') : t('lowest (open, not a closed low)', 'terendah (terbuka, bukan pusat tertutup)')) + ' ' + fmt(low.mslpHpa) + ' hPa' : null,
@@ -240,6 +248,27 @@ Promise.all([live.syn, live.fires]).then(([syn, fires]) => {
     if (sampler && (reduced() || !playing)) still();
   };
   renders.push(say); say(); start();
+  return () => {
+    playing=false;if(raf!==null)cancelAnimationFrame(raf);raf=null;
+    motion.setAttribute('aria-pressed','false');motion.disabled=true;
+    motion.removeEventListener('click',toggleMotion);window.removeEventListener('atlas:theme',themeChanged);
+    for(const fn of [say,motionLabel]){const i=renders.indexOf(fn);if(i>=0)renders.splice(i,1);}
+  };
+}
+let sessionStatus=null;
+const statusText=state=>{
+  sessionStatus=state;
+  refreshButton.disabled=state==='loading';
+  base.parentElement.hidden=true;motion.hidden=true;
+  caption.textContent=state==='paused'?t('View paused. Returning checks the model again before playback.', 'Tampilan dijeda. Saat kembali, model diperiksa lagi sebelum pemutaran.'):state==='unavailable'?t('Model field unavailable. Retry to check the source again.', 'Medan model tidak tersedia. Coba lagi untuk memeriksa sumber.'):t('Refreshing the model field… Last view is paused; no current field is implied.', 'Memperbarui medan model… Tampilan terakhir dijeda; tidak menyiratkan medan terkini.');
+};
+const session=createResearchSession({document,
+  load: signal=>Promise.all(['/api/atlas/synoptic','/api/atlas/fires'].map(url=>fetch(url,{signal:AbortSignal.any([signal,AbortSignal.timeout(url.endsWith('synoptic')?50000:20000)]),headers:{accept:'application/json'}}).then(r=>r.ok?r.json():null).catch(()=>null))),
+  render:value=>{sessionStatus=null;refreshButton.disabled=false;return renderField(value);},status:statusText,
 });
+renders.push(()=>{if(sessionStatus)statusText(sessionStatus);});
+refreshButton.addEventListener('click',()=>session.refresh());
+window.addEventListener('pagehide',event=>{if(!event.persisted)session.clear();});
+window.addEventListener('pageshow',event=>{if(event.persisted)session.refresh();});
 
 applyLang();

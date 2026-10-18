@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
+import {currentResearchField,createResearchSession,researchFires} from '../public/research-session.js';
 import {labelPosition} from '../public/research-labels.js';
 // research.js imports the atlas synoptic module; the sandbox strips import
 // statements, so the real module is injected here rather than stubbed. Without
@@ -44,7 +45,7 @@ const root={dataset:{},lang:'id'};
 const source=js.replace(/^import .* from .*;\n/gm,'');
 const doc={documentElement:root,getElementById:get,querySelectorAll:()=>links,createElement:()=>node(),createTextNode:text=>({textContent:text}),addEventListener(){}};
 const fixture={count:123,height:{estimated:123}};
-const context=vm.createContext({...synoptic,document:doc,location:{search:'?lang=en',href:'https://jakarta.nonarkara.org/research?lang=en'},localStorage:{getItem(){return null},setItem(){}},URL,URLSearchParams,AbortSignal,Date,console,window:{addEventListener(){}},getComputedStyle:()=>({getPropertyValue:()=> '#123747'}),fetch:async url=> {
+const context=vm.createContext({...synoptic,document:doc,currentResearchField,createResearchSession,researchFires,researchFires,location:{search:'?lang=en',href:'https://jakarta.nonarkara.org/research?lang=en'},localStorage:{getItem(){return null},setItem(){}},URL,URLSearchParams,AbortSignal,Date,console,window:{addEventListener(){}},getComputedStyle:()=>({getPropertyValue:()=> '#123747'}),fetch:async url=> {
  if(url.includes('transit'))return new Promise(()=>{});
  return {ok:!url.includes('source-catalog'),json:async()=>url.includes('buildings-stats')?fixture:null};
 }});

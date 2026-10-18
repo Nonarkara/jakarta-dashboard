@@ -5,7 +5,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
-import { windTransportPoint, windTrajectoryPoint } from '../public/air-timeline.js';
+import { windTransportPoint, windTrajectoryPoint, transportWindow, currentTransportRow } from '../public/air-timeline.js';
 const source = readFileSync(new URL('../src/index.ts', import.meta.url), 'utf8');
 const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText
   .replace('./coastal.js', (await import('./coastal-test-module.mjs')).coastalModuleUrl)
@@ -125,3 +125,24 @@ assert.equal(clamped.body.times[0].windMs, 3.2, 'the wind branch still answers b
 
 globalThis.fetch = originalFetch;
 console.log('PASS air timeline: UTC/grid/unit/timestamp-join validation, outage and null honesty, piecewise wind-trajectory transport math');
+
+// Fractional hours use only their elapsed duration, and missing wind consumes time.
+{
+const start=[106.8272,-6.1754], uniform=[{windMs:10,windFromDeg:0},{windMs:10,windFromDeg:90}];
+for(const seconds of [0,1,900,1800,3599,3600]){
+ const actual=windTrajectoryPoint(start,uniform,seconds).coordinates;
+ const expected=windTransportPoint(start,0,10,seconds);
+ assert.ok(Math.hypot(actual[0]-expected[0],actual[1]-expected[1])<1e-10,'exact fractional travel '+seconds);
+}
+const boundary=windTransportPoint(start,0,10,3600);
+const partial=windTransportPoint(boundary,90,10,900);
+assert.deepEqual(windTrajectoryPoint(start,uniform,4500).coordinates,partial,'second hour is partial');
+assert.deepEqual(windTrajectoryPoint(start,[{},uniform[0]],4500).coordinates,windTransportPoint(start,0,10,900),'unknown first hour never borrows future wind');
+const rows=[0,1,3].map(i=>({validAt:new Date(Date.UTC(2026,9,18,i)).toISOString(),windMs:i,windFromDeg:0}));
+assert.equal(currentTransportRow(rows,Date.UTC(2026,9,18,1,35)),rows[1],'launch anchors current hour, not first usable midnight wind');
+assert.equal(currentTransportRow(rows,Date.UTC(2026,9,18,2,35)),null,'missing current hour cannot borrow next wind');
+const window=transportWindow(rows,rows[1].validAt,3);
+assert.equal(window[0].windMs,1);assert.equal(window[1].windMs,null);assert.equal(window[2].windMs,3);
+console.log('PASS fractional transport and time-anchored wind gaps');
+
+}

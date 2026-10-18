@@ -315,3 +315,8 @@ Independent reviewer inspected1440/1024/390 and found sticky-anchor occlusion, c
 
 
 Live design release completed: `jakarta-atlas-20261018-1792334510-014ecdc`, Worker `4c6517af-a7d4-4be2-975e-8ab838df4f3a`, stamped `97f8a7f`. Canonical gate exited0;36tests,12verification,37/37API checks, both-host byte convergence, archives and dashboard envelopes passed. Parent performed live EN/ID, play/pause and responsive checks; independent reviewer checked matching live screenshots/HTML, with interactive independent verification before deploy because its browser binding later disappeared. Final artifact audit caught four mislabeled-width screenshots; re-captured after views from live with separated resize/capture, checked actual pixel widths and saved dimensions.json. Main map and all earned capabilities retained. Global stack rules are durable files under Projects (no parent Git repository); Jakarta's copies/instructions are committed.
+
+
+## 19 October 2026 · open-session audit
+
+Fixed partial-hour transport distance, current-hour/click-time wind selection, Research refresh/visibility lifecycle and actual FIRMS age contract, clock-based gauge expiry, and crowded phone isobar labels. Preserved all layers and compact Palette267/Bayer design. Controlled-clock tests plus independent visual review passed. See docs/OPEN-SESSION-AUDIT-2026-10-19.md for evidence and boundaries; canonical release receipt pending.

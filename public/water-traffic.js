@@ -30,9 +30,16 @@ export function validPolderReference(data,manifest) {
   function coordinates(c,depth){if(!Array.isArray(c)||!c.length)return false;if(depth===0)return c.length>=2&&c.every(Number.isFinite)&&c[0]>=105&&c[0]<=108&&c[1]>=-8&&c[1]<=-5;return c.every(child=>coordinates(child,depth-1));}
   return data.features.every(f=>['Polygon','MultiPolygon'].includes(f?.geometry?.type)&&coordinates(f.geometry.coordinates,f.geometry.type==='Polygon'?2:3));
 }
+// Re-evaluate the source reading against the display clock, including open tabs.
+export function gaugeState(row, now=Date.now()) {
+  const at=Date.parse(row?.observedAt);
+  if(!Number.isFinite(row?.levelM)||!Number.isFinite(at)||at>now+300000)return 'unknown';
+  return now-at>=3*3600000||row.levelState==='stale'?'stale':row.levelState==='fresh'?'fresh':'unknown';
+}
 export function createController(map,{text:t,active,buildTag}) {
   let waterContext=null;
   let mode=null,epoch=0,water=null,cameras=null,hydrology=null,jaxa=null,nasa=null,lastBody=null;
+  let gaugeTimer=null,gaugeVisibility=null,selectedGauge=null;
   const listeners=[]; let player=null, video=null, playRequest=0;
   const pending=new Set();
   async function get(path){const c=new AbortController();const timer=setTimeout(()=>c.abort(new Error('timeout')),12000);pending.add(c);try{const response=await fetch(path,{headers:{accept:'application/json'},signal:c.signal});return await readObservationResponse(response,path);}finally{clearTimeout(timer);pending.delete(c);}}
@@ -49,12 +56,12 @@ export function createController(map,{text:t,active,buildTag}) {
   function on(event,id,callback){map.on(event,id,callback);listeners.push([event,id,callback]);}
   function focusFeature(feature,body){const c=feature.geometry.type==='Point'?feature.geometry.coordinates:null;if(c)map.flyTo({center:c,zoom:14,pitch:35});document.getElementById('atlas-lens-evidence').open=true;body.scrollIntoView({block:'nearest'});}
   function removeLayers(){for(const id of ids)if(map.getLayer(id))map.removeLayer(id);for(const id of ids)if(map.getSource(id))map.removeSource(id);for(const [event,id,callback] of listeners)map.off(event,id,callback);listeners.length=0;}
-  function clear(){epoch++;waterContext?.clear();waterContext=null;playRequest++;mode=null;cancelPending();removeLayers();lastBody=null;player?.destroy();player=null;if(video){video.pause();video.removeAttribute("src");video.load();video=null;}}
+  function clear(){if(gaugeTimer!==null)clearTimeout(gaugeTimer);gaugeTimer=null;if(gaugeVisibility)document.removeEventListener('visibilitychange',gaugeVisibility);gaugeVisibility=null;selectedGauge=null;epoch++;waterContext?.clear();waterContext=null;playRequest++;mode=null;cancelPending();removeLayers();lastBody=null;player?.destroy();player=null;if(video){video.pause();video.removeAttribute("src");video.load();video=null;}}
   function pointLayer(id,data,paint,cluster=false){map.addSource(id,{type:'geojson',data,cluster,clusterRadius:40,clusterMaxZoom:14});const layer={id,type:'circle',source:id,paint};if(cluster)layer.filter=['!', ['has','point_count']];map.addLayer(layer);}
   function gaugeFeature(row){return {type:'Feature',geometry:{type:'Point',coordinates:[row.lng,row.lat]},properties:{id:row.id,name:row.name,levelM:row.levelM,observedAt:row.observedAt,basin:row.basin}};}
   function featureCollection(features){return {type:'FeatureCollection',features};}
   const kindLabel=kind=>t(...({river:['River','Sungai'],canal:['Canal','Kanal'],stream:['Stream','Anak sungai'],drain:['Drain','Saluran'],ditch:['Ditch','Parit'],waterbody:['Water body','Badan air'],'waterbody-edge':['Water edge','Tepi air']}[kind]||[kind,kind]));
-  function renderWaterSelection(parent,feature){
+  function renderWaterSelection(parent,feature){selectedGauge=null;
     parent.replaceChildren();const p=feature.properties;parent.append(el('h3',p.name||t('Unnamed mapped waterway','Alur air terpetakan tanpa nama')));
     parent.append(el('p',kindLabel(p.kind)+' · '+(p.lengthM?number(Number(p.lengthM)/1000,2)+' km':t('Mapped water-body polygon','Poligon badan air terpetakan'))));
     note(parent,'Geometry follows OpenStreetMap. Length is computed along its original geometry. No discharge or measured flow direction is attached to this line.','Geometri mengikuti OpenStreetMap. Panjang dihitung sepanjang geometri aslinya. Garis ini tidak memiliki debit atau arah aliran terukur.');
@@ -63,8 +70,8 @@ export function createController(map,{text:t,active,buildTag}) {
   function renderGauge(parent,row){
     parent.replaceChildren();parent.append(el('h3',row.name));const [en,id]=approachSector(row.lng,row.lat);
     parent.append(el('p',row.basin+' · '+t(en,id)+' '+t('of Monas','dari Monas')));
-    const state=row.levelState||'unknown';
-    const stateText=state==='fresh'?t('Current level · under 3 h old','Tinggi terkini · di bawah 3 jam'):state==='stale'?t('Dated evidence · older than 3 h, not a current level','Bukti bertanggal · lebih dari 3 jam, bukan tinggi terkini'):t('No usable level at this gauge','Tidak ada tinggi yang dapat dipakai di pos ini');
+    selectedGauge={parent,row};const state=gaugeState(row);
+    const stateText=state==='fresh'?t('Current level · under 3 h old','Tinggi terkini · di bawah 3 jam'):state==='stale'?t('Dated evidence · 3 h old or more, not a current level','Bukti bertanggal · 3 jam atau lebih, bukan tinggi terkini'):t('No usable level at this gauge','Tidak ada tinggi yang dapat dipakai di pos ini');
     parent.append(el('p',number(row.levelM,2)+' '+t('m at local gauge datum','m pada datum pos setempat')+' · '+time(row.observedAt)));
     parent.append(el('p',stateText,state==='fresh'?'network-state network-state--fresh':'network-state'));
     parent.append(el('p',row.lat.toFixed(5)+', '+row.lng.toFixed(5),'network-location'));
@@ -124,7 +131,7 @@ export function createController(map,{text:t,active,buildTag}) {
       toggle(number(d.count,0)+' '+t('official micro-drain lines · zoom 11+','garis saluran mikro resmi · zoom 11+'),['official-drain-lines']);
       parent.append(el('p',t('Source date unknown · retrieved ','Tanggal sumber tidak diketahui · diambil ')+time(d.retrievedAt),'meta'));
       on('click','official-drain-lines',event=>{
-        const f=event.features?.[0];if(!f)return;const props=f.properties||{};selected.replaceChildren();
+        const f=event.features?.[0];if(!f)return;const props=f.properties||{};selectedGauge=null;selected.replaceChildren();
         selected.append(el('h3',props.name||t('Official micro-drain','Saluran mikro resmi')));
         selected.append(el('p','DSDA · OBJECTID '+String(props.OBJECTID??props.id??'—')));
         note(selected,'Publisher line geometry. Capacity, connectivity, flow direction and operation are unknown. Administrative names have not been spatially reconciled.','Geometri garis penerbit. Kapasitas, konektivitas, arah aliran, dan operasi tidak diketahui. Nama administrasi belum dicocokkan secara spasial.');
@@ -138,7 +145,7 @@ export function createController(map,{text:t,active,buildTag}) {
       map.addLayer({id:'official-polder-lines',type:'line',source:'official-polder-lines',paint:{'line-color':'#79c2d1','line-width':2,'line-dasharray':[3,2]}},map.getLayer('network-water-lines')?'network-water-lines':undefined);
       toggle(number(p.count,0)+' '+t('publisher polder boundaries','batas polder penerbit'),['official-polder-fill','official-polder-lines']);
       parent.append(el('p',t('Source date unknown · retrieved ','Tanggal sumber tidak diketahui · diambil ')+time(p.retrievedAt)+' · '+number(p.sourceInvalidPolygonCount||0,0)+' '+t('publisher polygons with geometry issues','poligon penerbit dengan masalah geometri'),'meta'));
-      on('click','official-polder-lines',event=>{const props=event.features?.[0]?.properties;if(!props)return;selected.replaceChildren();selected.append(el('h3',props.NAMOBJ||t('Polder reference','Referensi polder')));selected.append(el('p','OBJECTID '+String(props.OBJECTID??'—')));note(selected,'Publisher reference boundary, not an observed flood or a protection guarantee. Some source geometry is invalid; no flood area or capacity is computed.','Batas referensi penerbit, bukan banjir teramati atau jaminan perlindungan. Sebagian geometri sumber tidak valid; luas banjir atau kapasitas tidak dihitung.');selected.append(link('Jakarta Satu / DSDA ↗',p.sourceUrl));selected.parentElement.open=true;document.getElementById('atlas-lens-evidence').open=true;});
+      on('click','official-polder-lines',event=>{const props=event.features?.[0]?.properties;if(!props)return;selectedGauge=null;selected.replaceChildren();selected.append(el('h3',props.NAMOBJ||t('Polder reference','Referensi polder')));selected.append(el('p','OBJECTID '+String(props.OBJECTID??'—')));note(selected,'Publisher reference boundary, not an observed flood or a protection guarantee. Some source geometry is invalid; no flood area or capacity is computed.','Batas referensi penerbit, bukan banjir teramati atau jaminan perlindungan. Sebagian geometri sumber tidak valid; luas banjir atau kapasitas tidak dihitung.');selected.append(link('Jakarta Satu / DSDA ↗',p.sourceUrl));selected.parentElement.open=true;document.getElementById('atlas-lens-evidence').open=true;});
     }else note(parent,'Polder boundaries unavailable. Other water evidence remains visible.','Batas polder tidak tersedia. Bukti air lain tetap terlihat.');
     note(parent,'Thin lines: official micro-drains. Dashed boundaries: polders. These references are separate from OSM and are not a connected hydraulic model.','Garis tipis: saluran mikro resmi. Batas putus-putus: polder. Referensi ini terpisah dari OSM dan bukan model hidraulik yang terhubung.');
   }
@@ -166,16 +173,33 @@ export function createController(map,{text:t,active,buildTag}) {
     try {hydrology=await get('/api/atlas/hydrology');}catch{hydrology={stations:[],predictions:[],available:false};}
     if(!hydrology.stations?.length){let reference;try{reference=await get('/data/jakarta-v1/hydrology-reference.json?v='+buildTag);}catch{reference={stations:[],checkedAt:null};}hydrology={...hydrology,stations:reference.stations.map(s=>({...s,levelM:null,observedAt:null,levelState:'unknown',sourceUrl:reference.sourceUrl})),checkedAt:hydrology.checkedAt||reference.checkedAt,predictions:hydrology.predictions||[]};}if(token!==epoch)return;
     measure.replaceChildren();
-    const fresh=hydrology.stations.filter(s=>s.levelState==='fresh').length;
-    const dated=hydrology.stations.filter(s=>s.levelM!==null&&s.levelState!=='fresh').length;
-    measure.append(el('p',number(fresh,0)+' '+t('current levels','tinggi terkini')+' · '+number(dated,0)+' '+t('kept as dated evidence','disimpan sebagai bukti bertanggal')+' · '+number(hydrology.stations.length-fresh-dated,0)+' '+t('without a usable level','tanpa tinggi terpakai')+' / '+number(hydrology.stations.length,0)+' '+t('gauges','pos')+' · '+time(hydrology.checkedAt)));
+    const fresh=hydrology.stations.filter(s=>gaugeState(s)==='fresh').length;
+    const dated=hydrology.stations.filter(s=>gaugeState(s)==='stale').length;
+    const summary=el('p',number(fresh,0)+' '+t('current levels','tinggi terkini')+' · '+number(dated,0)+' '+t('kept as dated evidence','disimpan sebagai bukti bertanggal')+' · '+number(hydrology.stations.length-fresh-dated,0)+' '+t('without a usable level','tanpa tinggi terpakai')+' / '+number(hydrology.stations.length,0)+' '+t('gauges','pos')+' · '+time(hydrology.checkedAt));measure.append(summary);
+    const ageButtons=[];
     note(measure,'Gauge levels use local datums. A reading older than three hours is dated evidence, never a current level — a trial display policy, not a provider service interval. Invalid future timestamps are excluded. No city-wide measured inflow or direction is available from these levels.','Tinggi pos memakai datum setempat. Pembacaan lebih dari tiga jam adalah bukti bertanggal, bukan tinggi terkini — kebijakan tampilan percobaan, bukan interval layanan penyedia. Waktu masa depan yang tidak valid dikeluarkan. Pembacaan ini tidak memberikan total air masuk atau arah aliran kota terukur.');
     if(hydrology.stations.length){
       pointLayer('network-gauges',featureCollection(hydrology.stations.map(gaugeFeature)),{'circle-radius':5,'circle-color':'#d74841','circle-stroke-color':'#fff','circle-stroke-width':1});
       on('click','network-gauges',event=>{const row=hydrology.stations.find(s=>s.id===event.features?.[0]?.properties.id);if(row){renderGauge(selected,row);selected.parentElement.open=true;document.getElementById('atlas-lens-evidence').open=true;}});
       const list=section(measure,'Gauge positions & readings','Posisi pos & pembacaan');
-      for(const row of hydrology.stations){const [en,id]=approachSector(row.lng,row.lat);const state=row.levelState||'unknown';const stateLabel=state==='fresh'?t('current','terkini'):state==='stale'?t('dated evidence','bukti bertanggal'):t('no usable level','tanpa tinggi terpakai');button(list,row.name+' · '+row.basin+' · '+t(en,id)+' · '+number(row.levelM,2)+' m · '+stateLabel+' · '+time(row.observedAt),()=>{renderGauge(selected,row);selected.parentElement.open=true;focusFeature(gaugeFeature(row),selected);});}
+      for(const row of hydrology.stations){const [en,id]=approachSector(row.lng,row.lat);const state=gaugeState(row);const stateLabel=state==='fresh'?t('current','terkini'):state==='stale'?t('dated evidence','bukti bertanggal'):t('no usable level','tanpa tinggi terpakai');const item=button(list,row.name+' · '+row.basin+' · '+t(en,id)+' · '+number(row.levelM,2)+' m · '+stateLabel+' · '+time(row.observedAt),()=>{renderGauge(selected,row);selected.parentElement.open=true;focusFeature(gaugeFeature(row),selected);});ageButtons.push({item,row,prefix:row.name+' · '+row.basin+' · '+t(en,id)+' · '+number(row.levelM,2)+' m · '});}
     }
+    const reAge=()=>{
+      if(token!==epoch||mode!=='waterways')return;
+      const f=hydrology.stations.filter(r=>gaugeState(r)==='fresh').length;
+      const d=hydrology.stations.filter(r=>gaugeState(r)==='stale').length;
+      summary.textContent=number(f,0)+' '+t('current levels','tinggi terkini')+' · '+number(d,0)+' '+t('kept as dated evidence','disimpan sebagai bukti bertanggal')+' · '+number(hydrology.stations.length-f-d,0)+' '+t('without a usable level','tanpa tinggi terpakai')+' / '+number(hydrology.stations.length,0)+' '+t('gauges','pos')+' · '+time(hydrology.checkedAt);
+      for(const {item,row,prefix} of ageButtons){const state=gaugeState(row);item.textContent=prefix+(state==='fresh'?t('current','terkini'):state==='stale'?t('dated evidence','bukti bertanggal'):t('no usable level','tanpa tinggi terpakai'))+' · '+time(row.observedAt);}
+      if(selectedGauge)renderGauge(selectedGauge.parent,selectedGauge.row);
+      scheduleAge();
+    };
+    const scheduleAge=()=>{
+      if(gaugeTimer!==null)clearTimeout(gaugeTimer);gaugeTimer=null;
+      const deadlines=hydrology.stations.filter(r=>gaugeState(r)==='fresh').map(r=>Date.parse(r.observedAt)+3*3600000-Date.now());
+      if(deadlines.length){gaugeTimer=setTimeout(reAge,Math.max(1,Math.min(...deadlines)));gaugeTimer?.unref?.();}
+    };
+    scheduleAge();
+    gaugeVisibility=()=>{if(!document.hidden)reAge();};document.addEventListener('visibilitychange',gaugeVisibility);
     const predicted=section(measure,'Predicted discharge by upstream section','Prediksi debit per penampang hulu');
     note(predicted,'Each row has its own valid time. Directions below are geographic sectors of exactly matched station locations, not measured water vectors. Unmatched locations remain unknown.','Setiap baris memiliki waktu berlaku tersendiri. Arah di bawah adalah sektor geografis lokasi pos yang cocok persis, bukan vektor air terukur. Lokasi yang belum cocok tetap tidak diketahui.');
     for(const row of hydrology.predictions||[]){const sector=Number.isFinite(row.lng)&&Number.isFinite(row.lat)?t(...approachSector(row.lng,row.lat)):t('Location not matched','Lokasi belum cocok');predicted.append(el('p',row.name+' · '+number(row.dischargeM3s,2)+' m³/s · '+sector+' · '+time(row.validAt)));}

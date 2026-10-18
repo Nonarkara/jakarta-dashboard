@@ -125,14 +125,27 @@ await assert.rejects(readObservationResponse(Response.json(datedBody,{status:503
 {
   const oldDocument=globalThis.document,oldOption=globalThis.Option;
   function node(tag='div'){return {tagName:tag,children:[],textContent:'',value:'',append(...nodes){this.children.push(...nodes);for(const n of nodes)if(n&&typeof n==='object')n.parentElement=this;},replaceChildren(...nodes){this.children=[];this.append(...nodes);},setAttribute(){},addEventListener(){},scrollIntoView(){}};}
-  globalThis.document={createElement:node,getElementById:()=>node()};globalThis.Option=class{constructor(text,value){this.textContent=text;this.value=value;}};
+  globalThis.document={createElement:node,getElementById:()=>node(),addEventListener(){},removeEventListener(){}};globalThis.Option=class{constructor(text,value){this.textContent=text;this.value=value;}};
   globalThis.fetch=async path=>String(path).includes('waterways.geojson')?Response.json(water):String(path)==='/api/atlas/hydrology'?Response.json(datedBody,{status:503}):Response.json({}, {status:503});
   const testMap={addSource(){},addLayer(){},getLayer(){},getSource(){},on(){},off(){},flyTo(){}};
   const body=node();const ui=createController(testMap,{text:e=>e,active:()=> 'waterways',buildTag:'test'});
   await ui.show('waterways',body);
   const text=n=>(n.textContent||'')+' '+(n.children||[]).map(text).join(' ');
   assert.match(text(body),/0 current levels/);assert.match(text(body),/1 kept as dated evidence/);assert.match(text(body),/Dated station/);assert.match(text(body),/2.4 m/);
-  ui.clear();globalThis.document=oldDocument;globalThis.Option=oldOption;
+  ui.clear();
+  const realNow=Date.now,realSetTimeout=globalThis.setTimeout,realClearTimeout=globalThis.clearTimeout;
+  let clock=Date.UTC(2026,9,18,15,0),deadline,gaugeHandle;
+  Date.now=()=>clock;
+  globalThis.setTimeout=(fn,delay)=>{if(delay===60000){deadline=fn;gaugeHandle={unref(){}};return gaugeHandle;}return realSetTimeout(fn,delay);};
+  globalThis.clearTimeout=id=>{if(id===gaugeHandle)return;realClearTimeout(id);};
+  const freshBody={...datedBody,available:true,freshLevels:1,stations:[{...datedBody.stations[0],levelState:'fresh',observedAt:new Date(clock-3*3600000+60000).toISOString()}]};
+  globalThis.fetch=async path=>String(path).includes('waterways.geojson')?Response.json(water):String(path)==='/api/atlas/hydrology'?Response.json(freshBody):Response.json({}, {status:503});
+  const ageBody=node(),aging=createController(testMap,{text:e=>e,active:()=> 'waterways',buildTag:'test'});
+  await aging.show('waterways',ageBody);
+  assert.match(text(ageBody),/1 current levels/);assert.equal(typeof deadline,'function','earliest3h expiry scheduled');
+  clock+=120000;deadline();assert.match(text(ageBody),/0 current levels/);assert.match(text(ageBody),/1 kept as dated evidence/);
+  aging.clear();Date.now=realNow;globalThis.setTimeout=realSetTimeout;globalThis.clearTimeout=realClearTimeout;
+  globalThis.document=oldDocument;globalThis.Option=oldOption;
 }
 globalThis.fetch=realFetch;delete globalThis.caches;
 // observation client: every request is bounded and cancelled on exit
