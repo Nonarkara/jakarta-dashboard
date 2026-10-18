@@ -6,6 +6,7 @@
 import { gridOf, contour, stitch, lowCentre, hoursOf } from './synoptic.js';
 import { trajectory } from './haze-transport.js';
 import { makeSampler, stepLngLat } from './flow-canvas.js';
+import { labelPosition } from './research-labels.js';
 
 const JAKARTA = { lng: 106.8272, lat: -6.1754 };
 const root = document.documentElement;
@@ -22,6 +23,8 @@ const renders = [];
 function applyLang() {
   root.lang = lang; root.dataset.lang = lang;
   document.title = t('How it is built · JKTx', 'Cara dibuat · JKTx');
+  document.querySelectorAll('[data-city-link]').forEach((a) => { const u = new URL(a.href); u.searchParams.set('lang', lang); a.href = u.href; });
+  document.getElementById('lang').setAttribute('aria-label', t('Switch to Bahasa Indonesia', 'Ganti bahasa ke Inggris'));
   renders.forEach((r) => r());
 }
 document.getElementById('lang').addEventListener('click', () => {
@@ -33,17 +36,18 @@ document.getElementById('lang').addEventListener('click', () => {
 
 // ── Shipped-file figures ─────────────────────────────────────────────────
 const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
-const files = Promise.all([
+const files = [
   json('/data/jakarta-v1/buildings-stats.json'),
   json('/data/jakarta-v1/transit.json'),
   json('/data/jakarta-v1/source-catalog.json'),
   json('/data/jakarta-v1/flood-network.json'),
-]);
+];
+const fileState = [null, null, null, null];
 const live = { fires: json('/api/atlas/fires'), syn: json('/api/atlas/synoptic') };
 
-files.then(([buildings, transit, catalog, flood]) => {
+function renderFiles([buildings, transit, catalog, flood]) {
   const records = Array.isArray(catalog?.records) ? catalog.records : [];
-  const count = (s) => records.filter((r) => r.status === s).length;
+  const count = (s) => Array.isArray(catalog?.records) ? records.filter((r) => r.status === s).length : null;
   const draw = () => {
     document.getElementById('fig-buildings').textContent = fmt(buildings?.count);
     const fig = document.getElementById('figures'); fig.replaceChildren();
@@ -51,7 +55,7 @@ files.then(([buildings, transit, catalog, flood]) => {
     cell(fmt(transit?.routeCount), t('Transjakarta GTFS routes', 'rute GTFS Transjakarta'));
     cell(fmt(flood?.stations?.length ?? flood?.stationCount), t('flood-network stations', 'stasiun jaringan banjir'));
     cell(fmt(count('integrated')), t('sources integrated', 'sumber terintegrasi'));
-    cell(fmt(records.length), t('sources assessed', 'sumber dinilai'));
+    cell(fmt(Array.isArray(catalog?.records) ? records.length : null), t('sources assessed', 'sumber dinilai'));
 
     const st = document.getElementById('src-status'); st.replaceChildren();
     for (const [s, en, id] of [['integrated', 'integrated', 'terintegrasi'], ['candidate', 'candidate', 'kandidat'], ['registration-required', 'needs registration', 'perlu registrasi'], ['blocked', 'blocked', 'terblokir']]) {
@@ -73,19 +77,25 @@ files.then(([buildings, transit, catalog, flood]) => {
     }
     else legend.append(el('li', null, t('Building statistics unavailable.', 'Statistik bangunan tidak tersedia.')));
   };
-  renders.push(draw); draw();
-});
+  draw();
+}
+renders.push(() => renderFiles(fileState));
+files.forEach((request, index) => request.then((value) => { fileState[index] = value; renderFiles(fileState); }));
 
 // ── Live field ───────────────────────────────────────────────────────────
 const base = document.getElementById('field'), top = document.getElementById('flow');
 const caption = document.getElementById('live-caption');
+const motion = document.getElementById('field-motion');
 const reduced = () => globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
 
 Promise.all([live.syn, live.fires]).then(([syn, fires]) => {
   if (!syn?.available || !syn.cells?.length) {
+    base.parentElement.hidden = true;
+    motion.hidden = true;
     const say = () => { caption.textContent = t('The pressure model did not answer. Nothing is drawn in its place.', 'Model tekanan tidak menjawab. Tidak ada yang digambar sebagai gantinya.'); };
     renders.push(say); say(); return;
   }
+  base.parentElement.hidden = false;
   const now = Date.now();
   let index = 0, best = Infinity;
   syn.hours.forEach((h, i) => { const d = Math.abs(Date.parse(h) - now); if (d < best) { best = d; index = i; } });
@@ -108,11 +118,13 @@ Promise.all([live.syn, live.fires]).then(([syn, fires]) => {
   function drawBase() {
     const g = base.getContext('2d'); if (!g) return;
     g.clearRect(0, 0, W, H);
-    g.font = '30px ui-monospace, Menlo, monospace'; g.textBaseline = 'middle';
+    g.font = '30px ' + css('--font-sans'); g.textBaseline = 'middle';
+    const occupied = [];
+    const fixedText = (text, px, py) => { g.fillText(text, px, py); occupied.push({x:px,y:py-18,width:g.measureText(text).width,height:36}); };
     // Graticule every 2°: orientation without a coastline we do not ship.
     g.strokeStyle = css('--strong'); g.lineWidth = 1; g.fillStyle = css('--dim');
-    for (let lng = Math.ceil(w / 2) * 2; lng <= e; lng += 2) { g.beginPath(); g.moveTo(x(lng), 0); g.lineTo(x(lng), H); g.stroke(); g.fillText(lng + '°E', x(lng) + 6, H - 16); }
-    for (let lat = Math.ceil(s / 2) * 2; lat <= n; lat += 2) { g.beginPath(); g.moveTo(0, y(lat)); g.lineTo(W, y(lat)); g.stroke(); g.fillText(Math.abs(lat) + '°S', 8, y(lat) - 14); }
+    for (let lng = Math.ceil(w / 2) * 2; lng <= e; lng += 2) { g.beginPath(); g.moveTo(x(lng), 0); g.lineTo(x(lng), H); g.stroke(); fixedText(lng + '°E', x(lng) + 6, H - 16); }
+    for (let lat = Math.ceil(s / 2) * 2; lat <= n; lat += 2) { g.beginPath(); g.moveTo(0, y(lat)); g.lineTo(W, y(lat)); g.stroke(); fixedText(Math.abs(lat) + '°S', 8, y(lat) - 14); }
     // Isobars every 2 hPa between the pressures the provider returned.
     const rows = gridOf(cells), p = cells.map((c) => c.mslpHpa);
     g.strokeStyle = css('--ink'); g.globalAlpha = 0.55; g.lineWidth = 1.5;
@@ -120,14 +132,14 @@ Promise.all([live.syn, live.fires]).then(([syn, fires]) => {
       for (const line of stitch(contour(rows, L))) {
         g.beginPath(); line.forEach(([lng, lat], i) => (i ? g.lineTo(x(lng), y(lat)) : g.moveTo(x(lng), y(lat)))); g.stroke();
         const mid = line[Math.floor(line.length / 2)];
-        g.globalAlpha = 1; g.fillStyle = css('--dim'); g.fillText(String(L), x(mid[0]) + 4, y(mid[1])); g.globalAlpha = 0.55;
+        g.globalAlpha = 1; g.fillStyle = css('--dim'); fixedText(String(L), x(mid[0]) + 4, y(mid[1])); g.globalAlpha = 0.55;
       }
     }
     g.globalAlpha = 1;
     // Model cells: where the numbers actually come from.
     g.fillStyle = css('--line');
     for (const c of cells) { g.beginPath(); g.arc(x(c.lng), y(c.lat), 3, 0, Math.PI * 2); g.fill(); }
-    if (low?.isLow) { g.fillStyle = css('--lacquer'); g.font = '700 44px -apple-system, Helvetica, sans-serif'; g.fillText('L', x(low.lng) - 10, y(low.lat)); g.font = '30px ui-monospace, Menlo, monospace'; }
+    if (low?.isLow) { g.fillStyle = css('--lacquer'); g.font = '700 44px ' + css('--font-sans'); fixedText('L', x(low.lng) - 10, y(low.lat)); g.font = '30px ' + css('--font-sans'); }
     // Fire detections inside the box, sized by radiative power.
     g.fillStyle = css('--lacquer');
     for (const f of fires?.features || []) {
@@ -136,12 +148,19 @@ Promise.all([live.syn, live.fires]).then(([syn, fires]) => {
       const r = 2 + Math.min(Math.sqrt(Math.max(f.properties?.frp || 0, 0)) / 3, 6);
       g.beginPath(); g.arc(x(lng), y(lat), r, 0, Math.PI * 2); g.fill();
     }
+    // Reserve Jakarta's label before placing time labels.
+    occupied.push({x:x(JAKARTA.lng)+12,y:y(JAKARTA.lat),width:g.measureText('Jakarta').width,height:36});
     // The Jakarta parcel, with a tick every 6 hours.
     if (run?.path?.length > 1) {
       g.strokeStyle = css('--accent'); g.lineWidth = 4; g.beginPath();
       run.path.forEach(([lng, lat], i) => (i ? g.lineTo(x(lng), y(lat)) : g.moveTo(x(lng), y(lat)))); g.stroke();
       g.fillStyle = css('--accent');
-      run.path.forEach(([lng, lat], i) => { if (i && i % 6 === 0) { g.fillRect(x(lng) - 5, y(lat) - 5, 10, 10); g.fillText('+' + i + 'h', x(lng) + 10, y(lat) - 14); } });
+      run.path.forEach(([lng, lat], i) => { if (i && i % 6 === 0) {
+        const px=x(lng), py=y(lat), text='+' + i + 'h';
+        g.fillRect(px - 5, py - 5, 10, 10);
+        const box=labelPosition(px,py,g.measureText(text).width,36,{width:W,height:H},occupied);
+        if(box) { occupied.push(box); g.beginPath(); g.moveTo(px,py); g.lineTo(box.x,box.y+18); g.lineWidth=1; g.stroke(); g.fillText(text,box.x,box.y+18); }
+      } });
     }
     g.fillStyle = css('--ink'); g.fillRect(x(JAKARTA.lng) - 6, y(JAKARTA.lat) - 6, 12, 12);
     g.fillText('Jakarta', x(JAKARTA.lng) + 12, y(JAKARTA.lat) + 18);
@@ -151,7 +170,7 @@ Promise.all([live.syn, live.fires]).then(([syn, fires]) => {
   const ctx = top.getContext('2d');
   const metresPerPx = ((e - w) / W) * 111320 * Math.cos(((n + s) / 2) * Math.PI / 180);
   const seconds = sampler ? (1.6 * metresPerPx) / sampler.maxSpeed : 0;
-  let particles = [], raf = null;
+  let particles = [], raf = null, playing = false;
   const spawn = () => {
     for (let i = 0; i < 6; i++) { const lng = w + Math.random() * (e - w), lat = s + Math.random() * (n - s); if (sampler.sample(lng, lat)) return { lng, lat, age: 0, life: 60 + Math.random() * 80 }; }
     return null;
@@ -159,7 +178,7 @@ Promise.all([live.syn, live.fires]).then(([syn, fires]) => {
   const colour = (speed) => (speed / sampler.maxSpeed > 0.66 ? css('--accent') : css('--ink'));
   function frame() {
     raf = null;
-    if (document.hidden || !ctx) return;
+    if (document.hidden || !ctx || !playing || reduced()) return;
     ctx.globalCompositeOperation = 'destination-in'; ctx.fillStyle = 'rgba(0,0,0,0.92)'; ctx.fillRect(0, 0, W, H);
     ctx.globalCompositeOperation = 'source-over'; ctx.lineWidth = 2;
     while (particles.length < 900) { const p = spawn(); if (!p) break; particles.push(p); }
@@ -184,7 +203,19 @@ Promise.all([live.syn, live.fires]).then(([syn, fires]) => {
     }
     ctx.globalAlpha = 1;
   }
-  const start = () => { if (!sampler) return; if (reduced()) still(); else if (raf === null && !document.hidden) raf = requestAnimationFrame(frame); };
+  const start = () => { if (!sampler) return; if (reduced() || !playing) still(); else if (raf === null && !document.hidden) raf = requestAnimationFrame(frame); };
+  const motionLabel = () => {
+    motion.textContent = playing ? t('Pause wind', 'Jeda angin') : t('Play wind', 'Putar angin');
+    motion.setAttribute('aria-pressed', String(playing));
+  };
+  motion.disabled = !sampler || reduced();
+  motion.addEventListener('click', () => {
+    playing = !playing; motionLabel();
+    if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
+    start();
+  });
+  renders.push(motionLabel); motionLabel();
+  window.addEventListener('atlas:theme', () => { drawBase(); if (sampler && (!playing || reduced())) still(); });
   document.addEventListener('visibilitychange', () => { if (document.hidden && raf !== null) { cancelAnimationFrame(raf); raf = null; } else start(); });
 
   const say = () => {
@@ -200,7 +231,7 @@ Promise.all([live.syn, live.fires]).then(([syn, fires]) => {
     ];
     caption.textContent = parts.filter(Boolean).join(' · ');
     drawBase();
-    if (reduced()) still();
+    if (sampler && (reduced() || !playing)) still();
   };
   renders.push(say); say(); start();
 });

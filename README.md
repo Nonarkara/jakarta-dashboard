@@ -12,7 +12,7 @@ Search a route and select it to draw the scheduled alignment. Select a stop or c
 
 The Research dialog now has three more tabs beside the project, flood and report data: how the system was built (method, live/dated/unavailable states, charts computed from the shipped records, build inventory), the legal basis (independent demo, source licenses, no personal data, non-affiliation), and the builder (bio and contact).
 
-The Banjir / Flood desk popup couples those live signals with the dated Jakarta Satu monitoring network: AWLR water-level stations with official SIAGA 1–4 alert thresholds grouped by river, ARR rain gauges, pumps, floodgates and reservoirs, flood-risk reference polygons joined to 2023 kelurahan population, and the situ inventory. No live water level is shown anywhere; stations publish thresholds, not readings, and unavailable feeds stay explicit states with official links.
+The Banjir / Flood desk popup couples those live signals with the dated Jakarta Satu monitoring network: AWLR water-level stations with official SIAGA 1–4 alert thresholds grouped by river, ARR rain gauges, pumps, floodgates and reservoirs, flood-risk reference polygons joined to 2023 kelurahan population, and the situ inventory. This flood desk keeps published thresholds separate from the live, local-datum BBWS readings in the waterways lens. Unavailable feeds stay explicit states with official links.
 
 ## Water context acquired · 15 October 2026
 
@@ -33,7 +33,7 @@ Risk classes, station inventories and green polygons are official reference data
 
 ## Local design and citizen services
 
-Palette/Wada plate 267 supplies a documented warm/cool relationship, adapted into dark coastal, city-daylight and high-contrast modes. Plus Jakarta Sans is the city-commissioned Tokotype family, self-hosted under OFL 1.1. The font, actual tokens, contrast proof and local source evidence are recorded in `docs/JAKARTA-DESIGN-AND-CRM.md`. Source/period text is larger; scientific layer legends keep their own semantic colours.
+Palette/Wada plate 267 supplies a documented warm/cool relationship, adapted into dark coastal, city-daylight and high-contrast modes. The current typography uses the owner-selected CTAN Universa display face and Source Sans 3 for functional text and reading. The earlier Tokotype exploration, actual palette tokens, contrast proof and local source evidence remain recorded in `docs/JAKARTA-DESIGN-AND-CRM.md`. Source/period text is larger; scientific layer legends keep their own semantic colours.
 
 The citizen-services section links to CRM's official daily, monthly, kelurahan and map destinations. Its monthly Looker viewer loads only when selected, keeps the publisher's period/filter controls and can be closed without remounting the city map. A direct report link is available above the viewer. No report submission or citizen identity/photo collection occurs here, and no CRM totals are converted into local live readings.
 
@@ -51,7 +51,7 @@ The citizen-services section links to CRM's official daily, monthly, kelurahan a
 - `npm run prepare:ispu`: bake the Satu Data Jakarta official ISPU CSV export (daily SPKU measurements, five stations, DKI1–DKI5) into a dated monthly reference at `public/data/jakarta-v1/ispu-reference.json`, with the raw export retained under `data/source-evidence/`.
 - `npm run release` runs the full local gate (typecheck, verify, every test suite), stamps dashboard/atlas assets, deploys the existing Worker with its R2 binding and custom domain, and checks the exact deployed bytes plus provider envelopes. It refuses to deploy an uncommitted tree, so deployed bytes always trace to a commit. Do not deploy from the old atlas repo to this Worker.
 
-Civic datasets publish no observation epoch or explicit dataset license in the inspected service metadata; the ledger labels their attribution/access limitation. GTFS is CC BY 4.0, normalized/simplified here; service calendars and selected representative trips are scheduled records. Official ISPU now ships as a dated monthly reference from Satu Data Jakarta (five SPKU stations, latest batch labelled, not live). BPS statistical baselines, tides, subsidence, live vehicles and congestion remain unconnected.
+Civic datasets publish no observation epoch or explicit dataset license in the inspected service metadata; the ledger labels their attribution/access limitation. GTFS is CC BY 4.0, normalized/simplified here; service calendars and selected representative trips are scheduled records. Official ISPU now ships as a dated monthly reference from Satu Data Jakarta (five SPKU stations, latest batch labelled, not live). BPS statistical baselines, subsidence, live vehicles and congestion remain unconnected. The independent BMKG Priok tide forecast is connected; its unknown vertical datum prevents a join to river levels or terrain.
 
 ---
 
@@ -118,3 +118,7 @@ GHSL GHS-BUILT-H R2023A (EC JRC, CC BY 4.0). Rail, waterways and landmarks
 air quality Open-Meteo / CAMS (CC BY 4.0, non-commercial free tier). Radar
 RainViewer. Satellite layers NASA GIBS / LANCE and JMA Himawari. Storms GDACS.
 See `THIRD_PARTY_NOTICES.md`.
+
+## Integrated design rules · 18 October 2026
+
+`AGENTS.md` and `docs/ANTI-SLOP-DESIGN.md` adopt the owner-supplied seven-rule design standard. `npm run audit:design` runs inside the full test and release gate; it checks objective layout/font contracts and Research loading/unknown states. Responsive screenshots and an independent visual review remain mandatory. Research now uses the city’s two font families and Palette 267, a compact contents row, unboxed metrics, sequential calculations and an optional wind animation. All existing sections, source tables, canvases and map lenses remain. Release byte checks include the Research route, client, label placement module, shared theme and dashboard CSS.

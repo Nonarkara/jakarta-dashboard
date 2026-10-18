@@ -6,76 +6,82 @@
 <title>Cara dibuat · JKTx</title>
 <meta name="description" content="How the Jakarta atlas is built from open public data, satellites and arithmetic. Every figure is read from the files the site ships.">
 <link rel="icon" href="/brand/jktx-symbol-v2.png">
+<link rel="stylesheet" href="/jakarta-design.css?v=anti-slop-20261018">
+<script src="/theme.js"></script>
 <style>
-:root{--bg:#0f1b33;--raised:#16264a;--strong:#1e3260;--line:#8590ad;--ink:#f1e7d0;--dim:#c3bba7;--accent:#d8a24a;--lacquer:#c9644a;
-  --display:32px;--body:14px;--micro:11px;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,"Noto Sans Thai",sans-serif;--w:1080px}
-@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f1e7d0;--raised:#fbf5e6;--strong:#e5d8b8;--line:#776c58;--ink:#0f1b33;--dim:#3f4660;--accent:#7a3e1d;--lacquer:#9c3d24}}
+:root{--display:32px;--body:15px;--micro:12px;--sans:var(--font-sans);--mono:var(--font-sans);--strong:var(--bg-strong);--lacquer:var(--signal-alert,#c9644a);--w:1120px}
 *{box-sizing:border-box;margin:0;padding:0}
+html{scroll-padding-top:52px}
 html[data-lang="id"] [lang="en"]:not(html),html[data-lang="en"] [lang="id"]:not(html){display:none}
-body{background:var(--bg);color:var(--ink);font:var(--body)/1.55 var(--sans);-webkit-text-size-adjust:100%}
-a{color:var(--accent)}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+body{background:var(--bg);color:var(--ink);font:var(--body)/1.6 var(--sans);-webkit-text-size-adjust:100%;font-variant-numeric:tabular-nums}
+a{color:var(--accent);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .wrap{width:min(var(--w),calc(100% - 32px));margin:0 auto}
 .bar{border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:2}
-.bar .wrap{display:flex;align-items:center;gap:8px;min-height:48px}
-.bar .brand{font:700 var(--body) var(--sans);letter-spacing:.06em;color:var(--ink);text-decoration:none;margin-right:auto}
-.bar a,.bar button{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;font:var(--micro) var(--mono);text-transform:uppercase;letter-spacing:.08em;text-decoration:none}
-.bar button{background:none;border:1px solid var(--line);color:var(--ink);cursor:pointer}
-.eyebrow{font:var(--micro) var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--dim)}
-h1,h2{font:700 var(--display)/1.1 var(--sans);letter-spacing:-.01em;text-wrap:balance}
-h2{margin:0 0 12px}
-h3{font:700 var(--body) var(--sans)}
-section{padding:40px 0;border-bottom:1px solid var(--line)}
-.lede{max-width:68ch;color:var(--dim);margin-top:12px}
-.hero{display:grid;gap:24px;padding:32px 0 40px}
-.big{font:700 var(--display)/1 var(--mono);color:var(--accent)}
-.figures{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
-.figures div{padding:12px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
-.figures b{display:block;font:700 var(--body) var(--mono);color:var(--ink)}
-.figures span{font:var(--micro) var(--mono);color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
-.live{display:grid;gap:16px}
-.stage{position:relative;border:1px solid var(--line);background:var(--raised)}
-.stage{aspect-ratio:1/1;overflow:hidden}
+.bar .wrap{display:flex;align-items:center;gap:8px;min-height:36px}
+.bar .brand{font:var(--body) var(--font-display);color:var(--ink);text-decoration:none;margin-right:auto}
+.bar a,.bar button{display:inline-flex;align-items:center;min-height:30px;padding:3px 8px;font:600 var(--micro)/1.4 var(--sans);text-decoration:none}
+button{background:transparent;border:1px solid var(--line);color:var(--ink);cursor:pointer;font:inherit;padding:4px 8px}
+button:active{transform:scale(.97)}
+.eyebrow{font:600 var(--micro)/1.5 var(--sans);color:var(--dim)}
+h1{font:var(--display)/1.2 var(--font-display);text-wrap:balance;max-width:24ch}
+h2{font:650 var(--display)/1.2 var(--sans);letter-spacing:-.025em;text-wrap:balance;margin:0 0 16px;max-width:32ch}
+h3{font:650 var(--body)/1.4 var(--sans)}
+p{max-width:65ch}
+section{padding:32px 0;border-bottom:2px solid var(--line)}
+.lede{max-width:65ch;color:var(--dim);margin-top:12px}
+.hero{display:grid;gap:20px;padding:28px 0;align-items:end}
+.big{font:650 var(--display)/1.1 var(--sans);color:var(--ink);font-variant-numeric:tabular-nums}
+.figures{display:flex;flex-wrap:wrap;gap:12px 32px;padding:16px 0;border-bottom:1px solid var(--line)}
+.figures div{flex:0 1 auto}
+.figures b{display:block;font:650 var(--body)/1.4 var(--sans);color:var(--ink)}
+.figures span{font:var(--micro)/1.5 var(--sans);color:var(--dim)}
+.contents{display:flex;flex-wrap:wrap;gap:6px 20px;padding-top:16px;font-size:var(--micro)}
+.live{display:grid;gap:20px;align-items:start}
+.live>div{min-width:0}
+.stage{position:relative;background:var(--bg-raised);aspect-ratio:1/1;overflow:hidden}
 .stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.caption{font:var(--micro)/1.6 var(--mono);color:var(--dim)}
-.formula{font:var(--body)/1.7 var(--mono);color:var(--ink);background:var(--raised);border-left:2px solid var(--accent);padding:10px 12px;overflow-x:auto;white-space:pre}
-.pipe{list-style:none;display:grid;gap:0;counter-reset:s;border-top:1px solid var(--line)}
-.pipe li{display:grid;grid-template-columns:40px 1fr;gap:4px 12px;padding:12px 0;border-bottom:1px solid var(--line);counter-increment:s}
-.pipe li::before{content:counter(s,decimal-leading-zero);grid-row:1/4;font:var(--micro) var(--mono);color:var(--accent);padding-top:2px}
-.pipe code,.maths code,td code{font:var(--micro) var(--mono);color:var(--dim)}
+.stage[hidden]{display:none}
+.field-tools{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:8px;font-size:var(--micro)}
+.caption{font:var(--micro)/1.6 var(--sans);color:var(--dim);margin-top:8px;max-width:65ch}
+.formula{font:var(--body)/1.7 var(--sans);font-variant-numeric:tabular-nums;color:var(--ink);border-left:2px solid var(--accent);padding:6px 12px;overflow-x:auto;white-space:pre;max-width:100%}
+.pipe{list-style:none;display:grid;gap:0;counter-reset:s}
+.pipe li{display:grid;grid-template-columns:3ch minmax(0,1fr);gap:4px 12px;padding:12px 0;border-top:1px solid var(--line);counter-increment:s;min-width:0}
+.pipe li::before{content:counter(s,decimal-leading-zero);grid-row:1/4;font:600 var(--micro)/1.8 var(--sans);color:var(--accent)}
+.pipe code,.maths code,td code{font:var(--micro)/1.5 var(--sans);color:var(--dim);overflow-wrap:anywhere}
 .table{overflow-x:auto;border-top:1px solid var(--line)}
 table{border-collapse:collapse;width:100%;min-width:560px}
-th,td{text-align:left;vertical-align:top;padding:8px 12px 8px 0;border-bottom:1px solid var(--line)}
-th{font:var(--micro) var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--dim);font-weight:400}
-.stack{display:flex;height:28px;border:1px solid var(--line);margin:8px 0}
+th,td{text-align:left;vertical-align:top;padding:8px 16px 8px 0;border-bottom:1px solid var(--line)}
+th{font:600 var(--micro)/1.5 var(--sans);color:var(--dim)}
+.stack{display:flex;height:20px;margin:12px 0}
 .stack i{display:block;height:100%;border-right:1px solid var(--bg)}
-.legend{list-style:none;display:grid;gap:4px;font:var(--micro) var(--mono);color:var(--dim)}
-.legend li{display:flex;gap:8px;align-items:center}
-.legend s{display:inline-block;width:10px;height:10px;text-decoration:none}
+.legend{list-style:none;display:grid;gap:4px;font:var(--micro)/1.6 var(--sans);color:var(--dim)}
+.legend li{display:flex;gap:8px;align-items:baseline}
+.legend s{display:inline-block;flex:none;width:10px;height:10px;text-decoration:none}
 .maths{display:grid;gap:24px}
-.maths article{display:grid;gap:8px}
-.rules{list-style:none;display:grid;border-top:1px solid var(--line)}
-.rules li{padding:12px 0;border-bottom:1px solid var(--line);display:grid;gap:4px}
-.status{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line);margin:12px 0}
-.status div{padding:12px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
-footer{padding:32px 0 48px;color:var(--dim)}
+.maths article{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:12px;min-width:0}
+.rules{list-style:none;display:grid}
+.rules li{padding:12px 0;border-top:1px solid var(--line);display:grid;gap:4px;max-width:65ch}
+.status{display:flex;flex-wrap:wrap;gap:16px 40px;margin:16px 0}
+.status div{flex:0 1 auto}
+footer{padding:24px 0;color:var(--dim)}
 @media (min-width:760px){
-  .hero{grid-template-columns:2fr 1fr;align-items:end}
-  .figures,.status{grid-template-columns:repeat(4,1fr)}
-  .live{grid-template-columns:2fr 1fr;align-items:start}
-  .maths{grid-template-columns:1fr 1fr}
-  .pipe{grid-template-columns:repeat(7,1fr);border-top:0}
-  .pipe li{grid-template-columns:1fr;border-bottom:0;border-top:2px solid var(--line);padding:12px 12px 0 0}
-  .pipe li::before{grid-row:auto}
+ .hero{grid-template-columns:minmax(0,2.4fr) minmax(0,1fr)}
+ .live{grid-template-columns:minmax(0,1.8fr) minmax(0,1fr)}
+ .pipe{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px}
+ .maths article{grid-template-columns:minmax(0,1fr) minmax(0,2.1fr);column-gap:32px}
+ .maths article h3{grid-column:1;grid-row:1/4}
+ .maths article>:not(h3){grid-column:2}
 }
-@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+@media (max-width:600px){.bar .wrap{gap:2px}.bar a,.bar button{padding:3px 6px}.hero{padding:24px 0}.live{gap:16px}section{padding:24px 0}.figures{gap:10px 24px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}button:active{transform:none}}
 </style>
 </head>
-<body>
+<body data-surface="jakarta-research">
 <header class="bar"><div class="wrap">
-  <a class="brand" href="/">JKTx</a>
-  <a href="/"><span lang="id">Dasbor</span><span lang="en">Dashboard</span></a>
-  <a href="/atlas">Atlas</a>
+  <a class="brand" data-city-link href="/">JKTx</a>
+  <a data-city-link href="/"><span lang="id">Dasbor</span><span lang="en">Dashboard</span></a>
+  <a data-city-link href="/atlas">Atlas</a>
   <button type="button" id="lang" aria-label="Switch language"><span lang="id">English</span><span lang="en">Bahasa</span></button>
 </div></header>
 
@@ -84,7 +90,7 @@ footer{padding:32px 0 48px;color:var(--dim)}
     <div>
       <p class="eyebrow"><span lang="id">Riset · metode</span><span lang="en">Research · method</span></p>
       <h1><span lang="id">Cara atlas ini dibuat</span><span lang="en">How this atlas is built</span></h1>
-      <p class="lede"><span lang="id">Data publik terbuka, produk satelit, dan beberapa halaman aritmetika. Setiap angka di halaman ini dibaca dari berkas yang dikirim situs ini atau dari API langsungnya, saat Anda membukanya. Tidak ada yang diketik tangan.</span><span lang="en">Open public data, satellite products and a few pages of arithmetic. Every number on this page is read from the files this site ships, or from its live API, at the moment you open it. None of it is typed in by hand.</span></p>
+      <p class="lede"><span lang="id">Baca kota melalui buktinya. Jumlah arsip berasal dari berkas yang dikirim situs ini; diagram kerja memakai data model atlas. Ikuti setiap perhitungan, sumber dan batasannya.</span><span lang="en">Read the city through its evidence. Archive counts come from the files this site ships; the working diagram uses the atlas’s model data. Follow each calculation, its source and its limits.</span></p>
     </div>
     <div>
       <p class="big" id="fig-buildings">—</p>
@@ -93,17 +99,19 @@ footer{padding:32px 0 48px;color:var(--dim)}
   </section>
 
   <div class="figures" id="figures" aria-live="polite"></div>
+  <nav class="contents" aria-label="Research sections"><a href="#h-live"><span lang="id">Diagram kerja</span><span lang="en">Working diagram</span></a><a href="#h-pipe"><span lang="id">Proses</span><span lang="en">Process</span></a><a href="#h-sat"><span lang="id">Satelit</span><span lang="en">Satellites</span></a><a href="#h-maths"><span lang="id">Perhitungan</span><span lang="en">Calculations</span></a><a href="#h-src"><span lang="id">Sumber</span><span lang="en">Sources</span></a></nav>
 
   <section aria-labelledby="h-live">
     <p class="eyebrow"><span lang="id">Langsung · model Open-Meteo</span><span lang="en">Live · Open-Meteo model</span></p>
     <h2 id="h-live"><span lang="id">Matematika yang sedang berjalan</span><span lang="en">The maths, running now</span></h2>
     <div class="live">
       <div>
-        <div class="stage"><canvas id="field" width="720" height="720" role="img" aria-label="Isobars, 850 hPa air flow and a 24 hour trajectory from Jakarta"></canvas><canvas id="flow" width="720" height="720" aria-hidden="true"></canvas></div>
-        <p class="caption" id="live-caption">…</p>
+        <div class="stage" hidden><canvas id="field" width="720" height="720" role="img" aria-label="Isobars, 850 hPa air flow and a 24 hour trajectory from Jakarta"></canvas><canvas id="flow" width="720" height="720" aria-hidden="true"></canvas></div>
+        <div class="field-tools"><button id="field-motion" type="button" aria-pressed="false" disabled><span lang="id">Putar angin</span><span lang="en">Play wind</span></button><a data-city-link href="/atlas?lens=rain"><span lang="id">Buka di peta ↗</span><span lang="en">Open on the map ↗</span></a></div>
+        <p class="caption" id="live-caption" role="status"><span lang="id">Memuat medan model…</span><span lang="en">Loading the model field…</span></p>
       </div>
       <div>
-        <p><span lang="id">Medan ini dihitung di peramban Anda, dari sel model yang sama yang digunakan lensa hujan dan kabut di atlas. Garis tipis adalah isobar tekanan permukaan laut setiap 2 hPa. Partikel bergerak mengikuti angin 850 hPa (sekitar 1,5 km di atas tanah). Garis emas adalah lintasan sebuah parsel udara yang dilepas dari Jakarta sekarang, dengan tanda setiap 6 jam.</span><span lang="en">This field is computed in your browser, from the same model cells the atlas rain and haze lenses use. Thin lines are sea-level isobars every 2 hPa. Particles move with the 850 hPa wind (about 1.5 km up). The gold line is the path of one air parcel released from Jakarta now, marked every 6 hours.</span></p>
+        <p><span lang="id">Medan ini dihitung di peramban Anda, dari sel model yang sama yang digunakan lensa hujan dan kabut di atlas. Garis tipis adalah isobar tekanan permukaan laut setiap 2 hPa. Partikel bergerak mengikuti angin 850 hPa (sekitar 1,5 km di atas tanah). Garis emas adalah lintasan sebuah parsel udara yang dilepas dari Jakarta sekarang, dengan tanda setiap 6 jam; label waktu ditempatkan jika ruang mencukupi.</span><span lang="en">This field is computed in your browser, from the same model cells the atlas rain and haze lenses use. Thin lines are sea-level isobars every 2 hPa. Particles move with the 850 hPa wind (about 1.5 km up). The gold line is the path of one air parcel released from Jakarta now, marked every 6 hours; time labels are placed where they fit.</span></p>
         <p class="formula" style="margin-top:12px">θ = from + 180°
 u = s · sin θ     v = s · cos θ
 Δφ = v·Δt / 110.574 km
@@ -129,7 +137,7 @@ u = s · sin θ     v = s · cos θ
   <section aria-labelledby="h-sat">
     <h2 id="h-sat"><span lang="id">Satelit dan instrumen</span><span lang="en">Satellites and instruments</span></h2>
     <p class="lede"><span lang="id">Citra dibaca dari NASA GIBS dan JMA, dengan tanggal terbit masing-masing. Tanggal yang belum terjadi tidak pernah ditampilkan sebagai terkini. Piksel kosong bukan tanda aman.</span><span lang="en">Imagery is read from NASA GIBS and JMA, each with its own publication date. A date that has not happened yet is never shown as current. A missing pixel is not an all-clear.</span></p>
-    <div class="table" style="margin-top:16px"><table>
+    <div class="table" style="margin-top:16px" role="region" aria-labelledby="h-sat" tabindex="0"><table>
       <thead><tr><th><span lang="id">Produk</span><span lang="en">Product</span></th><th><span lang="id">Wahana · sensor</span><span lang="en">Platform · sensor</span></th><th><span lang="id">Resolusi</span><span lang="en">Resolution</span></th><th><span lang="id">Yang ditunjukkan</span><span lang="en">What it shows</span></th></tr></thead>
       <tbody>
         <tr><td><span lang="id">Deteksi termal</span><span lang="en">Thermal detections</span></td><td>NOAA-20 VIIRS · FIRMS</td><td>375 m</td><td><span lang="id">Titik panas 24 jam, daya radiatif api (MW). Deteksi, bukan kebakaran terkonfirmasi.</span><span lang="en">24 h hotspots, fire radiative power (MW). A detection, not a confirmed fire.</span></td></tr>
@@ -138,7 +146,7 @@ u = s · sin θ     v = s · cos θ
         <tr><td><span lang="id">Indeks aerosol UV</span><span lang="en">UV aerosol index</span></td><td>NOAA-20 OMPS</td><td>12 × 17 km</td><td><span lang="id">Aerosol penyerap seperti asap, juga di atas awan.</span><span lang="en">Absorbing aerosol such as smoke, also above cloud.</span></td></tr>
         <tr><td><span lang="id">Aerosol MODIS</span><span lang="en">MODIS aerosol</span></td><td>Terra MODIS</td><td>10 km</td><td><span lang="id">Kedalaman optik aerosol harian.</span><span lang="en">Daily aerosol optical depth.</span></td></tr>
         <tr><td><span lang="id">Air permukaan</span><span lang="en">Surface water</span></td><td>Terra + Aqua MODIS</td><td>250 m</td><td><span lang="id">Komposit banjir 3 hari.</span><span lang="en">3-day flood composite.</span></td></tr>
-        <tr><td><span lang="id">Cahaya malam</span><span lang="en">Night lights</span></td><td>NOAA-20 VIIRS DNB · Black Marble</td><td>500 m</td><td><span lang="id">Radiansi harian terkoreksi, dibandingkan dengan komposit 2016.</span><span lang="en">Corrected daily radiance, compared with the 2016 composite.</span></td></tr>
+        <tr><td><span lang="id">Cahaya malam</span><span lang="en">Night lights</span></td><td>NOAA-20 VIIRS DNB · Black Marble</td><td><span lang="id">750 m sensor · citra 500 m</span><span lang="en">750 m sensor · 500 m imagery</span></td><td><span lang="id">Radiansi harian terkoreksi, dibandingkan dengan komposit 2016.</span><span lang="en">Corrected daily radiance, compared with the 2016 composite.</span></td></tr>
         <tr><td><span lang="id">Hujan satelit</span><span lang="en">Satellite rain</span></td><td>GPM IMERG</td><td>0.1°</td><td><span lang="id">Laju dalam mm/jam, bukan akumulasi harian.</span><span lang="en">Rate in mm/h, not a daily total.</span></td></tr>
         <tr><td><span lang="id">Puncak awan</span><span lang="en">Cloud tops</span></td><td>Himawari AHI band 13</td><td>2 km</td><td><span lang="id">Suhu kecerahan (K), bingkai 10 menit, maksimal 3 jam lalu.</span><span lang="en">Brightness temperature (K), 10-minute frames, at most 3 h old.</span></td></tr>
         <tr><td>NDVI</td><td>NOAA-20 VIIRS</td><td>~450 m</td><td><span lang="id">Indeks vegetasi 8 hari, produk NASA.</span><span lang="en">8-day vegetation index, NASA's product.</span></td></tr>
