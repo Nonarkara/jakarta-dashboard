@@ -174,3 +174,84 @@ console.log('PASS air lens slim panel, folded CAMS, phone chip, ID/EN AOD note')
   assert.match(client, /\$\{tail\}/, 'the compass label prints the time it derived');
   console.log('PASS wind compass: vector mean, calm, compass points, km/h, valid time');
 }
+
+// ── The controller must refuse a stale check ───────────────────────────────
+// An import in the source proves the rule is referenced, not that the lens
+// still calls it. Driving the real controller is the only thing that tells.
+{
+  const realDate = Date, realFetch = globalThis.fetch, realDocument = globalThis.document;
+  const now = Date.UTC(2026, 9, 19, 3, 20);
+  const hour = Math.floor(now / 3600000) * 3600000;
+  const hours = [hour - 2 * 3600000, hour - 3600000, hour, hour + 3600000, hour + 2 * 3600000].map((h) => new Date(h).toISOString());
+  const cells = [-6.15, -6.35].flatMap((lat) => [106.7, 106.9].map((lng) => ({
+    lat, lng,
+    hours: hours.map(() => ({ validAt: 'x', windMs: 2.5, windFromDeg: 140 })),
+  })));
+  const envelope = (over = {}) => ({
+    available: true, contract: 'wind-field-v1', requestedPoints: 4, cellCount: 4,
+    spacingKm: 20, checkedAt: new Date(now).toISOString(), hours, cells, ...over,
+  });
+
+  const node = (tag = 'DIV') => ({
+    tagName: tag, className: '', textContent: '', dataset: {}, children: [],
+    append(...c) { this.children.push(...c); }, setAttribute() {}, addEventListener() {},
+    replaceChildren() { this.children.length = 0; }, querySelector: () => null, querySelectorAll: () => [],
+  });
+  const stubBody = () => { const b = node(); b.querySelector = () => null; return b; };
+  const stubMap = () => {
+    const layers = new Map(), sources = new Map();
+    return {
+      layers, sources, zoom: 9,
+      getZoom: () => 9, getLayer: (id) => layers.get(id) || null, getSource: (id) => sources.get(id) || null,
+      addLayer(l) { layers.set(l.id, l); }, addSource(id, s) { sources.set(id, s); },
+      removeLayer(id) { layers.delete(id); }, removeSource(id) { sources.delete(id); },
+      setPaintProperty() {}, on() {}, off() {},
+    };
+  };
+  globalThis.document = {
+    createElement(tag) { return node(String(tag).toUpperCase()); },
+    addEventListener() {}, removeEventListener() {}, hidden: false,
+    getElementById: () => null, querySelector: () => null, querySelectorAll: () => [],
+  };
+  globalThis.window = globalThis.window || { addEventListener() {}, removeEventListener() {} };
+  globalThis.Date = class extends realDate { static now() { return now; } };
+
+  try {
+    let payload = envelope();
+    globalThis.fetch = async (url) => String(url).includes('/api/atlas/wind-field')
+      ? { ok: true, json: async () => payload }
+      : { ok: true, json: async () => null };
+
+    // Control: a current envelope really does draw. Without this, every
+    // assertion below would also pass against a controller that draws nothing.
+    const live = stubMap(), liveBody = stubBody();
+    const liveCtl = mod.createWindField(live, { text: (en) => en, active: () => 'air', buildTag: 'test' });
+    liveCtl.show(liveBody);
+    await new Promise((r) => setTimeout(r, 30));
+    assert.ok(live.layers.size > 0, 'a current envelope draws the wind layer');
+    liveCtl.clear();
+
+    payload = envelope({ checkedAt: new Date(now - 60 * 60 * 1000).toISOString() });
+    const map = stubMap(), body = stubBody();
+    const ctl = mod.createWindField(map, { text: (en) => en, active: () => 'air', buildTag: 'test' });
+    ctl.show(body);
+    await new Promise((r) => setTimeout(r, 30));
+    assert.equal(map.layers.size, 0, 'a model check older than ten minutes draws no wind layer');
+    assert.ok(JSON.stringify(body.children).includes('older than 10 minutes'),
+      'and the panel states the check is stale, in English');
+    ctl.clear();
+
+    payload = envelope({ checkedAt: new Date(now + 60 * 60 * 1000).toISOString() });
+    const ahead = stubMap(), aheadBody = stubBody();
+    const aheadCtl = mod.createWindField(ahead, { text: (en) => en, active: () => 'air', buildTag: 'test' });
+    aheadCtl.show(aheadBody);
+    await new Promise((r) => setTimeout(r, 30));
+    assert.equal(ahead.layers.size, 0, 'a source clock ahead of the viewer draws nothing');
+    aheadCtl.clear();
+  } finally {
+    globalThis.fetch = realFetch;
+    if (realDocument === undefined) delete globalThis.document; else globalThis.document = realDocument;
+    globalThis.Date = realDate;
+  }
+  console.log('PASS wind controller refuses a stale or future check without drawing');
+}

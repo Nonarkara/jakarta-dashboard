@@ -362,7 +362,7 @@ const realFetch = globalThis.fetch;
 const realDocument = globalThis.document;
 // The module builds nodes with document.createElement. Node has no DOM, so the
 // stub is just enough to exercise the real render path.
-globalThis.document = {
+const documentStub = {
   createElement(tag) {
     return {
       tagName: String(tag).toUpperCase(), className: '', textContent: '', dataset: {}, children: [],
@@ -371,9 +371,29 @@ globalThis.document = {
     };
   },
 };
+globalThis.document = documentStub;
+// The fixture is a frozen snapshot, so as time passes it stops covering "now"
+// and the admission rule correctly refuses it. Re-stamp the whole envelope onto
+// the current hour window so the drawing path is exercised: every timestamp
+// keeps its exact offset from the first hour, so the shape of the field is
+// untouched and only its position in time moves.
+function restamp(base, now = Date.now()) {
+  const first = Date.parse(base.hours[0]);
+  const delta = Math.floor(now / 3600000) * 3600000 - first;
+  const shift = (v) => new Date(Date.parse(v) + delta).toISOString();
+  return {
+    ...base,
+    checkedAt: new Date(now).toISOString(),
+    hours: base.hours.map(shift),
+    cells: base.cells.map((c) => ({
+      ...c,
+      hours: c.hours.map((h) => ({ ...h, validAt: shift(h.validAt) })),
+    })),
+  };
+}
 globalThis.fetch = async (url) => {
   if (String(url).includes('/api/atlas/synoptic')) {
-    return { ok: true, json: async () => JSON.parse(read('test/fixtures/synoptic-response.json')) };
+    return { ok: true, json: async () => restamp(JSON.parse(read('test/fixtures/synoptic-response.json'))) };
   }
   return { ok: false, json: async () => ({ available: false }) };
 };
@@ -517,6 +537,54 @@ assert.equal(mod.ISOBAR_STEP_HPA, 1, '1 hPa: a 4 hPa step draws one line or none
   assert.ok(withPressure.every((h) => h.levels >= 1), 'every hour yields at least one isobar at the shipped interval, so the lens is never silently empty');
   assert.ok(withPressure.some((h) => h.levels >= 3), 'and at least some hours yield a readable field of three or more isobars');
   assert.ok(withPressure.reduce((s, h) => s + h.lines, 0) > 0, 'the field produces drawn lines, not just levels');
+}
+
+// ── A stale envelope must not draw, and must say why ───────────────────────
+// The import above proves the module is referenced, not that the lens still
+// calls it. Only driving the real controller can tell the difference.
+{
+  const base = JSON.parse(read('test/fixtures/synoptic-response.json'));
+  const fresh = restamp(base);
+  const realFetch = globalThis.fetch;
+  const realDocHere = globalThis.document;
+  globalThis.document = documentStub;
+  try {
+    let payload = fresh;
+    globalThis.fetch = async (url) => String(url).includes('/api/atlas/synoptic')
+      ? { ok: true, json: async () => payload }
+      : { ok: false, json: async () => ({ available: false }) };
+
+    // Control: the same fixture, current, does draw.
+    const live = stubMap(), liveBody = stubBody();
+    const liveCtl = mod.createSynoptic(live, { text: (en) => en, active: () => 'rain', buildTag: 'test' });
+    liveCtl.show(liveBody);
+    await new Promise((r) => setTimeout(r, 30));
+    liveCtl.render(liveBody);
+    assert.ok(live.layers.has('synoptic-isobars'), 'a current envelope draws isobars');
+    liveCtl.clear();
+
+    // One hour past the admission window: nothing may draw.
+    payload = { ...fresh, checkedAt: new Date(Date.now() - 60 * 60 * 1000).toISOString() };
+    const map = stubMap(), body = stubBody();
+    const ctl = mod.createSynoptic(map, { text: (en) => en, active: () => 'rain', buildTag: 'test' });
+    ctl.show(body);
+    await new Promise((r) => setTimeout(r, 30));
+    ctl.render(body);
+    assert.equal(map.layers.size, 0, 'an expired model check draws no isobar, wind or low layer');
+    assert.ok(JSON.stringify(body.children).includes('older than 10 minutes'),
+      'and the panel states the check is older than ten minutes, in English');
+    ctl.clear();
+
+    // A payload whose own clock is ahead of the viewer.
+    payload = { ...fresh, checkedAt: new Date(Date.now() + 60 * 60 * 1000).toISOString() };
+    const ahead = stubMap(), aheadBody = stubBody();
+    const aheadCtl = mod.createSynoptic(ahead, { text: (en) => en, active: () => 'rain', buildTag: 'test' });
+    aheadCtl.show(aheadBody);
+    await new Promise((r) => setTimeout(r, 30));
+    aheadCtl.render(aheadBody);
+    assert.equal(ahead.layers.size, 0, 'a source clock ahead of the viewer draws nothing');
+    ctl.clear(); aheadCtl.clear();
+  } finally { globalThis.fetch = realFetch; globalThis.document = realDocHere; }
 }
 
 console.log('test-synoptic: ok');

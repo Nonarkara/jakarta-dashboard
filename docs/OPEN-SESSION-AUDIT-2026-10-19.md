@@ -19,7 +19,7 @@ Research was exercised in both languages: playing then refreshing stops old moti
 
 This release improves temporal correctness; it does not increase the model grid resolution or establish calibrated hydraulic/pollution forecasting. Other atlas lenses still fetch on reopening. No claim that every public dataset has been exhausted. No Cloudflare account rule or Dependabot mode was changed. TypeScript remains 5.9.3. Palette 267, CTAN Universa/Source Sans 3, compact chrome and every existing map/data layer are preserved.
 
-Verified lesson: Scars/Debug-Logs/2026-10-19-wind-transport-must-integrate-partial-hours-and-preserve-missing-hour-time-slots.md.
+Verified lessons: `Scars/Debug-Logs/2026-10-19-wind-transport-must-integrate-partial-hours-and-preserve-missing-hour-time-slots.md`, and the follow-on audit in `Scars/Debug-Logs/2026-10-19-temporal-admission-must-anchor-to-the-exact-hour.md` (the same neighbour-borrow rule survived in three more lenses and now has one shared admission module).
 
 ## Live release receipt
 

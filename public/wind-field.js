@@ -18,6 +18,8 @@ const TAU = Math.PI * 2;
 
 // Arrowhead at the TOWARD end: the data stays FROM-bearing (meteorological
 // convention); only the drawing points where the air is going.
+import { admitModel, currentHourIndex, admissionMessage, scrubGapMessage } from './temporal-admission.js';
+
 export function arrowHead(shaft) {
   const [[x0, y0], [x1, y1]] = shaft.geometry.coordinates;
   const lat = (y0 + y1) / 2, kx = 111.32 * Math.cos(lat * Math.PI / 180), ky = 110.57;
@@ -85,7 +87,7 @@ export function sampleField(cells, lng, lat) {
 }
 
 export function createWindField(map, { text: t, active, buildTag, flow }) {
-  let wind = null, air = null, epoch = 0;
+  let wind = null, air = null, epoch = 0, refusal = null;
   let timer = null, source = null, layer = null, markers = null, frameNodes = [];
   let reduced = false, hiddenListener = null;
   const panel = { playing: false, index: 0 };
@@ -107,13 +109,16 @@ export function createWindField(map, { text: t, active, buildTag, flow }) {
     }).filter(Boolean);
   }
 
+  // The panel opens on the current hour, never on the closest one. -1 means no
+  // current hour: the panel states the gap and leaves the scrub on real hours.
   function currentIndex() {
-    if (!wind?.hours?.length) return 0;
-    const now = Date.now();
-    let best = 0, bestDelta = Infinity;
-    wind.hours.forEach((h, i) => { const d = Math.abs(Date.parse(h) - now); if (d < bestDelta) { bestDelta = d; best = i; } });
-    return best;
+    return currentHourIndex(wind?.hours, Date.now());
   }
+
+  const refused = () => {
+    const r = refusal;
+    return !!(r && r !== 'no-current-hour');
+  };
 
   function stop() {
     if (timer !== null) clearInterval(timer);
@@ -178,7 +183,7 @@ export function createWindField(map, { text: t, active, buildTag, flow }) {
   }
 
   function drawField(index) {
-    if (!map || active() !== 'air') return;
+    if (!map || active() !== 'air' || refused()) return;
     const cells = cellsAt(index);
     if (!cells.length) { hide(); return; }
     const hour = wind.hours[index];
@@ -263,14 +268,23 @@ export function createWindField(map, { text: t, active, buildTag, flow }) {
     body.querySelector('#wind-field-section')?.remove();
     const section = el('div', undefined, 'air-timeline wind-field');
     section.id = 'wind-field-section';
+    // A refusal is stated, not left to look like a pending load.
+    // A dead provider keeps this lens's own wording, which names the wind and the
+    // calm it refuses to imply. Staleness and gaps get the shared reason, which
+    // names the clock.
+    if (refusal) {
+      const text = refusal === 'unavailable'
+        ? t('The wind model is unavailable. No wind is drawn and no calm is implied.', 'Model angin tidak tersedia. Angin tidak digambar dan kondisi tenang tidak disimpulkan.')
+        : refusal === 'no-current-hour' ? scrubGapMessage(t) : admissionMessage(refusal, t);
+      section.append(el('p', text, 'note'));
+      body.append(section); return;
+    }
     if (!wind) {
       section.append(el('p', t('Loading the wind model…', 'Memuat model angin…'), 'note'));
       body.append(section); return;
     }
-    if (!wind.available) {
-      section.append(el('p', t('The wind model is unavailable. No wind is drawn and no calm is implied.', 'Model angin tidak tersedia. Angin tidak digambar dan kondisi tenang tidak disimpulkan.'), 'note'));
-      body.append(section); return;
-    }
+    // An admitted envelope is available and carries cells, so the older
+    // !available guard is now unreachable. One admission rule, not two.
     section.append(el('h3', t('Wind field · 10 m', 'Medan angin · 10 m')));
     // The server's cellNote is the authoritative contract text, but it is English
     // and this page defaults to Bahasa. Say it in the reader's language and keep
@@ -305,14 +319,14 @@ export function createWindField(map, { text: t, active, buildTag, flow }) {
     reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
     hiddenListener = () => { if (document.hidden) stop(); };
     document.addEventListener('visibilitychange', hiddenListener);
-    panel.index = currentIndex();
+    panel.index = Math.max(0, currentIndex());
     drawField(panel.index);
   }
 
   function show(body) {
     hide();
     const myEpoch = ++epoch;
-    wind = null; render(body);
+    wind = null; refusal = null; render(body);
     const pending = [
       fetch('/api/atlas/wind-field' + (buildTag ? '?v=' + encodeURIComponent(buildTag) : ''), { headers: { accept: 'application/json' }, signal: AbortSignal.timeout(12000) })
         .then((r) => (r.ok ? r.json() : { available: false })).catch(() => ({ available: false })),
@@ -321,13 +335,19 @@ export function createWindField(map, { text: t, active, buildTag, flow }) {
     ];
     Promise.all(pending).then(([w, a]) => {
       if (myEpoch !== epoch) return;
-      wind = w; air = a;
+      // Same admission the synoptic and research lenses apply. A stale envelope
+      // must not draw a wind field that reads as describing this hour.
+      const admission = admitModel(w);
+      wind = admission.ok ? w : null;
+      refusal = admission.ok ? null : admission.reason;
+      air = a;
       render(body);
     });
   }
 
   function clear() {
     epoch++;
+    wind = null; air = null; refusal = null;
     stop();
     hide();
     if (hiddenListener) { document.removeEventListener('visibilitychange', hiddenListener); hiddenListener = null; }

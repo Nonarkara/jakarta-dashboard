@@ -1,10 +1,9 @@
 // Research is a current view, not an indefinitely retained forecast snapshot.
+// The admission rule itself lives in temporal-admission.js so every live lens
+// answers "is this current?" identically.
+import { admitModel } from './temporal-admission.js';
 export function currentResearchField(data, now = Date.now()) {
-  const checked=Date.parse(data?.checkedAt);
-  const hour=Math.floor(now/3600000)*3600000;
-  return data?.available===true && Number.isFinite(checked) && checked<=now+300000 && now-checked<=600000
-    && Array.isArray(data.cells) && data.cells.length>0 && Array.isArray(data.hours)
-    && data.hours.some(t=>Date.parse(t)===hour);
+  return admitModel(data, now).ok;
 }
 // FIRMS has a FeatureCollection/fetchedAt contract, not the model's envelope.
 export function researchFires(data, now=Date.now()) {

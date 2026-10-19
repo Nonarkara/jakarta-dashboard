@@ -95,6 +95,8 @@ function clusterBy(values, tol) {
   return out.sort((a, b) => a.mean - b.mean);
 }
 
+import { admitModel, currentHourIndex, admissionMessage, scrubGapMessage } from './temporal-admission.js';
+
 export function gridOf(cells) {
   const usable = (cells || []).filter((c) => Number.isFinite(c?.lat) && Number.isFinite(c?.lng) && Number.isFinite(c.mslpHpa));
   if (!usable.length) return [];
@@ -251,7 +253,7 @@ export function createSynoptic(map, { text: t, active, buildTag, flow }) {
   const activeIsOneOf = () => PAINTS_ON.includes(active());
   let data = null, epoch = 0;
   let source = null, isoLayer = null, windLayer = null, lowLayer = null, lowLabelLayer = null;
-  const state = { index: 0, isobars: true, wind850: true };
+  const state = { index: 0, isobars: true, wind850: true, admission: null };
   let lastBody = null, drawnLastRender = null, zoomListener = null;
 
   const el = (tag, content, cls) => { const n = document.createElement(tag); if (content !== undefined) n.textContent = content; if (cls) n.className = cls; return n; };
@@ -261,13 +263,19 @@ export function createSynoptic(map, { text: t, active, buildTag, flow }) {
   // view carries a different layer set. Only anchor to a layer we can see.
   const anchor = () => map.getLayer('network-water-lines') ? 'network-water-lines' : undefined;
 
-  function nearestIndex() {
-    if (!data?.hours?.length) return 0;
-    const now = Date.now();
-    let best = 0, delta = Infinity;
-    data.hours.forEach((h, i) => { const d = Math.abs(Date.parse(h) - now); if (d < delta) { delta = d; best = i; } });
-    return best;
+  // The panel opens on the current hour, never on a neighbour. Picking the
+  // closest hour would let a model that does not cover now be drawn as if it
+  // did — the same silent borrow the research lens was fixed for. -1 means
+  // "no current hour"; the panel says so and leaves the scrub for real hours.
+  function currentIndex() {
+    return currentHourIndex(data?.hours, Date.now());
   }
+
+  // A refusal is absolute; a gap is not (see scrubGapMessage).
+  const refused = () => {
+    const r = state.admission;
+    return !!(r && !r.ok && r.reason !== 'no-current-hour');
+  };
 
   function hide() {
     // The label is a layer too. Leaving it behind points an "L 961" label at a
@@ -279,7 +287,7 @@ export function createSynoptic(map, { text: t, active, buildTag, flow }) {
   }
 
   function draw() {
-    if (!map || !activeIsOneOf() || !data?.cells?.length) { hide(); return; }
+    if (!map || !activeIsOneOf() || !data?.cells?.length || refused()) { hide(); return; }
     // A contour between two cells 174 km apart says nothing about the 300 m in
     // front of it. At a city zoom the field would draw a fragmentary line
     // across a neighbourhood and imply it meant something there, so the layers
@@ -379,6 +387,17 @@ export function createSynoptic(map, { text: t, active, buildTag, flow }) {
       host.append(el('p', t('The pressure model returned no usable field. No isobar is drawn and no low is implied.', 'Model tekanan tidak mengembalikan medan yang dapat dipakai. Tidak ada isobar yang digambar dan tidak ada rendah yang diasumsikan.'), 'synoptic-note'));
       return;
     }
+    // A stale envelope is not drawn at all. A fresh envelope that simply does
+    // not cover this hour still has real, time-labelled forecast hours worth
+    // exploring, so it draws with the gap stated instead of a silent neighbour.
+    const refusal = state.admission && !state.admission.ok ? state.admission.reason : null;
+    if (refusal && refusal !== 'no-current-hour') {
+      host.append(el('p', admissionMessage(refusal, t), 'synoptic-note'));
+      return;
+    }
+    if (refusal === 'no-current-hour') {
+      host.append(el('p', scrubGapMessage(t), 'synoptic-note'));
+    }
     const hour = data.hours[state.index];
     const section = el('section', undefined, 'synoptic-panel');
 
@@ -461,7 +480,7 @@ export function createSynoptic(map, { text: t, active, buildTag, flow }) {
   function show(body) {
     hide();
     const myEpoch = ++epoch;
-    data = null; state.index = 0; state.isobars = true; state.wind850 = true;
+    data = null; state.index = 0; state.isobars = true; state.wind850 = true; state.admission = null;
     lastBody = body;
     if (!zoomListener) {
       // The note that says the field is not drawn has to follow the camera.
@@ -484,7 +503,11 @@ export function createSynoptic(map, { text: t, active, buildTag, flow }) {
       .then((d) => {
         if (myEpoch !== epoch) return;
         data = d;
-        state.index = nearestIndex();
+        // One admission rule, shared with every other live lens. A stale or
+        // hour-less envelope is recorded with its reason and never drawn as now.
+        const admission = admitModel(d);
+        state.admission = admission;
+        state.index = admission.ok ? admission.index : Math.max(0, currentIndex());
         draw();
         render(body);
       });

@@ -167,9 +167,12 @@ globalThis.fetch = async (url) => {
   return { ok: false, json: async () => ({ available: false }) };
 };
 try {
-  // Pin "now" to three hours before the fixture ends (two steps left): a wall-clock test passes on the day
-  // the fixture was captured and fails forever after.
-  globalThis.Date = class extends realDate { static now() { return realDate.parse(synFixture.hours.at(-3)); } };
+  // Pin "now" to the moment the payload says it was checked: a wall-clock test
+  // passes on the day the fixture was captured and fails forever after. The
+  // clock must agree with the payload's own checkedAt — a model stamped ahead
+  // of the viewer is refused as a future source, and that guard is the point.
+  // Three forecast hours (09, 10, 11) remain, which is what the scrub covers.
+  globalThis.Date = class extends realDate { static now() { return realDate.parse(synFixture.checkedAt); } };
   // The haze lens draws it; no other lens does.
   for (const lens of ['haze', 'rain', 'green']) {
     const map = stubMap();
@@ -217,6 +220,9 @@ try {
 {
   const longFixture = {
     available: true, contract: 'synoptic-v1', requestedPoints: 5, cellCount: 5, spacingKm: 174,
+    // Stamped to the instant this test pins "now" to, so the envelope agrees
+    // with its own clock. A payload with no checkedAt is not a current field.
+    checkedAt: new Date(Date.UTC(2026, 0, 1, 0)).toISOString().replace('.000Z', 'Z'),
     hours: Array.from({ length: 30 }, (_, i) => new Date(Date.UTC(2026, 0, 1, i)).toISOString().replace('.000Z', 'Z')),
     cells: [-8, -6, -4].flatMap((lat) => [100, 103, 106, 109, 112].map((lng) => ({
       lat, lng,
@@ -256,6 +262,26 @@ try {
     assert.equal(map.layers.size, 0, 'no wind field means no path drawn');
     assert.ok(JSON.stringify(body.children).includes('No path is drawn'),
       'and the panel says no path is drawn, in English');
+    ctl.clear();
+  }
+
+  // A model check older than the admission window is refused even though its
+  // hours still cover now. Only driving the controller proves the rule is
+  // called; an import in the source proves nothing.
+  {
+    const checkedAt = realDate.parse(synFixture.checkedAt);
+    globalThis.Date = class extends realDate { static now() { return checkedAt; } };
+    globalThis.fetch = async (url) => String(url).includes('/api/atlas/synoptic')
+      ? { ok: true, json: async () => ({ ...synFixture, checkedAt: new Date(checkedAt - 60 * 60 * 1000).toISOString() }) }
+      : { ok: true, json: async () => ({ type: 'FeatureCollection', fetchedAt: new Date(checkedAt).toISOString(), windowHours: 24, features: [] }) };
+    const map = stubMap();
+    const body = stubBody();
+    const ctl = mod.createHazeTransport(map, { text: (en) => en, active: () => 'haze', buildTag: 'test' });
+    ctl.show(body);
+    await new Promise((r) => setTimeout(r, 40));
+    assert.equal(map.layers.size, 0, 'a model check older than ten minutes draws no path');
+    assert.ok(JSON.stringify(body.children).includes('older than 10 minutes'),
+      'and the panel states the check is stale, in English');
     ctl.clear();
   }
 } finally {

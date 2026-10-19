@@ -42,6 +42,9 @@ function fieldBounds(cells) {
   return Number.isFinite(minLat) ? { minLat, maxLat, minLng, maxLng } : null;
 }
 
+import { admitModel, currentHourIndex, admissionMessage } from './temporal-admission.js';
+import { researchFires } from './research-session.js';
+
 export function insideField(bounds, lng, lat) {
   if (!bounds) return false;
   return lng >= bounds.minLng && lng <= bounds.maxLng && lat >= bounds.minLat && lat <= bounds.maxLat;
@@ -140,24 +143,21 @@ export function fireOrigins(features, bounds = null) {
 }
 
 export function createHazeTransport(map, { text: t, active, buildTag, flow }) {
-  let synoptic = null, fires = null, epoch = 0;
+  let synoptic = null, fires = null, epoch = 0, refusal = null;
   let source = null, pathLayer = null, seedLayer = null, hourLayer = null, lastBody = null, fitted = false;
   const state = { origins: 'jakarta', hours: 24 };
 
+  const currentIndex = () => currentHourIndex(synoptic?.hours, Date.now());
+
   const HOURS_AVAILABLE = () => {
     if (!synoptic?.hours?.length || !synoptic.available) return 0;
-    const now = Date.now();
-    let best = 0, delta = Infinity;
-    synoptic.hours.forEach((h, i) => { const d = Math.abs(Date.parse(h) - now); if (d < delta) { delta = d; best = i; } });
-    return Math.max(0, synoptic.hours.length - best - 1); // steps, not hours: N hours give N-1 steps
+    const at = currentIndex();
+    if (at < 0) return 0;
+    return Math.max(0, synoptic.hours.length - at - 1); // steps, not hours: N hours give N-1 steps
   };
-  const startIndex = () => {
-    if (!synoptic?.hours?.length) return 0;
-    const now = Date.now();
-    let best = 0, delta = Infinity;
-    synoptic.hours.forEach((h, i) => { const d = Math.abs(Date.parse(h) - now); if (d < delta) { delta = d; best = i; } });
-    return best;
-  };
+  // The parcel is released at the current hour. If the model does not cover it,
+  // the panel has already said so and nothing starts from a neighbour.
+  const startIndex = () => Math.max(0, currentIndex());
   // The wind, hoisted for one hour, the same shape the synoptic module builds.
   const cellsAt = (index) => (synoptic?.cells || [])
     .map((c) => {
@@ -262,12 +262,23 @@ export function createHazeTransport(map, { text: t, active, buildTag, flow }) {
     const section = el('section', undefined, 'transport-panel');
     section.append(el('strong', t('Where the wind would carry it', 'Ke mana angin akan membawanya'), 'synoptic-title'));
 
-    if (!synoptic) { host.append(section); section.append(el('p', t('Loading the wind model…', 'Memuat model angin…'), 'synoptic-note')); return; }
-    if (!synoptic.available || !synoptic.cells?.length) {
+    // A dead provider keeps this lens's own wording, which names the wind and the
+    // path. Staleness and gaps get the shared reason, which names the clock.
+    if (refusal === 'unavailable') {
       section.append(el('p', t('The wind model returned no usable field. No path is drawn and no transport is implied.', 'Model angin tidak mengembalikan medan yang dapat dipakai. Tidak ada jalur yang digambar dan tidak ada transportasi yang diasumsikan.'), 'synoptic-note'));
       host.append(section);
       return;
     }
+    // A refusal is stated, not left to look like a pending load.
+    if (refusal) {
+      section.append(el('p', admissionMessage(refusal, t), 'synoptic-note'));
+      host.append(section);
+      return;
+    }
+    if (!synoptic) { host.append(section); section.append(el('p', t('Loading the wind model…', 'Memuat model angin…'), 'synoptic-note')); return; }
+    // Nothing further to refuse: an admitted envelope is available and has cells,
+    // so the older !available / !cells guard is now unreachable. Removal keeps one
+    // admission rule rather than two that can disagree.
 
     const b = build();
     const available = HOURS_AVAILABLE();
@@ -323,7 +334,7 @@ export function createHazeTransport(map, { text: t, active, buildTag, flow }) {
   function show(body) {
     hide();
     const myEpoch = ++epoch;
-    synoptic = null; fires = null; fitted = false;
+    synoptic = null; fires = null; fitted = false; refusal = null;
     lastBody = body;
     renderPanel();
     const tag = buildTag ? '?v=' + encodeURIComponent(buildTag) : '';
@@ -331,13 +342,18 @@ export function createHazeTransport(map, { text: t, active, buildTag, flow }) {
       .then((r) => (r.ok ? r.json() : { available: false })).catch(() => ({ available: false }));
     Promise.all([get('/api/atlas/synoptic' + tag), get('/api/atlas/fires' + tag)]).then(([s, f]) => {
       if (myEpoch !== epoch) return;
-      synoptic = s; fires = f;
+      // Same admission the research lens applies, on the same two feeds. A
+      // stale envelope must not draw a path that reads as starting from now.
+      const admission = admitModel(s);
+      synoptic = admission.ok ? s : null;
+      refusal = admission.ok ? null : admission.reason;
+      fires = researchFires(f);
       draw(); fit(); renderPanel();
     });
   }
 
   function clear() {
-    epoch++; synoptic = null; fires = null; fitted = false; lastBody = null;
+    epoch++; synoptic = null; fires = null; fitted = false; refusal = null; lastBody = null;
     hide();
   }
 
