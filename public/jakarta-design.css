@@ -318,7 +318,10 @@ body.atlas-workbench .atlas-menu { margin:0; align-self:center; }
 body.atlas-workbench .atlas-menu > summary { min-height:30px; padding:4px 8px; font-size:12px; }
 body.atlas-workbench .atlas-menu-body { z-index:65; width:min(360px,calc(100vw - 16px)); }
 body.atlas-workbench .atlas-lens-story { display:none; }
-body.atlas-workbench .atlas-lenses { min-height:0; align-items:center; padding:0; gap:0; }
+/* The strip scrolls past the viewport edge with no affordance, so the last lens
+   was cut mid-word. The right-edge fade says "more to the right", and the
+   padding gives the final lens somewhere to land once scrolled fully. */
+body.atlas-workbench .atlas-lenses { min-height:0; align-items:center; padding:0 26px 0 0; gap:0; -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 26px),transparent 100%); mask-image:linear-gradient(to right,#000 calc(100% - 26px),transparent 100%); }
 body.atlas-workbench .atlas-lenses button { min-height:30px; padding:4px 8px; font-size:12px; }
 body.atlas-workbench #atlas-lens-evidence { position:sticky; left:0; order:-1; flex:none; background:var(--bg); z-index:60; margin:0; border:0; padding:0; }
 body.atlas-workbench #atlas-lens-evidence > summary { display:flex; align-items:center; min-height:30px; padding:4px 8px; font-size:12px; white-space:nowrap; cursor:pointer; border-right:1px solid var(--line); }
@@ -330,7 +333,7 @@ body.atlas-workbench #atlas-lens-evidence > summary { display:flex; align-items:
    (36 header + 36 lenses + 56), leaving 100svh - 208px before it would run off
    the bottom. That space is the real bound - 84svh only stops a long panel
    (flood monitoring carries 1812px) from swallowing a tall screen. */
-body.atlas-workbench .atlas-lens-popup { position:fixed; top:calc(var(--atlas-header-row) + var(--atlas-lenses-row) + 56px); left:8px; width:min(380px,calc(100vw - 16px)); max-height:min(84svh,calc(100svh - 208px)); overflow:auto; z-index:65; border:1px solid var(--line); background:var(--bg); }
+body.atlas-workbench .atlas-lens-popup { position:fixed; top:calc(var(--atlas-header-row) + var(--atlas-lenses-row) + 56px); left:8px; width:min(380px,calc(100vw - 16px)); max-height:min(84svh,calc(100svh - 208px)); overflow:auto; z-index:65; border:1px solid var(--line); background:var(--bg); padding-bottom:26px; -webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 26px),transparent 100%); mask-image:linear-gradient(to bottom,#000 calc(100% - 26px),transparent 100%); }
 body.atlas-workbench.atlas-embedded .atlas-lens-popup { top:var(--atlas-lenses-row); }
 body.atlas-workbench #atlas-lens-evidence[open] .atlas-lens-popup .atlas-lens-context { display:block; position:static; width:auto; padding:8px; border:0; border-bottom:1px solid var(--line); background:var(--bg-raised); }
 body.atlas-workbench .atlas-lens-context > * { display:block; font-size:12px; }

@@ -497,7 +497,9 @@ details[open] > .atlas-panel-summary::after { content: "-"; }
 .atlas-maturity { color: var(--amber); font-size: 11px; margin: 6px 0 0; }
 .atlas-data { padding: 18px 24px; border-top: 2px solid var(--line-bright); }
 .atlas-data h2 { font-size: 22px; margin: 0 0 8px; }
-.atlas-data p { max-width: 90ch; }
+/* 90ch rendered well past the 45–75 character law. 55ch matches the reading
+   measure the city design already uses. */
+.atlas-data p { max-width: 55ch; }
 .atlas-data details { border-top: 1px solid var(--line-bright); }
 .atlas-data summary { min-height: 44px; padding: 12px 0; cursor: pointer; font-weight: 600; }
 .atlas-data a, .atlas-footer a { color: var(--amber); }

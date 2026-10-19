@@ -24,14 +24,17 @@ a{color:var(--accent);text-underline-offset:3px}
 button{background:transparent;border:1px solid var(--line);color:var(--ink);cursor:pointer;font:inherit;padding:4px 8px}
 button:active{transform:scale(.97)}
 .eyebrow{font:600 var(--micro)/1.5 var(--sans);color:var(--dim)}
-h1{font:var(--display)/1.2 var(--font-display);text-wrap:balance;max-width:24ch}
-h2{font:650 var(--display)/1.2 var(--sans);letter-spacing:-.025em;text-wrap:balance;margin:0 0 16px;max-width:32ch}
+h1{font:clamp(26px,2.3vw,32px)/1.2 var(--font-display);text-wrap:balance;max-width:24ch}
+h2{font:650 clamp(19px,1.5vw,21px)/1.25 var(--sans);letter-spacing:-.025em;text-wrap:balance;margin:0 0 16px;max-width:32ch}
 h3{font:650 var(--body)/1.4 var(--sans)}
 p{max-width:65ch}
 section{padding:32px 0;border-bottom:2px solid var(--line)}
-.lede{max-width:65ch;color:var(--dim);margin-top:12px}
+/* `ch` is the advance of "0" in Source Sans 3, narrower than this text's mean
+   advance, so 65ch measured 80 real characters — over the 45–75 law. 55ch
+   lands the lede inside 60–70. */
+.lede{max-width:55ch;color:var(--dim);margin-top:12px}
 .hero{display:grid;gap:20px;padding:28px 0;align-items:end}
-.big{font:650 var(--display)/1.1 var(--sans);color:var(--ink);font-variant-numeric:tabular-nums}
+.big{font:650 clamp(32px,3.5vw,48px)/1.05 var(--sans);color:var(--ink);font-variant-numeric:tabular-nums}
 .figures{display:flex;flex-wrap:wrap;gap:12px 32px;padding:16px 0;border-bottom:1px solid var(--line)}
 .figures div{flex:0 1 auto}
 .figures b{display:block;font:650 var(--body)/1.4 var(--sans);color:var(--ink)}
