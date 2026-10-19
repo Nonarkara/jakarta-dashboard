@@ -74,3 +74,20 @@ const pkg=JSON.parse(read('package.json'));
 assert.match(pkg.scripts.test,/npm run audit:design/,'design contracts run in every full test/release');
 assert.match(read('AGENTS.md'),/ANTI-SLOP-DESIGN/,'instructions travel with the repository');
 console.log('PASS anti-slop contracts, preserved visuals, independent loading, truthful unknowns, motion and language continuity');
+
+// ── A containing block on an ancestor silently hides the lens panel ────────
+// .atlas-lens-popup is position:fixed and lives INSIDE the .atlas-lenses
+// scroller. Any mask, filter, transform, perspective or contain on that
+// ancestor establishes a containing block, which clips the panel to the 36px
+// strip and makes it vanish from the page. This shipped once and every
+// computed-style check still passed; only a screenshot caught it.
+{
+  const traps = /(^|[;\s])(?:-webkit-)?mask(?:-image)?\s*:|(^|[;\s])filter\s*:|(^|[;\s])transform\s*:|(^|[;\s])perspective\s*:|(^|[;\s])contain\s*:/;
+  for (const block of css.split('}')) {
+    const head = block.split('{')[0];
+    if (!/\.atlas-lenses\b|#atlas-lens-evidence\b/.test(head)) continue;
+    assert.doesNotMatch(block, traps,
+      `no containing-block property on "${head.trim().slice(0, 60)}" — it would trap the fixed lens panel`);
+  }
+  console.log('PASS no ancestor of the fixed lens panel establishes a containing block');
+}
