@@ -320,3 +320,8 @@ Live design release completed: `jakarta-atlas-20261018-1792334510-014ecdc`, Work
 ## 19 October 2026 · open-session audit
 
 Fixed partial-hour transport distance, current-hour/click-time wind selection, Research refresh/visibility lifecycle and actual FIRMS age contract, clock-based gauge expiry, and crowded phone isobar labels. Preserved all layers and compact Palette267/Bayer design. Controlled-clock tests plus independent visual review passed. See docs/OPEN-SESSION-AUDIT-2026-10-19.md for evidence and boundaries; canonical release completed: `jakarta-atlas-20261018-1792343175-bd1a259`, stamp `c8e9a80`, exact bytes on both hosts, 37/37 API and all remaining live smokes passed. Phone Research play/refresh and production waterways evidence verified; live receipts in the audit directory.
+
+
+## 19 October 2026 · haze operational evidence
+
+Added bounded NEA Singapore one-hour measured PM2.5 and fixed ASMC situation/dispersion raster references; no numeric issue time or georeferenced raster claims. Haze lens now screens real NOAA-20 detections6/12/24h with linked map filters, equal-age histogram, busiest0.5° bins, sensor/version inspection, JSON export, explicit coverage/attribution gaps and preserved historical ISPU disclosure. Shared five-minute visible-session lifecycle now retires stale/hidden haze fields and rechecks current-hour admission at render/draw. Controlled-clock actual-controller tests, new adapter/analysis tests, independent seven-rule responsive review and local three-source smoke passed. Source ledger60contracts/41integrated. See docs/HAZE-EVIDENCE-2026-10-19.md; canonical release receipt pending. Verified ASMC octet-stream raster lesson captured in SecondBrain.

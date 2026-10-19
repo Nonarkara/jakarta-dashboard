@@ -1,0 +1,7 @@
+import assert from 'node:assert/strict';
+const base=process.env.ATLAS_URL||'https://jakarta.nonarkara.org';
+const r=await fetch(base+'/api/atlas/haze-receptors',{signal:AbortSignal.timeout(25000)}),d=await r.json();
+assert.ok([200,503].includes(r.status));assert.equal(d.contract,'haze-receptors-v1');
+if(r.status===200){assert.equal(d.available,true);assert.ok(d.points.length>0);for(const p of d.points){assert.equal(typeof p.pm25,'number');assert.ok(Date.now()-Date.parse(p.observedAt)<10800000);assert.ok(Date.parse(p.observedAt)<=Date.now()+300000);}console.log('PASS NEA measured one-hour PM2.5:',d.points.length,'regions');}
+else{assert.equal(d.available,false);assert.deepEqual(d.points,[]);assert.equal(r.headers.get('cache-control'),'no-store');console.log('DEGRADED NEA unavailable; explicit no-model-substitution envelope');}
+for(const product of ['situation','dispersion']){const r=await fetch(base+'/api/atlas/asmc-graphic?product='+product,{signal:AbortSignal.timeout(30000)});assert.ok([200,503].includes(r.status));if(r.status===200){assert.equal(r.headers.get('content-type'),product==='situation'?'image/png':'image/gif');const b=new Uint8Array(await r.arrayBuffer());assert.ok(b.length>1000&&b.length<=8000000);assert.equal(r.headers.get('x-asmc-issue-time'),'unparsed-read-publisher-graphic');console.log('PASS ASMC',product,b.length,'bytes; issue time remains publisher-printed');}else{assert.equal(r.headers.get('cache-control'),'no-store');console.log('DEGRADED ASMC',product,'explicit outage');}}

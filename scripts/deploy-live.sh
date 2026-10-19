@@ -79,6 +79,7 @@ ATLAS_BASE="$ATLAS_URL" npm run smoke
 ATLAS_URL="$ATLAS_URL" node scripts/smoke-official-networks.mjs
 ATLAS_URL="$ATLAS_URL" node scripts/smoke-water-context.mjs
 ATLAS_URL="$ATLAS_URL" npm run smoke:api
+ATLAS_URL="$ATLAS_URL" node scripts/smoke-haze.mjs
 
 npm run smoke:dashboard
 node scripts/release-snapshot.mjs check "$LOCK/inputs.json"

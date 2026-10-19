@@ -1,0 +1,16 @@
+"""Upsert the verified haze source contracts; preserve every existing record."""
+import csv, datetime, json
+from pathlib import Path
+base=Path(__file__).resolve().parents[1]/'public/data/jakarta-v1'
+p=base/'source-catalog.json';doc=json.loads(p.read_text());checked=datetime.datetime.now(datetime.timezone.utc).isoformat()
+rows=[('nea-singapore-pm25','Singapore NEA one-hour PM2.5','PM2.5 satu jam NEA Singapura','https://api-open.data.gov.sg/v2/real-time/api/pm25','/api/atlas/haze-receptors','official-regional-observation','Singapore NEA / data.gov.sg','Five regional representative points, not individual station coordinates. One-hour PM2.5 in µg/m³, not PSI, ISPU or Jakarta conditions. Three-hour display-age gate; upstream outage remains explicit.','Lima titik perwakilan wilayah, bukan koordinat stasiun individu. PM2.5 satu jam dalam µg/m³, bukan PSI, ISPU atau kondisi Jakarta. Gerbang umur tampilan tiga jam; kegagalan sumber dinyatakan.'),('asmc-situation','ASMC regional haze situation graphic','Grafik situasi kabut asap regional ASMC','https://wis2.asmc.asean.org/regional-haze-situation/','/api/atlas/asmc-graphic?product=situation','official-regional-reference','ASMC','Daily PNG graphic from the published WIS item endpoint; read issue time on the graphic. No numeric feed, automated issue-time extraction or georeferenced overlay claimed.','Grafik PNG harian dari endpoint item WIS terpublikasi; baca waktu terbit pada grafik. Bukan data numerik, ekstraksi waktu terbit otomatis atau overlay berkoordinat.'),('asmc-dispersion','ASMC 24-hour PM10 forecast graphic','Grafik prakiraan PM10 24 jam ASMC','https://wis2.asmc.asean.org/smoke-haze-dispersion-model/','/api/atlas/asmc-graphic?product=dispersion','official-regional-forecast','ASMC','Daily 24-hour PM10 forecast GIF, three-hour frames. Model, not measured PM2.5. Read issue/valid times on graphic; access time is not issue time. No numerical pixel values or local calibrated attribution.','GIF prakiraan PM10 24 jam harian, bingkai tiga jam. Model, bukan pengamatan PM2.5. Baca waktu terbit/berlaku pada grafik; waktu akses bukan waktu terbit. Tidak ada nilai piksel numerik atau atribusi lokal terkalibrasi.')]
+for id,en,local,url,endpoint,tier,publisher,limits,limits_id in rows:
+ r=dict(id=id,name=en,nameEn=en,nameId=local,category='air',publisher=publisher,status='integrated',sourceUrl=url,endpoint=endpoint,license='Publisher terms apply; attribution retained; no re-licensing asserted',dataAsOf=None,checkedAt=checked,access='anonymous fixed public endpoint',verification='bounded-adapter-and-runtime-probe',tier=tier,useCase='Regional haze evidence comparison',limitations=limits,limitationsEn=limits,limitationsId=limits_id,assets=[])
+ doc['records']=[old for old in doc['records'] if old['id']!=id]+[r]
+doc['generatedAt']=checked;p.write_text(json.dumps(doc,ensure_ascii=False,indent=1)+'\n')
+cp=base/'source-catalog.csv'
+with cp.open() as f:fields=next(csv.reader(f))
+with cp.open('w',newline='') as f:
+ w=csv.DictWriter(f,fieldnames=fields,extrasaction='ignore',lineterminator='\n');w.writeheader()
+ for r in doc['records']:w.writerow({k:';'.join(v) if isinstance(v,list) else '' if v is None else v for k,v in r.items()})
+print(len(doc['records']),'source contracts')

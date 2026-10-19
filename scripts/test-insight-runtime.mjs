@@ -7,8 +7,9 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import {researchFires} from '../public/research-session.js';
 
-const app = readFileSync(new URL('../public/app.js', import.meta.url), 'utf8');
+const app = readFileSync(new URL('../public/app.js', import.meta.url), 'utf8').replace('import("./research-session.js")','Promise.resolve({researchFires: sharedResearchFires})');
 const data = name => readFileSync(new URL(name.startsWith('/') ? '../public' + name : '../public/data/jakarta-v1/' + name, import.meta.url), 'utf8');
 const parsed = name => JSON.parse(data(name));
 const insight = parsed('insight.json');
@@ -119,7 +120,7 @@ function boot() {
   window.maplibregl = { Map: FakeMap, addProtocol() {}, NavigationControl: class {}, ScaleControl: class {} };
   window.pmtiles = { Protocol: class {} };
   const context = vm.createContext({
-    window, URL, URLSearchParams, AbortSignal, Date, Math, JSON, Event: class Event { constructor(type, init) { this.type = type; Object.assign(this, init || {}); } },
+    sharedResearchFires:researchFires, window, URL, URLSearchParams, AbortSignal, Date, Math, JSON, Event: class Event { constructor(type, init) { this.type = type; Object.assign(this, init || {}); } },
     document: {
       documentElement: { ...element('html'), dataset: { theme: 'dark' } },
       body: element('body'), head: element('head'), referrer: '',

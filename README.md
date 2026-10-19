@@ -122,3 +122,8 @@ See `THIRD_PARTY_NOTICES.md`.
 ## Integrated design rules · 18 October 2026
 
 `AGENTS.md` and `docs/ANTI-SLOP-DESIGN.md` adopt the owner-supplied seven-rule design standard. `npm run audit:design` runs inside the full test and release gate; it checks objective layout/font contracts and Research loading/unknown states. Responsive screenshots and an independent visual review remain mandatory. Research now uses the city’s two font families and Palette 267, a compact contents row, unboxed metrics, sequential calculations and an optional wind animation. All existing sections, source tables, canvases and map lenses remain. Release byte checks include the Research route, client, label placement module, shared theme and dashboard CSS.
+
+
+## Haze evidence · 19 October 2026
+
+Open `/atlas?lens=haze` for 6/12/24-hour NOAA-20 hotspot screening, acquisition-age bars, ranked 0.5° cells, measured Singapore NEA regional PM2.5, on-demand ASMC situation/forecast graphics and JSON export. Visible evidence refreshes every five minutes; hiding the tab retires its field and returning fetches again. Map filtering and counts share the admitted selection. Wind trajectories retain their own 24-hour seed controls and Java grid limits. ASMC issue times remain printed on the graphic; no numeric raster concentration or transboundary source attribution is inferred. Details and limitations: `docs/HAZE-PLAN-2026-10-19.md`; source ledger has 60 contracts (41 integrated). `node scripts/smoke-haze.mjs` checks both healthy feeds and explicit outages.

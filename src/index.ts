@@ -1,3 +1,4 @@
+import { handleHazeReceptors, handleAsmcGraphic } from './haze.js';
 import { handleCoastal } from "./coastal.js";
 import { handleHydrology } from "./hydrology.js";
 import { handleJakarta } from "./jakarta.js";
@@ -721,14 +722,14 @@ function parseFires(csv: unknown): any[] | null {
     const instant = Date.parse(observedAt);
     if (!Number.isFinite(instant) || new Date(instant).toISOString().slice(0, 16) !== observedAt.slice(0, 16) || !validObservation(observedAt, 24 * 3600000)) return [];
     return [{ type: "Feature", geometry: { type: "Point", coordinates: [lng, lat] },
-      properties: { frp: c[11].trim() && Number.isFinite(frp) && frp >= 0 && frp <= 100000 ? frp : null, confidence: c[8], observedAt, daynight: c[12] === "N" ? "night" : "day" } }];
+      properties: { sensor: "NOAA-20 VIIRS", product: "375 m Collection 2", version: c[9].length <= 32 ? c[9] : null, frp: c[11].trim() && Number.isFinite(frp) && frp >= 0 && frp <= 100000 ? frp : null, confidence: c[8], observedAt, daynight: c[12] === "N" ? "night" : "day" } }];
   });
 }
 // The CSV carries ~10k regional rows in fire season. Cache the parsed result,
 // not just the raw CSV, so each colo parses once per 15 minutes.
 async function handleFires(): Promise<Response> {
   const cache = (caches as unknown as { default: Cache }).default;
-  const key = new Request("https://jakarta-atlas.internal/api/atlas/fires/v1");
+  const key = new Request("https://jakarta-atlas.internal/api/atlas/fires/v2");
   try { const hit = await cache.match(key); if (hit) return hit; } catch {}
   const feed = await fetchEnvironmentProvider(FIRMS_URL, "text", 1800);
   const features = parseFires(feed?.body);
@@ -1110,6 +1111,8 @@ async function routeRequest(request: Request, env: Env): Promise<Response> {
   if (path === "/api/atlas/watch") return handleCityWatch();
   if (path === "/api/atlas/air-quality") return handleAirQuality();
   if (path === "/api/atlas/fires") return handleFires();
+  if (path === "/api/atlas/haze-receptors") return handleHazeReceptors();
+  if (path === "/api/atlas/asmc-graphic") return handleAsmcGraphic(request);
   if (path === "/api/atlas/air-timeline") return handleAirTimeline();
   if (path === "/api/atlas/wind-field") return handleWindField();
   if (path === "/api/atlas/synoptic") return handleSynoptic();

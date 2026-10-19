@@ -143,7 +143,7 @@ function stubBody() {
     className: cls, textContent: '', dataset: {}, children: [],
     append(...c) { this.children.push(...c); }, setAttribute() {}, addEventListener() {},
     replaceChildren() { this.children.length = 0; },
-    querySelector: () => null, querySelectorAll: () => [],
+    querySelector: () => null, querySelectorAll: () => [], prepend(...c){this.children.unshift(...c);},
   });
   const body = node();
   body.querySelector = (sel) => body.children.find((c) => c.className === sel.replace(/[.:>]/g, '')) || null;
@@ -155,10 +155,11 @@ const realFetch = globalThis.fetch;
 const realDocument = globalThis.document;
 const realDate = globalThis.Date;
 globalThis.document = {
+  addEventListener(){}, removeEventListener(){},
   createElement: () => ({
     className: '', textContent: '', dataset: {}, children: [],
     append(...c) { this.children.push(...c); }, setAttribute() {}, addEventListener() {},
-    replaceChildren() { this.children.length = 0; }, querySelector: () => null, querySelectorAll: () => [],
+    replaceChildren() { this.children.length = 0; }, querySelector: () => null, querySelectorAll: () => [], prepend(...c){this.children.unshift(...c);},
   }),
 };
 globalThis.fetch = async (url) => {
@@ -283,6 +284,24 @@ try {
     assert.ok(JSON.stringify(body.children).includes('older than 10 minutes'),
       'and the panel states the check is stale, in English');
     ctl.clear();
+  }
+  // Real haze controller: hide retires layers; return fetches again; an open
+  // session crossing beyond its model hours never borrows index zero.
+  {
+    let clock=realDate.parse(synFixture.checkedAt),tick,visibility,calls=0;
+    const oldSet=globalThis.setInterval,oldClear=globalThis.clearInterval;
+    const add=document.addEventListener,remove=document.removeEventListener;
+    globalThis.Date=class extends realDate {static now(){return clock;}};
+    globalThis.setInterval=fn=>{tick=fn;return {unref(){}};};globalThis.clearInterval=()=>{};
+    document.hidden=false;document.addEventListener=(name,fn)=>{if(name==='visibilitychange')visibility=fn;};document.removeEventListener=()=>{};
+    globalThis.fetch=async url=>{calls++;return {ok:true,json:async()=>String(url).includes('/synoptic')?{...synFixture,checkedAt:new realDate(clock).toISOString()}:{type:'FeatureCollection',windowHours:24,fetchedAt:new realDate(clock).toISOString(),features:[]}};};
+    const map=stubMap(),body=stubBody(),ctl=mod.createHazeTransport(map,{text:en=>en,active:()=> 'haze'});
+    try {
+      ctl.show(body);await new Promise(r=>setTimeout(r,10));assert.ok(map.layers.has('haze-path'));
+      document.hidden=true;visibility();assert.equal(map.layers.size,0,'hidden haze retires the actual layers');
+      const before=calls;clock+=660000;document.hidden=false;visibility();await new Promise(r=>setTimeout(r,10));assert.ok(calls>before,'return refetches all evidence');assert.ok(map.layers.has('haze-path'));
+      clock+=4*3600000;tick();assert.equal(map.layers.size,0,'refresh removes old paths before async response');await new Promise(r=>setTimeout(r,10));assert.equal(map.layers.size,0,'missing current hour never falls back to first forecast hour');
+    }finally{ctl.clear();globalThis.setInterval=oldSet;globalThis.clearInterval=oldClear;document.addEventListener=add;document.removeEventListener=remove;delete document.hidden;}
   }
 } finally {
   globalThis.fetch = realFetch;

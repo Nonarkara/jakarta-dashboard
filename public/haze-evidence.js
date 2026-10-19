@@ -1,0 +1,60 @@
+import { researchFires } from './research-session.js';
+
+// Coordinate bins are reproducible screening cells, never administrative areas
+// or unique fires. Repeated pixels are retained as detections, not persistence.
+export function hazeSummary(payload,{hours=24,highOnly=false,now=Date.now()}={}) {
+ const feed=researchFires(payload,now);if(!feed)return null;
+ const window=[6,12,24].includes(hours)?hours:24,cutoff=now-window*3600000;
+ const features=feed.features.filter(f=>{const c=f?.geometry?.coordinates;return Array.isArray(c)&&Number.isFinite(c[0])&&Number.isFinite(c[1])&&c[0]>=94&&c[0]<=120&&c[1]>=-9&&c[1]<=7&&Date.parse(f.properties.observedAt)>=cutoff&&(!highOnly||f.properties.confidence==='high');});
+ const bins=[0,0,0,0],groups=new Map();let newest=null,oldest=null,high=0,knownFrp=0,frp=0;
+ for(const f of features){const [lng,lat]=f.geometry.coordinates,p=f.properties,at=Date.parse(p.observedAt);bins[Math.max(0,Math.min(3,Math.floor((now-at)/(window*3600000/4))))]++;if(newest===null||at>newest)newest=at;if(oldest===null||at<oldest)oldest=at;if(p.confidence==='high')high++;
+ const x=Math.floor(lng*2)/2,y=Math.floor(lat*2)/2,key=x+','+y;let g=groups.get(key);if(!g){g={west:x,south:y,count:0,high:0,frp:0,knownFrp:0};groups.set(key,g);}g.count++;if(p.confidence==='high')g.high++;
+ if(typeof p.frp==='number'&&Number.isFinite(p.frp)&&p.frp>=0){frp+=p.frp;knownFrp++;g.frp+=p.frp;g.knownFrp++;}}
+ return {hours:window,features,count:features.length,high,frp:knownFrp?frp:null,knownFrp,bins,newest,oldest,groups:[...groups.values()].sort((a,b)=>b.count-a.count||a.west-b.west||a.south-b.south),retrievedAt:feed.fetchedAt};
+}
+export function receptorPoints(payload,now=Date.now()) {
+ if(payload?.available!==true||payload.contract!=='haze-receptors-v1'||!Array.isArray(payload.points))return [];
+ return payload.points.filter(p=>{const at=Date.parse(p.observedAt),c=p.coordinates;return Number.isFinite(at)&&at<=now+300000&&now-at<10800000&&typeof p.pm25==='number'&&Number.isFinite(p.pm25)&&p.pm25>=0&&p.pm25<=2000&&Array.isArray(c)&&c[0]>=103.5&&c[0]<=104.1&&c[1]>=1.1&&c[1]<=1.6;});
+}
+export function createHazeEvidence(map,{text:t,refresh,onFilter}) {
+ let state={hours:24,highOnly:false},last=null,host=null,regional=false,selectedCell=null;
+ const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
+ const time=value=>value?new Date(value).toLocaleString(t('en-GB','id-ID'),{timeZone:'Asia/Jakarta',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})+' WIB':'—';
+ const button=(label,fn)=>{const b=el('button',label);b.type='button';b.addEventListener('click',fn);return b;};
+ const link=(label,href)=>{const a=el('a',label+' ↗');a.href=href;a.target='_blank';a.rel='noopener';return a;};
+ const details=(label)=>{const d=el('details');d.append(el('summary',label));host.append(d);return d;};
+ function hidePoints(){for(const id of ['haze-receptor-labels','haze-receptor-points'])if(map?.getLayer(id))map.removeLayer(id);if(map?.getSource('haze-receptors'))map.removeSource('haze-receptors');}
+ function drawPoints(points){hidePoints();if(!regional||!points.length||!map)return;
+ map.addSource('haze-receptors',{type:'geojson',data:{type:'FeatureCollection',features:points.map(p=>({type:'Feature',geometry:{type:'Point',coordinates:p.coordinates},properties:{value:p.pm25}}))}});
+ map.addLayer({id:'haze-receptor-points',type:'circle',source:'haze-receptors',paint:{'circle-radius':6,'circle-color':'#fff4e6','circle-stroke-color':'#e4572e','circle-stroke-width':2}});
+ map.addLayer({id:'haze-receptor-labels',type:'symbol',source:'haze-receptors',layout:{'text-field':['concat',['to-string',['get','value']],' µg/m³'],'text-size':12,'text-offset':[0,1.4]},paint:{'text-color':'#fff4e6','text-halo-color':'#102532','text-halo-width':2}});}
+ function render(body,data=last){last=data;if(!body)return;
+ host=body.querySelector(':scope > .haze-evidence-root');if(!host){host=el('section',undefined,'haze-evidence-root');body.prepend(host);}host.replaceChildren();
+ host.append(el('strong',t('Haze evidence · source to receptor','Bukti kabut asap · sumber hingga penerima'),'synoptic-title'));
+ if(selectedCell)host.append(el('p',selectedCell+' · WGS84','network-location'));
+ const controls=el('div',undefined,'synoptic-toggles');for(const hours of [6,12,24]){const b=button(hours+' h',()=>{state.hours=hours;render(body);});b.setAttribute('aria-pressed',String(state.hours===hours));controls.append(b);}
+ const high=button(t('High confidence only','Hanya keyakinan tinggi'),()=>{state.highOnly=!state.highOnly;render(body);});high.setAttribute('aria-pressed',String(state.highOnly));controls.append(high,button(t('Refresh evidence','Perbarui bukti'),()=>refresh()));host.append(controls);const local=el('p',undefined,'haze-local-links');local.append(link(t('Jakarta official air monitors','Pemantau udara resmi Jakarta'),'https://udara.jakarta.go.id/'),link(t('Jakarta model timeline','Linimasa model Jakarta'),'/atlas?lens=air&lang='+t('en','id')));host.append(local);host.append(el('p',t('Filters apply to hotspot dots and this analysis. Wind paths have separate origin controls below. Evidence refreshes every 5 minutes while visible.','Filter berlaku pada titik panas dan analisis ini. Jalur angin memiliki kendali titik asal terpisah di bawah. Bukti diperbarui tiap 5 menit saat terlihat.'),'meta'));
+ const s=hazeSummary(data?.fires,state),points=receptorPoints(data?.receptors);drawPoints(points);onFilter?.(s?{...data.fires,features:s.features,count:s.count}:null);
+ host.append(el('p',s?`${s.count.toLocaleString()} `+t('detections','deteksi')+` · ${s.high} `+t('high confidence','keyakinan tinggi')+` · ${s.hours} h`:data?.status==='loading'?t('Refreshing evidence… old fields are paused.','Memperbarui bukti… medan lama dijeda.'):data?.status==='paused'?t('View paused. Fresh evidence loads on return.','Tampilan dijeda. Bukti baru dimuat saat kembali.'):t('Thermal feed unavailable or expired. No fire count inferred.','Data termal tidak tersedia atau kedaluwarsa. Jumlah kebakaran tidak disimpulkan.'),'haze-total'));
+ if(s){host.append(el('p',t('Acquired ','Diakuisisi ')+time(s.oldest)+' → '+time(s.newest)+t(' · retrieved ',' · diambil ')+time(s.retrievedAt),'meta'));
+ const hist=el('figure',undefined,'haze-histogram');hist.append(el('figcaption',t('Detection age · equally sized intervals','Umur deteksi · interval sama panjang')));const max=Math.max(1,...s.bins);
+ s.bins.forEach((count,i)=>{const row=el('div',undefined,'haze-age-row');row.append(el('span',`${i*s.hours/4}–${(i+1)*s.hours/4} h`));const bar=el('meter');bar.min=0;bar.max=max;bar.value=count;bar.setAttribute('aria-label',`${i*s.hours/4}–${(i+1)*s.hours/4} h: ${count}`);row.append(bar,el('span',String(count)));hist.append(row);});host.append(hist);
+ const groups=details(t('Inspect busiest 0.5° cells','Periksa sel 0,5° terpadat'));groups.append(el('p',t('Ranked by detection count, not burned area or unique fires. Select to locate.','Urutan menurut jumlah deteksi, bukan luas terbakar atau kebakaran unik. Pilih untuk melihat lokasi.'),'synoptic-note'));
+ for(const g of s.groups.slice(0,8)){const label=`${g.south.toFixed(1)}…${(g.south+.5).toFixed(1)}°, ${g.west.toFixed(1)}…${(g.west+.5).toFixed(1)}° · ${g.count}`;groups.append(button(label,()=>{selectedCell=`${g.south.toFixed(1)}…${(g.south+.5).toFixed(1)}°, ${g.west.toFixed(1)}…${(g.west+.5).toFixed(1)}°`;render(body);map?.fitBounds([[g.west,g.south],[g.west+.5,g.south+.5]],{padding:70,duration:0});}));}
+ host.append(el('p',t('One NOAA-20 sensor, nominal 375 m; detections can repeat or be missed by cloud and orbital gaps. Counts are not emissions.','Satu sensor NOAA-20, nominal 375 m; deteksi dapat berulang atau terlewat karena awan dan lintasan satelit. Jumlah bukan emisi.'),'synoptic-note'));}
+ const receptor=details(t('Measured receptor · Singapore','Pengamatan penerima · Singapura'));
+ receptor.append(el('p',points.length?t('NEA one-hour PM2.5 · µg/m³. Regional monitoring regions, not individual station coordinates.','PM2.5 satu jam NEA · µg/m³. Wilayah pemantauan, bukan koordinat stasiun individu.'):t('Official measured receptor feed unavailable or older than 3 h. No model replaces it.','Pengamatan resmi penerima tidak tersedia atau lebih lama dari 3 jam. Tidak diganti dengan model.'),'synoptic-note'));
+ const names={north:['North','Utara'],south:['South','Selatan'],east:['East','Timur'],west:['West','Barat'],central:['Central','Tengah']};
+ for(const p of points){const name=names[p.region]||[p.region,p.region];receptor.append(button(t(...name)+` · ${p.pm25} µg/m³ · `+time(p.observedAt),()=>{regional=true;drawPoints(points);map?.flyTo({center:p.coordinates,zoom:9,duration:0});}));}
+ if(points.length)receptor.append(button(t('Show receptor regions on map','Tampilkan wilayah penerima di peta'),()=>{regional=true;drawPoints(points);map?.fitBounds([[103.55,1.15],[104.1,1.5]],{padding:70,duration:0});}));
+ receptor.append(link(t('Official NEA haze guidance','Panduan kabut asap resmi NEA'),'https://www.haze.gov.sg/'));
+ const official=details(t('Official ASMC regional assessment','Penilaian regional resmi ASMC'));
+ official.append(el('p',t('Daily situation graphic and 24 h PM10 model forecast (3 h frames). Read the issue and valid times printed by ASMC. Image access time is not the model issue time. These are regional references, not georeferenced overlays.','Grafik situasi harian dan prakiraan model PM10 24 jam (bingkai 3 jam). Baca waktu terbit dan berlaku yang dicetak ASMC. Waktu akses bukan waktu terbit model. Referensi regional, bukan overlay berkoordinat.'),'synoptic-note'));
+ for(const [kind,title,url] of [['situation',t('Situation map','Peta situasi'),'regional-haze-situation'],['dispersion',t('PM10 forecast animation','Animasi prakiraan PM10'),'smoke-haze-dispersion-model']]){
+ const area=el('div');let image=null;const b=button(title,()=>{if(image){image.remove();image=null;return;}image=el('img');image.alt=title;image.className='haze-official-image';image.addEventListener('error',()=>{image?.remove();image=null;area.append(el('p',t('Graphic unavailable. Open the publisher.','Grafik tidak tersedia. Buka penerbit.')));});image.src='/api/atlas/asmc-graphic?product='+kind;area.append(image);});area.append(b,link(t('Full-size graphic','Grafik ukuran penuh'),'/api/atlas/asmc-graphic?product='+kind),link(t('Publisher','Penerbit'),'https://wis2.asmc.asean.org/'+url+'/'));official.append(area);}
+ const limits=details(t('What this evidence cannot establish','Yang belum dapat dibuktikan'));
+ limits.append(el('p',t('The Java wind grid does not cover most Kalimantan or the full route to Singapore. Peat/concession boundaries, regional calibrated dispersion and local Indonesian/Malaysian measured receptors are not joined. The monthly Jakarta ISPU below is historical. A hotspot plus a wind line does not identify who caused pollution. Local emissions, dust, rainfall, cloud and missing passes remain alternatives.','Kisi angin Jawa tidak mencakup sebagian besar Kalimantan atau seluruh jalur ke Singapura. Batas gambut/konsesi, dispersi regional terkalibrasi dan pengamatan lokal Indonesia/Malaysia belum digabung. ISPU Jakarta bulanan di bawah adalah historis. Titik panas ditambah garis angin tidak membuktikan penyebab polusi. Emisi lokal, debu, hujan, awan dan lintasan yang hilang tetap perlu dipertimbangkan.'),'synoptic-note'));
+ host.append(button(t('Export evidence JSON','Ekspor bukti JSON'),()=>{const blob=new Blob([JSON.stringify({generatedAt:new Date().toISOString(),selectedCell,screening:s?{...s,features:undefined}:null,fires:data?.fires||null,receptors:data?.receptors||null,wind:data?.wind||null,attribution:'Not established; missing context and receptor/transport coupling.'},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=el('a');a.href=url;a.download='jakarta-haze-evidence.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}));
+ }
+ return {render,clear(){hidePoints();last=null;host=null;regional=false;selectedCell=null;}};
+}

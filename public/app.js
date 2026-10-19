@@ -566,13 +566,21 @@ let firesData = null;
 async function refreshFires(force) {
   if (force) liveCache.delete("/api/atlas/fires");
   const data = await fetchLive("/api/atlas/fires", 1800);
-  firesData = data && data.type === "FeatureCollection" && Array.isArray(data.features) ? data : null;
+  const {researchFires}=await import("./research-session.js");
+  firesData = researchFires(data);
   // A failed load retries in a minute, not at the next scheduled refresh.
   if (!firesData && !refreshFires.retry) refreshFires.retry = setTimeout(() => { refreshFires.retry = null; refreshFires(true); }, 60000);
   const src = mapInstance && mapInstance.getSource("jkt-fires-src");
   if (src) src.setData(firesData || { type: "FeatureCollection", features: [] });
   setToggleLabel("atlas-fires-label", firesData ? lensText("Thermal detections · admitted 24 h", "Deteksi termal · lolos 24 jam") : lensText("Thermal detections · unavailable", "Deteksi termal · tidak tersedia"));
   if (activeLens === "haze") renderLensEvidence();
+}
+
+function applyCurrentFires(data) {
+  firesData=data;
+  const source=mapInstance?.getSource('jkt-fires-src');
+  source?.setData(data||{type:'FeatureCollection',features:[]});
+  const label=document.getElementById('haze-thermal-status');if(label)label.textContent=data?fmtNum(data.features.length,0)+' '+lensText('detections on map · retrieved ','deteksi pada peta · diambil ')+formatLocal(data.fetchedAt):lensText('No current thermal count available.','Jumlah termal terkini belum tersedia.');
 }
 
 // ── Hero landmarks — OSM footprints at published or curated heights for
@@ -1647,8 +1655,8 @@ async function boot() {
       renderLensEvidence();
       const p=f.properties||{},coordinates=f.geometry.coordinates;
       const row=document.createElement('p');row.className='network-location';
-      row.textContent=coordinates[1].toFixed(6)+', '+coordinates[0].toFixed(6)+' · WGS84 · '+formatLocal(p.observedAt)+' · FRP '+(Number.isFinite(p.frp)?fmtNum(p.frp,1)+' MW':lensText('unknown','tidak diketahui'))+' · '+p.confidence;
-      document.getElementById('atlas-lens-body').append(row);document.getElementById('atlas-lens-evidence').open=true;
+      row.textContent=coordinates[1].toFixed(6)+', '+coordinates[0].toFixed(6)+' · WGS84 · '+formatLocal(p.observedAt)+' · FRP '+(Number.isFinite(p.frp)?fmtNum(p.frp,1)+' MW':lensText('unknown','tidak diketahui'))+' · '+p.confidence+' · '+(p.sensor||'NOAA-20 VIIRS')+' · '+(p.product||'375 m Collection 2')+' · '+lensText('version ','versi ')+(p.version||lensText('not supplied','tidak tersedia'));
+      document.getElementById('atlas-lens-body').prepend(row);document.getElementById('atlas-lens-evidence').open=true;
     });
     setBasemap(currentBasemap);
     const view = new URLSearchParams(window.location.search).get("view");
@@ -1803,7 +1811,7 @@ let hazeTransportController = null, hazeTransportPending = null;
 async function loadHazeTransport() {
   if (hazeTransportController) return hazeTransportController;
   if (!hazeTransportPending) hazeTransportPending = import('./haze-transport.js?v=' + encodeURIComponent(ATLAS_BUILD_TAG))
-    .then(module => loadFlow().then(flow => { hazeTransportController = module.createHazeTransport(mapInstance, {text:lensText,active:()=>activeLens,buildTag:ATLAS_BUILD_TAG,flow}); return hazeTransportController; }))
+    .then(module => loadFlow().then(flow => { hazeTransportController = module.createHazeTransport(mapInstance, {text:lensText,active:()=>activeLens,buildTag:ATLAS_BUILD_TAG,flow,onFires:applyCurrentFires}); return hazeTransportController; }))
     .finally(() => { hazeTransportPending = null; });
   return hazeTransportPending;
 }
@@ -2192,13 +2200,12 @@ function renderConfidencePanel(data, share) {
 
 function renderHazeEvidence(body) {
   body.append(lensNoteLine(lensText('NASA NOAA-20 VIIRS thermal detections, nominal 375 m. Only valid records within 24 hours are admitted. Clouds and satellite coverage can hide activity; an empty result does not mean no fire or clean air.', 'Deteksi termal NASA NOAA-20 VIIRS, nominal 375 m. Hanya rekaman valid dalam 24 jam yang ditampilkan. Awan dan cakupan satelit dapat menyembunyikan aktivitas; hasil kosong bukan berarti tanpa kebakaran atau udara bersih.')));
-  if (!firesData) body.append(lensNoteLine(lensText('Thermal source unavailable or loading.', 'Sumber termal tidak tersedia atau sedang dimuat.')));
-  else {
-    body.append(lensNoteLine(fmtNum(firesData.features.length,0)+' '+lensText('admitted detections · retrieved ', 'deteksi lolos · diambil ')+formatLocal(firesData.fetchedAt)));
-    body.append(lensNoteLine(lensText('Select a detection for its acquisition time, coordinates and radiative power. Radiative power is not emitted particle mass. Visible imagery has its own observation date.', 'Pilih deteksi untuk waktu akuisisi, koordinat, dan daya radiasi. Daya radiasi bukan massa partikel yang dilepaskan. Citra tampak memiliki tanggal pengamatan sendiri.')));
-  }
+  const count=lensNoteLine(firesData?fmtNum(firesData.features.length,0)+' '+lensText('detections on map · retrieved ','deteksi pada peta · diambil ')+formatLocal(firesData.fetchedAt):lensText('No current thermal count available.','Jumlah termal terkini belum tersedia.'));
+  count.id='haze-thermal-status';body.append(count);
+  body.append(lensNoteLine(lensText('Select a detection for acquisition time, coordinates and radiative power. Radiative power is not emitted particle mass. Visible imagery has its own date.','Pilih deteksi untuk waktu akuisisi, koordinat dan daya radiasi. Daya radiasi bukan massa partikel yang dilepaskan. Citra tampak memiliki tanggal sendiri.')));
   const source=document.createElement('a');source.href='https://firms.modaps.eosdis.nasa.gov/';source.target='_blank';source.rel='noopener';source.textContent=lensText('NASA FIRMS source ↗','Sumber NASA FIRMS ↗');body.append(source);
-  renderOfficialIspu(body);
+  const archive=document.createElement("details"),summary=document.createElement("summary");
+  summary.textContent=lensText("Historical Jakarta ISPU · monthly record","ISPU Jakarta historis · catatan bulanan");archive.append(summary);body.append(archive);renderOfficialIspu(archive);
 }
 // Official ISPU record from the five DLH SPKU stations, read from the same
 // dated ispu-reference.json the dashboard observations use — one bake, one

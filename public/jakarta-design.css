@@ -563,3 +563,20 @@ body[data-lens="air"] .wind-compass svg { flex:none; }
 
 /* Evidence prose has a shared measure; the containing rail owns vertical scroll. */
 .dashboard-modal .modal-content p, .paper-methods p { max-width:65ch; }
+
+/* Haze evidence: one reading edge, four comparable age intervals. */
+.haze-evidence-root { margin-bottom:12px; }
+.haze-histogram { margin:8px 0; }
+.haze-histogram figcaption { font-size:12px; margin-bottom:4px; }
+.haze-age-row { display:grid; grid-template-columns:64px minmax(30px,1fr) 48px; gap:8px; align-items:center; font-variant-numeric:tabular-nums; }
+.haze-age-row meter { width:100%; height:12px; accent-color:var(--amber); }
+.haze-age-row > :last-child { text-align:right; }
+.haze-evidence-root details { margin:8px 0; }
+.haze-evidence-root details button { display:block; max-width:100%; margin:4px 0; text-align:left; white-space:normal; }
+.haze-official-image { display:block; width:100%; height:auto; margin:6px 0; }
+#atlas-lens-body .haze-evidence-root button { width:fit-content; min-height:28px; padding:4px 6px; font:12px/1.3 var(--font-sans); border:1px solid var(--line); }
+.haze-age-row meter::-webkit-meter-optimum-value { background:var(--amber); }
+.haze-age-row meter::-moz-meter-bar { background:var(--amber); }
+#atlas-lens-body .haze-total { font-size:18px; font-weight:600; line-height:1.3; color:var(--ink); margin:8px 0; }
+.haze-age-row meter::-webkit-meter-bar { background:var(--line); border:0; border-radius:0; }
+.haze-local-links a { display:block; width:fit-content; max-width:100%; }

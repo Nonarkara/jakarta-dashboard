@@ -43,7 +43,8 @@ function fieldBounds(cells) {
 }
 
 import { admitModel, currentHourIndex, admissionMessage } from './temporal-admission.js';
-import { researchFires } from './research-session.js';
+import { researchFires, createResearchSession } from './research-session.js';
+import { createHazeEvidence } from './haze-evidence.js';
 
 export function insideField(bounds, lng, lat) {
   if (!bounds) return false;
@@ -142,8 +143,9 @@ export function fireOrigins(features, bounds = null) {
   return { paths: mapped.slice(0, MAX_FIRE_PATHS), total: mapped.length, outside: list.length - mapped.length, capped: mapped.length > MAX_FIRE_PATHS };
 }
 
-export function createHazeTransport(map, { text: t, active, buildTag, flow }) {
-  let synoptic = null, fires = null, epoch = 0, refusal = null;
+export function createHazeTransport(map, { text: t, active, buildTag, flow, onFires }) {
+  let synoptic = null, fires = null, epoch = 0, refusal = null, session = null, receptors = null, sessionState = null;
+  const desk=createHazeEvidence(map,{text:t,refresh:()=>session?.refresh(),onFilter:onFires});
   let source = null, pathLayer = null, seedLayer = null, hourLayer = null, lastBody = null, fitted = false;
   const state = { origins: 'jakarta', hours: 24 };
 
@@ -157,7 +159,7 @@ export function createHazeTransport(map, { text: t, active, buildTag, flow }) {
   };
   // The parcel is released at the current hour. If the model does not cover it,
   // the panel has already said so and nothing starts from a neighbour.
-  const startIndex = () => Math.max(0, currentIndex());
+  const startIndex = () => currentIndex();
   // The wind, hoisted for one hour, the same shape the synoptic module builds.
   const cellsAt = (index) => (synoptic?.cells || [])
     .map((c) => {
@@ -221,6 +223,8 @@ export function createHazeTransport(map, { text: t, active, buildTag, flow }) {
   }
 
   function draw() {
+    if(synoptic){const admitted=admitModel(synoptic);if(!admitted.ok){refusal=admitted.reason;synoptic=null;}}
+    fires=researchFires(fires);
     if (!map || active() !== 'haze' || !synoptic?.available) { hide(); return; }
     const b = build();
     // The air the paths ride on, moving: same 850 hPa cells, current hour.
@@ -257,6 +261,9 @@ export function createHazeTransport(map, { text: t, active, buildTag, flow }) {
 
   function renderPanel() {
     if (active() !== 'haze' || !lastBody) return;
+    if(synoptic){const admission=admitModel(synoptic);if(!admission.ok){refusal=admission.reason;synoptic=null;hide();}}
+    fires=researchFires(fires);
+    desk.render(lastBody,{fires,receptors,wind:synoptic,status:sessionState});
     const host = slot(lastBody);
     const el = (tag, content, cls) => { const n = document.createElement(tag); if (content !== undefined) n.textContent = content; if (cls) n.className = cls; return n; };
     const section = el('section', undefined, 'transport-panel');
@@ -292,9 +299,10 @@ export function createHazeTransport(map, { text: t, active, buildTag, flow }) {
 
     const facts = el('dl', undefined, 'synoptic-facts');
     const fact = (k, v) => { facts.append(el('dt', k)); facts.append(el('dd', v)); };
+    fact(t('Model hour / checked', 'Jam model / diperiksa'), new Date(synoptic.hours[currentIndex()]).toLocaleString(t('en-GB','id-ID'),{timeZone:'Asia/Jakarta'})+' WIB / '+new Date(synoptic.checkedAt).toLocaleTimeString(t('en-GB','id-ID'),{timeZone:'Asia/Jakarta'})+' WIB');
     fact(t('Wind', 'Angin'), '850 hPa · ' + t('about 1.5 km up, not the ground', 'sekitar 1,5 km di atas permukaan'));
     fact(t('Cells', 'Sel'), synoptic.cellCount + ' ' + t('of', 'dari') + ' ' + synoptic.requestedPoints + ' · ' + synoptic.spacingKm + ' km ' + t('grid step', 'langkah kisi'));
-    fact(t('Seeds', 'Titik asal'), state.origins === 'fires'
+    fact(t('Seeds · 24 h feed', 'Titik asal · data 24 jam'), state.origins === 'fires'
       ? note.total + ' ' + t('thermal detections inside the wind field', 'deteksi termal di dalam medan angin') + (note.outside ? ' (' + note.outside + ' ' + t('outside it, not advected', 'di luar, tidak dilacak') + ')' : '') + ' · ' + t('paths drawn', 'jalur digambar') + ' ' + b.paths + (note.capped ? ' ' + t('strongest by FRP', 'terkuat menurut FRP') : '')
       : b.paths + ' ' + t('Jakarta origins, planning points not emission sources', 'titik asal Jakarta, titik perencanaan bukan sumber emisi'));
     fact(t('Horizon', 'Horizon'), Math.min(state.hours, available) + ' h' + (b.endedEarly ? ' · ' + t('some paths stop sooner where the wind data ends', 'sebagian jalur berhenti lebih awal di tempat data angin berakhir') : ''));
@@ -332,29 +340,18 @@ export function createHazeTransport(map, { text: t, active, buildTag, flow }) {
   }
 
   function show(body) {
-    hide();
-    const myEpoch = ++epoch;
-    synoptic = null; fires = null; fitted = false; refusal = null;
-    lastBody = body;
-    renderPanel();
-    const tag = buildTag ? '?v=' + encodeURIComponent(buildTag) : '';
-    const get = (url) => fetch(url, { headers: { accept: 'application/json' }, signal: AbortSignal.timeout(20000) })
-      .then((r) => (r.ok ? r.json() : { available: false })).catch(() => ({ available: false }));
-    Promise.all([get('/api/atlas/synoptic' + tag), get('/api/atlas/fires' + tag)]).then(([s, f]) => {
-      if (myEpoch !== epoch) return;
-      // Same admission the research lens applies, on the same two feeds. A
-      // stale envelope must not draw a path that reads as starting from now.
-      const admission = admitModel(s);
-      synoptic = admission.ok ? s : null;
-      refusal = admission.ok ? null : admission.reason;
-      fires = researchFires(f);
-      draw(); fit(); renderPanel();
+    clear();lastBody=body;renderPanel();
+    const tag=buildTag?'?v='+encodeURIComponent(buildTag):'';
+    session=createResearchSession({
+      load:signal=>{const get=(url,ms=20000)=>fetch(url+tag,{headers:{accept:'application/json'},signal:AbortSignal.any([signal,AbortSignal.timeout(ms)])}).then(r=>r.ok?r.json():null).catch(()=>null);return Promise.all([get('/api/atlas/synoptic',50000),get('/api/atlas/fires'),get('/api/atlas/haze-receptors')]);},
+      status:state=>{sessionState=state;synoptic=null;fires=null;receptors=null;refusal=state==='unavailable'?'unavailable':null;hide();onFires?.(null);if(state==='paused')refusal='expired';renderPanel();},
+      render:([s,f,r])=>{if(active()!=='haze')return;sessionState='loaded';const admission=admitModel(s);synoptic=admission.ok?s:null;refusal=admission.ok?null:admission.reason;fires=researchFires(f);receptors=r;onFires?.(fires);draw();fit();renderPanel();return ()=>{hide();desk.clear();};}
     });
   }
 
   function clear() {
-    epoch++; synoptic = null; fires = null; fitted = false; refusal = null; lastBody = null;
-    hide();
+    session?.clear();session=null;epoch++;synoptic=null;fires=null;receptors=null;fitted=false;refusal=null;lastBody=null;
+    hide();desk.clear();
   }
 
   return { show, render: renderPanel, clear };
