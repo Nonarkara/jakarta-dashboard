@@ -562,6 +562,31 @@ input[type="range"], input[type="checkbox"] { accent-color:var(--accent); }
 }
 #atlas-lens-body .synoptic-toggles button[aria-pressed="true"] { background:var(--ink); color:var(--bg); border-color:var(--ink); }
 #atlas-lens-body .synoptic-hour { min-width:0; padding:0 6px; white-space:nowrap; }
+
+/* Reading order for the evidence rail.
+   The rail used to run 13 / 12 / 12 / 11 — lens name, values, controls and
+   caveats all within two pixels of each other, so nothing could win and the
+   eye had no order to follow. The scale is now 14 / 13 / 12 / 11:
+
+     what this lens is        14px, weight 600, full ink
+     what it says             13px, weight 500, full ink  (values carry it)
+     what I can change        12px, unchanged — borders already mark them
+     what the limits are      11px, dimmed — a caveat is subordinate to the
+                                        claim it qualifies, never equal to it
+
+   Labels drop below their own values so a number and the thing naming it no
+   longer arrive as one undifferentiated block of grey. */
+body.atlas-workbench .atlas-lens-popup .synoptic-title { font-size:14px; font-weight:650; letter-spacing:-.01em; }
+body.atlas-workbench .atlas-lens-popup .synoptic-facts { font-size:13px; }
+body.atlas-workbench .atlas-lens-popup .synoptic-facts dt { font-size:11px; color:var(--dim); opacity:1; }
+/* 550 against the title's 650 is the step that actually separates first from
+   second rank at this size; a 14-to-13 pixel nudge is not a step. */
+body.atlas-workbench .atlas-lens-popup .synoptic-facts dd { font-weight:550; }
+/* The whole ladder is restated here rather than split across two stylesheets,
+   so the order the rail reads in cannot drift one file at a time. */
+body.atlas-workbench .atlas-lens-popup .synoptic-note { font-size:11px; color:var(--dim); opacity:.8; }
+body.atlas-workbench .atlas-lens-popup .synoptic-toggles button,
+body.atlas-workbench .atlas-lens-popup .synoptic-scrub button { font-size:12px; }
 #atlas-lens-body > button { min-height:32px; padding:4px 8px; margin:0; border:0; border-bottom:1px solid var(--line); background:transparent; font:12px/1.3 var(--font-sans); letter-spacing:0; }
 @media (pointer:coarse) {
   #atlas-lens-body .synoptic-toggles button, #atlas-lens-body .synoptic-scrub button, #atlas-lens-body > button { min-height:44px; }

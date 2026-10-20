@@ -91,3 +91,45 @@ console.log('PASS anti-slop contracts, preserved visuals, independent loading, t
   }
   console.log('PASS no ancestor of the fixed lens panel establishes a containing block');
 }
+
+// ── The evidence rail must state an order, not just sizes ─────────────────
+// It once ran 13 / 12 / 12 / 11 — lens name, values, controls and caveats all
+// within two pixels. Nothing could win, so the eye had no order to follow. A
+// flat scale is not a quiet design; it is a missing hierarchy.
+{
+  // Match a selector as a whole token. Splitting the selector list on commas
+  // means `.synoptic-toggles button` resolves to that rule, and `.synoptic-facts
+  // dt` is never mistaken for `.synoptic-facts`.
+  const rule = (sel, prop) => {
+    let found = null;
+    for (const block of css.split('}')) {
+      const i = block.lastIndexOf('{');
+      if (i < 0) continue;
+      const sels = block.slice(0, i).split(',').map((x) => x.trim());
+      if (!sels.some((x) => x === sel || x.endsWith(' ' + sel))) continue;
+      const body = block.slice(i + 1);
+      if (new RegExp(`${prop}\\s*:`).test(body)) found = body;
+    }
+    assert.ok(found, `the rail states ${prop} for ${sel}`);
+    return found;
+  };
+  const px = (body, prop) => { const m = body.match(new RegExp(`${prop}\\s*:\\s*(\\d+)px`)); return m ? +m[1] : null; };
+
+  const title = rule('.synoptic-title', 'font-size');
+  const facts = px(rule('.synoptic-facts', 'font-size'), 'font-size');
+  const note  = px(rule('.synoptic-note', 'font-size'), 'font-size');
+  const btn   = px(rule('.synoptic-toggles button', 'font-size'), 'font-size');
+
+  const scale = [px(title, 'font-size'), facts, btn, note];
+  for (const v of scale) assert.equal(typeof v, 'number', 'every rank resolves to a px size');
+  for (let i = 1; i < scale.length; i++) {
+    assert.ok(scale[i] < scale[i - 1], `rank ${i} (${scale[i]}px) sits below rank ${i - 1} (${scale[i - 1]}px)`);
+  }
+  assert.ok(scale[0] - scale[3] >= 3, `the rail states an order: ${scale.join(' / ')}`);
+
+  // Labels sit below the values they name, or a number and its label arrive as
+  // one undifferentiated block of grey.
+  const dt = rule('.synoptic-facts dt', 'font-size');
+  assert.ok(px(dt, 'font-size') < facts, 'a label is smaller than the value it names');
+  console.log(`PASS evidence rail states an order (${scale.join(' / ')}), labels below their values`);
+}
