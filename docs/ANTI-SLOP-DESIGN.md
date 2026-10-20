@@ -18,6 +18,12 @@ These are known AI design-slop patterns. Never re-create them. Check every page 
 
 ## Jakarta implementation
 
+The map is the hero. It is the product; everything else is secondary to it, and a layout that lets chrome or an evidence panel outrank the map has failed even when every other rule passes. Concretely, on 19 October 2026 the owner directed: shrink the top bar, and treat any box that is larger than its text — especially one carrying space above and below the text — as a defect rather than as breathing room.
+
+The reason is hierarchy, not taste. A box padded well past its content announces equal importance whether it holds a headline or a footnote, so the eye is given no order to follow and reads the page as a stack of equal slabs. Space earns its place by separating *different* things, never by inflating a thing that is already said.
+
+A last child's trailing margin must not stack with its container's padding: the card then measures taller than its contents for no reason. Zero the trailing margin inside watch cards and popovers.
+
 The map remains dominant. Universa Civic is the owner-selected CTAN implementation of the Bayer lineage; Source Sans 3 carries long evidence and values. Two authored font families; platform fallbacks are compatibility only. Scientific layers retain meaningful classes and source colours. Research shares those tokens and offers a 65ch prose measure. Counts are computed, time-labelled model data stays distinct from observations, and outages stay visible. Compact bars remain compact; do not reintroduce a 44px chrome row merely to enlarge a button frame.
 
 `npm run audit:design` checks font faces, reading measure, unboxed metric layout, pipeline widths, preserved interactive elements and release wiring. It cannot judge composition or beauty. Save responsive screenshots, name findings for all seven rules, fix/re-capture and obtain an independent review.
