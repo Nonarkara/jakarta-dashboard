@@ -1,13 +1,13 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 const base=process.env.ATLAS_URL||'https://jakarta.nonarkara.org';
-const manifest=await (await fetch(base+'/data/jakarta-v1/official-drainage-manifest.json',{signal:AbortSignal.timeout(20000)})).json();
+const manifest=await (await fetch(base+'/data/jakarta-v1/official-drainage-manifest.json',{signal:AbortSignal.timeout(30000)})).json();
 assert.equal(manifest.tiles.path,'/jakarta-official-drainage.pmtiles');
-const range=await fetch(base+manifest.tiles.path,{headers:{Range:'bytes=0-126'},signal:AbortSignal.timeout(20000)});
+const range=await fetch(base+manifest.tiles.path,{headers:{Range:'bytes=0-126'},signal:AbortSignal.timeout(30000)});
 assert.equal(range.status,206);assert.equal(range.headers.get('content-range'),'bytes 0-126/'+manifest.tiles.bytes);
 assert.equal((await range.arrayBuffer()).byteLength,127);
-const response=await fetch(base+manifest.tiles.path,{signal:AbortSignal.timeout(60000)});assert.equal(response.status,200);
+const response=await fetch(base+manifest.tiles.path,{signal:AbortSignal.timeout(120000)});assert.equal(response.status,200);
 const bytes=Buffer.from(await response.arrayBuffer());assert.equal(bytes.byteLength,manifest.tiles.bytes);assert.equal(bytes.subarray(0,7).toString(),'PMTiles');
 assert.equal(createHash('sha256').update(bytes).digest('hex'),manifest.tiles.sha256,'live R2 bytes match the admitted archive');
-const polders=await (await fetch(base+'/data/jakarta-v1/official-polders.geojson',{signal:AbortSignal.timeout(20000)})).json();assert.equal(polders.features.length,65);
+const polders=await (await fetch(base+'/data/jakarta-v1/official-polders.geojson',{signal:AbortSignal.timeout(30000)})).json();assert.equal(polders.features.length,65);
 console.log('PASS official network live: 206 Range, PMTiles header, complete archive SHA256 and 65 polder references');
