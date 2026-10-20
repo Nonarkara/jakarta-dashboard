@@ -35,7 +35,7 @@ console.log('PASS local identity: three-theme contrast including green fields, l
  assert.ok(rule,'the workbench lens popup rule was located');
  const w=Number(rule.match(/width:min\((\d+)px/)?.[1]||0);
  assert.ok(w>0,'the popup width is declared in px');
- assert.ok(w<=400,'the lens popup is at most 400px wide (was 520px), got '+w);
+ assert.ok(w<=260,'the lens popup is at most 260px wide (was 380px), got '+w);
  assert.match(rule,/top:calc\([\s\S]{0,140}?\+ \d+px\)/,'the popup drops clear of the lens row instead of sitting on it');
  assert.match(rule,/max-height:min\(\d+svh,/,'and its height stays bounded by what is left below, not an unbounded share');
  // The body rule is never allowed to grow geometry again: dead declarations that

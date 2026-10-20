@@ -145,7 +145,7 @@ console.log('PASS wind arrowheads, open panel and AOD pixel note');
   assert.match(tl, /el\('details', undefined, 'air-timeline'\)/, 'the CAMS table is folded behind a summary, not open by default');
   assert.match(client, /t\('Wind, not pollution', 'Angin, bukan pencemaran'\)/, 'the phone chip states the rule in both languages');
   assert.match(client, /getElementById\('wind-not-pollution-chip'\)\?\.remove\(\)/, 'the chip leaves with the lens');
-  assert.match(css, /\[data-lens="air"\] \.atlas-lens-popup \{ width:min\(300px, 21vw\); \}/, 'the air panel stays a slim rail');
+  assert.match(css, /\[data-lens="air"\] \.atlas-lens-popup \{ width:min\(240px, 21vw\); \}/, 'the air panel stays a slim rail');
   assert.match(tr, /Setiap kotak adalah satu pengambilan ~10 km/, 'the AOD square note is translated');
 }
 console.log('PASS air lens slim panel, folded CAMS, phone chip, ID/EN AOD note');

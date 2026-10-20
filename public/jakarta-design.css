@@ -338,7 +338,7 @@ body.atlas-workbench #atlas-lens-evidence > summary { display:flex; align-items:
    (36 header + 36 lenses + 56), leaving 100svh - 208px before it would run off
    the bottom. That space is the real bound - 84svh only stops a long panel
    (flood monitoring carries 1812px) from swallowing a tall screen. */
-body.atlas-workbench .atlas-lens-popup { position:fixed; top:calc(var(--atlas-header-row) + var(--atlas-lenses-row) + 56px); left:8px; width:min(380px,calc(100vw - 16px)); max-height:min(84svh,calc(100svh - 208px)); overflow:auto; z-index:65; border:1px solid var(--line); background:var(--bg); padding-bottom:26px; -webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 26px),transparent 100%); mask-image:linear-gradient(to bottom,#000 calc(100% - 26px),transparent 100%); }
+body.atlas-workbench .atlas-lens-popup { position:fixed; top:calc(var(--atlas-header-row) + var(--atlas-lenses-row) + 56px); left:8px; width:min(240px,calc(100vw - 16px)); max-height:min(84svh,calc(100svh - 208px)); overflow:auto; z-index:65; border:1px solid var(--line); background:var(--bg); padding-bottom:26px; -webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 26px),transparent 100%); mask-image:linear-gradient(to bottom,#000 calc(100% - 26px),transparent 100%); }
 body.atlas-workbench.atlas-embedded .atlas-lens-popup { top:var(--atlas-lenses-row); }
 body.atlas-workbench #atlas-lens-evidence[open] .atlas-lens-popup .atlas-lens-context { display:block; position:static; width:auto; padding:8px; border:0; border-bottom:1px solid var(--line); background:var(--bg-raised); }
 body.atlas-workbench .atlas-lens-context > * { display:block; font-size:12px; }
@@ -531,7 +531,7 @@ input[type="range"], input[type="checkbox"] { accent-color:var(--accent); }
 
 /* Air lens: the evidence panel stays a slim side rail (≤ ~21% of a 1440 map). */
 @media (min-width: 701px) {
-  body.atlas-workbench[data-lens="air"] .atlas-lens-popup { width:min(300px, 21vw); }
+  body.atlas-workbench[data-lens="air"] .atlas-lens-popup { width:min(240px, 21vw); }
 }
 .wind-chip { display:none; }
 @media (max-width: 700px) {
@@ -567,16 +567,23 @@ body[data-lens="air"] .wind-compass svg { flex:none; }
 /* Haze evidence: one reading edge, four comparable age intervals. */
 .haze-evidence-root { margin-bottom:12px; }
 .haze-histogram { margin:8px 0; }
-.haze-histogram figcaption { font-size:12px; margin-bottom:4px; }
-.haze-age-row { display:grid; grid-template-columns:64px minmax(30px,1fr) 48px; gap:8px; align-items:center; font-variant-numeric:tabular-nums; }
-.haze-age-row meter { width:100%; height:12px; accent-color:var(--amber); }
-.haze-age-row > :last-child { text-align:right; }
+.haze-histogram figcaption { font-size:11px; margin-bottom:6px; opacity:.78; }
+.haze-age-row { display:grid; grid-template-columns:56px minmax(20px,64px) auto; gap:6px; align-items:center; font-variant-numeric:tabular-nums; margin-bottom:2px; }
+.haze-age-row span:first-child { font-size:11px; opacity:.78; }
+.haze-age-row meter { width:100%; height:6px; accent-color:var(--amber); }
+.haze-age-row > :last-child { text-align:right; font-size:11px; font-weight:600; }
 .haze-evidence-root details { margin:8px 0; }
-.haze-evidence-root details button { display:block; max-width:100%; margin:4px 0; text-align:left; white-space:normal; }
+.haze-evidence-root details summary { font-size:12px; font-weight:600; cursor:pointer; }
+.haze-evidence-root details button {
+  display:flex; justify-content:space-between; align-items:baseline; width:100%; margin:2px 0; padding:4px 0;
+  text-align:left; border:0; border-bottom:1px solid var(--line); background:transparent; font:11px/1.3 var(--font-sans);
+  border-radius:0; min-height:auto; color:var(--ink);
+}
+.haze-evidence-root details button:hover { color:var(--accent); }
 .haze-official-image { display:block; width:100%; height:auto; margin:6px 0; }
-#atlas-lens-body .haze-evidence-root button { width:fit-content; min-height:28px; padding:4px 6px; font:12px/1.3 var(--font-sans); border:1px solid var(--line); }
+#atlas-lens-body .haze-evidence-root button { width:fit-content; min-height:26px; padding:3px 6px; font:11px/1.3 var(--font-sans); border:1px solid var(--line); }
 .haze-age-row meter::-webkit-meter-optimum-value { background:var(--amber); }
 .haze-age-row meter::-moz-meter-bar { background:var(--amber); }
-#atlas-lens-body .haze-total { font-size:18px; font-weight:600; line-height:1.3; color:var(--ink); margin:8px 0; }
+#atlas-lens-body .haze-total { font-size:15px; font-weight:600; line-height:1.25; color:var(--ink); margin:6px 0; }
 .haze-age-row meter::-webkit-meter-bar { background:var(--line); border:0; border-radius:0; }
-.haze-local-links a { display:block; width:fit-content; max-width:100%; }
+.haze-local-links a { display:block; width:fit-content; max-width:100%; font-size:11px; margin:2px 0; }
