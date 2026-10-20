@@ -304,7 +304,10 @@ body.atlas-embedded #atlas-lens-evidence .atlas-lens-popup #atlas-lens-body { po
 body.atlas-embedded[data-lens="arrival"] #atlas-lens-evidence[open] .atlas-lens-popup .atlas-lens-context { display:none; }
 
 /* Map-first workbench: two compact rows, all secondary content on demand. */
-body.atlas-workbench { --atlas-header-row:36px; --atlas-lenses-row:36px; height:100svh; overflow:hidden; }
+/* Chrome is the frame, not the subject. Two rows of it spent 64px of the
+   viewport before the map started; 28 + 26 hands 10px straight back to the map,
+   which is the product. Touch targets stay at 44px in the media query below. */
+body.atlas-workbench { --atlas-header-row:28px; --atlas-lenses-row:26px; height:100svh; overflow:hidden; }
 body.atlas-workbench .atlas-page { height:100%; min-height:0; display:grid; grid-template-rows:var(--atlas-header-row) var(--atlas-lenses-row) minmax(0,1fr); }
 body.atlas-workbench.atlas-embedded .atlas-page { grid-template-rows:var(--atlas-lenses-row) minmax(0,1fr); }
 body.atlas-workbench .atlas-header { padding:2px 8px; display:flex; gap:8px; flex-wrap:nowrap; min-height:0; }
@@ -351,6 +354,12 @@ body.atlas-workbench .atlas-watch-shell > summary { display:block; min-height:30
 body.atlas-workbench .atlas-watch-content { position:absolute; right:0; top:100%; width:min(360px,calc(100vw - 16px)); max-height:60svh; overflow:auto; border:1px solid var(--line); background:var(--bg); }
 body.atlas-workbench .atlas-watch-grid { grid-template-columns:1fr 1fr; }
 body.atlas-workbench .atlas-watch-notice-body { position:static; }
+/* A card's last line should sit on its padding, not on padding PLUS the
+   element's own bottom margin. Stacked, they left ~24px of dead space under the
+   "Data dan sumber" link — a box taller than its contents for no reason. */
+body.atlas-workbench .atlas-watch-content > :last-child,
+body.atlas-workbench .atlas-watch-notice-body > :last-child,
+body.atlas-workbench .atlas-watch-action > :last-child { margin-bottom:0; }
 body.atlas-workbench .atlas-menu-body .atlas-watch, body.atlas-workbench .atlas-embedded-evidence .atlas-watch { position:static; width:100%; }
 body.atlas-workbench .atlas-menu-body .atlas-watch-content, body.atlas-workbench .atlas-embedded-evidence .atlas-watch-content { position:static; width:auto; }
 body.atlas-workbench .atlas-layers { top:8px; width:auto; padding:0 8px; font-family:var(--font-sans); }
@@ -434,7 +443,7 @@ body.atlas-workbench .atlas-watch { overflow:visible; max-height:none; }
 
 
 /* Slim control frames: labels carry the action, padding stays secondary. */
-body.atlas-workbench { --atlas-lenses-row:28px; }
+body.atlas-workbench { --atlas-lenses-row:26px; }
 body.atlas-workbench .atlas-lenses button,
 body.atlas-workbench #atlas-lens-evidence > summary,
 body.atlas-workbench .atlas-panel-summary,
@@ -545,7 +554,10 @@ input[type="range"], input[type="checkbox"] { accent-color:var(--accent); }
 #atlas-lens-body .synoptic-toggles, #atlas-lens-body .synoptic-scrub { display:flex; flex-wrap:wrap; align-items:center; gap:4px; margin:6px 0; }
 #atlas-lens-body .synoptic-toggles button, #atlas-lens-body .synoptic-scrub button {
   display:inline-flex; align-items:center; justify-content:center; width:auto; min-height:30px; margin:0;
-  padding:3px 10px; border:1px solid var(--line); background:transparent; color:var(--ink);
+  /* 10px a side made "Hujan satelit IMERG" + "Tampilan kota" 220px inside a
+     214px rail — 6px over — so four controls sprawled over three bordered rows.
+     7px a side brings the pair to 208px and the rail holds two per row. */
+  padding:3px 7px; border:1px solid var(--line); background:transparent; color:var(--ink);
   font:500 12px/1.2 var(--font-sans); letter-spacing:0; text-transform:none; text-align:center; white-space:nowrap;
 }
 #atlas-lens-body .synoptic-toggles button[aria-pressed="true"] { background:var(--ink); color:var(--bg); border-color:var(--ink); }
