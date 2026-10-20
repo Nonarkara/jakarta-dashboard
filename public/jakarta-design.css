@@ -195,6 +195,17 @@ body.atlas-embedded #atlas-lens-body { top: 90px; left: 0; right: auto; padding:
 .atlas-embedded-drawer { position: absolute; z-index: 40; top: 8px; right: 48px; max-width: calc(100% - 64px); margin: 0; }
 .atlas-embedded-drawer > summary { min-height: 32px; padding: 6px 10px; cursor: pointer; border: 1px solid var(--line); background: var(--bg); font-size: 12px; }
 .atlas-embedded-drawer[open] { left: 8px; right: 48px; }
+/* Two page-level doors share the corner the drawer already occupied. The row
+   is absolutely positioned, so it adds no height and the map keeps every pixel
+   it had. Closed, both sit inline; opened, the drawer leaves the flow and
+   anchors to the row's right edge. z-index 44 clears the city-watch overlay
+   (42) — at 40 this row rendered visibly but was not clickable — and still
+   sits under the loading veil (50) and the lens panel (65). */
+.atlas-page-tools { position: absolute; z-index: 44; top: 8px; right: 48px; max-width: calc(100% - 64px); display: flex; gap: 6px; align-items: flex-start; }
+.atlas-page-tools > .atlas-embedded-drawer { position: static; right: auto; max-width: none; }
+.atlas-page-tools > .atlas-embedded-drawer[open] { position: absolute; top: 0; right: 0; left: auto; width: min(420px, calc(100vw - 32px)); }
+.atlas-research-link { min-height: 32px; display: inline-flex; align-items: center; padding: 6px 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: 500 12px/1.4 var(--font-sans); text-decoration: none; white-space: nowrap; }
+.atlas-research-link:hover, .atlas-research-link:focus-visible { border-color: var(--amber); color: var(--amber); }
 .atlas-embedded-evidence { background: var(--bg); border: 1px solid var(--line); max-height: calc(100vh - 130px); overflow: auto; padding: 8px; }
 body.atlas-embedded .atlas-embedded-evidence .atlas-menu-body { position: static; width: auto; max-height: none; display: block; border: 0; padding: 0; }
 body.atlas-embedded .atlas-embedded-evidence .atlas-environment,
@@ -372,6 +383,8 @@ body.atlas-workbench .atlas-quick-heading { font-size:11px; }
 body.atlas-workbench .atlas-observation-hud { top:48px; }
 body.atlas-workbench .atlas-embedded-drawer { right:8px; }
 body.atlas-workbench .atlas-embedded-drawer > summary { min-height:30px; padding:4px 8px; }
+body.atlas-workbench .atlas-page-tools { right:8px; }
+body.atlas-workbench .atlas-research-link { min-height:30px; padding:4px 8px; }
 body.atlas-workbench .water-scenario-location { bottom:76px; }
 body.atlas-workbench .maplibregl-ctrl-group button { width:30px; height:30px; min-width:30px; min-height:30px; }
 body.atlas-workbench .maplibregl-ctrl-attrib { font-size:10px; }
@@ -411,7 +424,7 @@ body[data-surface="jakarta-dashboard"] .map-panel > .note[hidden] { display:none
 @media(pointer:coarse), (max-width:600px) {
  body.atlas-workbench { --atlas-header-row:44px; --atlas-lenses-row:44px; }
  body.atlas-workbench .atlas-header { padding:0 6px; }
- body.atlas-workbench .atlas-header-nav > .atlas-theme-control select, body.atlas-workbench .atlas-menu > summary, body.atlas-workbench .atlas-lenses button, body.atlas-workbench #atlas-lens-evidence > summary, body.atlas-workbench .atlas-panel-summary, body.atlas-workbench .atlas-watch-shell > summary, body.atlas-workbench .atlas-embedded-drawer > summary { min-height:44px; }
+ body.atlas-workbench .atlas-header-nav > .atlas-theme-control select, body.atlas-workbench .atlas-menu > summary, body.atlas-workbench .atlas-lenses button, body.atlas-workbench #atlas-lens-evidence > summary, body.atlas-workbench .atlas-panel-summary, body.atlas-workbench .atlas-watch-shell > summary, body.atlas-workbench .atlas-embedded-drawer > summary, body.atlas-workbench .atlas-research-link { min-height:44px; }
  body.atlas-workbench .maplibregl-ctrl-group button { width:44px; height:44px; min-width:44px; min-height:44px; }
  body.atlas-workbench .maplibregl-ctrl-attrib-button { min-width:44px; min-height:44px; }
  body.atlas-workbench .water-scenario-location { bottom:92px; }
@@ -449,6 +462,7 @@ body.atlas-workbench #atlas-lens-evidence > summary,
 body.atlas-workbench .atlas-panel-summary,
 body.atlas-workbench .atlas-watch-shell > summary,
 body.atlas-workbench .atlas-embedded-drawer > summary { min-height:24px; padding:2px 6px; line-height:18px; }
+body.atlas-workbench .atlas-research-link { min-height:24px; padding:2px 6px; line-height:18px; }
 body.atlas-workbench .atlas-layers,
 body.atlas-workbench .atlas-quick { padding:0 4px; }
 body.atlas-workbench .maplibregl-ctrl-group button { width:28px !important; height:28px !important; min-width:28px; min-height:28px; }

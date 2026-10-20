@@ -63,7 +63,7 @@ DEPLOYED_BUILD="$(node --input-type=module -e 'import {readFileSync} from "node:
 #
 # Commit with a pathspec, never `git add -A`: a bare commit would sweep anything a
 # parallel agent staged mid-release. RELEASE_AGENT names the runner.
-STAMPED=(public/app.js public/index.html public/dashboard.html public/dashboard.js)
+STAMPED=(public/app.js public/index.html public/research.html public/dashboard.html public/dashboard.js)
 if ! git diff --quiet HEAD -- "${STAMPED[@]}"; then
   git add -- "${STAMPED[@]}"
   git commit -q -m "chore: stamp build $(node --input-type=module -e 'import {readFileSync} from "node:fs"; console.log(readFileSync("public/app.js", "utf8").match(/const ATLAS_BUILD_TAG = "([^"]+)"/)[1])')" -m "Agent: ${RELEASE_AGENT:-unattributed-release}" -- "${STAMPED[@]}"
@@ -82,6 +82,10 @@ ATLAS_URL="$ATLAS_URL" npm run smoke:api
 ATLAS_URL="$ATLAS_URL" node scripts/smoke-haze.mjs
 
 npm run smoke:dashboard
+# Read the deployed page, not its source. This is the only gate that can see a
+# control which renders correctly and swallows its own clicks, or a chart whose
+# bars no longer track their values.
+ATLAS_URL="$ATLAS_URL" node scripts/audit-rendered.mjs
 node scripts/release-snapshot.mjs check "$LOCK/inputs.json"
 
 echo "released ${EXPECTED_BUILD}; working tree:"

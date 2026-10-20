@@ -26,6 +26,13 @@ function applyLang() {
   document.title = t('How it is built · JKTx', 'Cara dibuat · JKTx');
   document.querySelectorAll('[data-city-link]').forEach((a) => { const u = new URL(a.href); u.searchParams.set('lang', lang); a.href = u.href; });
   document.getElementById('lang').setAttribute('aria-label', t('Switch to Bahasa Indonesia', 'Ganti bahasa ke Inggris'));
+  // The canvas carries a sighted drawing and an English-only accessible name.
+  // The atlas translates its accessible attributes; this page must not be the
+  // one surface where a screen reader is told the wrong language.
+  const field = document.getElementById('field');
+  if (field) field.setAttribute('aria-label', t('Isobars, 850 hPa air flow and a 24 hour trajectory from Jakarta', 'Isobar, aliran udara 850 hPa dan lintasan 24 jam dari Jakarta'));
+  const meta = document.querySelector('meta[name="description"]');
+  if (meta) meta.setAttribute('content', t('How the Jakarta atlas is built from open public data, satellites and arithmetic. Every figure is read from the files the site ships.', 'Cara atlas Jakarta dibangun dari data publik terbuka, satelit dan aritmetika. Setiap angka dibaca dari berkas yang dikirim situs ini.'));
   // The prose states the contour interval. Read it from the module that draws
   // it, so the sentence and the canvas cannot disagree in a later release.
   document.querySelectorAll('[data-isobar-step]').forEach((n) => { n.textContent = String(ISOBAR_STEP_HPA); });
@@ -40,6 +47,34 @@ document.getElementById('lang').addEventListener('click', () => {
 
 // ── Shipped-file figures ─────────────────────────────────────────────────
 const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+
+// A ranked composition chart. One row per thing: name, bar, count, share. The
+// bar is the share; the number beside it is the count, so a reader never has to
+// estimate from the bar. Rows are content-sized and nothing is framed.
+function barChart(host, rows, { total = null } = {}) {
+  host.replaceChildren();
+  const sum = total ?? rows.reduce((a, r) => a + (r.value || 0), 0);
+  if (!sum) { host.append(el('p', 'caption', t('These figures are not available.', 'Angka ini tidak tersedia.'))); return; }
+  for (const r of rows) {
+    if (!(r.value > 0)) continue;
+    const row = el('div', 'row');
+    const share = r.value / sum;
+    const fill = el('i');
+    fill.style.width = (share * 100).toFixed(2) + '%';
+    fill.style.background = r.colour || css('--ink');
+    // The machine-readable share travels with the bar. An audit must never
+    // parse the printed number: "90,9 %" and "90.9 %" are the same value and
+    // stripping the wrong separator turned 90.9 into 909.
+    row.dataset.share = share.toFixed(6);
+    row.dataset.value = String(r.value);
+    const meter = el('div', 'meter');
+    meter.append(fill);
+    const count = el('div', 'count', fmt(r.value));
+    count.append(el('small', null, fmt(share * 100, 1) + ' %'));
+    row.append(el('div', 'name', r.label), meter, count);
+    host.append(row);
+  }
+}
 const files = [
   json('/data/jakarta-v1/buildings-stats.json'),
   json('/data/jakarta-v1/transit.json'),
@@ -62,24 +97,43 @@ function renderFiles([buildings, transit, catalog, flood]) {
     cell(fmt(Array.isArray(catalog?.records) ? records.length : null), t('sources assessed', 'sumber dinilai'));
 
     const st = document.getElementById('src-status'); st.replaceChildren();
-    for (const [s, en, id] of [['integrated', 'integrated', 'terintegrasi'], ['candidate', 'candidate', 'kandidat'], ['registration-required', 'needs registration', 'perlu registrasi'], ['blocked', 'blocked', 'terblokir']]) {
-      const d = el('div'); d.append(el('b', 'big', fmt(count(s))), el('p', 'eyebrow', t(en, id))); st.append(d);
+    const STATUS = [
+      ['integrated', t('Integrated here', 'Terintegrasi di sini'), css('--ink')],
+      ['candidate', t('Probed, not admitted', 'Diperiksa, belum diterima'), css('--accent')],
+      ['registration-required', t('Needs an account', 'Perlu akun / registrasi'), css('--dim')],
+      ['blocked', t('Access failed', 'Akses gagal'), css('--lacquer')],
+    ];
+    barChart(st, STATUS.map(([k, label, colour]) => ({ label, value: count(k), colour })), { total: records.length || null });
+
+    // Licences, reduced to the one question a reader actually has: does the
+    // publisher name an open licence? That is a prefix test on the catalogue's
+    // own string, not an interpretation of it — and every licence the test does
+    // not catch is still listed in the disclosure below, so nothing is lost.
+    const lic = document.getElementById('src-licence');
+    const OPEN = /^(CC BY 4\.0|CC BY-NC 4\.0|ODbL|Apache-2\.0)/i;
+    const namesOpen = records.filter((r) => OPEN.test(String(r.license ?? '').trim()));
+    barChart(lic, [
+      { label: t('Names no open licence', 'Tidak menyebut lisensi terbuka'), value: records.length - namesOpen.length, colour: css('--ink') },
+      { label: t('Names an open licence', 'Menyebut lisensi terbuka'), value: namesOpen.length, colour: css('--accent') },
+    ], { total: records.length || null });
+
+    const detail = document.getElementById('src-licence-detail');
+    if (detail) {
+      const tally = {};
+      for (const r of namesOpen) { const s = String(r.license).trim(); tally[s] = (tally[s] || 0) + 1; }
+      const list = el('ul', 'legend');
+      for (const [text, n] of Object.entries(tally).sort((a, b) => b[1] - a[1])) list.append(el('li', null, fmt(n) + ' × ' + text));
+      detail.replaceChildren(list);
     }
 
-    // Height sources: shares of the baked archive, read from its stats file.
+    // Height provenance: shares of the baked archive, read from its stats file.
     const h = buildings?.height || {};
-    const parts = [['measured', t('tagged (OSM / survey)', 'bertag (OSM / survei)'), css('--ink')], ['floors', t('floors × 3.3 m', 'lantai × 3,3 m'), css('--lacquer')],
-      ['google', t('Google 2.5D satellite, p75', 'satelit Google 2.5D, p75'), css('--accent')], ['ghsl', t('GHSL area average', 'rata-rata area GHSL'), css('--line')], ['estimated', t('type default', 'nilai bawaan tipe'), css('--dim')]];
-    const total = parts.reduce((a, [k]) => a + (h[k] || 0), 0);
-    const stack = document.getElementById('height-stack'), legend = document.getElementById('height-legend');
-    stack.replaceChildren(); legend.replaceChildren();
-    if (total) for (const [k, label, colour] of parts) {
-      const share = (h[k] || 0) / total;
-      const bar = el('i'); bar.style.width = (share * 100) + '%'; bar.style.background = colour; stack.append(bar);
-      const li = el('li'); const sw = el('s'); sw.style.background = colour;
-      li.append(sw, document.createTextNode(label + ' · ' + fmt(h[k]) + ' · ' + fmt(share * 100, 2) + ' %')); legend.append(li);
-    }
-    else legend.append(el('li', null, t('Building statistics unavailable.', 'Statistik bangunan tidak tersedia.')));
+    const parts = [['google', t('Google 2.5D satellite, p75', 'satelit Google 2.5D, p75'), css('--accent')],
+      ['ghsl', t('GHSL area average', 'rata-rata area GHSL'), css('--ink')],
+      ['floors', t('floors × 3.3 m', 'lantai × 3,3 m'), css('--lacquer')],
+      ['estimated', t('type default', 'nilai bawaan tipe'), css('--line')],
+      ['measured', t('tagged (OSM / survey)', 'bertag (OSM / survei)'), css('--dim')]];
+    barChart(document.getElementById('height-bars'), parts.map(([k, label, colour]) => ({ label, value: h[k] || 0, colour })));
   };
   draw();
 }

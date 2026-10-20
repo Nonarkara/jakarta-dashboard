@@ -31,6 +31,7 @@ window.ATLAS_ID = {
   "Visible satellite imagery can show clouds, land and smoke-like features. It does not identify a pollution source or measure surface concentration.": "Citra satelit tampak dapat memperlihatkan awan, daratan dan bentuk menyerupai asap. Tidak mengidentifikasi sumber polusi atau mengukur konsentrasi permukaan.",
   "Waterways & inflow": "Alur air & air masuk", "Traffic cameras": "Kamera lalu lintas",
   "and": "dan", "City dashboard": "Dasbor kota", "How it is built": "Cara dibuat",
+  "Research & method": "Riset & metode",
   "Himawari clouds": "Awan Himawari",
   "Aerosol": "Aerosol",
   "Explore city conditions": "Jelajahi kondisi kota",

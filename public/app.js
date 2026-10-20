@@ -1260,7 +1260,18 @@ window.addEventListener('atlas:theme',reportBuildingView);
     if (node) body.append(node);
   }
   drawer.append(summary, body);
-  document.querySelector('.atlas-map-wrap').append(drawer);
+  // The research page existed behind two clicks (Controls → How it is built) and
+  // was the only page in the product nobody could reach from the map. It shares
+  // the drawer's corner: one right-hand row, two page-level doors, and the row
+  // was already occupied, so the map loses no height to it.
+  const tools = document.createElement('div');
+  tools.className = 'atlas-page-tools';
+  const researchLink = document.createElement('a');
+  researchLink.className = 'atlas-research-link';
+  researchLink.href = '/research';
+  researchLink.textContent = 'Research & method';
+  tools.append(researchLink, drawer);
+  document.querySelector('.atlas-map-wrap').append(tools);
   const context = document.createElement('div');
   context.className = 'atlas-lens-context';
   context.append(document.getElementById('atlas-lens-title'), document.getElementById('atlas-lens-description'));

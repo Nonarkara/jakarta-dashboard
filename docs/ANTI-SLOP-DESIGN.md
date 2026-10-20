@@ -27,3 +27,43 @@ A last child's trailing margin must not stack with its container's padding: the 
 The map remains dominant. Universa Civic is the owner-selected CTAN implementation of the Bayer lineage; Source Sans 3 carries long evidence and values. Two authored font families; platform fallbacks are compatibility only. Scientific layers retain meaningful classes and source colours. Research shares those tokens and offers a 65ch prose measure. Counts are computed, time-labelled model data stays distinct from observations, and outages stay visible. Compact bars remain compact; do not reintroduce a 44px chrome row merely to enlarge a button frame.
 
 `npm run audit:design` checks font faces, reading measure, unboxed metric layout, pipeline widths, preserved interactive elements and release wiring. It cannot judge composition or beauty. Save responsive screenshots, name findings for all seven rules, fix/re-capture and obtain an independent review.
+
+## 20 October 2026 — reachability, hittability, and bars that mean something
+
+Three audits in one week failed the same way: an assertion ran, passed, and
+described nothing a person could observe. All three are now guarded, and each
+guard has been shown to fail on the defect it forbids.
+
+**The index hid its own page.** The research page carried eight sections and
+its contents nav linked five. The three it dropped included the
+height-provenance section — the only graphic on that page that renders without
+a network call. `test-anti-slop-design.mjs` had asserted each section `id`
+existed, so it stayed green through the whole regression. The guard now walks
+the sections and the nav and requires them to correspond in both directions,
+and requires every entry to carry both languages.
+
+**The research page was unreachable from the map.** It existed, and it was the
+one page nobody could get to from the atlas: its only link sat inside the
+collapsed Controls disclosure. It now has a door in the atlas's own page-tools
+row, beside the evidence drawer — an absolutely-positioned row that adds no
+height, so the map keeps every pixel. The first attempt placed that row at
+`z-index:40`, under the city-watch overlay at 42: it rendered perfectly and
+swallowed every click. It now sits at 44. `audit:design` executes the real
+drawer block and inspects the tree it builds, so deleting the link, moving it
+inside the drawer, or letting it drift to a second name all fail the gate.
+
+**A chart can be a picture of a chart.** The first rendered audit asked only
+whether each bar row contained a filled element — which passed for every row
+forever. It now compares the drawn width against the stated share, and reads
+the share from `data-share` rather than from the printed text.
+
+**Charts must be drawn from files this site ships.** Of the sixty sources the
+catalogue assesses, eleven name an open licence (`CC BY 4.0`, `CC BY-NC 4.0`,
+`ODbL`, `Apache-2.0`); forty-nine do not. Every graphic on the research page is
+therefore computed in the browser from this site's own JSON, and the page says
+so in both languages. "License-free" here means drawn here, not scraped from a
+publisher who never granted the right.
+
+`npm run audit:rendered` reads the deployed page rather than its source, at
+1440 / 1024 / 390, on `/atlas` and `/research`, and runs inside `npm run
+release`. It fails loudly — never silently skips — if it cannot run at all.

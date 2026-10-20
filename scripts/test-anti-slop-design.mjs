@@ -29,7 +29,7 @@ for(const selector of ['figures','status']) {
 }
 assert.match(style,/\.maths\{display:grid;gap:24px\}/,'maths retain a sequential reading order');
 assert.match(read('public/dashboard.css'),/\.warning p\{max-width:65ch\}/,'warning text no longer owns a nested scrollbar');
-for(const id of ['field','flow','height-stack','height-legend','figures','src-status']) assert.match(html,new RegExp('id="'+id+'"'),'earned visual '+id+' remains');
+for(const id of ['field','flow','height-bars','figures','src-status','src-licence','src-licence-detail']) assert.match(html,new RegExp('id="'+id+'"'),'earned visual '+id+' remains');
 for(const id of ['h-live','h-pipe','h-sat','h-height','h-maths','h-rules','h-src']) assert.match(html,new RegExp('id="'+id+'"'),'earned section '+id+' remains');
 assert.match(html,/class="stage" hidden/,'loading/outage cannot leave a huge empty diagram');
 assert.match(js,/base\.parentElement\.hidden = false/,'valid data restores the diagram');
@@ -38,12 +38,13 @@ assert.match(js,/if \(document.hidden \|\| !ctx \|\| !playing \|\| reduced\(\)\)
 // Execute the real Research client with one failed and one indefinitely slow source.
 // A stalled file must not block other figures; a missing catalogue must never become 0.
 const nodes=new Map();
-const node=()=>({children:[],textContent:'',hidden:false,disabled:false,style:{},attributes:{},parentElement:{hidden:true},append(...n){this.children.push(...n)},replaceChildren(...n){this.children=n},setAttribute(k,v){this.attributes[k]=v},addEventListener(k,f){this[k]=f}});
+const node=()=>({children:[],textContent:'',hidden:false,disabled:false,style:{},attributes:{},dataset:{},className:'',parentElement:{hidden:true},append(...n){this.children.push(...n)},replaceChildren(...n){this.children=n},setAttribute(k,v){this.attributes[k]=v},addEventListener(k,f){this[k]=f}});
 const get=id=>{if(!nodes.has(id))nodes.set(id,node());return nodes.get(id)};
 const links=[{href:'https://jakarta.nonarkara.org/atlas?lens=rain'}];
 const root={dataset:{},lang:'id'};
 const source=js.replace(/^import .* from .*;\n/gm,'');
-const doc={documentElement:root,getElementById:get,querySelectorAll:()=>links,createElement:()=>node(),createTextNode:text=>({textContent:text}),addEventListener(){}};
+const meta=node();
+const doc={documentElement:root,getElementById:get,querySelectorAll:()=>links,querySelector:s=>s==='meta[name="description"]'?meta:null,createElement:()=>node(),createTextNode:text=>({textContent:text}),addEventListener(){}};
 const fixture={count:123,height:{estimated:123}};
 const context=vm.createContext({...synoptic,document:doc,currentResearchField,createResearchSession,researchFires,researchFires,location:{search:'?lang=en',href:'https://jakarta.nonarkara.org/research?lang=en'},localStorage:{getItem(){return null},setItem(){}},URL,URLSearchParams,AbortSignal,Date,console,window:{addEventListener(){}},getComputedStyle:()=>({getPropertyValue:()=> '#123747'}),fetch:async url=> {
  if(url.includes('transit'))return new Promise(()=>{});
@@ -132,4 +133,78 @@ console.log('PASS anti-slop contracts, preserved visuals, independent loading, t
   const dt = rule('.synoptic-facts dt', 'font-size');
   assert.ok(px(dt, 'font-size') < facts, 'a label is smaller than the value it names');
   console.log(`PASS evidence rail states an order (${scale.join(' / ')}), labels below their values`);
+}
+
+// ── An index that hides sections is a missing hierarchy ───────────────────
+// The research page carried eight sections and its own contents nav linked
+// five. The three it dropped included the height-provenance section, which
+// holds the only graphic that renders without a network call. The guard above
+// only ever asked whether an id existed, so it stayed green while a third of
+// the page was unreachable from its own table of contents. Presence is not
+// reachability: assert that every section answers to a link.
+{
+  const nav = html.match(/<nav class="contents"[\s\S]*?<\/nav>/)[0];
+  const linked = new Set([...nav.matchAll(/href="#([^"]+)"/g)].map((m) => m[1]));
+  const sections = [...html.matchAll(/<section[^>]*aria-labelledby="([^"]+)"/g)].map((m) => m[1]);
+  assert.ok(sections.length >= 8, `the page keeps its sections (${sections.length} found)`);
+  const orphans = sections.filter((id) => !linked.has(id));
+  assert.deepEqual(orphans, [], `every section is reachable from the contents nav; orphans: ${orphans.join(', ')}`);
+  const dead = [...linked].filter((id) => !sections.includes(id));
+  assert.deepEqual(dead, [], `every contents link points at a real section; dangling: ${dead.join(', ')}`);
+
+  // Both languages carry the same index, or the page is half navigable.
+  const navIds = [...nav.matchAll(/<a href="#[^"]+"><span lang="id">[^<]*<\/span><span lang="en">[^<]*<\/span><\/a>/g)];
+  assert.equal(navIds.length, sections.length, 'each contents entry carries both languages');
+  console.log(`PASS research index reaches all ${sections.length} sections, bilingual`);
+}
+
+// ── The research page must be reachable from the map ──────────────────────
+// It existed behind two clicks and was the one page nobody could get to from
+// the atlas. This runs the real drawer block out of app.js and inspects the
+// tree it builds, so removing the link — or burying it inside a collapsed
+// <details> — fails here rather than on someone's screen.
+{
+  const app = read('public/app.js');
+  const block = app.slice(app.indexOf('const embedded = window.parent'), app.indexOf("document.getElementById('atlas-lens-evidence').append(lensPopup)"));
+  assert.ok(block.length > 200, 'the atlas page-tools block is present');
+
+  const made = [];
+  const mk = (tag) => {
+    // The real DOM reports tagName upper-case for HTML elements.
+    const n = { tagName: String(tag).toUpperCase(), children: [], attrs: {}, className: '', textContent: '', dataset: {},
+      append(...k) { this.children.push(...k); }, replaceChildren(...k) { this.children = k; } };
+    Object.defineProperty(n, 'classList', { value: { add() {} } });
+    made.push(n);
+    return n;
+  };
+  const mapWrap = { children: [], append(...k) { this.children.push(...k); } };
+  const body = { classList: { add() {} } };
+  const host = {
+    document: {
+      body,
+      documentElement: { classList: { add() {} } },
+      createElement: mk,
+      getElementById: (id) => ({ append() {}, style: {} }),
+      querySelector: (s) => (s === '.atlas-map-wrap' ? mapWrap : null),
+      querySelectorAll: () => [],
+      addEventListener() {},
+    },
+    window: { parent: {}, addEventListener() {} },
+  };
+  vm.createContext(host);
+  vm.runInContext(block, host);
+
+  assert.equal(mapWrap.children.length, 1, 'the page-tools row is mounted once');
+  const tools = mapWrap.children[0];
+  assert.equal(tools.className, 'atlas-page-tools', 'the row carries its own hook');
+  const link = tools.children.find((n) => n.tagName === 'A');
+  assert.ok(link, 'the atlas offers a link out to the research page');
+  assert.equal(link.attrs.href ?? link.href, '/research', 'the research link points at the research page');
+  assert.equal(link.className, 'atlas-research-link', 'the research link is styleable as chrome');
+  assert.ok(!link.closest, 'the link is built directly, not inherited from a collapsed control');
+  const drawer = tools.children.find((n) => n.tagName === 'DETAILS');
+  assert.ok(drawer, 'the existing evidence drawer still ships beside it');
+  assert.equal(link.textContent, 'Research & method', 'the research page has exactly one name');
+  assert.match(read('public/translations.js'), /"Research & method": "Riset & metode"/, 'the research link is translated');
+  console.log('PASS the atlas mounts a research door beside the evidence drawer, in both languages');
 }

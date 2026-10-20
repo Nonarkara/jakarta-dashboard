@@ -1,0 +1,221 @@
+#!/usr/bin/env node
+// Rendered-page anti-slop audit.
+//
+// The guards in scripts/test-anti-slop-design.mjs read source. This one reads
+// the page a human actually sees, at three widths, on the deployed site. It
+// exists because the strongest defects in this project were never visible in a
+// stylesheet: a fixed panel trapped by an ancestor's containing block, a
+// controls row that rendered correctly and swallowed every click, a chart
+// whose bars were all 0.4% of a 500px track and could not be compared.
+//
+// Playwright is not a dependency of this repository and must not become one.
+// It is loaded from the sanctioned sibling checkout. If it is not there this
+// FAILS LOUDLY — it never quietly skips, because a gate that silently passes
+// when it cannot run is the exact defect class this file exists to catch.
+//
+// Usage:
+//   ATLAS_URL=https://jakarta.nonarkara.org node scripts/audit-rendered.mjs
+//   SHOT_DIR=docs/receipts node scripts/audit-rendered.mjs
+
+import { createRequire } from 'node:module';
+import { mkdirSync } from 'node:fs';
+
+const BASE = process.env.ATLAS_URL || 'https://jakarta.nonarkara.org';
+const SHOTS = process.env.SHOT_DIR || '';
+const PLAYWRIGHT = process.env.PLAYWRIGHT_PATH || '/Users/nonarkara/Projects/dashboards/HCMC/node_modules/playwright/index.mjs';
+const CDP = process.env.CHROME_CDP || 'http://127.0.0.1:9656';
+
+let chromium;
+try {
+  ({ chromium } = await import(PLAYWRIGHT));
+} catch (e) {
+  console.error(`FATAL: cannot load Playwright from ${PLAYWRIGHT}.\n` +
+    `The rendered audit cannot run, and it will not report success without running.\n` +
+    `Set PLAYWRIGHT_PATH to a Playwright 1.64+ install. (${e.message})`);
+  process.exit(2);
+}
+
+// One shared browser, per the standing rule. Attach to the running instance;
+// start it only if nobody holds the port.
+let browser;
+try {
+  browser = await chromium.connectOverCDP(CDP);
+} catch {
+  const { spawn } = await import('node:child_process');
+  const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+  const child = spawn(CHROME, ['--headless=new', `--remote-debugging-port=${new URL(CDP).port}`,
+    `--user-data-dir=/tmp/one-shared-chrome-${new URL(CDP).port}`,
+    '--no-first-run', '--no-default-browser-check', '--hide-scrollbars', 'about:blank'],
+    { detached: true, stdio: 'ignore' });
+  child.unref();
+  for (let i = 0; i < 40 && !browser; i++) {
+    await new Promise((r) => setTimeout(r, 500));
+    try { browser = await chromium.connectOverCDP(CDP); } catch { /* not up yet */ }
+  }
+  if (!browser) { console.error(`FATAL: no Chrome at ${CDP} and it would not start. The audit cannot run.`); process.exit(2); }
+}
+
+if (SHOTS) mkdirSync(SHOTS, { recursive: true });
+
+const results = [];
+const record = (where, name, ok, detail) => { results.push({ where, name, ok, detail }); };
+
+// Everything below runs inside the page.
+const AUDIT = () => {
+  const out = { overflow: null, mapShare: null, boxes: [], measure: [], hittable: [], charts: [], errors: [] };
+  out.overflow = document.documentElement.scrollWidth > document.documentElement.clientWidth + 1;
+
+  const map = document.querySelector('.maplibregl-map');
+  if (map) {
+    const r = map.getBoundingClientRect();
+    out.mapShare = +(((r.width * r.height) / (innerWidth * innerHeight)) * 100).toFixed(1);
+  }
+
+  // ── Hittability. A control that renders and cannot be clicked is not a
+  // control. Hit-test each page-level door at its own centre.
+  for (const el of document.querySelectorAll('.atlas-page-tools > *, .atlas-layers > details > summary')) {
+    const r = el.getBoundingClientRect();
+    if (!r.width || !r.height) continue;
+    const hit = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+    const label = (el.tagName === 'SUMMARY' || el.classList.contains('atlas-embedded-drawer')
+      ? (el.querySelector('summary')?.textContent || el.textContent)
+      : el.textContent) || el.className;
+    out.hittable.push({
+      name: label.trim().replace(/\s+/g, ' ').slice(0, 28),
+      top: hit === el || el.contains(hit),
+      coveredBy: hit && !(hit === el || el.contains(hit)) ? (hit.tagName + '.' + (hit.className || '')).slice(0, 40) : null,
+    });
+  }
+
+  // ── Boxes fit their content. The law allows 0.5–1.5x line height of
+  // padding. An element whose height is a graphic is not measured here: a bar
+  // chart row is legitimately taller than the text sitting in it.
+  const GRAPHIC = 'canvas,svg,img,video,i.meter,.meter';
+  for (const el of document.querySelectorAll('body *')) {
+    if (el.matches(GRAPHIC) || el.querySelector(GRAPHIC)) continue;
+    const cs = getComputedStyle(el);
+    const own = [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
+    if (!own) continue;
+    const text = el.textContent.trim();
+    if (!text || text.length > 400) continue;
+    const r = el.getBoundingClientRect();
+    if (r.width < 8 || r.height < 4) continue;
+    if (cs.visibility === 'hidden' || cs.display === 'none' || +cs.opacity === 0) continue;
+    const pad = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+    const lh = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.2;
+    const lines = el.getClientRects().length || 1;
+    const budget = 1.5 * lh;
+    if (pad > budget) {
+      out.boxes.push({
+        name: el.tagName + '.' + (el.className || '').toString().slice(0, 30),
+        text: text.slice(0, 30), pad: Math.round(pad), budget: Math.round(budget), lines,
+        h: Math.round(r.height),
+      });
+    }
+  }
+
+  // ── Reading measure, in real characters. `ch` is the advance of "0", not the
+  // mean advance, so a CSS max-width cannot be trusted; count what is drawn.
+  for (const p of document.querySelectorAll('p, li')) {
+    const cs = getComputedStyle(p);
+    const r = p.getBoundingClientRect();
+    if (r.width < 200 || r.height < 10) continue;
+    if (p.closest('table,.table,.bars,.formula,.pipe,.legend')) continue;
+    const probe = document.createElement('span');
+    probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font:' + cs.font;
+    probe.textContent = 'abcdefghijklmnopqrstuvwxyz';
+    document.body.append(probe);
+    const avg = probe.getBoundingClientRect().width / 26;
+    probe.remove();
+    const chars = Math.round(r.width / avg);
+    if (chars > 78) out.measure.push({ name: p.className || p.tagName, chars, w: Math.round(r.width) });
+  }
+
+  // ── Charts must encode something. A bar whose drawn length does not track
+  // its own stated share is a picture of a chart. Compare the painted width to
+  // the number printed beside it — checking only that a bar exists lets every
+  // bar be drawn at 100% forever.
+  for (const host of document.querySelectorAll('.bars')) {
+    const rows = [...host.querySelectorAll('.row')].map((row) => {
+      const meter = row.querySelector('.meter');
+      const fill = row.querySelector('.meter i');
+      const stated = parseFloat(row.dataset.share);           // the value, not its rendering
+      const mw = meter ? meter.getBoundingClientRect().width : 0;
+      const fw = fill ? fill.getBoundingClientRect().width : 0;
+      return {
+        label: (row.querySelector('.name')?.textContent || '').slice(0, 30),
+        stated: Number.isFinite(stated) ? +(stated * 100).toFixed(2) : null,
+        drawn: mw > 0 && fill ? +((100 * fw) / mw).toFixed(2) : null,
+      };
+    });
+    if (!rows.length) continue;
+    const liar = rows.filter((r) => r.drawn === null || !Number.isFinite(r.stated) || Math.abs(r.drawn - r.stated) > 0.6);
+    const sum = +rows.reduce((a, r) => a + (r.stated || 0), 0).toFixed(1);
+    out.charts.push({
+      id: host.id, rows, liars: liar.map((r) => `${r.label}: states ${r.stated}% but draws ${r.drawn}%`),
+      sum, sumOk: Math.abs(sum - 100) <= 1.0,
+    });
+  }
+  return out;
+};
+
+const VIEWPORTS = [[1440, 900, false], [1024, 768, false], [390, 844, true]];
+const PAGES = [['/atlas', 'atlas'], ['/research', 'research']];
+
+for (const [path, label] of PAGES) {
+  for (const [w, h, isMobile] of VIEWPORTS) {
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1, isMobile, hasTouch: isMobile });
+    const page = await ctx.newPage();
+    page.on('pageerror', (e) => record(label, 'page error', false, String(e).slice(0, 100)));
+    await page.goto(BASE + path, { waitUntil: 'networkidle', timeout: 90000 });
+    await page.waitForTimeout(3500);
+
+    // The loading veil sits above every control. While it is up, a hit-test
+    // failure means nothing — the page simply is not interactive yet. Wait for
+    // it to lift, and if it never does, say so once and skip the hit-tests
+    // rather than reporting three controls as broken.
+    let veilLifted = true;
+    if (label === 'atlas') {
+      try {
+        await page.waitForFunction(() => {
+          const v = document.getElementById('atlas-map-loading');
+          return !v || v.offsetParent === null || getComputedStyle(v).display === 'none';
+        }, null, { timeout: 20000 });
+      } catch { veilLifted = false; }
+    }
+
+    const a = await page.evaluate(AUDIT);
+    const where = `${label}@${w}`;
+
+    record(where, 'no horizontal overflow', !a.overflow, a.overflow ? `scrollWidth exceeds clientWidth by ${a.overflow}px` : 'none');
+    if (!veilLifted) {
+      record(where, 'the map finishes loading', false, 'the loading veil never lifted; hit-tests skipped because nothing was interactive');
+      await ctx.close();
+      continue;
+    }
+    if (label === 'atlas' && w >= 1024) {
+      record(where, 'the map keeps the viewport', a.mapShare !== null && a.mapShare >= 60,
+        a.mapShare === null ? 'no map element' : `${a.mapShare}% of the viewport`);
+    }
+    for (const t of a.hittable) record(where, `"${t.name}" is clickable`, t.top, t.coveredBy ? `covered by ${t.coveredBy}` : '');
+    for (const b of a.boxes) record(where, `box fits its text: ${b.name}`, false, `"${b.text}" has ${b.pad}px padding against a ${b.budget}px budget (${b.lines} lines, ${b.h}px tall)`);
+    for (const m of a.measure) record(where, `reading measure: ${m.name}`, false, `${m.chars} characters across ${m.w}px`);
+    for (const c of a.charts) {
+      record(where, `chart "${c.id}" draws its own numbers`, c.liars.length === 0,
+        c.liars.length ? c.liars.join('; ') : `${c.rows.length} rows, each bar length matches its stated share`);
+      record(where, `chart "${c.id}" shares sum to one whole`, c.sumOk, `stated shares sum to ${c.sum}%`);
+    }
+
+    if (SHOTS) await page.screenshot({ path: `${SHOTS}/${label}-${w}.png` });
+    await ctx.close();
+  }
+}
+
+await browser.close();
+
+const failed = results.filter((r) => !r.ok);
+for (const r of results) {
+  if (!r.ok) console.log(`  FAIL  ${r.where}  ${r.name}${r.detail ? '  — ' + r.detail : ''}`);
+}
+console.log(`\nrendered audit: ${results.length - failed.length}/${results.length} passed against ${BASE}`);
+if (failed.length) { console.log(`${failed.length} rendered defect(s). Bytes are not pixels.`); process.exit(1); }

@@ -58,6 +58,20 @@ th,td{text-align:left;vertical-align:top;padding:8px 16px 8px 0;border-bottom:1p
 th{font:600 var(--micro)/1.5 var(--sans);color:var(--dim)}
 .stack{display:flex;height:20px;margin:12px 0}
 .stack i{display:block;height:100%;border-right:1px solid var(--bg)}
+/* Ranked composition. One row per thing — label, bar, count, share — so the
+   chart reads as a table and its numbers stay comparable down the page. The
+   row is content-sized: nothing here is padded past what it holds. */
+.bars{display:grid;margin:16px 0 10px;max-width:780px}
+.bars .row{display:grid;grid-template-columns:minmax(0,1fr) 230px auto;gap:4px 16px;align-items:baseline;padding:6px 0;border-top:1px solid var(--line)}
+.bars .row:first-child{border-top:0}
+.bars .name{font:500 var(--body)/1.35 var(--sans);min-width:0}
+.bars .count{font:var(--body)/1.35 var(--sans);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.bars .count small{font:var(--micro)/1.35 var(--sans);color:var(--dim);margin-left:8px}
+.bars .meter{grid-column:2;height:10px;background:var(--bg-raised);position:relative}
+.bars .meter i{position:absolute;inset:0 auto 0 0;display:block}
+.licence-detail{margin-top:8px}
+.licence-detail > summary{font:600 var(--micro)/1.6 var(--sans);color:var(--dim);cursor:pointer}
+.licence-detail[open] > summary{margin-bottom:6px}
 .legend{list-style:none;display:grid;gap:4px;font:var(--micro)/1.6 var(--sans);color:var(--dim)}
 .legend li{display:flex;gap:8px;align-items:baseline}
 .legend s{display:inline-block;flex:none;width:10px;height:10px;text-decoration:none}
@@ -72,11 +86,20 @@ footer{padding:24px 0;color:var(--dim)}
  .hero{grid-template-columns:minmax(0,2.4fr) minmax(0,1fr)}
  .live{grid-template-columns:minmax(0,1.8fr) minmax(0,1fr)}
  .pipe{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px}
- .maths article{grid-template-columns:minmax(0,1fr) minmax(0,2.1fr);column-gap:32px}
+ .maths article{grid-template-columns:minmax(0,24ch) minmax(0,1fr);column-gap:32px}
  .maths article h3{grid-column:1;grid-row:1/4}
  .maths article>:not(h3){grid-column:2}
 }
-@media (max-width:600px){.bar .wrap{gap:2px}.bar a,.bar button{padding:3px 6px}.hero{padding:24px 0}.live{gap:16px}section{padding:24px 0}.figures{gap:10px 24px}}
+@media (max-width:600px){.bar .wrap{gap:2px}.bar a,.bar button{padding:3px 6px}.hero{padding:24px 0}.live{gap:16px}section{padding:24px 0}.figures{gap:10px 24px}
+/* At the narrow measure a three-column chart wraps its labels to four lines.
+   The bar moves under the row instead, so each row stays one line of text
+   plus one bar. Every cell is placed explicitly: the meter claims both columns
+   on its own row, which would otherwise push the count onto a third line. */
+.bars .row{grid-template-columns:minmax(0,1fr) auto;gap:3px 12px;padding:7px 0}
+.bars .name{grid-column:1;grid-row:1}
+.bars .count{grid-column:2;grid-row:1}
+.bars .meter{grid-column:1/-1;grid-row:2}
+.bars .count small{margin-left:6px}}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}button:active{transform:none}}
 </style>
 </head>
@@ -102,7 +125,7 @@ footer{padding:24px 0;color:var(--dim)}
   </section>
 
   <div class="figures" id="figures" aria-live="polite"></div>
-  <nav class="contents" aria-label="Research sections"><a href="#h-live"><span lang="id">Diagram kerja</span><span lang="en">Working diagram</span></a><a href="#h-pipe"><span lang="id">Proses</span><span lang="en">Process</span></a><a href="#h-sat"><span lang="id">Satelit</span><span lang="en">Satellites</span></a><a href="#h-maths"><span lang="id">Perhitungan</span><span lang="en">Calculations</span></a><a href="#h-src"><span lang="id">Sumber</span><span lang="en">Sources</span></a></nav>
+  <nav class="contents" aria-label="Research sections"><a href="#h-live"><span lang="id">Diagram kerja</span><span lang="en">Working diagram</span></a><a href="#h-pipe"><span lang="id">Proses</span><span lang="en">Process</span></a><a href="#h-sat"><span lang="id">Satelit</span><span lang="en">Satellites</span></a><a href="#h-haze"><span lang="id">Kabut</span><span lang="en">Haze</span></a><a href="#h-height"><span lang="id">Tinggi</span><span lang="en">Heights</span></a><a href="#h-maths"><span lang="id">Perhitungan</span><span lang="en">Calculations</span></a><a href="#h-rules"><span lang="id">Aturan</span><span lang="en">Rules</span></a><a href="#h-src"><span lang="id">Sumber</span><span lang="en">Sources</span></a></nav>
 
   <section aria-labelledby="h-live">
     <p class="eyebrow"><span lang="id">Langsung · model Open-Meteo</span><span lang="en">Live · Open-Meteo model</span></p>
@@ -171,8 +194,8 @@ u = s · sin θ     v = s · cos θ
 
   <section aria-labelledby="h-height">
     <h2 id="h-height"><span lang="id">Dari mana tinggi setiap bangunan berasal</span><span lang="en">Where each building's height comes from</span></h2>
-    <div class="stack" id="height-stack" role="img" aria-label="Height source shares"></div>
-    <ul class="legend" id="height-legend"></ul>
+    <div class="bars" id="height-bars"></div>
+    <p class="caption"><span lang="id">Setiap baris adalah bagian dari arsip yang sama; panjang bar adalah bagiannya dari total. Tinggi tidak pernah diskalakan — jumlah ini hanya menyatakan dari mana angkanya datang.</span><span lang="en">Each row is a share of the same archive; the bar length is that share of the total. Heights are never scaled — these counts only say where the numbers came from.</span></p>
     <p class="formula" style="margin-top:16px">h = tagged          if 1 ≤ h ≤ 500 m
   | floors × 3.3 m    if 3 ≤ h ≤ 400 m
   | min(p75 Google, cap)
@@ -214,7 +237,12 @@ now − t ≤ 3 h ; t ≤ now + 5 min</p><p><span lang="id">Model memetakan perm
 
   <section aria-labelledby="h-src">
     <h2 id="h-src"><span lang="id">Daftar sumber</span><span lang="en">The source register</span></h2>
-    <div class="status" id="src-status" aria-live="polite"></div>
+    <div class="bars" id="src-status" aria-live="polite"></div>
+    <p class="caption"><span lang="id">Keempat status menjawab pertanyaan berbeda. <b>Terintegrasi</b> berarti kapabilitas yang sudah ada di situs ini — bukan berarti data langsung atau lengkap. <b>Kandidat</b> ditemukan atau diperiksa, belum diterima. <b>Terblokir</b> adalah kegagalan akses yang tercatat, bukan penilaian kondisi kota.</span><span lang="en">The four statuses answer different questions. <b>Integrated</b> means a capability this site already has — not that the data is live or complete. <b>Candidate</b> means found or probed, not yet admitted. <b>Blocked</b> is a recorded access failure, not a judgement about conditions in the city.</span></p>
+    <h3 style="margin-top:24px"><span lang="id">Lisensi: apa yang sebenarnya mengizinkan redistribusi</span><span lang="en">Licences: what actually permits redistribution</span></h3>
+    <div class="bars" id="src-licence"></div>
+    <p class="caption"><span lang="id">Dua baris, satu aturan yang dapat diperiksa: sebuah lisensi dihitung <b>terbuka</b> hanya bila teksnya diawali <code>CC BY 4.0</code>, <code>CC BY-NC 4.0</code>, <code>ODbL</code> atau <code>Apache-2.0</code>. Sisanya menyatakan akses atau atribusi penerbit tanpa lisensi terbuka yang terverifikasi — jadi tidak ada yang disalin dari sumber itu. Ini jawaban praktisnya: sebagian besar penerbit di sini tidak mengizinkan redistribute, dan grafik di halaman atlas pun digambar dari berkas milik situs ini, bukan dari milik mereka.</span><span lang="en">Two rows, one inspectable rule: a licence counts as <b>open</b> only when its own text begins with <code>CC BY 4.0</code>, <code>CC BY-NC 4.0</code>, <code>ODbL</code> or <code>Apache-2.0</code>. The rest state publisher access or attribution with no verified open licence, so nothing is copied out of them. That is the practical answer: most publishers here do not permit redistribution — which is why every graphic on this page is drawn from files this site ships, not from theirs.</span></p>
+    <details class="licence-detail"><summary><span lang="id">Teks lisensi yang lolos aturan ini</span><span lang="en">Licence strings that pass the rule</span></summary><div id="src-licence-detail"></div></details>
     <p><span lang="id">Buku besar lengkap, dengan lisensi, batasan, dan tanggal per sumber, ada di dasbor (Menu → Riset). Unduh: </span><span lang="en">The full ledger, with licence, limits and dates per source, is on the dashboard (Menu → Research). Download: </span><a href="/data/jakarta-v1/source-catalog.json">JSON</a> · <a href="/data/jakarta-v1/source-catalog.csv">CSV</a> · <a href="/data/jakarta-v1/buildings-stats.json">buildings</a></p>
   </section>
 </main>

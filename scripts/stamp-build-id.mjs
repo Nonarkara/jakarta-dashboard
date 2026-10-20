@@ -40,6 +40,17 @@ const nextJs = js.replace(
 writeFileSync(appJs, nextJs, "utf8");
 
 console.log(`[stamp-build-id] wrote ${stamp} into index.html and app.js`);
+// The research page was never stamped, so after a release a browser could run
+// the PREVIOUS research.js against the NEW shipped data. That page exists to
+// keep prose and module in agreement — it reads the isobar step out of
+// synoptic.js rather than repeating it — so a mixed build is precisely the
+// case where it would silently disagree with itself.
+const researchHtml = join(__dirname, '..', 'public', 'research.html');
+const nextResearch = readFileSync(researchHtml, 'utf8')
+  .replace(/href="\/jakarta-design\.css\?v=[^"]*"/g, `href="/jakarta-design.css?v=${stamp}"`)
+  .replace(/src="\/theme\.js(?:\?v=[^"]*)?"/g, `src="/theme.js?v=${stamp}"`)
+  .replace(/src="\/research\.js(?:\?v=[^"]*)?"/g, `src="/research.js?v=${stamp}"`);
+writeFileSync(researchHtml, nextResearch, 'utf8');
 const dashboardHtml = join(__dirname, '..', 'public', 'dashboard.html');
 const dashboardJs = join(__dirname, '..', 'public', 'dashboard.js');
 writeFileSync(dashboardHtml, readFileSync(dashboardHtml, 'utf8').replace(/(dashboard\.css|dashboard\.js|official-data\.js|flood-data\.js|reference-language\.js|theme\.js|jakarta-design\.css)\?v=[^" ]*/g, '$1?v=' + stamp));

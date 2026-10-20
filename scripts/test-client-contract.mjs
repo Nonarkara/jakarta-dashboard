@@ -53,9 +53,21 @@ async function scenario(mode) {
     setTimeout: () => 1, clearTimeout() {}, setInterval: () => 1, clearInterval() {},
   });
   vm.runInContext(app, context);
-  const drawer = get('.atlas-map-wrap').children.find(el => el.className === 'atlas-embedded-drawer');
+  // The drawer no longer has to be a DIRECT child of the map wrap: it now sits
+  // in the page-tools row beside the research door. The invariant this guard
+  // protects is that the embedded evidence lives inside an explicit drawer
+  // rather than dumped below the map — so look for it inside that row first,
+  // and fall back to the direct child for a build that has no tools row.
+  const wrap = get('.atlas-map-wrap');
+  const tools = wrap.children.find(el => el.className === 'atlas-page-tools');
+  assert.ok(tools, 'page-level controls live inside the map wrap, not beside it');
+  const drawer = (tools ? tools.children : wrap.children).find(el => el.className === 'atlas-embedded-drawer')
+    ?? wrap.children.find(el => el.className === 'atlas-embedded-drawer');
   assert.ok(drawer, 'embedded evidence stays inside an explicit drawer, not below the map');
   assert.equal(drawer.children[1].children.length, 4, 'tools, environment, data and attribution are retained');
+  const door = tools.children.find(el => el.className === 'atlas-research-link');
+  assert.ok(door, 'the atlas offers the research page from the same row as the drawer');
+  assert.equal(door.href, '/research', 'and that door points at the research page');
 
   for (let i = 0; i < 10; i++) await new Promise(resolve => setImmediate(resolve));
   if (mode !== 'missing-libraries' && mode !== 'webgl-failure') {
