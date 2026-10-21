@@ -47,7 +47,13 @@
     1920
   ],
   "measuredWidths": [
+    339,
+    340,
+    341,
     360,
+    379,
+    380,
+    381,
     429,
     430,
     431,
@@ -104,12 +110,97 @@
   },
   "reasons": {
     "dead|aside.atlas-layers": "The layer rail is a floating panel ON the map, not a column beside it. It is short on purpose — a rail as tall as the map would cover the city — so the space under it is the map itself. Check it: open /atlas and look under the rail; what is there is satellite imagery and 3D blocks, not an empty band.",
-    "dead|div.atlas-page-tools": "The row of page-level doors (city watch, Research & method, Data and sources) floats over the map's top-right corner so the map keeps every pixel of its height. The space under the row is the map. Check it: open /atlas and look under the row; what is there is the city, not an empty band."
+    "dead|div.atlas-page-tools": "The row of page-level doors (city watch, Research & method, Data and sources) floats over the map's top-right corner so the map keeps every pixel of its height. The space under the row is the map. Check it: open /atlas and look under the row; what is there is the city, not an empty band.",
+    "wrap|div.atlas-page-tools": "Below 340px the three page-level doors (city watch, Research & method, Data & sources) cannot sit on one row beside the Layers button: they need about 355px at the tightest padding that keeps them legible, and a 320px phone has 320. They wrap, and Data & sources ends up alone on the second row, right-aligned under the others. The alternative is the one that shipped until 22 October 2026: the row ran under Layers and hid its \"+\". A second short row over the map costs a few lines of city; a button covered by its neighbour costs a door. Check it: open /atlas at 320px wide and see City watch and Research & method on one row, Data & sources below them, and Layers uncovered. Wider than 340px the row is single and this reason does not apply."
   },
   "exempt": [],
   "routes": {
     "/": {
+      "339": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 12,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "340": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 12,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "341": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 12,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
       "360": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 12,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "379": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 12,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "380": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 12,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "381": {
         "findings": [],
         "firstAction": {
           "y": null,
@@ -713,7 +804,181 @@
       }
     },
     "/atlas": {
+      "339": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 755,
+            "detail": "div.atlas-page-tools leaves 755px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "340": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 755,
+            "detail": "div.atlas-page-tools leaves 755px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "341": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 770,
+            "detail": "div.atlas-page-tools leaves 770px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
       "360": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "379": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "380": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "381": {
         "findings": [
           {
             "kind": "dead",
@@ -1876,7 +2141,181 @@
       }
     },
     "/atlas-open": {
+      "339": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 755,
+            "detail": "div.atlas-page-tools leaves 755px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "340": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 755,
+            "detail": "div.atlas-page-tools leaves 755px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "341": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 770,
+            "detail": "div.atlas-page-tools leaves 770px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
       "360": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "379": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "380": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "381": {
         "findings": [
           {
             "kind": "dead",
@@ -3039,7 +3478,91 @@
       }
     },
     "/research": {
+      "339": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "340": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "341": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
       "360": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "379": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "380": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "381": {
         "findings": [],
         "firstAction": {
           "y": null,
