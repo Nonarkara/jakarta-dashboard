@@ -695,8 +695,11 @@ body[data-lens="air"] .wind-compass svg { flex:none; }
    `.atlas-embedded-drawer { right:8px }` (specificity 0,2,1) beat the page-tools
    rule that sets `right:auto` (0,2,0), and on a position:relative element
    `right:8px` is a leftward nudge. At 360px that was the whole overlap with
-   "Research & method". */
-body.atlas-workbench .atlas-page-tools > .atlas-embedded-drawer { right:auto; left:auto; }
+   "Research & method". The same element still carried `top:8px` from when it
+   was absolutely placed, a downward nudge: "Data & sources" hung 8px below its
+   two neighbours at every width, on desktop too. */
+body.atlas-workbench .atlas-page-tools > .atlas-embedded-drawer { right:auto; left:auto; top:auto; }
+body.atlas-workbench .atlas-page-tools > .atlas-embedded-drawer > summary { min-height:30px; }
 /* The three tools were 30, 24 and 30px tall on a flex-start row, so "Data &
    sources" hung 11px below "Research & method". One row, one height, so their
    top and bottom edges meet. */

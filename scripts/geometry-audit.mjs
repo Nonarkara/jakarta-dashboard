@@ -15,7 +15,7 @@
 // neighbour, and the whole page was wider than a 360px screen. Each was visible
 // in one screenshot; nothing rendered the phone.
 //
-// What it proves: overlapping blocks, sideways overflow, and touch-target size
+// What it proves: overlapping blocks, row alignment, sideways overflow, and touch-target size
 // inside the lens panel and on the map controls, measured on rendered pixels.
 // What it does not: whether anything looks good.
 //
@@ -77,7 +77,7 @@ for (const [W, H] of VIEWPORTS) {
     const r = await page.evaluate(({ phone }) => {
       const vis = e => e.getBoundingClientRect().width > 0 && e.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true, contentVisibilityAuto: true });
       const name = e => (e.id || e.getAttribute('aria-label') || e.textContent || e.className).toString().trim().replace(/\s+/g, ' ').slice(0, 30);
-      const out = { overlap: [], small: [], wide: [] };
+      const out = { overlap: [], small: [], wide: [], edges: [] };
       const vv = visualViewport.width;
       // The page must be exactly as wide as the screen: not 362px on a 360px phone.
       if (document.documentElement.scrollWidth > vv + 1) out.wide.push(`page is ${document.documentElement.scrollWidth}px on a ${Math.round(vv)}px screen`);
@@ -97,6 +97,15 @@ for (const [W, H] of VIEWPORTS) {
         const ox = Math.min(ra.right, rc.right) - Math.max(ra.left, rc.left), oy = Math.min(ra.bottom, rc.bottom) - Math.max(ra.top, rc.top);
         if (ox > 2 && oy > 2) out.overlap.push(`${name(a)} x ${name(c)} (${Math.round(ox)}x${Math.round(oy)}px)`);
       }
+      // Buttons on one row share their top and bottom edges (the planar-alignment law).
+      // "Data & sources" hung 8px below its neighbours for months because a leftover
+      // `top:8px` still nudged it after it stopped being absolutely placed.
+      const row = [...document.querySelectorAll('.atlas-page-tools summary, .atlas-page-tools a')].filter(vis).map(e => [e, e.getBoundingClientRect()]);
+      for (let i = 0; i < row.length; i++) for (let j = i + 1; j < row.length; j++) {
+        const [a, ra] = row[i], [c, rc] = row[j];
+        if (Math.min(ra.bottom, rc.bottom) - Math.max(ra.top, rc.top) < 0.5 * Math.min(ra.height, rc.height)) continue; // different rows
+        if (Math.abs(ra.top - rc.top) > 1.5 || Math.abs(ra.bottom - rc.bottom) > 1.5) out.edges.push(`${name(a)} (${Math.round(ra.top)}..${Math.round(ra.bottom)}) vs ${name(c)} (${Math.round(rc.top)}..${Math.round(rc.bottom)})`);
+      }
       if (phone) for (const e of document.querySelectorAll('.maplibregl-ctrl-group button, #atlas-lens-body button, #atlas-lens-body summary, #atlas-lens-body select, #atlas-lens-body input[type="range"]')) {
         if (!vis(e) || e.closest('.maplibregl-ctrl-attrib')) continue;
         const b = e.getBoundingClientRect();
@@ -104,7 +113,7 @@ for (const [W, H] of VIEWPORTS) {
       }
       return out;
     }, { phone });
-    const found = [...r.wide.map(x => `sideways overflow: ${x}`), ...r.overlap.map(x => `overlap: ${x}`), ...[...new Set(r.small)].slice(0, 8).map(x => `touch target under 44px: ${x}`)];
+    const found = [...r.wide.map(x => `sideways overflow: ${x}`), ...r.overlap.map(x => `overlap: ${x}`), ...r.edges.map(x => `edges do not meet on one row: ${x}`), ...[...new Set(r.small)].slice(0, 8).map(x => `touch target under 44px: ${x}`)];
     for (const f of found) { failures.push(`${tag}: ${f}`); console.log(`  FAIL ${tag}: ${f}`); }
     await page.screenshot({ path: join(outDir, `${W}x${H}-${lens}.png`) });
   }
