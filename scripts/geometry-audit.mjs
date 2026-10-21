@@ -15,14 +15,18 @@
 // neighbour, and the whole page was wider than a 360px screen. Each was visible
 // in one screenshot; nothing rendered the phone.
 //
-// What it proves: overlapping blocks, row alignment, sideways overflow, and touch-target size
-// inside the lens panel and on the map controls, measured on rendered pixels.
-// What it does not: whether anything looks good.
+// What it proves: overlapping blocks, row alignment, sideways overflow, touch size on
+// the map controls and lens-panel controls, and the MSH checks (a box bigger than its
+// own text; fixed chrome over budget), measured on rendered pixels.
+// What it does not: whether anything looks good, or whether a surface that could fit
+// one screen does; those need a person with the screenshots it leaves.
 //
-// Named deviations, not checked because they are the owner's ruling (compact
-// chrome, "labels carry the action"): the masthead, the lens strip, and the
-// Layers / Quick jump / Around here / City watch / Research / Data & sources
-// buttons stay at 22-30px. Everything else a thumb touches is held to 44px.
+// Owner's rulings, not checked as touch failures (compact chrome, "labels carry the
+// action", MSH): the masthead, the lens strip, and the Layers / Quick jump / Around
+// here / City watch / Research / Data & sources buttons stay at 22-30px. Lens-panel
+// controls are label-plus-padding at 32px on touch; map zoom/rotate are real 44px.
+// What IS checked against them is the opposite failure: a box more than 2.5x the
+// height of its own text, and fixed bars over 15% of a phone's height.
 //
 // Needs Playwright, which this repo does not depend on:
 //   npm i --no-save playwright     or     PLAYWRIGHT_MODULE=/path/to/playwright/index.mjs
@@ -71,13 +75,15 @@ for (const [W, H] of VIEWPORTS) {
     const filled = await page.waitForFunction(min => (document.querySelector('#atlas-lens-body')?.innerText || '').length > min, lens === 'city' ? 40 : 160, { timeout: 25000 }).then(() => true, () => false);
     const flow = FLOWS[lens];
     const flowing = !flow || await page.waitForFunction(f => document.querySelector('.flow-canvas')?.dataset.flow === f, flow, { timeout: 25000 }).then(() => true, () => false);
-    await page.waitForTimeout(800);
+    // Photograph the map, not the loading card (it covers the desktop view for several seconds).
+    await page.waitForFunction(() => !document.body.innerText.includes('atlas loading'), null, { timeout: 20000 }).catch(() => {});
+    await page.waitForTimeout(1200);
     if (!filled || !flowing) unverified.push(`${tag}: ${!filled ? 'panel did not populate' : `flow "${flow}" did not start`}`);
 
     const r = await page.evaluate(({ phone }) => {
       const vis = e => e.getBoundingClientRect().width > 0 && e.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true, contentVisibilityAuto: true });
       const name = e => (e.id || e.getAttribute('aria-label') || e.textContent || e.className).toString().trim().replace(/\s+/g, ' ').slice(0, 30);
-      const out = { overlap: [], small: [], wide: [], edges: [] };
+      const out = { overlap: [], small: [], wide: [], edges: [], big: [] };
       const vv = visualViewport.width;
       // The page must be exactly as wide as the screen: not 362px on a 360px phone.
       if (document.documentElement.scrollWidth > vv + 1) out.wide.push(`page is ${document.documentElement.scrollWidth}px on a ${Math.round(vv)}px screen`);
@@ -106,14 +112,26 @@ for (const [W, H] of VIEWPORTS) {
         if (Math.min(ra.bottom, rc.bottom) - Math.max(ra.top, rc.top) < 0.5 * Math.min(ra.height, rc.height)) continue; // different rows
         if (Math.abs(ra.top - rc.top) > 1.5 || Math.abs(ra.bottom - rc.bottom) > 1.5) out.edges.push(`${name(a)} (${Math.round(ra.top)}..${Math.round(ra.bottom)}) vs ${name(c)} (${Math.round(rc.top)}..${Math.round(rc.bottom)})`);
       }
-      if (phone) for (const e of document.querySelectorAll('.maplibregl-ctrl-group button, #atlas-lens-body button, #atlas-lens-body summary, #atlas-lens-body select, #atlas-lens-body input[type="range"]')) {
-        if (!vis(e) || e.closest('.maplibregl-ctrl-attrib')) continue;
-        const b = e.getBoundingClientRect();
+      if (phone) for (const e of document.querySelectorAll('.maplibregl-ctrl-group button')) {
+        if (!vis(e)) continue;
+        const b = e.getBoundingClientRect(); // icon controls on the map's edge: real 44px
         if (b.width < 43.5 || b.height < 43.5) out.small.push(`${name(e)} ${Math.round(b.width)}x${Math.round(b.height)}`);
       }
+      // MSH: a box is its label plus padding. Too small is a touch failure (32px on a
+      // phone, 24px anywhere); too big is spatial hallucination: more than 2.5x the
+      // height of its own text (a 44px slab round a 16px line is 2.75x).
+      for (const e of document.querySelectorAll('#atlas-lens-body button, #atlas-lens-body summary, .atlas-observation-hud summary, .atlas-page-tools summary, .atlas-page-tools a, .atlas-layers summary, .atlas-quick summary')) {
+        if (!vis(e) || e.closest('.maplibregl-ctrl-attrib')) continue;
+        const b = e.getBoundingClientRect(), r = document.createRange(); r.selectNodeContents(e);
+        const t = r.getBoundingClientRect(); if (!t.height) continue;
+        if (phone && e.closest('#atlas-lens-body') && b.height < 31.5) out.small.push(`${name(e)} ${Math.round(b.width)}x${Math.round(b.height)} (panel controls are 32px on touch)`);
+        if (b.height > t.height * 2.5 + 1 && b.height > 40) out.big.push(`${name(e)} is ${Math.round(b.height)}px tall round a ${Math.round(t.height)}px line (${(b.height / t.height).toFixed(1)}x)`);
+      }
+      // MSH chrome budget: the two fixed bars together stay a small share of a phone's height.
+      if (phone) { let h = 0; for (const q of ['.atlas-header', '.atlas-lenses']) { const e = document.querySelector(q); if (e && vis(e)) h += e.getBoundingClientRect().height; } if (h > innerHeight * 0.15) out.big.push(`fixed bars take ${Math.round(h)}px of ${innerHeight}px (${Math.round(h / innerHeight * 100)}%, budget 15%)`); }
       return out;
     }, { phone });
-    const found = [...r.wide.map(x => `sideways overflow: ${x}`), ...r.overlap.map(x => `overlap: ${x}`), ...r.edges.map(x => `edges do not meet on one row: ${x}`), ...[...new Set(r.small)].slice(0, 8).map(x => `touch target under 44px: ${x}`)];
+    const found = [...r.wide.map(x => `sideways overflow: ${x}`), ...r.overlap.map(x => `overlap: ${x}`), ...r.edges.map(x => `edges do not meet on one row: ${x}`), ...r.big.map(x => `MSH, box bigger than its content: ${x}`), ...[...new Set(r.small)].slice(0, 8).map(x => `touch target under 44px: ${x}`)];
     for (const f of found) { failures.push(`${tag}: ${f}`); console.log(`  FAIL ${tag}: ${f}`); }
     await page.screenshot({ path: join(outDir, `${W}x${H}-${lens}.png`) });
   }

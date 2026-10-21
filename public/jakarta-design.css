@@ -636,7 +636,7 @@ body.atlas-workbench .atlas-lens-popup .synoptic-toggles button,
 body.atlas-workbench .atlas-lens-popup .synoptic-scrub button { font-size:12px; }
 #atlas-lens-body > button { min-height:32px; padding:4px 8px; margin:0; border:0; border-bottom:1px solid var(--line); background:transparent; font:12px/1.3 var(--font-sans); letter-spacing:0; }
 @media (pointer:coarse) {
-  #atlas-lens-body .synoptic-toggles button, #atlas-lens-body .synoptic-scrub button, #atlas-lens-body > button { min-height:44px; }
+  #atlas-lens-body .synoptic-toggles button, #atlas-lens-body .synoptic-scrub button, #atlas-lens-body > button { min-height:32px; }
 }
 
 /* Wind compass: on the map beside the zoom controls (phone: above the wind chip), never over the lens panel. */
@@ -724,22 +724,30 @@ body.atlas-workbench .atlas-page-tools { align-items:stretch; }
   body.atlas-workbench .atlas-page-tools { flex-wrap:wrap; justify-content:flex-end; row-gap:3px; max-width:calc(100% - 88px); }
   body.atlas-workbench .atlas-observation-hud { top:86px; }
 }
-/* Touch: the contract in context.md says coarse pointers keep 44px targets. Two
-   things broke it. The map's zoom and rotate buttons are 28px with !important,
-   which no un-flagged rule can beat (three stacked 28px targets), and the
-   controls inside a lens panel never had a touch rule beyond the synoptic chips.
-   Panel content is not the compact masthead: it gets real targets, and links in
-   running text get an invisible 44px hit area rather than a taller line. */
+/* Touch, under MSH (workspace CLAUDE.md 11.12). Map zoom/rotate are icon buttons
+   on the map's edge, three stacked at 28px with an !important no un-flagged
+   rule could beat: they get real 44px. Controls inside a lens panel are a dense
+   group of text controls: a box is its label plus padding, 32px high on touch,
+   4px apart, never a 44px slab. (This block briefly set them to 44px and made
+   the haze panel's chips and link rows two and three times taller than their
+   words. The owner called that spatial hallucination, and it was.) Links in
+   running text get a hit area 16px taller than the text, not a taller line. */
 @media (pointer: coarse) {
   body.atlas-workbench .maplibregl-ctrl-group button { width:44px !important; height:44px !important; }
-  #atlas-lens-body button, #atlas-lens-body summary, #atlas-lens-body select, #atlas-lens-body input[type="range"] { min-height:44px; min-width:44px; }
-  #atlas-lens-body .haze-evidence-root button, #atlas-lens-body .haze-evidence-root details button { min-height:44px; }
+  #atlas-lens-body button, #atlas-lens-body summary, #atlas-lens-body select, #atlas-lens-body input[type="range"] { min-height:32px; min-width:32px; }
+  #atlas-lens-body .haze-evidence-root button, #atlas-lens-body .haze-evidence-root details button { min-height:32px; }
   /* Links in running text cannot be 44px without breaking the line, so they get
      a hit area 16px taller than the text. Not 44: stacked links sit about 19px
      apart, and a taller extension makes the later one cover the centre of the
      earlier. Links that stand alone on their own line are real 44px rows. */
   #atlas-lens-body a { position:relative; }
   #atlas-lens-body a::after { content:""; position:absolute; left:-6px; right:-6px; top:-8px; bottom:-8px; }
-  .haze-local-links a { display:flex; align-items:center; min-height:44px; margin:0; }
-  .haze-local-links a::after { display:none; }
+}
+
+/* The observation card's closed state on a phone was `display:list-item;
+   min-height:44px; padding:12px`: a one-word disclosure drawn as a 188x112px box,
+   and once I narrowed the card the marker wrapped onto its own line above the
+   word. It is a chip: marker and label on one line, label plus padding. */
+@media (max-width: 700px) {
+  .atlas-hud-details > summary { display:flex; align-items:center; gap:6px; min-height:32px; padding:4px 8px; white-space:nowrap; }
 }
