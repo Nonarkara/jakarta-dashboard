@@ -67,3 +67,15 @@ publisher who never granted the right.
 `npm run audit:rendered` reads the deployed page rather than its source, at
 1440 / 1024 / 390, on `/atlas` and `/research`, and runs inside `npm run
 release`. It fails loudly — never silently skips — if it cannot run at all.
+
+## Version history
+
+This committed copy travels with Jakarta and mirrors the global
+`/Users/nonarkara/Projects/DESIGN-ANTI-SLOP.md`. Every audit bumps it one
+version.
+
+| Version | Date | What the audit found that the previous pass had missed |
+|---|---|---|
+| 1.4 | 2026-10-20 | Three checks measured existence instead of the thing that matters: section id presence over index linkage, rendered box over clickable centre, bar existence over drawn width vs stated share. |
+| 1.5 | 2026-10-20 | Research index answers to every section in both directions and both languages; page-tools door above the watch overlay at z-index 44, hit-tested at its own centre; charts compare drawn width to `data-share` instead of asserting a bar exists. 8/8 mutants killed. Research assets cache-busted. |
+| 1.6 | 2026-10-21 | Spatial Hallucination audit: City watch integrated into atlas-page-tools flex row, eliminating unhittable overlap and magic pixel offsets; audit-rendered explicitly hit-tests City watch; lens-hours converted to 2-column tabular grid to eliminate accidental wrapping; lens-row formatted with flexible wrap and compact padding; research pipeline orphan slot eliminated. |

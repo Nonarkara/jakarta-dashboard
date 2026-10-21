@@ -1266,6 +1266,8 @@ window.addEventListener('atlas:theme',reportBuildingView);
   // was already occupied, so the map loses no height to it.
   const tools = document.createElement('div');
   tools.className = 'atlas-page-tools';
+  const watch = document.getElementById('atlas-watch');
+  if (watch) tools.append(watch);
   const researchLink = document.createElement('a');
   researchLink.className = 'atlas-research-link';
   researchLink.href = '/research';

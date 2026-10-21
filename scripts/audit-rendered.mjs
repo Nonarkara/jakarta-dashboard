@@ -77,7 +77,7 @@ const AUDIT = () => {
     const r = el.getBoundingClientRect();
     if (!r.width || !r.height) continue;
     const hit = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
-    const label = (el.tagName === 'SUMMARY' || el.classList.contains('atlas-embedded-drawer')
+    const label = (el.tagName === 'SUMMARY' || el.classList.contains('atlas-embedded-drawer') || el.classList.contains('atlas-watch')
       ? (el.querySelector('summary')?.textContent || el.textContent)
       : el.textContent) || el.className;
     out.hittable.push({

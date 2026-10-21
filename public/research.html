@@ -48,7 +48,7 @@ section{padding:32px 0;border-bottom:2px solid var(--line)}
 .field-tools{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:8px;font-size:var(--micro)}
 .caption{font:var(--micro)/1.6 var(--sans);color:var(--dim);margin-top:8px;max-width:65ch}
 .formula{font:var(--body)/1.7 var(--sans);font-variant-numeric:tabular-nums;color:var(--ink);border-left:2px solid var(--accent);padding:6px 12px;overflow-x:auto;white-space:pre;max-width:100%}
-.pipe{list-style:none;display:grid;gap:0;counter-reset:s}
+.pipe{list-style:none;display:grid;gap:0;counter-reset:s;max-width:65ch}
 .pipe li{display:grid;grid-template-columns:3ch minmax(0,1fr);gap:4px 12px;padding:12px 0;border-top:1px solid var(--line);counter-increment:s;min-width:0}
 .pipe li::before{content:counter(s,decimal-leading-zero);grid-row:1/4;font:600 var(--micro)/1.8 var(--sans);color:var(--accent)}
 .pipe code,.maths code,td code{font:var(--micro)/1.5 var(--sans);color:var(--dim);overflow-wrap:anywhere}
@@ -85,7 +85,6 @@ footer{padding:24px 0;color:var(--dim)}
 @media (min-width:760px){
  .hero{grid-template-columns:minmax(0,2.4fr) minmax(0,1fr)}
  .live{grid-template-columns:minmax(0,1.8fr) minmax(0,1fr)}
- .pipe{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px}
  .maths article{grid-template-columns:minmax(0,24ch) minmax(0,1fr);column-gap:32px}
  .maths article h3{grid-column:1;grid-row:1/4}
  .maths article>:not(h3){grid-column:2}

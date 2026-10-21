@@ -12,7 +12,7 @@ const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const html=read('public/research.html'), css=read('public/jakarta-design.css'), js=read('public/research.js');
 const style=html.match(/<style>([\s\S]*?)<\/style>/)[1];
 assert.match(html,/href="\/jakarta-design\.css\?v=/,'Research shares the actual city design');
-assert.match(html,/src="\/theme\.js"/,'Research shares saved reading conditions');
+assert.match(html,/src="\/theme\.js\?v=/,'Research shares saved reading conditions');
 const faces=[...css.matchAll(/@font-face\s*\{\s*font-family:\s*"([^"]+)"/g)].map(m=>m[1]);
 assert.deepEqual(faces,['Universa Civic','Source Sans 3'],'two authored font families');
 assert.match(style,/--sans:var\(--font-sans\)/,'body uses the shared reading family');
