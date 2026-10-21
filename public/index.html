@@ -8,7 +8,7 @@
   <script src="/theme.js?v=jakarta-atlas-20261021-1792555313-ee6c6e1"></script>
   <script src="/translations.js?v=jakarta-atlas-20261021-1792555313-ee6c6e1"></script>
   <script src="/i18n.js?v=jakarta-atlas-20261021-1792555313-ee6c6e1"></script>
-  <link rel="icon" type="image/png" href="/brand/jktx-symbol-v2.png" />
+  <link rel="icon" type="image/png" sizes="64x64" href="/brand/jktx-favicon.png" />
   <link href="/vendor/maplibre-6.4.1/maplibre-gl.css" rel="stylesheet" />
   <link rel="stylesheet" href="/style.css?v=jakarta-atlas-20261021-1792555313-ee6c6e1" />
   <link rel="stylesheet" href="/jakarta-design.css?v=jakarta-atlas-20261021-1792555313-ee6c6e1" />
@@ -179,18 +179,22 @@
       <div class="atlas-environment-topline"><h2 id="atlas-environment-heading">Rain, water &amp; atmosphere</h2>
       <p id="atlas-environment-status" role="status">Checking environmental sources…</p></div>
       <div class="atlas-environment-controls">
-        <label>Environmental layer <select id="atlas-environment-layer" aria-label="Environmental layer">
+        <div class="atlas-environment-layers">
+          <label>Environmental layer <select id="atlas-environment-layer" aria-label="Environmental layer">
           <option value="none">No environmental overlay</option><option value="radar">Rain radar</option>
           <option value="himawari">Himawari infrared clouds</option><option value="surface-water">Satellite surface water / flood</option><option value="aerosol">Satellite aerosol optical depth</option><option value="satellite-rain">Satellite rainfall estimate</option><option value="true-colour">Visible satellite imagery</option><option value="night-lights">Night lights · corrected daily</option><option value="night-lights-2016">Night lights · 2016 composite</option><option value="aerosol-viirs">VIIRS Deep Blue aerosol</option><option value="aerosol-index">OMPS absorbing aerosol index</option>
-        </select></label>
-        <details class="atlas-extra-controls" id="atlas-extra-controls"><summary>Layer settings</summary><div class="atlas-extra-controls-body">
-        <label id="atlas-satellite-date-control" hidden><span id="atlas-satellite-date-label">Satellite day</span> <select id="atlas-satellite-date" aria-label="Satellite day"></select></label>
-        <label id="atlas-radar-frame-control" hidden>Radar frame <select id="atlas-radar-frame" aria-label="Radar frame"></select></label>
-        <label id="atlas-radar-coverage-control" hidden><input type="checkbox" id="atlas-radar-coverage" />Radar coverage mask</label>
-        <label>Display opacity <input type="range" id="atlas-environment-opacity" aria-label="Display opacity" min="10" max="100" value="75" /></label>
-        </div></details>
-        <button type="button" id="atlas-environment-overview">Regional overview</button>
-        <button type="button" id="atlas-environment-refresh">Refresh data</button>
+          </select></label>
+          <details class="atlas-extra-controls" id="atlas-extra-controls"><summary>Layer settings</summary><div class="atlas-extra-controls-body">
+          <label id="atlas-satellite-date-control" hidden><span id="atlas-satellite-date-label">Satellite day</span> <select id="atlas-satellite-date" aria-label="Satellite day"></select></label>
+          <label id="atlas-radar-frame-control" hidden>Radar frame <select id="atlas-radar-frame" aria-label="Radar frame"></select></label>
+          <label id="atlas-radar-coverage-control" hidden><input type="checkbox" id="atlas-radar-coverage" />Radar coverage mask</label>
+          <label>Display opacity <input type="range" id="atlas-environment-opacity" aria-label="Display opacity" min="10" max="100" value="75" /></label>
+          </div></details>
+        </div>
+        <div class="atlas-environment-actions">
+          <button type="button" id="atlas-environment-overview">Regional overview</button>
+          <button type="button" id="atlas-environment-refresh">Refresh data</button>
+        </div>
       </div>
       <details class="atlas-environment-details">
       <summary>Evidence &amp; rainfall forecast</summary>
@@ -248,6 +252,15 @@
     <div id="place-body"></div>
   </dialog>
   <script src="https://unpkg.com/pmtiles@4.4.1/dist/pmtiles.js" integrity="sha384-iS2/cbFYol4NsEeda4mW6N/8wPMOT6pv2eY+GNYSJRqVC4nbJECP1+mg6D2T8wT/" crossorigin="anonymous" defer></script>
-  <script src="/loader.js?v=jakarta-atlas-20261021-1792555313-ee6c6e1" data-app="/app.js?v=jakarta-atlas-20261021-1792555313-ee6c6e1" defer></script>
+  <!-- The client must be LOAD-BLOCKING. It used to be appended by loader.js after a
+       dynamic import, and a script appended that way does not delay the load
+       event: the browser reported the page loaded while the atlas was still an
+       inert shell. Anything that measures the page on load — the spatial gate,
+       the rendered audit — was reading a skeleton, not the product. A module
+       script and a deferred script both delay load, and both run in document
+       order, so PMTiles → MapLibre → the client is the order and the order
+       holds. -->
+  <script type="module" src="/loader.js?v=jakarta-atlas-20261021-1792555313-ee6c6e1"></script>
+  <script src="/app.js?v=jakarta-atlas-20261021-1792555313-ee6c6e1" defer></script>
 </body>
 </html>

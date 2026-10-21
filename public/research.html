@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cara dibuat · JKTx</title>
 <meta name="description" content="How the Jakarta atlas is built from open public data, satellites and arithmetic. Every figure is read from the files the site ships.">
-<link rel="icon" href="/brand/jktx-symbol-v2.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/brand/jktx-favicon.png">
 <link rel="stylesheet" href="/jakarta-design.css?v=jakarta-atlas-20261021-1792555313-ee6c6e1">
 <script src="/theme.js?v=jakarta-atlas-20261021-1792555313-ee6c6e1"></script>
 <style>
@@ -44,11 +44,16 @@ section{padding:32px 0;border-bottom:2px solid var(--line)}
 .live>div{min-width:0}
 .stage{position:relative;background:var(--bg-raised);aspect-ratio:1/1;overflow:hidden}
 .stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+/* The note sits at the foot of the frame, not in the middle of it. A square
+   frame waiting for its field is a reserved place; a line of text floating in
+   the middle of it would be a thing in a frame, and the empty half above it
+   would be a hole nobody asked for. */
+.stage-note{position:absolute;left:0;right:0;bottom:0;margin:0;padding:14px 24px;font-size:12px;line-height:1.5;color:var(--dim);text-align:center;background:var(--bg-raised)}
 .stage[hidden]{display:none}
 .field-tools{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:8px;font-size:var(--micro)}
 .caption{font:var(--micro)/1.6 var(--sans);color:var(--dim);margin-top:8px;max-width:65ch}
 .formula{font:var(--body)/1.7 var(--sans);font-variant-numeric:tabular-nums;color:var(--ink);border-left:2px solid var(--accent);padding:6px 12px;overflow-x:auto;white-space:pre;max-width:100%}
-.pipe{list-style:none;display:grid;gap:0;counter-reset:s;max-width:65ch}
+.pipe{list-style:none;display:grid;gap:0;counter-reset:s}
 .pipe li{display:grid;grid-template-columns:3ch minmax(0,1fr);gap:4px 12px;padding:12px 0;border-top:1px solid var(--line);counter-increment:s;min-width:0}
 .pipe li::before{content:counter(s,decimal-leading-zero);grid-row:1/4;font:600 var(--micro)/1.8 var(--sans);color:var(--accent)}
 .pipe code,.maths code,td code{font:var(--micro)/1.5 var(--sans);color:var(--dim);overflow-wrap:anywhere}
@@ -59,10 +64,15 @@ th{font:600 var(--micro)/1.5 var(--sans);color:var(--dim)}
 .stack{display:flex;height:20px;margin:12px 0}
 .stack i{display:block;height:100%;border-right:1px solid var(--bg)}
 /* Ranked composition. One row per thing — label, bar, count, share — so the
-   chart reads as a table and its numbers stay comparable down the page. The
-   row is content-sized: nothing here is padded past what it holds. */
-.bars{display:grid;margin:16px 0 10px;max-width:780px}
-.bars .row{display:grid;grid-template-columns:minmax(0,1fr) 230px auto;gap:4px 16px;align-items:baseline;padding:6px 0;border-top:1px solid var(--line)}
+   chart reads as a table and its numbers stay comparable down the page.
+   The label column is max-content, NOT a flexible fraction: a flexing label
+   column invents a gulf between a short name and the bar that belongs to it,
+   and the reader loses the pairing. Sizing it to the longest label keeps
+   every bar on one baseline — that shared edge is the chart's reason for
+   existing, and the residual gap is the honest price of it. The chart also
+   takes the page's one reading measure, so it is not a second page width. */
+.bars{display:grid;margin:16px 0 10px;max-width:65ch}
+.bars .row{display:grid;grid-template-columns:max-content minmax(0,1fr) auto;gap:4px 14px;align-items:baseline;padding:6px 0;border-top:1px solid var(--line)}
 .bars .row:first-child{border-top:0}
 .bars .name{font:500 var(--body)/1.35 var(--sans);min-width:0}
 .bars .count{font:var(--body)/1.35 var(--sans);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -79,15 +89,34 @@ th{font:600 var(--micro)/1.5 var(--sans);color:var(--dim)}
 .maths article{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:12px;min-width:0}
 .rules{list-style:none;display:grid}
 .rules li{padding:12px 0;border-top:1px solid var(--line);display:grid;gap:4px;max-width:65ch}
-.status{display:flex;flex-wrap:wrap;gap:16px 40px;margin:16px 0}
-.status div{flex:0 1 auto}
 footer{padding:24px 0;color:var(--dim)}
 @media (min-width:760px){
  .hero{grid-template-columns:minmax(0,2.4fr) minmax(0,1fr)}
  .live{grid-template-columns:minmax(0,1.8fr) minmax(0,1fr)}
- .maths article{grid-template-columns:minmax(0,24ch) minmax(0,1fr);column-gap:32px}
- .maths article h3{grid-column:1;grid-row:1/4}
- .maths article>:not(h3){grid-column:2}
+ /* Seven steps read in two ranks, not one long column that leaves half the
+    page empty. The seventh step is where the sequence arrives — the reader's
+    own screen — so it spans both ranks: the width says "this is the end". */
+ .pipe{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:40px}
+ .pipe li:last-child{grid-column:1/-1}
+ .pipe li:last-child p{max-width:65ch}
+ /* The term is a key, the definition is its value. The term column is sized
+    to the terms, the definition column to the reading measure, and the source
+    pointer sits under its own term rather than adrift at the far end. */
+ .maths article{grid-template-columns:minmax(0,24ch) minmax(0,65ch);column-gap:32px;align-items:start}
+ .maths article .term{grid-column:1;grid-row:1;display:grid;gap:4px;align-content:start}
+ .maths article>p.formula{grid-column:2;grid-row:1}
+ .maths article>p:not(.formula){grid-column:2;grid-row:2}
+}
+/* A free-width wrap ends in an orphan: at 480px the four metrics broke 3 + 1
+   and the index broke 7 + 1, leaving one thing alone on the last row. A
+   column count that divides the item count never orphans one. */
+@media (max-width:760px){
+ .figures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 24px}
+ .figures div{flex:none}
+ .contents{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px 16px}
+}
+@media (max-width:430px){
+ .contents{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:600px){.bar .wrap{gap:2px}.bar a,.bar button{padding:3px 6px}.hero{padding:24px 0}.live{gap:16px}section{padding:24px 0}.figures{gap:10px 24px}
 /* At the narrow measure a three-column chart wraps its labels to four lines.
@@ -131,7 +160,7 @@ footer{padding:24px 0;color:var(--dim)}
     <h2 id="h-live"><span lang="id">Matematika yang sedang berjalan</span><span lang="en">The maths, running now</span></h2>
     <div class="live">
       <div>
-        <div class="stage" hidden><canvas id="field" width="720" height="720" role="img" aria-label="Isobars, 850 hPa air flow and a 24 hour trajectory from Jakarta"></canvas><canvas id="flow" width="720" height="720" aria-hidden="true"></canvas></div>
+        <div class="stage"><canvas id="field" width="720" height="720" role="img" aria-label="Isobars, 850 hPa air flow and a 24 hour trajectory from Jakarta" hidden></canvas><canvas id="flow" width="720" height="720" aria-hidden="true" hidden></canvas><p class="stage-note" id="field-note" role="status">Loading the model field…</p></div>
         <div class="field-tools"><button id="field-refresh" type="button"><span lang="id">Perbarui data</span><span lang="en">Refresh data</span></button><button id="field-motion" type="button" aria-pressed="false" disabled><span lang="id">Putar angin</span><span lang="en">Play wind</span></button><a data-city-link href="/atlas?lens=rain"><span lang="id">Buka di peta ↗</span><span lang="en">Open on the map ↗</span></a></div>
         <p class="caption" id="live-caption" role="status"><span lang="id">Memuat medan model…</span><span lang="en">Loading the model field…</span></p>
       </div>
@@ -207,18 +236,18 @@ cap = max(6 m, 4·√A)</p>
   <section aria-labelledby="h-maths">
     <h2 id="h-maths"><span lang="id">Matematika lainnya</span><span lang="en">The rest of the maths</span></h2>
     <div class="maths">
-      <article><h3><span lang="id">Isobar · marching squares</span><span lang="en">Isobars · marching squares</span></h3><p class="formula">t = (L − p) / (q − p)
-x = p + t·(q − p)</p><p><span lang="id">Satu titik di setiap sisi kisi yang dilintasi level L. Hanya kotak dengan empat sudut nyata; tidak pernah melintasi sel yang tidak menjawab.</span><span lang="en">One point on each grid edge that level L crosses. Only quads with four real corners; never across a cell that did not answer.</span></p><code>synoptic.js contour()</code></article>
-      <article><h3><span lang="id">Pusat tekanan rendah</span><span lang="en">Low centre</span></h3><p class="formula">isLow = interior ∧ p₀ &lt; p(N,S,E,W)
-Δp = p(t) − p(t − 24 h)</p><p><span lang="id">Minimum di tepi kotak bukan pusat rendah. Kecenderungan 24 jam, karena pasang atmosfer harian menggeser tekanan tropis sekitar 3 hPa dua kali sehari.</span><span lang="en">A minimum on the box edge is not a low. Tendency over 24 h, because the daily atmospheric tide swings tropical pressure about 3 hPa twice a day.</span></p><code>synoptic.js lowCentre()</code></article>
-      <article><h3><span lang="id">Interpolasi jarak terbalik</span><span lang="en">Inverse-distance interpolation</span></h3><p class="formula">w = 1 / d²   (k = 4 nearest)
-reach = 1.6 × grid step</p><p><span lang="id">Di luar jangkauan, nilainya tidak diketahui. Tidak ada ekstrapolasi.</span><span lang="en">Beyond reach the value is unknown. No extrapolation.</span></p><code>flow-canvas.js makeSampler()</code></article>
-      <article><h3><span lang="id">Matahari langsung</span><span lang="en">Live sun</span></h3><p class="formula">alt = asin(sin φ sin δ + cos φ cos δ cos H)</p><p><span lang="id">Algoritma NOAA presisi rendah (sekitar 0,5°) untuk Monas; cahaya kota 3D mengikuti posisi matahari yang dihitung.</span><span lang="en">NOAA low-precision algorithm (about 0.5°) for Monas; the 3D city is lit from the computed sun.</span></p><code>app.js</code></article>
-      <article><h3><span lang="id">Hujan 24 jam, hanya jika lengkap</span><span lang="en">24 h rain, only when complete</span></h3><p class="formula">Σ mm  iff n = 24 ∧ no null ∧ hourly</p><p><span lang="id">Satu jam hilang menjadikan totalnya null, bukan jumlah yang lebih kecil.</span><span lang="en">One missing hour makes the total null, not a smaller sum.</span></p><code>src/index.ts</code></article>
-      <article><h3><span lang="id">Luas poligon bola</span><span lang="en">Spherical polygon area</span></h3><p class="formula">A = R²/2 · |Σ (λ₂ − λ₁)(2 + sin φ₁ + sin φ₂)|</p><p><span lang="id">R = 6 371 008,8 m; lubang dikurangi.</span><span lang="en">R = 6,371,008.8 m; holes subtracted.</span></p><code>prepare-insight-views.py</code></article>
-      <article><h3><span lang="id">Proksi penduduk di lahan berat</span><span lang="en">Residents-on-severe-land proxy</span></h3><p class="formula">P_kel × A_berat / A_terpeta</p><p><span lang="id">Penyebutnya lahan berisiko yang terpetakan, bukan seluruh kelurahan. Tidak pernah dijumlah menjadi total kota.</span><span lang="en">The denominator is risk-mapped land, not the whole kelurahan. Never summed into a city total.</span></p><code>prepare-insight-views.py</code></article>
-      <article><h3><span lang="id">Gerbang jarak dan waktu</span><span lang="en">Distance and time gates</span></h3><p class="formula">haversine(req, cell) ≤ 20 km (35 km air)
-now − t ≤ 3 h ; t ≤ now + 5 min</p><p><span lang="id">Model memetakan permintaan ke selnya sendiri. Sel yang terlalu jauh atau terlalu tua ditolak, dan layar mengatakan "tidak tersedia".</span><span lang="en">A model snaps a request to its own cell. A cell too far away or too old is rejected, and the screen says "unavailable".</span></p><code>src/index.ts</code></article>
+      <article><div class="term"><h3><span lang="id">Isobar · marching squares</span><span lang="en">Isobars · marching squares</span></h3><code>synoptic.js contour()</code></div><p class="formula">t = (L − p) / (q − p)
+x = p + t·(q − p)</p><p><span lang="id">Satu titik di setiap sisi kisi yang dilintasi level L. Hanya kotak dengan empat sudut nyata; tidak pernah melintasi sel yang tidak menjawab.</span><span lang="en">One point on each grid edge that level L crosses. Only quads with four real corners; never across a cell that did not answer.</span></p></article>
+      <article><div class="term"><h3><span lang="id">Pusat tekanan rendah</span><span lang="en">Low centre</span></h3><code>synoptic.js lowCentre()</code></div><p class="formula">isLow = interior ∧ p₀ &lt; p(N,S,E,W)
+Δp = p(t) − p(t − 24 h)</p><p><span lang="id">Minimum di tepi kotak bukan pusat rendah. Kecenderungan 24 jam, karena pasang atmosfer harian menggeser tekanan tropis sekitar 3 hPa dua kali sehari.</span><span lang="en">A minimum on the box edge is not a low. Tendency over 24 h, because the daily atmospheric tide swings tropical pressure about 3 hPa twice a day.</span></p></article>
+      <article><div class="term"><h3><span lang="id">Interpolasi jarak terbalik</span><span lang="en">Inverse-distance interpolation</span></h3><code>flow-canvas.js makeSampler()</code></div><p class="formula">w = 1 / d²   (k = 4 nearest)
+reach = 1.6 × grid step</p><p><span lang="id">Di luar jangkauan, nilainya tidak diketahui. Tidak ada ekstrapolasi.</span><span lang="en">Beyond reach the value is unknown. No extrapolation.</span></p></article>
+      <article><div class="term"><h3><span lang="id">Matahari langsung</span><span lang="en">Live sun</span></h3><code>app.js</code></div><p class="formula">alt = asin(sin φ sin δ + cos φ cos δ cos H)</p><p><span lang="id">Algoritma NOAA presisi rendah (sekitar 0,5°) untuk Monas; cahaya kota 3D mengikuti posisi matahari yang dihitung.</span><span lang="en">NOAA low-precision algorithm (about 0.5°) for Monas; the 3D city is lit from the computed sun.</span></p></article>
+      <article><div class="term"><h3><span lang="id">Hujan 24 jam, hanya jika lengkap</span><span lang="en">24 h rain, only when complete</span></h3><code>src/index.ts</code></div><p class="formula">Σ mm  iff n = 24 ∧ no null ∧ hourly</p><p><span lang="id">Satu jam hilang menjadikan totalnya null, bukan jumlah yang lebih kecil.</span><span lang="en">One missing hour makes the total null, not a smaller sum.</span></p></article>
+      <article><div class="term"><h3><span lang="id">Luas poligon bola</span><span lang="en">Spherical polygon area</span></h3><code>prepare-insight-views.py</code></div><p class="formula">A = R²/2 · |Σ (λ₂ − λ₁)(2 + sin φ₁ + sin φ₂)|</p><p><span lang="id">R = 6 371 008,8 m; lubang dikurangi.</span><span lang="en">R = 6,371,008.8 m; holes subtracted.</span></p></article>
+      <article><div class="term"><h3><span lang="id">Proksi penduduk di lahan berat</span><span lang="en">Residents-on-severe-land proxy</span></h3><code>prepare-insight-views.py</code></div><p class="formula">P_kel × A_berat / A_terpeta</p><p><span lang="id">Penyebutnya lahan berisiko yang terpetakan, bukan seluruh kelurahan. Tidak pernah dijumlah menjadi total kota.</span><span lang="en">The denominator is risk-mapped land, not the whole kelurahan. Never summed into a city total.</span></p></article>
+      <article><div class="term"><h3><span lang="id">Gerbang jarak dan waktu</span><span lang="en">Distance and time gates</span></h3><code>src/index.ts</code></div><p class="formula">haversine(req, cell) ≤ 20 km (35 km air)
+now − t ≤ 3 h ; t ≤ now + 5 min</p><p><span lang="id">Model memetakan permintaan ke selnya sendiri. Sel yang terlalu jauh atau terlalu tua ditolak, dan layar mengatakan "tidak tersedia".</span><span lang="en">A model snaps a request to its own cell. A cell too far away or too old is rejected, and the screen says "unavailable".</span></p></article>
     </div>
   </section>
 

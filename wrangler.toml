@@ -25,3 +25,21 @@ binding = "ASSETS"
 # PMTiles needs Range passthrough, so the Worker runs before [assets];
 # otherwise /jakarta-buildings.pmtiles would return the whole archive.
 run_worker_first = true
+
+# Cloudflare's native Workers Rate Limiting. This is the real limit: it counts
+# across every isolate and every colo. The Worker falls back to an in-isolate
+# window (src/rate-limit.ts) when the binding is absent, and that fallback is
+# documented as best-effort — it counts only what reaches one isolate, so a
+# client spread across many connections is under-counted.
+#
+# To switch the native one on: create a rate-limit namespace for this account
+# (Cloudflare dashboard -> Workers & Pages -> Account Settings -> Rate
+# Limiting, or the Worker's own Rate limits tab) and uncomment the block
+# below with the namespace's id. The account's OAuth token is refused on the
+# namespace endpoint ("Method not allowed for this authentication scheme"), so
+# this one step needs a dashboard session or an API token.
+#
+# [[ratelimits]]
+# name = "RATE_LIMITER"
+# namespace_id = "1001"
+# simple = { key = "http.request.cf.ip.src", limit = 180, period = 60 }

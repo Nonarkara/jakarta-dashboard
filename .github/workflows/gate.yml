@@ -39,3 +39,13 @@ jobs:
       - run: npm run typecheck
       - run: npm run verify
       - run: npm test
+
+      # The spatial gate. A hole in the layout may exist, but not without
+      # somebody having written down why it is there — and a change in the
+      # geometry shows up in the baseline's diff rather than silently.
+      - run: npm run audit:spatial
+
+      # The falsifier. A gate that has never failed protects nothing, so this
+      # injects one real defect per mode of spatial hallucination and requires
+      # the gate above to catch every one of them.
+      - run: npm run audit:spatial:falsify

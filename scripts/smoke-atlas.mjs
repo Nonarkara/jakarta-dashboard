@@ -40,11 +40,29 @@ async function main() {
 
   const html = await fetchText("/atlas");
   const appJs = await fetchText(
-    html.match(/data-app="\/app\.js\?v=[^"]+"/)[0].replace(/data-app="|"/g, ""),
+    html.match(/src="\/app\.js\?v=[^"]+"/)[0].replace(/src="|"/g, ""),
   );
 
   await check("index.html references app.js with cache-buster", async () => {
     assert.match(html, /\/app\.js\?v=jakarta-atlas-/, "no app.js cache-buster");
+  });
+
+  // The client has to be LOAD-BLOCKING. It used to be appended by loader.js
+  // after a dynamic import, and a script appended that way does not delay the
+  // load event — so the browser reported the page loaded while the atlas was
+  // still an inert shell, and every check that reads the page on load was
+  // reading that shell instead of the map.
+  await check("index.html loads the atlas client as a load-blocking script", async () => {
+    assert.match(
+      html,
+      /<script src="\/app\.js\?v=[^"]+" defer><\/script>/,
+      "app.js is not a deferred, load-blocking script",
+    );
+    assert.match(
+      html,
+      /<script type="module" src="\/loader\.js\?v=[^"]+"><\/script>/,
+      "loader.js is not a module script, so MapLibre does not delay load",
+    );
   });
 
   await check("index.html references style.css with cache-buster", async () => {

@@ -22,17 +22,35 @@ assert.match(style,/html\{scroll-padding-top:52px\}/,'section anchors clear the 
 assert.doesNotMatch(js,/ui-monospace|Menlo|-apple-system/,'canvas text uses the same authored fonts');
 assert.match(style,/p\{max-width:65ch\}/,'all Research prose has a reading measure');
 assert.doesNotMatch(style,/repeat\(7/,'no seven narrow process columns');
-for(const selector of ['figures','status']) {
+// The metrics row must wrap to its contents and must not become a grid of
+// equal framed tiles. The rule used to be checked for a `.status` class the
+// page had already stopped using — a rule that governs nothing, guarded as
+// if it were live. Each selector is now required to appear in the markup too,
+// so a rule cannot pass by outliving the element it styles.
+for(const selector of ['figures']) {
  const rule=style.match(new RegExp('\\.'+selector+'\\{([^}]+)'))[1];
+ assert.match(html,new RegExp('class="[^"]*\\b'+selector+'\\b'),selector+' is styled by a rule it actually uses');
  assert.match(rule,/display:flex;flex-wrap:wrap/,'metrics wrap to their contents');
  assert.doesNotMatch(rule,/border-left|grid-template-columns/,'metrics are not equal framed tiles');
 }
+// A free-width wrap ends in an orphan. The narrow measure needs a column count
+// that divides the item count, so the last row is never one thing alone.
+const narrow=style.match(/@media \(max-width:760px\)\{([\s\S]*?)\n\}/)[1];
+assert.match(narrow,/\.figures\{display:grid;grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/,'four metrics become two columns, never 3 + 1');
+assert.match(narrow,/\.contents\{display:grid;grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/,'eight index entries become four columns, never 7 + 1');
 assert.match(style,/\.maths\{display:grid;gap:24px\}/,'maths retain a sequential reading order');
 assert.match(read('public/dashboard.css'),/\.warning p\{max-width:65ch\}/,'warning text no longer owns a nested scrollbar');
 for(const id of ['field','flow','height-bars','figures','src-status','src-licence','src-licence-detail']) assert.match(html,new RegExp('id="'+id+'"'),'earned visual '+id+' remains');
 for(const id of ['h-live','h-pipe','h-sat','h-height','h-maths','h-rules','h-src']) assert.match(html,new RegExp('id="'+id+'"'),'earned section '+id+' remains');
-assert.match(html,/class="stage" hidden/,'loading/outage cannot leave a huge empty diagram');
-assert.match(js,/base\.parentElement\.hidden = false/,'valid data restores the diagram');
+// The field's frame keeps its place whether or not the model answered. The old
+// rule hid the whole stage, which left the reading column standing alone
+// beside half a screen of nothing whenever the model did not answer. The
+// frame now stays, says why it is empty, and draws nothing into it.
+assert.match(html,/class="stage"/,'the field frame is present');
+assert.doesNotMatch(html,/class="stage" hidden/,'the frame is reserved rather than removed when the model does not answer');
+assert.match(html,/class="stage-note" id="field-note"/,'an empty frame says why it is empty');
+assert.match(html,/<canvas id="field"[^>]*hidden/,'nothing is drawn into the frame until the model answers');
+assert.match(js,/showField\(true\)/,'valid data restores the diagram');
 assert.match(js,/if \(document.hidden \|\| !ctx \|\| !playing \|\| reduced\(\)\) return/,'animation is gated by intent and reduced motion');
 
 // Execute the real Research client with one failed and one indefinitely slow source.
@@ -55,7 +73,8 @@ await new Promise(resolve=>setImmediate(resolve));
 assert.equal(get('fig-buildings').textContent,'123','slow transit does not hold the building figure hostage');
 assert.equal(get('figures').children[2].children[0].textContent,'—','failed catalogue is unknown, not 0 integrated');
 assert.equal(get('figures').children[3].children[0].textContent,'—','failed catalogue is unknown, not 0 assessed');
-assert.equal(get('field').parentElement.hidden,true,'model outage leaves no empty fixed-aspect stage');
+assert.equal(get('field').hidden,true,'model outage draws nothing');
+assert.equal(get('field-note').hidden,false,'the reserved frame says why it is empty');
 assert.equal(get('field-motion').hidden,true,'no play control for an unavailable field');
 assert.match(links[0].href,/lens=rain&lang=en/,'cross-page links retain lens and language');
 assert.match(get('live-caption').textContent,/did not answer/,'outage is visible');

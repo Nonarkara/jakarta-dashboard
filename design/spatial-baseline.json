@@ -1,0 +1,3646 @@
+{
+  "version": 2,
+  "tool": "spatial-law",
+  "widths": [
+    360,
+    429,
+    430,
+    431,
+    449,
+    450,
+    451,
+    479,
+    480,
+    481,
+    599,
+    600,
+    601,
+    699,
+    700,
+    701,
+    702,
+    759,
+    760,
+    761,
+    768,
+    799,
+    800,
+    801,
+    838,
+    839,
+    840,
+    899,
+    900,
+    901,
+    999,
+    1000,
+    1001,
+    1024,
+    1099,
+    1100,
+    1101,
+    1198,
+    1199,
+    1200,
+    1201,
+    1440,
+    1920
+  ],
+  "measuredWidths": [
+    360,
+    429,
+    430,
+    431,
+    449,
+    450,
+    451,
+    479,
+    480,
+    481,
+    599,
+    600,
+    601,
+    699,
+    700,
+    701,
+    702,
+    759,
+    760,
+    761,
+    768,
+    799,
+    800,
+    801,
+    838,
+    839,
+    840,
+    899,
+    900,
+    901,
+    999,
+    1000,
+    1001,
+    1024,
+    1099,
+    1100,
+    1101,
+    1198,
+    1199,
+    1200,
+    1201,
+    1440,
+    1920
+  ],
+  "limits": {
+    "deadGap": 72,
+    "orphanFill": 0.5,
+    "scatteredApart": 0.55,
+    "grownTolerance": 24,
+    "firstActionTolerance": 120,
+    "firstAction": null,
+    "titleRatio": 0.5,
+    "peerShare": 0.25,
+    "allowedSizes": null
+  },
+  "reasons": {
+    "dead|aside.atlas-layers": "The layer rail is a floating panel ON the map, not a column beside it. It is short on purpose — a rail as tall as the map would cover the city — so the space under it is the map itself. Check it: open /atlas and look under the rail; what is there is satellite imagery and 3D blocks, not an empty band.",
+    "dead|div.atlas-page-tools": "The row of page-level doors (city watch, Research & method, Data and sources) floats over the map's top-right corner so the map keeps every pixel of its height. The space under the row is the map. Check it: open /atlas and look under the row; what is there is the city, not an empty band."
+  },
+  "exempt": [],
+  "routes": {
+    "/": {
+      "360": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 12,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "429": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 12,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "430": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 12,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "431": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 12,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "449": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 12,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "450": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 12,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "451": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 12,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "479": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 12,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "480": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 12,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "481": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 12,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "599": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 12,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "600": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 12,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "601": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "699": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "700": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "701": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "702": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "759": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "760": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "761": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "768": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "799": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "800": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "801": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "838": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "839": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "840": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "899": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "900": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "901": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "999": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1000": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1001": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1024": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1099": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1100": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1101": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1198": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1199": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 11,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1200": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 13,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1201": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 13,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1440": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 13,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1920": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 13,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      }
+    },
+    "/atlas": {
+      "360": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 770,
+            "detail": "div.atlas-page-tools leaves 770px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "429": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "430": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "431": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "449": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "450": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "451": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "479": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "480": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "481": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 942,
+            "detail": "aside.atlas-layers leaves 942px empty beneath it in a 976px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 938,
+            "detail": "div.atlas-page-tools leaves 938px empty beneath it in a 976px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "599": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 942,
+            "detail": "aside.atlas-layers leaves 942px empty beneath it in a 976px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 938,
+            "detail": "div.atlas-page-tools leaves 938px empty beneath it in a 976px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "600": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 942,
+            "detail": "aside.atlas-layers leaves 942px empty beneath it in a 976px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 938,
+            "detail": "div.atlas-page-tools leaves 938px empty beneath it in a 976px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "601": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "699": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "700": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "701": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "702": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "759": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "760": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "761": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "768": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "799": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "800": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "801": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "838": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "839": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "840": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "899": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "900": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "901": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "999": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1000": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1001": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1024": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1099": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1100": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1101": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1198": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1199": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1200": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1201": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1440": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1920": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      }
+    },
+    "/atlas-open": {
+      "360": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 770,
+            "detail": "div.atlas-page-tools leaves 770px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "429": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "430": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "431": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "449": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "450": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "451": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "479": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "480": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 786,
+            "detail": "aside.atlas-layers leaves 786px empty beneath it in a 820px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 782,
+            "detail": "div.atlas-page-tools leaves 782px empty beneath it in a 820px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "481": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 942,
+            "detail": "aside.atlas-layers leaves 942px empty beneath it in a 976px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 938,
+            "detail": "div.atlas-page-tools leaves 938px empty beneath it in a 976px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "599": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 942,
+            "detail": "aside.atlas-layers leaves 942px empty beneath it in a 976px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 938,
+            "detail": "div.atlas-page-tools leaves 938px empty beneath it in a 976px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "600": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 942,
+            "detail": "aside.atlas-layers leaves 942px empty beneath it in a 976px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 938,
+            "detail": "div.atlas-page-tools leaves 938px empty beneath it in a 976px row"
+          }
+        ],
+        "firstAction": {
+          "y": 0,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "601": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "699": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "700": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "701": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "702": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "759": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "760": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "761": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "768": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "799": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "800": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "801": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "838": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "839": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "840": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "899": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "900": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "901": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "999": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1000": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1001": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1024": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1099": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1100": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1101": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1198": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1199": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1200": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1201": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1440": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1920": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 940,
+            "detail": "aside.atlas-layers leaves 940px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      }
+    },
+    "/research": {
+      "360": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "429": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "430": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "431": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "449": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "450": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "451": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "479": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "480": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "481": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "599": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "600": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "601": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "699": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "700": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "701": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "702": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "759": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "760": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "761": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "768": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "799": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "800": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "801": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "838": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "839": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "840": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "899": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "900": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "901": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 32,
+          "ratio": 0.81,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "999": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 34.965,
+          "ratio": 0.74,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1000": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 35,
+          "ratio": 0.74,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1001": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 35.035,
+          "ratio": 0.74,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1024": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 35.84,
+          "ratio": 0.73,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1099": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 38.465,
+          "ratio": 0.68,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1100": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 38.5,
+          "ratio": 0.68,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1101": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 38.535,
+          "ratio": 0.67,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1198": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 27.554,
+          "largest": 41.93,
+          "ratio": 0.66,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1199": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 27.577,
+          "largest": 41.965,
+          "ratio": 0.66,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1200": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 27.6,
+          "largest": 42,
+          "ratio": 0.66,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1201": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 27.623,
+          "largest": 42.035,
+          "ratio": 0.66,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1440": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 32,
+          "largest": 48,
+          "ratio": 0.67,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1920": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "hierarchy": {
+          "h1": 32,
+          "largest": 48,
+          "ratio": 0.67,
+          "peers": 0,
+          "share": 0
+        }
+      }
+    }
+  }
+}

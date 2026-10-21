@@ -2,6 +2,8 @@ import { handleHazeReceptors, handleAsmcGraphic } from './haze.js';
 import { handleCoastal } from "./coastal.js";
 import { handleHydrology } from "./hydrology.js";
 import { handleJakarta } from "./jakarta.js";
+import { checkRateLimit } from "./rate-limit.js";
+import type { RateLimitEnv } from "./rate-limit.js";
 // Cloudflare Worker entry for jakarta-3d-atlas.
 //
 // The atlas is a static SPA in public/ (no build step). The Worker exists to
@@ -40,6 +42,13 @@ const WATERWAYS_PMTILES_PATH = "/jakarta-waterways.pmtiles";
 const WATERWAYS_PMTILES_R2_KEY = "buildings/jakarta-waterways.pmtiles"; // scripts/bake-osm-layers.py waterways
 
 const ATLAS_VERSION = "1.0.0";
+
+// The API's rate limit. 180 requests a minute per address is far above what
+// one reader makes (the atlas and the research page together ask for about a
+// dozen) and far below what a script needs to burn the account's daily
+// quota. The window is one minute.
+const API_RATE_LIMIT = 180;
+const API_RATE_WINDOW_SECONDS = 60;
 
 // DKI Jakarta mainland and its immediate edge. Kepulauan Seribu is outside.
 const CITY_BBOX = {
@@ -1086,6 +1095,22 @@ async function routeRequest(request: Request, env: Env): Promise<Response> {
     return new Response("method not allowed", { status: 405, headers: { allow: "GET, HEAD, OPTIONS", "access-control-allow-origin": "*" } });
   }
 
+  // The public API is rate limited; the pages and the map assets are not.
+  // The limit is generous on purpose: a reader makes a handful of API calls,
+  // and many readers share one address. It exists to stop a script.
+  if (path.startsWith("/api/")) {
+    const verdict = await checkRateLimit(request, env as unknown as RateLimitEnv, {
+      limit: API_RATE_LIMIT,
+      windowSeconds: API_RATE_WINDOW_SECONDS,
+      scope: "api",
+    });
+    if (!verdict.allowed) {
+      return new Response(
+        JSON.stringify({ error: "Too many requests", retryAfterSeconds: verdict.retryAfter }),
+        { status: 429, headers: { "content-type": "application/json", "retry-after": String(verdict.retryAfter), "cache-control": "no-store" } },
+      );
+    }
+  }
   if (path.startsWith("/api/atlas/traffic-stream/")) return handleHydrology(request, env);
   if (["/api/atlas/hydrology", "/api/atlas/jaxa-water", "/api/atlas/jaxa-tile", "/api/atlas/traffic-stream"].includes(path)) return handleHydrology(request, env);
   if (path.startsWith("/api/jakarta/")) return handleJakarta(request);

@@ -49,20 +49,20 @@ Himawari AHI Band 13 clean infrared imagery is served by NASA GIBS with JMA attr
 
 ## Jakarta typography and Palette adaptation · 11 October 2026
 
-Plus Jakarta Sans: Copyright 2020 The Plus Jakarta Sans Project Authors, https://github.com/tokotype/PlusJakartaSans. SIL Open Font License 1.1, full license included at `public/fonts/PlusJakartaSans-OFL.txt`. The unmodified variable webfont is self-hosted from upstream commit 18d1cd2f7ea10481919d2f05c1f7064b7307fc26.
+Plus Jakarta Sans was used for the wordmark in the first release and is **not shipped any more**: the interface reads in Source Sans 3 and the display face is Universa Civic, so the Plus Jakarta Sans webfont and its OFL were removed from the served tree on 21 October 2026 rather than left on the edge unused. For the record, that typeface is Copyright 2020 The Plus Jakarta Sans Project Authors, https://github.com/tokotype/PlusJakartaSans, SIL Open Font License 1.1; the unmodified variable webfont had been self-hosted from upstream commit 18d1cd2f7ea10481919d2f05c1f7064b7307fc26. No Plus Jakarta Sans glyph is now served or rendered.
 
 Palette plate 267: Sanzo Wada's relationship, via Matt DesLauriers' MIT-licensed digital conversion data (Copyright (c) 2020 Matt DesLauriers), which credits Dain M. Blodorn Kim. Production shades and role assignments are our own adaptation. Values are digital conversions, not exact printed inks. Palette reference: https://colors.nonarkara.org/#plate-267. The dataset notice and MIT permission/disclaimer are available at https://github.com/mattdesl/dictionary-of-colour-combinations; no source book scans are distributed.
 
 CRM: official hosted monthly report by Jakarta Smart City/CRM; the Google report URL comes from https://crm.jakarta.go.id/data-bulanan. The report is displayed on demand as the publisher's own iframe. No private complaint data or copied report metrics are stored. Links, periods and data access remain publisher-controlled; no official affiliation is claimed by this research dashboard.
 
 
-Logo artwork: supplied by the project owner as “Jakarta Civic Dashboard Logo Explorations.png” on 11 October 2026. The original raster is retained in `public/brand/jakarta-logo-set.png`; CSS frames its app icon and wordmark, and the favicon uses the same app-icon region. No external license or official Jakarta government endorsement is asserted.
+Logo artwork: supplied by the project owner on 11 October 2026. The original raster is retained in the repository at `docs/brand/jakarta-logo-set.png`, and the reconstructed symbol at `docs/brand/jktx-symbol-v2.png`; both were moved out of the served tree on 21 October 2026, because no page loads them. What the site ships is derived from them: `public/brand/jktx-symbol.png`, the symbol cropped to its own artwork at 30 KB, which CSS frames as the app icon, and `public/brand/jktx-favicon.png`, the same mark at 64x64 for the browser tab. No external license or official Jakarta government endorsement is asserted.
 
 
-Logo production correction: `jktx-symbol-v2.png` is an AI-assisted transparent reconstruction of the red Monas/blue-layer symbol from the owner-supplied sheet. It replaces presentation-sheet cropping on the live surfaces. The JKTx wordmark is native text in the licensed Plus Jakarta Sans family. Original sheet retained as source evidence; no official government endorsement asserted.
+Logo production correction: `jktx-symbol-v2.png` is an AI-assisted transparent reconstruction of the red Monas/blue-layer symbol from the owner-supplied sheet. It replaces presentation-sheet cropping on the live surfaces. The JKTx wordmark is native text, set in Source Sans 3 (SIL OFL 1.1) - it is not the Plus Jakarta Sans the first release used, and no Plus Jakarta Sans is served now. Original sheet retained as source evidence; no official government endorsement asserted.
 
 
-Source Sans 3 variable upright: Adobe Source Sans, copyright 2010–2024 Adobe, SIL OFL 1.1. Original WOFF2 from https://github.com/adobe-fonts/source-sans, release branch `WOFF2/VF/SourceSans 3VF-Upright.ttf.woff2`; full license retained in `public/fonts/SourceSans 3-OFL.txt`. Now used for interface text; prior Plus Jakarta font assets remain as historical source.
+Source Sans 3 variable upright: Adobe Source Sans, copyright 2010-2024 Adobe, SIL OFL 1.1. Original WOFF2 from https://github.com/adobe-fonts/source-sans, release branch `WOFF2/VF/SourceSans 3VF-Upright.ttf.woff2`; full license retained in `public/fonts/SourceSans3-OFL.txt`. It is the interface and reading face, and it sets the JKTx wordmark; the earlier Plus Jakarta Sans webfont has been removed from the served tree rather than kept as unused historical source.
 
 ## Water and traffic observation lenses · 12 October 2026
 

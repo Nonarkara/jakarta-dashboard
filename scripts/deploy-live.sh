@@ -46,6 +46,11 @@ npm test
 # tree meanwhile. The committed-work guarantee must hold at the deploy moment,
 # not only at the gate.
 check_clean
+# The spatial gate: every hole in the layout is either fixed or written down
+# in design/spatial-baseline.json, with a reason a stranger could check. It
+# runs on the committed tree, before the stamp, so what it measures is what
+# ships.
+npm run audit:spatial
 npm run stamp
 node scripts/release-snapshot.mjs write "$LOCK/inputs.json"
 npx wrangler deploy

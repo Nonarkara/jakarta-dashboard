@@ -97,11 +97,14 @@ function renderFiles([buildings, transit, catalog, flood]) {
     cell(fmt(Array.isArray(catalog?.records) ? records.length : null), t('sources assessed', 'sumber dinilai'));
 
     const st = document.getElementById('src-status'); st.replaceChildren();
+    // The catalogue's own status words, not restatements of them. A short name
+    // buys the bar its length back: the label column is sized to the longest
+    // name, so every extra word is taken straight out of the track.
     const STATUS = [
-      ['integrated', t('Integrated here', 'Terintegrasi di sini'), css('--ink')],
-      ['candidate', t('Probed, not admitted', 'Diperiksa, belum diterima'), css('--accent')],
-      ['registration-required', t('Needs an account', 'Perlu akun / registrasi'), css('--dim')],
-      ['blocked', t('Access failed', 'Akses gagal'), css('--lacquer')],
+      ['integrated', t('Terintegrasi', 'Terintegrasi'), css('--ink')],
+      ['candidate', t('Kandidat', 'Kandidat'), css('--accent')],
+      ['registration-required', t('Perlu registrasi', 'Perlu registrasi'), css('--dim')],
+      ['blocked', t('Terblokir', 'Terblokir'), css('--lacquer')],
     ];
     barChart(st, STATUS.map(([k, label, colour]) => ({ label, value: count(k), colour })), { total: records.length || null });
 
@@ -113,8 +116,8 @@ function renderFiles([buildings, transit, catalog, flood]) {
     const OPEN = /^(CC BY 4\.0|CC BY-NC 4\.0|ODbL|Apache-2\.0)/i;
     const namesOpen = records.filter((r) => OPEN.test(String(r.license ?? '').trim()));
     barChart(lic, [
-      { label: t('Names no open licence', 'Tidak menyebut lisensi terbuka'), value: records.length - namesOpen.length, colour: css('--ink') },
-      { label: t('Names an open licence', 'Menyebut lisensi terbuka'), value: namesOpen.length, colour: css('--accent') },
+      { label: t('Tanpa lisensi terbuka', 'Tanpa lisensi terbuka'), value: records.length - namesOpen.length, colour: css('--ink') },
+      { label: t('Dengan lisensi terbuka', 'Dengan lisensi terbuka'), value: namesOpen.length, colour: css('--accent') },
     ], { total: records.length || null });
 
     const detail = document.getElementById('src-licence-detail');
@@ -146,15 +149,27 @@ const caption = document.getElementById('live-caption');
 const motion = document.getElementById('field-motion');
 const refreshButton=document.getElementById('field-refresh');
 const reduced = () => globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
+const stageNote=document.getElementById('field-note');
+
+// The frame keeps its place whether or not the model answered. The field is a
+// square plot of the model box; when the model does not answer, the frame says
+// so instead of vanishing — because a vanished frame left the reading column
+// standing alone beside half a screen of nothing.
+function showField(drawn, message) {
+  base.hidden = !drawn;
+  top.hidden = !drawn;
+  if (message !== undefined) stageNote.textContent = message;
+  stageNote.hidden = !!drawn;
+}
 
 function renderField([syn, fires]) {
   if (!currentResearchField(syn)) {
-    base.parentElement.hidden = true;
+    showField(false, t('The pressure model did not answer. Nothing is drawn in its place.', 'Model tekanan tidak menjawab. Tidak ada yang digambar sebagai gantinya.'));
     motion.hidden = true;
-    const say = () => { caption.textContent = t('The pressure model did not answer. Nothing is drawn in its place.', 'Model tekanan tidak menjawab. Tidak ada yang digambar sebagai gantinya.'); };
+    const say = () => { const m = t('The pressure model did not answer. Nothing is drawn in its place.', 'Model tekanan tidak menjawab. Tidak ada yang digambar sebagai gantinya.'); caption.textContent = m; showField(false, m); };
     renders.push(say); say(); return () => { const i=renders.indexOf(say); if(i>=0)renders.splice(i,1); };
   }
-  base.parentElement.hidden = false; motion.hidden = false;
+  showField(true); motion.hidden = false;
   fires=researchFires(fires);
   const now = Date.now();
   const index = syn.hours.findIndex(h => Date.parse(h) === Math.floor(now/3600000)*3600000);
@@ -313,7 +328,8 @@ let sessionStatus=null;
 const statusText=state=>{
   sessionStatus=state;
   refreshButton.disabled=state==='loading';
-  base.parentElement.hidden=true;motion.hidden=true;
+  showField(false, state==='paused'?t('The field is paused.','Medan dijeda.'):state==='unavailable'?t('The model field is unavailable.','Medan model tidak tersedia.'):t('Loading the model field…','Memuat medan model…'));
+  motion.hidden=true;
   caption.textContent=state==='paused'?t('View paused. Returning checks the model again before playback.', 'Tampilan dijeda. Saat kembali, model diperiksa lagi sebelum pemutaran.'):state==='unavailable'?t('Model field unavailable. Retry to check the source again.', 'Medan model tidak tersedia. Coba lagi untuk memeriksa sumber.'):t('Refreshing the model field… Last view is paused; no current field is implied.', 'Memperbarui medan model… Tampilan terakhir dijeda; tidak menyiratkan medan terkini.');
 };
 const session=createResearchSession({document,

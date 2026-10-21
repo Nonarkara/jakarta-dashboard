@@ -584,7 +584,7 @@ button:active { transform: scale(0.97); }
 .atlas-rain-location { min-height: 44px; padding: 6px; border: 1px solid var(--line); background: var(--bg-raised); color: var(--accent); font: inherit; text-align: left; }
 
 /* Two-row environmental toolbar; full evidence remains expandable. */
-.atlas-environment { position: relative; padding: 10px 24px; }
+.atlas-environment { position: relative; padding: 10px 24px; container-type: inline-size; }
 .atlas-environment-topline { display: flex; align-items: baseline; gap: 16px; padding-right: 240px; }
 .atlas-environment-topline h2 { flex-shrink: 0; font-size: 15px; margin: 0; }
 .atlas-environment-topline p { margin: 0; font-size: 12px; color: var(--dim); }
@@ -592,20 +592,35 @@ button:active { transform: scale(0.97); }
 .atlas-environment-controls label { flex-direction: row; align-items: center; gap: 8px; font-size: 12px; }
 .atlas-environment-controls select, .atlas-environment-controls button { padding: 6px 8px; font-size: 12px; }
 .atlas-environment-controls input[type="range"] { width: 100px; }
-.atlas-environment-controls #atlas-environment-overview { margin-left: auto; }
+/* The panel holds two kinds of thing: which layer, and what to do to it. They
+   are grouped, because a flat row of four controls broke wherever the panel
+   ran out of room — and in the 420px data drawer that left "Refresh data"
+   alone on a row of its own, which is the accident the layout is not allowed
+   to make. Two clusters cannot orphan one button from the other. */
+.atlas-environment-layers, .atlas-environment-actions { display: flex; align-items: center; gap: 8px 16px; }
+.atlas-environment-layers { flex-wrap: wrap; min-width: 0; }
+.atlas-environment-actions { margin-left: auto; }
 .atlas-environment .atlas-environment-details { border-top: 0; }
 .atlas-environment-details > summary { position: absolute; top: 3px; right: 24px; min-height: 44px; padding: 12px 0; font-size: 12px; }
 .atlas-environment-detail-body { border-top: 1px solid var(--line); margin-top: 10px; padding-top: 8px; }
 .atlas-environment-detail-body button { min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); color: var(--ink); background: var(--bg-raised); font: inherit; }
+/* This panel lives in the data drawer, which is 420px wide inside a viewport
+   that can be 1440px. The old rules answered the VIEWPORT's width, so at a
+   desktop the panel kept a 230px reservation for a summary that then sat on
+   top of a status line squeezed into a 19px ribbon beside its own heading.
+   The panel's own width is the question, so the panel is the container. */
+@container (max-width: 520px) {
+  .atlas-environment-topline { display: block; padding-right: 0; gap: 0; }
+  .atlas-environment-topline p { margin-top: 4px; }
+  .atlas-environment-details > summary { position: static; padding: 12px 0 0; }
+  .atlas-environment-controls { flex-direction: column; align-items: stretch; }
+  .atlas-environment-actions { margin-left: 0; }
+}
 @media (max-width: 700px) {
   .atlas-environment { padding: 10px 14px; }
-  .atlas-environment-topline { display: block; padding-right: 0; }
-  .atlas-environment-topline p { margin-top: 4px; }
   .atlas-environment-controls label, .atlas-environment-controls button { width: auto; }
   .atlas-environment-controls select { width: auto; max-width: 100%; }
   .atlas-environment-controls label { flex-wrap: wrap; }
-  .atlas-environment-controls #atlas-environment-overview { margin-left: 0; }
-  .atlas-environment-details > summary { position: static; padding: 12px 0 0; }
 }
 
 /* Give the city the remaining viewport, independent of geographic zoom. */
@@ -715,9 +730,7 @@ button:disabled { opacity: 0.55; cursor: not-allowed; }
 .atlas-embedded .atlas-watch { max-height: calc(100% - 88px); overflow-y: auto; }
 @media (min-width: 701px) {
   .atlas-embedded .atlas-environment { padding: 6px 14px; }
-  .atlas-embedded .atlas-environment-topline { display: flex; padding-right: 230px; gap: 10px; }
   .atlas-embedded .atlas-environment-topline h2 { font-size: 13px; }
-  .atlas-embedded .atlas-environment-details > summary { position: absolute; right: 14px; top: 0; padding: 10px 0; }
 }
 
 /* A geographic story strip, rather than another independent KPI dashboard. */

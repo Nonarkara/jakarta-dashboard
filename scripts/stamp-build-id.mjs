@@ -28,7 +28,7 @@ const nextHtml = html
   .replace(/src="\/loader\.js(?:\?v=[^"]*)?"/g, `src="/loader.js?v=${stamp}"`)
   .replace(/href="\/style\.css\?v=[^"]*"/g, `href="/style.css?v=${stamp}"`)
   .replace(/src="\/theme\.js\?v=[^"]*"/g, `src="/theme.js?v=${stamp}"`)
-  .replace(/data-app="\/app\.js\?v=[^"]*"/g, `data-app="/app.js?v=${stamp}"`);
+  .replace(/src="\/app\.js(?:\?v=[^"]*)?"/g, `src="/app.js?v=${stamp}"`);
 
 writeFileSync(indexHtml, nextHtml.replace(/href="\/jakarta-design\.css\?v=[^"]*"/g, `href="/jakarta-design.css?v=${stamp}"`), "utf8");
 

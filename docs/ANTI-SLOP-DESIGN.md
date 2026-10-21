@@ -68,6 +68,69 @@ publisher who never granted the right.
 1440 / 1024 / 390, on `/atlas` and `/research`, and runs inside `npm run
 release`. It fails loudly — never silently skips — if it cannot run at all.
 
+## 21 October 2026 — the spatial law, and what it found
+
+The owner named the failure: **spatial hallucination** is when an interface
+invents a reason for things to occupy space, instead of arranging them around
+how people read, choose and act. The test is one question asked of every
+region of every page — *"why is this here, why this size, and why this far
+from that?"* — and if the answer is *"the grid put it there"*, the layout has
+failed.
+
+The previous pass (1.6) fixed collisions and wraps it could see. It could not
+see the ones the eye skips, because nobody had swept the widths. This pass
+installed the spatial-law instrument byte-identically, built the site the way
+the Worker serves it, and swept 43 widths — every declared breakpoint, the
+width just below it and the width just above it — across four routes.
+
+**What the sweep found that the previous pass had missed**
+
+1. **The charts the owner pointed at.** The research bar chart's label column
+   was `minmax(0,1fr)`, so a short name stretched and invented a ~390px gulf
+   before its own bar. A flexing label column invents space: size it to its
+   content (`max-content`) and the bars share a left edge again.
+2. **A control stranded by its own row.** In the 420px data drawer the
+   environment controls were four flat flex children. "Refresh data" ended up
+   alone on the last row. Controls are not tags: the two actions are now one
+   cluster that travels together, and cannot be orphaned.
+3. **A panel answering the wrong question.** The drawer panel reserved 230px
+   for an absolutely-positioned summary, because its rules asked the
+   *viewport's* width. At 1440px the panel is 402px wide, the status line was
+   squeezed into a 19px ribbon 370px tall, and its own heading stood beside
+   it with 688px of emptiness beneath. The panel's own width is the question,
+   so the panel is now a **container query**.
+4. **A frame that vanished.** When the pressure model did not answer, the
+   research field's frame was removed — and the reading column stood alone
+   beside half a screen of nothing. The frame now keeps its place and says
+   why it is empty. A layout that is different depending on whether a remote
+   service answered is not a layout; it is a coin toss.
+5. **Doors under a door.** The opened data drawer was an absolute panel at the
+   row's right edge, so it covered the research door and the city-watch door —
+   the two actions the reader wanted next. It now hangs below the row.
+6. **A page that reported itself loaded before it was.** The atlas client was
+   appended by script after a dynamic import, and a script appended that way
+   does not delay the load event: the browser said "loaded" while the atlas was
+   still an inert shell, and every check that reads the page on load — this
+   gate, the rendered audit — was reading a skeleton. The client is
+   load-blocking now.
+
+**The blind spot, recorded because the law is about honesty.** The instrument
+found none of the rail findings to be defects, and it never saw the drawer's
+interior at all: a collapsed `<details>` keeps its contents in the layout
+(Chrome's `content-visibility`) even though nothing paints them, so a measure
+of the closed page read a 94px-wide ghost of a 420px panel. Two consequences,
+both now in place: a closed drawer is not laid out at all, and the gate
+measures the atlas a second time with the drawer **open** — a layout reviewed
+only in the state it happens to open in is half a review.
+
+**The receipt.** `design/spatial-baseline.json` holds the numbers and a
+written reason for every decision that produced them. Two holes are blessed
+and both are the same one: the lens rail and the row of doors float over the
+map, so the space beneath them is the map. A stranger can check that by
+opening the atlas. Nothing is left unaccounted for, and the falsifier injects
+one real defect per mode and requires the gate to catch all six.
+
+
 ## Version history
 
 This committed copy travels with Jakarta and mirrors the global
@@ -79,3 +142,4 @@ version.
 | 1.4 | 2026-10-20 | Three checks measured existence instead of the thing that matters: section id presence over index linkage, rendered box over clickable centre, bar existence over drawn width vs stated share. |
 | 1.5 | 2026-10-20 | Research index answers to every section in both directions and both languages; page-tools door above the watch overlay at z-index 44, hit-tested at its own centre; charts compare drawn width to `data-share` instead of asserting a bar exists. 8/8 mutants killed. Research assets cache-busted. |
 | 1.6 | 2026-10-21 | Spatial Hallucination audit: City watch integrated into atlas-page-tools flex row, eliminating unhittable overlap and magic pixel offsets; audit-rendered explicitly hit-tests City watch; lens-hours converted to 2-column tabular grid to eliminate accidental wrapping; lens-row formatted with flexible wrap and compact padding; research pipeline orphan slot eliminated. |
+| 1.7 | 2026-10-21 | The Spatial Law adopted end to end: the vendored instrument, a Worker-faithful route server the gate measures the build through, `design/spatial-baseline.json` as the receipt, and a falsifier that catches all six modes. Fixed what the previous pass missed — the research charts' bars stranded from their labels by a flexing label column; the data drawer reserving 230px for an absolutely-positioned summary, which squeezed its status line into a 19px ribbon; “Refresh data” orphaned on a row of its own in the 420px drawer; the research field's frame vanishing when the model did not answer, leaving the reading column alone beside half a screen of nothing; the opened drawer covering the research and city-watch doors; and the atlas client not being load-blocking, so the browser reported the page loaded before the atlas existed. Two holes are blessed with written reasons; none is left unaccounted for. |

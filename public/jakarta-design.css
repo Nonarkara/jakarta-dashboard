@@ -128,7 +128,7 @@ body[data-surface="jakarta-dashboard"] .masthead {
 .city-brand { display: flex; align-items: center; gap: 6px; height: 44px; }
 .city-brand-icon {
   display: inline-block; width: 32px; height: 36px; flex: none;
-  background: url('/brand/jktx-symbol-v2.png') center / auto 44px no-repeat;
+  background: url('/brand/jktx-symbol.png') center / auto 44px no-repeat;
 }
 .city-brand-wordmark {
   flex: none; font: 800 26px/1 var(--font-sans);
@@ -165,7 +165,7 @@ body[data-surface="jakarta-dashboard"] .map-heading h2 { margin: 0; }
 body[data-surface="jakarta-atlas"] .atlas-title::before {
   content: ''; display: inline-block; vertical-align: middle; margin-right: 8px;
   width: 32px; height: 30px;
-  background: url('/brand/jktx-symbol-v2.png') center / contain no-repeat;
+  background: url('/brand/jktx-symbol.png') center / contain no-repeat;
 }
 body[data-surface="jakarta-atlas"] .atlas-map-loading-glyph { border: 0; background: transparent; }
 
@@ -202,8 +202,21 @@ body.atlas-embedded #atlas-lens-body { top: 90px; left: 0; right: auto; padding:
    (42) — at 40 this row rendered visibly but was not clickable — and still
    sits under the loading veil (50) and the lens panel (65). */
 .atlas-page-tools { position: absolute; z-index: 44; top: 8px; right: 48px; max-width: calc(100% - 64px); display: flex; gap: 6px; align-items: flex-start; }
-.atlas-page-tools > .atlas-embedded-drawer { position: static; right: auto; max-width: none; }
-.atlas-page-tools > .atlas-embedded-drawer[open] { position: absolute; top: 0; right: 0; left: auto; width: min(420px, calc(100vw - 32px)); }
+.atlas-page-tools > .atlas-embedded-drawer { position: relative; right: auto; max-width: none; }
+.atlas-page-tools > .atlas-embedded-drawer[open] { position: relative; right: auto; left: auto; width: auto; max-width: none; }
+/* The opened drawer hangs BELOW the row of doors, not on top of it. It used
+   to be an absolute panel at the row's right edge, which covered the research
+   door and the city-watch door — the two actions the reader wanted next —
+   while it was open. The panel still overlays the map; the doors stay. */
+.atlas-page-tools > .atlas-embedded-drawer[open] > .atlas-embedded-evidence {
+  position: absolute; top: calc(100% + 6px); right: 0; left: auto;
+  width: min(420px, calc(100vw - 32px));
+}
+/* A closed drawer must not be laid out at all. Chrome keeps the contents of a
+   collapsed <details> in the layout (content-visibility), so a measure of the
+   closed page was reading a 94px-wide ghost of the data panel — a shape no
+   reader ever sees, and a shape that changes when the panel is opened. */
+.atlas-page-tools > .atlas-embedded-drawer:not([open]) > *:not(summary) { display: none; }
 .atlas-page-tools > .atlas-watch { position: static; right: auto; top: auto; left: auto; width: auto; max-width: none; border: 0; background: transparent; z-index: auto; }
 .atlas-page-tools > .atlas-watch .atlas-watch-shell { margin: 0; padding: 0; border: 0; }
 .atlas-page-tools > .atlas-watch .atlas-watch-shell > summary { display: inline-flex; align-items: center; min-height: 32px; padding: 6px 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: 500 12px/1.4 var(--font-sans); cursor: pointer; white-space: nowrap; }
