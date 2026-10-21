@@ -1,9 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import ts from 'typescript';
-const source=readFileSync(new URL('../src/coastal.ts',import.meta.url),'utf8');
-const compiled=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText;
-const {cleanCoastal,handleCoastal}=await import('data:text/javascript;base64,'+Buffer.from(compiled).toString('base64'));
+import {coastalModuleUrl} from './coastal-test-module.mjs';
+const {cleanCoastal,handleCoastal}=await import(coastalModuleUrl);
 const raw=JSON.parse(readFileSync(new URL('../data/source-evidence/water-candidates-2026-10-15/bmkg-priok.json',import.meta.url),'utf8'));
 const now=Date.parse('2026-10-15T15:50:00Z');
 const good=cleanCoastal(raw,now);

@@ -4,15 +4,9 @@
 // never a concentration. Outages are 503/no-store, never an all-clear 200.
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import ts from 'typescript';
 import { windTransportPoint, windTrajectoryPoint, transportWindow, currentTransportRow } from '../public/air-timeline.js';
-const source = readFileSync(new URL('../src/index.ts', import.meta.url), 'utf8');
-const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText
-  .replace('./coastal.js', (await import('./coastal-test-module.mjs')).coastalModuleUrl)
-  .replace('./hydrology.js', (await import('./hydrology-test-module.mjs')).hydrologyModuleUrl)
-  .replace('./haze.js',new URL('../src/haze.js',import.meta.url).href)
-  .replace('./jakarta.js', new URL('../src/jakarta.js', import.meta.url).href);
-const worker = (await import('data:text/javascript;base64,' + Buffer.from(compiled).toString('base64'))).default;
+import { workerModuleUrl } from './worker-test-module.mjs';
+const worker = (await import(workerModuleUrl)).default;
 const originalFetch = globalThis.fetch;
 globalThis.caches = { default: { match: async () => null, put: async () => {} } };
 

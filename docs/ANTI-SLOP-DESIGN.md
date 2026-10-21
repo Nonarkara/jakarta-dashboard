@@ -131,6 +131,39 @@ opening the atlas. Nothing is left unaccounted for, and the falsifier injects
 one real defect per mode and requires the gate to catch all six.
 
 
+## 21 October 2026 (second pass) — the release gate failed on the release
+
+The spatial pass shipped its code and the release script ran the tests, and the
+tests died on the first one. The cause was not the spatial work: the Worker had
+gained a dependency (`./rate-limit.js`), and three contract tests compile the
+Worker into a `data:` URL module in order to import it.
+
+A `data:` URL has no base URL. A relative import left inside it cannot be
+resolved, so Node throws `ERR_UNSUPPORTED_RESOLVE_REQUEST` — which names a Node
+internal and says nothing about the dependency that was actually missing. The
+release had found a real defect in the *build*, and reported it in the one
+vocabulary that hides it.
+
+**The fix is not a patch; it is an owner.** `scripts/worker-bundle.mjs` now
+resolves the Worker's whole relative import graph itself:
+
+- a TypeScript module is transpiled and inlined as a `data:` URL;
+- a plain JavaScript module with no relative imports keeps its file URL, so its
+  bare import (`fast-xml-parser`) still resolves from `node_modules`;
+- a dependency that does not exist is refused **by name**, at bundle time;
+- a module that would have to be inlined but carries a bare specifier is
+  refused **by name**, at bundle time.
+
+Adding a dependency to the Worker is now a one-line change with no test to
+remember. Forgetting one is a message that names the file.
+
+**The refusal is the guard, and the guard is mutation-tested.** Three mutants
+must fail it: a missing dependency ignored, a bare specifier ignored, a nested
+relative import dropped. Three of three die. The bundler is written without a
+bare specifier of its own, so it can be loaded as a `data:` URL and mutated in
+place — the test attacks the bundler, not a copy of it.
+
+
 ## Version history
 
 This committed copy travels with Jakarta and mirrors the global
@@ -143,3 +176,4 @@ version.
 | 1.5 | 2026-10-20 | Research index answers to every section in both directions and both languages; page-tools door above the watch overlay at z-index 44, hit-tested at its own centre; charts compare drawn width to `data-share` instead of asserting a bar exists. 8/8 mutants killed. Research assets cache-busted. |
 | 1.6 | 2026-10-21 | Spatial Hallucination audit: City watch integrated into atlas-page-tools flex row, eliminating unhittable overlap and magic pixel offsets; audit-rendered explicitly hit-tests City watch; lens-hours converted to 2-column tabular grid to eliminate accidental wrapping; lens-row formatted with flexible wrap and compact padding; research pipeline orphan slot eliminated. |
 | 1.7 | 2026-10-21 | The Spatial Law adopted end to end: the vendored instrument, a Worker-faithful route server the gate measures the build through, `design/spatial-baseline.json` as the receipt, and a falsifier that catches all six modes. Fixed what the previous pass missed — the research charts' bars stranded from their labels by a flexing label column; the data drawer reserving 230px for an absolutely-positioned summary, which squeezed its status line into a 19px ribbon; “Refresh data” orphaned on a row of its own in the 420px drawer; the research field's frame vanishing when the model did not answer, leaving the reading column alone beside half a screen of nothing; the opened drawer covering the research and city-watch doors; and the atlas client not being load-blocking, so the browser reported the page loaded before the atlas existed. Two holes are blessed with written reasons; none is left unaccounted for. |
+| 1.8 | 2026-10-21 | The release gate failed on the release, and the error named the wrong thing. Adding `./rate-limit.js` to the Worker broke three contract tests at once: each compiles the Worker into a `data:` URL module, a `data:` URL has no base to resolve a relative import against, and the whole chain died with `ERR_UNSUPPORTED_RESOLVE_REQUEST` — a Node internal — with the missing dependency nowhere in the message. `scripts/worker-bundle.mjs` now owns the import graph: it resolves every relative import into a module URL, keeps a plain JavaScript module on its file URL so its bare imports still resolve from `node_modules`, refuses a dependency that does not exist **by name**, and refuses a module it would have to inline but cannot resolve. Three mutants — a missing dependency ignored, a bare specifier ignored, a nested relative import dropped — are killed by `scripts/test-worker-bundle.mjs`. A build step must not emit a reference it cannot resolve, and it must name the cause. |

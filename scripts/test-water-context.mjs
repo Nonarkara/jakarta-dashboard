@@ -1,11 +1,10 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import ts from 'typescript';
+import {coastalModuleUrl} from './coastal-test-module.mjs';
 import {validCoastal,validLandCover,createWaterContext} from '../public/water-context.js';
 const load=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url),'utf8'));
 const cover=load('public/data/jakarta-v1/worldcover-2021-reference.json');
-const compiled=ts.transpileModule(readFileSync(new URL('../src/coastal.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.ESNext}}).outputText;
-const {cleanCoastal}=await import('data:text/javascript;base64,'+Buffer.from(compiled).toString('base64'));
+const {cleanCoastal}=await import(coastalModuleUrl);
 const oldNow=Date.now;Date.now=()=>Date.parse('2026-10-15T15:50:00Z');
 const coast=cleanCoastal(load('data/source-evidence/water-candidates-2026-10-15/bmkg-priok.json'),Date.parse('2026-10-15T15:50:00Z'));
 assert.equal(validCoastal(coast),true);assert.equal(validCoastal(coast,Date.parse('2026-10-18T00:00:00Z')),false,'expired available flag cannot pass client boundary');assert.equal(validCoastal({...coast,issuedAt:'2026-10-16T00:00:00Z'}),false);assert.equal(validLandCover(cover),true);

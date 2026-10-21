@@ -102,9 +102,43 @@ one. That limit is stated here rather than implied.
 | #7 | `@cloudflare/workers-types` 5.20261013.1 → 5.20261016.1 | **merged.** Type definitions only; the local gate re-ran clean against it. |
 | #1 | `actions/setup-node` 4 → 7 | **merged.** v7.1.0 published 8 October 2026. The workflow's Node major is unchanged (26) and the comment that pins it still holds. |
 | #2 | `actions/checkout` 4 → 7 | **merged.** v7.0.1 published 20 July 2026. |
-| #3 | `typescript` 5.9.3 → 7.0.2 | **closed, with the reason.** TypeScript 7 removes the JavaScript compiler API that `scripts/coastal-test-module.mjs` uses to check the coastal forecast module. The bump is worth taking when that script is rewritten, not before. |
+| #3 | `typescript` 5.9.3 → 7.0.2 | **closed, with the reason.** TypeScript 7 removes the JavaScript compiler API — `transpileModule`, `ModuleKind`, `ScriptTarget` — that the test harness uses to compile the Worker's TypeScript modules into importable modules (`scripts/worker-bundle.mjs`, `scripts/coastal-test-module.mjs`, `scripts/hydrology-test-module.mjs`, `scripts/test-rate-limit.mjs`). The bump is worth taking when that harness is rewritten, not before. |
 
 The two action bumps are the only changes in this set that CI could not
 exercise, because CI is off. They are version references in one workflow file
 and nothing else; the first CI run when the quota returns is their test, and
 a red gate there is the gate doing its job.
+
+## 5. The release blocker — found by the gate, now closed
+
+**State: closed. The gate caught it, the cause is fixed, and the cause cannot
+come back the same way.**
+
+`npm run release` failed on this pass, inside `npm test`, on the *first* test
+script — before any deploy, so nothing reached production and the live site was
+untouched.
+
+The cause was the rate limiter's own wiring. `src/index.ts` gained
+`import { checkRateLimit } from "./rate-limit.js"`, and three contract tests
+(`test-release-contract`, `test-environment-contract`, `test-air-timeline`)
+compile the Worker into a `data:` URL module in order to import it. A `data:`
+URL has no base to resolve a relative import against, so the whole chain died
+with `ERR_UNSUPPORTED_RESOLVE_REQUEST` — a Node internal — and the missing
+dependency was nowhere in the message.
+
+Three things are now true, and each is checked:
+
+1. **The bundler owns the import graph.** `scripts/worker-bundle.mjs` resolves
+   every relative import into a module URL, keeps a plain JavaScript module on
+   its file URL so its bare imports still resolve from `node_modules`, and
+   **refuses a dependency that does not exist by name**. Adding a dependency to
+   the Worker is now a one-line change with no test to remember.
+2. **The refusal is mutation-tested.** `scripts/test-worker-bundle.mjs` kills
+   three mutants — a missing dependency ignored, a bare specifier ignored, a
+   nested relative import dropped — 3/3, and runs inside `npm test`.
+3. **The limit has headroom in the tests.** The contract test makes 21–50 API
+   requests against a 180/minute limit (measured by lowering the limit until
+   the test went red), so the suite cannot trip the limiter it is testing.
+
+The lesson is recorded in both design laws: **a build step must not emit a
+reference it cannot resolve, and it must name the cause.**
