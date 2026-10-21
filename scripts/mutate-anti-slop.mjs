@@ -66,16 +66,48 @@ const MUTANTS = [
     to: "researchLink.textContent = 'The science bit';",
     expect: /the research page has exactly one name|AssertionError/,
   },
+  {
+    name: "the review disposition receipt is deleted",
+    file: 'docs/REVIEW-DISPOSITION-2026-10-19.md',
+    delete: true,
+    expect: /the review disposition receipt exists/,
+  },
+  {
+    name: 'a finding is left unanswered',
+    file: 'docs/REVIEW-DISPOSITION-2026-10-19.md',
+    from: '| **Fixed** | The rain lens panel is 240×692',
+    to: '|  | The rain lens panel is 240×692',
+    expect: /no finding may be left unanswered/,
+  },
+  {
+    name: 'the lede goes back to a measure that is 80 characters wide',
+    file: 'public/research.html',
+    from: '.lede{max-width:55ch;',
+    to: '.lede{max-width:65ch;',
+    expect: /the lede is still capped at 55ch/,
+  },
 ];
 
 let killed = 0;
 for (const m of MUTANTS) {
   const dir = mkdtempSync(join(tmpdir(), 'slop-mut-'));
-  cpSync(REPO, dir, { recursive: true, filter: (s) => !s.includes('/.git') && !s.includes('node_modules') && !s.includes('/docs/') });
+  // docs/ is copied for its markdown — the disposition receipt and the design
+  // law are part of what the guard reads — but the 104 PNGs (36 MB) are not.
+  cpSync(REPO, dir, { recursive: true, filter: (s) => !s.includes('/.git') && !s.includes('node_modules') && !/\.(png|jpe?g|webp|gif)$/i.test(s) });
   const target = join(dir, m.file);
-  const original = readFileSync(target, 'utf8');
-  if (!original.includes(m.from)) { console.log(`SKIP  ${m.name} — anchor not found in ${m.file}`); rmSync(dir, { recursive: true, force: true }); continue; }
-  writeFileSync(target, original.replace(m.from, m.to));
+  if (m.delete) {
+    try {
+      rmSync(target);
+    } catch {
+      console.log(`SKIP  ${m.name} — ${m.file} could not be removed`);
+      rmSync(dir, { recursive: true, force: true });
+      continue;
+    }
+  } else {
+    const original = readFileSync(target, 'utf8');
+    if (!original.includes(m.from)) { console.log(`SKIP  ${m.name} — anchor not found in ${m.file}`); rmSync(dir, { recursive: true, force: true }); continue; }
+    writeFileSync(target, original.replace(m.from, m.to));
+  }
   let out = '';
   let failed = false;
   try {

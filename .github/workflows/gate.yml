@@ -49,3 +49,7 @@ jobs:
       # injects one real defect per mode of spatial hallucination and requires
       # the gate above to catch every one of them.
       - run: npm run audit:spatial:falsify
+
+      # The anti-slop mutation harness runs inside `npm test` above: it
+      # reintroduces each defect that has actually shipped here and requires
+      # the design guard to catch it, so the assertions are known to bite.

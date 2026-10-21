@@ -164,6 +164,55 @@ bare specifier of its own, so it can be loaded as a `data:` URL and mutated in
 place — the test attacks the bundler, not a copy of it.
 
 
+## 21 October 2026 (third pass) — a verdict that was never read
+
+An independent anti-slop review of the five shipped screens was run on 19
+October, from screenshots taken at 09:19. It returned **DO NOT SHIP**: one
+blocking defect and one navigation defect.
+
+Both were fixed the same morning, in `f44db2b` at 09:37 — the evidence panel
+that cut a line of text in half gained a bottom fade and 26px of padding, and
+the lens strip that ran off the right edge gained a scroll shadow. Four more
+findings went with them: the lede narrowed from 80 characters to 58, the top
+three type ranks split from 27/24/24px to 48/32/21px, and the latent `90ch`
+became `55ch`.
+
+**And then the report was never opened again.**
+
+The fixes landed; the verdict was never answered. The ship decision was taken
+with the review still unread, and no finding was ever dispositioned in
+writing. A fix without a disposition is not a closed review — it is a set of
+commits that happens to contain the right changes.
+
+So this pass read it, and answered every finding against the **deployed**
+build, with a number where a number decides it:
+
+- The blocking clip: gone. The rain lens panel is 240×692 and scrolls
+  (690 against 1075), with `mask-image` over the last 26px and 26px of
+  padding — the last line now fades into the scroll edge instead of being
+  cut.
+- The strip: the affordance is there — a four-layer scroll shadow, `local,
+  local, scroll, scroll`, so the right edge is shaded and the cut tab is
+  visibly dimmed.
+- The lede: **58 characters per line**, inside the band.
+- The hierarchy: hero 48px, h1 32px, h2 21px — steps of 1.50× and 1.52×.
+- The 390 evidence door: present and hit-testable, which the review could not
+  verify.
+
+One finding is a judgement, and a judgement needs a reason rather than a
+patch: the two rules that bracket the four counts span 1120px around 490px of
+content. It is not a hole. The rules are the section's rules; the four counts
+are a tight group 32px apart; the space to their right is the column's
+margin; and the 48px number directly above already establishes that column's
+right edge at 1280. The full reasoning is in
+`docs/REVIEW-DISPOSITION-2026-10-19.md`.
+
+**The law that comes out of it: a verdict must be read, not just its fixes
+applied.** A review is closed by answering every finding, on the shipped
+bytes, with a number where a number decides it and a reason where a judgement
+decides it.
+
+
 ## Version history
 
 This committed copy travels with Jakarta and mirrors the global
@@ -177,3 +226,4 @@ version.
 | 1.6 | 2026-10-21 | Spatial Hallucination audit: City watch integrated into atlas-page-tools flex row, eliminating unhittable overlap and magic pixel offsets; audit-rendered explicitly hit-tests City watch; lens-hours converted to 2-column tabular grid to eliminate accidental wrapping; lens-row formatted with flexible wrap and compact padding; research pipeline orphan slot eliminated. |
 | 1.7 | 2026-10-21 | The Spatial Law adopted end to end: the vendored instrument, a Worker-faithful route server the gate measures the build through, `design/spatial-baseline.json` as the receipt, and a falsifier that catches all six modes. Fixed what the previous pass missed — the research charts' bars stranded from their labels by a flexing label column; the data drawer reserving 230px for an absolutely-positioned summary, which squeezed its status line into a 19px ribbon; “Refresh data” orphaned on a row of its own in the 420px drawer; the research field's frame vanishing when the model did not answer, leaving the reading column alone beside half a screen of nothing; the opened drawer covering the research and city-watch doors; and the atlas client not being load-blocking, so the browser reported the page loaded before the atlas existed. Two holes are blessed with written reasons; none is left unaccounted for. |
 | 1.8 | 2026-10-21 | The release gate failed on the release, and the error named the wrong thing. Adding `./rate-limit.js` to the Worker broke three contract tests at once: each compiles the Worker into a `data:` URL module, a `data:` URL has no base to resolve a relative import against, and the whole chain died with `ERR_UNSUPPORTED_RESOLVE_REQUEST` — a Node internal — with the missing dependency nowhere in the message. `scripts/worker-bundle.mjs` now owns the import graph: it resolves every relative import into a module URL, keeps a plain JavaScript module on its file URL so its bare imports still resolve from `node_modules`, refuses a dependency that does not exist **by name**, and refuses a module it would have to inline but cannot resolve. Three mutants — a missing dependency ignored, a bare specifier ignored, a nested relative import dropped — are killed by `scripts/test-worker-bundle.mjs`. A build step must not emit a reference it cannot resolve, and it must name the cause. |
+| 1.9 | 2026-10-21 | A verdict must be read, not just its fixes applied. An independent review of the five shipped screens returned **DO NOT SHIP** on 19 October: a lens evidence panel that cut a line of evidence in half, and a lens strip that ran off the right edge with no affordance. Both were fixed within the hour in `f44db2b`, along with the 80-character lede, the 27/24/24px hierarchy tie and the latent `90ch`. **The report itself was never read back** — so the ship decision was taken with the verdict unread and no finding ever dispositioned. This pass read it and answered all ten findings against the deployed build: the clip is a fade into the scroll edge, the strip carries a four-layer scroll shadow, the lede is 58 characters, the top three ranks are 48/32/21px, and the 390 evidence door is hit-testable. The one judgement — the rules bracketing 490px of content in 1120px — is answered in writing, not patched, in `docs/REVIEW-DISPOSITION-2026-10-19.md`. A fix without a disposition is not a closed review. |

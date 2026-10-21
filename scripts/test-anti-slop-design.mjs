@@ -227,3 +227,62 @@ console.log('PASS anti-slop contracts, preserved visuals, independent loading, t
   assert.match(read('public/translations.js'), /"Research & method": "Riset & metode"/, 'the research link is translated');
   console.log('PASS the atlas mounts a research door beside the evidence drawer, in both languages');
 }
+
+// ── A review's verdict must be read, not just its fixes applied ──────────
+// An independent review returned DO NOT SHIP on 19 October. Its findings were
+// fixed within the hour; its report was never opened again, so no finding was
+// ever dispositioned and the ship decision was taken with the verdict unread.
+// This guard makes the disposition a thing that exists, makes an unanswered
+// finding a thing that fails, and keeps the receipt's numbers honest by
+// checking them against the source they describe.
+{
+  const law = read('docs/ANTI-SLOP-DESIGN.md');
+  assert.match(law, /A verdict must be read, not just its fixes applied/, 'the design law carries the rule about closing a review');
+
+  let receipt = '';
+  try {
+    receipt = readFileSync(new URL('../docs/REVIEW-DISPOSITION-2026-10-19.md', import.meta.url), 'utf8');
+  } catch {
+    receipt = '';
+  }
+  assert.ok(receipt.length > 0, 'the review disposition receipt exists');
+
+  // Every finding row must carry a disposition in its "Now" column. A row
+  // that is blank, a dash, or a placeholder is an unanswered finding.
+  const rows = receipt.split('\n').filter((l) => /^\|\s*\d+\s*\|/.test(l));
+  assert.ok(rows.length >= 10, `the receipt answers every finding the review raised (${rows.length} rows)`);
+  const SETTLED = /^(Fixed|Judged|Moot|Noted|Verified)/;
+  const unanswered = rows.filter((l) => {
+    const cells = l.split('|').map((c) => c.trim());
+    // ['', '#', 'Finding', 'Verdict then', 'Now', 'Evidence', '']
+    if (cells.length < 7) return true;
+    return !SETTLED.test(cells[4].replace(/[*_`]/g, ''));
+  });
+  assert.deepEqual(
+    unanswered.map((l) => l.split('|')[1].trim()),
+    [],
+    'no finding may be left unanswered or undispositioned',
+  );
+
+  // The receipt must name the build it was verified against, in the canonical
+  // form. It is deliberately not required to equal the current build: a later
+  // release re-stamps, and a receipt is a record of the build it measured.
+  assert.match(receipt, /jakarta-atlas-\d{8}-\d+-[0-9a-f]{7}/, 'the receipt names the build it verified');
+
+  // The receipt's numbers must still be true of the source they describe.
+  // If the lede goes back to 65ch, "58 characters" becomes a lie and this
+  // guard fails rather than letting the receipt rot.
+  assert.match(style, /\.lede\{[^}]*max-width:55ch/, 'the lede is still capped at 55ch');
+  assert.match(receipt, /58 characters/, 'the receipt records the lede measure it measured');
+  assert.match(style, /h1\{[^}]*clamp\(26px,2\.3vw,32px\)/, 'the h1 clamp is unchanged');
+  assert.match(style, /h2\{[^}]*clamp\(19px,1\.5vw,21px\)/, 'the h2 clamp is unchanged');
+  assert.match(style, /\.big\{[^}]*clamp\(32px,3\.5vw,48px\)/, 'the hero clamp is unchanged');
+  assert.match(receipt, /48px[\s\S]{0,40}32px[\s\S]{0,40}21px/, 'the receipt records the hierarchy it measured');
+  assert.match(read('public/style.css'), /\.atlas-data p \{ max-width: 55ch; \}/, 'the data panel prose is still capped at 55ch');
+
+  // The receipt must show its work: a verdict that was never answered in
+  // writing is the exact failure this guard exists to prevent.
+  assert.match(receipt, /Verdict then/, 'the receipt records the verdict it is answering');
+  assert.match(receipt, /A fix without a disposition is not a closed review/, 'the receipt states the rule it enforces');
+  console.log(`PASS a review verdict is answered: ${rows.length} findings dispositioned, none left unanswered, and its numbers still match the source`);
+}
