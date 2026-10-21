@@ -759,3 +759,9 @@ body.atlas-workbench .atlas-page-tools { align-items:stretch; }
 #atlas-lens-body .crm-actions { gap:4px; }
 #atlas-lens-body .crm-actions button { display:inline-flex; align-items:center; width:auto; min-height:32px; margin:0; padding:3px 10px; border:1px solid var(--line); background:transparent; color:var(--ink); font:500 12px/1.2 var(--font-sans); text-align:center; white-space:nowrap; }
 #atlas-lens-body .crm-actions button[aria-pressed="true"] { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+
+/* The observation card's "Data & sources" link was `min-height:44px`: a 16px line
+   in a 44px row, so every card ended in a band of nothing. A link is its text;
+   the hit area is invisible and 16px taller than the line. */
+.atlas-observation-hud a { min-height:0; display:inline-block; position:relative; padding:0; }
+.atlas-observation-hud a::after { content:""; position:absolute; left:-6px; right:-6px; top:-8px; bottom:-8px; }

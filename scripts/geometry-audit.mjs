@@ -120,7 +120,7 @@ for (const [W, H] of VIEWPORTS) {
       // MSH: a box is its label plus padding. Too small is a touch failure (32px on a
       // phone, 24px anywhere); too big is spatial hallucination: more than 2.5x the
       // height of its own text (a 44px slab round a 16px line is 2.75x).
-      for (const e of document.querySelectorAll('#atlas-lens-body button, #atlas-lens-body summary, .atlas-observation-hud summary, .atlas-page-tools summary, .atlas-page-tools a, .atlas-layers summary, .atlas-quick summary')) {
+      for (const e of document.querySelectorAll('#atlas-lens-body button, #atlas-lens-body summary, .atlas-observation-hud summary, .atlas-observation-hud a, .atlas-page-tools summary, .atlas-page-tools a, .atlas-layers summary, .atlas-quick summary')) {
         if (!vis(e) || e.closest('.maplibregl-ctrl-attrib')) continue;
         const b = e.getBoundingClientRect(), r = document.createRange(); r.selectNodeContents(e);
         const t = r.getBoundingClientRect(); if (!t.height) continue;
