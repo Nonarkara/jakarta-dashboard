@@ -30,7 +30,8 @@
     "audit:design": "node scripts/test-anti-slop-design.mjs",
     "audit:rendered": "node scripts/audit-rendered.mjs",
     "audit:spatial": "node scripts/spatial-gate.mjs",
-    "audit:spatial:falsify": "node scripts/spatial-gate.mjs --falsify"
+    "audit:spatial:falsify": "node scripts/spatial-gate.mjs --falsify",
+    "geometry": "node scripts/geometry-audit.mjs"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20261016.1",

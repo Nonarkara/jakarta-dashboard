@@ -671,3 +671,72 @@ body[data-lens="air"] .wind-compass svg { flex:none; }
 #atlas-lens-body .haze-total { font-size:15px; font-weight:600; line-height:1.25; color:var(--ink); margin:6px 0; }
 .haze-age-row meter::-webkit-meter-bar { background:var(--line); border:0; border-radius:0; }
 .haze-local-links a { display:block; width:fit-content; max-width:100%; font-size:11px; margin:2px 0; }
+
+/* Phone overlays, measured on the live build at 390x844 and 360x640 (a rendered
+   probe: overlapping blocks, hit-tested controls). Four things were on top of
+   each other, and one of them was information:
+   - the lens panel covered the left 40-56px of the observation card, the box
+     that names the layer's source, tier and date, on every lens;
+   - in the air lens the panel ran down over the wind compass, whose own CSS
+     says it is never to sit over the lens panel, and over the forecast slider;
+   - "Layers" and the page tools collided by 22px at 360px (fixed below).
+   The panel and the card now share the row: the panel is 62vw at most, the card
+   takes what is left, and the air panel stops above the compass and the chip.
+   The compact masthead and lens strip are the owner's ruling and are untouched. */
+@media (max-width: 700px) {
+  body.atlas-workbench .atlas-lens-popup { width:min(240px, 62vw); }
+  body:has(#atlas-lens-evidence[open]) .atlas-observation-hud { max-width:calc(100vw - min(240px, 62vw) - 28px); }
+  body.atlas-workbench[data-lens="air"] .atlas-lens-popup { max-height:calc(100svh - 252px); }
+}
+/* "Layers +" lost its "+" under "City watch" at 360px: three buttons of 71, 113
+   and 99px do not fit beside it. A wrapped button was worse (it dropped onto the
+   observation card), so the three give up 5px of padding each side instead. */
+/* "Data & sources" sat 8px left of its slot at every width: the workbench rule
+   `.atlas-embedded-drawer { right:8px }` (specificity 0,2,1) beat the page-tools
+   rule that sets `right:auto` (0,2,0), and on a position:relative element
+   `right:8px` is a leftward nudge. At 360px that was the whole overlap with
+   "Research & method". */
+body.atlas-workbench .atlas-page-tools > .atlas-embedded-drawer { right:auto; left:auto; }
+/* The three tools were 30, 24 and 30px tall on a flex-start row, so "Data &
+   sources" hung 11px below "Research & method". One row, one height, so their
+   top and bottom edges meet. */
+body.atlas-workbench .atlas-page-tools { align-items:stretch; }
+@media (max-width: 380px) {
+  body.atlas-workbench .atlas-page-tools { gap:3px; }
+  body.atlas-workbench .atlas-page-tools > .atlas-watch .atlas-watch-shell > summary,
+  body.atlas-workbench .atlas-page-tools > .atlas-embedded-drawer > summary,
+  body.atlas-workbench .atlas-page-tools .atlas-research-link { padding-inline:2px; }
+  /* The header's minimum width was 362px (brand 159 + language 115 + Controls
+     65 + gaps), so every phone under 362px scrolled sideways (2px at 360, 42px
+     at 320) and the title ran under the language select. The title now yields
+     and ends in an ellipsis, and the select gives back 15px. */
+  body.atlas-workbench .atlas-header { min-width:0; max-width:100%; }
+  body.atlas-workbench .atlas-header-meta { min-width:0; overflow:hidden; }
+  body.atlas-workbench .atlas-title { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  body.atlas-workbench .atlas-header-nav .atlas-theme-control select { width:100px; }
+}
+/* Below 340px the three tools cannot sit beside Layers: they wrap to a second
+   row, and the observation card moves down to clear it. */
+@media (max-width: 340px) {
+  body.atlas-workbench .atlas-page-tools { flex-wrap:wrap; justify-content:flex-end; row-gap:3px; max-width:calc(100% - 88px); }
+  body.atlas-workbench .atlas-observation-hud { top:86px; }
+}
+/* Touch: the contract in context.md says coarse pointers keep 44px targets. Two
+   things broke it. The map's zoom and rotate buttons are 28px with !important,
+   which no un-flagged rule can beat (three stacked 28px targets), and the
+   controls inside a lens panel never had a touch rule beyond the synoptic chips.
+   Panel content is not the compact masthead: it gets real targets, and links in
+   running text get an invisible 44px hit area rather than a taller line. */
+@media (pointer: coarse) {
+  body.atlas-workbench .maplibregl-ctrl-group button { width:44px !important; height:44px !important; }
+  #atlas-lens-body button, #atlas-lens-body summary, #atlas-lens-body select, #atlas-lens-body input[type="range"] { min-height:44px; min-width:44px; }
+  #atlas-lens-body .haze-evidence-root button, #atlas-lens-body .haze-evidence-root details button { min-height:44px; }
+  /* Links in running text cannot be 44px without breaking the line, so they get
+     a hit area 16px taller than the text. Not 44: stacked links sit about 19px
+     apart, and a taller extension makes the later one cover the centre of the
+     earlier. Links that stand alone on their own line are real 44px rows. */
+  #atlas-lens-body a { position:relative; }
+  #atlas-lens-body a::after { content:""; position:absolute; left:-6px; right:-6px; top:-8px; bottom:-8px; }
+  .haze-local-links a { display:flex; align-items:center; min-height:44px; margin:0; }
+  .haze-local-links a::after { display:none; }
+}
