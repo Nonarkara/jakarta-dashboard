@@ -11,7 +11,7 @@ ship decision was made without the review in hand. A fix without a disposition
 is not a closed review.
 
 **Closed:** 21 October 2026, against the deployed build
-`jakarta-atlas-20261021-1792598910-24f8889`, measured on the live site with
+`jakarta-atlas-20261021-1792602003-e01967d`, measured on the live site with
 the shared Chrome on CDP 9656. Every number below is read from the rendered
 page, not from the source.
 
@@ -25,7 +25,7 @@ been checked and holds; **Noted** — accepted as it is, no change wanted.
 
 | # | Finding | Verdict then | Now | Evidence on the live build |
 |---|---|---|---|---|
-| 1 | **BLOCKING** — the lens evidence panel cut a line of evidence in half: the last visible ink row was the top ~5px of an 11px glyph, then map. No border, no fade, no scrollbar. | DO NOT SHIP | **Fixed** | The rain lens panel is 240×692, `clientHeight` 690 against `scrollHeight` 1075 — it scrolls. `mask-image: linear-gradient(rgb(0,0,0) calc(100% - 26px), rgba(0,0,0,0) 100%)` with `padding-bottom: 26px`. The last line now *fades into the scroll edge* instead of being cut. |
+| 1 | **BLOCKING** — the lens evidence panel cut a line of evidence in half: the last visible ink row was the top ~5px of an 11px glyph, then map. No border, no fade, no scrollbar. | DO NOT SHIP | **Fixed** | The rain lens panel is 240×692, `clientHeight` 690 against a `scrollHeight` of 1090 — it scrolls, and the figure moves with the live radar feed. `mask-image: linear-gradient(rgb(0,0,0) calc(100% - 26px), rgba(0,0,0,0) 100%)` with `padding-bottom: 26px`. The last line now *fades into the scroll edge* instead of being cut. |
 | 2 | **SHOULD-FIX** — the lens strip ran off the right edge with no affordance; at 1024 the last tab was cut mid-word as "Rad", with four lenses entirely hidden. | DO NOT SHIP | **Fixed** | `.atlas-lenses` carries a four-layer scroll shadow — `background-attachment: local, local, scroll, scroll`, `background-size: 26px 100%, 26px 100%, 14px 100%, 14px 100%` — so the right edge is shaded and the cut tab is visibly dimmed. `scrollWidth` 1679 against `clientWidth` 1024: there is more to scroll, and the page now says so. |
 | 3 | **SHOULD-FIX** — the research lede rendered 80 characters against a 45–75 law, because `65ch` is the advance of "0" in Source Sans 3 and narrower than the text's mean advance. The CSS satisfied the letter of the rule and failed its character test. | — | **Fixed** | The lede is `max-width: 55ch` → 410px rendered, 7.074px per character → **58 characters per line**. Inside the band. |
 | 4 | **SHOULD-FIX** — h1, h2 and the hero number all resolved to `--display: 32px`, so the top three ranks measured 27/24/24px against a rule asking for a 1.5× step. | — | **Fixed** | Hero **48px**, h1 **32px**, h2 **21px**. Steps of **1.50×** and **1.52×**. |

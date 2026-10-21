@@ -3,8 +3,8 @@
 What was measured on the **deployed** site, not on the local tree. The bytes on
 the edge are the only deliverable; a local build is a claim, not a receipt.
 
-**Build:** `jakarta-atlas-20261021-1792598910-24f8889`
-**Commit:** `24f8889` (the tree that was deployed; the stamp commit `c22b437`
+**Build:** `jakarta-atlas-20261021-1792602003-e01967d`
+**Commit:** `e01967d` (the tree that was deployed; the stamp commit `13aab1a`
 records the cache-busters written after it)
 **URL:** https://jakarta.nonarkara.org
 **Method:** the shared Chrome on CDP 9656, driven through Playwright
@@ -95,3 +95,16 @@ dependency that does not exist **by name**.
 
 The lesson is in both design laws: **a build step must not emit a reference it
 cannot resolve, and it must name the cause.**
+
+## The review that was never read
+
+An independent review of the five shipped screens returned **DO NOT SHIP** on
+19 October. Its findings were fixed within the hour; its report was never
+opened again, so no finding was ever dispositioned and the ship decision was
+taken with the verdict unread.
+
+It has now been read and answered against this build, with a number where a
+number decides it — including the 58-character lede, the 48/32/21px
+hierarchy, the faded scroll edge of the evidence panel and the scroll shadow
+on the lens strip. See `docs/REVIEW-DISPOSITION-2026-10-19.md`, and the law
+that came out of it in `docs/ANTI-SLOP-DESIGN.md` (1.9).
