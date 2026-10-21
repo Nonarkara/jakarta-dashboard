@@ -57,7 +57,7 @@ function cachedShell() {
 // 390 and 375 are the common iPhones, 360 the most common Android, 320 the
 // smallest anyone still carries; 1440 is the desktop the chrome was drawn at.
 const VIEWPORTS = [[390, 844], [375, 667], [360, 640], [320, 568], [1440, 900]];
-const LENSES = ['city', 'air', 'rain', 'haze'];
+const LENSES = ['city', 'air', 'rain', 'haze', 'green'];
 const FLOWS = { air: 'wind10', rain: 'syn850', haze: 'haze850' };
 const failures = [], unverified = [];
 const browser = await chromium.launch({ executablePath: process.env.PLAYWRIGHT_EXEC || cachedShell(), headless: true, args: ['--use-angle=metal', '--ignore-gpu-blocklist', '--enable-gpu'] });
