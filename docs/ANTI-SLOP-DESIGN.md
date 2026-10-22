@@ -113,6 +113,18 @@ width just below it and the width just above it — across four routes.
    still an inert shell, and every check that reads the page on load — this
    gate, the rendered audit — was reading a skeleton. The client is
    load-blocking now.
+7. **A page that painted one layout and settled into another.** The atlas
+   assembled its own chrome with JavaScript: the workbench class, the row of
+   page-level doors, and the evidence popup were all created a third of a
+   second *after* the first paint. The reader got a page that then grew and
+   shrank under them, and the gate measured whichever state it caught — the
+   same build, swept twice, reported the City watch as a hole in one run and
+   the doors row in the next. A gate whose verdict flips on a coin is a gate
+   nobody can read. The class is now in the markup, the sections that move
+   into the drawer are hidden where they stand until they move, and the
+   assembly itself runs in a classic script at the end of the body — before
+   the first paint. **A page has one layout, and the gate must measure the
+   layout a reader gets.**
 
 **The blind spot, recorded because the law is about honesty.** The instrument
 found none of the rail findings to be defects, and it never saw the drawer's
@@ -213,6 +225,59 @@ bytes, with a number where a number decides it and a reason where a judgement
 decides it.
 
 
+## 23 October 2026 (fourth pass) — the band that cropped its own controls
+
+The shipability audit asked a question the spatial gate had never been asked:
+**what does the gate not measure?**
+
+The gate measures the atlas inside the instrument's iframe harness, and inside
+an iframe the atlas hides its own header (`body.atlas-embedded .atlas-header
+{ display: none }`) and clips its own root (`html.atlas-embedded-root { overflow:
+hidden }`). So the gate has never once measured the atlas's header band, and
+never once measured the atlas in the state `/atlas` actually serves — a
+top-level page with a scrollable root.
+
+It did not have to be asked twice. On the **deployed** build, at 768, 1024 and
+1440px:
+
+- the language select — the page's **first control** — sat at **y = −1.5px**,
+  cut by the top edge of the document;
+- the Controls summary hung 0.5px into the lens strip below it.
+
+Both because the header row is 28px with 2px of padding — a 24px content box —
+and both controls were still carrying the old 30px frame, the last two in the
+app not yet brought down to the house size of 24px that every other control
+had been given. A band that is shorter than what it holds does not push the
+control away; it crops it, and a control cropped at the top of the page is
+cropped by the top of the page.
+
+The fix is in two parts, and both parts are the law:
+
+- the two controls are 24px now — the size of their labels;
+- the row is `minmax(var(--atlas-header-row), auto)` — the band **grows** to
+  fit its contents rather than cropping them. The header is 29px now, one
+  pixel more than before, because the title's brand mark needed it.
+
+And the guard is a rendered one, because a source scan cannot see a crop:
+`scripts/audit-rendered.mjs` now reads the band and every control in it, and
+fails when a control does not fit. The guard proves itself on the page it
+reads — the page is put back the way it shipped (a fixed 28px row, a 40px
+control) and the same check has to report the crop **deeper**. A check whose
+answer never changes is blind, and the audit fails saying so.
+
+The falsifier's copy learned the same lesson. The instrument's "the page
+scrolls sideways" rule cannot fire on a page whose root clips its own
+overflow — the copy was measured embedded, where a 4000px block left
+`documentElement.scrollWidth` at 390 — so the rule was structurally dead
+there. The copy now measures the atlas the way `/atlas` serves it (a
+top-level page, a scrollable root), and the rule bites again: the same block
+leaves `scrollWidth` at 4000 and the page scrolls sideways, as it must.
+
+**The law that comes out of it: a gate that measures one state of a page has
+not measured the page; and a band that crops its own contents is not a
+layout, it is a window onto one.**
+
+
 ## Version history
 
 This committed copy travels with Jakarta and mirrors the global
@@ -227,3 +292,4 @@ version.
 | 1.7 | 2026-10-21 | The Spatial Law adopted end to end: the vendored instrument, a Worker-faithful route server the gate measures the build through, `design/spatial-baseline.json` as the receipt, and a falsifier that catches all six modes. Fixed what the previous pass missed — the research charts' bars stranded from their labels by a flexing label column; the data drawer reserving 230px for an absolutely-positioned summary, which squeezed its status line into a 19px ribbon; “Refresh data” orphaned on a row of its own in the 420px drawer; the research field's frame vanishing when the model did not answer, leaving the reading column alone beside half a screen of nothing; the opened drawer covering the research and city-watch doors; and the atlas client not being load-blocking, so the browser reported the page loaded before the atlas existed. Two holes are blessed with written reasons; none is left unaccounted for. |
 | 1.8 | 2026-10-21 | The release gate failed on the release, and the error named the wrong thing. Adding `./rate-limit.js` to the Worker broke three contract tests at once: each compiles the Worker into a `data:` URL module, a `data:` URL has no base to resolve a relative import against, and the whole chain died with `ERR_UNSUPPORTED_RESOLVE_REQUEST` — a Node internal — with the missing dependency nowhere in the message. `scripts/worker-bundle.mjs` now owns the import graph: it resolves every relative import into a module URL, keeps a plain JavaScript module on its file URL so its bare imports still resolve from `node_modules`, refuses a dependency that does not exist **by name**, and refuses a module it would have to inline but cannot resolve. Three mutants — a missing dependency ignored, a bare specifier ignored, a nested relative import dropped — are killed by `scripts/test-worker-bundle.mjs`. A build step must not emit a reference it cannot resolve, and it must name the cause. |
 | 1.9 | 2026-10-21 | A verdict must be read, not just its fixes applied. An independent review of the five shipped screens returned **DO NOT SHIP** on 19 October: a lens evidence panel that cut a line of evidence in half, and a lens strip that ran off the right edge with no affordance. Both were fixed within the hour in `f44db2b`, along with the 80-character lede, the 27/24/24px hierarchy tie and the latent `90ch`. **The report itself was never read back** — so the ship decision was taken with the verdict unread and no finding ever dispositioned. This pass read it and answered all ten findings against the deployed build: the clip is a fade into the scroll edge, the strip carries a four-layer scroll shadow, the lede is 58 characters, the top three ranks are 48/32/21px, and the 390 evidence door is hit-testable. The one judgement — the rules bracketing 490px of content in 1120px — is answered in writing, not patched, in `docs/REVIEW-DISPOSITION-2026-10-19.md`. A fix without a disposition is not a closed review. |
+| 1.10 | 2026-10-23 | The atlas existed in two states, and the gate could not see the band that cropped its own controls. The workbench class, the row of page-level doors and the evidence popup were all assembled by JavaScript a third of a second after the first paint: the reader got a page that then grew and shrank under them, and the spatial gate measured whichever state it caught — the same build, swept twice, reported the City watch as a hole in one run and the doors row in the next, so the receipt was a coin toss. The class is in the markup now, the sections that move into the drawer are hidden where they stand until they move, and `public/atlas-layout.js` assembles the page in a classic script before the first paint. The gate found a defect it could not previously see: at 339px the atlas title hid 15px of its own content behind the language select, and the phone title is now the plainest name that fits. The instrument's own stale-reason check is switched off whenever a sweep is narrowed by route, and this gate must name its routes — so `scripts/spatial-reasons.mjs` checks the rule itself against a complete sweep, and four mutants of it are killed. Then the audit asked what the gate does **not** measure: it measures the atlas inside an iframe, where the atlas hides its own header and clips its own root, so the header band was never measured at all — and on the deployed build the language select, the page's first control, sat 1.5px **above** the top of the document, cropped by the edge of the page. The band now grows to fit its contents (`minmax(…, auto)`) and its two controls are the size of their labels; `scripts/audit-rendered.mjs` reads the band and fails when a control does not fit, and proves itself by putting the page back the way it shipped and requiring the same check to report the crop deeper. **A page has one layout; a reason must have something under it; a gate that measures a coin toss protects nothing; and a band that crops its own contents is a window onto one.** |

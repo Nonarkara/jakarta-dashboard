@@ -16,8 +16,8 @@
  * Usage: node spatial-falsify.mjs [path-to-built-site]
  */
 import { execFileSync, spawnSync } from "node:child_process";
-import { existsSync, readFileSync, writeFileSync, readdirSync, mkdirSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { existsSync, readFileSync, writeFileSync, readdirSync, mkdirSync, rmSync } from "node:fs";
+import { tmpdir, homedir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -96,6 +96,47 @@ const FIXTURES = [
     html: `<div class="sl-tall" style="height:2400px"></div>`,
     expect: "the first thing you can do moved",
   },
+  {
+    // The sixth mode. A page where the TITLE loses to another piece of text:
+    // the reader cannot tell what the page is for, because nothing on it
+    // wins. The house sets its title ratio limit; this proves the limit
+    // bites, which no other fixture did.
+    name: "a heading louder than the title",
+    mode: "false hierarchy",
+    at: "top",
+    html: `<h2 style="font-size:64px;margin:0">A heading that shouts over the title</h2>`,
+    limits: { titleRatio: 1.6 },
+    expect: "the title is only",
+  },
+  {
+    // The chrome of a page: the furniture that stands at the edge of the
+    // screen. A band that grows takes height away from the work, and the
+    // receipt records how tall the chrome is — so a chrome that grows must
+    // fail until somebody says why it is there. The baseline rule below
+    // proves the same check from the other side, by doctoring the receipt;
+    // this one proves it on the page itself.
+    name: "the chrome of the page grows",
+    mode: "chrome cost",
+    at: "top",
+    html: `<div class="sl-chrome" style="position:fixed;top:0;left:0;right:0;height:300px;background:#d8d8d8;z-index:9999"></div>`,
+    expect: "chrome GREW",
+  },
+  {
+    // The seventh mode, and the one the furniture is measured in: a PINNED
+    // band that sits ON the work. The chrome is measured for its cost; this
+    // proves the measurement also catches the chrome that covers the work
+    // instead of merely costing height. Without this fixture the overlap
+    // rule would be a rule nobody had ever seen fail.
+    name: "a fixed bar sits on top of the work",
+    mode: "overlapping chrome",
+    at: "top",
+    html: `<div class="sl-overlap" style="position:fixed;top:0;left:0;right:0;height:140px;background:#334455;z-index:9999"></div>`,
+    // The finding names the element that is on top of the work. The gate
+    // prints it in two places — in the failure line ("overlap: div.sl-overlap
+    // has no written reason") and in the list of decisions — and the check
+    // is for the ELEMENT, not for the punctuation around it.
+    expect: "div.sl-overlap",
+  },
 ];
 
 const ROUTES = "/";
@@ -117,8 +158,11 @@ if (!existsSync(path.join(COPY, "index.html"))) {
 
 function cleanup() {
   try {
-    const trash = "/Users/nonarkara/.minimax/bin/mavis-trash";
+    // The trash helper belongs to the runtime and is not in the same place on
+    // every machine, so it is asked for rather than assumed.
+    const trash = process.env.MAVIS_TRASH || path.join(homedir(), ".minimax", "bin", "mavis-trash");
     if (existsSync(trash)) execFileSync(trash, ["--", WORK]);
+    else rmSync(WORK, { recursive: true, force: true });
   } catch {
     /* best effort */
   }
@@ -126,11 +170,35 @@ function cleanup() {
 process.on("exit", cleanup);
 for (const sig of ["SIGINT", "SIGTERM"]) process.on(sig, () => { cleanup(); process.exit(130); });
 
-function runGate(args) {
+function runGate(args, routes) {
   const res = spawnSync(
     process.execPath,
-    [CHECK, "--dir", COPY, "--baseline", BASELINE, "--routes", ROUTES, "--widths", WIDTHS, ...args],
+    [
+      CHECK,
+      "--dir",
+      COPY,
+      "--baseline",
+      BASELINE,
+      "--routes",
+      routes || ROUTES,
+      "--widths",
+      WIDTHS,
+      ...args,
+    ],
     { encoding: "utf8", timeout: 600000 },
+  );
+  return {
+    pass: res.status === 0,
+    out: `${res.stdout || ""}${res.stderr || ""}`,
+  };
+}
+
+/** The same gate, but over EVERY route in the copy. */
+function runFullGate(args) {
+  const res = spawnSync(
+    process.execPath,
+    [CHECK, "--dir", COPY, "--baseline", BASELINE, "--widths", WIDTHS, ...args],
+    { encoding: "utf8", timeout: 900000 },
   );
   return {
     pass: res.status === 0,
@@ -142,7 +210,7 @@ function runGate(args) {
 // Generated from the clean copy, with a synthetic reason on every finding so
 // the clean copy can pass. This baseline is a measuring device for the
 // falsifier, not a review of the project.
-const gen = runGate(["--update"]);
+const gen = runFullGate(["--update"]);
 if (!existsSync(BASELINE)) {
   console.error(`\nFAIL — the gate could not write a baseline for the falsifier.\n${gen.out}\n`);
   process.exit(1);
@@ -207,8 +275,21 @@ const MOUNTER = `<script id="__sl_mounter__">
     t.innerHTML = HTML;
     // The fixture is wrapped, so the wrapper's id never becomes the finding's
     // selector: the finding must name the element that actually misbehaves.
+    //
+    // The wrapper generates NO BOX. The page's own layout is a grid, and a
+    // wrapper inserted as the first child becomes a grid item: it takes the
+    // first row, and everything below it moves down. The fixture then
+    // measures a page that is not the page - the tools row sat 48px lower
+    // than the receipt said, the gate reported THAT, and the defect the
+    // fixture was injected to prove went unmentioned. The rule is that the
+    // wrapper generates no box at all (display:contents), so the wrapper keeps
+    // its identity without becoming a grid item, and the fixture lands on the
+    // page the reader gets.
+    //
+    // NOTE: this whole script is a template literal. No backticks in here.
     var wrap = document.createElement("div");
     wrap.id = "__sl_fixture__";
+    wrap.style.display = "contents";
     while (t.content.firstChild) wrap.appendChild(t.content.firstChild);
     if (WHERE === "top" && m.firstChild) m.insertBefore(wrap, m.firstChild);
     else m.appendChild(wrap);
@@ -235,8 +316,15 @@ function inject(html, at) {
 
 let failures = 0;
 for (const f of FIXTURES) {
+  const savedBaseline = readFileSync(BASELINE, "utf8");
+  if (f.limits) {
+    const b = JSON.parse(savedBaseline);
+    b.limits = { ...(b.limits || {}), ...f.limits };
+    writeFileSync(BASELINE, JSON.stringify(b, null, 2) + "\n");
+  }
   writeFileSync(PAGE, inject(f.html, f.at));
   const res = runGate([]);
+  writeFileSync(BASELINE, savedBaseline);
   writeFileSync(PAGE, ORIGINAL);
   if (res.pass) {
     console.error(`  ✗ ${f.name} — the gate did NOT catch it. The rule is dead.`);
@@ -257,7 +345,292 @@ if (failures) {
   process.exit(1);
 }
 
+// ---------------------------------------------------------------- the rules about the baseline
+// The gate is also a set of rules about the BASELINE, and a rule about the
+// baseline can be as dead as a rule about a page. Each case below breaks the
+// baseline on purpose and expects the gate to notice. A rule that has never
+// failed is a rule nobody should rely on.
+const BASELINE_SAVED = readFileSync(BASELINE, "utf8");
+
+function withBaseline(mutate) {
+  const b = JSON.parse(BASELINE_SAVED);
+  mutate(b);
+  writeFileSync(BASELINE, JSON.stringify(b, null, 2) + "\n");
+}
+
+const BASELINE_RULES = [
+  {
+    name: "a reason for a decision that no longer exists",
+    expect: "stale reason",
+    full: true,
+    mutate: (b) => {
+      b.reasons["dead|div.__gone__"] = "a reason for a decision that is not there";
+    },
+  },
+  {
+    name: "the chrome grows and the receipt does not",
+    expect: "chrome GREW",
+    full: true,
+    mutate: (b) => {
+      // The receipt records how tall the chrome is, at every route and every
+      // width. Take forty pixels off the number it recorded, and the chrome
+      // the gate measures now looks forty pixels BIGGER than the page it was
+      // measured on — which is what happens the day somebody makes the header
+      // taller and forgets the receipt. Without this rule, the chrome drift
+      // check is a check nobody has ever seen fail.
+      for (const byw of Object.values(b.routes || {})) {
+        for (const entry of Object.values(byw)) {
+          if (entry.chrome && entry.chrome.top) {
+            entry.chrome.top = Math.max(0, entry.chrome.top - 40);
+            return;
+          }
+        }
+      }
+    },
+  },
+  {
+    name: "an absolute limit bites on a page the baseline already knows",
+    expect: "the first thing you can do is",
+    full: true,
+    mutate: (b) => {
+      b.limits = { ...b.limits, firstAction: 200 };
+    },
+  },
+  {
+    name: "a page the baseline has never seen, with a long scroll before the action",
+    expect: "the first thing you can do is",
+    also: ["sl-never-seen"],
+    full: true,
+    mutate: (b) => {
+      // A bound only the new page breaks: every other page's first action is
+      // well inside 1200px, so the failure can only be about the new page.
+      b.limits = { ...b.limits, firstAction: 1200 };
+    },
+    site: () => {
+      // A route that has never been in the baseline: a copy of the home page
+      // with two thousand pixels of nothing in front of its first action.
+      // The name must not begin with an underscore — the gate skips those
+      // directories, the way it skips a framework's own build output.
+      //
+      // The spacer is MOUNTED BY SCRIPT, not pasted into the markup: a
+      // modern app hydrates the page and removes the nodes the framework
+      // does not own, so a pasted spacer is gone before anything measures
+      // it — and a fixture that vanishes is a fixture that never happened.
+      const dir = path.join(COPY, "sl-never-seen");
+      mkdirSync(dir, { recursive: true });
+      const html = readFileSync(path.join(COPY, "index.html"), "utf8");
+      writeFileSync(path.join(dir, "index.html"), inject('<div style="height:2000px"></div>', "top"));
+    },
+    cleanupSite: () => rmSync(path.join(COPY, "sl-never-seen"), { recursive: true, force: true }),
+  },
+  {
+    name: "an exemption that is written down excuses the limit it names",
+    expect: null,
+    note: "the written exemption let the limit pass",
+    full: false,
+    mutate: (b) => {
+      b.limits = { ...b.limits, firstAction: 200 };
+      b.exempt = [
+        { route: "/", check: "firstAction", why: "a synthetic exemption, written down for falsification" },
+      ];
+    },
+  },
+  {
+    name: "a page with no <main> element at all",
+    expect: null,
+    note: "the gate measured a page with no <main>",
+    full: true,
+    site: () => {
+      // A project whose pages have no <main> must still be measured, not
+      // waited on until the harness gives up.
+      const dir = path.join(COPY, "sl-no-main");
+      mkdirSync(dir, { recursive: true });
+      writeFileSync(
+        path.join(dir, "index.html"),
+        "<!doctype html><html><head><meta charset=utf-8><title>no main</title></head>" +
+          "<body><p>A page that never learned the main element.</p></body></html>",
+      );
+    },
+    cleanupSite: () => rmSync(path.join(COPY, "sl-no-main"), { recursive: true, force: true }),
+  },
+  {
+    name: "an exemption for a page that is not there",
+    expect: "stale exemption",
+    full: true,
+    mutate: (b) => {
+      b.exempt = [
+        ...(b.exempt || []),
+        {
+          route: "/no-such-route/",
+          check: "firstAction",
+          why: "a synthetic exemption, written down for falsification",
+        },
+      ];
+    },
+  },
+  {
+    name: "a decision the receipt has no numbers for",
+    expect: "the baseline records no numbers for this route and width",
+    full: true,
+    mutate: (b) => {
+      // Keep the reason, lose the numbers. The decision is still justified,
+      // so the gate cannot complain that it is unjustified — it must
+      // complain that nothing would notice if it changed.
+      for (const byw of Object.values(b.routes || {})) {
+        for (const [w, entry] of Object.entries(byw)) {
+          if ((entry.findings || []).length) {
+            delete byw[w];
+            return;
+          }
+        }
+      }
+    },
+  },
+  {
+    name: "a hole that grew since the receipt was written",
+    expect: "GREW",
+    full: true,
+    mutate: (b) => {
+      for (const byw of Object.values(b.routes || {})) {
+        for (const entry of Object.values(byw)) {
+          for (const f of entry.findings || []) {
+            if (f.kind === "dead" || f.kind === "orphan") {
+              f.metric = Math.max(0, f.metric - 300);
+              return;
+            }
+          }
+        }
+      }
+    },
+  },
+  {
+    name: "a hole that shrank since the receipt was written",
+    expect: "SHRANK",
+    full: true,
+    mutate: (b) => {
+      for (const byw of Object.values(b.routes || {})) {
+        for (const entry of Object.values(byw)) {
+          for (const f of entry.findings || []) {
+            if (f.kind === "dead" || f.kind === "orphan") {
+              f.metric = f.metric + 300;
+              return;
+            }
+          }
+        }
+      }
+    },
+  },
+  {
+    // The gate measures most widths by RESIZING a page it has already
+    // loaded, and proves on every run that a resized page and a freshly
+    // loaded page agree. If that proof never fires, it is decoration.
+    //
+    // This page decides its gap ONCE, from the width it was loaded at, and
+    // never again — so a resized page and a freshly loaded page genuinely
+    // disagree, and the gate has to notice.
+    name: "a page whose layout depends on the width it was loaded at",
+    expect: "measuring two different layouts",
+    routes: "/sl-load-width/",
+    site: () => {
+      const dir = path.join(COPY, "sl-load-width");
+      mkdirSync(dir, { recursive: true });
+      writeFileSync(
+        path.join(dir, "index.html"),
+        `<!doctype html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>load width</title>
+<style>html,body{margin:0;padding:0;background:#fff}main{padding:24px}
+main h1{font-size:32px;margin:0 0 16px}
+.sl-col{display:flex;flex-direction:column}
+.sl-a{height:24px;background:#ddd}.sl-b{height:24px;background:#ccc}</style>
+</head><body>
+<main id="content">
+<h1>Load width</h1>
+<div class="sl-col"><div class="sl-a"></div><div class="sl-b"></div></div>
+</main>
+<script>
+// The gap is decided ONCE, when the page loads, from the width it was
+// loaded at. Resizing the window afterwards does not move it, so a resized
+// page and a freshly loaded page are genuinely different pages.
+document.querySelector(".sl-b").style.marginTop = window.innerWidth >= 700 ? "260px" : "0px";
+</script>
+</body></html>`,
+      );
+    },
+    cleanupSite: () => rmSync(path.join(COPY, "sl-load-width"), { recursive: true, force: true }),
+  },
+];
+
+for (const rule of BASELINE_RULES) {
+  writeFileSync(BASELINE, BASELINE_SAVED);
+  if (rule.site) rule.site();
+  withBaseline(rule.mutate || (() => {}));
+  const res = rule.full ? runFullGate([]) : runGate([], rule.routes);
+  if (rule.cleanupSite) rule.cleanupSite();
+  writeFileSync(BASELINE, BASELINE_SAVED);
+  if (rule.expect === null) {
+    // This one must PASS: the page has no <main>, and the gate must measure
+    // it rather than time out on it.
+    if (!res.pass) {
+      console.error(
+        `  ✗ ${rule.name} — the gate failed instead of measuring it:\n${res.out.trim().split("\n").slice(0, 8).join("\n")}`,
+      );
+      failures++;
+    } else if (res.out.includes("timed out waiting for the page")) {
+      console.error(`  ✗ ${rule.name} — the gate timed out on it. The body fallback is not working.`);
+      failures++;
+    } else {
+      console.log(`  · caught: ${rule.name}  [${rule.note || "the gate measured it"}]`);
+    }
+    continue;
+  }
+  if (res.pass) {
+    console.error(`  ✗ ${rule.name} — the gate did NOT catch it. The rule is dead.`);
+    failures++;
+  } else if (!res.out.includes(rule.expect) || (rule.also || []).some((a) => !res.out.includes(a))) {
+    console.error(
+      `  ✗ ${rule.name} — the gate failed, but not for the expected reason.\n` +
+        `      expected a message containing "${rule.expect}"${(rule.also || []).map((a) => ` and "${a}"`).join("")}, got:\n${res.out.trim().split("\n").slice(0, 8).join("\n")}`,
+    );
+    failures++;
+  } else {
+    console.log(`  · caught: ${rule.name}  [a rule about the baseline]`);
+  }
+}
+
+// The other direction: a PARTIAL sweep has not seen the routes the reason
+// belongs to, so it must not call that reason stale. A rule that fires on
+// everything is as useless as a rule that fires on nothing.
+{
+  const b = JSON.parse(BASELINE_SAVED);
+  b.reasons["dead|div.__gone__"] = "a reason for a decision that is not there";
+  writeFileSync(BASELINE, JSON.stringify(b, null, 2) + "\n");
+  const res = runGate([]);
+  writeFileSync(BASELINE, BASELINE_SAVED);
+  if (!res.pass) {
+    console.error(
+      `  ✗ a partial sweep is not told a reason is stale — the gate failed on a reason it never had the chance to see:\n` +
+        res.out.trim().split("\n").slice(0, 8).join("\n"),
+    );
+    failures++;
+  } else {
+    console.log(`  · caught: a partial sweep is not told a reason is stale  [the rule does not fire on everything]`);
+  }
+}
+
+if (failures) {
+  console.error(`\nFAIL — ${failures} rule(s) did not bite. The gate is not trustworthy.\n`);
+  process.exit(1);
+}
+
+const modes = [...new Set(FIXTURES.map((f) => f.mode))].sort();
 console.log(
-  `\n  · spatial gate: ${FIXTURES.length} injected defects, all caught. ` +
-    `Every mode has failed at least once.\n`,
+  `\n  · spatial gate: ${FIXTURES.length} injected page defects, ${BASELINE_RULES.length + 1} broken-baseline cases ` +
+    `and 1 case about the instrument itself, all caught.\n` +
+    `  · modes covered: ${modes.join(", ")} — ${modes.length} of the 6.\n` +
+    `  · Every mode has failed at least once, every rule about the baseline has failed at least once, ` +
+    `and the cross-check between a resized page and a freshly loaded page has failed at least once.\n`,
 );
+// Everything was caught, so the proof is over and the process ends here
+// rather than waiting for a handle it has no further use for.
+process.exit(0);

@@ -111,10 +111,85 @@ writeFileSync(path.join(CSS_DIR, "inline-from-pages.css"), inline);
 //
 // So the falsifier gets its own copy of the build with the atlas at the root:
 // the atlas is the product's page, and its map controls are the first action.
+//
+// THE COPY MEASURES THE ATLAS THE WAY /atlas SERVES IT.
+//
+// The atlas decides whether it is embedded by asking whether it has a parent
+// window, and an embedded atlas clips its own root
+// (`html.atlas-embedded-root { overflow: hidden }`) so the dashboard's iframe
+// cannot scroll. The instrument measures inside an iframe — always — so a copy
+// that leaves the detection alone is measured in the EMBEDDED state, which is
+// a state /atlas never serves.
+//
+// That difference is not cosmetic. It was measured, not argued about:
+//
+//   embedded   (root clipped)   a 4000px block injected into the page leaves
+//                              documentElement.scrollWidth at 390 — the root
+//                              clips it, the page does not scroll sideways, and
+//                              the instrument's "the page scrolls sideways"
+//                              rule can never fire on this page.
+//   standalone (as /atlas)     the same block leaves scrollWidth at 4000, the
+//                              page scrolls sideways, and the rule fires.
+//
+// So in the embedded state the rule is structurally dead, and the falsifier
+// reports a dead rule where the page is merely clipped. The copy therefore
+// makes the atlas believe it is a top-level page, which is the state the
+// product serves at /atlas — a real state, not a doctored one.
 const FALSIFY_DIR = path.join(path.dirname(OUT), "route-site-falsify");
 rmSync(FALSIFY_DIR, { recursive: true, force: true });
 cpSync(OUT, FALSIFY_DIR, { recursive: true });
 copyFileSync(path.join(FALSIFY_DIR, "atlas.html"), path.join(FALSIFY_DIR, "index.html"));
+
+// The override goes BEFORE the atlas's own layout script, so the atlas never
+// sees a parent window. It is scoped to the copy: the shipped bytes are
+// untouched.
+const STANDALONE_OVERRIDE = `<script id="__sl_standalone__">
+/* The measurement copy serves the atlas the way /atlas serves it: as a
+   top-level page with a scrollable root. The instrument measures inside an
+   iframe, so without this the copy would only ever be measured in the
+   embedded state, where the atlas clips its own root and one of the
+   instrument's rules can never fire. */
+try { Object.defineProperty(window, "parent", { get: function () { return window; }, configurable: true }); } catch (e) {}
+</script>`;
+
+function makeStandalone(html) {
+  const m = /<script[^>]*src=["'][^"']*atlas-layout\.js[^"']*["'][^>]*><\/script>/i.exec(html);
+  if (m) return html.slice(0, m.index) + STANDALONE_OVERRIDE + "\n" + html.slice(m.index);
+  const b = /<body[^>]*>/i.exec(html);
+  if (b) return html.slice(0, b.index + b[0].length) + "\n" + STANDALONE_OVERRIDE + "\n" + html.slice(b.index + b[0].length);
+  return STANDALONE_OVERRIDE + "\n" + html;
+}
+
+for (const page of ["index.html", "atlas.html", "atlas-open.html"]) {
+  const p = path.join(FALSIFY_DIR, page);
+  if (existsSync(p)) writeFileSync(p, makeStandalone(readFileSync(p, "utf8")));
+}
+
+// THE COPY SERVES THE PAGES THE PRODUCT SERVES.
+//
+// The instrument finds the routes to measure by walking the tree for
+// index.html files. The Worker serves /atlas, /research and / from FLAT files
+// (atlas.html, research.html, dashboard.html), so a copy of that tree exposes
+// exactly one route — the atlas — and the instrument's sweep, and every rule
+// about the receipt that runs over a whole sweep, would be a rule about one
+// page.
+//
+// So the copy carries the product's pages as the directories a static host
+// would serve them from. Same bytes, same pages, and the sweep now measures
+// what the product serves.
+const COPY_ROUTES = {
+  "atlas": "atlas.html",
+  "atlas-open": "atlas-open.html",
+  "research": "research.html",
+  "dashboard": "dashboard.html",
+};
+for (const [route, page] of Object.entries(COPY_ROUTES)) {
+  const src = path.join(FALSIFY_DIR, page);
+  if (!existsSync(src)) continue;
+  const dir = path.join(FALSIFY_DIR, route);
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(path.join(dir, "index.html"), makeStandalone(readFileSync(src, "utf8")));
+}
 
 let bytes = 0;
 function walk(dir) {
@@ -129,5 +204,5 @@ walk(OUT);
 console.log(`  · route site built at ${OUT}`);
 console.log(`  · routes: / -> index.html (dashboard), /atlas -> atlas.html, /research -> research.html`);
 console.log(`  · breakpoint source: ${stylesheets.length} stylesheet(s) + inline <style> from 3 pages`);
-console.log(`  · falsifier copy at ${FALSIFY_DIR} (the atlas at the root, so the first action exists)`);
+console.log(`  · falsifier copy at ${FALSIFY_DIR} (the atlas at the root and as a top-level page, so the first action exists and the root does not clip)`);
 console.log(`  · ${(bytes / 1024 / 1024).toFixed(1)} MB`);

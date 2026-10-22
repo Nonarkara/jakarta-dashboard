@@ -7,3 +7,9 @@ Untitled/
 .env.*
 out/
 .deploy-locked/
+
+# the spatial gate writes its own measurements here; it removes the file when it is done
+.spatial-measurements.json
+
+# scratch: the MSH diagnostics and the evidence recorder output
+.msh-work/
