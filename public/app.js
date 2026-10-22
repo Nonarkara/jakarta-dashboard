@@ -1242,46 +1242,12 @@ function applyBuildingFilter(input) {
 }
 if(mapInstance){mapInstance.on('idle',()=>{buildingFilterPending=false;reportBuildingView();});mapInstance.on('moveend',reportBuildingView);}
 window.addEventListener('atlas:theme',reportBuildingView);
-{
-  const embedded = window.parent !== window;
-  document.body.classList.add('atlas-workbench');
-  if (embedded) {
-    document.body.classList.add('atlas-embedded');
-    document.documentElement.classList.add('atlas-embedded-root');
-  }
-  const drawer = document.createElement('details');
-  drawer.className = 'atlas-embedded-drawer';
-  const summary = document.createElement('summary');
-  summary.textContent = 'Data & sources';
-  const body = document.createElement('div');
-  body.className = 'atlas-embedded-evidence';
-  for (const selector of (embedded ? ['.atlas-menu-body', '#atlas-environment', '#atlas-data', '.atlas-footer'] : ['#atlas-environment', '#atlas-data', '.atlas-footer'])) {
-    const node = document.querySelector(selector);
-    if (node) body.append(node);
-  }
-  drawer.append(summary, body);
-  // The research page existed behind two clicks (Controls → How it is built) and
-  // was the only page in the product nobody could reach from the map. It shares
-  // the drawer's corner: one right-hand row, two page-level doors, and the row
-  // was already occupied, so the map loses no height to it.
-  const tools = document.createElement('div');
-  tools.className = 'atlas-page-tools';
-  const watch = document.getElementById('atlas-watch');
-  if (watch) tools.append(watch);
-  const researchLink = document.createElement('a');
-  researchLink.className = 'atlas-research-link';
-  researchLink.href = '/research';
-  researchLink.textContent = 'Research & method';
-  tools.append(researchLink, drawer);
-  document.querySelector('.atlas-map-wrap').append(tools);
-  const context = document.createElement('div');
-  context.className = 'atlas-lens-context';
-  context.append(document.getElementById('atlas-lens-title'), document.getElementById('atlas-lens-description'));
-  const lensPopup = document.createElement('div');
-  lensPopup.className = 'atlas-lens-popup';
-  lensPopup.append(context, document.getElementById('atlas-lens-body'));
-  document.getElementById('atlas-lens-evidence').append(lensPopup);
-}
+// The page's layout is assembled by public/atlas-layout.js, in a classic
+// script at the end of the body, so that the DOM a reader gets is the DOM
+// that was painted. It used to live here, at the end of a deferred script,
+// and the atlas existed in two states: the static markup for a third of a
+// second, and the real page after that. The map had a column of chrome it
+// did not keep, and the spatial gate measured whichever state it caught.
 window.addEventListener("message", function (e) {
   if (PARENT_ORIGINS.indexOf(e.origin) === -1 && e.origin !== window.location.origin) return;
   if (e.source !== window.parent) return;

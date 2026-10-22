@@ -62,8 +62,47 @@ const record = (where, name, ok, detail) => { results.push({ where, name, ok, de
 
 // Everything below runs inside the page.
 const AUDIT = () => {
-  const out = { overflow: null, mapShare: null, boxes: [], measure: [], hittable: [], charts: [], errors: [] };
+  const out = { overflow: null, mapShare: null, boxes: [], measure: [], hittable: [], charts: [], cropped: [], errors: [] };
   out.overflow = document.documentElement.scrollWidth > document.documentElement.clientWidth + 1;
+
+  // ── The chrome band fits its controls. A band that is shorter than what it
+  // holds does not push the control away — it CROPS it, and a control cropped
+  // at the top of the page is cropped by the top of the document. The atlas's
+  // header row is 28px with 2px of padding, so its content box is 24px; the
+  // language select was 30px, and it sat 1.5px above the top of the page. The
+  // spatial gate cannot see this: it measures the atlas inside an iframe,
+  // where the atlas hides its own header, so the gate never measured the
+  // band at all. This reads the rendered page.
+  //
+  // The check is installed on the window, not written inline, so the mutation
+  // below can call THE SAME function. A mutation that proves a copy of the
+  // check bites proves nothing about the check.
+  window.__SL_CROPPED__ = () => {
+    const found = [];
+    for (const band of document.querySelectorAll('.atlas-header, .atlas-lenses')) {
+      const br = band.getBoundingClientRect();
+      if (!br.height) continue;
+      for (const el of band.querySelectorAll('a,button,input,select,textarea,summary')) {
+        const r = el.getBoundingClientRect();
+        if (!r.width || !r.height) continue;
+        // Only the band's OWN row. A control that STARTS below the band is a
+        // panel that hangs off it (the Controls menu), not something the band
+        // was supposed to hold.
+        if (r.top >= br.bottom - 0.5) continue;
+        const above = +(br.top - r.top).toFixed(1);
+        const below = +(r.bottom - br.bottom).toFixed(1);
+        if (above > 0.5 || below > 0.5) {
+          found.push({
+            band: (band.className || band.tagName).toString().split(' ')[0],
+            name: (el.id ? '#' + el.id : el.tagName.toLowerCase() + (el.className ? '.' + String(el.className).split(' ')[0] : '')),
+            above, below,
+          });
+        }
+      }
+    }
+    return found;
+  };
+  out.cropped = window.__SL_CROPPED__();
 
   const map = document.querySelector('.maplibregl-map');
   if (map) {
@@ -188,10 +227,52 @@ for (const [path, label] of PAGES) {
     const where = `${label}@${w}`;
 
     record(where, 'no horizontal overflow', !a.overflow, a.overflow ? `scrollWidth exceeds clientWidth by ${a.overflow}px` : 'none');
+    for (const c of a.cropped) {
+      record(where, `the ${c.band} band fits its controls: ${c.name}`, false,
+        `${c.name} sticks ${c.above > 0 ? c.above + 'px above' : ''}${c.above > 0 && c.below > 0 ? ' and ' : ''}${c.below > 0 ? c.below + 'px below' : ''} the band that holds it`);
+    }
     if (!veilLifted) {
       record(where, 'the map finishes loading', false, 'the loading veil never lifted; hit-tests skipped because nothing was interactive');
       await ctx.close();
       continue;
+    }
+
+    // ── THE CHECK MUST BITE. An assertion nobody has seen fail is decoration,
+    // so the band check is put to the test on this very page: the page is put
+    // back the way it SHIPPED — a fixed 28px header row and a 40px language
+    // control in a 24px content box — and the SAME check has to report the
+    // crop. If the answer does not change, the check is blind and the audit
+    // fails saying so.
+    //
+    // The mutation has to restore the defect, not merely change the page: the
+    // band now grows to fit its controls, so making the control taller on its
+    // own changes nothing. The shipped page is what has to come back.
+    const bite = await page.evaluate(() => {
+      const sel = document.querySelector('.atlas-header .atlas-theme-control select');
+      if (!sel || typeof window.__SL_CROPPED__ !== 'function') return { skipped: true };
+      const pick = (list) => list.find((c) => c.name === '#atlas-language') || null;
+      const before = pick(window.__SL_CROPPED__());
+      const style = document.createElement('style');
+      style.textContent = `
+        body.atlas-workbench .atlas-page { grid-template-rows: 28px 26px minmax(0,1fr) !important; }
+        .atlas-header .atlas-theme-control select { min-height:40px !important; }
+      `;
+      document.head.append(style);
+      const after = pick(window.__SL_CROPPED__());
+      style.remove();
+      return {
+        skipped: false,
+        beforeAbove: before ? before.above : 0,
+        afterAbove: after ? after.above : 0,
+      };
+    });
+    if (bite.skipped) {
+      record(where, 'the band check bites', true, 'this page has no atlas header band to test');
+    } else {
+      record(where, 'the band check bites', bite.afterAbove > bite.beforeAbove,
+        bite.afterAbove > bite.beforeAbove
+          ? `the page as it shipped (a fixed 28px row, a 40px control) was reported ${bite.beforeAbove}px above the band before and ${bite.afterAbove}px after`
+          : `the page as it shipped was not reported (${bite.beforeAbove}px above before, ${bite.afterAbove}px after) — the check is blind`);
     }
     if (label === 'atlas' && w >= 1024) {
       record(where, 'the map keeps the viewport', a.mapShare !== null && a.mapShare >= 60,

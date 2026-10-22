@@ -12,8 +12,22 @@
   <link href="/vendor/maplibre-6.4.1/maplibre-gl.css" rel="stylesheet" />
   <link rel="stylesheet" href="/style.css?v=jakarta-atlas-20261021-1792608695-0fa13f1" />
   <link rel="stylesheet" href="/jakarta-design.css?v=jakarta-atlas-20261021-1792608695-0fa13f1" />
+  <!-- The atlas is a workbench: a compact header row, a lens row, and the map
+       filling the rest. That class used to be added by JavaScript, so the
+       page painted its long, scrolling self first and then became the
+       workbench a quarter of a second later — the composition decided by
+       load order, with the Layers rail jumping 233px under the reader. It is
+       in the markup now, and the first paint is the only layout there is.
+       Without JavaScript there is no "Data & sources" drawer to hold these
+       sections, so they stay in the flow where they can still be read, and
+       the page goes back to being a document rather than a workbench. -->
+  <noscript><style>
+    body.atlas-workbench { height: auto; overflow: auto; }
+    body.atlas-workbench .atlas-page { display: block; height: auto; }
+    .atlas-page > #atlas-environment, .atlas-page > #atlas-data, .atlas-page > .atlas-footer { display: block; }
+  </style></noscript>
 </head>
-<body data-surface="jakarta-atlas">
+<body data-surface="jakarta-atlas" class="atlas-workbench">
   <a class="atlas-skip" href="#atlas-environment">Skip to map controls</a>
   <main class="atlas-page">
     <header class="atlas-header">
@@ -21,7 +35,7 @@
 
         <h1 class="atlas-title">
           <span class="atlas-title-desk">Jakarta, block by block</span>
-          <span class="atlas-title-phone">Jakarta -- 3D atlas</span>
+          <span class="atlas-title-phone">Jakarta 3D</span>
         </h1>
 
       </div>
@@ -260,6 +274,12 @@
        script and a deferred script both delay load, and both run in document
        order, so PMTiles → MapLibre → the client is the order and the order
        holds. -->
+  <!-- The layout is assembled here, in a CLASSIC script, so it runs while the
+       body is still being parsed: the DOM a reader gets is the DOM that was
+       painted. It used to be the last thing app.js did, a third of a second
+       after the first paint — so the atlas existed in two states, and the
+       spatial gate measured whichever one it caught. -->
+  <script src="/atlas-layout.js?v=jakarta-atlas-20261021-1792608695-0fa13f1"></script>
   <script type="module" src="/loader.js?v=jakarta-atlas-20261021-1792608695-0fa13f1"></script>
   <script src="/app.js?v=jakarta-atlas-20261021-1792608695-0fa13f1" defer></script>
 </body>

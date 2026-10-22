@@ -2,6 +2,12 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 const app = readFileSync(new URL('../public/app.js', import.meta.url), 'utf8');
+// The page-level assembly (the tools row, the data drawer, the lens popup) is
+// no longer in the deferred client: it is in public/atlas-layout.js, which runs
+// BEFORE the client, so the reader's DOM is the DOM that was painted. The
+// contract below is about that assembly, so the harness has to run it — in the
+// same order the browser does.
+const layout = readFileSync(new URL('../public/atlas-layout.js', import.meta.url), 'utf8');
 const files = name => JSON.parse(readFileSync(new URL('../public/' + name, import.meta.url), 'utf8'));
 const current = new Date().toISOString();
 const feeds = {
@@ -52,6 +58,7 @@ async function scenario(mode) {
     fetch: async path => Response.json(feeds[path]), requestAnimationFrame: cb => cb(),
     setTimeout: () => 1, clearTimeout() {}, setInterval: () => 1, clearInterval() {},
   });
+  vm.runInContext(layout, context);
   vm.runInContext(app, context);
   // The drawer no longer has to be a DIRECT child of the map wrap: it now sits
   // in the page-tools row beside the research door. The invariant this guard

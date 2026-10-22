@@ -583,8 +583,26 @@ button:active { transform: scale(0.97); }
 .atlas-environment h3 { font-size: 13px; }
 .atlas-rain-location { min-height: 44px; padding: 6px; border: 1px solid var(--line); background: var(--bg-raised); color: var(--accent); font: inherit; text-align: left; }
 
+/* The three sections below the map do not belong where they stand.
+   app.js assembles the page: it moves #atlas-environment, #atlas-data and
+   .atlas-footer into the collapsed "Data & sources" drawer, and the map then
+   fills the window. Until that happened the atlas painted a 1449px scrolling
+   page and then, a quarter of a second later, became one screen with the
+   Layers rail jumping 233px upward under the reader's hand. The composition
+   was decided by load order, not by the task.
+   So the sections are hidden where they stand: the map takes the space from
+   the first paint, and there is only ever one layout. The rule is scoped to
+   .atlas-page, so it stops applying the moment the sections are inside the
+   drawer — where the closed drawer hides them anyway. */
+.atlas-page > #atlas-environment,
+.atlas-page > #atlas-data,
+.atlas-page > .atlas-footer { display: none; }
+
 /* Two-row environmental toolbar; full evidence remains expandable. */
-.atlas-environment { position: relative; padding: 10px 24px; container-type: inline-size; }
+/* The container is NAMED so the spatial gate can tell which element the
+   query belongs to, and can therefore check that the width sweep actually
+   lands on the cliff. An anonymous query is a cliff the gate can only note. */
+.atlas-environment { position: relative; padding: 10px 24px; container-type: inline-size; container-name: atlas-environment; }
 .atlas-environment-topline { display: flex; align-items: baseline; gap: 16px; padding-right: 240px; }
 .atlas-environment-topline h2 { flex-shrink: 0; font-size: 15px; margin: 0; }
 .atlas-environment-topline p { margin: 0; font-size: 12px; color: var(--dim); }
@@ -609,7 +627,7 @@ button:active { transform: scale(0.97); }
    desktop the panel kept a 230px reservation for a summary that then sat on
    top of a status line squeezed into a 19px ribbon beside its own heading.
    The panel's own width is the question, so the panel is the container. */
-@container (max-width: 520px) {
+@container atlas-environment (max-width: 520px) {
   .atlas-environment-topline { display: block; padding-right: 0; gap: 0; }
   .atlas-environment-topline p { margin-top: 4px; }
   .atlas-environment-details > summary { position: static; padding: 12px 0 0; }

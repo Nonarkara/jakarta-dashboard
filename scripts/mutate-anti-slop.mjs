@@ -33,21 +33,21 @@ const MUTANTS = [
   },
   {
     name: 'the atlas drops the research door entirely',
-    file: 'public/app.js',
+    file: 'public/atlas-layout.js',
     from: "tools.append(researchLink, drawer);",
     to: "tools.append(drawer);",
     expect: /the atlas offers a link out to the research page|AssertionError/,
   },
   {
     name: 'the research door is buried inside the collapsed drawer',
-    file: 'public/app.js',
+    file: 'public/atlas-layout.js',
     from: "tools.append(researchLink, drawer);",
     to: "drawer.append(researchLink);tools.append(drawer);",
     expect: /AssertionError/,
   },
   {
     name: 'the research door points somewhere else',
-    file: 'public/app.js',
+    file: 'public/atlas-layout.js',
     from: "researchLink.href = '/research';",
     to: "researchLink.href = '/?lang=id';",
     expect: /the research link points at the research page|AssertionError/,
@@ -61,7 +61,7 @@ const MUTANTS = [
   },
   {
     name: 'the page adopts a second name for the research page',
-    file: 'public/app.js',
+    file: 'public/atlas-layout.js',
     from: "researchLink.textContent = 'Research & method';",
     to: "researchLink.textContent = 'The science bit';",
     expect: /the research page has exactly one name|AssertionError/,

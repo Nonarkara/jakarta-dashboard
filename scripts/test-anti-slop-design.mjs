@@ -179,11 +179,16 @@ console.log('PASS anti-slop contracts, preserved visuals, independent loading, t
 
 // ── The research page must be reachable from the map ──────────────────────
 // It existed behind two clicks and was the one page nobody could get to from
-// the atlas. This runs the real drawer block out of app.js and inspects the
-// tree it builds, so removing the link — or burying it inside a collapsed
-// <details> — fails here rather than on someone's screen.
+// the atlas. This runs the real drawer block out of the layout script and
+// inspects the tree it builds, so removing the link — or burying it inside a
+// collapsed <details> — fails here rather than on someone's screen.
+//
+// The block lives in public/atlas-layout.js, not in the deferred client: the
+// page's assembly runs before the first paint, so the reader's DOM is the DOM
+// that was painted. A guard that reads the client instead would be guarding a
+// file that no longer assembles anything.
 {
-  const app = read('public/app.js');
+  const app = read('public/atlas-layout.js');
   const block = app.slice(app.indexOf('const embedded = window.parent'), app.indexOf("document.getElementById('atlas-lens-evidence').append(lensPopup)"));
   assert.ok(block.length > 200, 'the atlas page-tools block is present');
 

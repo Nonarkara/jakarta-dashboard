@@ -326,7 +326,7 @@ window.ATLAS_ID = {
   "Selected environmental observation": "Pengamatan lingkungan yang dipilih",
   "Missing pixels are not an all-clear.": "Piksel yang hilang bukan tanda aman.",
   "Jakarta, block by block": "Jakarta, blok demi blok",
-  "Jakarta -- 3D atlas": "Jakarta -- atlas 3D",
+  "Jakarta 3D": "Jakarta 3D",
   "JKTx 3D Atlas -- Jakarta block by block": "Atlas 3D JKTx -- Jakarta blok demi blok",
   "JKTx 3D atlas loading": "Atlas 3D JKTx sedang dimuat",
   "Jakarta key areas": "Kawasan utama Jakarta",

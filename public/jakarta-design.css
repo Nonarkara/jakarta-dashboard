@@ -337,17 +337,27 @@ body.atlas-embedded[data-lens="arrival"] #atlas-lens-evidence[open] .atlas-lens-
    viewport before the map started; 28 + 26 hands 10px straight back to the map,
    which is the product. Touch targets stay at 44px in the media query below. */
 body.atlas-workbench { --atlas-header-row:28px; --atlas-lenses-row:26px; height:100svh; overflow:hidden; }
-body.atlas-workbench .atlas-page { height:100%; min-height:0; display:grid; grid-template-rows:var(--atlas-header-row) var(--atlas-lenses-row) minmax(0,1fr); }
-body.atlas-workbench.atlas-embedded .atlas-page { grid-template-rows:var(--atlas-lenses-row) minmax(0,1fr); }
+body.atlas-workbench .atlas-page { height:100%; min-height:0; display:grid; grid-template-rows:minmax(var(--atlas-header-row),auto) minmax(var(--atlas-lenses-row),auto) minmax(0,1fr); }
+body.atlas-workbench.atlas-embedded .atlas-page { grid-template-rows:minmax(var(--atlas-lenses-row),auto) minmax(0,1fr); }
 body.atlas-workbench .atlas-header { padding:2px 8px; display:flex; gap:8px; flex-wrap:nowrap; min-height:0; }
 body.atlas-workbench .atlas-header-meta { display:block; min-width:0; flex:1; }
 body.atlas-workbench .atlas-title { font-size:14px; margin:0; line-height:1; white-space:nowrap; }
 body.atlas-workbench .atlas-title::before { width:20px; height:24px; margin-right:4px; }
 body.atlas-workbench .atlas-header-nav { display:flex; gap:6px; flex:none; width:auto; }
 body.atlas-workbench .atlas-header-nav > .atlas-theme-control { display:flex; flex-direction:row; gap:0; font-size:0; }
-body.atlas-workbench .atlas-header-nav > .atlas-theme-control select { width:auto; padding:2px 4px; min-height:30px; font-size:12px; }
+/* THE BAND FITS ITS CONTENTS, OR IT CROPS THEM.
+   The header row is 28px with 2px of padding, so its content box is 24px.
+   These two controls were 30px — the last two in the app still carrying the
+   old fat frame, after every other control had come down to the house size of
+   24px. A 30px control in a 24px box does not fit: the language select (the
+   page's FIRST control) sat 1.5px ABOVE the top of the document, cut by the
+   edge of the page, and the Controls summary hung 0.5px into the lens strip
+   below it. Measured on the deployed build at 768, 1024 and 1440px. The band
+   now grows rather than crops (see the minmax() above), and these two
+   controls are the size of their labels. */
+body.atlas-workbench .atlas-header-nav > .atlas-theme-control select { width:auto; padding:2px 4px; min-height:24px; font-size:12px; }
 body.atlas-workbench .atlas-menu { margin:0; align-self:center; }
-body.atlas-workbench .atlas-menu > summary { min-height:30px; padding:4px 8px; font-size:12px; }
+body.atlas-workbench .atlas-menu > summary { min-height:24px; padding:2px 8px; font-size:12px; }
 body.atlas-workbench .atlas-menu-body { z-index:65; width:min(360px,calc(100vw - 16px)); }
 body.atlas-workbench .atlas-lens-story { display:none; }
 /* The strip scrolls past the viewport edge with no affordance, so the last lens

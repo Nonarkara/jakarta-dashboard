@@ -73,6 +73,27 @@ test("public/app.js parses as JS (basic syntax)", () => {
   if (code.includes("Stop \" + (i + 1)")) throw new Error("procedural bus stops are still in the client");
 });
 
+// The atlas's layout is assembled by a classic script at the end of the
+// body, so the DOM a reader gets is the DOM that was painted. The assembly
+// used to be the last thing the deferred client did, a third of a second
+// after the first paint — so the page existed in two states, and the spatial
+// gate measured whichever one it caught. Two things must hold, or the page
+// goes back to being two pages: the script must be there, and it must run
+// before the deferred client that would otherwise do the work late.
+test("public/atlas-layout.js is loaded before the deferred client", () => {
+  const code = readFileSync(resolve(ROOT, "public/atlas-layout.js"), "utf-8");
+  if (!code.includes("atlas-page-tools")) throw new Error("the layout script does not build the page-tools row");
+  if (!code.includes("atlas-embedded-drawer")) throw new Error("the layout script does not build the data drawer");
+  if (code.includes("defer")) throw new Error("the layout script must not be deferred: it has to run before the first paint");
+  const html = readFileSync(resolve(ROOT, "public/index.html"), "utf-8");
+  const layout = html.indexOf("/atlas-layout.js");
+  const client = html.indexOf("/app.js");
+  if (layout < 0) throw new Error("index.html does not load the layout script");
+  if (client < 0) throw new Error("index.html does not load the client");
+  if (layout > client) throw new Error("the layout script must come before the deferred client");
+  if (!html.includes('class="atlas-workbench"')) throw new Error("the workbench class must be in the markup, not added by script");
+});
+
 // Four agents "fixed" invisible buildings by inflating heights (x8, sqrt,
 // tiered 6x...). Heights are real metres; density does the visual work.
 test("building heights are real metres (no multiplier)", () => {
