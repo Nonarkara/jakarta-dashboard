@@ -359,7 +359,10 @@ for (const route of ROUTES) {
       lines.push(`| ${r.w} × ${r.h}${r.note ? ` — ${r.note}` : ""} | **unverified** | **unverified** | **unverified** | **unverified** | **unverified** — ${r.unverified} |`);
       continue;
     }
-    const chrome = `${fmt(r.chrome.topPx, "px")} top (${fmt(r.chrome.topPct, "%")}), ${fmt(r.chrome.bottomPx, "px")} bottom${r.chrome.topStacked > 1 ? `, ${r.chrome.topStacked} bands stacked` : ""}`;
+    // The law asks for the stacked-band count as well as the height, so it is
+    // stated even when it is one: silence would leave the reader guessing
+    // whether the band was one band or none.
+    const chrome = `${fmt(r.chrome.topPx, "px")} top (${fmt(r.chrome.topPct, "%")}), ${r.chrome.topStacked} band(s) stacked; ${fmt(r.chrome.bottomPx, "px")} bottom, ${r.chrome.bottomStacked} band(s) stacked`;
     const task = r.task.firstAction
       ? `first action at ${r.task.firstAction.y}px — ${r.task.firstAction.y < r.vh ? "**in the first screen**" : "**below the fold**"}${r.task.h1 ? `; the title is at ${r.task.h1.y}px` : ""}`
       : "no action found on the page";
