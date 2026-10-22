@@ -291,6 +291,24 @@ async function measure() {
 }
 
 const rows = [];
+
+/**
+ * THE BUILD THIS RECORD IS ABOUT.
+ *
+ * A receipt that does not name the thing it measured cannot be checked
+ * against anything. The deployed client declares its own build tag, so the
+ * tag is READ FROM THE EDGE and written into the record. If it cannot be
+ * read, the record says so — it never writes a tag it did not read.
+ */
+let buildTag = null;
+try {
+  const src = await (await fetch(`${BASE}/app.js`)).text();
+  const m = /ATLAS_BUILD_TAG\s*=\s*"([^"]+)"/.exec(src);
+  if (m) buildTag = m[1];
+} catch {
+  buildTag = null;
+}
+
 for (const route of ROUTES) {
   for (const v of VIEWPORTS) {
     // A viewport that cannot be rendered is reported as UNVERIFIED, which is
@@ -320,7 +338,11 @@ const fmt = (n, u = "") => (n === null || n === undefined ? "—" : `${n}${u}`);
 const lines = [];
 lines.push("# MSH evidence — the deployed site");
 lines.push("");
-lines.push(`**Build:** the live site at ${BASE} (the build tag is read from the deployed \`app.js\`).`);
+lines.push(
+  buildTag
+    ? `**Build:** \`${buildTag}\` — read from the deployed \`app.js\` at ${BASE}.`
+    : `**Build:** UNVERIFIED — the build tag could not be read from the deployed \`app.js\` at ${BASE}.`,
+);
 lines.push(`**Method:** a real browser at the three widths the law names — 390 × 844, 1024 × **900** (the height used at 1024), 1440 × 900 — on every route.`);
 lines.push(`**Screenshots:** \`${OUT}/\` — the pixels these numbers were read from.`);
 lines.push("");
