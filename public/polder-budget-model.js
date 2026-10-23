@@ -11,8 +11,8 @@ export function rainForBoundary(payload,boundary,now=Date.now()) {
  const options=payload.points.flatMap(p=>{
   const from=Date.parse(p?.forecastFromUtc),to=Date.parse(p?.forecastToUtc),at=Date.parse(p?.validAt);
   const location=[p?.modelLocation?.lng,p?.modelLocation?.lat],km=distanceKm(boundary.representativePoint,location);
-  if(p.available!==true||!Number.isFinite(at)||at>now+300000||now-at>10800000||from<hour||from>hour+3600000||to-from!==86400000||km>20||!Array.isArray(p.forecast)||p.forecast.length!==24)return [];
-  if(!p.forecast.every((r,i)=>Date.parse(r.validAt)===from+(i+1)*3600000&&typeof r.precipitationMm==='number'&&Number.isFinite(r.precipitationMm)&&r.precipitationMm>=0&&r.precipitationMm<=1000))return [];
+  if(p?.available!==true||!Number.isFinite(at)||at>now+300000||now-at>10800000||from<hour||from>hour+3600000||to-from!==86400000||km>20||!Array.isArray(p.forecast)||p.forecast.length!==24)return [];
+  if(!p.forecast.every((r,i)=>Date.parse(r?.validAt)===from+(i+1)*3600000&&typeof r.precipitationMm==='number'&&Number.isFinite(r.precipitationMm)&&r.precipitationMm>=0&&r.precipitationMm<=1000))return [];
   return [{name:p.name||p.id||'Open-Meteo',distanceKm:km,modelLocation:location,from:new Date(from).toISOString(),to:new Date(to).toISOString(),fetchedAt:payload.fetchedAt,source:payload.source,sourceUrl:payload.sourceUrl,tier:payload.tier,mm:p.forecast.map(r=>r.precipitationMm)}];
  });
  return options.sort((a,b)=>a.distanceKm-b.distanceKm)[0]||null;

@@ -25,3 +25,6 @@ console.log('PASS polder budget: raw hashes, exclusions, native cells, exact rai
 // Seeded independent-review case: full removal must yield exactly zero, never −0.
 let seed=123456789;const random=()=>((seed=Math.imul(1664525,seed)+1013904223>>>0)/4294967296);
 for(let k=0;k<1000;k++){const result=waterBudget({areaM2:1e5+random()*3e7,rainMm:Array.from({length:24},()=>random()*200),pumpM3s:random()*500,runoffFraction:random(),initialM3:random()*1e6,freeStorageM3:random()*1e6});assert.ok(result.rows.every(r=>r.remainingM3>=0));assert.ok(Math.abs(result.conservationErrorM3)<1e-5);}
+
+assert.equal(rainForBoundary({...raw,points:[null]},boundary,now),null,'malformed point is unavailable, never a thrown render');
+assert.equal(rainForBoundary({...raw,points:[{...point,forecast:point.forecast.map((r,i)=>i===2?null:r)}]},boundary,now),null,'malformed hourly row is unavailable');
