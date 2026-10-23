@@ -108,16 +108,16 @@ function renderFiles([buildings, transit, catalog, flood]) {
     ];
     barChart(st, STATUS.map(([k, label, colour]) => ({ label, value: count(k), colour })), { total: records.length || null });
 
-    // Licences, reduced to the one question a reader actually has: does the
-    // publisher name an open licence? That is a prefix test on the catalogue's
+    // A literal licence-string grouping, not a legal permission verdict. Does
+    // the register name one of the listed licences? That is a prefix test on the catalogue's
     // own string, not an interpretation of it — and every licence the test does
     // not catch is still listed in the disclosure below, so nothing is lost.
     const lic = document.getElementById('src-licence');
     const OPEN = /^(CC BY 4\.0|CC BY-NC 4\.0|ODbL|Apache-2\.0)/i;
     const namesOpen = records.filter((r) => OPEN.test(String(r.license ?? '').trim()));
     barChart(lic, [
-      { label: t('No open licence stated', 'Tanpa lisensi terbuka'), value: records.length - namesOpen.length, colour: css('--ink') },
-      { label: t('Open licence stated', 'Dengan lisensi terbuka'), value: namesOpen.length, colour: css('--accent') },
+      { label: t('Rights unresolved', 'Hak belum dipastikan'), value: records.length - namesOpen.length, colour: css('--ink') },
+      { label: t('Licence recorded', 'Lisensi tercatat'), value: namesOpen.length, colour: css('--accent') },
     ], { total: records.length || null });
 
     const detail = document.getElementById('src-licence-detail');

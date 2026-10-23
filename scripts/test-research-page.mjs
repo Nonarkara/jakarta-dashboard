@@ -50,3 +50,7 @@ assert.equal(sum(stats.source), stats.count, 'and exactly one footprint source')
   assert.ok(Number.isInteger(syn.ISOBAR_STEP_HPA), 'the exported interval is an integer this page can print');
 }
 console.log('test-research-page: ok');
+
+// Unstated licence is not an established prohibition or a claim of no copying.
+assert.doesNotMatch(html,/most publishers here do not permit redistribution|nothing is copied out of them/);
+assert.match(html,/redistribution rights remain unresolved/);assert.match(html,/hak redistribusi belum dipastikan/);
