@@ -62,7 +62,7 @@ const record = (where, name, ok, detail) => { results.push({ where, name, ok, de
 
 // Everything below runs inside the page.
 const AUDIT = () => {
-  const out = { overflow: null, mapShare: null, boxes: [], measure: [], hittable: [], charts: [], cropped: [], errors: [] };
+  const out = { overflow: null, mapShare: null, boxes: [], measure: [], hittable: [], charts: [], cropped: [], mathsOverlap: [], errors: [] };
   out.overflow = document.documentElement.scrollWidth > document.documentElement.clientWidth + 1;
 
   // ── The chrome band fits its controls. A band that is shorter than what it
@@ -103,6 +103,22 @@ const AUDIT = () => {
     return found;
   };
   out.cropped = window.__SL_CROPPED__();
+
+  // Multiple method paragraphs must occupy separate rows. A source-only
+  // grid check missed three paragraphs explicitly placed into row2.
+  window.__SL_MATHS_OVERLAP__ = () => {
+    const found=[];
+    for(const article of document.querySelectorAll('.maths article')) {
+      const paragraphs=[...article.querySelectorAll(':scope > p')].map(p=>({text:p.textContent.trim().slice(0,45),r:p.getBoundingClientRect()})).filter(p=>p.r.width&&p.r.height);
+      for(let i=0;i<paragraphs.length;i++)for(let j=i+1;j<paragraphs.length;j++) {
+        const a=paragraphs[i],b=paragraphs[j];
+        if(Math.min(a.r.right,b.r.right)-Math.max(a.r.left,b.r.left)>1&&Math.min(a.r.bottom,b.r.bottom)-Math.max(a.r.top,b.r.top)>1)found.push({title:article.querySelector('h3')?.textContent.trim(),a:a.text,b:b.text});
+      }
+    }
+    return found;
+  };
+  out.mathsOverlap=window.__SL_MATHS_OVERLAP__();
+
 
   const map = document.querySelector('.maplibregl-map');
   if (map) {
@@ -227,6 +243,16 @@ for (const [path, label] of PAGES) {
     const where = `${label}@${w}`;
 
     record(where, 'no horizontal overflow', !a.overflow, a.overflow ? `scrollWidth exceeds clientWidth by ${a.overflow}px` : 'none');
+    if(label==='research') {
+      record(where,'method paragraphs do not overlap',a.mathsOverlap.length===0,JSON.stringify(a.mathsOverlap));
+      const bite=await page.evaluate(()=>{
+        const before=window.__SL_MATHS_OVERLAP__().length,style=document.createElement('style');
+        style.textContent='.maths article > p:not(.formula){grid-column:2!important;grid-row:2!important}';document.head.append(style);
+        const after=window.__SL_MATHS_OVERLAP__().length;style.remove();return {before,after};
+      });
+      record(where,'method overlap check bites',bite.before===0&&bite.after>0,JSON.stringify(bite));
+    }
+
     for (const c of a.cropped) {
       record(where, `the ${c.band} band fits its controls: ${c.name}`, false,
         `${c.name} sticks ${c.above > 0 ? c.above + 'px above' : ''}${c.above > 0 && c.below > 0 ? ' and ' : ''}${c.below > 0 ? c.below + 'px below' : ''} the band that holds it`);

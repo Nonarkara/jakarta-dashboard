@@ -29,6 +29,8 @@ Receipts: [phone plot](polder-budget-2026-10-23/final-local-390.png), [phone con
 
 No surveyed citywide terrain/datum join, hydraulic connectivity, calibrated river exchange, tide coupling or measured operating pump/storage capacity is introduced. Land-cover class is context, not measured impermeability. Rain resolution cannot resolve within-polder variability. Published boundary observation epoch and DSDA dataset-specific open licence remain unknown. These gaps prevent a defensible inundation/operational forecast; the account is an assumption-driven volume comparison.
 
+A final research browser pass caught the new multi-paragraph explanation sharing explicit CSS grid row 2 at desktop. Changed nonformula paragraph placement to auto rows, preserving the existing single-paragraph items. Added actual rectangle intersection detection to the canonical rendered audit; restoring explicit column 2 / row 2 must fail that same detector at every viewport. Local rendered audit passed **50/50**, including all three mutation proofs. Independent reviewer passed research at 390/1024/1440 and corrected the Bahasa conservation wording. Malformed rain points/hours now return unavailable; the clock-based map update also removes an expired model-cell marker.
+
 ## Production
 
 Pending canonical release and live browser verification at the implementation commit. No claim of live completion in this entry.
