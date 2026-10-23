@@ -28,3 +28,14 @@ for(let k=0;k<1000;k++){const result=waterBudget({areaM2:1e5+random()*3e7,rainMm
 
 assert.equal(rainForBoundary({...raw,points:[null]},boundary,now),null,'malformed point is unavailable, never a thrown render');
 assert.equal(rainForBoundary({...raw,points:[{...point,forecast:point.forecast.map((r,i)=>i===2?null:r)}]},boundary,now),null,'malformed hourly row is unavailable');
+
+// Missing array slots are absent observations, never a complete zero-rain day.
+const sparseRain=Array(24);sparseRain[0]=0;
+assert.equal(waterBudget({areaM2:1e6,rainMm:sparseRain}),null);
+assert.equal(waterBudget({areaM2:Number.MAX_VALUE,rainMm:stormProfile(1000,1)}),null,'overflow cannot become null numbers in an exported result');
+assert.equal(waterBudget({areaM2:Number.MAX_VALUE,rainMm:stormProfile(1000,1),runoffFraction:0}),null);
+const sparseForecast=Array(24);sparseForecast[0]=point.forecast[0];
+assert.equal(rainForBoundary({...raw,points:[{...point,forecast:sparseForecast}]},boundary,now),null);
+assert.equal(rainForBoundary(raw,null,now),null);
+assert.equal(rainForBoundary(raw,boundary,NaN),null);
+const shifted=1800000;assert.equal(rainForBoundary({...raw,points:[{...point,forecastFromUtc:new Date(from+shifted).toISOString(),forecastToUtc:new Date(from+shifted+86400000).toISOString(),forecast:point.forecast.map(r=>({...r,validAt:new Date(Date.parse(r.validAt)+shifted).toISOString()}))}]},boundary,now),null,'hour boundaries must align with model UTC hours');
