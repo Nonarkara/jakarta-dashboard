@@ -31,6 +31,8 @@ No surveyed citywide terrain/datum join, hydraulic connectivity, calibrated rive
 
 A final research browser pass caught the new multi-paragraph explanation sharing explicit CSS grid row 2 at desktop. Changed nonformula paragraph placement to auto rows, preserving the existing single-paragraph items. Added actual rectangle intersection detection to the canonical rendered audit; restoring explicit column 2 / row 2 must fail that same detector at every viewport. Local rendered audit passed **50/50**, including all three mutation proofs. Independent reviewer passed research at 390/1024/1440 and corrected the Bahasa conservation wording. Malformed rain points/hours now return unavailable; the clock-based map update also removes an expired model-cell marker.
 
+The unchanged full spatial gate then found the side label left a 358 px empty strip under the expanded explanation at 25 widths. Final composition uses inline title/source, formula and two semantic prose columns at the existing 760 px breakpoint, stacking on phone. This removes the reserved side column rather than adding a baseline exception. **208/208 fresh-load measurements across 52 widths and four routes passed**, with every existing reason still matched. Final local rendered audit **50/50** passed after the detector was extended to nested paragraphs and the mutation restored the actual old grid structure. Independent seven-rule review passed the final composition: [desktop](polder-budget-2026-10-23/research-final-1440.png), [tablet](polder-budget-2026-10-23/research-final-1024.png), [phone](polder-budget-2026-10-23/research-final-390.png).
+
 ## Production
 
 Pending canonical release and live browser verification at the implementation commit. No claim of live completion in this entry.

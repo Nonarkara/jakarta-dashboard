@@ -109,7 +109,7 @@ const AUDIT = () => {
   window.__SL_MATHS_OVERLAP__ = () => {
     const found=[];
     for(const article of document.querySelectorAll('.maths article')) {
-      const paragraphs=[...article.querySelectorAll(':scope > p')].map(p=>({text:p.textContent.trim().slice(0,45),r:p.getBoundingClientRect()})).filter(p=>p.r.width&&p.r.height);
+      const paragraphs=[...article.querySelectorAll('p')].map(p=>({text:p.textContent.trim().slice(0,45),r:p.getBoundingClientRect()})).filter(p=>p.r.width&&p.r.height);
       for(let i=0;i<paragraphs.length;i++)for(let j=i+1;j<paragraphs.length;j++) {
         const a=paragraphs[i],b=paragraphs[j];
         if(Math.min(a.r.right,b.r.right)-Math.max(a.r.left,b.r.left)>1&&Math.min(a.r.bottom,b.r.bottom)-Math.max(a.r.top,b.r.top)>1)found.push({title:article.querySelector('h3')?.textContent.trim(),a:a.text,b:b.text});
@@ -247,7 +247,7 @@ for (const [path, label] of PAGES) {
       record(where,'method paragraphs do not overlap',a.mathsOverlap.length===0,JSON.stringify(a.mathsOverlap));
       const bite=await page.evaluate(()=>{
         const before=window.__SL_MATHS_OVERLAP__().length,style=document.createElement('style');
-        style.textContent='.maths article > p:not(.formula){grid-column:2!important;grid-row:2!important}';document.head.append(style);
+        style.textContent='.maths article.budget-method{display:grid!important;grid-template-columns:minmax(0,24ch) minmax(0,65ch)!important}.budget-method-copy{display:contents!important}.maths article > p:not(.formula),.budget-method-copy > p{grid-column:2!important;grid-row:2!important}';document.head.append(style);
         const after=window.__SL_MATHS_OVERLAP__().length;style.remove();return {before,after};
       });
       record(where,'method overlap check bites',bite.before===0&&bite.after>0,JSON.stringify(bite));
