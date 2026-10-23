@@ -114,11 +114,19 @@
     "allowedSizes": null
   },
   "reasons": {
-    "dead|aside.atlas-layers": "The layer rail is a floating panel ON the map, not a column beside it. It is short on purpose — a rail as tall as the map would cover the city — so the space under it is the map itself. Check it: open /atlas at 1440px; the rail is 74x26 at x=12, y=62..88, and the element under it at 40, 150, 300, 450 and 600px below is canvas.maplibregl-canvas — satellite imagery and 3D blocks, not an empty band. The gate measures that space at 728..884px across the sweep, in a row of 820..976px. It is the map: the product, not a gap.",
+    "dead|aside.atlas-layers": "The layer rail is a floating panel ON the map, not a column beside it. It is short on purpose — a rail as tall as the map would cover the city — so the space under it is the map itself. Check it: open /atlas at 1440px; the rail is 74x26 at x=12, y=62..88, and the element under it at 40, 150, 300, 450 and 600px below is canvas.maplibregl-canvas — satellite imagery and 3D blocks, not an empty band. The gate measures that space at 726..882px across the sweep, in a row of 818..974px. It is the map: the product, not a gap.",
     "wrap|div.atlas-page-tools": "Below 340px the three page-level doors (city watch, Research & method, Data & sources) cannot sit on one row beside the Layers button: they need about 355px at the tightest padding that keeps them legible, and a 320px phone has 320. They wrap, and Data & sources ends up alone on the second row, right-aligned under the others. The alternative is the one that shipped until 22 October 2026: the row ran under Layers and hid its \"+\". A second short row over the map costs a few lines of city; a button covered by its neighbour costs a door. Check it: open /atlas at 339px and see City watch and Research & method on one row, Data & sources below them, and Layers uncovered. Wider than 340px the row is single and this reason does not apply.",
-    "dead|div.atlas-page-tools": "The three page-level doors — City watch, Research & method, Data & sources — are one right-hand row floating over the map, not a column beside it. The row is 30px tall because each door is a closed disclosure that opens over the map rather than taking a column of its own, so the map keeps every pixel of its height. Check it: open /atlas at 1440px; the row is 306x30 at x=1126, y=62..92, and the element under it at 40, 150, 300, 450 and 600px below is canvas.maplibregl-canvas. The gate measures that space at 691..938px across the sweep, in a row of 820..976px. It is the map."
+    "dead|div.atlas-page-tools": "The three page-level doors — City watch, Research & method, Data & sources — are one right-hand row floating over the map, not a column beside it. The row is 30px tall because each door is a closed disclosure that opens over the map rather than taking a column of its own, so the map keeps every pixel of its height. Check it: open /atlas at 1440px; the row is 306x30 at x=1126, y=62..92, and the element under it at 40, 150, 300, 450 and 600px below is canvas.maplibregl-canvas. The gate measures that space at 689..936px across the sweep, in a row of 818..974px. It is the map."
   },
   "exempt": [],
+  "provenance": {
+    "measuredAt": "2026-10-23T02:39:09.819Z",
+    "measurements": 208,
+    "routes": 4,
+    "widths": 52,
+    "measuredTogether": true,
+    "carriedOver": []
+  },
   "routes": {
     "/": {
       "339": {
@@ -1376,14 +1384,14 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 691,
-            "detail": "div.atlas-page-tools leaves 691px empty beneath it in a 820px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
           },
           {
             "kind": "wrap",
@@ -1393,7 +1401,7 @@
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -1419,14 +1427,14 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 691,
-            "detail": "div.atlas-page-tools leaves 691px empty beneath it in a 820px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
           },
           {
             "kind": "wrap",
@@ -1436,7 +1444,7 @@
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -1462,18 +1470,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -1499,18 +1507,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -1536,18 +1544,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -1573,18 +1581,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -1610,18 +1618,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -1647,18 +1655,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -1684,18 +1692,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -1721,18 +1729,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -1758,18 +1766,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -1795,18 +1803,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -1832,18 +1840,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -1869,18 +1877,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -1906,18 +1914,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -1943,18 +1951,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 884,
-            "detail": "aside.atlas-layers leaves 884px empty beneath it in a 976px row"
+            "metric": 882,
+            "detail": "aside.atlas-layers leaves 882px empty beneath it in a 974px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 880,
-            "detail": "div.atlas-page-tools leaves 880px empty beneath it in a 976px row"
+            "metric": 878,
+            "detail": "div.atlas-page-tools leaves 878px empty beneath it in a 974px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -1980,18 +1988,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 884,
-            "detail": "aside.atlas-layers leaves 884px empty beneath it in a 976px row"
+            "metric": 882,
+            "detail": "aside.atlas-layers leaves 882px empty beneath it in a 974px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 880,
-            "detail": "div.atlas-page-tools leaves 880px empty beneath it in a 976px row"
+            "metric": 878,
+            "detail": "div.atlas-page-tools leaves 878px empty beneath it in a 974px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -2017,18 +2025,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 884,
-            "detail": "aside.atlas-layers leaves 884px empty beneath it in a 976px row"
+            "metric": 882,
+            "detail": "aside.atlas-layers leaves 882px empty beneath it in a 974px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 880,
-            "detail": "div.atlas-page-tools leaves 880px empty beneath it in a 976px row"
+            "metric": 878,
+            "detail": "div.atlas-page-tools leaves 878px empty beneath it in a 974px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -2054,18 +2062,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 884,
-            "detail": "aside.atlas-layers leaves 884px empty beneath it in a 976px row"
+            "metric": 882,
+            "detail": "aside.atlas-layers leaves 882px empty beneath it in a 974px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 880,
-            "detail": "div.atlas-page-tools leaves 880px empty beneath it in a 976px row"
+            "metric": 878,
+            "detail": "div.atlas-page-tools leaves 878px empty beneath it in a 974px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -2091,18 +2099,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 884,
-            "detail": "aside.atlas-layers leaves 884px empty beneath it in a 976px row"
+            "metric": 882,
+            "detail": "aside.atlas-layers leaves 882px empty beneath it in a 974px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 938,
-            "detail": "div.atlas-page-tools leaves 938px empty beneath it in a 976px row"
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -2128,18 +2136,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 884,
-            "detail": "aside.atlas-layers leaves 884px empty beneath it in a 976px row"
+            "metric": 882,
+            "detail": "aside.atlas-layers leaves 882px empty beneath it in a 974px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 938,
-            "detail": "div.atlas-page-tools leaves 938px empty beneath it in a 976px row"
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3314,14 +3322,14 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 691,
-            "detail": "div.atlas-page-tools leaves 691px empty beneath it in a 820px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
           },
           {
             "kind": "wrap",
@@ -3331,7 +3339,7 @@
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3357,14 +3365,14 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 691,
-            "detail": "div.atlas-page-tools leaves 691px empty beneath it in a 820px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
           },
           {
             "kind": "wrap",
@@ -3374,7 +3382,7 @@
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3400,18 +3408,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3437,18 +3445,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3474,18 +3482,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3511,18 +3519,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3548,18 +3556,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3585,18 +3593,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3622,18 +3630,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3659,18 +3667,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3696,18 +3704,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3733,18 +3741,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3770,18 +3778,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3807,18 +3815,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3844,18 +3852,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 728,
-            "detail": "aside.atlas-layers leaves 728px empty beneath it in a 820px row"
+            "metric": 726,
+            "detail": "aside.atlas-layers leaves 726px empty beneath it in a 818px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 724,
-            "detail": "div.atlas-page-tools leaves 724px empty beneath it in a 820px row"
+            "metric": 722,
+            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3881,18 +3889,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 884,
-            "detail": "aside.atlas-layers leaves 884px empty beneath it in a 976px row"
+            "metric": 882,
+            "detail": "aside.atlas-layers leaves 882px empty beneath it in a 974px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 880,
-            "detail": "div.atlas-page-tools leaves 880px empty beneath it in a 976px row"
+            "metric": 878,
+            "detail": "div.atlas-page-tools leaves 878px empty beneath it in a 974px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3918,18 +3926,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 884,
-            "detail": "aside.atlas-layers leaves 884px empty beneath it in a 976px row"
+            "metric": 882,
+            "detail": "aside.atlas-layers leaves 882px empty beneath it in a 974px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 880,
-            "detail": "div.atlas-page-tools leaves 880px empty beneath it in a 976px row"
+            "metric": 878,
+            "detail": "div.atlas-page-tools leaves 878px empty beneath it in a 974px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3955,18 +3963,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 884,
-            "detail": "aside.atlas-layers leaves 884px empty beneath it in a 976px row"
+            "metric": 882,
+            "detail": "aside.atlas-layers leaves 882px empty beneath it in a 974px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 880,
-            "detail": "div.atlas-page-tools leaves 880px empty beneath it in a 976px row"
+            "metric": 878,
+            "detail": "div.atlas-page-tools leaves 878px empty beneath it in a 974px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -3992,18 +4000,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 884,
-            "detail": "aside.atlas-layers leaves 884px empty beneath it in a 976px row"
+            "metric": 882,
+            "detail": "aside.atlas-layers leaves 882px empty beneath it in a 974px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 880,
-            "detail": "div.atlas-page-tools leaves 880px empty beneath it in a 976px row"
+            "metric": 878,
+            "detail": "div.atlas-page-tools leaves 878px empty beneath it in a 974px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -4029,18 +4037,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 884,
-            "detail": "aside.atlas-layers leaves 884px empty beneath it in a 976px row"
+            "metric": 882,
+            "detail": "aside.atlas-layers leaves 882px empty beneath it in a 974px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 938,
-            "detail": "div.atlas-page-tools leaves 938px empty beneath it in a 976px row"
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {
@@ -4066,18 +4074,18 @@
           {
             "kind": "dead",
             "sel": "aside.atlas-layers",
-            "metric": 884,
-            "detail": "aside.atlas-layers leaves 884px empty beneath it in a 976px row"
+            "metric": 882,
+            "detail": "aside.atlas-layers leaves 882px empty beneath it in a 974px row"
           },
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 938,
-            "detail": "div.atlas-page-tools leaves 938px empty beneath it in a 976px row"
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
           }
         ],
         "firstAction": {
-          "y": 0,
+          "y": 1,
           "sel": "button"
         },
         "chrome": {

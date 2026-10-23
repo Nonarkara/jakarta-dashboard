@@ -6,8 +6,9 @@
  * ----------------
  * An interface invents a reason for things to occupy space when it arranges
  * itself around a grid instead of around how people read, choose and act.
- * The six modes are: unjustified gaps, orphan elements, scattered actions,
- * false hierarchy, accidental wrapping, spatially expensive information.
+ * The eight modes are: unjustified gaps, orphan elements, scattered actions,
+ * false hierarchy, accidental wrapping, spatially expensive information,
+ * chrome cost, overlapping chrome.
  *
  * The recurring question is "Why is this here, why this size, and why this
  * far from that?" — and the answer must never be "because the grid put it
@@ -404,13 +405,29 @@ function loadPage(route, w, h, cb) {
   // THIS navigation — the one whose URL carries this navigation's token —
   // and starts measuring as soon as it has parsed. The settle then waits for
   // the fonts, the images and the last change.
+  //
+  // The budget is WALL CLOCK, not a count of tries. A try count is a
+  // proxy for time, and it stops being one the moment the browser starts
+  // holding the timers back — which is exactly what a hidden page in a
+  // headless browser does, and what a machine with four other browsers on
+  // it does. Two sweeps on a shared machine sat on ONE measurement for
+  // fourteen and thirty minutes with the renderer idle at 0.1% CPU: the
+  // page was never going to be ready, the try budget was being spent at a
+  // crawl, and nothing in the loop was watching the clock.
+  //
+  // A gate that hangs is a gate that protects nothing. Thirty seconds of
+  // wall clock, then the measurement is reported as an error, and the
+  // sweep says so out loud instead of waiting for a browser that will
+  // never report.
   var tries = 0;
+  var waitStart = Date.now();
   (function wait() {
     if (token !== TOKEN) return;
     var d;
     try { d = f.contentDocument; } catch (e) { return finish({ route: route, w: w, error: 'cross-origin' }); }
     if (!d) return finish({ route: route, w: w, error: 'no document' });
-    if (tries++ > 1200) return finish({ route: route, w: w, error: 'timed out waiting for the page' });
+    if (Date.now() - waitStart > 30000 || tries++ > 1200)
+      return finish({ route: route, w: w, error: 'timed out waiting for the page' });
     var here = false;
     try {
       here = !!(d.location && String(d.location.search).indexOf('__spatial=' + token) >= 0);
@@ -534,6 +551,11 @@ let resultsResolve = null;
 // The measurements of the routes that are already done, carried from one
 // attempt to the next.
 let collected = [];
+// The status the upstream answered for each route's DOCUMENT, in --base
+// mode. A route that answers 404 or 500 renders an error page; an error
+// page has no spatial problems to find, so recording it as a clean page
+// would be a guarantee about nothing.
+const upstreamStatus = new Map();
 let completedRoutes = 0;
 function newResultsPromise() {
   return new Promise((resolve) => {
@@ -582,6 +604,7 @@ async function startServer(routes, widths) {
         return res.end(harnessHtml(widths, routes, completedRoutes));
       }
       if (raw === "/__spatial-results") return takeResults(req, res);
+      const q = (req.url || "").split("?")[1] || "";
       try {
         const target = new URL(raw, base + "/");
         const upstream = await fetch(target, {
@@ -589,6 +612,12 @@ async function startServer(routes, widths) {
           headers: { "user-agent": "spatial-law-probe", accept: "text/html,*/*" },
           redirect: "follow",
         });
+        // The status of the DOCUMENT the measurement came from is recorded,
+        // not the status of the asset that happened to be fetched last. A
+        // route that answers 404 or 500 renders an error page, and an error
+        // page has no spatial problems to find — so without this the gate
+        // certified a broken route as a clean one.
+        if (q.indexOf("__spatial=") >= 0) upstreamStatus.set(raw, upstream.status);
         const ct = upstream.headers.get("content-type") || "application/octet-stream";
         const body = Buffer.from(await upstream.arrayBuffer());
         // The proxy keeps every path, so the page's own relative URLs —
@@ -604,6 +633,10 @@ async function startServer(routes, widths) {
         res.writeHead(upstream.status, { "content-type": ct });
         res.end(body);
       } catch (e) {
+        // A route the proxy could not fetch at all. Record it as a failed
+        // fetch, so the measurement of it is reported as unreadable rather
+        // than as a clean page.
+        if (q.indexOf("__spatial=") >= 0) upstreamStatus.set(raw, 0);
         res.writeHead(502, { "content-type": "text/plain" });
         res.end("proxy error: " + e.message);
       }
@@ -644,23 +677,55 @@ async function startServer(routes, widths) {
 }
 
 // ---------------------------------------------------------------- the routes
+/**
+ * The pages a DEPLOYED site advertises, as opposed to the pages the receipt
+ * records. Empty for a build-directory sweep; filled in when the sweep is
+ * over a live site. A page the site advertises and the receipt does not
+ * record has never been reviewed, and that is reported rather than ignored.
+ */
+let advertisedRoutes = null;
+
+/**
+ * Is this path a FILE rather than a page?
+ *
+ * The test is a final segment with a dot and two or more letters, digits or
+ * hyphens after it. It has to be that wide: an earlier version allowed only
+ * two to five characters, which is fine for .png and .woff2 and useless for
+ * .webmanifest.
+ */
+function isAssetPath(p) {
+  return /\.[a-z0-9][a-z0-9-]{1,}$/i.test(p);
+}
+
 async function discoverRoutes() {
   if (ROUTES_ARG && typeof ROUTES_ARG === "string") {
     return ROUTES_ARG.split(",").map((r) => r.trim()).filter(Boolean);
   }
   if (BASE) {
-    // A deployed site has no directory to walk. Measure the same set the
-    // project ships by reading its sitemap AND the links on the home page —
-    // both, because either one alone misses pages: the sitemap of this site
-    // did not list /learn/ or /tikki/, and a home page link list does not
-    // reach the pages two links down.
+    // A deployed site has no directory to walk, so its pages are found by
+    // reading the sitemap AND the links on the home page — both, because
+    // either one alone misses pages: a sitemap does not list every page, and
+    // a home page link list does not reach the pages two links down.
+    //
+    // But that discovery is a PROXY, and it is not allowed to replace the
+    // receipt's route list. It used to: the live sweep measured whatever the
+    // proxy found, and then compared that against the receipt — so a page
+    // the receipt records but the proxy cannot see was reported as "missing
+    // page", and a page the site serves was called absent while it was
+    // standing right there answering 200. On this site that was /learn/, a
+    // forwarder the sitemap deliberately does not advertise.
+    //
+    // The receipt is the contract of what the project ships. A live run
+    // measures every route the receipt records, and ADDS the routes the site
+    // advertises, so that a page nobody has a receipt for is reported rather
+    // than silently ignored.
     const base = String(BASE).replace(/\/+$/, "");
     const routes = new Set(["/"]);
     try {
       const sm = await (await fetch(base + "/sitemap.xml")).text();
       for (const m of sm.matchAll(/<loc>([^<]+)<\/loc>/g)) {
         const u = new URL(m[1]);
-        if (u.origin === new URL(base).origin) routes.add(u.pathname);
+        if (u.origin === new URL(base).origin && !isAssetPath(u.pathname)) routes.add(u.pathname);
       }
     } catch {
       /* no sitemap — the home page links are still worth having */
@@ -673,12 +738,38 @@ async function discoverRoutes() {
         // A link with a file extension is an ASSET, not a page. /icon.svg and
         // /fonts/fonts.css are files; measuring them produced "no document"
         // failures and, with them, a run that measured nothing at all.
-        if (/\.[a-z0-9]{2,5}$/i.test(p)) continue;
+        //
+        // The extension test used to be two to five characters long, which
+        // missed /manifest.webmanifest — eleven characters — and so treated a
+        // resource reference as a page. A page then got the site's trailing
+        // slash appended, and the route it invented (/manifest.webmanifest/)
+        // answered 404 on the deployed site. The gate did the right thing
+        // with it (a route that answers 404 is a measurement that could not
+        // be read, and the gate fails), but the route was the instrument's
+        // own invention, and it failed a clean deployment for a URL that
+        // nobody ever asked for.
+        //
+        // So the test is: a final segment with a dot and two or more letters
+        // or digits after it is a file. A page that merely CONTAINS a dot
+        // (/v1.0/guide/) ends in a slash and is unaffected; a path ending in
+        // a single character after the dot (/v1.0) is not a common file
+        // extension and stays a page.
+        if (isAssetPath(p)) continue;
         routes.add(p.endsWith("/") ? p : p + "/");
       }
     } catch {
       /* nothing else to try */
     }
+
+    // The pages the site ADVERTISES, kept apart from the pages the RECEIPT
+    // records. A page that is advertised and has no receipt has never been
+    // reviewed, and that is reported below rather than swallowed.
+    advertisedRoutes = [...routes].sort();
+
+    // Every route the receipt records is measured, whether the site
+    // advertises it or not. The receipt is the contract.
+    for (const rt of Object.keys((baseline && baseline.routes) || {})) routes.add(rt);
+
     return [...routes].sort();
   }
   const root = path.resolve(String(DIR));
@@ -1081,6 +1172,22 @@ if (results.length !== expected || missingPairs.length || duplicatePairs.length)
   console.error(`  A page measured twice is the same count as a page never measured.\n`);
   process.exit(1);
 }
+// The status of the route's document, in --base mode. A route that answers
+// 404 or 500 renders an error page, and an error page cannot be certified:
+// it has no layout to find problems in. So the measurement is refused here,
+// rather than reported as a clean route.
+if (upstreamStatus.size) {
+  for (const r of results) {
+    if (r.error) continue;
+    const st = upstreamStatus.get(r.route);
+    if (st === undefined) continue;
+    if (st === 0) {
+      r.error = "the route could not be fetched";
+    } else if (st < 200 || st >= 400) {
+      r.error = `the route answered ${st}`;
+    }
+  }
+}
 const errored = results.filter((r) => r.error);
 if (errored.length) {
   console.error(`\nFAIL — the spatial gate could not read ${errored.length} page measurement(s):`);
@@ -1106,6 +1213,20 @@ const baselineRoutes = (baseline && baseline.routes) || {};
 const reasons = (baseline && baseline.reasons) || {};
 
 const failures = [];
+// A receipt that says it is an assembly is held to that claim: every
+// carried-over cell is compared against a fresh measurement like any other,
+// and the reader is told which cells came from the earlier sweep.
+const provenance = (baseline && baseline.provenance) || null;
+if (provenance && Array.isArray(provenance.carriedOver) && provenance.carriedOver.length) {
+  notes.push(
+    `this receipt is an ASSEMBLY: ${provenance.carriedOver.length} of ${routes.length} route(s) carried cells over from an earlier sweep` +
+      (provenance.measuredAt ? ` (${provenance.measuredAt})` : "") +
+      ` — every carried cell was re-measured on this run and compared, so an assembly cannot hide a change`,
+  );
+  for (const r of provenance.carriedOver.slice(0, 60)) {
+    notes.push(`  · carried over from the earlier sweep: ${r}`);
+  }
+}
 if (cssNotFound) {
   notes.push(
     `the stylesheet was not found at ${cssNotFound} — the sweep fell back to the project's own widths, ` +
@@ -1519,6 +1640,22 @@ if (!ROUTES_ARG) {
   }
 }
 
+// The other direction. For a build-directory sweep it cannot happen — the
+// sweep walks the build, so every page in the build is either recorded or
+// missing. For a LIVE sweep the pages come from the sitemap and the home
+// page, so a page can be advertised by the site and recorded by nobody: a
+// page a reader can reach that has never been measured, and never reviewed.
+if (advertisedRoutes && !ROUTES_ARG) {
+  for (const rt of advertisedRoutes) {
+    if (baselineRouteList.includes(rt)) continue;
+    failures.push(
+      `page without a receipt — the site advertises "${rt}" and the baseline records no such page. ` +
+        `A page a reader can reach that nobody has ever measured is a page nobody reviewed. ` +
+        `Measure it and record it, or take it out of the site.`,
+    );
+  }
+}
+
 // A stale reason can only be judged when the sweep was COMPLETE — and
 // "complete" means both axes. A run over a few routes has not seen the
 // routes the reason belongs to, and calling that reason stale would be the
@@ -1589,6 +1726,26 @@ if (UPDATE) {  // A reason for a decision that is no longer there is not recorde
     // Written exceptions to the absolute limits, kept for the same reason:
     // an exception is a decision, and a decision is written down.
     exempt: keptExempts,
+    // What this receipt is a receipt OF. A receipt that does not say where
+    // it came from is a number with no source: nobody can check it, and
+    // nobody can know whether it has gone stale.
+    //
+    // A receipt written by one sweep says so. A receipt ASSEMBLED from two
+    // sweeps — the routes that did not change carried over from the earlier
+    // one, the changed route measured again — says that instead, and names
+    // the routes it carried over. The assembly is checked on every run: a
+    // carried-over cell is compared against a fresh measurement like any
+    // other, so an assembly cannot hide a change. But a reader has to be
+    // told, because a receipt that claims to be one sweep and is two is a
+    // receipt with a false claim in it.
+    provenance: {
+      measuredAt: new Date().toISOString(),
+      measurements: results.length,
+      routes: new Set(results.map((r) => r.route)).size,
+      widths: widths.length,
+      measuredTogether: true,
+      carriedOver: [],
+    },
     routes: {},
   };
   const signatureDetail = new Map();
@@ -1667,8 +1824,24 @@ if (UPDATE) {  // A reason for a decision that is no longer there is not recorde
 
 // ---------------------------------------------------------------- report
 if (REPORT) {
+  // The route column is sized to the longest route in THIS report, with a
+  // minimum of 22 characters.
+  //
+  // It used to be a fixed 22, and a route longer than 21 characters ran
+  // straight into the width column with no space between them. On this site
+  // that was /bible/duties-state-policy/, and the row it produced read:
+  //
+  //   /bible/duties-state-policy/390   1     0     1 ...
+  //
+  // which is a route called "/bible/duties-state-policy/390" at width 1.
+  // A report is evidence, and evidence whose columns collide cannot be
+  // read by anyone checking it — so the column now fits what it holds.
+  const routeCol = Math.max(
+    22,
+    ...results.map((r) => String(r.route).length + 2),
+  );
   console.log(
-    "route".padEnd(22) + "w".padEnd(6) + "find".padEnd(6) + "dead".padEnd(6) + "orph".padEnd(6) +
+    "route".padEnd(routeCol) + "w".padEnd(6) + "find".padEnd(6) + "dead".padEnd(6) + "orph".padEnd(6) +
     "wrap".padEnd(6) + "clip".padEnd(6) + "scat".padEnd(6) + "ovlp".padEnd(6) + "act-y".padEnd(8) +
     "h1".padEnd(6) + "ratio".padEnd(7) + "share".padEnd(7) + "chrome-t".padEnd(9) + "chrome-b".padEnd(9) + "stack",
   );
@@ -1677,7 +1850,7 @@ if (REPORT) {
     const h = r.hierarchy || {};
     const c = r.chrome || {};
     console.log(
-      String(r.route).padEnd(22) + String(r.w).padEnd(6) + String(r.findings.length).padEnd(6) +
+      String(r.route).padEnd(routeCol) + String(r.w).padEnd(6) + String(r.findings.length).padEnd(6) +
       String(count("dead")).padEnd(6) + String(count("orphan")).padEnd(6) + String(count("wrap")).padEnd(6) +
       String(count("clip")).padEnd(6) + String(count("scattered")).padEnd(6) + String(count("overlap")).padEnd(6) +
       String(r.firstAction ? r.firstAction.y : "-").padEnd(8) + String(h.h1 || "-").padEnd(6) +
@@ -1742,7 +1915,11 @@ if (REPORT) {
     for (const k of staleReasons) console.log(`  · ${k}`);
   }
   printNotes();
-  process.exit(0);
+  // The report is MORE output, not a way past the verdict. It used to end
+  // here with exit 0, which meant a run with --report could not fail: the
+  // findings were printed and the gate walked away green. A report that
+  // cannot fail is not evidence of anything. So the report falls through to
+  // the verdict below, which decides the exit code.
 }
 
 // ---------------------------------------------------------------- verdict

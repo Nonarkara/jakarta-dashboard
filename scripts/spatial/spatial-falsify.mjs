@@ -127,15 +127,38 @@ const FIXTURES = [
     // proves the measurement also catches the chrome that covers the work
     // instead of merely costing height. Without this fixture the overlap
     // rule would be a rule nobody had ever seen fail.
+    //
+    // The bar has to REACH the work. It is 420px tall because this site's
+    // own furniture — the header and the door row under it — already occupies
+    // the top ~140px, so a shorter bar stands in empty space above the
+    // reading and covers nothing: the gate reported that the chrome had
+    // grown, which is the previous fixture's job, and the overlap it was
+    // injected to prove went unmentioned. A fixture that lands on empty
+    // space proves nothing about the rule it names.
     name: "a fixed bar sits on top of the work",
     mode: "overlapping chrome",
     at: "top",
-    html: `<div class="sl-overlap" style="position:fixed;top:0;left:0;right:0;height:140px;background:#334455;z-index:9999"></div>`,
+    html: `<div class="sl-overlap" style="position:fixed;top:0;left:0;right:0;height:420px;background:#334455;z-index:9999"></div>`,
     // The finding names the element that is on top of the work. The gate
     // prints it in two places — in the failure line ("overlap: div.sl-overlap
     // has no written reason") and in the list of decisions — and the check
     // is for the ELEMENT, not for the punctuation around it.
     expect: "div.sl-overlap",
+  },
+  {
+    // The SAME overlap, pinned to the RIGHT of the column instead of across
+    // it. The fixture above is full width, so its bar sits over the content's
+    // left edge too — and a rule that only ever looked near the left edge
+    // would pass that one and miss this. The rule used to ask the browser
+    // what was on top at one point: twenty pixels in from the content's left
+    // edge. A bar that starts further right than that was never asked
+    // about, so a bar covering the reading was reported as clean. The rule
+    // now asks across the width where the two actually meet.
+    name: "a fixed bar pinned to the right sits on top of the work",
+    mode: "overlapping chrome",
+    at: "top",
+    html: `<div class="sl-overlap-right" style="position:fixed;top:0;right:0;width:200px;height:420px;background:#334455;z-index:9999"></div>`,
+    expect: "sl-overlap-right",
   },
 ];
 
@@ -170,9 +193,64 @@ function cleanup() {
 process.on("exit", cleanup);
 for (const sig of ["SIGINT", "SIGTERM"]) process.on(sig, () => { cleanup(); process.exit(130); });
 
+// The verdict is at the END of the output — the notes are printed to stdout and
+// the failures to stderr, and stdout comes first — so the excerpt shows the
+// tail, not the head.
+function excerpt(out) {
+  return out.trim().split("\n").slice(-14).join("\n");
+}
+
+// The wall-clock budget for the gate the falsifier runs.
+//
+// The falsifier measures the whole estate: every route, at three widths, each
+// one loaded fresh. On an idle machine that is a few minutes. On a busy one —
+// and a laptop running three agents' browsers at once is a busy one — the
+// same sweep can take an order of magnitude longer, and a sweep killed at
+// the deadline reports nothing at all.
+//
+// The old budget was fifteen minutes. That was enough on an idle machine and
+// not enough on a busy one, so the falsifier failed for a reason that had
+// nothing to do with the gate it was testing: it failed by being killed, and
+// it said "the gate could not write a baseline", which is a sentence about
+// the gate that was really a sentence about the clock.
+//
+// So the budget is generous, and a deadline that is hit is named as a
+// deadline. 43 routes x 3 widths = 129 fresh loads; the measured cost is
+// about two seconds a load on a quiet runner (the same sweep at 58 widths
+// across 43 routes takes about seventy minutes), which is four minutes here
+// and can be forty on a loaded box. Forty-five minutes covers the honest
+// worst case, and the budget is the falsifier's own — so hitting it is the
+// falsifier's own failure, and it says so in those words.
+const FULL_GATE_BUDGET_MS = 45 * 60 * 1000;
+const ONE_ROUTE_BUDGET_MS = 10 * 60 * 1000;
+
+/**
+ * Run the gate, and say what happened in terms the reader can act on.
+ *
+ * `spawnSync` hands back a NULL status when the child was killed, and a null
+ * status is not a verdict. The old code read every null status as "the gate
+ * answered no", so a killed sweep was reported as a gate that could not do
+ * its job. Both are now named for what they are.
+ */
+function runGateProcess(args, budget) {
+  const res = spawnSync(process.execPath, args, { encoding: "utf8", timeout: budget });
+  const out = `${res.stdout || ""}${res.stderr || ""}`;
+  if (res.status === null) {
+    const timedOut = res.error && res.error.code === "ETIMEDOUT";
+    return {
+      pass: false,
+      finished: false,
+      why: timedOut
+        ? `the gate did not finish within ${Math.round(budget / 1000)}s`
+        : `the gate died before it answered (${res.error ? res.error.code : "unknown error"})`,
+      out,
+    };
+  }
+  return { pass: res.status === 0, finished: true, why: null, out };
+}
+
 function runGate(args, routes) {
-  const res = spawnSync(
-    process.execPath,
+  return runGateProcess(
     [
       CHECK,
       "--dir",
@@ -185,25 +263,32 @@ function runGate(args, routes) {
       WIDTHS,
       ...args,
     ],
-    { encoding: "utf8", timeout: 600000 },
+    ONE_ROUTE_BUDGET_MS,
   );
-  return {
-    pass: res.status === 0,
-    out: `${res.stdout || ""}${res.stderr || ""}`,
-  };
 }
 
 /** The same gate, but over EVERY route in the copy. */
 function runFullGate(args) {
-  const res = spawnSync(
-    process.execPath,
+  return runGateProcess(
     [CHECK, "--dir", COPY, "--baseline", BASELINE, "--widths", WIDTHS, ...args],
-    { encoding: "utf8", timeout: 900000 },
+    FULL_GATE_BUDGET_MS,
   );
-  return {
-    pass: res.status === 0,
-    out: `${res.stdout || ""}${res.stderr || ""}`,
-  };
+}
+
+/**
+ * A gate that never finished has neither passed nor failed. Report it as an
+ * unfinished run and stop: every later result would be measured against a
+ * baseline that may not exist, so the honest answer is "I did not learn".
+ */
+function requireFinished(res) {
+  if (res.finished) return;
+  console.error(
+    `\nFAIL — ${res.why}.\n` +
+      `  That is the falsifier's own budget, not the gate's verdict: the gate\n` +
+      `  was still working when the clock ran out, so nothing here says whether\n` +
+      `  it catches anything. Free the machine and run it again.\n`,
+  );
+  process.exit(1);
 }
 
 // ---------------------------------------------------------------- the baseline
@@ -211,6 +296,7 @@ function runFullGate(args) {
 // the clean copy can pass. This baseline is a measuring device for the
 // falsifier, not a review of the project.
 const gen = runFullGate(["--update"]);
+requireFinished(gen);
 if (!existsSync(BASELINE)) {
   console.error(`\nFAIL — the gate could not write a baseline for the falsifier.\n${gen.out}\n`);
   process.exit(1);
@@ -236,6 +322,7 @@ writeFileSync(BASELINE, JSON.stringify(baseline, null, 2) + "\n");
 
 // ---------------------------------------------------------------- the clean run
 const clean = runGate([]);
+requireFinished(clean);
 if (!clean.pass) {
   console.error("\nFAIL — the gate does not pass on the clean build. Fix that first.\n");
   console.error(clean.out);
@@ -307,8 +394,14 @@ const MOUNTER = `<script id="__sl_mounter__">
 
 function inject(html, at) {
   const mounter = MOUNTER.replace("__HTML__", JSON.stringify(html)).replace("__WHERE__", JSON.stringify(at));
-  const m2 = /<\/main\s*>/i.exec(ORIGINAL);
-  if (m2) return ORIGINAL.slice(0, m2.index) + "\n" + mounter + "\n" + ORIGINAL.slice(m2.index);
+  // The script has to RUN, so it cannot go inside a <noscript>: a browser
+  // does not execute what is in there, so the fixture is never mounted, the
+  // gate never sees the defect it was given, and every rule reports itself
+  // dead while proving nothing. An app shell usually carries a <main>
+  // inside its <noscript> fallback — the "JavaScript is required" page —
+  // and that is the one a regex finds first. So the script goes at the end
+  // of the body, and the mounter finds the page's own mount target at
+  // runtime, which is what it was written to do.
   const m3 = /<\/body\s*>/i.exec(ORIGINAL);
   if (m3) return ORIGINAL.slice(0, m3.index) + "\n" + mounter + "\n" + ORIGINAL.slice(m3.index);
   return ORIGINAL + mounter;
@@ -326,13 +419,14 @@ for (const f of FIXTURES) {
   const res = runGate([]);
   writeFileSync(BASELINE, savedBaseline);
   writeFileSync(PAGE, ORIGINAL);
+  requireFinished(res);
   if (res.pass) {
     console.error(`  ✗ ${f.name} — the gate did NOT catch it. The rule is dead.`);
     failures++;
   } else if (!res.out.includes(f.expect)) {
     console.error(
       `  ✗ ${f.name} — the gate failed, but not for the expected reason.\n` +
-        `      expected a message containing "${f.expect}", got:\n${res.out.trim().split("\n").slice(0, 8).join("\n")}`,
+        `      expected a message containing "${f.expect}", got:\n${excerpt(res.out)}`,
     );
     failures++;
   } else {
@@ -521,43 +615,55 @@ const BASELINE_RULES = [
     },
   },
   {
-    // The gate measures most widths by RESIZING a page it has already
-    // loaded, and proves on every run that a resized page and a freshly
-    // loaded page agree. If that proof never fires, it is decoration.
+    // The gate loads EVERY width fresh, so the geometry it records is the
+    // geometry a reader gets at that width. If it did not, a page that
+    // decides its layout once, from the width it was loaded at, would be
+    // measured at whichever width it happened to be loaded at first — and
+    // every other width would be a lie.
     //
-    // This page decides its gap ONCE, from the width it was loaded at, and
-    // never again — so a resized page and a freshly loaded page genuinely
-    // disagree, and the gate has to notice.
-    name: "a page whose layout depends on the width it was loaded at",
-    expect: "measuring two different layouts",
-    routes: "/sl-load-width/",
+    // This page decides its gap ONCE, at load, and never again. The gap
+    // exists only between 700px and 800px. So the gate must find it at
+    // 768px and must NOT report it at 390px or at 1440px, where the page
+    // has no gap at all.
+    name: "a page whose layout is decided by the width it was loaded at",
+    expect: "/sl-one-width/ @768px",
+    // The finding marker, not the route: a route the receipt has never seen
+    // is named in the NOTES as well ("no baseline entry for this
+    // route/width"), so a bare route would read as a finding at every width
+    // it was measured at. A FINDING at 390 or 1440 would be the gate
+    // inventing a hole where the page has none.
+    not: ["✗ /sl-one-width/ @390px", "✗ /sl-one-width/ @1440px"],
+    routes: "/sl-one-width/",
     site: () => {
-      const dir = path.join(COPY, "sl-load-width");
+      const dir = path.join(COPY, "sl-one-width");
       mkdirSync(dir, { recursive: true });
       writeFileSync(
         path.join(dir, "index.html"),
         `<!doctype html><html><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>load width</title>
+<title>one width</title>
 <style>html,body{margin:0;padding:0;background:#fff}main{padding:24px}
 main h1{font-size:32px;margin:0 0 16px}
 .sl-col{display:flex;flex-direction:column}
 .sl-a{height:24px;background:#ddd}.sl-b{height:24px;background:#ccc}</style>
 </head><body>
 <main id="content">
-<h1>Load width</h1>
+<h1>One width</h1>
 <div class="sl-col"><div class="sl-a"></div><div class="sl-b"></div></div>
 </main>
 <script>
 // The gap is decided ONCE, when the page loads, from the width it was
 // loaded at. Resizing the window afterwards does not move it, so a resized
-// page and a freshly loaded page are genuinely different pages.
-document.querySelector(".sl-b").style.marginTop = window.innerWidth >= 700 ? "260px" : "0px";
+// page and a freshly loaded page are genuinely different pages. The gap
+// exists only in one range of widths, so the gate has to be measuring each
+// width at its own width.
+var w = window.innerWidth;
+document.querySelector(".sl-b").style.marginTop = (w >= 700 && w < 800) ? "260px" : "0px";
 </script>
 </body></html>`,
       );
     },
-    cleanupSite: () => rmSync(path.join(COPY, "sl-load-width"), { recursive: true, force: true }),
+    cleanupSite: () => rmSync(path.join(COPY, "sl-one-width"), { recursive: true, force: true }),
   },
 ];
 
@@ -566,6 +672,7 @@ for (const rule of BASELINE_RULES) {
   if (rule.site) rule.site();
   withBaseline(rule.mutate || (() => {}));
   const res = rule.full ? runFullGate([]) : runGate([], rule.routes);
+  requireFinished(res);
   if (rule.cleanupSite) rule.cleanupSite();
   writeFileSync(BASELINE, BASELINE_SAVED);
   if (rule.expect === null) {
@@ -573,7 +680,7 @@ for (const rule of BASELINE_RULES) {
     // it rather than time out on it.
     if (!res.pass) {
       console.error(
-        `  ✗ ${rule.name} — the gate failed instead of measuring it:\n${res.out.trim().split("\n").slice(0, 8).join("\n")}`,
+        `  ✗ ${rule.name} — the gate failed instead of measuring it:\n${excerpt(res.out)}`,
       );
       failures++;
     } else if (res.out.includes("timed out waiting for the page")) {
@@ -587,10 +694,15 @@ for (const rule of BASELINE_RULES) {
   if (res.pass) {
     console.error(`  ✗ ${rule.name} — the gate did NOT catch it. The rule is dead.`);
     failures++;
-  } else if (!res.out.includes(rule.expect) || (rule.also || []).some((a) => !res.out.includes(a))) {
+  } else if (
+    !res.out.includes(rule.expect) ||
+    (rule.also || []).some((a) => !res.out.includes(a)) ||
+    (rule.not || []).some((n) => res.out.includes(n))
+  ) {
     console.error(
       `  ✗ ${rule.name} — the gate failed, but not for the expected reason.\n` +
-        `      expected a message containing "${rule.expect}"${(rule.also || []).map((a) => ` and "${a}"`).join("")}, got:\n${res.out.trim().split("\n").slice(0, 8).join("\n")}`,
+        `      expected a message containing "${rule.expect}"${(rule.also || []).map((a) => ` and "${a}"`).join("")}` +
+        `${(rule.not || []).map((n) => ` and NOT "${n}"`).join("")}, got:\n${excerpt(res.out)}`,
     );
     failures++;
   } else {
@@ -607,10 +719,11 @@ for (const rule of BASELINE_RULES) {
   writeFileSync(BASELINE, JSON.stringify(b, null, 2) + "\n");
   const res = runGate([]);
   writeFileSync(BASELINE, BASELINE_SAVED);
+  requireFinished(res);
   if (!res.pass) {
     console.error(
       `  ✗ a partial sweep is not told a reason is stale — the gate failed on a reason it never had the chance to see:\n` +
-        res.out.trim().split("\n").slice(0, 8).join("\n"),
+        excerpt(res.out),
     );
     failures++;
   } else {
@@ -627,9 +740,10 @@ const modes = [...new Set(FIXTURES.map((f) => f.mode))].sort();
 console.log(
   `\n  · spatial gate: ${FIXTURES.length} injected page defects, ${BASELINE_RULES.length + 1} broken-baseline cases ` +
     `and 1 case about the instrument itself, all caught.\n` +
-    `  · modes covered: ${modes.join(", ")} — ${modes.length} of the 6.\n` +
+    `  · modes covered: ${modes.join(", ")} — ${modes.length} of the 8.\n` +
     `  · Every mode has failed at least once, every rule about the baseline has failed at least once, ` +
-    `and the cross-check between a resized page and a freshly loaded page has failed at least once.\n`,
+    `and a page that decides its layout once, from the width it was loaded at, has been caught at the width ` +
+    `where a reader would see it.\n`,
 );
 // Everything was caught, so the proof is over and the process ends here
 // rather than waiting for a handle it has no further use for.

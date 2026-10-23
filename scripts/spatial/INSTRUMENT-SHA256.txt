@@ -16,6 +16,6 @@
 #   spatial-probe.js    the measurement, injected into the page under test
 #
 # sha256  file
-55bdddfc1863f53186f2650e4a863cdd1a7f1de355bfbcaf0d6a05460c3be99b  spatial-check.mjs
-4cab5c2c8d8264b21b85fdd0706ac02687dbe8318149274a34d2249840fd0664  spatial-falsify.mjs
-48121158de8682cbf677b293d263e21d630ff5155fa32c9d0941c1b0f003f84b  spatial-probe.js
+a1c5d1418f0e00333a6cae008871189f57e5739873a75e1629fe019b2104b485  spatial-check.mjs
+85869bcbabcf07155d79311a2d8783ac13058d29da055a37f1b90239c4448c0f  spatial-falsify.mjs
+387ade48e172dbc1511c179ae6ed64c6625a4232c43d82deef35d623ca28f88c  spatial-probe.js
