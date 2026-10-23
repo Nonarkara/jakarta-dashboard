@@ -14,6 +14,12 @@ The Research dialog now has three more tabs beside the project, flood and report
 
 The Banjir / Flood desk popup couples those live signals with the dated Jakarta Satu monitoring network: AWLR water-level stations with official SIAGA 1–4 alert thresholds grouped by river, ARR rain gauges, pumps, floodgates and reservoirs, flood-risk reference polygons joined to 2023 kelurahan population, and the situ inventory. This flood desk keeps published thresholds separate from the live, local-datum BBWS readings in the waterways lens. Unavailable feeds stay explicit states with official links.
 
+## Boundary water budget · 23 October 2026
+
+In `/atlas?lens=waterways`, open evidence → Rain → polder water budget. Select one of 64 valid DSDA boundaries, use a complete current hourly model-rain profile or explicitly choose a test storm, then change the assumed pumping/runoff. The account shows hourly water to store or drain, a zero-pump comparison, a readable table and a reproducible JSON export. Available space starts unknown; it is a comparison threshold, never a flood-depth estimate.
+
+The offline join uses original DSDA polygons for metric area and native WorldCover 2021 pixel centres for land context, retaining holes. One invalid boundary is excluded and one original-boundary overlap pair is recorded; scenarios cannot be summed into a city total. Display geometry is separately simplified. `npm run prepare:polder-budget` reproduces the derived reference; `python3 scripts/prepare-polder-budget.py --check` rechecks it without writing. Raw hashes, algorithms, attribution and exclusions travel with the product. Land cover does not set a runoff coefficient. No terrain, tide, river exchange, calibrated drainage or measured pump/storage capacity is implied. See [the audit](docs/POLDER-BUDGET-AUDIT-2026-10-23.md).
+
 ## Water context acquired · 15 October 2026
 
 The waterways evidence panel now includes an independent BMKG Tanjung Priok coastal forecast and an optional ESA WorldCover 2021 land-cover overlay. Tide and wave heights retain their forecast times and metre units; the unknown vertical datum prevents a river/terrain join. WorldCover is a 10 m historical classification, displayed at 20 m using nearest-neighbour sampling, with full-native cell composition in a mainland rectangle. Built-up is not measured impermeability; permanent water is not current flood extent. Full publisher attribution, raw crop, checksums and reproduction scripts are retained.

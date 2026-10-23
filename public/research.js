@@ -101,10 +101,10 @@ function renderFiles([buildings, transit, catalog, flood]) {
     // buys the bar its length back: the label column is sized to the longest
     // name, so every extra word is taken straight out of the track.
     const STATUS = [
-      ['integrated', t('Terintegrasi', 'Terintegrasi'), css('--ink')],
-      ['candidate', t('Kandidat', 'Kandidat'), css('--accent')],
-      ['registration-required', t('Perlu registrasi', 'Perlu registrasi'), css('--dim')],
-      ['blocked', t('Terblokir', 'Terblokir'), css('--lacquer')],
+      ['integrated', t('Integrated', 'Terintegrasi'), css('--ink')],
+      ['candidate', t('Candidate', 'Kandidat'), css('--accent')],
+      ['registration-required', t('Registration needed', 'Perlu registrasi'), css('--dim')],
+      ['blocked', t('Blocked', 'Terblokir'), css('--lacquer')],
     ];
     barChart(st, STATUS.map(([k, label, colour]) => ({ label, value: count(k), colour })), { total: records.length || null });
 
@@ -116,8 +116,8 @@ function renderFiles([buildings, transit, catalog, flood]) {
     const OPEN = /^(CC BY 4\.0|CC BY-NC 4\.0|ODbL|Apache-2\.0)/i;
     const namesOpen = records.filter((r) => OPEN.test(String(r.license ?? '').trim()));
     barChart(lic, [
-      { label: t('Tanpa lisensi terbuka', 'Tanpa lisensi terbuka'), value: records.length - namesOpen.length, colour: css('--ink') },
-      { label: t('Dengan lisensi terbuka', 'Dengan lisensi terbuka'), value: namesOpen.length, colour: css('--accent') },
+      { label: t('No open licence stated', 'Tanpa lisensi terbuka'), value: records.length - namesOpen.length, colour: css('--ink') },
+      { label: t('Open licence stated', 'Dengan lisensi terbuka'), value: namesOpen.length, colour: css('--accent') },
     ], { total: records.length || null });
 
     const detail = document.getElementById('src-licence-detail');

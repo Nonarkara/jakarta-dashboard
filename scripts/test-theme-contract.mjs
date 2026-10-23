@@ -14,10 +14,11 @@ function luminance(hex){const rgb=hex.match(/[0-9a-f]{2}/g).map(v=>parseInt(v,16
 function contrast(a,b){let x=luminance(a),y=luminance(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);}
 for(const theme of ['dark','light','contrast']){
  const values=tokens(theme);
- for(const ink of ['--ink','--dim','--accent'])for(const ground of ['--bg','--bg-raised','--bg-strong'])assert.ok(contrast(values[ink],values[ground])>=4.5,`${theme} ${ink}/${ground} contrast`);
+ for(const ink of ['--ink','--dim','--accent','--signal-alert'])for(const ground of ['--bg','--bg-raised','--bg-strong'])assert.ok(contrast(values[ink],values[ground])>=4.5,`${theme} ${ink}/${ground} contrast`);
  for(const ground of ['--bg','--bg-raised','--bg-strong'])assert.ok(contrast(values['--line'],values[ground])>=3,`${theme} control boundaries`);
  assert.ok(contrast(values['--accent-ink'],values['--accent'])>=4.5,`${theme} filled control`);
  assert.ok(contrast(values['--accent-ink'],values['--accent-hover'])>=4.5,`${theme} hover control`);
+ for(const ground of ['--bg','--bg-raised','--bg-strong'])assert.ok(contrast(values['--signal-water'],values[ground])>=3,`${theme} water chart line contrast`);
  if(theme==='contrast')assert.ok(contrast(values['--ink'],values['--bg'])>=15);
  console.log(theme,'body',contrast(values['--ink'],values['--bg']).toFixed(2),'secondary',contrast(values['--dim'],values['--bg']).toFixed(2));
 }

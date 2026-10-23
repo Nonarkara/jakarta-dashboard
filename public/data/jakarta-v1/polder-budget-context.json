@@ -1,0 +1,6252 @@
+{
+ "contract": "polder-budget-context-v1",
+ "boundaryTier": "official-reference-geometry-derived",
+ "landCoverTier": "satellite-classification-reference",
+ "boundarySourceUrl": "https://jakartasatu.jakarta.go.id/server/rest/services/DSDA/Polder_Jakarta/FeatureServer/0/query",
+ "boundaryRetrievedAt": "2026-10-15T14:31:29.870182+00:00",
+ "boundaryObservedAt": null,
+ "landCoverSourceUrl": "https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/ESA_WorldCover_10m_2021_v200_S09E105_Map.tif",
+ "landCoverPeriod": [
+  "2021-01-01",
+  "2021-12-31"
+ ],
+ "landCoverLicense": "CC BY 4.0",
+ "landCoverAttribution": "© ESA WorldCover project 2021 / Contains modified Copernicus Sentinel data (2021) processed by ESA WorldCover consortium",
+ "boundaryLicense": "Dataset-specific open license not stated; publisher attribution retained.",
+ "inputHashes": {
+  "rawPolders": "fdd8717fdb05401beacbb1ca3e8910fd53ba6e2a32943669caae6f3ecb4e41ab",
+  "displayPolders": "32e3ab5b713e3197b53eae6f5cdafe9946e70f49c9e1c0de3dfd4c73d6ff157e",
+  "nativeWorldCover": "4f926e3f19c6d437eb74dde957f845b7de032b19dff4bca6e1f50e70dcafaa1f"
+ },
+ "method": {
+  "area": "WGS84 polygon projected to EPSG:32748; square metres; holes retained",
+  "landCover": "All native pixel centres inside original valid polygon; all_touched=False; holes and multipolygons retained",
+  "invalidGeometry": "Excluded without repair; still visible in existing reference map",
+  "aggregation": "Overlapping boundaries are independent scenarios. Never sum to a city total."
+ },
+ "sourceRecordCount": 65,
+ "count": 64,
+ "excluded": [
+  {
+   "id": 48,
+   "name": "Sunter Timur II Kebantenan - KBN",
+   "reason": "Ring Self-intersection[106.917238694318 -6.13705114053594]"
+  }
+ ],
+ "overlapPairs": [
+  [
+   4,
+   7
+  ]
+ ],
+ "records": [
+  {
+   "id": 1,
+   "name": "PIK Golf Course",
+   "areaM2": 1599434.119,
+   "representativePoint": [
+    106.74377771126666,
+    -6.115687449540054
+   ],
+   "bounds": [
+    106.73571109805364,
+    -6.121786125274784,
+    106.75220789465911,
+    -6.109538603634367
+   ],
+   "nativeCells": 18803,
+   "nodataCells": 0,
+   "validCells": 18803,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 5502
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 7164
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 36
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 5127
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 19
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 935
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 20
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "name": "PIK Selatan Timur",
+   "areaM2": 1791576.096,
+   "representativePoint": [
+    106.76337125373176,
+    -6.12588535767439
+   ],
+   "bounds": [
+    106.75300036182637,
+    -6.130600663250127,
+    106.7736611323054,
+    -6.121573453739577
+   ],
+   "nativeCells": 21081,
+   "nodataCells": 0,
+   "validCells": 21081,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 3974
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 5742
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 4
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 10267
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 17
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 1077
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "name": "PIK Utara Timur",
+   "areaM2": 3415061.018,
+   "representativePoint": [
+    106.75886102138708,
+    -6.113605443810789
+   ],
+   "bounds": [
+    106.75131307804702,
+    -6.122747883462824,
+    106.77413041187589,
+    -6.104377588450067
+   ],
+   "nativeCells": 40171,
+   "nodataCells": 0,
+   "validCells": 40171,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 11353
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 1
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 1895
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 142
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 25719
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 3
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 1039
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 19
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "name": "Kamal - Tanjungan",
+   "areaM2": 20754156.265,
+   "representativePoint": [
+    106.71173788850055,
+    -6.116181453237248
+   ],
+   "bounds": [
+    106.68580472335287,
+    -6.14400357501065,
+    106.73414544542936,
+    -6.088387903405515
+   ],
+   "nativeCells": 244127,
+   "nodataCells": 0,
+   "validCells": 244127,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 23377
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 47
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 26374
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 8552
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 179979
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 289
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 3831
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 1678
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "name": "Kapuk Poglar",
+   "areaM2": 5121457.147,
+   "representativePoint": [
+    106.76198688844235,
+    -6.147528333164436
+   ],
+   "bounds": [
+    106.74827051881333,
+    -6.159767805980885,
+    106.77543782153255,
+    -6.135216486659073
+   ],
+   "nativeCells": 60246,
+   "nodataCells": 0,
+   "validCells": 60246,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 3793
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 5150
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 69
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 50987
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 23
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 211
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 13
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "name": "Muara Karang",
+   "areaM2": 2753937.689,
+   "representativePoint": [
+    106.77857339827105,
+    -6.121206398236479
+   ],
+   "bounds": [
+    106.76953346331369,
+    -6.135922346152243,
+    106.78604003080841,
+    -6.106517115410896
+   ],
+   "nativeCells": 32396,
+   "nodataCells": 0,
+   "validCells": 32396,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 2098
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 297
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 4
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 29519
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 9
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 469
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 7,
+   "name": "Cengkareng - Kalideres",
+   "areaM2": 15802488.676,
+   "representativePoint": [
+    106.70155721074721,
+    -6.1406450100227685
+   ],
+   "bounds": [
+    106.68735878352442,
+    -6.159786871225926,
+    106.75245054149543,
+    -6.1214819235766385
+   ],
+   "nativeCells": 185853,
+   "nodataCells": 0,
+   "validCells": 185853,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 12752
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 4594
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 592
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 167559
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 60
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 285
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 11
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 8,
+   "name": "Jelambar",
+   "areaM2": 5553223.608,
+   "representativePoint": [
+    106.7811968015953,
+    -6.155183771745477
+   ],
+   "bounds": [
+    106.76673637042181,
+    -6.167232693182381,
+    106.79369134902218,
+    -6.1432453503207425
+   ],
+   "nativeCells": 65316,
+   "nodataCells": 0,
+   "validCells": 65316,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 2961
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 613
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 13
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 61472
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 8
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 249
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 9,
+   "name": "Penjaringan Junction",
+   "areaM2": 1577626.547,
+   "representativePoint": [
+    106.73969433566413,
+    -6.123861488802283
+   ],
+   "bounds": [
+    106.73155466486513,
+    -6.1348975328972895,
+    106.75316680949847,
+    -6.112770867896062
+   ],
+   "nativeCells": 18562,
+   "nodataCells": 0,
+   "validCells": 18562,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 1681
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 26
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 1266
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 10
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 15087
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 27
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 346
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 119
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 10,
+   "name": "Teluk Gong",
+   "areaM2": 1501615.788,
+   "representativePoint": [
+    106.78037575947462,
+    -6.134906953882357
+   ],
+   "bounds": [
+    106.77493327308468,
+    -6.14506410338038,
+    106.78804081682192,
+    -6.124741008192675
+   ],
+   "nativeCells": 17654,
+   "nodataCells": 0,
+   "validCells": 17654,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 221
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 31
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 0
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 17084
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 0
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 318
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 11,
+   "name": "Kapuk Muara (Kapuk I, II, III)",
+   "areaM2": 2755732.984,
+   "representativePoint": [
+    106.76506499487299,
+    -6.132100738540737
+   ],
+   "bounds": [
+    106.7529871341085,
+    -6.141637419738256,
+    106.7771532699063,
+    -6.122557740347518
+   ],
+   "nativeCells": 32427,
+   "nodataCells": 0,
+   "validCells": 32427,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 3010
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 19
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 3161
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 187
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 25891
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 6
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 95
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 58
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 12,
+   "name": "Pluit",
+   "areaM2": 29190227.74,
+   "representativePoint": [
+    106.81636318985599,
+    -6.156481126523644
+   ],
+   "bounds": [
+    106.78406647029627,
+    -6.208044851918643,
+    106.8556437515133,
+    -6.104855173473824
+   ],
+   "nativeCells": 343304,
+   "nodataCells": 0,
+   "validCells": 343304,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 19871
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 4
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 3601
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 234
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 308619
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 308
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 10629
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 38
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 13,
+   "name": "Ancol Pademangan",
+   "areaM2": 3477264.308,
+   "representativePoint": [
+    106.85994311028645,
+    -6.117117618565503
+   ],
+   "bounds": [
+    106.82924366926282,
+    -6.129980266632127,
+    106.8729342508307,
+    -6.104255277150731
+   ],
+   "nativeCells": 40896,
+   "nodataCells": 0,
+   "validCells": 40896,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 13251
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 2043
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 11
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 25023
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 63
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 505
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 14,
+   "name": "Sunter Utara",
+   "areaM2": 12830954.684,
+   "representativePoint": [
+    106.87575087471765,
+    -6.124705191220706
+   ],
+   "bounds": [
+    106.85393006490528,
+    -6.142584794112473,
+    106.90656902423262,
+    -6.106881219972254
+   ],
+   "nativeCells": 150896,
+   "nodataCells": 0,
+   "validCells": 150896,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 7585
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 1230
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 97
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 138020
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 61
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 3903
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 15,
+   "name": "Kedoya Green Garden",
+   "areaM2": 2634838.203,
+   "representativePoint": [
+    106.75393777055817,
+    -6.167966094232096
+   ],
+   "bounds": [
+    106.74781341401153,
+    -6.180204721335845,
+    106.76306170741263,
+    -6.155857756457
+   ],
+   "nativeCells": 30982,
+   "nodataCells": 0,
+   "validCells": 30982,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 2431
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 860
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 65
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 27420
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 26
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 129
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 51
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 16,
+   "name": "Tomang Barat",
+   "areaM2": 2368042.997,
+   "representativePoint": [
+    106.78585369422439,
+    -6.175765902808244
+   ],
+   "bounds": [
+    106.77962139917638,
+    -6.185336553276473,
+    106.79411896910861,
+    -6.166146873178166
+   ],
+   "nativeCells": 27849,
+   "nodataCells": 0,
+   "validCells": 27849,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 1275
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 22
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 21
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 25695
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 31
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 805
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 17,
+   "name": "Cempaka Putih",
+   "areaM2": 14292209.328,
+   "representativePoint": [
+    106.86351836160529,
+    -6.185353120504124
+   ],
+   "bounds": [
+    106.84956185272655,
+    -6.215733129991235,
+    106.88131160767118,
+    -6.154993216230311
+   ],
+   "nativeCells": 168113,
+   "nodataCells": 0,
+   "validCells": 168113,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 4504
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 430
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 89
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 163047
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 11
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 32
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 18,
+   "name": "Pulomas",
+   "areaM2": 7069455.615,
+   "representativePoint": [
+    106.8865596735397,
+    -6.178075121449281
+   ],
+   "bounds": [
+    106.87506285142787,
+    -6.193529495519549,
+    106.90509680002066,
+    -6.16262848600613
+   ],
+   "nativeCells": 83127,
+   "nodataCells": 0,
+   "validCells": 83127,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 8867
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 3265
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 176
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 69374
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 179
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 1254
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 12
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 19,
+   "name": "Sunter Timur I Kodamar",
+   "areaM2": 1828997.957,
+   "representativePoint": [
+    106.88819190841612,
+    -6.160764304838244
+   ],
+   "bounds": [
+    106.8806720956811,
+    -6.170449352003409,
+    106.89594692611743,
+    -6.151071090145244
+   ],
+   "nativeCells": 21514,
+   "nodataCells": 0,
+   "validCells": 21514,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 2097
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 1541
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 32
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 17254
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 16
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 574
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 20,
+   "name": "Sunter Selatan",
+   "areaM2": 7371526.181,
+   "representativePoint": [
+    106.87503521326701,
+    -6.150438117550625
+   ],
+   "bounds": [
+    106.85670328214167,
+    -6.163481223910469,
+    106.89124367062131,
+    -6.137410290807311
+   ],
+   "nativeCells": 86707,
+   "nodataCells": 0,
+   "validCells": 86707,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 6671
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 923
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 97
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 75245
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 7
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 3711
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 53
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 21,
+   "name": "Kemayoran",
+   "areaM2": 12388722.824,
+   "representativePoint": [
+    106.84801977827682,
+    -6.153721511031421
+   ],
+   "bounds": [
+    106.8308260839203,
+    -6.1815967607980635,
+    106.86111103934371,
+    -6.125814169809883
+   ],
+   "nativeCells": 145726,
+   "nodataCells": 0,
+   "validCells": 145726,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 19397
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 4944
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 38
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 119540
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 67
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 1734
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 6
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 22,
+   "name": "Sunda Kelapa",
+   "areaM2": 3112817.204,
+   "representativePoint": [
+    106.81920056917339,
+    -6.12342708547445
+   ],
+   "bounds": [
+    106.80800571365025,
+    -6.1319289091980576,
+    106.83024441238645,
+    -6.11485330467604
+   ],
+   "nativeCells": 36616,
+   "nodataCells": 0,
+   "validCells": 36616,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 5914
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 3
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 1125
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 123
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 28781
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 29
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 634
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 7
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 23,
+   "name": "Sunter Timur I B",
+   "areaM2": 10513408.1,
+   "representativePoint": [
+    106.90482611177868,
+    -6.155668462326133
+   ],
+   "bounds": [
+    106.88797387252005,
+    -6.180529079586722,
+    106.91393895971396,
+    -6.130483168904057
+   ],
+   "nativeCells": 123651,
+   "nodataCells": 0,
+   "validCells": 123651,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 11162
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 4269
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 133
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 107816
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 115
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 156
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 24,
+   "name": "Sunter Timur III Rawa Badak",
+   "areaM2": 6575619.59,
+   "representativePoint": [
+    106.90646394782797,
+    -6.123235464538695
+   ],
+   "bounds": [
+    106.89430474981076,
+    -6.138256920874161,
+    106.9194640853735,
+    -6.108143915393765
+   ],
+   "nativeCells": 77309,
+   "nodataCells": 0,
+   "validCells": 77309,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 1344
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 907
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 13
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 73958
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 0
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 1081
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 6
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 25,
+   "name": "Marunda Timur",
+   "areaM2": 2331234.468,
+   "representativePoint": [
+    106.96154781984312,
+    -6.101985261411706
+   ],
+   "bounds": [
+    106.95394241104472,
+    -6.111278946946026,
+    106.96913285125694,
+    -6.092435076798891
+   ],
+   "nativeCells": 27416,
+   "nodataCells": 0,
+   "validCells": 27416,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 2459
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 68
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 6094
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 1214
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 11275
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 88
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 5862
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 356
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 26,
+   "name": "Mangga Dua",
+   "areaM2": 2282705.554,
+   "representativePoint": [
+    106.82508470246042,
+    -6.139253192227688
+   ],
+   "bounds": [
+    106.8150141246598,
+    -6.148841350481995,
+    106.83417483187782,
+    -6.129737570916752
+   ],
+   "nativeCells": 26853,
+   "nodataCells": 0,
+   "validCells": 26853,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 907
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 893
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 0
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 25043
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 3
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 7
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 27,
+   "name": "Siantar Melati",
+   "areaM2": 7757131.297,
+   "representativePoint": [
+    106.82255853984495,
+    -6.189801167316464
+   ],
+   "bounds": [
+    106.80601659752632,
+    -6.208496690981057,
+    106.84798822702261,
+    -6.17107494045538
+   ],
+   "nativeCells": 91249,
+   "nodataCells": 0,
+   "validCells": 91249,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 9132
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 76
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 0
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 81488
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 19
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 534
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 28,
+   "name": "Johar Baru",
+   "areaM2": 4773904.245,
+   "representativePoint": [
+    106.84608950487868,
+    -6.1889498855337255
+   ],
+   "bounds": [
+    106.83627768697048,
+    -6.213277759394551,
+    106.86172676583413,
+    -6.164621848525781
+   ],
+   "nativeCells": 56142,
+   "nodataCells": 0,
+   "validCells": 56142,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 1309
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 267
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 0
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 54558
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 1
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 7
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 29,
+   "name": "Kembangan",
+   "areaM2": 7588027.797,
+   "representativePoint": [
+    106.73828228104452,
+    -6.178947500009567
+   ],
+   "bounds": [
+    106.71355610184916,
+    -6.192697993214789,
+    106.75797373475707,
+    -6.165159297198764
+   ],
+   "nativeCells": 89265,
+   "nodataCells": 0,
+   "validCells": 89265,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 17783
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 2271
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 255
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 68845
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 18
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 92
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 1
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 30,
+   "name": "Jati Pulo",
+   "areaM2": 5529299.6,
+   "representativePoint": [
+    106.80140573814602,
+    -6.1906307214729726
+   ],
+   "bounds": [
+    106.79227964822415,
+    -6.207838675657475,
+    106.81119585594553,
+    -6.173401672838595
+   ],
+   "nativeCells": 65019,
+   "nodataCells": 0,
+   "validCells": 65019,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 3684
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 492
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 12
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 60723
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 54
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 54
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 31,
+   "name": "Rawa Buaya",
+   "areaM2": 3598198.241,
+   "representativePoint": [
+    106.73684490770825,
+    -6.165379622703794
+   ],
+   "bounds": [
+    106.72717406197222,
+    -6.175993753149979,
+    106.74860995553438,
+    -6.154757376832588
+   ],
+   "nativeCells": 42328,
+   "nodataCells": 0,
+   "validCells": 42328,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 3277
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 2314
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 119
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 36448
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 11
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 159
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 32,
+   "name": "Semanan",
+   "areaM2": 10526167.922,
+   "representativePoint": [
+    106.70741946506465,
+    -6.169011510574618
+   ],
+   "bounds": [
+    106.68680767392485,
+    -6.184805256761755,
+    106.72836591461527,
+    -6.153375919973514
+   ],
+   "nativeCells": 123811,
+   "nodataCells": 0,
+   "validCells": 123811,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 21058
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 5931
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 2313
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 93645
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 615
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 249
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 33,
+   "name": "Grogol",
+   "areaM2": 1121776.82,
+   "representativePoint": [
+    106.79347014269904,
+    -6.151651897486268
+   ],
+   "bounds": [
+    106.78536950962605,
+    -6.166888957984465,
+    106.80005000775452,
+    -6.136429931801966
+   ],
+   "nativeCells": 13195,
+   "nodataCells": 0,
+   "validCells": 13195,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 726
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 0
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 0
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 12247
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 10
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 212
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 34,
+   "name": "Setiabudi Barat",
+   "areaM2": 4663428.837,
+   "representativePoint": [
+    106.82367901620681,
+    -6.212697978350448
+   ],
+   "bounds": [
+    106.81005962019104,
+    -6.2256083382261425,
+    106.83617161006963,
+    -6.19978387315183
+   ],
+   "nativeCells": 54855,
+   "nodataCells": 0,
+   "validCells": 54855,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 8369
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 639
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 311
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 45114
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 61
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 361
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 35,
+   "name": "PIK BGM/Utara Barat 1",
+   "areaM2": 1180750.88,
+   "representativePoint": [
+    106.7453740649355,
+    -6.107688876513276
+   ],
+   "bounds": [
+    106.73897632267384,
+    -6.113152762877216,
+    106.75134293382351,
+    -6.102078559941182
+   ],
+   "nativeCells": 13893,
+   "nodataCells": 0,
+   "validCells": 13893,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 1491
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 261
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 49
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 11263
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 1
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 828
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 36,
+   "name": "Muara Angke",
+   "areaM2": 633602.444,
+   "representativePoint": [
+    106.77126183510515,
+    -6.10736717192448
+   ],
+   "bounds": [
+    106.76777572429371,
+    -6.112471753529343,
+    106.77666280923285,
+    -6.102240511250816
+   ],
+   "nativeCells": 7450,
+   "nodataCells": 0,
+   "validCells": 7450,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 15
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 4
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 0
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 7133
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 78
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 220
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 37,
+   "name": "Rawa Kepa",
+   "areaM2": 1878246.07,
+   "representativePoint": [
+    106.79745463585016,
+    -6.174298459934003
+   ],
+   "bounds": [
+    106.7879958096733,
+    -6.182500042976638,
+    106.80514212703993,
+    -6.165985200183689
+   ],
+   "nativeCells": 22090,
+   "nodataCells": 0,
+   "validCells": 22090,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 1224
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 5
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 27
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 20808
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 23
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 3
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 38,
+   "name": "Hankam Slipi",
+   "areaM2": 4560109.876,
+   "representativePoint": [
+    106.7858389351105,
+    -6.197080770885306
+   ],
+   "bounds": [
+    106.77150405144569,
+    -6.211428068853146,
+    106.79429546750819,
+    -6.182680890795517
+   ],
+   "nativeCells": 53639,
+   "nodataCells": 0,
+   "validCells": 53639,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 2647
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 182
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 0
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 50810
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 0
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 0
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 39,
+   "name": "Senayan TVRI",
+   "areaM2": 9519500.78,
+   "representativePoint": [
+    106.78160779337122,
+    -6.234003110003242
+   ],
+   "bounds": [
+    106.77168725783784,
+    -6.261318349330178,
+    106.79696881077373,
+    -6.206689504205002
+   ],
+   "nativeCells": 112009,
+   "nodataCells": 0,
+   "validCells": 112009,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 12414
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 701
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 1
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 98859
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 33
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 1
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 40,
+   "name": "PIK Utara Barat 2",
+   "areaM2": 610936.979,
+   "representativePoint": [
+    106.73748626799438,
+    -6.108290150628254
+   ],
+   "bounds": [
+    106.73277832287079,
+    -6.1160952743943815,
+    106.74084468650838,
+    -6.100506603859515
+   ],
+   "nativeCells": 7187,
+   "nodataCells": 0,
+   "validCells": 7187,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 1259
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 466
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 31
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 5337
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 37
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 56
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 1
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 41,
+   "name": "PIK Selatan Barat",
+   "areaM2": 662111.514,
+   "representativePoint": [
+    106.74897437213994,
+    -6.124226861112606
+   ],
+   "bounds": [
+    106.73919054234248,
+    -6.129305907393627,
+    106.75297197799509,
+    -6.119218719861483
+   ],
+   "nativeCells": 7791,
+   "nodataCells": 0,
+   "validCells": 7791,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 4101
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 60
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 92
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 108
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 2822
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 12
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 556
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 40
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 42,
+   "name": "Kebayoran Lama",
+   "areaM2": 9106809.509,
+   "representativePoint": [
+    106.77005984120464,
+    -6.222826511022946
+   ],
+   "bounds": [
+    106.75709399042661,
+    -6.260284017159538,
+    106.78305715370333,
+    -6.185368439167241
+   ],
+   "nativeCells": 107126,
+   "nodataCells": 0,
+   "validCells": 107126,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 11136
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 1208
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 54
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 94723
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 2
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 3
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 43,
+   "name": "Duren Sawit",
+   "areaM2": 5549847.426,
+   "representativePoint": [
+    106.90949959297326,
+    -6.221753288975881
+   ],
+   "bounds": [
+    106.89012651387746,
+    -6.2300382841059,
+    106.92469800198185,
+    -6.2134743251003375
+   ],
+   "nativeCells": 65257,
+   "nodataCells": 0,
+   "validCells": 65257,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 3379
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 447
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 591
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 60830
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 4
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 6
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 44,
+   "name": "Cipinang - Rawa Bunga",
+   "areaM2": 1885843.005,
+   "representativePoint": [
+    106.87706437614384,
+    -6.219105279474575
+   ],
+   "bounds": [
+    106.86701809670394,
+    -6.224811391279499,
+    106.89244705225006,
+    -6.213403593584067
+   ],
+   "nativeCells": 22182,
+   "nodataCells": 0,
+   "validCells": 22182,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 682
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 459
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 3
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 21033
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 5
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 0
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 45,
+   "name": "Pulo Gadung",
+   "areaM2": 6361542.523,
+   "representativePoint": [
+    106.88521825718999,
+    -6.2037294111234935
+   ],
+   "bounds": [
+    106.87323392634904,
+    -6.215195133026707,
+    106.90243597830138,
+    -6.192274017060587
+   ],
+   "nativeCells": 74843,
+   "nodataCells": 0,
+   "validCells": 74843,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 7057
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 2565
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 20
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 65200
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 0
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 1
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 46,
+   "name": "Kayu Putih",
+   "areaM2": 10853198.5,
+   "representativePoint": [
+    106.91722836571847,
+    -6.1970793440298975
+   ],
+   "bounds": [
+    106.89583742943599,
+    -6.216044857245914,
+    106.93301205259736,
+    -6.178071966294572
+   ],
+   "nativeCells": 127673,
+   "nodataCells": 0,
+   "validCells": 127673,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 13115
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 3314
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 498
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 110314
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 90
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 337
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 5
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 47,
+   "name": "Penggilingan - Pulo Gebang",
+   "areaM2": 10087375.876,
+   "representativePoint": [
+    106.94616793121874,
+    -6.202664218433814
+   ],
+   "bounds": [
+    106.9247914038749,
+    -6.219028380849354,
+    106.96722601232247,
+    -6.1863457584264525
+   ],
+   "nativeCells": 118656,
+   "nodataCells": 0,
+   "validCells": 118656,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 11983
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 2136
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 252
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 103929
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 8
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 348
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 49,
+   "name": "Sunter Timur II Petukangan Cakung",
+   "areaM2": 2677746.491,
+   "representativePoint": [
+    106.92429103266048,
+    -6.172832556065568
+   ],
+   "bounds": [
+    106.9203713546246,
+    -6.187296932426481,
+    106.93551137421747,
+    -6.158324187667284
+   ],
+   "nativeCells": 31496,
+   "nodataCells": 0,
+   "validCells": 31496,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 1720
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 4557
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 152
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 24420
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 607
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 22
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 18
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 50,
+   "name": "Perum Walikota (Don Bosco)",
+   "areaM2": 986190.617,
+   "representativePoint": [
+    106.91025342642538,
+    -6.1715606578247835
+   ],
+   "bounds": [
+    106.90584178242025,
+    -6.17866574609038,
+    106.91600094359428,
+    -6.16436291378651
+   ],
+   "nativeCells": 11604,
+   "nodataCells": 0,
+   "validCells": 11604,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 551
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 27
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 0
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 11026
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 0
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 0
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 51,
+   "name": "Pegangsaan Dua",
+   "areaM2": 1997670.353,
+   "representativePoint": [
+    106.91608643445386,
+    -6.152853509346125
+   ],
+   "bounds": [
+    106.91168740575297,
+    -6.16832252914502,
+    106.92201578592727,
+    -6.137411703534559
+   ],
+   "nativeCells": 23486,
+   "nodataCells": 0,
+   "validCells": 23486,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 3371
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 905
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 0
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 19207
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 3
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 0
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 52,
+   "name": "Warung Jengkol Vespa",
+   "areaM2": 1654112.824,
+   "representativePoint": [
+    106.91697057066887,
+    -6.175395171602483
+   ],
+   "bounds": [
+    106.9065909480536,
+    -6.18308604367145,
+    106.92237619208431,
+    -6.167757746177587
+   ],
+   "nativeCells": 19450,
+   "nodataCells": 0,
+   "validCells": 19450,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 1708
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 375
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 40
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 17295
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 10
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 22
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 53,
+   "name": "Komplek Dewa Kembar",
+   "areaM2": 2542734.793,
+   "representativePoint": [
+    106.92991341189617,
+    -6.111495834965586
+   ],
+   "bounds": [
+    106.92245028217701,
+    -6.122251167355598,
+    106.94061605797492,
+    -6.100723353978247
+   ],
+   "nativeCells": 29887,
+   "nodataCells": 0,
+   "validCells": 29887,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 2104
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 589
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 92
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 26958
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 4
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 42
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 98
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 54,
+   "name": "Komplek Dewa Ruci",
+   "areaM2": 3475741.928,
+   "representativePoint": [
+    106.92056732781504,
+    -6.112704782722236
+   ],
+   "bounds": [
+    106.91672907314822,
+    -6.12926388320718,
+    106.9403089618315,
+    -6.096273213490581
+   ],
+   "nativeCells": 40873,
+   "nodataCells": 0,
+   "validCells": 40873,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 955
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 604
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 52
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 39236
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 14
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 12
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 55,
+   "name": "Cakung Timur Utara",
+   "areaM2": 2474657.715,
+   "representativePoint": [
+    106.93689729553304,
+    -6.1662367027965015
+   ],
+   "bounds": [
+    106.92798939306017,
+    -6.180592951746158,
+    106.94313114245524,
+    -6.151418049150683
+   ],
+   "nativeCells": 29094,
+   "nodataCells": 0,
+   "validCells": 29094,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 2397
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 1385
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 94
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 25076
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 142
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 0
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 56,
+   "name": "Cakung Timur Selatan",
+   "areaM2": 5484368.983,
+   "representativePoint": [
+    106.94761077209199,
+    -6.185978625190456
+   ],
+   "bounds": [
+    106.92798598898979,
+    -6.19767517072027,
+    106.97057168742079,
+    -6.174278224109377
+   ],
+   "nativeCells": 64506,
+   "nodataCells": 0,
+   "validCells": 64506,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 9929
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 3995
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 1727
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 48836
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 4
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 5
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 10
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 57,
+   "name": "Klender",
+   "areaM2": 1937766.6,
+   "representativePoint": [
+    106.8883490478938,
+    -6.2210157747467285
+   ],
+   "bounds": [
+    106.87742505432507,
+    -6.229591781919569,
+    106.896072440758,
+    -6.2124512005257895
+   ],
+   "nativeCells": 22797,
+   "nodataCells": 0,
+   "validCells": 22797,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 1137
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 181
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 7
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 21472
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 0
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 0
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 58,
+   "name": "Pondok Kopi",
+   "areaM2": 2583632.464,
+   "representativePoint": [
+    106.93520217174049,
+    -6.22209343083975
+   ],
+   "bounds": [
+    106.92394910022423,
+    -6.228342229231983,
+    106.94848511606754,
+    -6.216061868367325
+   ],
+   "nativeCells": 30381,
+   "nodataCells": 0,
+   "validCells": 30381,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 2905
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 6
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 0
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 27466
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 0
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 4
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 59,
+   "name": "Setiabudi Timur",
+   "areaM2": 2551164.11,
+   "representativePoint": [
+    106.83982258659299,
+    -6.214677400078475
+   ],
+   "bounds": [
+    106.82751216286846,
+    -6.225468850866931,
+    106.84735855588983,
+    -6.2039045163249895
+   ],
+   "nativeCells": 30003,
+   "nodataCells": 0,
+   "validCells": 30003,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 4328
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 687
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 85
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 24606
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 3
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 294
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 60,
+   "name": "Manggarai - Tebet",
+   "areaM2": 2744538.166,
+   "representativePoint": [
+    106.84989286364436,
+    -6.216606368126236
+   ],
+   "bounds": [
+    106.84325344445031,
+    -6.225479374879197,
+    106.8652098057243,
+    -6.2077350151769375
+   ],
+   "nativeCells": 32291,
+   "nodataCells": 0,
+   "validCells": 32291,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 928
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 17
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 0
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 31346
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 0
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 0
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 61,
+   "name": "Jatinegara",
+   "areaM2": 989767.074,
+   "representativePoint": [
+    106.86508673800942,
+    -6.218157873228779
+   ],
+   "bounds": [
+    106.85640219528418,
+    -6.225009231805856,
+    106.8702002313714,
+    -6.21133429870864
+   ],
+   "nativeCells": 11637,
+   "nodataCells": 0,
+   "validCells": 11637,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 155
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 0
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 0
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 11480
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 0
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 2
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 62,
+   "name": "Marunda Barat",
+   "areaM2": 6316285.809,
+   "representativePoint": [
+    106.94870904444504,
+    -6.116364821851212
+   ],
+   "bounds": [
+    106.93998734651869,
+    -6.137346868033338,
+    106.95805812104844,
+    -6.095371139855069
+   ],
+   "nativeCells": 74285,
+   "nodataCells": 0,
+   "validCells": 74285,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 3200
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 228
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 8502
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 2818
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 47183
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 1320
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 9991
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 1043
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 63,
+   "name": "IKPN Bintaro",
+   "areaM2": 364116.34,
+   "representativePoint": [
+    106.76912314857657,
+    -6.263436832612512
+   ],
+   "bounds": [
+    106.76719033046345,
+    -6.268773614011171,
+    106.77299705743006,
+    -6.258103390500337
+   ],
+   "nativeCells": 4285,
+   "nodataCells": 0,
+   "validCells": 4285,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 823
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 91
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 0
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 3371
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 0
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 0
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 64,
+   "name": "Kedoya Taman Ratu Greenville",
+   "areaM2": 7184687.057,
+   "representativePoint": [
+    106.76667679308282,
+    -6.174649655823465
+   ],
+   "bounds": [
+    106.75325131110678,
+    -6.190521003214255,
+    106.78257611439668,
+    -6.158965402535416
+   ],
+   "nativeCells": 84530,
+   "nodataCells": 0,
+   "validCells": 84530,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 4515
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 0
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 573
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 0
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 79397
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 8
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 37
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 0
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  },
+  {
+   "id": 65,
+   "name": "Marunda",
+   "areaM2": 21950697.373,
+   "representativePoint": [
+    106.94975101490556,
+    -6.145856038358202
+   ],
+   "bounds": [
+    106.94040068860883,
+    -6.188079761788701,
+    106.97205114679711,
+    -6.1082740442764
+   ],
+   "nativeCells": 258083,
+   "nodataCells": 0,
+   "validCells": 258083,
+   "classes": [
+    {
+     "value": 10,
+     "nameEn": "Tree cover",
+     "nameId": "Tutupan pohon",
+     "color": "#006400",
+     "cells": 24225
+    },
+    {
+     "value": 20,
+     "nameEn": "Shrubland",
+     "nameId": "Semak",
+     "color": "#ffbb22",
+     "cells": 176
+    },
+    {
+     "value": 30,
+     "nameEn": "Grassland",
+     "nameId": "Padang rumput",
+     "color": "#ffff4c",
+     "cells": 49606
+    },
+    {
+     "value": 40,
+     "nameEn": "Cropland",
+     "nameId": "Lahan pertanian",
+     "color": "#f096ff",
+     "cells": 41564
+    },
+    {
+     "value": 50,
+     "nameEn": "Built-up",
+     "nameId": "Area terbangun",
+     "color": "#fa0000",
+     "cells": 121400
+    },
+    {
+     "value": 60,
+     "nameEn": "Bare / sparse vegetation",
+     "nameId": "Tanah terbuka / vegetasi jarang",
+     "color": "#b4b4b4",
+     "cells": 2110
+    },
+    {
+     "value": 70,
+     "nameEn": "Snow and ice",
+     "nameId": "Salju dan es",
+     "color": "#f0f0f0",
+     "cells": 0
+    },
+    {
+     "value": 80,
+     "nameEn": "Permanent water bodies",
+     "nameId": "Perairan permanen",
+     "color": "#0064c8",
+     "cells": 16884
+    },
+    {
+     "value": 90,
+     "nameEn": "Herbaceous wetland",
+     "nameId": "Lahan basah herba",
+     "color": "#0096a0",
+     "cells": 2118
+    },
+    {
+     "value": 95,
+     "nameEn": "Mangroves",
+     "nameId": "Mangrove",
+     "color": "#00cf75",
+     "cells": 0
+    },
+    {
+     "value": 100,
+     "nameEn": "Moss and lichen",
+     "nameId": "Lumut dan liken",
+     "color": "#fae6a0",
+     "cells": 0
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,33 @@
+# One boundary, an inspectable water account · 23 October 2026
+
+## Found
+
+The existing atlas showed drainage, river readings, satellite context and independent travel-time assumptions, but did not turn rain over a selected published polder into an inspectable volume account. This is a bounded digital-twin step, not a calibrated city flood model.
+
+The prototype exposed spatial costs: a 360-unit chart shrank to 206 physical pixels in the normal evidence column; warning/location red was about 4.0:1; Refresh rain orphaned under three actions at 390/1024. Independent review also found floating-point grouping could leave a tiny negative balance after complete removal.
+
+## Changed
+
+- Join the acquired original DSDA polygons to native ESA WorldCover 2021 pixel centres. Derive area in EPSG:32748, retaining holes and multipolygons. Bake 64 of 65 records; exclude invalid OBJECTID 48 without repair. Record the original overlap pair [4,7]. Never sum independent boundaries into a city total. Display geometry remains a separately identified simplified reference.
+- Admit only a fresh, complete 24-hour model rain profile from an actual returned cell within 20 km of the polygon interior representative point. Rain timestamps are interval ends; no missing hour becomes zero. Model rain is uniformly applied within the boundary, not a local gauge measurement.
+- Compute rain volume, assumed runoff, capped hourly pumping and remaining water. Default assumptions: 100% runoff, zero pumping, zero starting account, available space unknown. Space is a comparison threshold; peaks are hourly samples, not intrahour maxima or flood depth. Test storm is explicitly chosen, never an automatic forecast fallback.
+- Link the selected gold map boundary, editable account, zero-pump comparison, rain bars, hourly cursor, text table and JSON export. The export includes forcing, assumptions, exact outputs, source hashes and the role of simplified display geometry. Add bilingual method prose and a source-catalog contract.
+- Widen only the explicitly opened scenario drawer to 384 px maximum. Chart grows to 350 px desktop/tablet and 340 px phone. Pair map/data and forcing actions; retain Universa/Source Sans, Palette 267, existing layers, prepaint layout and normal compact evidence. Add tested theme-aware red text and water-line colours.
+
+## Verified locally
+
+- Recomputed the bake from raw hashes with `python3 scripts/prepare-polder-budget.py --check`. Independent reviewer checked metric areas, crop containment, counts and 3,000 random pixel-centre membership probes.
+- Conservation, absent-water pumping, unknown versus zero, strict numeric input, exact hourly intervals, freshness and returned-cell distance pass. Independent seeded 1,000-scenario regression guards exact nonnegative full removal.
+- Real browser: forecast admitted; explicit test storm; long boundary selection; pump, runoff, available space and hour edits; hourly table; downloaded JSON; language change retains the chosen scenario. Example boundary 49: 50 mm gives 133,887.32455 m³; 1 m³/s removes 86,400 m³ over 24 h and leaves 47,487.32455 m³; conservation error zero. Saved export is the tested scenario before metadata-only additions to the export envelope.
+- Final screenshots at 390×844 / 1024×900 / 1440×900, dimensions checked from PNG bytes. Page scroll width equals viewport; header 24 px phone and 29 px desktop/tablet. Header cost 2.84% / 3.22%; header plus lens row 50 px phone and 55 px desktop/tablet, 5.92% / 6.11%. The scenario is an explicitly opened evidence tool, with no added permanent band. Source-level and final seven-rule independent visual review pass after contrast/orphan fixes. Gold boundary and numeric rainfall scale verified by looking.
+- Typecheck, 13 local verification checks and the complete 45-command test chain passed before release. Existing spatial instrument, hashes, reasons and baseline remain unchanged. Canonical release repeats the required gates; production result is appended below after it runs.
+
+Receipts: [phone plot](polder-budget-2026-10-23/final-local-390.png), [phone controls](polder-budget-2026-10-23/final-local-390-controls.png), [tablet](polder-budget-2026-10-23/final-local-1024.png), [desktop](polder-budget-2026-10-23/final-local-1440.png), [gold boundary](polder-budget-2026-10-23/final-local-boundary.png), [scenario export](polder-budget-2026-10-23/scenario-export.json).
+
+## Remaining
+
+No surveyed citywide terrain/datum join, hydraulic connectivity, calibrated river exchange, tide coupling or measured operating pump/storage capacity is introduced. Land-cover class is context, not measured impermeability. Rain resolution cannot resolve within-polder variability. Published boundary observation epoch and DSDA dataset-specific open licence remain unknown. These gaps prevent a defensible inundation/operational forecast; the account is an assumption-driven volume comparison.
+
+## Production
+
+Pending canonical release and live browser verification at the implementation commit. No claim of live completion in this entry.

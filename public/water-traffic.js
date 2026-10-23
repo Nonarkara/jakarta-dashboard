@@ -1,3 +1,4 @@
+import {createPolderBudget} from './polder-budget.js';
 import {createWaterContext} from './water-context.js?v=coastal-worldcover-v1';
 // Lazy map lenses: mapped hydrography, dated gauges/model flow, public traffic-camera references.
 export function volumeM3(dischargeM3s,hours) {
@@ -37,7 +38,8 @@ export function gaugeState(row, now=Date.now()) {
   return now-at>=3*3600000||row.levelState==='stale'?'stale':row.levelState==='fresh'?'fresh':'unknown';
 }
 export function createController(map,{text:t,active,buildTag}) {
-  let waterContext=null;
+  let waterContext=null,polderBudget=null,budgetBody=null,budgetDetails=null,budgetStarted=false;
+  const budgetState={id:null,forcing:'forecast',runoff:'100',pump:'0',initial:'0',space:'',storm:'50',hour:'24'};
   let mode=null,epoch=0,water=null,cameras=null,hydrology=null,jaxa=null,nasa=null,lastBody=null;
   let gaugeTimer=null,gaugeVisibility=null,selectedGauge=null;
   const listeners=[]; let player=null, video=null, playRequest=0;
@@ -56,7 +58,7 @@ export function createController(map,{text:t,active,buildTag}) {
   function on(event,id,callback){map.on(event,id,callback);listeners.push([event,id,callback]);}
   function focusFeature(feature,body){const c=feature.geometry.type==='Point'?feature.geometry.coordinates:null;if(c)map.flyTo({center:c,zoom:14,pitch:35});document.getElementById('atlas-lens-evidence').open=true;body.scrollIntoView({block:'nearest'});}
   function removeLayers(){for(const id of ids)if(map.getLayer(id))map.removeLayer(id);for(const id of ids)if(map.getSource(id))map.removeSource(id);for(const [event,id,callback] of listeners)map.off(event,id,callback);listeners.length=0;}
-  function clear(){if(gaugeTimer!==null)clearTimeout(gaugeTimer);gaugeTimer=null;if(gaugeVisibility)document.removeEventListener('visibilitychange',gaugeVisibility);gaugeVisibility=null;selectedGauge=null;epoch++;waterContext?.clear();waterContext=null;playRequest++;mode=null;cancelPending();removeLayers();lastBody=null;player?.destroy();player=null;if(video){video.pause();video.removeAttribute("src");video.load();video=null;}}
+  function clear(){polderBudget?.clear();polderBudget=null;budgetBody=null;budgetDetails=null;budgetStarted=false;if(gaugeTimer!==null)clearTimeout(gaugeTimer);gaugeTimer=null;if(gaugeVisibility)document.removeEventListener('visibilitychange',gaugeVisibility);gaugeVisibility=null;selectedGauge=null;epoch++;waterContext?.clear();waterContext=null;playRequest++;mode=null;cancelPending();removeLayers();lastBody=null;player?.destroy();player=null;if(video){video.pause();video.removeAttribute("src");video.load();video=null;}}
   function pointLayer(id,data,paint,cluster=false){map.addSource(id,{type:'geojson',data,cluster,clusterRadius:40,clusterMaxZoom:14});const layer={id,type:'circle',source:id,paint};if(cluster)layer.filter=['!', ['has','point_count']];map.addLayer(layer);}
   function gaugeFeature(row){return {type:'Feature',geometry:{type:'Point',coordinates:[row.lng,row.lat]},properties:{id:row.id,name:row.name,levelM:row.levelM,observedAt:row.observedAt,basin:row.basin}};}
   function featureCollection(features){return {type:'FeatureCollection',features};}
@@ -145,9 +147,14 @@ export function createController(map,{text:t,active,buildTag}) {
       map.addLayer({id:'official-polder-lines',type:'line',source:'official-polder-lines',paint:{'line-color':'#79c2d1','line-width':2,'line-dasharray':[3,2]}},map.getLayer('network-water-lines')?'network-water-lines':undefined);
       toggle(number(p.count,0)+' '+t('publisher polder boundaries','batas polder penerbit'),['official-polder-fill','official-polder-lines']);
       parent.append(el('p',t('Source date unknown · retrieved ','Tanggal sumber tidak diketahui · diambil ')+time(p.retrievedAt)+' · '+number(p.sourceInvalidPolygonCount||0,0)+' '+t('publisher polygons with geometry issues','poligon penerbit dengan masalah geometri'),'meta'));
-      on('click','official-polder-lines',event=>{const props=event.features?.[0]?.properties;if(!props)return;selectedGauge=null;selected.replaceChildren();selected.append(el('h3',props.NAMOBJ||t('Polder reference','Referensi polder')));selected.append(el('p','OBJECTID '+String(props.OBJECTID??'—')));note(selected,'Publisher reference boundary, not an observed flood or a protection guarantee. Some source geometry is invalid; no flood area or capacity is computed.','Batas referensi penerbit, bukan banjir teramati atau jaminan perlindungan. Sebagian geometri sumber tidak valid; luas banjir atau kapasitas tidak dihitung.');selected.append(link('Jakarta Satu / DSDA ↗',p.sourceUrl));selected.parentElement.open=true;document.getElementById('atlas-lens-evidence').open=true;});
+      on('click','official-polder-lines',event=>{const props=event.features?.[0]?.properties;if(!props)return;selectedGauge=null;selected.replaceChildren();selected.append(el('h3',props.NAMOBJ||t('Polder reference','Referensi polder')));selected.append(el('p','OBJECTID '+String(props.OBJECTID??'—')));note(selected,'Publisher reference boundary, not an observed flood or a protection guarantee. Some source geometry is invalid; no flood area or capacity is computed.','Batas referensi penerbit, bukan banjir teramati atau jaminan perlindungan. Sebagian geometri sumber tidak valid; luas banjir atau kapasitas tidak dihitung.');selected.append(link('Jakarta Satu / DSDA ↗',p.sourceUrl));const budgetButton=button(selected,t('Test this boundary water budget','Uji neraca air batas ini'),()=>openBudget(props.OBJECTID));budgetButton.disabled=p.invalidObjectIds?.includes(Number(props.OBJECTID))===true;selected.parentElement.open=true;document.getElementById('atlas-lens-evidence').open=true;});
     }else note(parent,'Polder boundaries unavailable. Other water evidence remains visible.','Batas polder tidak tersedia. Bukti air lain tetap terlihat.');
     note(parent,'Thin lines: official micro-drains. Dashed boundaries: polders. These references are separate from OSM and are not a connected hydraulic model.','Garis tipis: saluran mikro resmi. Batas putus-putus: polder. Referensi ini terpisah dari OSM dan bukan model hidraulik yang terhubung.');
+  }
+  function openBudget(id){
+    if(!budgetBody||!polderBudget)return;
+    budgetDetails.open=true;budgetStarted=true;
+    void polderBudget.show(budgetBody,id);
   }
   async function showWater(body,token){
     try{water ||= await get('/data/jakarta-v1/waterways.geojson?v='+buildTag);}catch{water=null;}if(token!==epoch)return;
@@ -162,6 +169,9 @@ export function createController(map,{text:t,active,buildTag}) {
     }else{body.replaceChildren();note(body,'OSM waterways unavailable. Independent official drainage and gauge sources are checked below.','Alur air OSM tidak tersedia. Sumber drainase resmi dan pos independen diperiksa di bawah.');}
     const selected=section(body,'Selected waterway / gauge','Alur air / pos terpilih');
     if(water)on('click','network-water-lines',event=>{const f=event.features?.[0];if(!f)return;renderWaterSelection(selected,f);selected.parentElement.open=true;document.getElementById('atlas-lens-evidence').open=true;});
+    budgetBody=section(body,'Rain → polder water budget','Hujan → neraca air polder');budgetBody.className+=' polder-budget';budgetDetails=budgetBody.parentElement;
+    polderBudget=createPolderBudget(map,{text:t,isCurrent:()=>token===epoch&&active()==='waterways',state:budgetState,buildTag});
+    budgetDetails.addEventListener('toggle',()=>{if(budgetDetails?.open&&!budgetStarted)openBudget();});
     showOfficialNetworks(section(body,'Official drainage & polders','Drainase resmi & polder'),selected,token).catch(()=>{if(token===epoch)note(body,'Official network references unavailable; other water sources remain usable.','Referensi jaringan resmi tidak tersedia; sumber air lain tetap dapat digunakan.');});
     const context=waterContext=createWaterContext(map,{text:t,get,isCurrent:()=>token===epoch,buildTag});
     context.coastal(section(body,'Coastal tide forecast · Priok','Prakiraan pasang surut pesisir · Priok'));

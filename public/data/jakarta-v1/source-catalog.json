@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "title": "Jakarta source contracts",
- "generatedAt": "2026-10-19T14:08:38.259311+00:00",
+ "generatedAt": "2026-10-23T07:38:19.038962+00:00",
  "scope": "Selected integrated capabilities and inspected candidates. Not a count of all Jakarta open datasets.",
  "datePolicy": "dataAsOf is publisher observation/snapshot period where known; checkedAt is retrieval/probe only. Unknown epochs remain null.",
  "statusDefinitions": {
@@ -1459,6 +1459,32 @@
    "limitationsEn": "Daily 24-hour PM10 forecast GIF, three-hour frames. Model, not measured PM2.5. Read issue/valid times on graphic; access time is not issue time. No numerical pixel values or local calibrated attribution.",
    "limitationsId": "GIF prakiraan PM10 24 jam harian, bingkai tiga jam. Model, bukan pengamatan PM2.5. Baca waktu terbit/berlaku pada grafik; waktu akses bukan waktu terbit. Tidak ada nilai piksel numerik atau atribusi lokal terkalibrasi.",
    "assets": []
+  },
+  {
+   "id": "polder-budget-context",
+   "name": "Independent polder water-budget context",
+   "category": "water",
+   "publisher": "JKTx derived from DSDA / ESA WorldCover",
+   "status": "integrated",
+   "sourceUrl": "https://jakartasatu.jakarta.go.id/server/rest/services/DSDA/Polder_Jakarta/FeatureServer/0/query",
+   "endpoint": "",
+   "license": "DSDA dataset-specific open licence not stated; WorldCover CC BY 4.0. Publisher attribution retained.",
+   "dataAsOf": null,
+   "checkedAt": "2026-10-23T07:38:19.038962+00:00",
+   "access": "committed derived reference; anonymous inputs",
+   "verification": "raw-input-hashes-native-pixel-centres-metric-area",
+   "tier": "derived-reference-and-user-scenario",
+   "useCase": "One-boundary rain volume, explicit pump assumptions and conservation",
+   "limitations": "Original DSDA boundaries joined to native WorldCover 2021 centres. 64 valid, one excluded; overlapping boundaries cannot be summed. Land cover is not measured impermeability; no operational capacity or calibrated flood depth.",
+   "assets": [
+    "polder-budget-context.json"
+   ],
+   "recordCount": 64,
+   "assetSha256": "af5a46eb3a4344ac316af974702e41999ded447f69d6b395d82c1253f71e9639",
+   "nameEn": "Independent polder water-budget context",
+   "nameId": "Konteks neraca air polder independen",
+   "limitationsEn": "Original DSDA boundaries joined to native WorldCover 2021 centres. 64 valid, one excluded; overlapping boundaries cannot be summed. Land cover is not measured impermeability; no operational capacity or calibrated flood depth.",
+   "limitationsId": "Batas asli DSDA digabung dengan pusat piksel asli WorldCover 2021. 64 valid, satu dikecualikan; batas tumpang tindih tidak dapat dijumlah. Tutupan lahan bukan kedap air terukur; tanpa kapasitas operasi atau kedalaman banjir terkalibrasi."
   }
  ],
  "auditScope": "15 October 2026 bounded follow-up: 57 contracts; BMKG Priok and a bounded WorldCover 2021 crop admitted; actual Copernicus Jakarta access verified; BBWS timestamp contradiction recorded as a new candidate. Not all public data and not calibrated hydraulics."
