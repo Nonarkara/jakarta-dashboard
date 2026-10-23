@@ -1,0 +1,6 @@
+{
+  "verification": "Computed live CSS read through browser; warning and location agree, result preserved across theme changes",
+  "light": "rgb(156, 48, 39)",
+  "dark": "rgb(255, 144, 124)",
+  "contrast": "rgb(255, 172, 152)"
+}

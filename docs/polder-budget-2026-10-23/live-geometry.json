@@ -1,0 +1,35 @@
+[
+  {
+    "chart": 350,
+    "header": 29,
+    "height": 900,
+    "lenses": 26,
+    "locationColour": "rgb(156, 48, 39)",
+    "result": "47,487 m³",
+    "scrollWidth": 1440,
+    "theme": "light",
+    "width": 1440
+  },
+  {
+    "chart": 350,
+    "header": 29,
+    "height": 900,
+    "lenses": 26,
+    "locationColour": "rgb(156, 48, 39)",
+    "result": "47,487 m³",
+    "scrollWidth": 1024,
+    "theme": "light",
+    "width": 1024
+  },
+  {
+    "chart": 340,
+    "header": 24,
+    "height": 844,
+    "lenses": 26,
+    "locationColour": "rgb(156, 48, 39)",
+    "result": "47.487 m³",
+    "scrollWidth": 390,
+    "theme": "light",
+    "width": 390
+  }
+]
