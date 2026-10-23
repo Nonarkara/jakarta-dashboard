@@ -1,3 +1,5 @@
+// Numerical display/accounting bound, not a measured city capacity.
+export const MAX_ACCOUNT_M3=1e12;
 // One boundary, one rain profile, explicit assumptions. No terrain or routing.
 export function distanceKm(a,b) {
  if(!Array.isArray(a)||!Array.isArray(b)||a.length!==2||b.length!==2||![...a,...b].every(Number.isFinite)||[a,b].some(p=>Math.abs(p[0])>180||Math.abs(p[1])>90))return Infinity;
@@ -22,7 +24,7 @@ export function stormProfile(totalMm=50,hours=3) {
  return Array.from({length:24},(_,i)=>i<hours?totalMm/hours:0);
 }
 export function waterBudget({areaM2,rainMm,runoffFraction=1,pumpM3s=0,initialM3=0,freeStorageM3=null}) {
- if(![areaM2,runoffFraction,pumpM3s,initialM3].every(v=>typeof v==='number'&&Number.isFinite(v))||areaM2<=0||runoffFraction<0||runoffFraction>1||pumpM3s<0||pumpM3s>10000||initialM3<0||!Array.isArray(rainMm)||rainMm.length!==24||!Array.from(rainMm).every(v=>typeof v==='number'&&Number.isFinite(v)&&v>=0&&v<=1000)||freeStorageM3!==null&&(!Number.isFinite(freeStorageM3)||typeof freeStorageM3!=='number'||freeStorageM3<0))return null;
+ if(![areaM2,runoffFraction,pumpM3s,initialM3].every(v=>typeof v==='number'&&Number.isFinite(v))||areaM2<=0||runoffFraction<0||runoffFraction>1||pumpM3s<0||pumpM3s>10000||initialM3<0||initialM3>MAX_ACCOUNT_M3||!Array.isArray(rainMm)||rainMm.length!==24||!Array.from(rainMm).every(v=>typeof v==='number'&&Number.isFinite(v)&&v>=0&&v<=1000)||freeStorageM3!==null&&(!Number.isFinite(freeStorageM3)||typeof freeStorageM3!=='number'||freeStorageM3<0||freeStorageM3>MAX_ACCOUNT_M3))return null;
  let remaining=initialM3,gross=0,runoff=0,removed=0,peak=initialM3;
  const rows=rainMm.map((mm,i)=>{
   const rainM3=areaM2*mm/1000,inflowM3=rainM3*runoffFraction;
@@ -31,6 +33,6 @@ export function waterBudget({areaM2,rainMm,runoffFraction=1,pumpM3s=0,initialM3=
   return {hour:i+1,mm,rainM3,inflowM3,pumpedM3,cumulativeRunoffM3:runoff,remainingM3:remaining,aboveSpaceM3:freeStorageM3===null?null:Math.max(0,remaining-freeStorageM3)};
  });
  const conservationErrorM3=initialM3+runoff-removed-remaining;
- if(!Number.isFinite(initialM3+runoff)||!Number.isFinite(gross)||!Number.isFinite(conservationErrorM3))return null;
+ if(!Number.isFinite(initialM3+runoff)||initialM3+runoff>MAX_ACCOUNT_M3||gross>MAX_ACCOUNT_M3||Math.abs(conservationErrorM3)>1e-3||!Number.isFinite(gross)||!Number.isFinite(conservationErrorM3))return null;
  return {rows,grossRainM3:gross,runoffM3:runoff,removedM3:removed,remainingM3:remaining,peakM3:peak,maxAboveSpaceM3:freeStorageM3===null?null:Math.max(0,peak-freeStorageM3),initialM3,conservationErrorM3};
 }

@@ -39,3 +39,7 @@ assert.equal(rainForBoundary({...raw,points:[{...point,forecast:sparseForecast}]
 assert.equal(rainForBoundary(raw,null,now),null);
 assert.equal(rainForBoundary(raw,boundary,NaN),null);
 const shifted=1800000;assert.equal(rainForBoundary({...raw,points:[{...point,forecastFromUtc:new Date(from+shifted).toISOString(),forecastToUtc:new Date(from+shifted+86400000).toISOString(),forecast:point.forecast.map(r=>({...r,validAt:new Date(Date.parse(r.validAt)+shifted).toISOString()}))}]},boundary,now),null,'hour boundaries must align with model UTC hours');
+
+for(const initialM3 of [1e20,1e308])for(const mm of [1,1000])assert.equal(waterBudget({areaM2:1000,rainMm:Array(24).fill(mm),initialM3}),null,'unsafe magnitude cannot silently lose water');
+assert.equal(waterBudget({areaM2:1e6,rainMm:stormProfile(),freeStorageM3:1e308}),null);
+assert.equal(waterBudget({areaM2:1e12,rainMm:Array(24).fill(1000)}),null,'derived total is bounded too');

@@ -1,4 +1,4 @@
-import {rainForBoundary,waterBudget,stormProfile} from './polder-budget-model.js';
+import {rainForBoundary,waterBudget,stormProfile,MAX_ACCOUNT_M3} from './polder-budget-model.js';
 
 export function createPolderBudget(map,{text:t,isCurrent,state,buildTag}) {
  let disposed=false,parent=null,context=null,polygons=null,rain=null,loading=false,lastAttempt=0,clock=null,abort=null,view=null,opening=false;
@@ -75,7 +75,7 @@ export function createPolderBudget(map,{text:t,isCurrent,state,buildTag}) {
   input(fields,t('Pump assumption · m³/s','Asumsi pompa · m³/detik'),'pump',{max:10000});
   const assumptions=el('details'),assumptionTitle=el('summary',t('Runoff, initial water & available space','Limpasan, air awal & ruang tersedia'));assumptions.append(assumptionTitle);parent.append(assumptions);
   const [,,runoffLabel]=input(assumptions,t('Runoff assumption · %','Asumsi limpasan · %'),'runoff',{type:'range',max:100,step:1});
-  input(assumptions,t('Starting water account · m³','Neraca air awal · m³'),'initial');input(assumptions,t('Available space · m³ (blank = unknown)','Ruang tersedia · m³ (kosong = tidak diketahui)'),'space');
+  input(assumptions,t('Starting water account · m³','Neraca air awal · m³'),'initial',{max:MAX_ACCOUNT_M3});input(assumptions,t('Available space · m³ (blank = unknown)','Ruang tersedia · m³ (kosong = tidak diketahui)'),'space',{max:MAX_ACCOUNT_M3});
   assumptions.append(el('p',t('Defaults: all rain becomes runoff, no pumping, no starting water accounted. These are user assumptions, not measured operations. Pumping is available throughout each hour, capped by water present. Peaks are sampled hourly; bursts within an hour are unresolved. Land cover is not measured impermeability.','Nilai awal: semua hujan menjadi limpasan, tanpa pompa, tanpa air awal yang diperhitungkan. Ini asumsi pengguna, bukan operasi terukur. Pompa diasumsikan tersedia sepanjang jam, dibatasi air yang ada. Puncak dihitung per jam; lonjakan dalam jam belum diperhitungkan. Tutupan lahan bukan kedap air terukur.'),'meta'));
   const output=el('div'),plot=el('figure',undefined,'budget-chart'),source=el('p',undefined,'meta');parent.append(output,plot,el('p',t('Gold bars: rain. Dashed: no pumping. Blue: edited water account. Red line, if entered: available-space assumption.','Batang emas: hujan. Putus-putus: tanpa pompa. Biru: neraca air suntingan. Garis merah, jika diisi: asumsi ruang tersedia.'),'meta'));
   const hourLabel=el('label',t('Follow the 24 h account','Ikuti neraca 24 jam'));const hourInput=el('input');hourInput.type='range';hourInput.min='0';hourInput.max='24';hourInput.step='1';hourInput.value=state.hour;hourInput.setAttribute('aria-label',t('Scenario hour','Jam skenario'));hourInput.addEventListener('input',()=>{state.hour=hourInput.value;recompute();});hourLabel.append(hourInput);parent.append(hourLabel,source);
@@ -102,7 +102,7 @@ export function createPolderBudget(map,{text:t,isCurrent,state,buildTag}) {
    if(!live())return;if(c.contract!=='polder-budget-context-v1'||!Array.isArray(c.records)||!c.records.length||!Array.isArray(p.features))throw Error('contract');context=c;polygons=p;
    if(!selected()){if(id!==undefined){parent.replaceChildren(el('p',t('This boundary is excluded from calculation because its geometry is invalid. Choose a valid boundary from the water-budget menu.','Batas ini dikecualikan dari perhitungan karena geometrinya tidak valid. Pilih batas valid dari menu neraca air.')));return;}state.id=String(context.records[0].id);}render();locate(true);void refreshRain();
    document.addEventListener('visibilitychange',visibility);clock=setInterval(()=>{if(!document.hidden&&live()){recompute();locate();if(Date.now()-lastAttempt>=300000)void refreshRain();}},30000);clock?.unref?.();
-  }catch{if(live())parent.replaceChildren(el('p',t('Boundary/land-context join unavailable. Other water layers remain usable.','Gabungan batas/konteks lahan tidak tersedia. Lapisan air lain tetap dapat digunakan.')),button(t('Retry context','Coba lagi konteks'),()=>show(parent)));}finally{opening=false;}
+  }catch{context=null;polygons=null;view=null;if(live())parent.replaceChildren(el('p',t('Boundary/land-context join unavailable. Other water layers remain usable.','Gabungan batas/konteks lahan tidak tersedia. Lapisan air lain tetap dapat digunakan.')),button(t('Retry context','Coba lagi konteks'),()=>show(parent)));}finally{opening=false;}
  }
  return {show,clear(){disposed=true;abort?.abort();if(clock)clearInterval(clock);document.removeEventListener('visibilitychange',visibility);removeMap();view=null;}};
 }
