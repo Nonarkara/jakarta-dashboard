@@ -57,7 +57,7 @@ function cachedShell() {
 // 390 and 375 are the common iPhones, 360 the most common Android, 320 the
 // smallest anyone still carries; 1440 is the desktop the chrome was drawn at.
 const VIEWPORTS = [[390, 844], [375, 667], [360, 640], [320, 568], [1440, 900]];
-const LENSES = ['city', 'air', 'rain', 'haze', 'green'];
+const LENSES = ['city', 'air', 'rain', 'haze', 'green', 'waterways'];
 const FLOWS = { air: 'wind10', rain: 'syn850', haze: 'haze850' };
 const failures = [], unverified = [];
 const browser = await chromium.launch({ executablePath: process.env.PLAYWRIGHT_EXEC || cachedShell(), headless: true, args: ['--use-angle=metal', '--ignore-gpu-blocklist', '--enable-gpu'] });
@@ -78,6 +78,15 @@ for (const [W, H] of VIEWPORTS) {
     // Photograph the map, not the loading card (it covers the desktop view for several seconds).
     await page.waitForFunction(() => !document.body.innerText.includes('atlas loading'), null, { timeout: 20000 }).catch(() => {});
     await page.waitForTimeout(1200);
+    // Waterways is audited with the polder budget open: that is where the panel widens
+    // and where the answer used to sit two screens down on a small phone.
+    let budget = lens !== 'waterways';
+    if (!budget) {
+      await page.evaluate(() => { for (const s of document.querySelectorAll('#atlas-lens-body summary')) if (/polder water budget|neraca air polder/i.test(s.textContent) && !s.parentElement.open) s.click(); });
+      budget = await page.waitForFunction(() => !!document.querySelector('.budget-total'), null, { timeout: 25000 }).then(() => true, () => false);
+      if (!budget) unverified.push(`${tag}: polder budget did not compute`);
+      await page.waitForTimeout(600);
+    }
     if (!filled || !flowing) unverified.push(`${tag}: ${!filled ? 'panel did not populate' : `flow "${flow}" did not start`}`);
 
     const r = await page.evaluate(({ phone }) => {
@@ -128,6 +137,10 @@ for (const [W, H] of VIEWPORTS) {
         if (b.height > t.height * 2.5 + 1 && b.height > 40) out.big.push(`${name(e)} is ${Math.round(b.height)}px tall round a ${Math.round(t.height)}px line (${(b.height / t.height).toFixed(1)}x)`);
       }
       // MSH chrome budget: the two fixed bars together stay a small share of a phone's height.
+      // MSH, the first screen carries the answer: the polder budget's result must be fully
+      // visible in the panel before anyone scrolls (it was 742px down a 430px panel at 360x640).
+      const answer = document.querySelector('.budget-total'), pop = document.querySelector('.atlas-lens-popup');
+      if (answer && pop && vis(answer)) { pop.scrollTop = 0; const ab = answer.getBoundingClientRect(), pb = pop.getBoundingClientRect(); if (ab.bottom > pb.bottom + 1) out.big.push(`the polder budget's answer starts ${Math.round(ab.top - pb.top)}px down a ${Math.round(pb.height)}px panel (below the first screen)`); }
       if (phone) { let h = 0; for (const q of ['.atlas-header', '.atlas-lenses']) { const e = document.querySelector(q); if (e && vis(e)) h += e.getBoundingClientRect().height; } if (h > innerHeight * 0.15) out.big.push(`fixed bars take ${Math.round(h)}px of ${innerHeight}px (${Math.round(h / innerHeight * 100)}%, budget 15%)`); }
       return out;
     }, { phone });

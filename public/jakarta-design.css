@@ -812,3 +812,45 @@ body.atlas-workbench .atlas-page-tools { align-items:stretch; }
 body.atlas-workbench .atlas-lens-popup:has(details[open] > .polder-budget) { width:min(384px,calc(100vw - 16px)); }
 
 .budget-actions > div { display:flex; gap:4px; flex-wrap:wrap; }
+
+/* Waterways with the polder budget open, on a phone. The budget widens the panel
+   to min(384px, 100vw - 16px), which on a phone is the whole width, and the panel
+   then sat over the map's zoom and rotate buttons (top 88px of the group covered
+   at 360x640). It keeps its width but stops short of the map-control column.
+   And the first line of every lens body sat 26px below the heading, the first
+   line of an opened section 20px below its summary: a padding plus a margin that
+   nobody chose. The padding stays; the stacked margin goes. */
+@media (max-width: 700px) {
+  body.atlas-workbench .atlas-lens-popup:has(details[open] > .polder-budget) { width:calc(100vw - 68px); }
+  /* With the budget open, the two paragraphs about the whole waterways layer (feature
+     count, what OSM maps) pushed the budget's answer 70px below the fold at 360x640.
+     They describe the layer, not the budget, and come back when the budget closes. */
+  body.atlas-workbench .atlas-lens-popup:has(details[open] > .polder-budget) #atlas-lens-body > p:not(details ~ p) { display:none; }
+}
+#atlas-lens-body > :first-child, #atlas-lens-body .network-section > :first-child { margin-top:0; }
+/* The budget's own button rule (min-height 28px, specificity 1,1,1) outranked the
+   touch rule for lens panels, so on a phone its five buttons stayed 28px. Same
+   floor as every other panel control: label plus padding, 32px on touch. */
+@media (pointer: coarse) {
+  #atlas-lens-body .polder-budget button, #atlas-lens-body .polder-budget input[type="number"] { min-height:32px; }
+}
+/* On a phone the budget's heading repeats, word for word, the boundary name the
+   select directly above it already shows: a line spent saying the same thing
+   twice. It stays in the accessibility tree as the section's heading. */
+@media (max-width: 700px) {
+  #atlas-lens-body .polder-budget > h3 { position:absolute; width:1px; height:1px; margin:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+}
+/* Below 340px the page tools wrap to a second row: the wider budget panel starts
+   under that row and gives back the same height at the bottom; the budget's
+   how-to line yields so its answer stays on the first screen; and the air panel
+   stops above a wind compass that is taller here because it wraps. */
+@media (max-width: 340px) {
+  body.atlas-workbench .atlas-lens-popup:has(details[open] > .polder-budget) { top:calc(var(--atlas-header-row) + var(--atlas-lenses-row) + 90px); max-height:calc(100svh - 242px); }
+  #atlas-lens-body .polder-budget > p:first-child { display:none; }
+  body.atlas-workbench[data-lens="air"] .atlas-lens-popup { max-height:calc(100svh - 272px); }
+}
+/* The budget's action buttons carried a lone right-edge hairline, so "Locate
+   boundary | Refresh rain |" read as a rule-separated list. They are chips like
+   every other action row: a full hairline, the selected one in solid ink. */
+#atlas-lens-body .budget-actions button { border:1px solid var(--line); background:transparent; color:var(--ink); }
+#atlas-lens-body .budget-actions button[aria-pressed="true"] { background:var(--ink); color:var(--bg); border-color:var(--ink); }
