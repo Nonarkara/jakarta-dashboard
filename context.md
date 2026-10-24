@@ -333,3 +333,8 @@ Added an on-demand, bilingual one-polder rain-volume account in Waterways eviden
 
 
 Polder water budget live: `jakarta-atlas-20261023-1792743024-598c887`, stamp `c35aa9a`, Worker `3d419fd1-4c7e-4d77-961c-0c5fe998b939`. Canonical release exited 0; full 45-command tests, 13/13 verification, unchanged 208 spatial measurements, both-host byte convergence, 37/37 API checks and 50/50 rendered checks passed. Live browser at 390/1024/1440 verified calculation/export, null vs zero, bilingual state and all theme colours. The first full spatial pass caught an empty side-label strip in the expanded research method; final title/formula plus two desktop prose columns/phone stack removes it without changing baseline reasons. Full production receipt: docs/POLDER-BUDGET-AUDIT-2026-10-23.md. Scientific gaps remain listed there; no calibrated flood forecast claim.
+
+
+##24 October2026 · scenario admission safety
+
+Fixed sparse-hour admission, unsafe numeric overflow/loss, invalid clock/boundary inputs and nonhour model windows. Shared1e12m³ numerical bound is not a physical capacity; derived totals and conservation residual are checked. Failed context cache clears before Retry. Independent review/regressions passed. Canonical release `jakarta-atlas-20261023-1792779011-daf1308` (stamp b8f6e02, Worker a711e48a-5057-41b8-961f-94dac5455c2e) exited0:13 local checks,45-command chain,208 spatial measurements, both-host bytes,37 API checks,50 live rendered checks and other smokes passed. Production module bytes were directly re-evaluated against malformed and valid cases. No layout/map/font changes.0 production dependency advisories; no claim of an exhaustive security certificate. See docs/SCENARIO-SAFETY-2026-10-24.md.
