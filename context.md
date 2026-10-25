@@ -338,3 +338,8 @@ Polder water budget live: `jakarta-atlas-20261023-1792743024-598c887`, stamp `c3
 ##24 October2026 · scenario admission safety
 
 Fixed sparse-hour admission, unsafe numeric overflow/loss, invalid clock/boundary inputs and nonhour model windows. Shared1e12m³ numerical bound is not a physical capacity; derived totals and conservation residual are checked. Failed context cache clears before Retry. Independent review/regressions passed. Canonical release `jakarta-atlas-20261023-1792779011-daf1308` (stamp b8f6e02, Worker a711e48a-5057-41b8-961f-94dac5455c2e) exited0:13 local checks,45-command chain,208 spatial measurements, both-host bytes,37 API checks,50 live rendered checks and other smokes passed. Production module bytes were directly re-evaluated against malformed and valid cases. No layout/map/font changes.0 production dependency advisories; no claim of an exhaustive security certificate. See docs/SCENARIO-SAFETY-2026-10-24.md.
+
+
+## 25 October2026 · administrator preparedness references
+
+Added on-demand original-polder→health/school reference join (1,990distinctrecords;767exactduplicateextras merged with aliases), independent of rainfall. Search/paging, map selection with red coordinates and full-map handoff, all-record CSV/JSON brief, source dates/hashes/unknowns retained. No inundation/availability/capacity/shelter inference. Source/controller, optimized-Python admission, independent membership and responsive reviews pass;47command suite,50rendered and5viewport/6lensgeometry checks pass locally. Preserve ef19fda first-screen answer/controlclearance. Canonical release pending; append production receipt. Audit: docs/PREPAREDNESS-CONTEXT-AUDIT-2026-10-25.md; full objective/gaps: docs/ADMIN-READINESS.md.

@@ -1,0 +1,9 @@
+# Selected-polder preparedness context · 25 October 2026
+
+Administrator question: which published school and health-facility reference locations fall inside this selected polder, so a local preparedness check can start from an inspectable list?
+
+Reuse acquired original DSDA polygons (not simplified display shapes), existing Jakarta Satu health/school reference points and their own hashes, retrieval/unknown-observation dates and redistribution limits. Point-in-polygon covers includes exact edges, retains holes/multipart shapes, excludes invalid polder48 without repair. Deduplicate only exact name/coordinate rows within each source, retaining source row indexes; count invalid/unplaced/outside rows. Overlapping polders remain independent lists, never a citywide impact total. Rounded coordinates and unknown observation dates limit membership accuracy.
+
+Add a collapsed preparedness disclosure after the hourly-account controls, preserving the first-screen answer and map controls. Load independently on demand; a missing preparedness reference must not disable rain calculations. Show source-specific counts, searchable paginated names, map selection with red coordinates, and CSV/JSON reference export usable even when forecast is unavailable. No new permanent chrome. CSV text cells neutralize spreadsheet formulas; no staff/resident/contact data. No claims of flood impact, service availability, occupancy or shelter suitability.
+
+Verify raw-to-cooked reconciliation, holes/edges/overlaps/duplicates/outside fixtures, actual independent membership recomputation, partial load/retry/abort cleanup, export injection and map interactions. Apply anti-slop plus independent scientific/visual review at390/1024/1440, existing spatial/geometry gates unchanged, canonical committed release, exact live bytes and browser evidence. Keep the broad digital-twin goal active; this is one preparation capability, not proof of complete mitigation capacity.

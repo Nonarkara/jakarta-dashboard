@@ -1,0 +1,8063 @@
+{
+  "available": true,
+  "contract": "polder-preparedness-brief-v1",
+  "generatedAt": "2026-10-25T04:17:47.724Z",
+  "boundary": {
+    "id": 12,
+    "name": "Pluit",
+    "memberKeys": [
+      "health:37",
+      "health:38",
+      "health:39",
+      "health:40",
+      "health:41",
+      "health:42",
+      "health:44",
+      "health:45",
+      "health:46",
+      "health:47",
+      "health:48",
+      "health:49",
+      "health:50",
+      "health:51",
+      "health:52",
+      "health:53",
+      "health:54",
+      "health:55",
+      "health:56",
+      "health:57",
+      "health:58",
+      "health:59",
+      "health:60",
+      "health:61",
+      "health:62",
+      "health:63",
+      "health:64",
+      "health:65",
+      "health:66",
+      "health:72",
+      "health:105",
+      "health:108",
+      "health:110",
+      "health:111",
+      "health:114",
+      "health:115",
+      "health:116",
+      "health:118",
+      "health:123",
+      "health:124",
+      "health:125",
+      "health:126",
+      "health:127",
+      "health:128",
+      "health:129",
+      "health:146",
+      "health:147",
+      "health:150",
+      "health:151",
+      "health:153",
+      "health:154",
+      "health:156",
+      "health:157",
+      "health:294",
+      "health:295",
+      "health:297",
+      "health:298",
+      "health:300",
+      "health:465",
+      "health:508",
+      "health:509",
+      "health:670",
+      "schools:266",
+      "schools:267",
+      "schools:268",
+      "schools:269",
+      "schools:270",
+      "schools:271",
+      "schools:272",
+      "schools:273",
+      "schools:274",
+      "schools:275",
+      "schools:276",
+      "schools:277",
+      "schools:278",
+      "schools:279",
+      "schools:280",
+      "schools:283",
+      "schools:284",
+      "schools:285",
+      "schools:286",
+      "schools:287",
+      "schools:288",
+      "schools:289",
+      "schools:290",
+      "schools:291",
+      "schools:292",
+      "schools:293",
+      "schools:294",
+      "schools:295",
+      "schools:296",
+      "schools:297",
+      "schools:298",
+      "schools:299",
+      "schools:300",
+      "schools:301",
+      "schools:302",
+      "schools:303",
+      "schools:304",
+      "schools:305",
+      "schools:306",
+      "schools:307",
+      "schools:308",
+      "schools:309",
+      "schools:310",
+      "schools:311",
+      "schools:312",
+      "schools:313",
+      "schools:314",
+      "schools:315",
+      "schools:316",
+      "schools:317",
+      "schools:318",
+      "schools:319",
+      "schools:320",
+      "schools:321",
+      "schools:322",
+      "schools:323",
+      "schools:324",
+      "schools:325",
+      "schools:326",
+      "schools:327",
+      "schools:328",
+      "schools:329",
+      "schools:330",
+      "schools:331",
+      "schools:332",
+      "schools:333",
+      "schools:334",
+      "schools:335",
+      "schools:336",
+      "schools:337",
+      "schools:338",
+      "schools:339",
+      "schools:340",
+      "schools:341",
+      "schools:342",
+      "schools:343",
+      "schools:344",
+      "schools:345",
+      "schools:346",
+      "schools:347",
+      "schools:348",
+      "schools:349",
+      "schools:350",
+      "schools:351",
+      "schools:352",
+      "schools:353",
+      "schools:354",
+      "schools:355",
+      "schools:356",
+      "schools:357",
+      "schools:358",
+      "schools:359",
+      "schools:360",
+      "schools:361",
+      "schools:362",
+      "schools:363",
+      "schools:364",
+      "schools:365",
+      "schools:366",
+      "schools:367",
+      "schools:368",
+      "schools:369",
+      "schools:370",
+      "schools:371",
+      "schools:372",
+      "schools:373",
+      "schools:374",
+      "schools:375",
+      "schools:376",
+      "schools:377",
+      "schools:378",
+      "schools:379",
+      "schools:388",
+      "schools:389",
+      "schools:603",
+      "schools:604",
+      "schools:607",
+      "schools:608",
+      "schools:614",
+      "schools:615",
+      "schools:625",
+      "schools:626",
+      "schools:627",
+      "schools:630",
+      "schools:633",
+      "schools:634",
+      "schools:635",
+      "schools:636",
+      "schools:637",
+      "schools:638",
+      "schools:639",
+      "schools:641",
+      "schools:651",
+      "schools:652",
+      "schools:655",
+      "schools:656",
+      "schools:657",
+      "schools:658",
+      "schools:661",
+      "schools:662",
+      "schools:665",
+      "schools:666",
+      "schools:667",
+      "schools:668",
+      "schools:669",
+      "schools:670",
+      "schools:675",
+      "schools:676",
+      "schools:692",
+      "schools:693",
+      "schools:694",
+      "schools:695",
+      "schools:696",
+      "schools:697",
+      "schools:698",
+      "schools:699",
+      "schools:700",
+      "schools:701",
+      "schools:702",
+      "schools:703",
+      "schools:704",
+      "schools:705",
+      "schools:706",
+      "schools:707",
+      "schools:708",
+      "schools:709",
+      "schools:710",
+      "schools:711",
+      "schools:712",
+      "schools:713",
+      "schools:714",
+      "schools:715",
+      "schools:716",
+      "schools:717",
+      "schools:718",
+      "schools:719",
+      "schools:720",
+      "schools:773",
+      "schools:922",
+      "schools:923",
+      "schools:925",
+      "schools:926",
+      "schools:928",
+      "schools:931",
+      "schools:933",
+      "schools:934",
+      "schools:935",
+      "schools:936",
+      "schools:937",
+      "schools:940",
+      "schools:941",
+      "schools:942",
+      "schools:943",
+      "schools:944",
+      "schools:945",
+      "schools:948",
+      "schools:950",
+      "schools:952",
+      "schools:953",
+      "schools:954",
+      "schools:961",
+      "schools:964",
+      "schools:965",
+      "schools:966",
+      "schools:968",
+      "schools:977",
+      "schools:979",
+      "schools:980",
+      "schools:982",
+      "schools:988",
+      "schools:989",
+      "schools:990",
+      "schools:991",
+      "schools:992",
+      "schools:995",
+      "schools:1875",
+      "schools:1876",
+      "schools:1877",
+      "schools:1878",
+      "schools:1879",
+      "schools:1880",
+      "schools:1881",
+      "schools:1901",
+      "schools:2724",
+      "schools:2893",
+      "schools:3418",
+      "schools:3419",
+      "schools:3420",
+      "schools:3421",
+      "schools:3428",
+      "schools:3429",
+      "schools:3430",
+      "schools:3431",
+      "schools:3480"
+    ],
+    "counts": {
+      "health": 62,
+      "schools": 234
+    }
+  },
+  "boundarySource": {
+    "sourceUrl": "https://jakartasatu.jakarta.go.id/server/rest/services/DSDA/Polder_Jakarta/FeatureServer/0/query",
+    "retrievedAt": "2026-10-15T14:31:29.870182+00:00",
+    "license": "Dataset-specific open license not stated; publisher attribution retained."
+  },
+  "boundaryObservedAt": null,
+  "rawBoundarySha256": "fdd8717fdb05401beacbb1ca3e8910fd53ba6e2a32943669caae6f3ecb4e41ab",
+  "sources": [
+    {
+      "source": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu/Fasilitas_Kesehatan/MapServer/0/query",
+      "publisher": "Pemprov DKI Jakarta · Jakarta Satu",
+      "retrievedAt": "2026-10-11T06:37:55.144713+00:00",
+      "observedAt": null,
+      "tier": "public-reference",
+      "license": "Publisher attribution; dataset-specific open license not stated in service metadata",
+      "precisionDecimals": 5,
+      "id": "health",
+      "asset": "health.geojson",
+      "sha256": "871883982c56091e7dc9d889fc45e601646ae3e44676fdc42c596804f8a72f02",
+      "inputRows": 678,
+      "invalidRows": [],
+      "duplicates": 140,
+      "validUniqueRows": 538,
+      "outsideAllBoundaries": 226,
+      "insideAnyBoundary": 312
+    },
+    {
+      "source": "https://jakartasatu.jakarta.go.id/server/rest/services/JakartaSatu/Sekolah/MapServer/0/query",
+      "publisher": "Pemprov DKI Jakarta · Jakarta Satu",
+      "retrievedAt": "2026-10-11T06:37:55.144713+00:00",
+      "observedAt": null,
+      "tier": "public-reference",
+      "license": "Publisher attribution; dataset-specific open license not stated in service metadata",
+      "precisionDecimals": 5,
+      "id": "schools",
+      "asset": "schools.geojson",
+      "sha256": "95118a74296c53651621f9cf69c6a61eb070ce6ecd4da87e87715494d5066e10",
+      "inputRows": 3525,
+      "invalidRows": [],
+      "duplicates": 627,
+      "validUniqueRows": 2898,
+      "outsideAllBoundaries": 1220,
+      "insideAnyBoundary": 1678
+    }
+  ],
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "APOTEK KENCANA RAYA",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PLUIT",
+        "kecamatan": "PENJARINGAN",
+        "kota": "JAKARTA UTARA",
+        "key": "health:116",
+        "sourceId": "health",
+        "sourceRows": [
+          116
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.78847,
+          -6.12367
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "APOTEK PUTRI",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PLUIT",
+        "kecamatan": "PENJARINGAN",
+        "kota": "JAKARTA UTARA",
+        "key": "health:115",
+        "sourceId": "health",
+        "sourceRows": [
+          115
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.78797,
+          -6.12256
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "APOTIK DHARMA HUSADA",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PENJAGALAN",
+        "kecamatan": "PENJARINGAN",
+        "kota": "JAKARTA UTARA",
+        "key": "health:64",
+        "sourceId": "health",
+        "sourceRows": [
+          64
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79278,
+          -6.1386
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "APOTIK SARIWARAS",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PENJAGALAN",
+        "kecamatan": "PENJARINGAN",
+        "kota": "JAKARTA UTARA",
+        "key": "health:63",
+        "sourceId": "health",
+        "sourceRows": [
+          63
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79666,
+          -6.13892
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "BALAI KESEHATAN MASYARAKAT",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PENJARINGAN",
+        "kecamatan": "PENJARINGAN",
+        "kota": "JAKARTA UTARA",
+        "key": "health:114",
+        "sourceId": "health",
+        "sourceRows": [
+          114
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79566,
+          -6.13093
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "BALAI KESEHATAN MASYARAKAT YAYASAN RUMAH ABU LILM",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PEKOJAN",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:61",
+        "sourceId": "health",
+        "sourceRows": [
+          61
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80392,
+          -6.13462
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "BHINEKA TUNGGAL IKA PRESCHOOL DAN KINDERGARTEN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tanah Sereal",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:325",
+        "sourceId": "schools",
+        "sourceRows": [
+          325
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80864,
+          -6.1506
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "BKB PAUD ANGGREK 8",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:615",
+        "sourceId": "schools",
+        "sourceRows": [
+          615
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79638,
+          -6.12859
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "BKB PAUD MELATI 11",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:607",
+        "sourceId": "schools",
+        "sourceRows": [
+          607,
+          613
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79967,
+          -6.13156
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "FAKULTAS KEDOKTERAN UI D III PERUMAHSAKITAN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pegangsaan",
+        "kecamatan": "Menteng",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:1876",
+        "sourceId": "schools",
+        "sourceRows": [
+          1876
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.84255,
+          -6.19872
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "FAKULTAS KEDOKTERAN UNIVERSITAS KRISTEN KRIDA WAC*",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Mangga Dua Selatan",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:953",
+        "sourceId": "schools",
+        "sourceRows": [
+          953
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82834,
+          -6.14622
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "IDEAR TAIWAN PRESCHOOL",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pluit",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:661",
+        "sourceId": "schools",
+        "sourceRows": [
+          661
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79042,
+          -6.11556
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KB - TK CAHAYA BUNDA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Taman Sari",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:925",
+        "sourceId": "schools",
+        "sourceRows": [
+          925
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82588,
+          -6.14955
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KB MURTINI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tanah Sereal",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:318",
+        "sourceId": "schools",
+        "sourceRows": [
+          318
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81028,
+          -6.15294
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KB WIDURI INDAH 1",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Utara",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:302",
+        "sourceId": "schools",
+        "sourceRows": [
+          302
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80316,
+          -6.15629
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KB-TK-SD-SMP BUDAYA MULIA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Utara",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:340",
+        "sourceId": "schools",
+        "sourceRows": [
+          340
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80562,
+          -6.1525
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KB-TK-SD-SMP BUKIT SINAI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Angke",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:352",
+        "sourceId": "schools",
+        "sourceRows": [
+          352
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79765,
+          -6.14625
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KB-TK-SD-SMP JOY",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pekojan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:361",
+        "sourceId": "schools",
+        "sourceRows": [
+          361
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80232,
+          -6.14052
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KB-TK-SD-SMP-SMA KRISTEN KALAM KUDUS",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tangki",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:968",
+        "sourceId": "schools",
+        "sourceRows": [
+          968
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82124,
+          -6.1429
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KB, TK SANTO YOSEPH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kartini",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:935",
+        "sourceId": "schools",
+        "sourceRows": [
+          935
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83078,
+          -6.14857
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KLINIK CENDANA",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "TANAH SEREAL",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:41",
+        "sourceId": "health",
+        "sourceRows": [
+          41
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80926,
+          -6.15804
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KLINIK DR MURNI",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PEGANGSAAN",
+        "kecamatan": "MENTENG",
+        "kota": "JAKARTA PUSAT",
+        "key": "health:300",
+        "sourceId": "health",
+        "sourceRows": [
+          300
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.84482,
+          -6.20193
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KLINIK FAMILIA",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "TANAH SEREAL",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:46",
+        "sourceId": "health",
+        "sourceRows": [
+          46
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80902,
+          -6.15499
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KLINIK GULARDI CENTRE",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PEGANGSAAN",
+        "kecamatan": "MENTENG",
+        "kota": "JAKARTA PUSAT",
+        "key": "health:295",
+        "sourceId": "health",
+        "sourceRows": [
+          295
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.84449,
+          -6.1985
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KLINIK HARAPAN IBU",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PEKOJAN",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:59",
+        "sourceId": "health",
+        "sourceRows": [
+          59
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80065,
+          -6.14084
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KLINIK HEMODIALISISLIONS",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PLUIT",
+        "kecamatan": "PENJARINGAN",
+        "kota": "JAKARTA UTARA",
+        "key": "health:108",
+        "sourceId": "health",
+        "sourceRows": [
+          108
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7964,
+          -6.11879
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KLINIK HUSADA MULIA",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "JEMBATAN BESI",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:53",
+        "sourceId": "health",
+        "sourceRows": [
+          53
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79812,
+          -6.15478
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KLINIK KARUNIA",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "MAPHAR",
+        "kecamatan": "TAMAN SARI",
+        "kota": "JAKARTA BARAT",
+        "key": "health:125",
+        "sourceId": "health",
+        "sourceRows": [
+          125
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81863,
+          -6.15425
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KLINIK LABORATORIUM ETIKA",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "ANGKE",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:66",
+        "sourceId": "health",
+        "sourceRows": [
+          66
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79402,
+          -6.14314
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KLINIK LABORATORIUM PRODIA CIDENG",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "CIDENG",
+        "kecamatan": "GAMBIR",
+        "kota": "JAKARTA PUSAT",
+        "key": "health:38",
+        "sourceId": "health",
+        "sourceRows": [
+          38
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8103,
+          -6.16717
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KLINIK LOTUS",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "TANAH SEREAL",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:44",
+        "sourceId": "health",
+        "sourceRows": [
+          44
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80841,
+          -6.15761
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KLINIK PELA 9",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "CIDENG",
+        "kecamatan": "GAMBIR",
+        "kota": "JAKARTA PUSAT",
+        "key": "health:37",
+        "sourceId": "health",
+        "sourceRows": [
+          37
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80912,
+          -6.17082
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KLINIK PELA 9",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": " ",
+        "kecamatan": " ",
+        "kota": " ",
+        "key": "health:509",
+        "sourceId": "health",
+        "sourceRows": [
+          509,
+          640
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8091,
+          -6.17085
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KLINIK PRATAMA BUDI KEMULIAAN",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PEKOJAN",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:60",
+        "sourceId": "health",
+        "sourceRows": [
+          60
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80323,
+          -6.1388
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KLINIK PRIMA MEDIKA",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "ANGKE",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:56",
+        "sourceId": "health",
+        "sourceRows": [
+          56
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80013,
+          -6.14565
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KLINIK PUSPITA GRIYA HUSADA",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "TAMBORA",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:50",
+        "sourceId": "health",
+        "sourceRows": [
+          50
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80999,
+          -6.14731
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KLINIK SETIA",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "DURI PULO",
+        "kecamatan": "GAMBIR",
+        "kota": "JAKARTA PUSAT",
+        "key": "health:42",
+        "sourceId": "health",
+        "sourceRows": [
+          42
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80134,
+          -6.16584
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KOLESE KANISIUS",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kebon Sirih",
+        "kecamatan": "Menteng",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:3480",
+        "sourceId": "schools",
+        "sourceRows": [
+          3480
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83469,
+          -6.18584
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "MADRASAH DINIYAH AROBIYYAH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tanah Sereal",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:274",
+        "sourceId": "schools",
+        "sourceRows": [
+          274
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81041,
+          -6.15821
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "MADRASAH DINIYAH AROBIYYAH AL-HIDAYAH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tanah Sereal",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:273",
+        "sourceId": "schools",
+        "sourceRows": [
+          273
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81151,
+          -6.15925
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "MADRASAH IBTIDAIYAH JAMATUL KHAIR",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pejagalan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:378",
+        "sourceId": "schools",
+        "sourceRows": [
+          378
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79777,
+          -6.13912
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "MADRASAH IBTIDAIYAH MANSURIAH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Jembatan Lima",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:355",
+        "sourceId": "schools",
+        "sourceRows": [
+          355
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8058,
+          -6.14566
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "MADRASAH IBTIDAIYAH MIFTAHUL HUDA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kali Anyar",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:300",
+        "sourceId": "schools",
+        "sourceRows": [
+          300
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80045,
+          -6.15769
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "MADRASAH IBTIDAIYAH MIFTAHUL HUDA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Angke",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:375",
+        "sourceId": "schools",
+        "sourceRows": [
+          375
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79502,
+          -6.14449
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "MADRASAH IBTIDAIYAH MUAWANATUL KHAERIYAH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Krendang",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:341",
+        "sourceId": "schools",
+        "sourceRows": [
+          341
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80245,
+          -6.15115
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "MADRASAH IBTIDAIYAH NURUL ANWAR",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tambora",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:334",
+        "sourceId": "schools",
+        "sourceRows": [
+          334
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81056,
+          -6.1456
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "MADRASAH IBTIDAIYAH RABIATUL ADAWIYAH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Jembatan Besi",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:346",
+        "sourceId": "schools",
+        "sourceRows": [
+          346
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79746,
+          -6.15093
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "MADRASAH IBTIDAIYAH RAHDATUL ISLAMIYAH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:667",
+        "sourceId": "schools",
+        "sourceRows": [
+          667
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79891,
+          -6.13158
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "MD SA'ADATUDDARAIN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Selatan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:278",
+        "sourceId": "schools",
+        "sourceRows": [
+          278
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80617,
+          -6.16069
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "MI AL-IFADAH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:656",
+        "sourceId": "schools",
+        "sourceRows": [
+          656
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80271,
+          -6.13235
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "MTS CHAIRIYAH MANSURYAH (PAGI)",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Jembatan Lima",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:359",
+        "sourceId": "schools",
+        "sourceRows": [
+          359
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80593,
+          -6.14525
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NATION FIRST SCHOOL",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:676",
+        "sourceId": "schools",
+        "sourceRows": [
+          676
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79422,
+          -6.13088
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD - TK DARUUL GHUFRON",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:665",
+        "sourceId": "schools",
+        "sourceRows": [
+          665
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80518,
+          -6.12379
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD AL LATHIEF",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tanah Sereal",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:324",
+        "sourceId": "schools",
+        "sourceRows": [
+          324
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81018,
+          -6.14944
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD ANANDA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Angke",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:353",
+        "sourceId": "schools",
+        "sourceRows": [
+          353
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79776,
+          -6.14774
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD ANGGREK 10",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:614",
+        "sourceId": "schools",
+        "sourceRows": [
+          614
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80196,
+          -6.13113
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD BATAVIA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Roa Malaka",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:339",
+        "sourceId": "schools",
+        "sourceRows": [
+          339
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80847,
+          -6.1334
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD BERDIKARI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tanah Sereal",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:272",
+        "sourceId": "schools",
+        "sourceRows": [
+          272
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80966,
+          -6.16075
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD BINTANG CERIA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pekojan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:363",
+        "sourceId": "schools",
+        "sourceRows": [
+          363
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8075,
+          -6.14011
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD CERDAS BANGSA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pekojan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:369",
+        "sourceId": "schools",
+        "sourceRows": [
+          369
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80562,
+          -6.13355
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD FLAMBOYAN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kali Anyar",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:294",
+        "sourceId": "schools",
+        "sourceRows": [
+          294
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80068,
+          -6.15868
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD KARTINI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kartini",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:712",
+        "sourceId": "schools",
+        "sourceRows": [
+          712
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83294,
+          -6.15408
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD KENANGA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Selatan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:288",
+        "sourceId": "schools",
+        "sourceRows": [
+          288
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80664,
+          -6.15664
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD LESTARI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Mangga Besar",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:950",
+        "sourceId": "schools",
+        "sourceRows": [
+          950
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81947,
+          -6.14638
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD MADRASAH DINIYAH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Utara",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:310",
+        "sourceId": "schools",
+        "sourceRows": [
+          310
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80311,
+          -6.15462
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD MELATI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:658",
+        "sourceId": "schools",
+        "sourceRows": [
+          658
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80577,
+          -6.12569
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD MELATI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tangki",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:945",
+        "sourceId": "schools",
+        "sourceRows": [
+          945
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82498,
+          -6.14673
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD NADIRAH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pekojan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:367",
+        "sourceId": "schools",
+        "sourceRows": [
+          367
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80205,
+          -6.13982
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD TANSERA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tanah Sereal",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:275",
+        "sourceId": "schools",
+        "sourceRows": [
+          275
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80924,
+          -6.15902
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD TULIP",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Jembatan Besi",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:345",
+        "sourceId": "schools",
+        "sourceRows": [
+          345
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79813,
+          -6.15085
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PAUD TUNAS BANGSA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Krendang",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:349",
+        "sourceId": "schools",
+        "sourceRows": [
+          349
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8037,
+          -6.14858
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PELITA KINDERGARTEN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Utara",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:301",
+        "sourceId": "schools",
+        "sourceRows": [
+          301
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80288,
+          -6.15654
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PERGURUAN ISLAM MANHALUN NASYI'IN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Karang Anyar",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:922",
+        "sourceId": "schools",
+        "sourceRows": [
+          922
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82939,
+          -6.14973
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PLAY GROUP BOBOBOS",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pluit",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:633",
+        "sourceId": "schools",
+        "sourceRows": [
+          633
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.78788,
+          -6.11276
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PONPES SHIDDIYYAH BUSTAN TSAMROTUL QOLBISSALIM",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tanah Sereal",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:332",
+        "sourceId": "schools",
+        "sourceRows": [
+          332
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80957,
+          -6.148
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "POSYANDU KENCANA",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PINANGSIA",
+        "kecamatan": "TAMAN SARI",
+        "kota": " ",
+        "key": "health:156",
+        "sourceId": "health",
+        "sourceRows": [
+          156
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82088,
+          -6.14246
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "POSYANDU RW 07",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "KALI ANYAR",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:47",
+        "sourceId": "health",
+        "sourceRows": [
+          47
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8012,
+          -6.15905
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "POSYANDU SERUNI",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "ANGKE",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:65",
+        "sourceId": "health",
+        "sourceRows": [
+          65
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79552,
+          -6.14522
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS CIDENG",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": " ",
+        "kecamatan": " ",
+        "kota": " ",
+        "key": "health:508",
+        "sourceId": "health",
+        "sourceRows": [
+          508,
+          639
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80728,
+          -6.17276
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS DURI PULO",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "DURI PULO",
+        "kecamatan": "GAMBIR",
+        "kota": "JAKARTA PUSAT",
+        "key": "health:39",
+        "sourceId": "health",
+        "sourceRows": [
+          39
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80979,
+          -6.16253
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KECAMATAN MENTENG",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "MENTENG",
+        "kecamatan": "MENTENG",
+        "kota": "JAKARTA PUSAT",
+        "key": "health:294",
+        "sourceId": "health",
+        "sourceRows": [
+          294
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8412,
+          -6.19965
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KECAMATAN TAMANSARI",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "MANGGA BESAR",
+        "kecamatan": "TAMAN SARI",
+        "kota": " ",
+        "key": "health:153",
+        "sourceId": "health",
+        "sourceRows": [
+          153
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81745,
+          -6.14506
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KECAMATAN TAMANSARI",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "MANGGA BESAR",
+        "kecamatan": "TAMAN SARI",
+        "kota": " ",
+        "key": "health:157",
+        "sourceId": "health",
+        "sourceRows": [
+          157
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81891,
+          -6.14202
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KECAMATAN TAMBORA",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "KRENDANG",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:55",
+        "sourceId": "health",
+        "sourceRows": [
+          55
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80459,
+          -6.14817
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KELURAHAN ANGKE",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "ANGKE",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:57",
+        "sourceId": "health",
+        "sourceRows": [
+          57
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79962,
+          -6.14396
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KELURAHAN DURI UTARA",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "DURI UTARA",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:48",
+        "sourceId": "health",
+        "sourceRows": [
+          48
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8065,
+          -6.15324
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KELURAHAN JEMBATAN BESI",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "JEMBATAN BESI",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:54",
+        "sourceId": "health",
+        "sourceRows": [
+          54
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79969,
+          -6.14952
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KELURAHAN KARTINI",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "KARTINI",
+        "kecamatan": "SAWAH BESAR",
+        "kota": "JAKARTA PUSAT",
+        "key": "health:129",
+        "sourceId": "health",
+        "sourceRows": [
+          129
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83192,
+          -6.15341
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KELURAHAN KEAGUNGAN",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "KEAGUNGAN",
+        "kecamatan": "TAMAN SARI",
+        "kota": "JAKARTA BARAT",
+        "key": "health:123",
+        "sourceId": "health",
+        "sourceRows": [
+          123
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81301,
+          -6.15396
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KELURAHAN KEBON KELAPA",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "KEBON KELAPA",
+        "kecamatan": "GAMBIR",
+        "kota": "JAKARTA PUSAT",
+        "key": "health:128",
+        "sourceId": "health",
+        "sourceRows": [
+          128
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82157,
+          -6.16376
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KELURAHAN KRUKUT",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "KRUKUT",
+        "kecamatan": "TAMAN SARI",
+        "kota": "JAKARTA BARAT",
+        "key": "health:45",
+        "sourceId": "health",
+        "sourceRows": [
+          45
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81207,
+          -6.15486
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KELURAHAN MAPHAR",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "MAPHAR",
+        "kecamatan": "TAMAN SARI",
+        "kota": "JAKARTA BARAT",
+        "key": "health:124",
+        "sourceId": "health",
+        "sourceRows": [
+          124
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81967,
+          -6.15614
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KELURAHAN PEKAJON",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PEKOJAN",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:62",
+        "sourceId": "health",
+        "sourceRows": [
+          62
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80324,
+          -6.13351
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KELURAHAN PENJARINGAN",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PENJARINGAN",
+        "kecamatan": "PENJARINGAN",
+        "kota": "JAKARTA UTARA",
+        "key": "health:110",
+        "sourceId": "health",
+        "sourceRows": [
+          110
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80073,
+          -6.12566
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KELURAHAN ROA MALAKA",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "MALAKA",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:52",
+        "sourceId": "health",
+        "sourceRows": [
+          52
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80919,
+          -6.13589
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KELURAHAN TAMANSARI",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "TAMAN SARI",
+        "kecamatan": "TAMAN SARI",
+        "kota": "JAKARTA BARAT",
+        "key": "health:126",
+        "sourceId": "health",
+        "sourceRows": [
+          126
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82391,
+          -6.15458
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KELURAHAN TAMANSARI",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "TAMAN SARI",
+        "kecamatan": "TAMAN SARI",
+        "kota": "JAKARTA BARAT",
+        "key": "health:127",
+        "sourceId": "health",
+        "sourceRows": [
+          127
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82316,
+          -6.15455
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KELURAHAN TAMBORA",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "TAMBORA",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:51",
+        "sourceId": "health",
+        "sourceRows": [
+          51
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81036,
+          -6.14529
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS KELURAHAN TANAH SEREAL",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "TANAH SEREAL",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:49",
+        "sourceId": "health",
+        "sourceRows": [
+          49
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81009,
+          -6.15246
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS PASAR BARU",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PASAR BARU",
+        "kecamatan": "SAWAH BESAR",
+        "kota": "JAKARTA PUSAT",
+        "key": "health:670",
+        "sourceId": "health",
+        "sourceRows": [
+          670
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83239,
+          -6.16045
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "PUSKESMAS PEKOJAN 2",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PEKOJAN",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:58",
+        "sourceId": "health",
+        "sourceRows": [
+          58
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80063,
+          -6.13928
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "RAFFLES HOUSE PRESCHOOL",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pluit",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:634",
+        "sourceId": "schools",
+        "sourceRows": [
+          634
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.78522,
+          -6.11466
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "RS FAMILY",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PENJAGALAN",
+        "kecamatan": "PENJARINGAN",
+        "kota": "JAKARTA UTARA",
+        "key": "health:72",
+        "sourceId": "health",
+        "sourceRows": [
+          72
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79034,
+          -6.13356
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "RSCM UNIT PELAYANAN MATA",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PEGANGSAAN",
+        "kecamatan": "MENTENG",
+        "kota": "JAKARTA PUSAT",
+        "key": "health:298",
+        "sourceId": "health",
+        "sourceRows": [
+          298
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.84478,
+          -6.19703
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "RSIA FAMILY",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PENJAGALAN",
+        "kecamatan": "PENJARINGAN",
+        "kota": "JAKARTA UTARA",
+        "key": "health:118",
+        "sourceId": "health",
+        "sourceRows": [
+          118
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79035,
+          -6.1332
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "RSUD TARAKAN",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": " ",
+        "kecamatan": " ",
+        "kota": " ",
+        "key": "health:465",
+        "sourceId": "health",
+        "sourceRows": [
+          465,
+          596
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81032,
+          -6.17163
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "RUMAH BERSALIN LINA YANTI",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "MANGGA DUA SELATAN",
+        "kecamatan": "SAWAH BESAR",
+        "kota": " ",
+        "key": "health:147",
+        "sourceId": "health",
+        "sourceRows": [
+          147
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82731,
+          -6.14805
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "RUMAH SAKIT ATMA JAYA",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PENJARINGAN",
+        "kecamatan": "PENJARINGAN",
+        "kota": "JAKARTA UTARA",
+        "key": "health:111",
+        "sourceId": "health",
+        "sourceRows": [
+          111
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79323,
+          -6.12661
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "RUMAH SAKIT IBU DAN ANAK ARIES",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "TANAH SEREAL",
+        "kecamatan": "TAMBORA",
+        "kota": "JAKARTA BARAT",
+        "key": "health:40",
+        "sourceId": "health",
+        "sourceRows": [
+          40
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81,
+          -6.15763
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "RUMAH SAKIT PGI CIKINI",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "CIKINI",
+        "kecamatan": "MENTENG",
+        "kota": "JAKARTA PUSAT",
+        "key": "health:297",
+        "sourceId": "health",
+        "sourceRows": [
+          297
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.84204,
+          -6.19126
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "RUMAH SAKIT PLUIT",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "PENJARINGAN",
+        "kecamatan": "PENJARINGAN",
+        "kota": "JAKARTA UTARA",
+        "key": "health:105",
+        "sourceId": "health",
+        "sourceRows": [
+          105
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79949,
+          -6.12552
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "RUMAH SAKIT UMUM KECAMATAN SAWAH BESAR",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "KARANG ANYAR",
+        "kecamatan": "SAWAH BESAR",
+        "kota": " ",
+        "key": "health:146",
+        "sourceId": "health",
+        "sourceRows": [
+          146
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82982,
+          -6.1489
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "RUMAH SAKIT UMUM TAMAN SARI",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "MANGGA BESAR",
+        "kecamatan": "TAMAN SARI",
+        "kota": " ",
+        "key": "health:154",
+        "sourceId": "health",
+        "sourceRows": [
+          154
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81922,
+          -6.14374
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD - SMP - SMA YASPEN HARAPAN SALAHUDIN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:669",
+        "sourceId": "schools",
+        "sourceRows": [
+          669
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8038,
+          -6.12207
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD AL HIDAYAH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Karang Anyar",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:710",
+        "sourceId": "schools",
+        "sourceRows": [
+          710
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82859,
+          -6.15702
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD AL MAKMUR",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Cikini",
+        "kecamatan": "Menteng",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:1881",
+        "sourceId": "schools",
+        "sourceRows": [
+          1881
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8404,
+          -6.19351
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD CINDERA MATA INDAH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Utara",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:312",
+        "sourceId": "schools",
+        "sourceRows": [
+          312
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80502,
+          -6.15572
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD DAMAI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Selatan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:291",
+        "sourceId": "schools",
+        "sourceRows": [
+          291
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80478,
+          -6.15909
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD EMANUIL",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Glodok",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:335",
+        "sourceId": "schools",
+        "sourceRows": [
+          335
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8114,
+          -6.14303
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD HARAPAN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Mangga Dua Selatan",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:940",
+        "sourceId": "schools",
+        "sourceRows": [
+          940
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82709,
+          -6.1478
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD ISLAM MUHAMMADIYAH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Karang Anyar",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:3431",
+        "sourceId": "schools",
+        "sourceRows": [
+          3431
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82987,
+          -6.1576
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD ISLAM TELADAN YKPI PG/PT",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Angke",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:354",
+        "sourceId": "schools",
+        "sourceRows": [
+          354
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79778,
+          -6.14854
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD KASIH BUNDA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Taman Sari",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:701",
+        "sourceId": "schools",
+        "sourceRows": [
+          701
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82489,
+          -6.15614
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD KATOLIK DIAKONIA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pluit",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:635",
+        "sourceId": "schools",
+        "sourceRows": [
+          635
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.78934,
+          -6.11252
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD KRISTEN IPEKA PLUIT",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pluit",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:626",
+        "sourceId": "schools",
+        "sourceRows": [
+          626
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79658,
+          -6.11918
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD LUAR BIASA BAGIAN C-1 \"TRI-ASIH I\"",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Selatan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:279",
+        "sourceId": "schools",
+        "sourceRows": [
+          279
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80565,
+          -6.16116
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD MAHATMA GANDHI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pasar Baru",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:3428",
+        "sourceId": "schools",
+        "sourceRows": [
+          3428
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8358,
+          -6.16461
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD MDT PKBM KALI BARU",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kali Anyar",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:298",
+        "sourceId": "schools",
+        "sourceRows": [
+          298
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79768,
+          -6.15799
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD MURTINI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tanah Sereal",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:320",
+        "sourceId": "schools",
+        "sourceRows": [
+          320
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81028,
+          -6.15294
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD NEGERI 01 02 KEBON KELAPA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kebon Kelapa",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:705",
+        "sourceId": "schools",
+        "sourceRows": [
+          705
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82204,
+          -6.16498
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD NEGERI 01 CIKINI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Cikini",
+        "kecamatan": "Menteng",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:1877",
+        "sourceId": "schools",
+        "sourceRows": [
+          1877
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.84223,
+          -6.19404
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD NEGERI 01,03,05 PAGI DAN 02,06 PETANG",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Keagungan",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:692",
+        "sourceId": "schools",
+        "sourceRows": [
+          692
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81388,
+          -6.15402
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD NEGERI 02, 03, 04 CIKINI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Cikini",
+        "kecamatan": "Menteng",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:1878",
+        "sourceId": "schools",
+        "sourceRows": [
+          1878
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.84241,
+          -6.19437
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD NEGERI JEMBATAN LIMA 2 - 4 PETANG",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Jembatan Lima",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:357",
+        "sourceId": "schools",
+        "sourceRows": [
+          357
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80644,
+          -6.14728
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD NEGERI KARTINI 01 PAGI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kartini",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:711",
+        "sourceId": "schools",
+        "sourceRows": [
+          711
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83175,
+          -6.15062
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD NEGERI MANGGA BESAR 11 PAGI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Mangga Besar",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:965",
+        "sourceId": "schools",
+        "sourceRows": [
+          965
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81918,
+          -6.14344
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD NEGERI MANGGA BESAR 15 PAGI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Mangga Besar",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:961",
+        "sourceId": "schools",
+        "sourceRows": [
+          961
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81763,
+          -6.14482
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD NEGERI MANGGA DUA SELATAN 05 PAGI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Mangga Dua Selatan",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:954",
+        "sourceId": "schools",
+        "sourceRows": [
+          954
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82732,
+          -6.14602
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD NEGERI MAPHAR 01 PAGI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Maphar",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:698",
+        "sourceId": "schools",
+        "sourceRows": [
+          698
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81949,
+          -6.15668
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD NEGERI PASAR BARU 01 PGI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pasar Baru",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:715",
+        "sourceId": "schools",
+        "sourceRows": [
+          715
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83413,
+          -6.1585
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD NEGERI PASAR BARU 05 PAGI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pasar Baru",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:714",
+        "sourceId": "schools",
+        "sourceRows": [
+          714
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83421,
+          -6.15817
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD NEGERI PASAR BARU 11",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pasar Baru",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:3429",
+        "sourceId": "schools",
+        "sourceRows": [
+          3429
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83461,
+          -6.16281
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD NEGERI PINANSIA 06 PAGI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pinangsia",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:995",
+        "sourceId": "schools",
+        "sourceRows": [
+          995
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81607,
+          -6.1383
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD NEGERI TAMANSARI 07 DAN 08 PAGI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Taman Sari",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:708",
+        "sourceId": "schools",
+        "sourceRows": [
+          708
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8257,
+          -6.15412
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD PELITA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Utara",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:306",
+        "sourceId": "schools",
+        "sourceRows": [
+          306
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80216,
+          -6.15589
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD PERMATA BUNDA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Selatan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:285",
+        "sourceId": "schools",
+        "sourceRows": [
+          285
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80668,
+          -6.15727
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD RICCI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Glodok",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:336",
+        "sourceId": "schools",
+        "sourceRows": [
+          336
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81229,
+          -6.14262
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD SA' ADATUDDARAIN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Selatan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:277",
+        "sourceId": "schools",
+        "sourceRows": [
+          277
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80617,
+          -6.16069
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD SINAR DHARMA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Krendang",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:328",
+        "sourceId": "schools",
+        "sourceRows": [
+          328
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80706,
+          -6.14929
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD TUNAS PEMBANGUNAN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Jembatan Lima",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:358",
+        "sourceId": "schools",
+        "sourceRows": [
+          358
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80477,
+          -6.14683
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD WIDURI INDAH 1",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Utara",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:303",
+        "sourceId": "schools",
+        "sourceRows": [
+          303
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80316,
+          -6.15629
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD YAYASAN MASYARAKAT ISLAM \"BAHAGIA\"",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kali Anyar",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:295",
+        "sourceId": "schools",
+        "sourceRows": [
+          295
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79897,
+          -6.15912
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD YAYASAN NASIONAL GARUDA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Utara",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:316",
+        "sourceId": "schools",
+        "sourceRows": [
+          316
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80715,
+          -6.15384
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD YBPK",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Cikini",
+        "kecamatan": "Menteng",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:1879",
+        "sourceId": "schools",
+        "sourceRows": [
+          1879
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.84276,
+          -6.1935
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD-SMP-SMA BUDI AGUNG",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pejagalan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:388",
+        "sourceId": "schools",
+        "sourceRows": [
+          388
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.78919,
+          -6.13705
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD-SMP-SMA MELODIS",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pejagalan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:389",
+        "sourceId": "schools",
+        "sourceRows": [
+          389
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.78963,
+          -6.13721
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD-SMP-SMK BUDI DAYA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pejagalan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:374",
+        "sourceId": "schools",
+        "sourceRows": [
+          374
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79013,
+          -6.14094
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD, SMP KRISTEN ANUGRAH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pasar Baru",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:718",
+        "sourceId": "schools",
+        "sourceRows": [
+          718
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83639,
+          -6.15777
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD, SMP MELANIA DAN SMK PARAMITHA 2",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Taman Sari",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:702",
+        "sourceId": "schools",
+        "sourceRows": [
+          702
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82488,
+          -6.15577
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SD, SMP, SMA SEKOLAH KEMURNIAN I",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Glodok",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:948",
+        "sourceId": "schools",
+        "sourceRows": [
+          948
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81322,
+          -6.14647
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SDN 01 PENJARINGAN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:666",
+        "sourceId": "schools",
+        "sourceRows": [
+          666
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8045,
+          -6.12382
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SDN 03 PENJARINGAN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:636",
+        "sourceId": "schools",
+        "sourceRows": [
+          636
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80278,
+          -6.12481
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SDN 06, 07, 08, 09, 10, 11 PENJARINGAN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:608",
+        "sourceId": "schools",
+        "sourceRows": [
+          608
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79648,
+          -6.1332
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SDN ANGKE 1 - 4 - 5 - 6",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Angke",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:351",
+        "sourceId": "schools",
+        "sourceRows": [
+          351
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7986,
+          -6.14594
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SDN ANGKE 3 PAGI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Angke",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:350",
+        "sourceId": "schools",
+        "sourceRows": [
+          350
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79951,
+          -6.14364
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SDN DURI PULO 1 - 10",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Pulo",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:280",
+        "sourceId": "schools",
+        "sourceRows": [
+          280
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80111,
+          -6.16481
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SDN JEMBATAN BESI 1 - 3 PAGI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Jembatan Besi",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:343",
+        "sourceId": "schools",
+        "sourceRows": [
+          343
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79849,
+          -6.15295
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SDN JEMBATAN BESI 2 - 4 PETANG",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Jembatan Besi",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:344",
+        "sourceId": "schools",
+        "sourceRows": [
+          344
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79849,
+          -6.15296
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SDN JEMBATAN LIMA 1 - 3 PAGI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Jembatan Lima",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:356",
+        "sourceId": "schools",
+        "sourceRows": [
+          356
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80644,
+          -6.14728
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SDN PEKOJAN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pekojan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:365",
+        "sourceId": "schools",
+        "sourceRows": [
+          365
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80239,
+          -6.1375
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SDN PETOJO UTARA 1 PAGI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Petojo Utara",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:269",
+        "sourceId": "schools",
+        "sourceRows": [
+          269
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8116,
+          -6.16844
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SDN PETOJO UTARA 5 - 10",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Petojo Utara",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:270",
+        "sourceId": "schools",
+        "sourceRows": [
+          270
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81154,
+          -6.16441
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SDN TANAH SEREAL 1 PAGI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tanah Sereal",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:322",
+        "sourceId": "schools",
+        "sourceRows": [
+          322
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81179,
+          -6.15023
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SDN TANAH SEREAL 2 PETANG",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tanah Sereal",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:323",
+        "sourceId": "schools",
+        "sourceRows": [
+          323
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8118,
+          -6.15023
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SDN TANAH SEREAL 3 PAGI - 4 PETANG",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tanah Sereal",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:283",
+        "sourceId": "schools",
+        "sourceRows": [
+          283
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80988,
+          -6.1546
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SDS GEMAR BELAJAR BERKARYA BERSAMA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pasar Baru",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:720",
+        "sourceId": "schools",
+        "sourceRows": [
+          720
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83451,
+          -6.16182
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SDS GENEZARET",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:370",
+        "sourceId": "schools",
+        "sourceRows": [
+          370
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79914,
+          -6.13527
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SDS SARI PUTRA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Angke",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:379",
+        "sourceId": "schools",
+        "sourceRows": [
+          379
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79315,
+          -6.14703
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SEKOLAH BINAS TUNAS BANGSA INTERNASIONAL",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pluit",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:625",
+        "sourceId": "schools",
+        "sourceRows": [
+          625
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79982,
+          -6.12349
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SEKOLAH BUNDA MULIA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Petojo Utara",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:271",
+        "sourceId": "schools",
+        "sourceRows": [
+          271
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81238,
+          -6.16348
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SEKOLAH BUNDA MULIA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Petojo Utara",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:697",
+        "sourceId": "schools",
+        "sourceRows": [
+          697
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81252,
+          -6.16365
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SEKOLAH ISLAM PLUIT RAYA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:670",
+        "sourceId": "schools",
+        "sourceRows": [
+          670
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7914,
+          -6.12838
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SEKOLAH KATOLIK DIAKONIA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pluit",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:638",
+        "sourceId": "schools",
+        "sourceRows": [
+          638
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.78941,
+          -6.11197
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SEKOLAH KRISTEN BALA KESELAMATAN (PG-SMP)",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tangki",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:937",
+        "sourceId": "schools",
+        "sourceRows": [
+          937
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8207,
+          -6.14858
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SEKOLAH KRISTEN KETAPANG 1",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Petojo Utara",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:693",
+        "sourceId": "schools",
+        "sourceRows": [
+          693
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81416,
+          -6.16077
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SEKOLAH PELITA HARAPAN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pluit",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:639",
+        "sourceId": "schools",
+        "sourceRows": [
+          639
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.78832,
+          -6.11636
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SEKOLAH REMAJA PLUIT",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pluit",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:630",
+        "sourceId": "schools",
+        "sourceRows": [
+          630
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.791,
+          -6.12478
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SEKOLAH SINAR DHARMA KBB-TK",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Krendang",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:326",
+        "sourceId": "schools",
+        "sourceRows": [
+          326
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80712,
+          -6.14977
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SEKOLAH SUCI HATI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pinangsia",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:979",
+        "sourceId": "schools",
+        "sourceRows": [
+          979
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81649,
+          -6.14005
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SEKOLAH SUCI HATI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pinangsia",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:980",
+        "sourceId": "schools",
+        "sourceRows": [
+          980
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81657,
+          -6.14003
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SEKOLAH SUCI HATI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pinangsia",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:982",
+        "sourceId": "schools",
+        "sourceRows": [
+          982
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81643,
+          -6.1398
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SLB/SLC KASIH BUNDA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Selatan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:289",
+        "sourceId": "schools",
+        "sourceRows": [
+          289
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80569,
+          -6.15977
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SLTP 63",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tambora",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:338",
+        "sourceId": "schools",
+        "sourceRows": [
+          338
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81007,
+          -6.14209
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMA DAMAI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Selatan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:293",
+        "sourceId": "schools",
+        "sourceRows": [
+          293
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80478,
+          -6.15909
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMA NEGERI 2 JAKARTA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Keagungan",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:934",
+        "sourceId": "schools",
+        "sourceRows": [
+          934
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81585,
+          -6.14863
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMA NEGERI 20 JAKARTA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pasar Baru",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:3430",
+        "sourceId": "schools",
+        "sourceRows": [
+          3430
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83262,
+          -6.15921
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMA NEGERI 4 JAKARTA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Gambir",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:3419",
+        "sourceId": "schools",
+        "sourceRows": [
+          3419
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83553,
+          -6.17877
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMA PELITA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Utara",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:308",
+        "sourceId": "schools",
+        "sourceRows": [
+          308
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80216,
+          -6.15589
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMA PERMATA BUNDA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Selatan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:287",
+        "sourceId": "schools",
+        "sourceRows": [
+          287
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80668,
+          -6.15727
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMA SINAR DHARMA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Krendang",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:330",
+        "sourceId": "schools",
+        "sourceRows": [
+          330
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80706,
+          -6.14928
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMA TARAKANITA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pluit",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:651",
+        "sourceId": "schools",
+        "sourceRows": [
+          651
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79126,
+          -6.11436
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMAN 111 JAKARTA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:372",
+        "sourceId": "schools",
+        "sourceRows": [
+          372
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79635,
+          -6.13373
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMAN 19",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tambora",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:337",
+        "sourceId": "schools",
+        "sourceRows": [
+          337
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81007,
+          -6.14209
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMK CINDERA MATA INDAH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Utara",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:314",
+        "sourceId": "schools",
+        "sourceRows": [
+          314
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80502,
+          -6.15572
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMK INFORMATIKA KAFFAH UNGGUL 2",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Jembatan Besi",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:347",
+        "sourceId": "schools",
+        "sourceRows": [
+          347
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79589,
+          -6.15161
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMK NEGERI 11 JAKARTA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pinangsia",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:977",
+        "sourceId": "schools",
+        "sourceRows": [
+          977
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81658,
+          -6.14061
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMK NEGERI 2 JAKARTA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Gambir",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:3418",
+        "sourceId": "schools",
+        "sourceRows": [
+          3418
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83417,
+          -6.17819
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMK PARIWISATA SANTA MARIA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kebon Kelapa",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:704",
+        "sourceId": "schools",
+        "sourceRows": [
+          704
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82425,
+          -6.16457
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMK PELITA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Utara",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:307",
+        "sourceId": "schools",
+        "sourceRows": [
+          307
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80216,
+          -6.15589
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMK PGRI 34 JAKARTA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Cideng",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:267",
+        "sourceId": "schools",
+        "sourceRows": [
+          267
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81,
+          -6.17058
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMK PSKD 3",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:675",
+        "sourceId": "schools",
+        "sourceRows": [
+          675
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7947,
+          -6.13033
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMK REX MUNDI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Petojo Utara",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:696",
+        "sourceId": "schools",
+        "sourceRows": [
+          696
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81598,
+          -6.1644
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMK STRADA 2 TAMANSARI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Taman Sari",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:700",
+        "sourceId": "schools",
+        "sourceRows": [
+          700
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8245,
+          -6.15615
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMK STRADA II",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Taman Sari",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:703",
+        "sourceId": "schools",
+        "sourceRows": [
+          703
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8232,
+          -6.15705
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMK YAYASAN PENDIDIKAN MASYARAKAT ISLAM \"BAHAGIA\"",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kali Anyar",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:297",
+        "sourceId": "schools",
+        "sourceRows": [
+          297
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79897,
+          -6.15912
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMKN 56 JAKARTA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pluit",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:637",
+        "sourceId": "schools",
+        "sourceRows": [
+          637
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79453,
+          -6.1191
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMKN 9 JAKARTA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pekojan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:368",
+        "sourceId": "schools",
+        "sourceRows": [
+          368
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80478,
+          -6.13506
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP CINDERA MATA INDAH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Utara",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:313",
+        "sourceId": "schools",
+        "sourceRows": [
+          313
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80502,
+          -6.15572
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP DAMAI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Selatan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:292",
+        "sourceId": "schools",
+        "sourceRows": [
+          292
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80478,
+          -6.15909
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP JAME PEKOJAN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pekojan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:362",
+        "sourceId": "schools",
+        "sourceRows": [
+          362
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80463,
+          -6.14076
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP KARTINI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tangki",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:931",
+        "sourceId": "schools",
+        "sourceRows": [
+          931
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8236,
+          -6.14872
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP MDT PKBM KALI BARU",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kali Anyar",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:299",
+        "sourceId": "schools",
+        "sourceRows": [
+          299
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79768,
+          -6.15799
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP MURTINI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tanah Sereal",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:321",
+        "sourceId": "schools",
+        "sourceRows": [
+          321
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81028,
+          -6.15294
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP N 39",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Petojo Utara",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:773",
+        "sourceId": "schools",
+        "sourceRows": [
+          773
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8172,
+          -6.16605
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP N 8",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Menteng",
+        "kecamatan": "Menteng",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:1901",
+        "sourceId": "schools",
+        "sourceRows": [
+          1901
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.84288,
+          -6.20185
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP NEGERI 1 JAKARTA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Cikini",
+        "kecamatan": "Menteng",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:1880",
+        "sourceId": "schools",
+        "sourceRows": [
+          1880
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83936,
+          -6.19271
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP NEGERI 17 JAKARTA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Karang Anyar",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:709",
+        "sourceId": "schools",
+        "sourceRows": [
+          709
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82747,
+          -6.15019
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP NEGERI 18 JAKARTA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kebon Sirih",
+        "kecamatan": "Menteng",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:3420",
+        "sourceId": "schools",
+        "sourceRows": [
+          3420
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83382,
+          -6.18508
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP PELITA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Utara",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:309",
+        "sourceId": "schools",
+        "sourceRows": [
+          309
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80216,
+          -6.15589
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP PERMATA BUNDA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Selatan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:286",
+        "sourceId": "schools",
+        "sourceRows": [
+          286
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80668,
+          -6.15727
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP RAUDIATUL ISLAMIYAH PEKOJAN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pekojan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:366",
+        "sourceId": "schools",
+        "sourceRows": [
+          366
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80111,
+          -6.1405
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP SANTA MARIA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kebon Kelapa",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:707",
+        "sourceId": "schools",
+        "sourceRows": [
+          707
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82444,
+          -6.16501
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP SINAR DHARMA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Krendang",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:329",
+        "sourceId": "schools",
+        "sourceRows": [
+          329
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80706,
+          -6.14929
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP TARAKANITA 2",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pluit",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:652",
+        "sourceId": "schools",
+        "sourceRows": [
+          652
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79114,
+          -6.11525
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP YAYASAN NASIONAL GARUDA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Utara",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:317",
+        "sourceId": "schools",
+        "sourceRows": [
+          317
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80715,
+          -6.15384
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP YAYASAN PENDIDIKAN MASYARAKAT ISLAM \"BAHAGIA\"",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kali Anyar",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:296",
+        "sourceId": "schools",
+        "sourceRows": [
+          296
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79897,
+          -6.15912
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMP, SMA KRISTEN KARUNIA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pasar Baru",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:717",
+        "sourceId": "schools",
+        "sourceRows": [
+          717
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83628,
+          -6.15796
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMPI CHAIRIYAH MANSURYAH (SIANG)",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Jembatan Lima",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:360",
+        "sourceId": "schools",
+        "sourceRows": [
+          360
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80593,
+          -6.14525
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMPN 21 JAKARTA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:371",
+        "sourceId": "schools",
+        "sourceRows": [
+          371
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79597,
+          -6.13381
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMPN 60 JAKARTA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Cideng",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:266",
+        "sourceId": "schools",
+        "sourceRows": [
+          266
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8099,
+          -6.17077
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SMPN 60 JAKARTA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": " ",
+        "kecamatan": " ",
+        "kota": " ",
+        "key": "schools:2724",
+        "sourceId": "schools",
+        "sourceRows": [
+          2724,
+          3210
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80973,
+          -6.17084
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "STARS ELEMENTARY SCHOOL",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pasar Baru",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:719",
+        "sourceId": "schools",
+        "sourceRows": [
+          719
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83337,
+          -6.16143
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "STMIK MH.THAMRIN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Krendang",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:331",
+        "sourceId": "schools",
+        "sourceRows": [
+          331
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80685,
+          -6.14952
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "SUNSHINE PRESCHOOL",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pluit",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:662",
+        "sourceId": "schools",
+        "sourceRows": [
+          662
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.78656,
+          -6.12506
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TARSIUS I SCHOOL",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Petojo Utara",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:695",
+        "sourceId": "schools",
+        "sourceRows": [
+          695
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81643,
+          -6.16473
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK - SD - SMP - SMA DHARMA SUCI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pejagalan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:655",
+        "sourceId": "schools",
+        "sourceRows": [
+          655
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.78737,
+          -6.1327
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK ANANDA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tambora",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:333",
+        "sourceId": "schools",
+        "sourceRows": [
+          333
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81031,
+          -6.14538
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK BAHAGIA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pluit",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:604",
+        "sourceId": "schools",
+        "sourceRows": [
+          604,
+          612
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79076,
+          -6.12498
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK BINTANG KECIL",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kartini",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:713",
+        "sourceId": "schools",
+        "sourceRows": [
+          713
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83538,
+          -6.15555
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK CIBEA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pasar Baru",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:716",
+        "sourceId": "schools",
+        "sourceRows": [
+          716
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83645,
+          -6.15814
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK CINDERA MATA INDAH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Utara",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:311",
+        "sourceId": "schools",
+        "sourceRows": [
+          311
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80502,
+          -6.15572
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK DAMAI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Selatan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:290",
+        "sourceId": "schools",
+        "sourceRows": [
+          290
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80478,
+          -6.15909
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK ERINOA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Taman Sari",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:699",
+        "sourceId": "schools",
+        "sourceRows": [
+          699
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8234,
+          -6.15132
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK ISLAM DARUL HIKMAH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pejagalan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:373",
+        "sourceId": "schools",
+        "sourceRows": [
+          373
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79173,
+          -6.13908
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK KENANGA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": " ",
+        "kecamatan": " ",
+        "kota": " ",
+        "key": "schools:2893",
+        "sourceId": "schools",
+        "sourceRows": [
+          2893,
+          3379
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80497,
+          -6.16757
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK MANDIRI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:657",
+        "sourceId": "schools",
+        "sourceRows": [
+          657
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80117,
+          -6.13265
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK MURTINI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tanah Sereal",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:319",
+        "sourceId": "schools",
+        "sourceRows": [
+          319
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81028,
+          -6.15294
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK PAGI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Glodok",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:943",
+        "sourceId": "schools",
+        "sourceRows": [
+          943
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81361,
+          -6.14684
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK PELITA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Utara",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:305",
+        "sourceId": "schools",
+        "sourceRows": [
+          305
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80217,
+          -6.15589
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK PERMATA BUNDA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Selatan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:284",
+        "sourceId": "schools",
+        "sourceRows": [
+          284
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80668,
+          -6.15727
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK SA' ADATUDDARAIN",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Selatan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:276",
+        "sourceId": "schools",
+        "sourceRows": [
+          276
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80616,
+          -6.1607
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK SD MERPATI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kebon Kelapa",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:706",
+        "sourceId": "schools",
+        "sourceRows": [
+          706
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82218,
+          -6.16505
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK WIDURI INDAH 1",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Utara",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:304",
+        "sourceId": "schools",
+        "sourceRows": [
+          304
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80316,
+          -6.15629
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK YAYASAN NASIONAL GARUDA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Duri Utara",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:315",
+        "sourceId": "schools",
+        "sourceRows": [
+          315
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80715,
+          -6.15384
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK-PAUD AL-AMINAH",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pekojan",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:364",
+        "sourceId": "schools",
+        "sourceRows": [
+          364
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80637,
+          -6.1389
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK-SD BUDI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Jembatan Besi",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:342",
+        "sourceId": "schools",
+        "sourceRows": [
+          342
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79868,
+          -6.15096
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK-SD-SLTP-CANDRA JAYA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Jembatan Lima",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:348",
+        "sourceId": "schools",
+        "sourceRows": [
+          348
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80147,
+          -6.14638
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK-SD-SMP-SMA SINAR DHARMA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Krendang",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:327",
+        "sourceId": "schools",
+        "sourceRows": [
+          327
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80705,
+          -6.14928
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK-SD-SMP-SMA-SMK SANTO LEO",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Tangki",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:926",
+        "sourceId": "schools",
+        "sourceRows": [
+          926
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82095,
+          -6.14898
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK-SD-SMP-SMK YAYASAN PENDIDIKAN HARVARD",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Angke",
+        "kecamatan": "Tambora",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:376",
+        "sourceId": "schools",
+        "sourceRows": [
+          376
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.796,
+          -6.14293
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TK-SMA YUSUF",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pejagalan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:377",
+        "sourceId": "schools",
+        "sourceRows": [
+          377
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79485,
+          -6.14144
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TKK-SDK-SMPK PENABUR JAKARTA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Petojo Utara",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:694",
+        "sourceId": "schools",
+        "sourceRows": [
+          694
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81667,
+          -6.16201
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "TUTOR TIME INTERNASIONAL PRESCHOOL",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pluit",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:627",
+        "sourceId": "schools",
+        "sourceRows": [
+          627
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7922,
+          -6.11307
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "UNIVERSITAS BUNG KARNO",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pegangsaan",
+        "kecamatan": "Menteng",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:1875",
+        "sourceId": "schools",
+        "sourceRows": [
+          1875
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.84261,
+          -6.19923
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "UNIVERSITAS KATOLIK ATMA JAYA (KEDOKTERAN)",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:641",
+        "sourceId": "schools",
+        "sourceRows": [
+          641
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79301,
+          -6.12597
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "UNIVERSITAS KRISNADWIPAYANA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Cideng",
+        "kecamatan": "Gambir",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:268",
+        "sourceId": "schools",
+        "sourceRows": [
+          268
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.80871,
+          -6.17064
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "UNIVERSITAS MERCU BUANA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kebon Sirih",
+        "kecamatan": "Menteng",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:3421",
+        "sourceId": "schools",
+        "sourceRows": [
+          3421
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83647,
+          -6.18559
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "YAYASAN NAZARENE INDONESIA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Karang Anyar",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:923",
+        "sourceId": "schools",
+        "sourceRows": [
+          923
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82732,
+          -6.14961
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "YAYASAN PENDIDIKAN NURUL ISLAM",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Penjaringan",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:668",
+        "sourceId": "schools",
+        "sourceRows": [
+          668
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.79982,
+          -6.12916
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "YAYASAN PENDIDIKAN SENTOSA ABADI",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Mangga Besar",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:964",
+        "sourceId": "schools",
+        "sourceRows": [
+          964
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81999,
+          -6.14368
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "YAYASAN TARAKANITA",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pluit",
+        "kecamatan": "Penjaringan",
+        "kota": "Kota Adm. Jakarta Utara",
+        "key": "schools:603",
+        "sourceId": "schools",
+        "sourceRows": [
+          603
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7919,
+          -6.11531
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": " ",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "MANGGA DUA SELATAN",
+        "kecamatan": "SAWAH BESAR",
+        "kota": " ",
+        "key": "health:150",
+        "sourceId": "health",
+        "sourceRows": [
+          150
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82948,
+          -6.14746
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": " ",
+        "kind": "FASILITAS KESEHATAN",
+        "kelurahan": "MANGGA DUA SELATAN",
+        "kecamatan": "SAWAH BESAR",
+        "kota": " ",
+        "key": "health:151",
+        "sourceId": "health",
+        "sourceRows": [
+          151
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82906,
+          -6.1464
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": " ",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kartini",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:928",
+        "sourceId": "schools",
+        "sourceRows": [
+          928
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83061,
+          -6.14889
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": " ",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kartini",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:933",
+        "sourceId": "schools",
+        "sourceRows": [
+          933
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83054,
+          -6.14867
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": " ",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Kartini",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:936",
+        "sourceId": "schools",
+        "sourceRows": [
+          936
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83033,
+          -6.14855
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": " ",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Mangga Dua Selatan",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:941",
+        "sourceId": "schools",
+        "sourceRows": [
+          941
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82829,
+          -6.1476
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": " ",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Mangga Dua Selatan",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:942",
+        "sourceId": "schools",
+        "sourceRows": [
+          942
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.82814,
+          -6.14717
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": " ",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Mangga Dua Selatan",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:944",
+        "sourceId": "schools",
+        "sourceRows": [
+          944
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.828,
+          -6.14677
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": " ",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Mangga Dua Selatan",
+        "kecamatan": "Sawah Besar",
+        "kota": "Kota Adm. Jakarta Pusat",
+        "key": "schools:952",
+        "sourceId": "schools",
+        "sourceRows": [
+          952
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8269,
+          -6.14632
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": " ",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Glodok",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:966",
+        "sourceId": "schools",
+        "sourceRows": [
+          966
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81253,
+          -6.14336
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": " ",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pinangsia",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:988",
+        "sourceId": "schools",
+        "sourceRows": [
+          988
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81454,
+          -6.13884
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": " ",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pinangsia",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:989",
+        "sourceId": "schools",
+        "sourceRows": [
+          989
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81468,
+          -6.13882
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": " ",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pinangsia",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:990",
+        "sourceId": "schools",
+        "sourceRows": [
+          990
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81438,
+          -6.13881
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": " ",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pinangsia",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:991",
+        "sourceId": "schools",
+        "sourceRows": [
+          991
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81479,
+          -6.13879
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": " ",
+        "kind": "SEKOLAH / BANGUNAN PENDIDIKAN",
+        "kelurahan": "Pinangsia",
+        "kecamatan": "Taman Sari",
+        "kota": "Kota Adm. Jakarta Barat",
+        "key": "schools:992",
+        "sourceId": "schools",
+        "sourceRows": [
+          992
+        ],
+        "boundaryIds": [
+          12
+        ],
+        "onBoundaryIds": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.81476,
+          -6.13867
+        ]
+      }
+    }
+  ],
+  "method": "Original valid DSDA polygons cover the published facility point; exact boundary points included; holes retained. Exact public-property/coordinate duplicates merged within source, source row indexes retained.",
+  "limitations": "Reference membership only. Unknown observation dates and rounded coordinates. Not flood impact, service availability, occupancy or shelter designation. Overlapping boundary lists must not be summed."
+}

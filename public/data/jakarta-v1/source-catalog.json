@@ -1,7 +1,7 @@
 {
  "schemaVersion": 1,
  "title": "Jakarta source contracts",
- "generatedAt": "2026-10-23T07:38:19.038962+00:00",
+ "generatedAt": "2026-10-25T03:59:35.079942+00:00",
  "scope": "Selected integrated capabilities and inspected candidates. Not a count of all Jakarta open datasets.",
  "datePolicy": "dataAsOf is publisher observation/snapshot period where known; checkedAt is retrieval/probe only. Unknown epochs remain null.",
  "statusDefinitions": {
@@ -1485,6 +1485,32 @@
    "nameId": "Konteks neraca air polder independen",
    "limitationsEn": "Original DSDA boundaries joined to native WorldCover 2021 centres. 64 valid, one excluded; overlapping boundaries cannot be summed. Land cover is not measured impermeability; no operational capacity or calibrated flood depth.",
    "limitationsId": "Batas asli DSDA digabung dengan pusat piksel asli WorldCover 2021. 64 valid, satu dikecualikan; batas tumpang tindih tidak dapat dijumlah. Tutupan lahan bukan kedap air terukur; tanpa kapasitas operasi atau kedalaman banjir terkalibrasi."
+  },
+  {
+   "id": "polder-facility-membership",
+   "name": "Polder reference-location membership",
+   "nameEn": "Polder reference-location membership",
+   "nameId": "Keanggotaan lokasi referensi dalam polder",
+   "category": "preparedness",
+   "publisher": "JKTx derived from DSDA / Jakarta Satu",
+   "status": "integrated",
+   "sourceUrl": "https://jakartasatu.jakarta.go.id/server/rest/services/DSDA/Polder_Jakarta/FeatureServer/0/query",
+   "endpoint": "",
+   "license": "Publisher attribution; dataset-specific open licence not stated in source metadata",
+   "dataAsOf": null,
+   "checkedAt": "2026-10-25T03:59:35.079942+00:00",
+   "access": "committed derived reference; anonymous source snapshots",
+   "verification": "original-polygon-cover-source-hashes-duplicate-reconciliation",
+   "tier": "derived-public-reference",
+   "useCase": "Inspect and export published locations within a selected polder for local preparedness checks",
+   "limitations": "Original valid DSDA boundaries cover dated Jakarta Satu health/school points. Exact duplicate records merged, aliases retained. Reference membership only: no inundation, availability, capacity or shelter inference. Unknown observation epochs and rounded coordinates; overlapping lists cannot be summed.",
+   "limitationsEn": "Original valid DSDA boundaries cover dated Jakarta Satu health/school points. Exact duplicate records merged, aliases retained. Reference membership only: no inundation, availability, capacity or shelter inference. Unknown observation epochs and rounded coordinates; overlapping lists cannot be summed.",
+   "limitationsId": "Batas asli DSDA yang valid mencakup titik kesehatan/sekolah Jakarta Satu bertanggal. Catatan duplikat persis digabung, rujukan baris tetap disimpan. Hanya keanggotaan referensi: tanpa kesimpulan genangan, ketersediaan, kapasitas, atau pengungsian. Tanggal pengamatan tidak diketahui, koordinat dibulatkan; daftar tumpang tindih tidak boleh dijumlah.",
+   "assets": [
+    "polder-facilities.json"
+   ],
+   "recordCount": 1990,
+   "assetSha256": "f0d56af16f7dc4b5442513a4be35550f3e8b3c60a7a4bf3b2edf897fc6655e4c"
   }
  ],
  "auditScope": "15 October 2026 bounded follow-up: 57 contracts; BMKG Priok and a bounded WorldCover 2021 crop admitted; actual Copernicus Jakarta access verified; BBWS timestamp contradiction recorded as a new candidate. Not all public data and not calibrated hydraulics."

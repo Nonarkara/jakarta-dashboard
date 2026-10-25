@@ -1,3 +1,4 @@
+import {createPreparedness} from './polder-preparedness.js';
 import {rainForBoundary,waterBudget,stormProfile,MAX_ACCOUNT_M3} from './polder-budget-model.js';
 
 export function createPolderBudget(map,{text:t,isCurrent,state,buildTag}) {
@@ -10,6 +11,7 @@ export function createPolderBudget(map,{text:t,isCurrent,state,buildTag}) {
  const selected=()=>context?.records.find(r=>String(r.id)===String(state.id));
  const live=()=>!disposed&&isCurrent();
  const sourceIds=['polder-budget-shape','polder-budget-cell'];
+ const preparedness=createPreparedness(map,{text:t,isCurrent:()=>live(),buildTag});
  function removeMap(){for(const id of ['polder-budget-line','polder-budget-fill','polder-budget-point'])if(map.getLayer(id))map.removeLayer(id);for(const id of sourceIds)if(map.getSource(id))map.removeSource(id);}
  function locate(fit=false){
   const row=selected();if(!row)return;removeMap();
@@ -20,7 +22,7 @@ export function createPolderBudget(map,{text:t,isCurrent,state,buildTag}) {
   if(fit){const [w,s,e,n]=row.bounds;const width=map.getContainer?.().clientWidth||390;map.fitBounds([[w,s],[e,n]],{padding:{top:100,bottom:40,left:width>700?420:40,right:40},maxZoom:13,duration:0});}
  }
  function exportSnapshot(result,forcing,row){
-  const data={contract:'polder-budget-scenario-v1',computedAt:new Date().toISOString(),selectedHour:Number(state.hour),boundary:row,geometryRole:'Simplified display geometry. Analysis used the original DSDA polygon identified by context input hashes.',geometry:polygons.features.find(f=>String(f.properties.OBJECTID)===String(row.id)),context:{...context,records:undefined},forcing,assumptions:{runoffFraction:number(state.runoff)/100,pumpM3s:number(state.pump),initialM3:number(state.initial),freeStorageM3:number(state.space)},result,limitations:'Uncalibrated one-boundary volume account. No inundation depth, routing, tide, river exchange, operations or official pump/storage capacity. Overlapping boundaries cannot be added.'};
+  const data={contract:'polder-budget-scenario-v1',computedAt:new Date().toISOString(),selectedHour:Number(state.hour),preparedness:preparedness.snapshot(row.id),boundary:row,geometryRole:'Simplified display geometry. Analysis used the original DSDA polygon identified by context input hashes.',geometry:polygons.features.find(f=>String(f.properties.OBJECTID)===String(row.id)),context:{...context,records:undefined},forcing,assumptions:{runoffFraction:number(state.runoff)/100,pumpM3s:number(state.pump),initialM3:number(state.initial),freeStorageM3:number(state.space)},result,limitations:'Uncalibrated one-boundary volume account. No inundation depth, routing, tide, river exchange, operations or official pump/storage capacity. Overlapping boundaries cannot be added.'};
   const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=el('a');a.href=url;a.download='jakarta-polder-'+row.id+'-water-budget.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
  }
  function svgNode(tag,attrs,text){const node=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text!==undefined)node.textContent=text;return node;}
@@ -83,7 +85,7 @@ export function createPolderBudget(map,{text:t,isCurrent,state,buildTag}) {
   assumptions.append(el('p',t('Defaults: all rain becomes runoff, no pumping, no starting water accounted. These are user assumptions, not measured operations. Pumping is available throughout each hour, capped by water present. Peaks are sampled hourly; bursts within an hour are unresolved. Land cover is not measured impermeability.','Nilai awal: semua hujan menjadi limpasan, tanpa pompa, tanpa air awal yang diperhitungkan. Ini asumsi pengguna, bukan operasi terukur. Pompa diasumsikan tersedia sepanjang jam, dibatasi air yang ada. Puncak dihitung per jam; lonjakan dalam jam belum diperhitungkan. Tutupan lahan bukan kedap air terukur.'),'meta'));
   const plot=el('figure',undefined,'budget-chart'),source=el('p',undefined,'meta');parent.append(plot,el('p',t('Gold bars: rain. Dashed: no pumping. Blue: edited water account. Red line, if entered: available-space assumption.','Batang emas: hujan. Putus-putus: tanpa pompa. Biru: neraca air suntingan. Garis merah, jika diisi: asumsi ruang tersedia.'),'meta'));
   const hourLabel=el('label',t('Follow the 24 h account','Ikuti neraca 24 jam'));const hourInput=el('input');hourInput.type='range';hourInput.min='0';hourInput.max='24';hourInput.step='1';hourInput.value=state.hour;hourInput.setAttribute('aria-label',t('Scenario hour','Jam skenario'));hourInput.addEventListener('input',()=>{state.hour=hourInput.value;recompute();});hourLabel.append(hourInput);parent.append(hourLabel,source);
-  const tableDetails=el('details'),table=el('table');tableDetails.append(el('summary',t('Read hourly values','Baca nilai per jam')),table);parent.append(tableDetails);
+  const tableDetails=el('details'),table=el('table');tableDetails.append(el('summary',t('Read hourly values','Baca nilai per jam')),table);parent.append(tableDetails,preparedness.disclosure(row.id));
   const cover=el('details');cover.append(el('summary',t('2021 land context · raw → cooked','Konteks lahan 2021 · mentah → olahan')));
   cover.append(el('p',n(row.nativeCells)+' '+t('native pixel centres inside the original polygon','pusat piksel asli di dalam poligon asli')+' · '+n(row.nodataCells)+' '+t('no data','tanpa data')+'. '+t('Holes retained; boundary pixels selected by their centres. No runoff coefficient is inferred.','Lubang dipertahankan; piksel batas dipilih menurut pusatnya. Koefisien limpasan tidak disimpulkan.'),'meta'));
   const coverTable=el('table');for(const c of row.classes.filter(c=>c.cells>0)){const tr=el('tr');tr.append(el('th',t(c.nameEn,c.nameId)),el('td',n(100*c.cells/Math.max(1,row.validCells),1)+'%'));coverTable.append(tr);}cover.append(coverTable,el('p','© ESA WorldCover project 2021 / Contains modified Copernicus Sentinel data (2021) processed by ESA WorldCover consortium · CC BY 4.0','meta'));parent.append(cover);
@@ -108,5 +110,5 @@ export function createPolderBudget(map,{text:t,isCurrent,state,buildTag}) {
    document.addEventListener('visibilitychange',visibility);clock=setInterval(()=>{if(!document.hidden&&live()){recompute();locate();if(Date.now()-lastAttempt>=300000)void refreshRain();}},30000);clock?.unref?.();
   }catch{context=null;polygons=null;view=null;if(live())parent.replaceChildren(el('p',t('Boundary/land-context join unavailable. Other water layers remain usable.','Gabungan batas/konteks lahan tidak tersedia. Lapisan air lain tetap dapat digunakan.')),button(t('Retry context','Coba lagi konteks'),()=>show(parent)));}finally{opening=false;}
  }
- return {show,clear(){disposed=true;abort?.abort();if(clock)clearInterval(clock);document.removeEventListener('visibilitychange',visibility);removeMap();view=null;}};
+ return {show,clear(){disposed=true;preparedness.clear();abort?.abort();if(clock)clearInterval(clock);document.removeEventListener('visibilitychange',visibility);removeMap();view=null;}};
 }

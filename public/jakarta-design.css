@@ -854,3 +854,15 @@ body.atlas-workbench .atlas-lens-popup:has(details[open] > .polder-budget) { wid
    every other action row: a full hairline, the selected one in solid ink. */
 #atlas-lens-body .budget-actions button { border:1px solid var(--line); background:transparent; color:var(--ink); }
 #atlas-lens-body .budget-actions button[aria-pressed="true"] { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+
+/* Reference lookup stays behind its own disclosure; no permanent map chrome. */
+.preparedness-context input[type="search"] { width:100%; min-width:0; max-width:100%; font:inherit; padding:4px; }
+.preparedness-list { list-style:none; margin:8px 0; padding:0; }
+.preparedness-list li { margin:8px 0; }
+.preparedness-list small { display:block; color:var(--dim); }
+#atlas-lens-body .preparedness-context button { max-width:100%; white-space:normal; }
+
+.preparedness-selection { position:absolute; bottom:64px; left:8px; max-width:min(52ch,calc(100% - 80px)); padding:6px 8px; background:var(--bg); color:var(--ink); font:13px/1.4 var(--font-sans); z-index:5; }
+.preparedness-selection p { margin:0; }
+body:has(#atlas-lens-evidence[open]) .preparedness-selection { display:none; }
+#atlas-lens-body .preparedness-list button { border:1px solid var(--line); background:transparent; color:var(--ink); text-align:left; line-height:1.35; }
