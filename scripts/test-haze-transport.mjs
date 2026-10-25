@@ -315,7 +315,7 @@ assert.match(app, /if \(hazeTransportController\) hazeTransportController\.rende
   'the panel repaints from renderLensEvidence, not only from selectCityLens');
 const hazeBranch = app.slice(app.indexOf("} else if (lens === 'haze') {"), app.indexOf("} else if (lens === 'air')"));
 assert.ok(hazeBranch.includes('loadHazeTransport()'), 'the haze lens loads it');
-assert.ok(hazeBranch.includes('ev.open = true'), 'and opens its evidence panel on desktop');
+assert.ok(hazeBranch.includes('openLensEvidenceOnDesktop()'), 'and opens its evidence panel on desktop');
 
 // Reachable from the power menu, which is where the question gets asked.
 assert.match(html, /id="atlas-haze-transport"/, 'the Controls menu carries the entry point');

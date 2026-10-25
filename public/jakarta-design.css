@@ -869,3 +869,10 @@ body:has(#atlas-lens-evidence[open]) .preparedness-selection { display:none; }
 
 /* A scoped recovery action stays a label-sized chip, including on touch. */
 #atlas-lens-body .network-retry { width:fit-content; max-width:100%; min-height:32px; margin:4px 0 0; padding:4px 6px; border:1px solid var(--line); background:transparent; color:var(--ink); font:12px/1.3 var(--font-sans); white-space:normal; }
+
+/* MSH: a ranking row is a line of text, not a 44px slab. The base
+   `#atlas-lens-body button { min-height:44px }` reached the exposure rows
+   because they sit inside a table wrapper, out of reach of the
+   `> button` rule above. Touch keeps its 32px via the coarse block. */
+#atlas-lens-body .lens-row--button { min-height:0; margin:0; padding:4px 0; }
+@media (pointer: coarse) { #atlas-lens-body .lens-row--button { min-height:32px; } }

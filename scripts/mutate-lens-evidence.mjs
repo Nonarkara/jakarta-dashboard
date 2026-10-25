@@ -18,7 +18,7 @@ import { join } from 'node:path';
 
 const REPO = '/Users/nonarkara/Projects/dashboards/Jakarta-dashboard';
 
-const OPEN_LINE = "    if (!window.matchMedia('(max-width: 700px)').matches) { const ev = document.getElementById('atlas-lens-evidence'); if (ev) ev.open = true; }\n";
+const OPEN_LINE = "    openLensEvidenceOnDesktop();\n";
 
 const MUTANTS = [
   {

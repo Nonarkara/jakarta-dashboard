@@ -187,3 +187,48 @@ the pixels are `deep-link-after-waterways-1440.png`,
 disclosure before it measures has measured a state nobody was given; and an
 orphan is not fixed by moving it closer to its subject — it is fixed by naming
 what it belongs to.**
+
+## Follow-up, 26 October 2026
+
+**Every lens that carries its product in the panel now arrives with it open
+on desktop.** Rain, haze, air and the water lenses already did; exposure,
+green, arrival and confidence did not. One helper,
+`openLensEvidenceOnDesktop()`, replaces five copies of the same inline test
+and is called by all eight. Phones stay folded. `scripts/geometry-audit.mjs`
+now covers nine lenses, not six, and holds every lens but city to the arrival
+check. Mutation: with the helper disabled the audit fails 8 of 8 desktop
+lenses ("landed with its evidence folded shut"); restored, 5 viewports × 9
+lenses pass.
+
+**The wider sweep found one MSH defect the six-lens sweep could not see.**
+The exposure ranking rows were 44 px round a 16 px line on desktop: the base
+`#atlas-lens-body button { min-height:44px }` in `style.css` reached them
+because they sit inside a table wrapper, out of reach of the `> button` rule.
+They are now label plus 4 px padding, 32 px on touch.
+
+**Item 4 (hydrology latency) closed by measurement.** Live
+`/api/atlas/hydrology`: 0.74 s on a miss, 0.36 s on an edge hit
+(`cf-cache-status: HIT`, `max-age=14400`). The 12 s seen earlier is the
+client's own abort ceiling meeting a cold upstream; the panel says it is
+loading, and the cache-fault paths are already tested (`src/hydrology.ts`).
+
+**Item 5 (falsifier) is now two dead cases, and both have the same measured
+cause.** They test the absolute `firstAction` limit:
+
+- The probe counts a control as an action only if it is an input or a *loud*
+  control (`loudControl`). The dashboard and research pages have none, so
+  their recorded first action is `null` at every width, and no limit can
+  ever be applied to them.
+- The atlas's first loud control is in its header at `y = 1`, at every width
+  in the receipt. "An absolute limit bites on a page the baseline already
+  knows" sets the limit to 200 px, which nothing measured here exceeds. "A
+  page the baseline has never seen" mounts a 2000 px spacer above the atlas,
+  and the recorded first action stays at the header.
+
+So the rule is not shown to be wrong, it is shown to be **untestable on this
+site as the fixtures stand**. The repair belongs in the instrument, not in
+this repo: the fixture must mount its own in-flow loud control below the
+spacer, the way the OTOP-registry fork's `DEAD_FIXTURE` mounts its own hole
+before doctoring the receipt. The vendored files stay byte-identical to the
+recorded hashes; the falsifier still exits 1, and nothing here was weakened
+to make it pass.

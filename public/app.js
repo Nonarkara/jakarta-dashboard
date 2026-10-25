@@ -2393,7 +2393,7 @@ async function selectCityLens(lens) {
     // tendency — the numbers that make the isobars readable. Folded shut behind
     // "Explore evidence" the map shows lines nobody can interpret, so it opens
     // on desktop. On a phone it stays folded so the map keeps the screen.
-    if (!window.matchMedia('(max-width: 700px)').matches) { const ev = document.getElementById('atlas-lens-evidence'); if (ev) ev.open = true; }
+    openLensEvidenceOnDesktop();
     // ~7.2 is about 900 km across: wide enough to hold a low-pressure system,
     // and the same frame the synoptic grid was requested over.
     mapInstance.flyTo({center:[106.8,-6.0], zoom:7.2, pitch:currentView === '2d' ? 0 : 30, bearing:0});
@@ -2406,13 +2406,14 @@ async function selectCityLens(lens) {
     // haze, air and flood monitoring already do, and open it NOW rather than
     // after the fetch: the panel opens and fills in front of the reader.
     // On a phone it stays folded so the map keeps the screen.
-    if (!window.matchMedia('(max-width: 700px)').matches) { const ev = document.getElementById('atlas-lens-evidence'); if (ev) ev.open = true; }
+    openLensEvidenceOnDesktop();
     try { const controller=await loadObservationController(); if(request!==lensRequest)return; await controller.show(lens,document.getElementById('atlas-lens-body')); }
     catch { if(request===lensRequest)document.getElementById('atlas-lens-body').textContent=lensText('Mapped evidence is unavailable.','Bukti terpetakan tidak tersedia.'); }
     if(request!==lensRequest)return;
   } else if (lens === 'arrival') {
     await showWaterScenario(request);
     if (request !== lensRequest) return;
+    openLensEvidenceOnDesktop();
   } else if (lens === 'haze') {
     await refreshFires(false);
     loadIspuReference();
@@ -2422,7 +2423,7 @@ async function selectCityLens(lens) {
     try { const controller = await loadHazeTransport(); if (request !== lensRequest) return; controller.show(document.getElementById('atlas-lens-body')); }
     catch { if (request === lensRequest) { /* the transport panel reports its own failure; the fire evidence below still renders */ } }
     if (request !== lensRequest) return;
-    if (!window.matchMedia('(max-width: 700px)').matches) { const ev = document.getElementById('atlas-lens-evidence'); if (ev) ev.open = true; }
+    openLensEvidenceOnDesktop();
     mapInstance.flyTo({center:[106.83,-3.5],zoom:5,pitch:0,bearing:0});
   } else if (lens === 'air') {
     try { const controller = await loadWindField(); if (request !== lensRequest) return; controller.show(document.getElementById('atlas-lens-body')); }
@@ -2430,7 +2431,7 @@ async function selectCityLens(lens) {
     // The wind panel carries the cell count and the wind-not-pollution rule, so it
     // must be visible, not folded shut behind "Explore evidence". On a phone it stays
     // folded so the map keeps the screen; the lens description carries the rule there.
-    if (request === lensRequest && !window.matchMedia('(max-width: 700px)').matches) { const ev = document.getElementById('atlas-lens-evidence'); if (ev) ev.open = true; }
+    if (request === lensRequest) openLensEvidenceOnDesktop();
     // A 10 km AOD retrieval is one value per square; at full strength a single high
     // pixel reads as a solid block and competes with the wind. Soften, never hide.
     { const o = document.getElementById('atlas-environment-opacity'); if (o && Number(o.value) > 45) { o.value = '45'; o.dispatchEvent(new Event('input')); } }
@@ -2444,10 +2445,12 @@ async function selectCityLens(lens) {
     buildingShare = buildingConfidenceShare();
     // The building layer is an extrusion, so this lens is only legible in 3D.
     if (currentView === '2d') setMapView('3d');
+    openLensEvidenceOnDesktop();
     mapInstance.flyTo({center:[106.83,-6.20], zoom:13.2, pitch:currentView === '2d' ? 0 : 60, bearing:0});
   } else if (lens === 'exposure') {
     await renderExposureLens(request);
     if (request !== lensRequest) return;
+    openLensEvidenceOnDesktop();
     mapInstance.flyTo({center:[106.83,-6.20], zoom:9.8, pitch:0, bearing:0});
   } else if (lens === 'green') {
     // The published polygons stay as the atlas's own insight-green layer, with
@@ -2457,6 +2460,7 @@ async function selectCityLens(lens) {
     try { const controller = await loadGreenSpace(); if (request !== lensRequest) return; controller.show(document.getElementById('atlas-lens-body')); }
     catch { if (request === lensRequest) document.getElementById('atlas-lens-body').textContent = lensText('The green-space evidence is unavailable.', 'Bukti ruang hijau tidak tersedia.'); }
     if (request !== lensRequest) return;
+    openLensEvidenceOnDesktop();
     // Close enough that the published polygons are more than a pixel wide: the
     // median site is about four metres across, so at a city-wide zoom this
     // layer is empty by construction and looks broken rather than absent.
@@ -2471,7 +2475,7 @@ async function selectCityLens(lens) {
     try { const controller = await loadSynoptic(); if (request !== lensRequest) return; controller.show(document.getElementById('atlas-lens-body')); }
     catch { /* the panel reports its own failure; the inventory below still renders */ }
     if (request !== lensRequest) return;
-    if (!window.matchMedia('(max-width: 700px)').matches) { const ev = document.getElementById('atlas-lens-evidence'); if (ev) ev.open = true; }
+    openLensEvidenceOnDesktop();
     mapInstance.flyTo({center:[106.83,-6.20], zoom:9.6, pitch:0, bearing:0});
   } else if (lens === 'night') {
     mapInstance.flyTo({center:[106.83,-6.20], zoom:9, pitch:0, bearing:0});
@@ -2562,6 +2566,13 @@ function waterPosition(hours, factor, data, polylines) {
   return { coordinates, segment, progress, elapsed, total: durations[0] + durations[1] };
 }
 function waterGaugeLevel(hours, initial, rise) { return initial + Math.max(0, hours) * rise; }
+// A lens whose product lives in the evidence panel opens it on desktop; folded
+// shut behind "Explore evidence" the map shows a layer nobody can read. On a
+// phone it stays folded so the map keeps the screen.
+function openLensEvidenceOnDesktop() {
+  if (window.matchMedia('(max-width: 700px)').matches) return;
+  const ev = document.getElementById('atlas-lens-evidence'); if (ev) ev.open = true;
+}
 async function showWaterScenario(request) {
   if (!waterScenarioLoad) waterScenarioLoad = fetch('/data/jakarta-v1/water-scenario.json?v=' + encodeURIComponent(ATLAS_BUILD_TAG))
     .then(r => r.ok ? r.json() : null).then(d => { waterScenario = d; if (!d) waterScenarioLoad = null; return d; })

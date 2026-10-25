@@ -249,7 +249,7 @@ assert.match(app, /pick\('satellite-rain'/, 'IMERG satellite rain is one button 
 
 // The panel carries the spacing, the low's pressure and its tendency. Folded
 // shut, the map shows isobars with nothing to interpret them against.
-assert.ok(rainBranch.includes("document.getElementById('atlas-lens-evidence'); if (ev) ev.open = true"),
+assert.ok(rainBranch.includes('openLensEvidenceOnDesktop()'),
   'the rain lens opens its evidence panel on desktop');
 assert.ok(client.includes('Konteks sinoptik'), 'the panel has an Indonesian title');
 assert.ok(client.includes('Tidak ada isobar'), 'the Indonesian failure copy says no isobar is drawn');
@@ -485,7 +485,7 @@ assert.match(cov, /Sees water where no station is published/, 'the satellite wat
 const covBranch = app.slice(app.indexOf("} else if (lens === 'coverage') {"), app.indexOf("} else if (lens === 'night')"));
 assert.ok(covBranch.includes('loadSynoptic()'), 'the flood lens loads the pressure field');
 assert.ok(covBranch.includes('refreshRainfall(false)'), 'the flood lens loads the 24 h forecast');
-assert.ok(covBranch.includes('ev.open = true'), 'the flood lens opens its evidence panel on desktop');
+assert.ok(covBranch.includes('openLensEvidenceOnDesktop()'), 'the flood lens opens its evidence panel on desktop');
 assert.match(app, /night:'night-lights',rain:'radar',coverage:'radar'/, 'the flood lens opens on radar, not on nothing');
 // ── The contour interval ─────────────────────────────────────────────────
 // This replaces a source-text match on `ISOBAR_STEP_HPA = 1`, which passed

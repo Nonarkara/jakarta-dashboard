@@ -26,9 +26,12 @@ assert.ok(branchStart > -1, 'the atlas has a waterways/traffic lens branch');
 const branchEnd = app.indexOf("} else if (lens === 'arrival') {", branchStart);
 assert.ok(branchEnd > branchStart, 'the waterways/traffic branch is bounded');
 const branch = app.slice(branchStart, branchEnd);
-assert.match(branch,
-  /if \(!window\.matchMedia\('\(max-width: 700px\)'\)\.matches\) \{ const ev = document\.getElementById\('atlas-lens-evidence'\); if \(ev\) ev\.open = true; \}/,
+assert.match(branch, /^\s*openLensEvidenceOnDesktop\(\);$/m,
   'the water lens opens its own evidence on a desktop screen, so a deep link lands on the lens and not on a sealed panel');
+// The helper every panel lens shares: desktop opens, a phone stays folded.
+const helper = app.slice(app.indexOf('function openLensEvidenceOnDesktop() {'), app.indexOf('async function showWaterScenario('));
+assert.match(helper, /if \(window\.matchMedia\('\(max-width: 700px\)'\)\.matches\) return;\s*const ev = document\.getElementById\('atlas-lens-evidence'\); if \(ev\) ev\.open = true;/,
+  'the water lens opens its own evidence on a desktop screen, and only there: the shared helper folds on a phone');
 assert.ok(!/max-width: 700px[\s\S]{0,120}max-width: 700px/.test(branch),
   'the water lens opens its evidence once, not twice');
 

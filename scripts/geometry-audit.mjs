@@ -57,7 +57,7 @@ function cachedShell() {
 // 390 and 375 are the common iPhones, 360 the most common Android, 320 the
 // smallest anyone still carries; 1440 is the desktop the chrome was drawn at.
 const VIEWPORTS = [[390, 844], [375, 667], [360, 640], [320, 568], [1440, 900]];
-const LENSES = ['city', 'air', 'rain', 'haze', 'green', 'waterways'];
+const LENSES = ['city', 'air', 'rain', 'haze', 'green', 'waterways', 'exposure', 'arrival', 'confidence'];
 const FLOWS = { air: 'wind10', rain: 'syn850', haze: 'haze850' };
 const failures = [], unverified = [];
 const browser = await chromium.launch({ executablePath: process.env.PLAYWRIGHT_EXEC || cachedShell(), headless: true, args: ['--use-angle=metal', '--ignore-gpu-blocklist', '--enable-gpu'] });
@@ -78,7 +78,9 @@ for (const [W, H] of VIEWPORTS) {
     // have failed about it. On a phone the panel is folded by design: it is a
     // disclosure the reader taps, and the tap is the only state there is, so
     // the line below measures that state and no other.
-    if (lens === 'waterways' && !phone) {
+    // Every lens but city carries its product in that panel, so all of them
+    // are held to it, not only the one that was caught.
+    if (lens !== 'city' && !phone) {
       const arrived = await page.waitForFunction(() => document.querySelector('#atlas-lens-evidence')?.open === true, null, { timeout: 25000 }).then(() => true, () => false);
       if (!arrived) arrival.push('the deep link landed with its evidence folded shut');
     }
