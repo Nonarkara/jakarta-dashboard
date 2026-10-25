@@ -278,6 +278,58 @@ not measured the page; and a band that crops its own contents is not a
 layout, it is a window onto one.**
 
 
+## 25 October 2026 (fifth pass) — the lens that could not be reached
+
+The water-recovery pass shipped a good fix and a receipt that said the water
+lens was verified. The receipt's own link is the evidence against it.
+
+`https://jakarta.nonarkara.org/atlas?lens=waterways` is the URL the receipt
+publishes and the atlas's own share link for the water lens. Measured on the
+live release `jakarta-atlas-20261025-1792913608-001fbbc`, at 1440, 1024 and
+390: `#atlas-lens-evidence.open === false`. The lens title ("Alur air
+terpetakan, bukti air masuk"), its description, the count of 3,885 mapped
+features, the legend of their kinds, the gauge inventory, the polder budget and
+the retry chip were all inside that closed `<details>`. The reader got the
+hydrography map and a rail whose first tab read "Lihat bukti" among fourteen
+lens buttons.
+
+**A rule that is not written down is not a rule.** Four lenses opened their
+evidence on a desktop screen — rain, haze, air, flood monitoring — and the
+water lens did not, because the water branch was added after the rule and the
+rule was never written down. The water lens's product is a *number*: the
+count, its breakdown, the budget. A number lives in the panel. Folded shut,
+the lens showed a picture and no number at all.
+
+Inside the panel the legend was an orphan. It was appended after the coastal
+tide and land-cover sections — six elements below the count it explained, where
+it belonged to neither — and, because the recovery pass made the count arrive
+on its own, it was an empty `<p>` holding 26px of margin for the whole load: a
+row of nothing. An empty paragraph has no box, so a check that measured the
+box height called it zero; the space was in the margins. Measure the space it
+occupies, not the height of a box that was never there.
+
+And the audit could not see any of it, which is why the receipt said the lens
+was verified. `scripts/geometry-audit.mjs` force-opened the panel before it
+measured, and `scripts/audit-rendered.mjs` audited `/atlas`, which opens on
+the city lens. Both certified a state no reader was ever given.
+
+So:
+
+- the water lens opens its own evidence on a desktop screen, **when the lens is
+  chosen and before the fetch** — the panel opens and fills in front of the
+  reader instead of appearing fifteen seconds later;
+- the legend is the count's own breakdown: directly under it, labelled, and
+  never a line of nothing;
+- the geometry audit now asserts the deep link *arrived* with its evidence
+  open, before it touches anything, and the rendered audit visits
+  `/atlas?lens=waterways` and measures the state a reader gets.
+
+**The law that comes out of it: a deep link must deliver the lens it names; a
+guard that opens the disclosure before it measures has measured a state nobody
+was given; and an orphan is not fixed by moving it closer to its subject —
+it is fixed by naming what it belongs to.**
+
+
 ## Version history
 
 This committed copy travels with Jakarta and mirrors the global
@@ -293,3 +345,4 @@ version.
 | 1.8 | 2026-10-21 | The release gate failed on the release, and the error named the wrong thing. Adding `./rate-limit.js` to the Worker broke three contract tests at once: each compiles the Worker into a `data:` URL module, a `data:` URL has no base to resolve a relative import against, and the whole chain died with `ERR_UNSUPPORTED_RESOLVE_REQUEST` — a Node internal — with the missing dependency nowhere in the message. `scripts/worker-bundle.mjs` now owns the import graph: it resolves every relative import into a module URL, keeps a plain JavaScript module on its file URL so its bare imports still resolve from `node_modules`, refuses a dependency that does not exist **by name**, and refuses a module it would have to inline but cannot resolve. Three mutants — a missing dependency ignored, a bare specifier ignored, a nested relative import dropped — are killed by `scripts/test-worker-bundle.mjs`. A build step must not emit a reference it cannot resolve, and it must name the cause. |
 | 1.9 | 2026-10-21 | A verdict must be read, not just its fixes applied. An independent review of the five shipped screens returned **DO NOT SHIP** on 19 October: a lens evidence panel that cut a line of evidence in half, and a lens strip that ran off the right edge with no affordance. Both were fixed within the hour in `f44db2b`, along with the 80-character lede, the 27/24/24px hierarchy tie and the latent `90ch`. **The report itself was never read back** — so the ship decision was taken with the verdict unread and no finding ever dispositioned. This pass read it and answered all ten findings against the deployed build: the clip is a fade into the scroll edge, the strip carries a four-layer scroll shadow, the lede is 58 characters, the top three ranks are 48/32/21px, and the 390 evidence door is hit-testable. The one judgement — the rules bracketing 490px of content in 1120px — is answered in writing, not patched, in `docs/REVIEW-DISPOSITION-2026-10-19.md`. A fix without a disposition is not a closed review. |
 | 1.10 | 2026-10-23 | The atlas existed in two states, and the gate could not see the band that cropped its own controls. The workbench class, the row of page-level doors and the evidence popup were all assembled by JavaScript a third of a second after the first paint: the reader got a page that then grew and shrank under them, and the spatial gate measured whichever state it caught — the same build, swept twice, reported the City watch as a hole in one run and the doors row in the next, so the receipt was a coin toss. The class is in the markup now, the sections that move into the drawer are hidden where they stand until they move, and `public/atlas-layout.js` assembles the page in a classic script before the first paint. The gate found a defect it could not previously see: at 339px the atlas title hid 15px of its own content behind the language select, and the phone title is now the plainest name that fits. The instrument's own stale-reason check is switched off whenever a sweep is narrowed by route, and this gate must name its routes — so `scripts/spatial-reasons.mjs` checks the rule itself against a complete sweep, and four mutants of it are killed. Then the audit asked what the gate does **not** measure: it measures the atlas inside an iframe, where the atlas hides its own header and clips its own root, so the header band was never measured at all — and on the deployed build the language select, the page's first control, sat 1.5px **above** the top of the document, cropped by the edge of the page. The band now grows to fit its contents (`minmax(…, auto)`) and its two controls are the size of their labels; `scripts/audit-rendered.mjs` reads the band and fails when a control does not fit, and proves itself by putting the page back the way it shipped and requiring the same check to report the crop deeper. **A page has one layout; a reason must have something under it; a gate that measures a coin toss protects nothing; and a band that crops its own contents is a window onto one.** |
+| 1.11 | 2026-10-25 | The water lens could not be reached. `/atlas?lens=waterways` — the URL the water-recovery receipt publishes, and the atlas's own share link for that lens — landed on a map with the count (3,885 mapped features), the legend of their kinds, the gauge inventory, the polder budget and the retry chip all sealed inside a closed `<details>`: measured on the live release `jakarta-atlas-20261025-1792913608-001fbbc`, `#atlas-lens-evidence.open === false` at 1440, 1024 and 390. Four lenses opened their evidence on a desktop screen and the water lens did not, because the water branch was added after the rule and **a rule that is not written down is not a rule**. Inside the panel the legend was an orphan — appended after the coastal and land-cover sections, six elements below the count it explained — and, since the recovery pass made the count arrive on its own, an empty `<p>` holding 26px of margin for the whole load. An empty paragraph has no box, so a check on box height called it zero: the space was in the margins, and the space is what the reader pays for. The audit could not see it — the geometry audit force-opened the panel before measuring, and the rendered audit visited `/atlas`, which opens on the city lens — so the receipt said the lens was verified while certifying a state no reader was given. The lens now opens its own evidence on a desktop screen when it is chosen and before the fetch; the legend is the count's own breakdown, directly under it, labelled, and never a line of nothing; the geometry audit asserts the deep link *arrived* open before it touches anything; and the rendered audit visits the deep link, measures the state a reader gets, and proves each of its three checks by putting the page back into the defect. `scripts/test-lens-evidence.mjs` with `scripts/mutate-lens-evidence.mjs`, 4/4 killed, one of them the shipped orphan reproduced exactly. **A deep link must deliver the lens it names; a guard that opens the disclosure before it measures has measured a state nobody was given; and an orphan is not fixed by moving it closer to its subject — it is fixed by naming what it belongs to.** |

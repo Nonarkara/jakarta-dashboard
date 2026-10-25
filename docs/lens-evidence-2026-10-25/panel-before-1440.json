@@ -1,0 +1,203 @@
+{
+  "measuredOn": "https://jakarta.nonarkara.org",
+  "buildTag": "jakarta-atlas-20261025-1792913608-001fbbc",
+  "url": "/atlas?lens=waterways",
+  "viewport": "1440x900",
+  "note": "Measured on the live release, before this pass. The lens arrived with its evidence folded shut; the legend sat at panel position 7, six elements below the count it explained.",
+  "evidenceOpen": false,
+  "panelChildren": [
+    {
+      "index": 0,
+      "tag": "p.note",
+      "class": "",
+      "height": 36,
+      "margin": "0px/13px",
+      "label": "3.885 fitur terpetakan · OSM 2026-06-01T08:52:28Z"
+    },
+    {
+      "index": 1,
+      "tag": "p.note",
+      "class": "",
+      "height": 91,
+      "margin": "13px/13px",
+      "label": "Sungai, kanal, anak sungai, saluran, parit, dan badan air terpetakan."
+    },
+    {
+      "index": 2,
+      "tag": "details.",
+      "class": "",
+      "height": 18,
+      "margin": "0px/0px",
+      "label": "Alur air / pos terpilih"
+    },
+    {
+      "index": 3,
+      "tag": "details.",
+      "class": "",
+      "height": 18,
+      "margin": "0px/0px",
+      "label": "Hujan → neraca air polder"
+    },
+    {
+      "index": 4,
+      "tag": "details.",
+      "class": "",
+      "height": 18,
+      "margin": "0px/0px",
+      "label": "Drainase resmi & polder"
+    },
+    {
+      "index": 5,
+      "tag": "details.",
+      "class": "",
+      "height": 18,
+      "margin": "0px/0px",
+      "label": "Prakiraan pasang surut pesisir · Priok"
+    },
+    {
+      "index": 6,
+      "tag": "details.",
+      "class": "",
+      "height": 18,
+      "margin": "0px/0px",
+      "label": "Tutupan lahan · WorldCover 2021"
+    },
+    {
+      "index": 7,
+      "tag": "p.note",
+      "class": "",
+      "height": 55,
+      "margin": "13px/13px",
+      "label": "Badan air 1.677 · Saluran 441 · Sungai 686 · Kanal 186 · Anak sungai 8"
+    },
+    {
+      "index": 8,
+      "tag": "details.",
+      "class": "",
+      "height": 18,
+      "margin": "0px/0px",
+      "label": "Air masuk · pos & volume"
+    },
+    {
+      "index": 9,
+      "tag": "details.",
+      "class": "",
+      "height": 18,
+      "margin": "0px/0px",
+      "label": "Perbandingan satelit & model"
+    },
+    {
+      "index": 10,
+      "tag": "a.",
+      "class": "",
+      "height": 17,
+      "margin": "0px/0px",
+      "label": "OSM / ODbL ↗"
+    }
+  ],
+  "addLayerCalls": [
+    {
+      "id": "jkt-buildings",
+      "before": null
+    },
+    {
+      "id": "jkt-buildings-outline",
+      "before": null
+    },
+    {
+      "id": "waterways-line",
+      "before": null
+    },
+    {
+      "id": "aqi-points",
+      "before": null
+    },
+    {
+      "id": "aqi-labels",
+      "before": null
+    },
+    {
+      "id": "fire-hotspots",
+      "before": null
+    },
+    {
+      "id": "jkt-landmarks-3d",
+      "before": null
+    },
+    {
+      "id": "jkt-landmarks-outline",
+      "before": null
+    },
+    {
+      "id": "jkt-landmarks-label",
+      "before": null
+    },
+    {
+      "id": "rail-line",
+      "before": "jkt-buildings"
+    },
+    {
+      "id": "rail-stations",
+      "before": null
+    },
+    {
+      "id": "rail-stations-label",
+      "before": null
+    },
+    {
+      "id": "rain-model-samples",
+      "before": null
+    },
+    {
+      "id": "rain-model-samples-label",
+      "before": null
+    },
+    {
+      "id": "official-drain-lines",
+      "before": null
+    },
+    {
+      "id": "official-polder-fill",
+      "before": null
+    },
+    {
+      "id": "official-polder-lines",
+      "before": null
+    },
+    {
+      "id": "network-water-fill",
+      "before": "official-drain-lines"
+    },
+    {
+      "id": "network-water-lines",
+      "before": "official-drain-lines"
+    },
+    {
+      "id": "network-water-labels",
+      "before": "official-drain-lines"
+    },
+    {
+      "id": "network-gauges",
+      "before": null
+    }
+  ],
+  "styleOrderSubset": [
+    "network-water-fill",
+    "network-water-lines",
+    "network-water-labels",
+    "official-drain-lines",
+    "official-polder-fill",
+    "official-polder-lines",
+    "network-gauges"
+  ],
+  "styleTail": [
+    "rain-model-samples-label",
+    "network-water-fill",
+    "network-water-lines",
+    "network-water-labels",
+    "official-drain-lines",
+    "official-polder-fill",
+    "official-polder-lines",
+    "network-gauges"
+  ]
+}
