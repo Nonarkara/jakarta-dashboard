@@ -318,6 +318,117 @@ for (const [path, label] of PAGES) {
   }
 }
 
+// ── THE LENS DEEP LINK, AS IT ARRIVES.
+//
+// `/atlas?lens=waterways` is the URL the water-recovery receipt publishes and
+// the atlas's own share link for the water lens. Before this pass the water
+// lens never opened its own evidence: the count, the legend, the budget and
+// the retry chip were all sealed inside a closed <details>, so that link
+// landed on a map and nothing else. This audit never saw it either — it
+// audited `/atlas`, which opens on the city lens.
+//
+// Nothing below opens anything by hand. The state measured is the state a
+// reader gets from the link.
+const LENS_AUDIT = () => {
+  const out = { open: false, title: '', titleVisible: false, adjacent: false, between: -1, emptyLegendSpace: 0, legend: '' };
+  const ev = document.getElementById('atlas-lens-evidence');
+  out.open = !!(ev && ev.open);
+  const title = document.getElementById('atlas-lens-title');
+  out.title = (title?.textContent || '').trim();
+  out.titleVisible = !!title && title.getClientRects().length > 0;
+  const body = document.getElementById('atlas-lens-body');
+  const legend = body?.querySelector(':scope > p.water-legend');
+  const summary = body?.querySelector(':scope > p[role="status"]');
+  out.legend = (legend?.textContent || '').trim();
+  if (legend && summary && body) {
+    const kids = [...body.children];
+    const li = kids.indexOf(legend), si = kids.indexOf(summary);
+    out.adjacent = si >= 0 && li === si + 1;
+    out.between = si >= 0 && li >= 0 ? li - si - 1 : -1;
+  }
+  // An empty paragraph has NO BOX — but it still claims its margins, and a
+  // legend that says nothing while holding 26px of panel is the row of dashes
+  // that occupies space without saying anything. Measure the space it takes,
+  // not the height of a box that was never there.
+  if (legend && !out.legend) {
+    const cs = getComputedStyle(legend);
+    const lr = legend.getBoundingClientRect();
+    out.emptyLegendSpace = cs.display === 'none' ? 0
+      : Math.round(lr.height + (parseFloat(cs.marginTop) || 0) + (parseFloat(cs.marginBottom) || 0));
+  }
+  return out;
+};
+
+for (const [w, h] of [[1440, 900], [1024, 768]]) {
+  const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+  const page = await ctx.newPage();
+  const where = `atlas-waterways@${w}`;
+  page.on('pageerror', (e) => record(where, 'page error', false, String(e).slice(0, 100)));
+  await page.goto(BASE + '/atlas?lens=waterways', { waitUntil: 'networkidle', timeout: 90000 });
+  // The panel opens when the lens is chosen and the legend fills when the
+  // mapped reference arrives. Wait for both, then measure what arrived.
+  await page.waitForFunction(() => document.getElementById('atlas-lens-evidence')?.open === true, null, { timeout: 30000 }).catch(() => {});
+  await page.waitForFunction(() => { const l = document.querySelector('#atlas-lens-body > p.water-legend'); return l && l.textContent.trim().length > 0; }, null, { timeout: 30000 }).catch(() => {});
+  await page.waitForTimeout(1200);
+  // The check is installed on the window from ITS OWN SOURCE, so the mutation
+  // below calls THE SAME function. A mutation that proves a copy of the check
+  // bites proves nothing about the check.
+  await page.evaluate(`void (window.__SL_LENS__ = ${LENS_AUDIT.toString()})`);
+  const lens = await page.evaluate(() => window.__SL_LENS__());
+
+  record(where, 'the deep link opens its own evidence', lens.open,
+    lens.open ? 'the panel is open on arrival' : 'the lens arrived with its evidence folded shut');
+  record(where, 'the lens states what it is', lens.title.length > 0 && lens.titleVisible,
+    lens.titleVisible ? lens.title : 'the lens title is not painted');
+  record(where, "the legend is the count's own breakdown", lens.adjacent,
+    lens.adjacent ? 'directly under the count it explains' : `${lens.between} elements sit between the count and its legend`);
+  record(where, 'the legend never holds a line of nothing', lens.emptyLegendSpace === 0,
+    `an empty legend occupies ${lens.emptyLegendSpace}px`);
+
+  // ── THE CHECKS MUST BITE. The same function is called on a page put back
+  // into each defect: the panel closed, the legend in its shipped place below
+  // four unrelated sections, the legend holding a line of nothing.
+  const bite = await page.evaluate(() => {
+    const out = { skipped: true };
+    const ev = document.getElementById('atlas-lens-evidence');
+    const body = document.getElementById('atlas-lens-body');
+    const legend = body?.querySelector(':scope > p.water-legend');
+    const summary = body?.querySelector(':scope > p[role="status"]');
+    if (!ev || !legend || !summary || typeof window.__SL_LENS__ !== 'function') return out;
+    out.skipped = false;
+    const wasOpen = ev.open;
+    ev.open = false;
+    out.closed = window.__SL_LENS__();
+    ev.open = wasOpen;
+    const firstDetails = body.querySelector('details');
+    if (firstDetails) {
+      body.insertBefore(legend, firstDetails.nextSibling);
+      out.orphan = window.__SL_LENS__();
+      body.insertBefore(legend, summary.nextSibling);
+    }
+    const text = legend.textContent;
+    legend.textContent = '';
+    legend.hidden = false;
+    out.empty = window.__SL_LENS__();
+    legend.textContent = text;
+    legend.hidden = false;
+    return out;
+  });
+  if (bite.skipped) {
+    record(where, 'the lens checks bite', false, 'the lens page carried no panel, legend or count to test');
+  } else {
+    record(where, 'the panel check bites', bite.closed && bite.closed.open === false && lens.open,
+      bite.closed && bite.closed.open === false ? 'closing the panel was reported' : 'closing the panel changed nothing — the check is blind');
+    record(where, 'the legend-adjacency check bites', bite.orphan && bite.orphan.adjacent === false && lens.adjacent,
+      bite.orphan && bite.orphan.adjacent === false ? `the legend in its shipped place left ${bite.orphan.between} elements between it and the count` : 'moving the legend changed nothing — the check is blind');
+    record(where, 'the empty-legend check bites', bite.empty && bite.empty.emptyLegendSpace > 0 && lens.emptyLegendSpace === 0,
+      bite.empty && bite.empty.emptyLegendSpace > 0 ? `an empty legend was measured at ${bite.empty.emptyLegendSpace}px` : 'an empty legend measured 0px — the check is blind');
+  }
+
+  if (SHOTS) await page.screenshot({ path: `${SHOTS}/atlas-waterways-${w}.png` });
+  await ctx.close();
+}
+
 await browser.close();
 
 const failed = results.filter((r) => !r.ok);

@@ -159,10 +159,17 @@ export function createController(map,{text:t,active,buildTag}) {
   }
   async function showWater(body,token){
     body.replaceChildren();
-    const waterSummary=el('p',undefined,'note'),waterDescription=el('p',undefined,'note');
-    waterSummary.setAttribute('role','status');body.append(waterSummary,waterDescription);
+    const waterSummary=el('p',undefined,'note'),waterDescription=el('p',undefined,'note'),kinds=el('p',undefined,'note water-legend');
+    waterSummary.setAttribute('role','status');
+    // The legend is the breakdown of the count above it, so it belongs directly
+    // under it. It used to be appended after the coastal and land-cover
+    // sections — six elements below the count it explained, where it belonged
+    // to neither — and because the count now arrives on its own, the legend
+    // was an empty paragraph holding a line of space for the whole load.
+    kinds.hidden=true;
+    body.append(waterSummary,kinds,waterDescription);
     const selected=section(body,'Selected waterway / gauge','Alur air / pos terpilih');
-    const kinds=el('p',undefined,'note');let mappedLoading=false;
+    let mappedLoading=false;
     async function loadMappedWaterways(){
       if(mappedLoading||token!==epoch)return;mappedLoading=true;
       waterSummary.textContent=t('Loading mapped waterways…','Memuat alur air terpetakan…');
@@ -180,14 +187,15 @@ export function createController(map,{text:t,active,buildTag}) {
         map.addLayer({id:'network-water-labels',type:'symbol',source:'network-water-lines',minzoom:12,filter:['!=',['get','name'],''],layout:{'symbol-placement':'line','text-field':['get','name'],'text-size':11},paint:{'text-color':'#28a8c6','text-halo-color':'#071f2e','text-halo-width':1}},before);
         waterSummary.textContent=number(water.count,0)+' '+t('mapped features','fitur terpetakan')+' · OSM '+water.sourceAsOf;
         waterDescription.textContent=t('Rivers, canals, streams, drains, ditches and mapped water bodies. This covers the published OSM ways in the Jakarta extent, not every physical waterway.','Sungai, kanal, anak sungai, saluran, parit, dan badan air terpetakan. Mencakup way OSM yang dipublikasikan pada wilayah Jakarta, bukan setiap alur air fisik.');
-        kinds.textContent=Object.entries(water.kinds||{}).map(([k,n])=>kindLabel(k)+' '+number(n,0)).join(' · ');
+        kinds.textContent=t('By kind','Per jenis')+' · '+Object.entries(water.kinds||{}).map(([k,n])=>kindLabel(k)+' '+number(n,0)).join(' · ');
+        kinds.hidden=false;
         on('click','network-water-lines',event=>{const f=event.features?.[0];if(!f)return;renderWaterSelection(selected,f);selected.parentElement.open=true;document.getElementById('atlas-lens-evidence').open=true;});
       }catch{
         if(token!==epoch)return;water=null;
         for(const id of ['network-water-labels','network-water-lines','network-water-fill'])if(map.getLayer(id))map.removeLayer(id);
         if(map.getSource('network-water-lines'))map.removeSource('network-water-lines');
         waterSummary.textContent=t('OSM waterways unavailable. Independent official drainage and gauge sources are checked below.','Alur air OSM tidak tersedia. Sumber drainase resmi dan pos independen diperiksa di bawah.');
-        waterDescription.textContent='';kinds.textContent='';
+        waterDescription.textContent='';kinds.textContent='';kinds.hidden=true;
         button(waterSummary,t('Retry mapped waterways','Coba lagi alur air terpetakan'),loadMappedWaterways).className='network-retry';
       }finally{mappedLoading=false;}
     }
@@ -200,7 +208,6 @@ export function createController(map,{text:t,active,buildTag}) {
     const context=waterContext=createWaterContext(map,{text:t,get,isCurrent:()=>token===epoch,buildTag});
     context.coastal(section(body,'Coastal tide forecast · Priok','Prakiraan pasang surut pesisir · Priok'));
     context.landCover(section(body,'Land cover · WorldCover 2021','Tutupan lahan · WorldCover 2021'));
-    body.append(kinds);
     const measure=section(body,'Incoming water · gauges & volume','Air masuk · pos & volume');
     measure.append(el('p',t('Loading publisher readings…','Memuat pembacaan penerbit…')));
     comparison(section(body,'Satellite & model comparison','Perbandingan satelit & model'),token).catch(()=>{});

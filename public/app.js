@@ -2398,6 +2398,15 @@ async function selectCityLens(lens) {
     // and the same frame the synoptic grid was requested over.
     mapInstance.flyTo({center:[106.8,-6.0], zoom:7.2, pitch:currentView === '2d' ? 0 : 30, bearing:0});
   } else if (['waterways','traffic'].includes(lens)) {
+    // The water product is a number, and the number is in the panel: the mapped
+    // feature count and its legend, the gauge inventory, the polder budget. The
+    // map alone cannot say any of it, so folded shut behind "Explore evidence"
+    // the lens showed hydrography and nothing else — including on the deep link
+    // the water-recovery receipt publishes. Open it on desktop, the way rain,
+    // haze, air and flood monitoring already do, and open it NOW rather than
+    // after the fetch: the panel opens and fills in front of the reader.
+    // On a phone it stays folded so the map keeps the screen.
+    if (!window.matchMedia('(max-width: 700px)').matches) { const ev = document.getElementById('atlas-lens-evidence'); if (ev) ev.open = true; }
     try { const controller=await loadObservationController(); if(request!==lensRequest)return; await controller.show(lens,document.getElementById('atlas-lens-body')); }
     catch { if(request===lensRequest)document.getElementById('atlas-lens-body').textContent=lensText('Mapped evidence is unavailable.','Bukti terpetakan tidak tersedia.'); }
     if(request!==lensRequest)return;

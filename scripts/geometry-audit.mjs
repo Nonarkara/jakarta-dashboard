@@ -68,7 +68,20 @@ for (const [W, H] of VIEWPORTS) {
   const page = await ctx.newPage();
   for (const lens of LENSES) {
     const tag = `${W}x${H} ${lens}`;
+    const arrival = [];
     await page.goto(`${url}/atlas?lens=${lens}&lang=en`, { waitUntil: 'load', timeout: 60000 });
+    // What the reader gets from the link. The app opens the evidence for the
+    // lenses whose product is a number, so the water lens must arrive with its
+    // panel already open on a desktop screen. It used to arrive folded shut —
+    // and this audit force-opened the panel on the next line, so it never saw
+    // the state a reader was given, and "5 viewports x 6 lenses" could not
+    // have failed about it. On a phone the panel is folded by design: it is a
+    // disclosure the reader taps, and the tap is the only state there is, so
+    // the line below measures that state and no other.
+    if (lens === 'waterways' && !phone) {
+      const arrived = await page.waitForFunction(() => document.querySelector('#atlas-lens-evidence')?.open === true, null, { timeout: 25000 }).then(() => true, () => false);
+      if (!arrived) arrival.push('the deep link landed with its evidence folded shut');
+    }
     await page.evaluate(() => { const d = document.querySelector('#atlas-lens-evidence'); if (d && !d.open) d.querySelector('summary')?.click(); });
     // A panel that never filled proves nothing. Wait for it, and for the flow.
     // The city lens is a sentence; the others carry data and are much longer.
@@ -144,7 +157,7 @@ for (const [W, H] of VIEWPORTS) {
       if (phone) { let h = 0; for (const q of ['.atlas-header', '.atlas-lenses']) { const e = document.querySelector(q); if (e && vis(e)) h += e.getBoundingClientRect().height; } if (h > innerHeight * 0.15) out.big.push(`fixed bars take ${Math.round(h)}px of ${innerHeight}px (${Math.round(h / innerHeight * 100)}%, budget 15%)`); }
       return out;
     }, { phone });
-    const found = [...r.wide.map(x => `sideways overflow: ${x}`), ...r.overlap.map(x => `overlap: ${x}`), ...r.edges.map(x => `edges do not meet on one row: ${x}`), ...r.big.map(x => `MSH, box bigger than its content: ${x}`), ...[...new Set(r.small)].slice(0, 8).map(x => `touch target under 44px: ${x}`)];
+    const found = [...r.wide.map(x => `sideways overflow: ${x}`), ...r.overlap.map(x => `overlap: ${x}`), ...r.edges.map(x => `edges do not meet on one row: ${x}`), ...r.big.map(x => `MSH, box bigger than its content: ${x}`), ...[...new Set(r.small)].slice(0, 8).map(x => `touch target under 44px: ${x}`), ...arrival.map(x => `first screen: ${x}`)];
     for (const f of found) { failures.push(`${tag}: ${f}`); console.log(`  FAIL ${tag}: ${f}`); }
     await page.screenshot({ path: join(outDir, `${W}x${H}-${lens}.png`) });
   }
