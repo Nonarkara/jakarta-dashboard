@@ -150,6 +150,10 @@ await assert.rejects(readObservationResponse(Response.json(datedBody,{status:503
 globalThis.fetch=realFetch;delete globalThis.caches;
 // observation client: every request is bounded and cancelled on exit
 {
+  const savedDocument=globalThis.document,savedOption=globalThis.Option;
+  const makeNode=()=>({children:[],append(...nodes){this.children.push(...nodes);for(const n of nodes)n.parentElement=this;},replaceChildren(){this.children=[];},setAttribute(){},addEventListener(){}});
+  globalThis.document={createElement:makeNode,addEventListener(){},removeEventListener(){}};
+  globalThis.Option=class{constructor(text,value){this.textContent=text;this.value=value;}};
   const layers2=new Map(),sources2=new Map();
   const map2={getLayer:id=>layers2.get(id),getSource:id=>sources2.get(id),removeLayer:id=>layers2.delete(id),removeSource:id=>sources2.delete(id),off(){},on(){},flyTo(){},addSource(){},addLayer(){},getZoom:()=>10};
   const controller2=createController(map2,{text:e=>e,active:()=>null,buildTag:'test'});
@@ -163,6 +167,6 @@ globalThis.fetch=realFetch;delete globalThis.caches;
   await new Promise(r=>setTimeout(r,10));
   assert.ok(observed?.signal,'the observation client passes an abort signal to every fetch');
   controller2.clear();
-  globalThis.fetch=realFetch2;
+  globalThis.fetch=realFetch2;globalThis.document=savedDocument;globalThis.Option=savedOption;
 }
 console.log('PASS water/traffic: source coverage, coordinates, future gauge rejection, predicted-flow tiers, volume arithmetic, cleanup order, camera access boundaries and fixed JAXA proxy');

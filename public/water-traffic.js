@@ -1,3 +1,4 @@
+import {waterOverlayAnchor} from './water-layer-order.js';
 import {createPolderBudget} from './polder-budget.js';
 import {createWaterContext} from './water-context.js?v=coastal-worldcover-v1';
 // Lazy map lenses: mapped hydrography, dated gauges/model flow, public traffic-camera references.
@@ -108,7 +109,7 @@ export function createController(map,{text:t,active,buildTag}) {
       if(select.value==='none'){caption.textContent='';return;}
       const isNasa=select.value==='nasa';const tiles=isNasa?nasa.tiles:[`/api/atlas/jaxa-tile?product=${select.value}&date=${jaxa.date}&z={z}&x={x}&y={y}`];
       map.addSource('network-comparison',{type:'raster',tiles,tileSize:256,maxzoom:isNasa?nasa.maxzoom:9,attribution:isNasa?'NASA LANCE / GIBS':'JAXA/EORC Today’s Earth'});
-      map.addLayer({id:'network-comparison',type:'raster',source:'network-comparison',paint:{'raster-opacity':0.65}},map.getLayer('network-water-lines')?'network-water-lines':undefined);
+      map.addLayer({id:'network-comparison',type:'raster',source:'network-comparison',paint:{'raster-opacity':0.65}},waterOverlayAnchor(map));
       caption.textContent=isNasa?t('NASA MODIS 3-day classification, 250 m: cyan water, red detected flood, yellow recurring flood. Clouds and narrow drains limit detection; not confirmation of depth or incoming volume.','Klasifikasi 3 hari NASA MODIS, 250 m: biru muda air, merah banjir terdeteksi, kuning banjir berulang. Awan dan saluran sempit membatasi deteksi; bukan konfirmasi kedalaman atau volume masuk.')+' · '+nasa.date:t('JAXA satellite-informed model, approximately 10 km. Not observed water. ','Model JAXA berbasis satelit, sekitar 10 km. Bukan air teramati. ')+time(jaxa.validAt)+' · '+(select.value==='OUTFLW'?'0–1,000 m³/s':t('0–1 flood fraction','Fraksi banjir 0–1'));
     });
     note(parent,'A satellite water extent cannot confirm water volume or flow direction by itself. Compare observation dates and independent gauge readings. Blank or cloudy pixels are unknown.','Luasan air satelit saja tidak dapat memastikan volume atau arah aliran. Bandingkan tanggal pengamatan dan pembacaan pos independen. Piksel kosong atau berawan tidak diketahui.');
@@ -157,18 +158,41 @@ export function createController(map,{text:t,active,buildTag}) {
     void polderBudget.show(budgetBody,id);
   }
   async function showWater(body,token){
-    try{water ||= await get('/data/jakarta-v1/waterways.geojson?v='+buildTag);}catch{water=null;}if(token!==epoch)return;
-    if(water?.type!=='FeatureCollection'||!Array.isArray(water.features)||water.crs!=='EPSG:4326')water=null;
-    if(water){
-    map.addSource('network-water-lines',{type:'geojson',data:water,attribution:'© OpenStreetMap contributors'});
-    map.addLayer({id:'network-water-fill',type:'fill',source:'network-water-lines',filter:['==',['geometry-type'],'Polygon'],paint:{'fill-color':'#28a8c6','fill-opacity':0.4}});
-    map.addLayer({id:'network-water-lines',type:'line',source:'network-water-lines',paint:{'line-color':['match',['get','kind'],'river','#28a8c6','canal','#28a8c6','#79c2d1'],'line-width':['interpolate',['linear'],['zoom'],9,1.2,15,4],'line-opacity':0.9}});
-    map.addLayer({id:'network-water-labels',type:'symbol',source:'network-water-lines',minzoom:12,filter:['!=',['get','name'],''],layout:{'symbol-placement':'line','text-field':['get','name'],'text-size':11},paint:{'text-color':'#28a8c6','text-halo-color':'#071f2e','text-halo-width':1}});
-    body.replaceChildren();body.append(el('p',number(water.count,0)+' '+t('mapped features','fitur terpetakan')+' · OSM '+water.sourceAsOf));
-    note(body,'Rivers, canals, streams, drains, ditches and mapped water bodies. This covers the published OSM ways in the Jakarta extent, not every physical waterway.','Sungai, kanal, anak sungai, saluran, parit, dan badan air terpetakan. Mencakup way OSM yang dipublikasikan pada wilayah Jakarta, bukan setiap alur air fisik.');
-    }else{body.replaceChildren();note(body,'OSM waterways unavailable. Independent official drainage and gauge sources are checked below.','Alur air OSM tidak tersedia. Sumber drainase resmi dan pos independen diperiksa di bawah.');}
+    body.replaceChildren();
+    const waterSummary=el('p',undefined,'note'),waterDescription=el('p',undefined,'note');
+    waterSummary.setAttribute('role','status');body.append(waterSummary,waterDescription);
     const selected=section(body,'Selected waterway / gauge','Alur air / pos terpilih');
-    if(water)on('click','network-water-lines',event=>{const f=event.features?.[0];if(!f)return;renderWaterSelection(selected,f);selected.parentElement.open=true;document.getElementById('atlas-lens-evidence').open=true;});
+    const kinds=el('p',undefined,'note');let mappedLoading=false;
+    async function loadMappedWaterways(){
+      if(mappedLoading||token!==epoch)return;mappedLoading=true;
+      waterSummary.textContent=t('Loading mapped waterways…','Memuat alur air terpetakan…');
+      try{
+        const candidate=water||await get('/data/jakarta-v1/waterways.geojson?v='+buildTag);
+        if(token!==epoch)return;
+        if(candidate?.type!=='FeatureCollection'||!Array.isArray(candidate.features)||candidate.crs!=='EPSG:4326')throw Error('waterway reference');
+        water=candidate;
+        // The static reference may arrive after gauges or official drainage. Keep
+        // its water fill beneath those independent evidence layers in either order.
+        const before=waterOverlayAnchor(map);
+        map.addSource('network-water-lines',{type:'geojson',data:water,attribution:'© OpenStreetMap contributors'});
+        map.addLayer({id:'network-water-fill',type:'fill',source:'network-water-lines',filter:['==',['geometry-type'],'Polygon'],paint:{'fill-color':'#28a8c6','fill-opacity':0.4}},before);
+        map.addLayer({id:'network-water-lines',type:'line',source:'network-water-lines',paint:{'line-color':['match',['get','kind'],'river','#28a8c6','canal','#28a8c6','#79c2d1'],'line-width':['interpolate',['linear'],['zoom'],9,1.2,15,4],'line-opacity':0.9}},before);
+        map.addLayer({id:'network-water-labels',type:'symbol',source:'network-water-lines',minzoom:12,filter:['!=',['get','name'],''],layout:{'symbol-placement':'line','text-field':['get','name'],'text-size':11},paint:{'text-color':'#28a8c6','text-halo-color':'#071f2e','text-halo-width':1}},before);
+        waterSummary.textContent=number(water.count,0)+' '+t('mapped features','fitur terpetakan')+' · OSM '+water.sourceAsOf;
+        waterDescription.textContent=t('Rivers, canals, streams, drains, ditches and mapped water bodies. This covers the published OSM ways in the Jakarta extent, not every physical waterway.','Sungai, kanal, anak sungai, saluran, parit, dan badan air terpetakan. Mencakup way OSM yang dipublikasikan pada wilayah Jakarta, bukan setiap alur air fisik.');
+        kinds.textContent=Object.entries(water.kinds||{}).map(([k,n])=>kindLabel(k)+' '+number(n,0)).join(' · ');
+        on('click','network-water-lines',event=>{const f=event.features?.[0];if(!f)return;renderWaterSelection(selected,f);selected.parentElement.open=true;document.getElementById('atlas-lens-evidence').open=true;});
+      }catch{
+        if(token!==epoch)return;water=null;
+        for(const id of ['network-water-labels','network-water-lines','network-water-fill'])if(map.getLayer(id))map.removeLayer(id);
+        if(map.getSource('network-water-lines'))map.removeSource('network-water-lines');
+        waterSummary.textContent=t('OSM waterways unavailable. Independent official drainage and gauge sources are checked below.','Alur air OSM tidak tersedia. Sumber drainase resmi dan pos independen diperiksa di bawah.');
+        waterDescription.textContent='';kinds.textContent='';
+        button(waterSummary,t('Retry mapped waterways','Coba lagi alur air terpetakan'),loadMappedWaterways).className='network-retry';
+      }finally{mappedLoading=false;}
+    }
+    void loadMappedWaterways();
+    map.flyTo({center:[106.83,-6.23],zoom:9.6,pitch:0,bearing:0});
     budgetBody=section(body,'Rain → polder water budget','Hujan → neraca air polder');budgetBody.className+=' polder-budget';budgetDetails=budgetBody.parentElement;
     polderBudget=createPolderBudget(map,{text:t,isCurrent:()=>token===epoch&&active()==='waterways',state:budgetState,buildTag});
     budgetDetails.addEventListener('toggle',()=>{if(budgetDetails?.open&&!budgetStarted)openBudget();});
@@ -176,7 +200,7 @@ export function createController(map,{text:t,active,buildTag}) {
     const context=waterContext=createWaterContext(map,{text:t,get,isCurrent:()=>token===epoch,buildTag});
     context.coastal(section(body,'Coastal tide forecast · Priok','Prakiraan pasang surut pesisir · Priok'));
     context.landCover(section(body,'Land cover · WorldCover 2021','Tutupan lahan · WorldCover 2021'));
-    const kinds=el('p',Object.entries(water?.kinds||{}).map(([k,n])=>kindLabel(k)+' '+number(n,0)).join(' · '),'note');body.append(kinds);
+    body.append(kinds);
     const measure=section(body,'Incoming water · gauges & volume','Air masuk · pos & volume');
     measure.append(el('p',t('Loading publisher readings…','Memuat pembacaan penerbit…')));
     comparison(section(body,'Satellite & model comparison','Perbandingan satelit & model'),token).catch(()=>{});
@@ -214,7 +238,7 @@ export function createController(map,{text:t,active,buildTag}) {
     note(predicted,'Each row has its own valid time. Directions below are geographic sectors of exactly matched station locations, not measured water vectors. Unmatched locations remain unknown.','Setiap baris memiliki waktu berlaku tersendiri. Arah di bawah adalah sektor geografis lokasi pos yang cocok persis, bukan vektor air terukur. Lokasi yang belum cocok tetap tidak diketahui.');
     for(const row of hydrology.predictions||[]){const sector=Number.isFinite(row.lng)&&Number.isFinite(row.lat)?t(...approachSector(row.lng,row.lat)):t('Location not matched','Lokasi belum cocok');predicted.append(el('p',row.name+' · '+number(row.dischargeM3s,2)+' m³/s · '+sector+' · '+time(row.validAt)));}
     calculator(measure,hydrology.predictions||[]);
-    body.append(link('OSM / ODbL ↗','https://www.openstreetmap.org/copyright'));map.flyTo({center:[106.83,-6.23],zoom:9.6,pitch:0,bearing:0});
+    body.append(link('OSM / ODbL ↗','https://www.openstreetmap.org/copyright'));
   }
   function renderCamera(parent,f){
     parent.replaceChildren();const p=f.properties;parent.append(el('h3',p.name));parent.append(el('p',p.address+' · '+p.city));parent.append(el('p',f.geometry.coordinates[1].toFixed(5)+', '+f.geometry.coordinates[0].toFixed(5),'network-location'));

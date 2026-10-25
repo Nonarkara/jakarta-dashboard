@@ -1,3 +1,4 @@
+import {waterOverlayAnchor} from './water-layer-order.js';
 // Independent water context: coastal forecasts and historical land cover never become hydraulics.
 const WORLD_BOUNDS=[106.65,-6.4,107,-6.08];
 export function validCoastal(data,now=Date.now()){
@@ -56,7 +57,7 @@ export function createWaterContext(map,{text:t,get,isCurrent,buildTag}){
    listen('sourcedata',event=>{if(event.sourceId==='network-landcover'&&event.isSourceLoaded){if(loadTimer)cancel(loadTimer);status.textContent=t('Historical land-cover image loaded.','Citra tutupan lahan historis dimuat.');}});
    function toggle(){if(!isCurrent())return;if(!input.checked){if(map.getLayer('network-landcover'))map.setLayoutProperty('network-landcover','visibility','none');return;}
     again.hidden=true;
-    try{if(!map.getSource('network-landcover')){status.textContent=t('Loading image…','Memuat citra…');loadTimer=later(()=>{if(!map.getSource('network-landcover')?.loaded())failed();},12000);const [w,s,e,n]=d.bounds;map.addSource('network-landcover',{type:'image',url:d.display.path+'?v='+buildTag,coordinates:[[w,n],[e,n],[e,s],[w,s]]});map.addLayer({id:'network-landcover',type:'raster',source:'network-landcover',paint:{'raster-opacity':0.55,'raster-resampling':'nearest','raster-fade-duration':0}},map.getLayer('network-water-fill')?'network-water-fill':undefined);}else map.setLayoutProperty('network-landcover','visibility','visible');}catch{failed();}
+    try{if(!map.getSource('network-landcover')){status.textContent=t('Loading image…','Memuat citra…');loadTimer=later(()=>{if(!map.getSource('network-landcover')?.loaded())failed();},12000);const [w,s,e,n]=d.bounds;map.addSource('network-landcover',{type:'image',url:d.display.path+'?v='+buildTag,coordinates:[[w,n],[e,n],[e,s],[w,s]]});map.addLayer({id:'network-landcover',type:'raster',source:'network-landcover',paint:{'raster-opacity':0.55,'raster-resampling':'nearest','raster-fade-duration':0}},waterOverlayAnchor(map));}else map.setLayoutProperty('network-landcover','visibility','visible');}catch{failed();}
    }
    input.addEventListener('change',toggle);again.addEventListener('click',()=>{input.checked=true;toggle();});
    note(parent,'ESA WorldCover · 2021 · native 10 m classes; 20 m nearest-sample display. Counts use all native cells in this mainland rectangle, not DKI administrative totals. Built-up is not a measured impervious fraction.','ESA WorldCover · 2021 · kelas asli 10 m; tampilan sampel terdekat 20 m. Jumlah memakai semua sel asli dalam persegi panjang daratan ini, bukan total administrasi DKI. Lahan terbangun bukan fraksi kedap air terukur.');
