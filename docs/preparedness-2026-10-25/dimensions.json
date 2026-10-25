@@ -154,5 +154,33 @@
   "1440x900-rain.png": [
     2880,
     1800
+  ],
+  "live-1440.png": [
+    1440,
+    900
+  ],
+  "live-1024.png": [
+    1024,
+    768
+  ],
+  "live-final-selection.png": [
+    1440,
+    900
+  ],
+  "live-390-map.png": [
+    390,
+    844
+  ],
+  "live-map-selection.png": [
+    1440,
+    900
+  ],
+  "live-final-1440.png": [
+    1440,
+    900
+  ],
+  "live-390-id.png": [
+    390,
+    844
   ]
 }
