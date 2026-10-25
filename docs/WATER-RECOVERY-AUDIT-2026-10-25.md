@@ -22,4 +22,9 @@ A shared layer anchor reads actual style order. Satellite and land-cover context
 
 ## Production
 
-Pending canonical committed release, matching deployed bytes and live browser verification. Full-system readiness remains bounded by docs/ADMIN-READINESS.md: field validation, current operating capacity and calibrated hydraulics remain open. This change improves source recovery, not source availability or forecasting accuracy.
+Canonical release completed with exit 0: `jakarta-atlas-20261025-1792913608-001fbbc`, implementation `001fbbc`, stamp `8cd53d7`, Worker `be33e506-b236-4c8c-a67e-11482481a555`.
+
+- All 48 test commands, typecheck, 13/13 verification, unchanged 208 spatial measurements, three consecutive matching-byte probes on both hosts, atlas/dashboard/official-network/water/haze smokes, 37/37 API checks and 50/50 live rendered checks passed. Complete output: `water-recovery-2026-10-25/release-results.txt`.
+- Actual production browser shows 3,885 mapped features. Pluit/pump=3/explicit storm remain through the EN→ID switch. Live captures at 1440/1024/390 and 320 verify the answer, scientific units and native controls. Phone 390: width=scrollWidth=390, header=24px, answer y381–413 inside panel y104–740, right edge330 (60px viewport margin plus 8px panel offset gives the retained 68px width reduction). At 320: width=scrollWidth=320, answer bottom397.3 < panel bottom464.
+- No source outage was induced on production. The failure→Retry preservation test uses only the local controlled proxy; production assets match those tested bytes. Independent review closes both the async-order finding and the Retry-frame finding on the final local captures.
+- Temporary proxy/dev processes stopped; no other agents' services or files changed. Source and stamp pushed to origin/main; final documentation receipt follows. No open GitHub PRs remained during this audit. Full-system readiness remains bounded by docs/ADMIN-READINESS.md: field validation, current operating capacity and calibrated hydraulics remain open. This change improves source recovery, not source availability or forecasting accuracy.
