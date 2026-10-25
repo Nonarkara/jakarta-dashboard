@@ -1,6 +1,6 @@
 # MSH evidence — the deployed site
 
-**Build:** `jakarta-atlas-20261022-1792709947-fbaaca4` — read from the deployed `app.js` at https://jakarta.nonarkara.org.
+**Build:** `jakarta-atlas-20261025-1792945397-f014ee6` — read from the deployed `app.js` at https://jakarta.nonarkara.org.
 **Method:** a real browser at the three widths the law names — 390 × 844, 1024 × **900** (the height used at 1024), 1440 × 900 — on every route.
 **Screenshots:** `docs/msh/` — the pixels these numbers were read from.
 
@@ -21,6 +21,14 @@ The law's five questions, asked of each viewport.
 | 390 × 844 — the law's phone size | 48px top (5.7%), 1 band(s) stacked; 0px bottom, 0 band(s) stacked | first action at 1px — **in the first screen**; the title is at 2px | no sideways scroll; 6 element(s) past the edge: button., div.atlas-watch-content, div.atlas-watch-grid, button#atlas-watch-flood, small., strong#atlas-watch-flood-value | title 14px, loudest 14px (a.atlas-skip), ratio 1, 0 peer(s) at 0% of the text | 53 controls, 1 under 24px, 1 canvas(es), main present, title present |
 | 1024 × 900 — the intermediate width; height 900 used | 46px top (5.1%), 1 band(s) stacked; 0px bottom, 0 band(s) stacked | first action at 2px — **in the first screen**; the title is at 2px | no sideways scroll; 1 element(s) past the edge: button. | title 14px, loudest 14px (span.atlas-title-desk), ratio 1, 0 peer(s) at 0% of the text | 53 controls, 0 under 24px, 1 canvas(es), main present, title present |
 | 1440 × 900 — the law's desktop size | 46px top (5.1%), 1 band(s) stacked; 0px bottom, 0 band(s) stacked | first action at 2px — **in the first screen**; the title is at 2px | no sideways scroll; 1 element(s) past the edge: button. | title 14px, loudest 14px (span.atlas-title-desk), ratio 1, 0 peer(s) at 0% of the text | 53 controls, 0 under 24px, 1 canvas(es), main present, title present |
+
+## atlas-waterways — `/atlas?lens=waterways`
+
+| Viewport | Chrome cost | Task visibility | Geometry failures | Hierarchy | Preservation |
+|---|---|---|---|---|---|
+| 390 × 844 — the law's phone size | 48px top (5.7%), 1 band(s) stacked; 0px bottom, 0 band(s) stacked | first action at 1px — **in the first screen**; the title is at 2px | no sideways scroll; 6 element(s) past the edge: button., div.atlas-watch-content, div.atlas-watch-grid, button#atlas-watch-flood, small., strong#atlas-watch-flood-value | title 14px, loudest 16.4px (h3.), ratio 0.85, 0 peer(s) at 0% of the text | 121 controls, 4 under 24px, 1 canvas(es), main present, title present |
+| 1024 × 900 — the intermediate width; height 900 used | 46px top (5.1%), 1 band(s) stacked; 0px bottom, 0 band(s) stacked | first action at 2px — **in the first screen**; the title is at 2px | no sideways scroll; 1 element(s) past the edge: button. | title 14px, loudest 15.2px (h3.), ratio 0.92, 0 peer(s) at 0% of the text | 121 controls, 3 under 24px, 1 canvas(es), main present, title present |
+| 1440 × 900 — the law's desktop size | 46px top (5.1%), 1 band(s) stacked; 0px bottom, 0 band(s) stacked | first action at 2px — **in the first screen**; the title is at 2px | no sideways scroll; 1 element(s) past the edge: button. | title 14px, loudest 15.2px (h3.), ratio 0.92, 0 peer(s) at 0% of the text | 121 controls, 3 under 24px, 1 canvas(es), main present, title present |
 
 ## research — `/research`
 

@@ -38,6 +38,11 @@ const VIEWPORTS = [
 const ROUTES = [
   { path: "/", name: "dashboard" },
   { path: "/atlas", name: "atlas" },
+  // The deep link is a state of the atlas, and it is the state most readers
+  // arrive through — the one in a receipt, a message or a bookmark. It is
+  // recorded here like any other, because the law asks for the interface a
+  // reader actually gets.
+  { path: "/atlas?lens=waterways", name: "atlas-waterways", wait: 12000 },
   { path: "/research", name: "research" },
 ];
 
@@ -318,7 +323,7 @@ for (const route of ROUTES) {
       await ensureBrowser();
       await page.setViewportSize({ width: v.w, height: v.h });
       await page.goto(`${BASE}${route.path}`, { waitUntil: "load", timeout: 60000 }).catch(() => {});
-      await page.waitForTimeout(route.path === "/atlas" ? 7000 : 5000);
+      await page.waitForTimeout(route.wait ?? (route.path === "/atlas" ? 7000 : 5000));
       const m = await measure();
       const shot = path.join(OUT, `${route.name}-${v.w}.png`);
       // The atlas is a live 3D map on software GL, and the screenshot waits

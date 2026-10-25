@@ -1,0 +1,326 @@
+{
+  "base": "https://jakarta.nonarkara.org",
+  "measuredAt": "2026-10-25T16:33:35.393Z",
+  "states": [
+    {
+      "lens": "waterways",
+      "viewport": "1440x900",
+      "buildTag": "jakarta-atlas-20261025-1792945397-f014ee6",
+      "evidenceOpen": true,
+      "title": "Alur air terpetakan, bukti air masuk",
+      "titlePainted": true,
+      "summary": "3.885 fitur terpetakan · OSM 2026-06-01T08:52:28Z",
+      "legend": "Per jenis · Badan air 1.677 · Saluran 441 · Sungai 686 · Kanal 186 · Anak sungai 824 · Parit 69 · Tepi air 2",
+      "legendIndex": 1,
+      "summaryIndex": 0,
+      "legendAdjacent": true,
+      "elementsBetween": 0,
+      "emptyLegendSpace": 0,
+      "panelChildren": [
+        {
+          "i": 0,
+          "tag": "p",
+          "cls": "note",
+          "label": "3.885 fitur terpetakan · OSM 2026-06-01T08:52:28Z"
+        },
+        {
+          "i": 1,
+          "tag": "p",
+          "cls": "note water-legend",
+          "label": "Per jenis · Badan air 1.677 · Saluran 441 · Sungai 686 · Kan"
+        },
+        {
+          "i": 2,
+          "tag": "p",
+          "cls": "note",
+          "label": "Sungai, kanal, anak sungai, saluran, parit, dan badan air te"
+        },
+        {
+          "i": 3,
+          "tag": "details",
+          "cls": "",
+          "label": "Alur air / pos terpilih"
+        },
+        {
+          "i": 4,
+          "tag": "details",
+          "cls": "",
+          "label": "Hujan → neraca air polder"
+        },
+        {
+          "i": 5,
+          "tag": "details",
+          "cls": "",
+          "label": "Drainase resmi & polder"
+        },
+        {
+          "i": 6,
+          "tag": "details",
+          "cls": "",
+          "label": "Prakiraan pasang surut pesisir · Priok"
+        },
+        {
+          "i": 7,
+          "tag": "details",
+          "cls": "",
+          "label": "Tutupan lahan · WorldCover 2021"
+        },
+        {
+          "i": 8,
+          "tag": "details",
+          "cls": "",
+          "label": "Air masuk · pos & volume"
+        },
+        {
+          "i": 9,
+          "tag": "details",
+          "cls": "",
+          "label": "Perbandingan satelit & model"
+        },
+        {
+          "i": 10,
+          "tag": "a",
+          "cls": "",
+          "label": "OSM / ODbL ↗"
+        }
+      ]
+    },
+    {
+      "lens": "waterways",
+      "viewport": "1024x768",
+      "buildTag": "jakarta-atlas-20261025-1792945397-f014ee6",
+      "evidenceOpen": true,
+      "title": "Alur air terpetakan, bukti air masuk",
+      "titlePainted": true,
+      "summary": "3.885 fitur terpetakan · OSM 2026-06-01T08:52:28Z",
+      "legend": "Per jenis · Badan air 1.677 · Saluran 441 · Sungai 686 · Kanal 186 · Anak sungai 824 · Parit 69 · Tepi air 2",
+      "legendIndex": 1,
+      "summaryIndex": 0,
+      "legendAdjacent": true,
+      "elementsBetween": 0,
+      "emptyLegendSpace": 0,
+      "panelChildren": [
+        {
+          "i": 0,
+          "tag": "p",
+          "cls": "note",
+          "label": "3.885 fitur terpetakan · OSM 2026-06-01T08:52:28Z"
+        },
+        {
+          "i": 1,
+          "tag": "p",
+          "cls": "note water-legend",
+          "label": "Per jenis · Badan air 1.677 · Saluran 441 · Sungai 686 · Kan"
+        },
+        {
+          "i": 2,
+          "tag": "p",
+          "cls": "note",
+          "label": "Sungai, kanal, anak sungai, saluran, parit, dan badan air te"
+        },
+        {
+          "i": 3,
+          "tag": "details",
+          "cls": "",
+          "label": "Alur air / pos terpilih"
+        },
+        {
+          "i": 4,
+          "tag": "details",
+          "cls": "",
+          "label": "Hujan → neraca air polder"
+        },
+        {
+          "i": 5,
+          "tag": "details",
+          "cls": "",
+          "label": "Drainase resmi & polder"
+        },
+        {
+          "i": 6,
+          "tag": "details",
+          "cls": "",
+          "label": "Prakiraan pasang surut pesisir · Priok"
+        },
+        {
+          "i": 7,
+          "tag": "details",
+          "cls": "",
+          "label": "Tutupan lahan · WorldCover 2021"
+        },
+        {
+          "i": 8,
+          "tag": "details",
+          "cls": "",
+          "label": "Air masuk · pos & volume"
+        },
+        {
+          "i": 9,
+          "tag": "details",
+          "cls": "",
+          "label": "Perbandingan satelit & model"
+        },
+        {
+          "i": 10,
+          "tag": "a",
+          "cls": "",
+          "label": "OSM / ODbL ↗"
+        }
+      ]
+    },
+    {
+      "lens": "waterways",
+      "viewport": "390x844",
+      "buildTag": "jakarta-atlas-20261025-1792945397-f014ee6",
+      "evidenceOpen": false,
+      "title": "Alur air terpetakan, bukti air masuk",
+      "titlePainted": true,
+      "summary": "3.885 fitur terpetakan · OSM 2026-06-01T08:52:28Z",
+      "legend": "Per jenis · Badan air 1.677 · Saluran 441 · Sungai 686 · Kanal 186 · Anak sungai 824 · Parit 69 · Tepi air 2",
+      "legendIndex": 1,
+      "summaryIndex": 0,
+      "legendAdjacent": true,
+      "elementsBetween": 0,
+      "emptyLegendSpace": 0,
+      "panelChildren": [
+        {
+          "i": 0,
+          "tag": "p",
+          "cls": "note",
+          "label": "3.885 fitur terpetakan · OSM 2026-06-01T08:52:28Z"
+        },
+        {
+          "i": 1,
+          "tag": "p",
+          "cls": "note water-legend",
+          "label": "Per jenis · Badan air 1.677 · Saluran 441 · Sungai 686 · Kan"
+        },
+        {
+          "i": 2,
+          "tag": "p",
+          "cls": "note",
+          "label": "Sungai, kanal, anak sungai, saluran, parit, dan badan air te"
+        },
+        {
+          "i": 3,
+          "tag": "details",
+          "cls": "",
+          "label": "Alur air / pos terpilih"
+        },
+        {
+          "i": 4,
+          "tag": "details",
+          "cls": "",
+          "label": "Hujan → neraca air polder"
+        },
+        {
+          "i": 5,
+          "tag": "details",
+          "cls": "",
+          "label": "Drainase resmi & polder"
+        },
+        {
+          "i": 6,
+          "tag": "details",
+          "cls": "",
+          "label": "Prakiraan pasang surut pesisir · Priok"
+        },
+        {
+          "i": 7,
+          "tag": "details",
+          "cls": "",
+          "label": "Tutupan lahan · WorldCover 2021"
+        },
+        {
+          "i": 8,
+          "tag": "details",
+          "cls": "",
+          "label": "Air masuk · pos & volume"
+        },
+        {
+          "i": 9,
+          "tag": "details",
+          "cls": "",
+          "label": "Perbandingan satelit & model"
+        },
+        {
+          "i": 10,
+          "tag": "a",
+          "cls": "",
+          "label": "OSM / ODbL ↗"
+        }
+      ]
+    },
+    {
+      "lens": "traffic",
+      "viewport": "1440x900",
+      "buildTag": "jakarta-atlas-20261025-1792945397-f014ee6",
+      "evidenceOpen": true,
+      "title": "Kamera jalan publik dengan akses sumber",
+      "titlePainted": true,
+      "summary": "",
+      "legend": "",
+      "legendIndex": -1,
+      "summaryIndex": -1,
+      "legendAdjacent": false,
+      "elementsBetween": -1,
+      "emptyLegendSpace": 0,
+      "panelChildren": [
+        {
+          "i": 0,
+          "tag": "p",
+          "cls": "",
+          "label": "4.340 referensi kamera · katalog diperbarui 23/4/2025, 23.34"
+        },
+        {
+          "i": 1,
+          "tag": "p",
+          "cls": "note",
+          "label": "Cakupan kamera, bukan peta panas kemacetan langsung. Seluruh"
+        },
+        {
+          "i": 2,
+          "tag": "details",
+          "cls": "",
+          "label": "Kamera terpilih"
+        },
+        {
+          "i": 3,
+          "tag": "input",
+          "cls": "",
+          "label": ""
+        },
+        {
+          "i": 4,
+          "tag": "div",
+          "cls": "network-results",
+          "label": "4.340 hasil · 30 pertama ditampilkan; semua tetap di petaBam"
+        },
+        {
+          "i": 5,
+          "tag": "details",
+          "cls": "",
+          "label": "Kamera jalan tol · tayangan tersedia"
+        },
+        {
+          "i": 6,
+          "tag": "details",
+          "cls": "",
+          "label": "Kanal kamera jalan YouTube"
+        },
+        {
+          "i": 7,
+          "tag": "a",
+          "cls": "",
+          "label": "ArcGIS catalogue ↗"
+        },
+        {
+          "i": 8,
+          "tag": "a",
+          "cls": "",
+          "label": "Dishub ATCS ↗"
+        }
+      ]
+    }
+  ]
+}
