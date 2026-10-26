@@ -26,20 +26,16 @@ binding = "ASSETS"
 # otherwise /jakarta-buildings.pmtiles would return the whole archive.
 run_worker_first = true
 
-# Cloudflare's native Workers Rate Limiting. This is the real limit: it counts
-# across every isolate and every colo. The Worker falls back to an in-isolate
-# window (src/rate-limit.ts) when the binding is absent, and that fallback is
-# documented as best-effort — it counts only what reaches one isolate, so a
-# client spread across many connections is under-counted.
+# Cloudflare's native Workers Rate Limiting, keyed per client IP in
+# src/rate-limit.ts. It counts per Cloudflare location, not globally, and is
+# the real limit; the in-isolate window is only the fallback when the binding
+# is absent. namespace_id is an integer we choose, unique to the account (no
+# dashboard step: developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/).
 #
-# To switch the native one on: create a rate-limit namespace for this account
-# (Cloudflare dashboard -> Workers & Pages -> Account Settings -> Rate
-# Limiting, or the Worker's own Rate limits tab) and uncomment the block
-# below with the namespace's id. The account's OAuth token is refused on the
-# namespace endpoint ("Method not allowed for this authentication scheme"), so
-# this one step needs a dashboard session or an API token.
-#
-# [[ratelimits]]
-# name = "RATE_LIMITER"
-# namespace_id = "1001"
-# simple = { key = "http.request.cf.ip.src", limit = 180, period = 60 }
+# 600/min per IP: a page load makes 4-9 API calls and does not poll, and an
+# agency office shares one address, so 180 would have refused a monitoring
+# room refreshing together. 600 still stops a script.
+[[ratelimits]]
+name = "RATE_LIMITER"
+namespace_id = "4207"
+simple = { limit = 600, period = 60 }

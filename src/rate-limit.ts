@@ -3,10 +3,9 @@
  *
  * Two mechanisms, one interface:
  *
- * 1. **Cloudflare's native Workers Rate Limiting**, when the account has a
- *    namespace and the Worker is deployed with the `RATE_LIMITER` binding
- *    (see wrangler.toml). It is the real one: it counts across every isolate
- *    and every colo.
+ * 1. **Cloudflare's native Workers Rate Limiting**, through the
+ *    `RATE_LIMITER` binding in wrangler.toml (bound since 26 Oct 2026). It is
+ *    the real one: it counts across isolates, per Cloudflare location.
  * 2. **An in-isolate fixed window**, used when that binding is absent. It is
  *    honest about what it is: it counts the requests that reach THIS
  *    isolate, so a client spread across many connections is under-counted.

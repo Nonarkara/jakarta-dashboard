@@ -184,9 +184,10 @@ defect, named.
    are swept by hand.
 
 5. **Owner-account items, unchanged:** the Perplexity connector (absent from
-   the catalogue), the GitHub Actions spending limit (manual push path in use)
-   and the Cloudflare rate-limit namespace (one dashboard step, then uncomment
-   `[[ratelimits]]` in `wrangler.toml`).
+   the catalogue) and the GitHub Actions spending limit (manual push path in
+   use). *Update 26 Oct:* the rate-limit namespace needed no dashboard step;
+   `namespace_id` is an integer the account chooses. The native limiter is now
+   bound at 600/min per IP, and `test-rate-limit.mjs` fails if it is unbound.
 
 6. **Open by design:** field validation and calibrated flood forecasting
    (`docs/ADMIN-READINESS.md`).

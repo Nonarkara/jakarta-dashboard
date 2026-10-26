@@ -47,7 +47,7 @@ const ATLAS_VERSION = "1.0.0";
 // one reader makes (the atlas and the research page together ask for about a
 // dozen) and far below what a script needs to burn the account's daily
 // quota. The window is one minute.
-const API_RATE_LIMIT = 180;
+const API_RATE_LIMIT = 600;
 const API_RATE_WINDOW_SECONDS = 60;
 
 // DKI Jakarta mainland and its immediate edge. Kepulauan Seribu is outside.

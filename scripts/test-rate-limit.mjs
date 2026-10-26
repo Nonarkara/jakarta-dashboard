@@ -116,4 +116,13 @@ if (survived) {
   process.exit(1);
 }
 
+// Production Doctrine Law 2: the public API ships with the native limiter
+// bound, not commented out. The binding is a real config block in
+// wrangler.toml, read without its comments.
+const toml = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8').replace(/#.*$/gm, '');
+const block = /\[\[ratelimits\]\]([\s\S]*?)(?=\n\[|$)/.exec(toml)?.[1] || '';
+assert.match(block, /name\s*=\s*"RATE_LIMITER"/, 'wrangler.toml binds RATE_LIMITER');
+assert.match(block, /namespace_id\s*=\s*"\d+"/, 'the binding names an integer namespace');
+assert.match(block, /simple\s*=\s*\{\s*limit\s*=\s*\d+,\s*period\s*=\s*(10|60)\s*\}/, 'the limit uses a period Cloudflare accepts (10 or 60 s)');
+
 console.log('PASS rate limit: native binding preferred, in-isolate fallback, a limiter fault never blocks the publisher, and every mutant is killed');
