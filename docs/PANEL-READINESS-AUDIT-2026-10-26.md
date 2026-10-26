@@ -28,7 +28,12 @@ The first canonical run was stopped before deployment when process inspection sh
 
 ## Production
 
-Pending committed canonical release, exact deployed bytes and live browser verification.
+Canonical release completed with exit 0: `jakarta-atlas-20261026-1792989605-923553b`, final guard implementation `923553b`, stamp `79efdef`, Worker `ebfdbd4e-5177-4195-b6ce-66029d7069eb`.
+
+- Typecheck, 13/13 local checks, all 53 test commands, six timing mutants, eight lens/eleven design/four stale-reason mutants and unchanged 208 spatial measurements passed. Three consecutive matching-byte probes passed on both canonical hostnames. API smoke 37/37, other atlas/dashboard/network/water/haze smokes and the expanded live rendered audit 117/117 passed. Full stdout: `panel-readiness-2026-10-26/release-results.txt`.
+- The corrected live readiness gate measured all eleven panel lenses at both desktop and phone widths, including 83 waterways and 36 traffic controls, and caught its delayed nested oversized-control fixture. Success means the checks passed; it is not a claim that every provider is continuously available.
+- Actual production browser verified expanded traffic controls at 1440/1024/390, EN→ID navigation, Pluit's nested lookup and its two Kencana results, all-reference map display and cleared busy states. Traffic has 33 buttons plus its summaries; its loaded root reports `aria-busy=false`. Phone header is 24px and width=scrollWidth=390; desktop header is 29px. Final live images are retained alongside independently reviewed local captures, with actual PNG dimensions.
+- Canonical source, stamp and documentation receipts are committed/pushed after verification. Temporary viewport overrides were reset; the owned local dev server and verification tab were stopped/closed. Other agents' working trees and services were preserved.
 
 ## Remaining and boundaries
 
