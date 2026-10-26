@@ -1,5 +1,5 @@
 'use strict';
-const DASHBOARD_BUILD = 'jakarta-atlas-20261026-1792974835-d033143';
+const DASHBOARD_BUILD = 'jakarta-atlas-20261026-1792977256-b87cfd4';
 const DASHBOARD_VERSION = '1.0.0';
 const CRM_MONTHLY_URL = 'https://datastudio.google.com/embed/reporting/d7d87175-bfa2-4067-bf4d-42e8b996da11/page/27A2C';
 let crmViewerOpened = false;
