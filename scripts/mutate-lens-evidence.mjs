@@ -55,6 +55,27 @@ const MUTANTS = [
     edits: [{ from: '        kinds.hidden=false;\n', to: '' }],
     expect: /the legend appears once the count has arrived|AssertionError/,
   },
+  {
+    name: 'the panel control floor goes back to 44px (the shipped defect)',
+    file: 'public/style.css',
+    edits: [{
+      from: '#atlas-lens-body button { display:block; width:100%; text-align:left; min-height:32px; padding:4px 0; margin-bottom:4px; }',
+      to: '#atlas-lens-body button { display:block; width:100%; text-align:left; min-height:44px; margin-bottom:4px; }',
+    }],
+    expect: /the panel button floor is not 44px|AssertionError/,
+  },
+  {
+    name: 'the traffic lens leaves the sweep (the shipped blindness)',
+    file: 'scripts/geometry-audit.mjs',
+    edits: [{ from: "'traffic', ", to: '' }],
+    expect: /the geometry audit sweeps the traffic lens|AssertionError/,
+  },
+  {
+    name: 'the audit stops opening the disclosures, so the controls stay unseen',
+    file: 'scripts/geometry-audit.mjs',
+    edits: [{ from: "      for (const d of document.querySelectorAll('#atlas-lens-body details')) d.open = true;\n", to: '' }],
+    expect: /the geometry audit opens the panel disclosures|AssertionError/,
+  },
 ];
 
 let killed = 0;

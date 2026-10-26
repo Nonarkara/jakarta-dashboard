@@ -57,7 +57,11 @@ function cachedShell() {
 // 390 and 375 are the common iPhones, 360 the most common Android, 320 the
 // smallest anyone still carries; 1440 is the desktop the chrome was drawn at.
 const VIEWPORTS = [[390, 844], [375, 667], [360, 640], [320, 568], [1440, 900]];
-const LENSES = ['city', 'air', 'rain', 'haze', 'green', 'waterways', 'exposure', 'arrival', 'confidence'];
+// Every lens is swept, not a selection of them. The traffic lens carries 41
+// panel controls and the flood-monitoring lens opens its panel too; both were
+// missing from this list, so the MSH rules below were never applied to the
+// lens with the most controls in it.
+const LENSES = ['city', 'air', 'rain', 'haze', 'green', 'waterways', 'exposure', 'arrival', 'confidence', 'traffic', 'coverage'];
 const FLOWS = { air: 'wind10', rain: 'syn850', haze: 'haze850' };
 const failures = [], unverified = [];
 const browser = await chromium.launch({ executablePath: process.env.PLAYWRIGHT_EXEC || cachedShell(), headless: true, args: ['--use-angle=metal', '--ignore-gpu-blocklist', '--enable-gpu'] });
@@ -88,6 +92,23 @@ for (const [W, H] of VIEWPORTS) {
     // A panel that never filled proves nothing. Wait for it, and for the flow.
     // The city lens is a sentence; the others carry data and are much longer.
     const filled = await page.waitForFunction(min => (document.querySelector('#atlas-lens-body')?.innerText || '').length > min, lens === 'city' ? 40 : 160, { timeout: 25000 }).then(() => true, () => false);
+    // A character count is not a finished panel. The traffic panel fills in
+    // stages — the camera catalogue, then the toll catalogue — and a
+    // threshold measures it at its first paragraph, which is why a lens with
+    // 33 controls in it was never really measured. Wait for the panel to stop
+    // changing.
+    const settled = await page.evaluate(async () => {
+      const body = document.getElementById('atlas-lens-body');
+      if (!body) return false;
+      let last = -1, stable = 0;
+      const deadline = Date.now() + 25000;
+      while (Date.now() < deadline) {
+        const len = (body.innerText || '').length;
+        if (len === last) { if (++stable >= 5) return true; } else { stable = 0; last = len; }
+        await new Promise(r => setTimeout(r, 500));
+      }
+      return false;
+    });
     const flow = FLOWS[lens];
     const flowing = !flow || await page.waitForFunction(f => document.querySelector('.flow-canvas')?.dataset.flow === f, flow, { timeout: 25000 }).then(() => true, () => false);
     // Photograph the map, not the loading card (it covers the desktop view for several seconds).
@@ -102,7 +123,7 @@ for (const [W, H] of VIEWPORTS) {
       if (!budget) unverified.push(`${tag}: polder budget did not compute`);
       await page.waitForTimeout(600);
     }
-    if (!filled || !flowing) unverified.push(`${tag}: ${!filled ? 'panel did not populate' : `flow "${flow}" did not start`}`);
+    if (!filled || !flowing || !settled) unverified.push(`${tag}: ${!filled ? 'panel did not populate' : !settled ? 'panel never stopped changing' : `flow "${flow}" did not start`}`);
 
     const r = await page.evaluate(({ phone }) => {
       const vis = e => e.getBoundingClientRect().width > 0 && e.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true, contentVisibilityAuto: true });
@@ -159,7 +180,34 @@ for (const [W, H] of VIEWPORTS) {
       if (phone) { let h = 0; for (const q of ['.atlas-header', '.atlas-lenses']) { const e = document.querySelector(q); if (e && vis(e)) h += e.getBoundingClientRect().height; } if (h > innerHeight * 0.15) out.big.push(`fixed bars take ${Math.round(h)}px of ${innerHeight}px (${Math.round(h / innerHeight * 100)}%, budget 15%)`); }
       return out;
     }, { phone });
-    const found = [...r.wide.map(x => `sideways overflow: ${x}`), ...r.overlap.map(x => `overlap: ${x}`), ...r.edges.map(x => `edges do not meet on one row: ${x}`), ...r.big.map(x => `MSH, box bigger than its content: ${x}`), ...[...new Set(r.small)].slice(0, 8).map(x => `touch target under 44px: ${x}`), ...arrival.map(x => `first screen: ${x}`)];
+    // The controls, measured again with every disclosure open.
+    //
+    // A control inside a collapsed <details> is not on screen, so it is not
+    // measured, so it is not ruled on. The traffic panel keeps three action
+    // buttons in collapsed sections — two of them 44px slabs round a 16px
+    // line — and the sweep passed that lens because a collapsed section's
+    // contents are not on screen to measure. Opening every disclosure is the
+    // state a reader who wants the controls is in.
+    //
+    // Only the control rules are re-run. The layout rules stay on the arrival
+    // state: a fully expanded panel is not the state the reader arrives in,
+    // and the panel's own first screen is a separate question with its own
+    // answer (the polder budget's).
+    const opened = await page.evaluate(({ phone }) => {
+      const vis = e => e.getBoundingClientRect().width > 0 && e.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true, contentVisibilityAuto: true });
+      const name = e => (e.id || e.getAttribute('aria-label') || e.textContent || e.className).toString().trim().replace(/\s+/g, ' ').slice(0, 30);
+      const big = [], small = [];
+      for (const d of document.querySelectorAll('#atlas-lens-body details')) d.open = true;
+      for (const e of document.querySelectorAll('#atlas-lens-body button, #atlas-lens-body summary, .atlas-observation-hud summary, .atlas-observation-hud a, .atlas-page-tools summary, .atlas-page-tools a, .atlas-layers summary, .atlas-quick summary')) {
+        if (!vis(e) || e.closest('.maplibregl-ctrl-attrib')) continue;
+        const b = e.getBoundingClientRect(), r = document.createRange(); r.selectNodeContents(e);
+        const t = r.getBoundingClientRect(); if (!t.height) continue;
+        if (phone && e.closest('#atlas-lens-body') && b.height < 31.5) small.push(`${name(e)} ${Math.round(b.width)}x${Math.round(b.height)} (panel controls are 32px on touch)`);
+        if (b.height > t.height * 2.5 + 1 && b.height > 40) big.push(`${name(e)} is ${Math.round(b.height)}px tall round a ${Math.round(t.height)}px line (${(b.height / t.height).toFixed(1)}x)`);
+      }
+      return { big, small };
+    }, { phone });
+    const found = [...r.wide.map(x => `sideways overflow: ${x}`), ...r.overlap.map(x => `overlap: ${x}`), ...r.edges.map(x => `edges do not meet on one row: ${x}`), ...r.big.map(x => `MSH, box bigger than its content: ${x}`), ...opened.big.map(x => `MSH, box bigger than its content (behind a disclosure): ${x}`), ...[...new Set(r.small)].slice(0, 8).map(x => `touch target under 44px: ${x}`), ...[...new Set(opened.small)].slice(0, 8).map(x => `touch target under 44px (behind a disclosure): ${x}`), ...arrival.map(x => `first screen: ${x}`)];
     for (const f of found) { failures.push(`${tag}: ${f}`); console.log(`  FAIL ${tag}: ${f}`); }
     await page.screenshot({ path: join(outDir, `${W}x${H}-${lens}.png`) });
   }

@@ -330,7 +330,7 @@ for (const [path, label] of PAGES) {
 // Nothing below opens anything by hand. The state measured is the state a
 // reader gets from the link.
 const LENS_AUDIT = () => {
-  const out = { open: false, title: '', titleVisible: false, adjacent: false, between: -1, emptyLegendSpace: 0, legend: '' };
+  const out = { open: false, title: '', titleVisible: false, adjacent: false, between: -1, emptyLegendSpace: 0, legend: '', slabs: [], controls: 0 };
   const ev = document.getElementById('atlas-lens-evidence');
   out.open = !!(ev && ev.open);
   const title = document.getElementById('atlas-lens-title');
@@ -355,6 +355,23 @@ const LENS_AUDIT = () => {
     const lr = legend.getBoundingClientRect();
     out.emptyLegendSpace = cs.display === 'none' ? 0
       : Math.round(lr.height + (parseFloat(cs.marginTop) || 0) + (parseFloat(cs.marginBottom) || 0));
+  }
+  // The controls, behind their disclosures. A control in a collapsed section is
+  // not on screen, so it is not measured, so it is not ruled on: the traffic
+  // panel's three action buttons are 44px slabs round a 16px line, and they
+  // live inside collapsed sections. MSH: a box is its label plus padding —
+  // more than 2.5x its own text is spatial hallucination.
+  for (const d of document.querySelectorAll('#atlas-lens-body details')) d.open = true;
+  for (const e of document.querySelectorAll('#atlas-lens-body button, #atlas-lens-body summary')) {
+    const r = e.getBoundingClientRect();
+    if (!r.width || !r.height) continue;
+    out.controls++;
+    if (typeof e.checkVisibility === 'function' && !e.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true, contentVisibilityAuto: true })) continue;
+    const rg = document.createRange(); rg.selectNodeContents(e);
+    const t = rg.getBoundingClientRect(); if (!t.height) continue;
+    if (r.height > t.height * 2.5 + 1 && r.height > 40) {
+      out.slabs.push(`${(e.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 30)} is ${Math.round(r.height)}px tall round a ${Math.round(t.height)}px line`);
+    }
   }
   return out;
 };
@@ -384,6 +401,8 @@ for (const [w, h] of [[1440, 900], [1024, 768]]) {
     lens.adjacent ? 'directly under the count it explains' : `${lens.between} elements sit between the count and its legend`);
   record(where, 'the legend never holds a line of nothing', lens.emptyLegendSpace === 0,
     `an empty legend occupies ${lens.emptyLegendSpace}px`);
+  record(where, 'no panel control is a slab', lens.slabs.length === 0,
+    lens.slabs.length ? lens.slabs.join('; ') : `${lens.controls} panel controls measured behind their disclosures, none bigger than its own text`);
 
   // ── THE CHECKS MUST BITE. The same function is called on a page put back
   // into each defect: the panel closed, the legend in its shipped place below
@@ -412,6 +431,20 @@ for (const [w, h] of [[1440, 900], [1024, 768]]) {
     out.empty = window.__SL_LENS__();
     legend.textContent = text;
     legend.hidden = false;
+    // and a control put back on the 44px floor: a 44px box round a 16px line
+    // is a slab, and the check must say so.
+    let slabbed = null;
+    for (const e of body.querySelectorAll('button')) {
+      const rg = document.createRange(); rg.selectNodeContents(e);
+      const t = rg.getBoundingClientRect();
+      if (!t.height || t.height > 20) continue;
+      const before = e.style.minHeight;
+      e.style.minHeight = '44px';
+      slabbed = { before, after: window.__SL_LENS__() };
+      e.style.minHeight = before;
+      break;
+    }
+    out.slabbed = slabbed;
     return out;
   });
   if (bite.skipped) {
@@ -423,6 +456,10 @@ for (const [w, h] of [[1440, 900], [1024, 768]]) {
       bite.orphan && bite.orphan.adjacent === false ? `the legend in its shipped place left ${bite.orphan.between} elements between it and the count` : 'moving the legend changed nothing — the check is blind');
     record(where, 'the empty-legend check bites', bite.empty && bite.empty.emptyLegendSpace > 0 && lens.emptyLegendSpace === 0,
       bite.empty && bite.empty.emptyLegendSpace > 0 ? `an empty legend was measured at ${bite.empty.emptyLegendSpace}px` : 'an empty legend measured 0px — the check is blind');
+    record(where, 'the slab check bites', !!bite.slabbed && bite.slabbed.after.slabs.length > 0 && lens.slabs.length === 0,
+      bite.slabbed && bite.slabbed.after.slabs.length > 0
+        ? `a control put back on the 44px floor was reported: ${bite.slabbed.after.slabs[0]}`
+        : 'a 44px control was not reported — the check is blind');
   }
 
   if (SHOTS) await page.screenshot({ path: `${SHOTS}/atlas-waterways-${w}.png` });

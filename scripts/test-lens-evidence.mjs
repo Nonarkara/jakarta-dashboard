@@ -35,6 +35,35 @@ assert.match(helper, /if \(window\.matchMedia\('\(max-width: 700px\)'\)\.matches
 assert.ok(!/max-width: 700px[\s\S]{0,120}max-width: 700px/.test(branch),
   'the water lens opens its evidence once, not twice');
 
+// ── C. The floor every panel control stands on, and the sweep that rules ────
+// A panel control is its label plus padding. The floor was 44px, and every
+// house style since has been a carve-out from it — so a control nobody
+// remembered to carve out was a 44px slab round a 16px line. The traffic
+// panel's three action buttons were exactly that.
+const css = readFileSync(new URL('../public/style.css', import.meta.url), 'utf8');
+const floor = /#atlas-lens-body button \{([^}]*)\}/.exec(css);
+assert.ok(floor, 'the panel stylesheet declares the floor for panel buttons');
+assert.ok(!/min-height:\s*44px/.test(floor[1]),
+  'the panel button floor is not 44px: a 44px control is a slab round a 16px line, and every house style has been a carve-out from it');
+assert.match(floor[1], /min-height:\s*32px/,
+  'the panel button floor is 32px: label plus padding');
+assert.match(floor[1], /padding:\s*4px 0/,
+  'the panel button carries its own padding instead of a fixed height');
+
+// The sweep must reach every lens, including the one with the most controls
+// in it, and it must measure BEHIND a disclosure: a control in a collapsed
+// section is not on screen, so it is not measured, so it is not ruled on.
+const audit = readFileSync(new URL('../scripts/geometry-audit.mjs', import.meta.url), 'utf8');
+const swept = /const LENSES = \[([^\]]*)\]/.exec(audit);
+assert.ok(swept, 'the geometry audit names the lenses it sweeps');
+for (const lens of ['city', 'waterways', 'traffic', 'exposure', 'green', 'arrival', 'confidence', 'air', 'rain', 'haze', 'coverage']) {
+  assert.ok(swept[1].includes(`'${lens}'`), `the geometry audit sweeps the ${lens} lens`);
+}
+assert.match(audit, /querySelectorAll\('#atlas-lens-body details'\)\) d\.open = true/,
+  'the geometry audit opens the panel disclosures before measuring the controls: a control in a collapsed section is not on screen, so it is not measured');
+assert.match(audit, /panel never stopped changing/,
+  'the geometry audit waits for the panel to stop changing rather than to cross a character count');
+
 // ── B. The legend is the count's own breakdown ───────────────────────────────
 class Node {
   constructor(tag = 'div') { this.tag = tag; this.children = []; this.events = {}; this.attributes = {}; this.value = ''; this._text = ''; this.hidden = false; }
