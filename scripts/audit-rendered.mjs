@@ -431,18 +431,22 @@ for (const [w, h] of [[1440, 900], [1024, 768]]) {
     out.empty = window.__SL_LENS__();
     legend.textContent = text;
     legend.hidden = false;
-    // and a control put back on the 44px floor: a 44px box round a 16px line
-    // is a slab, and the check must say so.
+    // and a control put back into the SHAPE of the defect: a box more than
+    // 2.5x its own text. The 44px floor was one instance of that shape; the
+    // rule is about the shape, so the mutation restores the shape — a fixed
+    // 44px would only bite on a one-line label, and this panel's labels are
+    // all two lines wide, so a fixed height would have found nothing and
+    // reported the check as blind.
     let slabbed = null;
-    for (const e of body.querySelectorAll('button')) {
+    for (const e of body.querySelectorAll('button, summary')) {
       const rg = document.createRange(); rg.selectNodeContents(e);
       const t = rg.getBoundingClientRect();
-      if (!t.height || t.height > 20) continue;
+      if (!t.height) continue;
       const before = e.style.minHeight;
-      e.style.minHeight = '44px';
-      slabbed = { before, after: window.__SL_LENS__() };
+      e.style.minHeight = Math.ceil(t.height * 2.6) + 2 + 'px';
+      const after = window.__SL_LENS__();
       e.style.minHeight = before;
-      break;
+      if (after.slabs.length > 0) { slabbed = { before, after }; break; }
     }
     out.slabbed = slabbed;
     return out;
@@ -458,8 +462,8 @@ for (const [w, h] of [[1440, 900], [1024, 768]]) {
       bite.empty && bite.empty.emptyLegendSpace > 0 ? `an empty legend was measured at ${bite.empty.emptyLegendSpace}px` : 'an empty legend measured 0px — the check is blind');
     record(where, 'the slab check bites', !!bite.slabbed && bite.slabbed.after.slabs.length > 0 && lens.slabs.length === 0,
       bite.slabbed && bite.slabbed.after.slabs.length > 0
-        ? `a control put back on the 44px floor was reported: ${bite.slabbed.after.slabs[0]}`
-        : 'a 44px control was not reported — the check is blind');
+        ? `a control put back into the shape of the defect was reported: ${bite.slabbed.after.slabs[0]}`
+        : 'a control stretched past its own text was not reported — the check is blind');
   }
 
   if (SHOTS) await page.screenshot({ path: `${SHOTS}/atlas-waterways-${w}.png` });
