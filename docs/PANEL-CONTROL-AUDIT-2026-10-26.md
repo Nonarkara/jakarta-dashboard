@@ -60,7 +60,16 @@ panel body to cross **160 characters**. The traffic panel fills in stages — th
 camera catalogue, then the toll catalogue — so it crossed 160 characters at
 its first paragraph and was measured there.
 
-**5. An ad-hoc probe of my own missed one of the four.** A sweep of 190 panel
+**5. And the rail's rule was never scoped to the rail.** The rail is a `<nav>`
+whose first child is the evidence panel, so `.atlas-lenses button` — the rule
+that describes the rail's sixteen tabs — also reached the panel's thirty-three
+controls. It gave them the rail's hairline separator: a stray 1px vertical
+rule down the right of every panel button, in the middle of the panel, beside
+text. It also gave them the rail's 44px height, which is how three of them
+became slabs. A rule that is not scoped to what it describes reaches the thing
+next door and dresses it wrong.
+
+**6. An ad-hoc probe of my own missed one of the four.** A sweep of 190 panel
 buttons across 14 lenses, with every disclosure open, found three slabs. The
 gate found four: the air lens's transport button arrives later than the probe
 waited. The gate is the instrument; the probe was a look around it.
@@ -69,11 +78,18 @@ waited. The gate is the instrument; the probe was a look around it.
 
 ## Changed
 
-**`public/style.css`** — the floor is now the house style:
-`#atlas-lens-body button { min-height:32px; padding:4px 0; }`. A control is its
-label plus padding; a dense list row may still go tighter
-(`.lens-row--button`). This fixes the class, not the four instances: the next
-control nobody remembers to carve out is right by default.
+**`public/style.css`** — two changes. The floor is now the house style:
+`#atlas-lens-body button { min-height:32px; padding:4px 0; }`, with the resets
+the panel had been inheriting from the rail by accident — transparent, the
+panel's ink and type, clickable, no border. A control is its label plus
+padding; a dense list row may still go tighter (`.lens-row--button`). This
+fixes the class, not the four instances: the next control nobody remembers to
+carve out is right by default.
+
+And the rail's rule is scoped to the rail (`.atlas-lenses > button`), so it
+stops dressing the panel. The rail itself is unchanged: measured live and
+local at 1440 and 390, the lens tab and the "Lihat bukti" summary render
+identically — 24px, 12px, a 1px separator.
 
 **`scripts/geometry-audit.mjs`**
 - the sweep now names every lens that carries a panel — `traffic` and
@@ -96,9 +112,14 @@ control back on the 44px floor and requires the check to report it.
 44px, the sweep names every lens, and the audit opens the disclosures and
 waits for the panel to settle.
 
-**`scripts/mutate-lens-evidence.mjs`** — three more mutants: the floor goes
-back to 44px, the traffic lens leaves the sweep, the audit stops opening the
-disclosures. **7/7 killed.**
+**`scripts/mutate-lens-evidence.mjs`** — four more mutants: the floor goes
+back to 44px, the traffic lens leaves the sweep, the rail's rule reaches the
+panel again, the audit stops opening the disclosures. **8/8 killed.**
+
+The harness now says so out loud too. A mutant whose anchor has gone stale is
+an unverified guard, not a pass: one had gone stale — the floor mutant broke
+because the rule grew a property — and the harness printed "7/8" without saying
+which one it had not checked. It counts skips now, and fails on them.
 
 **`docs/ANTI-SLOP-DESIGN.md` → 1.12**, the shared law → 1.13.
 
@@ -110,11 +131,18 @@ disclosures. **7/7 killed.**
 |---|---|
 | `npm run typecheck` | 0 errors |
 | `npm run verify` | 13/13 |
-| `npm test` | exit 0 — including **7/7** lens mutants killed |
+| `npm test` | exit 0 — including **8/8** lens mutants killed, no skips |
 | `node scripts/audit-rendered.mjs` (local build, with the fix) | **68/68** |
+| `node scripts/audit-rendered.mjs` (live) | **68/68** against `https://jakarta.nonarkara.org` |
 | `node scripts/geometry-audit.mjs` (live, before the fix) | **FAILED with 4 problems** — the guard bites on the shipped defect |
-| `node scripts/geometry-audit.mjs` (live, after the fix) | see the release note below |
-| `npm run release` | see the release note below |
+| `node scripts/geometry-audit.mjs` (live, after the fix) | **PASS** — 5 viewports × 11 lenses, exit 0 |
+| Live traffic panel, disclosures open | 36 controls, **0 slabs**; the three offenders are 32px round a 16px line |
+| Live air panel, disclosures open | 4 controls, **0 slabs** |
+| `npm run release` | exit 0 — `jakarta-atlas-20261026-1792977256-b87cfd4` |
+
+The live measurements are in `docs/panel-control-2026-10-26/panel-controls-live.json`;
+the pixels are `traffic-panel-open-1440.png`, `traffic-channels-after-1440.png`
+and `air-panel-open-1440.png`.
 
 The "before" row is the proof that matters: the widened, disclosure-opening
 sweep **fails on the shipped build**, and the four lines it prints are the
@@ -140,18 +168,27 @@ defect, named.
    panel says it is loading; the specific figures in the 26 October follow-up
    (0.74 s / 0.36 s) did not reproduce from here.
 
-3. **The geometry audit is not in the release path.** It is the instrument
-   that found all four defects, and it runs by hand. Adding it to
-   `scripts/deploy-live.sh` would put the rule in force at the only moment it
-   matters, at the cost of roughly twenty minutes a release. That is the
-   owner's call, not this pass's.
+3. **The geometry audit is not in the release path.** The *control* rule is:
+   `scripts/audit-rendered.mjs` runs against the deployed bytes on every
+   release and now requires that no panel control is bigger than its own text.
+   The broader sweep — every lens, every viewport, overlap and overflow and
+   touch targets — is the instrument that found all four defects, and it runs
+   by hand. Putting it in `scripts/deploy-live.sh` would put the whole sweep
+   in force at the only moment it matters, at the cost of roughly twenty-five
+   minutes a release. That is the owner's call, not this pass's.
 
-4. **Owner-account items, unchanged:** the Perplexity connector (absent from
+4. **The traffic lens is in the geometry sweep but not in the release-path
+   sweep.** The rendered audit visits the waterways lens, whose panel holds 61
+   controls — more than the traffic lens's 33 — so the rule is in force at
+   release time on the biggest panel in the product. The traffic lens's own 33
+   are swept by hand.
+
+5. **Owner-account items, unchanged:** the Perplexity connector (absent from
    the catalogue), the GitHub Actions spending limit (manual push path in use)
    and the Cloudflare rate-limit namespace (one dashboard step, then uncomment
    `[[ratelimits]]` in `wrangler.toml`).
 
-5. **Open by design:** field validation and calibrated flood forecasting
+6. **Open by design:** field validation and calibrated flood forecasting
    (`docs/ADMIN-READINESS.md`).
 
 ---
