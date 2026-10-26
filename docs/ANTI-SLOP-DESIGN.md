@@ -385,7 +385,7 @@ An unchanged loading message can sit still while a request is pending. A disclos
 
 The audit must wait for explicit pending work to reach success or an honest unavailable state, repeatedly expand newly mounted disclosures, yield for their handlers, and then measure the resulting controls. Plain loading text at the root or after existing buttons also counts as pending. A timeout is unverified, never a visual pass. Layout-on-arrival and expanded-control checks remain separate.
 
-Jakarta implements this in `scripts/panel-readiness.mjs`; its release audit checks eleven panel lenses at desktop and phone widths. Five mutations prove the pending-work, recursive-expansion and same-length-change guards; an actual delayed nested oversized control proves the browser check reaches lazy content. Existing compact bars, scientific layers and chosen fonts remain.
+Jakarta implements this in `scripts/panel-readiness.mjs`; its release audit checks eleven panel lenses at desktop and phone widths. Timing mutations prove the pending-work, recursive-expansion and same-length-change guards; an actual delayed nested oversized control proves the browser check reaches lazy content. Existing compact bars, scientific layers and chosen fonts remain.
 
 ## Version history
 

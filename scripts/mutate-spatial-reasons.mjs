@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import {copyMutationFixture,verifyMutationFixture,fixtureRoot as REPO} from './mutation-fixture.mjs';
+import {copyMutationFixture,verifyMutationFixture,normalMutationFailure,fixtureRoot as REPO} from './mutation-fixture.mjs';
 // Mutation harness for the stale-reason guard.
 //
 // The guard says: a reason in the spatial baseline must have a measured
@@ -67,6 +67,7 @@ for (const m of MUTANTS) {
   try {
     execFileSync('node', ['scripts/test-spatial-reasons.mjs'], { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
   } catch (e) {
+    if(!normalMutationFailure(e))throw e;
     failed = true;
     out = (e.stdout || '') + (e.stderr || '');
   }

@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {spawnSync} from 'node:child_process';
+import {normalMutationFailure} from './mutation-fixture.mjs';
+const run=(code,options={})=>spawnSync(process.execPath,['-e',code],{encoding:'utf8',timeout:30000,...options});
+const assertion=run("process.stderr.write('AssertionError: seeded failure');process.exit(1)");
+assert.equal(normalMutationFailure(assertion),true,'a normal nonzero assertion exit can kill a mutant');
+assert.equal(normalMutationFailure(run('process.exit(0)')),false,'success never kills a mutant');
+const overflow=run("require('node:fs').writeSync(2,'AssertionError: seeded prefix\\n');process.stdout.write('x'.repeat(2*1024*1024),()=>process.exit(1))",{maxBuffer:65536});
+assert.equal(overflow.error?.code,'ENOBUFS','the real fixture must reach an output-buffer failure');
+assert.match(overflow.stderr,/AssertionError/,'an assertion prefix really was captured before failure');
+assert.equal(normalMutationFailure(overflow),false,'a buffer failure with an assertion prefix is not a killed mutant');
+for(const result of [{status:null,signal:'SIGTERM'},{status:1,signal:'SIGKILL'},{status:null,error:new Error('ETIMEDOUT')}])assert.equal(normalMutationFailure(result),false,'signals and timeouts fail closed');
+console.log('PASS mutation execution: normal assertion exit, clean exit, actual buffer failure, signals and timeout classification');

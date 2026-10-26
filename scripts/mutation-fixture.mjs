@@ -22,3 +22,7 @@ export function verifyMutationFixture(dir,test){
  catch(error){rmSync(dir,{recursive:true,force:true});throw error;}
  console.log('PASS clean reduced fixture: '+test);
 }
+
+// An infrastructure failure is not a killed mutation, even if captured text
+// contains an assertion prefix before the child was interrupted.
+export const normalMutationFailure=result=>Number.isInteger(result?.status)&&result.status!==0&&!result.signal&&!result.error;

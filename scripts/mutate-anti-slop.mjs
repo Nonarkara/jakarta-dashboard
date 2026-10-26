@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import {copyMutationFixture,verifyMutationFixture,fixtureRoot as REPO} from './mutation-fixture.mjs';
+import {copyMutationFixture,verifyMutationFixture,normalMutationFailure,fixtureRoot as REPO} from './mutation-fixture.mjs';
 // Mutation harness for the anti-slop design guards. Each mutant reintroduces a
 // defect that has actually shipped in this repo; the guard must kill it. A
 // survivor means the guard measures nothing and must be rewritten.
@@ -114,7 +114,7 @@ for (const m of MUTANTS) {
   let failed = false;
   try {
     execFileSync('node', ['scripts/test-anti-slop-design.mjs'], { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
-  } catch (e) { failed = true; out = (e.stdout || '') + (e.stderr || ''); }
+  } catch (e) { if(!normalMutationFailure(e))throw e; failed = true; out = (e.stdout || '') + (e.stderr || ''); }
   const killedIt = failed && (m.expect === /AssertionError/ || m.expect.test(out));
   console.log(`${killedIt ? 'KILL ' : 'SURV '} ${m.name}`);
   if (!killedIt && failed) console.log('        (failed, but not on the expected assertion)\n        ' + out.split('\n').filter(l => /Assertion|assert/i.test(l)).slice(0, 2).join('\n        '));

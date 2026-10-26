@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import {copyMutationFixture,verifyMutationFixture,fixtureRoot as REPO} from './mutation-fixture.mjs';
+import {copyMutationFixture,verifyMutationFixture,normalMutationFailure,fixtureRoot as REPO} from './mutation-fixture.mjs';
 // Mutation harness for the lens-evidence guards.
 //
 // Each mutant reintroduces a defect that has actually shipped in this repo.
@@ -120,7 +120,7 @@ for (const m of MUTANTS) {
   let failed = false;
   try {
     execFileSync('node', ['scripts/test-lens-evidence.mjs'], { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
-  } catch (e) { failed = true; out = (e.stdout || '') + (e.stderr || ''); }
+  } catch (e) { if(!normalMutationFailure(e))throw e; failed = true; out = (e.stdout || '') + (e.stderr || ''); }
   const killedIt = failed && (m.expect === /AssertionError/ || m.expect.test(out));
   console.log(`${killedIt ? 'KILL ' : 'SURV '} ${m.name}`);
   if (!killedIt && failed) {
