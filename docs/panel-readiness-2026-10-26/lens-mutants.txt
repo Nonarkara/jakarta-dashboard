@@ -1,3 +1,4 @@
+PASS clean reduced fixture: scripts/test-lens-evidence.mjs
 KILL  the water lens stops opening its own evidence (the shipped defect)
 KILL  the legend goes back to its shipped place, below four unrelated sections
 KILL  the legend holds a line of space while the count has not arrived

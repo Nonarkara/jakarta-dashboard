@@ -1,0 +1,7 @@
+PASS clean reduced fixture: scripts/test-spatial-reasons.mjs
+KILL  the rule never finds a stale reason
+KILL  the rule judges a narrowed sweep
+KILL  the rule compares the selector but not the kind
+KILL  the gate stops consulting the rule
+
+4/4 killed

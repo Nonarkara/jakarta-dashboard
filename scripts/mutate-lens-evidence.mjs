@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {copyMutationFixture,verifyMutationFixture,fixtureRoot as REPO} from './mutation-fixture.mjs';
 // Mutation harness for the lens-evidence guards.
 //
 // Each mutant reintroduces a defect that has actually shipped in this repo.
@@ -11,12 +12,11 @@
 //      and land-cover sections, six elements below the count it explains;
 //   3. the legend holds a line of space while the count is still in flight;
 //   4. the legend fills but never appears.
-import { readFileSync, writeFileSync, mkdtempSync, cpSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdtempSync, rmSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-const REPO = '/Users/nonarkara/Projects/dashboards/Jakarta-dashboard';
 
 const OPEN_LINE = "    openLensEvidenceOnDesktop();\n";
 
@@ -87,13 +87,12 @@ const MUTANTS = [
   },
 ];
 
+let fixtureChecked=false;
 let killed = 0, skipped = 0;
 for (const m of MUTANTS) {
   const dir = mkdtempSync(join(tmpdir(), 'lens-mut-'));
-  cpSync(REPO, dir, {
-    recursive: true,
-    filter: s => !s.includes('/.git') && !s.includes('node_modules') && !/\.(png|jpe?g|webp|gif)$/i.test(s),
-  });
+  copyMutationFixture(REPO,dir);
+  if(!fixtureChecked){verifyMutationFixture(dir,'scripts/test-lens-evidence.mjs');fixtureChecked=true;}
   const target = join(dir, m.file);
   let original = readFileSync(target, 'utf8');
   let ok = true;

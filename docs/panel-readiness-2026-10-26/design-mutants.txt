@@ -1,0 +1,14 @@
+PASS clean reduced fixture: scripts/test-anti-slop-design.mjs
+KILL  research index drops a section again (the shipped defect)
+KILL  contents nav links to a section that does not exist
+KILL  a contents entry loses its English half
+KILL  the atlas drops the research door entirely
+KILL  the research door is buried inside the collapsed drawer
+KILL  the research door points somewhere else
+KILL  the research door loses its Indonesian name
+KILL  the page adopts a second name for the research page
+KILL  the review disposition receipt is deleted
+KILL  a finding is left unanswered
+KILL  the lede goes back to a measure that is 80 characters wide
+
+11/11 killed

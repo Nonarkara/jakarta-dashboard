@@ -20,6 +20,12 @@ Independent review also reproduced two earlier states: a root containing only `L
 - Actual browser exercised native traffic disclosures and the nested Pluit preparedness lookup. At 390, width equals scrollWidth and busy states were terminal after data arrived. Six screenshots at 1440/1024/390 were independently reviewed against all seven design rules and passed. Fonts, compact bars, map priority, source limits and unknown-capacity text remain.
 - Full eleven-lens/five-viewport geometry audit passed all 55 combinations, including 320px phones, with nested controls settled before measurement. The vendored instrument and baseline are unchanged.
 
+## Harness reliability found during the final repeat
+
+A busy host let a false-ready mutant reach its tiny wall-clock deadline and return unverified; the test expected false, so the bad rule appeared safe. The harness now advances a controlled clock and yields between timer tasks. Five mutants were then caught on three repeated runs. This is a test repair, not a larger production deadline to conceal a failure.
+
+The first canonical run was stopped before deployment when process inspection showed mutation fixtures copying `out/route-site` and unrelated checkout artifacts. Source fixtures now exclude builds, Wrangler state, raw GIS archives and images, retain the one declared waterway reference and source/guard documents, and prove a clean copied fixture passes before counting mutants. All eight lens, eleven design and four stale-reason mutations still fail. Independent review measured the reduced fixture at 194 files / about 6.8 MB and reran all three clean guards. The interrupted copy positively identified from the stopped process was removed; unrelated temporary directories were not swept. No mutation, expected assertion, source archive or spatial reason was removed. The complete canonical run is repeated after this repair.
+
 ## Production
 
 Pending committed canonical release, exact deployed bytes and live browser verification.

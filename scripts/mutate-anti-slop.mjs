@@ -1,13 +1,13 @@
 #!/usr/bin/env node
+import {copyMutationFixture,verifyMutationFixture,fixtureRoot as REPO} from './mutation-fixture.mjs';
 // Mutation harness for the anti-slop design guards. Each mutant reintroduces a
 // defect that has actually shipped in this repo; the guard must kill it. A
 // survivor means the guard measures nothing and must be rewritten.
-import { readFileSync, writeFileSync, mkdtempSync, cpSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdtempSync, rmSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-const REPO = '/Users/nonarkara/Projects/dashboards/Jakarta-dashboard';
 
 const MUTANTS = [
   {
@@ -88,12 +88,14 @@ const MUTANTS = [
   },
 ];
 
+let fixtureChecked=false;
 let killed = 0;
 for (const m of MUTANTS) {
   const dir = mkdtempSync(join(tmpdir(), 'slop-mut-'));
   // docs/ is copied for its markdown — the disposition receipt and the design
   // law are part of what the guard reads — but the 104 PNGs (36 MB) are not.
-  cpSync(REPO, dir, { recursive: true, filter: (s) => !s.includes('/.git') && !s.includes('node_modules') && !/\.(png|jpe?g|webp|gif)$/i.test(s) });
+  copyMutationFixture(REPO,dir);
+  if(!fixtureChecked){verifyMutationFixture(dir,'scripts/test-anti-slop-design.mjs');fixtureChecked=true;}
   const target = join(dir, m.file);
   if (m.delete) {
     try {

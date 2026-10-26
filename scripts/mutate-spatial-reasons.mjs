@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {copyMutationFixture,verifyMutationFixture,fixtureRoot as REPO} from './mutation-fixture.mjs';
 // Mutation harness for the stale-reason guard.
 //
 // The guard says: a reason in the spatial baseline must have a measured
@@ -9,12 +10,11 @@
 // Each mutant below breaks that rule in a way that would let a stale reason
 // through, or that would make the guard cry wolf on a narrowed sweep. The
 // test must kill every one. A survivor means the guard measures nothing.
-import { readFileSync, writeFileSync, mkdtempSync, cpSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdtempSync, rmSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-const REPO = new URL('..', import.meta.url).pathname.replace(/\/$/, '');
 
 const MUTANTS = [
   {
@@ -47,17 +47,12 @@ const MUTANTS = [
   },
 ];
 
+let fixtureChecked=false;
 let killed = 0;
 for (const m of MUTANTS) {
   const dir = mkdtempSync(join(tmpdir(), 'spatial-reasons-mut-'));
-  cpSync(REPO, dir, {
-    recursive: true,
-    filter: (s) =>
-      !s.includes('/.git') &&
-      !s.includes('node_modules') &&
-      !s.includes('/out') &&
-      !/\.(png|jpe?g|webp|gif|geojson|geojson\.gz)$/i.test(s),
-  });
+  copyMutationFixture(REPO,dir);
+  if(!fixtureChecked){verifyMutationFixture(dir,'scripts/test-spatial-reasons.mjs');fixtureChecked=true;}
   const target = join(dir, m.file);
   const original = readFileSync(target, 'utf8');
   if (!original.includes(m.from)) {
