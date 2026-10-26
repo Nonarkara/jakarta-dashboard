@@ -330,6 +330,54 @@ was given; and an orphan is not fixed by moving it closer to its subject —
 it is fixed by naming what it belongs to.**
 
 
+## 26 October 2026 (sixth pass) — the control nobody measured
+
+The panel's control floor was 44px, and every house style since had been a
+carve-out from it: the direct-child row (32px), the action row (32px), the
+retry chip (32px), the observation link (0), the ranking row (24px). A control
+nobody remembered to carve out was therefore a **44px slab round a 16px line**
+— 2.75x its own text, against a law that says a box is its label plus padding.
+
+Three such controls existed, all in the traffic lens: the toll panel's "Muat
+kamera terpilih" and the YouTube panel's two "Coba siaran kanal saat ini". Each
+is a 44px box with a 16px line floating in it and a stray hairline down its
+right edge.
+
+**Nothing had ever said so, for two reasons that are the same reason.**
+
+1. The traffic lens was in no audit sweep. The geometry audit swept six
+   lenses, then nine; the traffic lens, with 33 controls in its panel, was in
+   neither.
+2. Even in a sweep it would have missed them. A control inside a collapsed
+   `<details>` is not on screen, so `checkVisibility` says no, so the rule
+   never ran on it. The audit measured the panel's **arrival** state — and
+   these three controls only exist after the reader opens a section.
+
+And the panel was measured while still filling: the audit waited for the body
+to cross **160 characters**, so the traffic panel was measured at its first
+paragraph, before the toll catalogue arrived.
+
+So the floor is now the house style — 32px with 4px of its own padding, and a
+dense list row may still go tighter — and the gates reached the case:
+
+- the geometry audit sweeps every lens that carries a panel (traffic and flood
+  monitoring join the nine);
+- it waits for the panel to **stop changing**, not to cross a threshold;
+- it measures the controls **with every disclosure open**, and leaves the
+  layout rules on the arrival state, because a fully expanded panel is not the
+  state the reader arrives in;
+- `scripts/audit-rendered.mjs`, which the release already runs against the
+  deployed bytes, opens the disclosures and requires that no panel control is
+  bigger than its own text — with a bite test that puts a control back on the
+  44px floor and requires the check to report it.
+
+**The law that comes out of it: a rule is not in force until the measurement
+that enforces it reaches the case the rule is about. A sweep that names a
+selection of lenses is not a sweep of the product; a threshold that says "more
+than 160 characters" is not "the panel has finished"; and a disclosure that
+hides a control from the audit hides it from the rule.**
+
+
 ## Version history
 
 This committed copy travels with Jakarta and mirrors the global
@@ -346,3 +394,4 @@ version.
 | 1.9 | 2026-10-21 | A verdict must be read, not just its fixes applied. An independent review of the five shipped screens returned **DO NOT SHIP** on 19 October: a lens evidence panel that cut a line of evidence in half, and a lens strip that ran off the right edge with no affordance. Both were fixed within the hour in `f44db2b`, along with the 80-character lede, the 27/24/24px hierarchy tie and the latent `90ch`. **The report itself was never read back** — so the ship decision was taken with the verdict unread and no finding ever dispositioned. This pass read it and answered all ten findings against the deployed build: the clip is a fade into the scroll edge, the strip carries a four-layer scroll shadow, the lede is 58 characters, the top three ranks are 48/32/21px, and the 390 evidence door is hit-testable. The one judgement — the rules bracketing 490px of content in 1120px — is answered in writing, not patched, in `docs/REVIEW-DISPOSITION-2026-10-19.md`. A fix without a disposition is not a closed review. |
 | 1.10 | 2026-10-23 | The atlas existed in two states, and the gate could not see the band that cropped its own controls. The workbench class, the row of page-level doors and the evidence popup were all assembled by JavaScript a third of a second after the first paint: the reader got a page that then grew and shrank under them, and the spatial gate measured whichever state it caught — the same build, swept twice, reported the City watch as a hole in one run and the doors row in the next, so the receipt was a coin toss. The class is in the markup now, the sections that move into the drawer are hidden where they stand until they move, and `public/atlas-layout.js` assembles the page in a classic script before the first paint. The gate found a defect it could not previously see: at 339px the atlas title hid 15px of its own content behind the language select, and the phone title is now the plainest name that fits. The instrument's own stale-reason check is switched off whenever a sweep is narrowed by route, and this gate must name its routes — so `scripts/spatial-reasons.mjs` checks the rule itself against a complete sweep, and four mutants of it are killed. Then the audit asked what the gate does **not** measure: it measures the atlas inside an iframe, where the atlas hides its own header and clips its own root, so the header band was never measured at all — and on the deployed build the language select, the page's first control, sat 1.5px **above** the top of the document, cropped by the edge of the page. The band now grows to fit its contents (`minmax(…, auto)`) and its two controls are the size of their labels; `scripts/audit-rendered.mjs` reads the band and fails when a control does not fit, and proves itself by putting the page back the way it shipped and requiring the same check to report the crop deeper. **A page has one layout; a reason must have something under it; a gate that measures a coin toss protects nothing; and a band that crops its own contents is a window onto one.** |
 | 1.11 | 2026-10-25 | The water lens could not be reached. `/atlas?lens=waterways` — the URL the water-recovery receipt publishes, and the atlas's own share link for that lens — landed on a map with the count (3,885 mapped features), the legend of their kinds, the gauge inventory, the polder budget and the retry chip all sealed inside a closed `<details>`: measured on the live release `jakarta-atlas-20261025-1792913608-001fbbc`, `#atlas-lens-evidence.open === false` at 1440, 1024 and 390. Four lenses opened their evidence on a desktop screen and the water lens did not, because the water branch was added after the rule and **a rule that is not written down is not a rule**. Inside the panel the legend was an orphan — appended after the coastal and land-cover sections, six elements below the count it explained — and, since the recovery pass made the count arrive on its own, an empty `<p>` holding 26px of margin for the whole load. An empty paragraph has no box, so a check on box height called it zero: the space was in the margins, and the space is what the reader pays for. The audit could not see it — the geometry audit force-opened the panel before measuring, and the rendered audit visited `/atlas`, which opens on the city lens — so the receipt said the lens was verified while certifying a state no reader was given. The lens now opens its own evidence on a desktop screen when it is chosen and before the fetch; the legend is the count's own breakdown, directly under it, labelled, and never a line of nothing; the geometry audit asserts the deep link *arrived* open before it touches anything; and the rendered audit visits the deep link, measures the state a reader gets, and proves each of its three checks by putting the page back into the defect. `scripts/test-lens-evidence.mjs` with `scripts/mutate-lens-evidence.mjs`, 4/4 killed, one of them the shipped orphan reproduced exactly. **A deep link must deliver the lens it names; a guard that opens the disclosure before it measures has measured a state nobody was given; and an orphan is not fixed by moving it closer to its subject — it is fixed by naming what it belongs to.** |
+| 1.12 | 2026-10-26 | The control nobody measured. The panel's control floor was 44px (`public/style.css`), and every house style since had been a carve-out from it — the direct-child row (32px), the action row (32px), the retry chip (32px), the observation link (0), the ranking row (24px) — so a control nobody remembered to carve out was a **44px slab round a 16px line**, 2.75x its own text, against a law that says a box is its label plus padding. Four such controls existed, and no audit had ever said so, for two reasons that are the same reason. The traffic lens was in no audit sweep: the geometry audit listed six lenses and then nine, and the lens with 33 controls in its panel was in neither. And even in a sweep it would have missed them — a control inside a collapsed `<details>` is not on screen, so `checkVisibility` says no and the rule never ran on it; the audit measured the panel's arrival state, and those controls only exist after the reader opens a section. The panel was also measured while still filling: the audit waited for the body to cross 160 characters, so the traffic panel was measured at its first paragraph, before the toll catalogue arrived. The floor is now the house style — 32px with 4px of its own padding, a dense list row tighter still. The gates reach the case: every lens that carries a panel is swept; the panel is waited on until it stops changing; the controls are measured with every disclosure open while the layout rules stay on the arrival state; and the release-path rendered audit requires that no panel control is bigger than its own text, with a bite test that puts a control back on the 44px floor and requires the check to report it. `scripts/test-lens-evidence.mjs` with `scripts/mutate-lens-evidence.mjs`: 7/7 killed. **A rule is not in force until the measurement that enforces it reaches the case the rule is about; a sweep that names a selection of lenses is not a sweep of the product; a threshold that says "more than 160 characters" is not "the panel has finished"; and a disclosure that hides a control from the audit hides it from the rule.** |
