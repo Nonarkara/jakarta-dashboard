@@ -1,1 +1,6 @@
 KILL ignore plain loading text
+KILL ignore trailing loading text
+KILL ignore unchanged in-flight requests
+KILL expand only the original disclosure
+KILL compare only text length
+PASS panel readiness mutants: 5/5 killed, no missing anchors
