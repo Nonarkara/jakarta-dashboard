@@ -46,7 +46,7 @@ export function createPreparedness(map,{text:t,isCurrent,buildTag}) {
   const token=++generation;removeMap();const details=el('details'),summary=el('summary',t('Preparedness · reference locations','Kesiapsiagaan · lokasi referensi')),host=el('div');host.className='preparedness-context';details.append(summary,host);let started=false;
   const current=()=>active()&&token===generation;
   async function show(){
-   if(!current())return;host.replaceChildren(el('p',t('Loading the boundary–location join…','Memuat gabungan batas dan lokasi…')));const loaded=await load();if(!current())return;
+   if(!current())return;host.setAttribute('aria-busy','true');host.replaceChildren(el('p',t('Loading the boundary–location join…','Memuat gabungan batas dan lokasi…')));const loaded=await load();host.setAttribute('aria-busy','false');if(!current())return;
    const rows=referenceRows(loaded,boundaryId);if(!loaded||!rows){host.replaceChildren(el('p',t('Preparedness references unavailable. The water account remains independent.','Referensi kesiapsiagaan tidak tersedia. Neraca air tetap terpisah.')),button(t('Retry references','Coba lagi referensi'),show));return;}
    host.replaceChildren();const boundary=loaded.boundaries.find(b=>b.id===Number(boundaryId));
    host.append(el('p',Object.entries(boundary.counts).map(([id,count])=>count.toLocaleString(t('en-GB','id-ID'))+' '+label(id)).join(' · ')));

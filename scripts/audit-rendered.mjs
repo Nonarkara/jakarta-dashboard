@@ -19,6 +19,7 @@
 
 import { createRequire } from 'node:module';
 import { mkdirSync } from 'node:fs';
+import {panelReadiness} from './panel-readiness.mjs';
 
 const BASE = process.env.ATLAS_URL || 'https://jakarta.nonarkara.org';
 const SHOTS = process.env.SHOT_DIR || '';
@@ -361,7 +362,6 @@ const LENS_AUDIT = () => {
   // panel's three action buttons are 44px slabs round a 16px line, and they
   // live inside collapsed sections. MSH: a box is its label plus padding —
   // more than 2.5x its own text is spatial hallucination.
-  for (const d of document.querySelectorAll('#atlas-lens-body details')) d.open = true;
   for (const e of document.querySelectorAll('#atlas-lens-body button, #atlas-lens-body summary')) {
     const r = e.getBoundingClientRect();
     if (!r.width || !r.height) continue;
@@ -391,6 +391,8 @@ for (const [w, h] of [[1440, 900], [1024, 768]]) {
   // below calls THE SAME function. A mutation that proves a copy of the check
   // bites proves nothing about the check.
   await page.evaluate(`void (window.__SL_LENS__ = ${LENS_AUDIT.toString()})`);
+  const ready = await page.evaluate(panelReadiness,{expand:true});
+  record(where,'expanded controls finish loading',ready.ready,JSON.stringify(ready));
   const lens = await page.evaluate(() => window.__SL_LENS__());
 
   record(where, 'the deep link opens its own evidence', lens.open,
@@ -468,6 +470,44 @@ for (const [w, h] of [[1440, 900], [1024, 768]]) {
 
   if (SHOTS) await page.screenshot({ path: `${SHOTS}/atlas-waterways-${w}.png` });
   await ctx.close();
+}
+
+
+// All panel lenses share the size law. Reuse the loaded map at each width:
+// the broader control sweep does not repeat the full spatial instrument.
+for(const width of [1440,390]){
+ const ctx=await browser.newContext({viewport:{width,height:900},hasTouch:width<700});
+ const page=await ctx.newPage();
+ await page.goto(BASE+'/atlas?lang=en&lens=traffic',{waitUntil:'load',timeout:90000});
+ const lenses=await page.locator('.atlas-lenses > button[data-lens]').evaluateAll(nodes=>nodes.map(n=>n.dataset.lens).filter(l=>['city','air','rain','haze','green','waterways','exposure','arrival','confidence','traffic','coverage'].includes(l)));
+ record('panel-controls@'+width,'all eleven panel lenses are present',new Set(lenses).size===11,lenses.join(', '));
+ for(const lens of lenses){
+  const where=`controls-${lens}@${width}`;
+  await page.locator('.atlas-lenses > button[data-lens="'+lens+'"]').click();
+  await page.locator('#atlas-lens-evidence > summary').evaluate(e=>{if(!e.parentElement.open)e.click();});
+  const ready=await page.evaluate(panelReadiness,{expand:true});
+  record(where,'expanded controls finish loading',ready.ready,JSON.stringify(ready));
+  const measured=await page.evaluate(LENS_AUDIT);
+  record(where,'no panel control is a slab',measured.slabs.length===0,measured.slabs.length?measured.slabs.join('; '):`${measured.controls} controls behind settled disclosures`);
+  console.log('  '+(ready.ready&&!measured.slabs.length?'PASS ':'FAIL ')+where+' · '+measured.controls+' controls');
+  if(width===1440&&lens==='traffic'){
+   // Prove the asynchronous expansion reaches a control which did not exist
+   // when its parent first opened. This also catches one-pass expansion.
+   await page.evaluate(()=>{
+    const body=document.getElementById('atlas-lens-body'),fixture=document.createElement('details');fixture.id='audit-lazy-control';
+    fixture.innerHTML='<summary>Delayed disclosure test</summary>';
+    fixture.addEventListener('toggle',()=>{if(!fixture.open||fixture.dataset.started)return;fixture.dataset.started='true';fixture.setAttribute('aria-busy','true');setTimeout(()=>{
+     const nested=document.createElement('details');nested.innerHTML='<summary>Nested disclosure test</summary>';
+     nested.addEventListener('toggle',()=>{if(!nested.open||nested.dataset.started)return;nested.dataset.started='true';const b=document.createElement('button');b.textContent='Delayed oversized control';b.style.cssText='min-height:80px;font-size:12px;line-height:16px';nested.append(b);fixture.setAttribute('aria-busy','false');});fixture.append(nested);
+    },200);});body.append(fixture);
+   });
+   const waited=await page.evaluate(panelReadiness,{expand:true});
+   const measured=await page.evaluate(LENS_AUDIT);
+   record(where,'lazy nested-control check bites',waited.ready&&waited.opened>=2&&measured.slabs.some(s=>s.includes('Delayed oversized control')),JSON.stringify({waited,slabs:measured.slabs}));
+   await page.locator('#audit-lazy-control').evaluate(e=>e.remove());
+  }
+ }
+ await ctx.close();
 }
 
 await browser.close();

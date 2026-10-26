@@ -82,7 +82,7 @@ const MUTANTS = [
   {
     name: 'the audit stops opening the disclosures, so the controls stay unseen',
     file: 'scripts/geometry-audit.mjs',
-    edits: [{ from: "      for (const d of document.querySelectorAll('#atlas-lens-body details')) d.open = true;\n", to: '' }],
+    edits: [{ from: "const expanded = await page.evaluate(panelReadiness,{expand:true})", to: "const expanded = await page.evaluate(panelReadiness,{expand:false})" }],
     expect: /the geometry audit opens the panel disclosures|AssertionError/,
   },
 ];

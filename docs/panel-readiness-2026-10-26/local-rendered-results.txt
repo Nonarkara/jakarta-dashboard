@@ -1,0 +1,24 @@
+  PASS controls-city@1440 · 0 controls
+  PASS controls-waterways@1440 · 83 controls
+  PASS controls-traffic@1440 · 36 controls
+  PASS controls-exposure@1440 · 12 controls
+  PASS controls-confidence@1440 · 0 controls
+  PASS controls-green@1440 · 3 controls
+  PASS controls-arrival@1440 · 1 controls
+  PASS controls-coverage@1440 · 8 controls
+  PASS controls-rain@1440 · 13 controls
+  PASS controls-air@1440 · 4 controls
+  PASS controls-haze@1440 · 31 controls
+  PASS controls-city@390 · 0 controls
+  PASS controls-waterways@390 · 83 controls
+  PASS controls-traffic@390 · 36 controls
+  PASS controls-exposure@390 · 12 controls
+  PASS controls-confidence@390 · 0 controls
+  PASS controls-green@390 · 0 controls
+  PASS controls-arrival@390 · 1 controls
+  PASS controls-coverage@390 · 8 controls
+  PASS controls-rain@390 · 13 controls
+  PASS controls-air@390 · 4 controls
+  PASS controls-haze@390 · 31 controls
+
+rendered audit: 117/117 passed against http://localhost:8793

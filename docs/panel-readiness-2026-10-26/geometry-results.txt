@@ -1,0 +1,7 @@
+  390x844 done
+  375x667 done
+  360x640 done
+  320x568 done
+  1440x900 done
+
+GEOMETRY AUDIT PASS: http://localhost:8793 · 5 viewports x 11 lenses, no overlap, no sideways overflow, touch targets held

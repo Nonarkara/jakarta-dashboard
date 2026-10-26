@@ -95,20 +95,21 @@ export function createPolderBudget(map,{text:t,isCurrent,state,buildTag}) {
   view={output,plot,source,table,runoffLabel,forecastButton,stormButton,stormField,exportButton};recompute();
  }
  async function refreshRain(){
-  if(!live()||loading)return;loading=true;lastAttempt=Date.now();recompute();
-  try{const response=await fetch('/api/atlas/rainfall',{cache:'no-store',signal:AbortSignal.any([abort.signal,AbortSignal.timeout(20000)])});rain=response.ok?await response.json():null;}catch{rain=null;}finally{loading=false;if(live()){recompute();locate();}}
+  if(!live()||loading)return;loading=true;updateBusy();lastAttempt=Date.now();recompute();
+  try{const response=await fetch('/api/atlas/rainfall',{cache:'no-store',signal:AbortSignal.any([abort.signal,AbortSignal.timeout(20000)])});rain=response.ok?await response.json():null;}catch{rain=null;}finally{loading=false;updateBusy();if(live()){recompute();locate();}}
  }
+ const updateBusy=()=>parent?.setAttribute('aria-busy',String(!disposed&&(opening||loading)));
  const visibility=()=>{if(!document.hidden&&live())void refreshRain();};
  async function show(target,id){
   parent=target;if(id!==undefined)state.id=String(id);if(context){if(!selected())state.id=String(context.records[0].id);render();locate(true);return;}
-  if(opening)return;opening=true;
+  if(opening)return;opening=true;updateBusy();
   parent.replaceChildren(el('p',t('Joining boundary and satellite reference…','Menggabungkan batas dan referensi satelit…')));abort=new AbortController();
   try{
    const [c,p]=await Promise.all(['/data/jakarta-v1/polder-budget-context.json','/data/jakarta-v1/official-polders.geojson'].map(async url=>{const r=await fetch(url+'?v='+encodeURIComponent(buildTag),{signal:AbortSignal.any([abort.signal,AbortSignal.timeout(15000)])});if(!r.ok)throw Error('context');return r.json();}));
    if(!live())return;if(c.contract!=='polder-budget-context-v1'||!Array.isArray(c.records)||!c.records.length||!Array.isArray(p.features))throw Error('contract');context=c;polygons=p;
    if(!selected()){if(id!==undefined){parent.replaceChildren(el('p',t('This boundary is excluded from calculation because its geometry is invalid. Choose a valid boundary from the water-budget menu.','Batas ini dikecualikan dari perhitungan karena geometrinya tidak valid. Pilih batas valid dari menu neraca air.')));return;}state.id=String(context.records[0].id);}render();locate(true);void refreshRain();
    document.addEventListener('visibilitychange',visibility);clock=setInterval(()=>{if(!document.hidden&&live()){recompute();locate();if(Date.now()-lastAttempt>=300000)void refreshRain();}},30000);clock?.unref?.();
-  }catch{context=null;polygons=null;view=null;if(live())parent.replaceChildren(el('p',t('Boundary/land-context join unavailable. Other water layers remain usable.','Gabungan batas/konteks lahan tidak tersedia. Lapisan air lain tetap dapat digunakan.')),button(t('Retry context','Coba lagi konteks'),()=>show(parent)));}finally{opening=false;}
+  }catch{context=null;polygons=null;view=null;if(live())parent.replaceChildren(el('p',t('Boundary/land-context join unavailable. Other water layers remain usable.','Gabungan batas/konteks lahan tidak tersedia. Lapisan air lain tetap dapat digunakan.')),button(t('Retry context','Coba lagi konteks'),()=>show(parent)));}finally{opening=false;updateBusy();}
  }
- return {show,clear(){disposed=true;preparedness.clear();abort?.abort();if(clock)clearInterval(clock);document.removeEventListener('visibilitychange',visibility);removeMap();view=null;}};
+ return {show,clear(){disposed=true;updateBusy();preparedness.clear();abort?.abort();if(clock)clearInterval(clock);document.removeEventListener('visibilitychange',visibility);removeMap();view=null;}};
 }

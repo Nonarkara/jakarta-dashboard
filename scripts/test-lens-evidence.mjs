@@ -70,10 +70,13 @@ assert.ok(swept, 'the geometry audit names the lenses it sweeps');
 for (const lens of ['city', 'waterways', 'traffic', 'exposure', 'green', 'arrival', 'confidence', 'air', 'rain', 'haze', 'coverage']) {
   assert.ok(swept[1].includes(`'${lens}'`), `the geometry audit sweeps the ${lens} lens`);
 }
-assert.match(audit, /querySelectorAll\('#atlas-lens-body details'\)\) d\.open = true/,
-  'the geometry audit opens the panel disclosures before measuring the controls: a control in a collapsed section is not on screen, so it is not measured');
-assert.match(audit, /panel never stopped changing/,
-  'the geometry audit waits for the panel to stop changing rather than to cross a character count');
+assert.match(audit, /const expanded = await page.evaluate\(panelReadiness,\{expand:true\}\)/,
+  'the geometry audit opens the panel disclosures and waits for lazy controls before measuring');
+assert.match(audit, /const settled = await page.evaluate\(panelReadiness,\{expand:false\}\)/,
+  'the geometry audit waits for explicit source completion on arrival');
+const rendered=readFileSync(new URL('../scripts/audit-rendered.mjs',import.meta.url),'utf8');
+assert.match(rendered,/page.evaluate\(panelReadiness,\{expand:true\}\)/,'the release audit awaits expanded controls');
+assert.match(rendered,/for\(const lens of lenses\)/,'the release audit sweeps every panel lens');
 
 // ── B. The legend is the count's own breakdown ───────────────────────────────
 class Node {

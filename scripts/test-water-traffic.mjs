@@ -162,7 +162,7 @@ globalThis.fetch=realFetch;delete globalThis.caches;
     observed=init||{};
     return new Promise((_,reject)=>{observed.signal?.addEventListener('abort',()=>reject(new Error('aborted')));});
   };
-  const body2={replaceChildren(){},append(){},textContent:''};
+  const body2={replaceChildren(){},append(){},setAttribute(){},textContent:''};
   controller2.show('waterways',body2).catch(()=>{});
   await new Promise(r=>setTimeout(r,10));
   assert.ok(observed?.signal,'the observation client passes an abort signal to every fetch');

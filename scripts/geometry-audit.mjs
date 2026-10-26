@@ -35,6 +35,7 @@
 import { mkdirSync, readdirSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
+import {panelReadiness} from './panel-readiness.mjs';
 
 const url = (process.argv[2] ?? 'https://jakarta.nonarkara.org').replace(/\/$/, '');
 const outDir = process.argv[3] ?? 'docs/geometry';
@@ -97,18 +98,7 @@ for (const [W, H] of VIEWPORTS) {
     // threshold measures it at its first paragraph, which is why a lens with
     // 33 controls in it was never really measured. Wait for the panel to stop
     // changing.
-    const settled = await page.evaluate(async () => {
-      const body = document.getElementById('atlas-lens-body');
-      if (!body) return false;
-      let last = -1, stable = 0;
-      const deadline = Date.now() + 25000;
-      while (Date.now() < deadline) {
-        const len = (body.innerText || '').length;
-        if (len === last) { if (++stable >= 5) return true; } else { stable = 0; last = len; }
-        await new Promise(r => setTimeout(r, 500));
-      }
-      return false;
-    });
+    const settled = await page.evaluate(panelReadiness,{expand:false});
     const flow = FLOWS[lens];
     const flowing = !flow || await page.waitForFunction(f => document.querySelector('.flow-canvas')?.dataset.flow === f, flow, { timeout: 25000 }).then(() => true, () => false);
     // Photograph the map, not the loading card (it covers the desktop view for several seconds).
@@ -123,7 +113,7 @@ for (const [W, H] of VIEWPORTS) {
       if (!budget) unverified.push(`${tag}: polder budget did not compute`);
       await page.waitForTimeout(600);
     }
-    if (!filled || !flowing || !settled) unverified.push(`${tag}: ${!filled ? 'panel did not populate' : !settled ? 'panel never stopped changing' : `flow "${flow}" did not start`}`);
+    if (!filled || !flowing || !settled.ready) unverified.push(`${tag}: ${!filled ? 'panel did not populate' : !settled.ready ? 'panel sources did not settle: '+JSON.stringify(settled) : `flow "${flow}" did not start`}`);
 
     const r = await page.evaluate(({ phone }) => {
       const vis = e => e.getBoundingClientRect().width > 0 && e.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true, contentVisibilityAuto: true });
@@ -193,11 +183,12 @@ for (const [W, H] of VIEWPORTS) {
     // state: a fully expanded panel is not the state the reader arrives in,
     // and the panel's own first screen is a separate question with its own
     // answer (the polder budget's).
+    const expanded = await page.evaluate(panelReadiness,{expand:true});
+    if(!expanded.ready)unverified.push(`${tag}: expanded controls not ready: ${JSON.stringify(expanded)}`);
     const opened = await page.evaluate(({ phone }) => {
       const vis = e => e.getBoundingClientRect().width > 0 && e.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true, contentVisibilityAuto: true });
       const name = e => (e.id || e.getAttribute('aria-label') || e.textContent || e.className).toString().trim().replace(/\s+/g, ' ').slice(0, 30);
       const big = [], small = [];
-      for (const d of document.querySelectorAll('#atlas-lens-body details')) d.open = true;
       for (const e of document.querySelectorAll('#atlas-lens-body button, #atlas-lens-body summary, .atlas-observation-hud summary, .atlas-observation-hud a, .atlas-page-tools summary, .atlas-page-tools a, .atlas-layers summary, .atlas-quick summary')) {
         if (!vis(e) || e.closest('.maplibregl-ctrl-attrib')) continue;
         const b = e.getBoundingClientRect(), r = document.createRange(); r.selectNodeContents(e);

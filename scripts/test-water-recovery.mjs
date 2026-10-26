@@ -21,7 +21,7 @@ try{
  globalThis.fetch=(path,init)=>{signals.push(init.signal);if(String(path).includes('waterways.geojson')){waterCalls++;return new Promise(r=>resolveWater=r);}if(path==='/api/atlas/hydrology')return new Promise(r=>resolveGauge=r);return Promise.resolve(other(path));};
  const map=mapFixture(),body=new Node(),ui=createController(map,{text:en=>en,active:()=> 'waterways',buildTag:'test'});
  const showing=ui.show('waterways',body);await flush();
- const budget=find(body,'Rain → polder water budget');assert.ok(budget,'budget mounts before OSM or gauge responds');assert.ok(find(body,'Coastal tide forecast · Priok'));assert.equal(waterCalls,1);assert.equal(map.cameras.length,1);
+ const budget=find(body,'Rain → polder water budget');assert.ok(budget,'budget mounts before OSM or gauge responds');assert.equal(body.attributes['aria-busy'],'true','pending sources remain explicit');assert.ok(find(body,'Coastal tide forecast · Priok'));assert.equal(waterCalls,1);assert.equal(map.cameras.length,1);
  budget.parentElement.open=true;budget.parentElement.savedAssumption='user edit';
  resolveWater(new Response('',{status:503}));await flush();
  const retry=all(body).find(n=>n.tag==='button'&&n.textContent==='Retry mapped waterways');assert.ok(retry);assert.match(body.textContent,/OSM waterways unavailable/);
@@ -37,7 +37,7 @@ try{
  assert.equal(map.layers.get('network-water-fill').before,'polder-preparedness-points','late OSM fill is beneath the actual first foreground layer');
  const order=[...map.layers.keys()];for(const id of ['network-landcover','network-comparison'])assert.ok(order.indexOf(id)<order.indexOf('network-water-lines'),'raster stays below OSM vectors');for(const id of ['polder-preparedness-points','official-drain-lines'])assert.ok(order.indexOf('network-water-labels')<order.indexOf(id),'foreground stays above OSM');
  assert.equal(map.listeners.filter(a=>a[1]==='network-water-lines').length,1);
- const cameraCount=map.cameras.length;resolveGauge(other('/api/atlas/hydrology'));await showing;assert.equal(map.cameras.length,cameraCount,'late gauges never recenter a user-selected view');assert.ok(signals.every(s=>s instanceof AbortSignal));ui.clear();
+ const cameraCount=map.cameras.length;resolveGauge(other('/api/atlas/hydrology'));await showing;assert.equal(body.attributes['aria-busy'],'false','terminal sources clear busy state');assert.equal(map.cameras.length,cameraCount,'late gauges never recenter a user-selected view');assert.ok(signals.every(s=>s instanceof AbortSignal));ui.clear();
  // A response arriving after exit cannot draw or repopulate the old panel.
  let lateResolve;globalThis.fetch=path=>String(path).includes('waterways.geojson')?new Promise(r=>lateResolve=r):Promise.resolve(other(path));
  const lateMap=mapFixture(),lateBody=new Node(),late=createController(lateMap,{text:en=>en,active:()=> 'waterways',buildTag:'test'});await late.show('waterways',lateBody);late.clear();lateResolve(Response.json(water));await flush();assert.equal(lateMap.sources.size,0);assert.equal(lateMap.listeners.length,0);assert.doesNotMatch(lateBody.textContent,/3,885 mapped features/);

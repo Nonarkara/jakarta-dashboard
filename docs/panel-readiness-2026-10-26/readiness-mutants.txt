@@ -1,0 +1,1 @@
+KILL ignore plain loading text

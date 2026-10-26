@@ -1,0 +1,10 @@
+KILL  the water lens stops opening its own evidence (the shipped defect)
+KILL  the legend goes back to its shipped place, below four unrelated sections
+KILL  the legend holds a line of space while the count has not arrived
+KILL  the legend fills but never appears
+KILL  the panel control floor goes back to 44px (the shipped defect)
+KILL  the traffic lens leaves the sweep (the shipped blindness)
+KILL  the rail rule reaches the panel again (the shipped leak)
+KILL  the audit stops opening the disclosures, so the controls stay unseen
+
+8/8 killed
