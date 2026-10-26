@@ -50,6 +50,17 @@ assert.match(floor[1], /min-height:\s*32px/,
 assert.match(floor[1], /padding:\s*4px 0/,
   'the panel button carries its own padding instead of a fixed height');
 
+// The rail's button rule must be scoped to the rail. The evidence panel lives
+// inside the rail's container, so an unscoped rule reaches 33 panel controls
+// and dresses them in the rail's 44px height, its 14px type and its hairline
+// separator.
+assert.ok(!/\.atlas-lenses button\s*\{/.test(css),
+  "the rail's button rule is scoped to the rail: an unscoped rule reaches the evidence panel, which lives inside the rail's container");
+assert.match(css, /\.atlas-lenses > button\s*\{/,
+  "the rail's own buttons keep the rail's house style");
+assert.match(floor[1], /cursor:\s*pointer/,
+  'a panel control is clickable: the pointer cursor used to arrive from the rail rule');
+
 // The sweep must reach every lens, including the one with the most controls
 // in it, and it must measure BEHIND a disclosure: a control in a collapsed
 // section is not on screen, so it is not measured, so it is not ruled on.

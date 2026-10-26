@@ -59,8 +59,11 @@ const MUTANTS = [
     name: 'the panel control floor goes back to 44px (the shipped defect)',
     file: 'public/style.css',
     edits: [{
-      from: '#atlas-lens-body button { display:block; width:100%; text-align:left; min-height:32px; padding:4px 0; margin-bottom:4px; }',
-      to: '#atlas-lens-body button { display:block; width:100%; text-align:left; min-height:44px; margin-bottom:4px; }',
+      // The anchor is the floor and its padding, not the whole declaration:
+      // a mutant that breaks because the rule grew a property is a skipped
+      // mutant, and a skipped mutant is a guard nobody checked.
+      from: 'min-height:32px; padding:4px 0;',
+      to: 'min-height:44px; padding:0;',
     }],
     expect: /the panel button floor is not 44px|AssertionError/,
   },
@@ -71,6 +74,12 @@ const MUTANTS = [
     expect: /the geometry audit sweeps the traffic lens|AssertionError/,
   },
   {
+    name: 'the rail rule reaches the panel again (the shipped leak)',
+    file: 'public/style.css',
+    edits: [{ from: '.atlas-lenses > button {', to: '.atlas-lenses button {' }],
+    expect: /the rail's button rule is scoped to the rail|AssertionError/,
+  },
+  {
     name: 'the audit stops opening the disclosures, so the controls stay unseen',
     file: 'scripts/geometry-audit.mjs',
     edits: [{ from: "      for (const d of document.querySelectorAll('#atlas-lens-body details')) d.open = true;\n", to: '' }],
@@ -78,7 +87,7 @@ const MUTANTS = [
   },
 ];
 
-let killed = 0;
+let killed = 0, skipped = 0;
 for (const m of MUTANTS) {
   const dir = mkdtempSync(join(tmpdir(), 'lens-mut-'));
   cpSync(REPO, dir, {
@@ -99,7 +108,14 @@ for (const m of MUTANTS) {
     if (hit < 0) { console.log(`SKIP  ${m.name} — anchor not found in ${m.file}`); ok = false; break; }
     original = original.slice(0, hit) + e.to + original.slice(hit + e.from.length);
   }
-  if (!ok) { rmSync(dir, { recursive: true, force: true }); continue; }
+  if (!ok) {
+    // A mutant whose anchor has gone stale is not a survivor and not a pass.
+    // It is an unverified guard, and the harness must say so out loud.
+    console.log(`SKIP  ${m.name} — anchor not found in ${m.file}`);
+    skipped++;
+    rmSync(dir, { recursive: true, force: true });
+    continue;
+  }
   writeFileSync(target, original);
   let out = '';
   let failed = false;
@@ -115,5 +131,5 @@ for (const m of MUTANTS) {
   if (killedIt) killed++;
   rmSync(dir, { recursive: true, force: true });
 }
-console.log(`\n${killed}/${MUTANTS.length} killed`);
+console.log(`\n${killed}/${MUTANTS.length} killed${skipped ? `, ${skipped} skipped` : ''}`);
 process.exit(killed === MUTANTS.length ? 0 : 1);

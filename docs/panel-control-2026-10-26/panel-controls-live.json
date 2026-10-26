@@ -1,0 +1,100 @@
+{
+  "base": "https://jakarta.nonarkara.org",
+  "measuredAt": "2026-10-26T00:44:34.179Z",
+  "lenses": [
+    {
+      "lens": "traffic",
+      "controls": 36,
+      "slabs": [],
+      "tallest": [
+        {
+          "id": "",
+          "text": "Muat kamera terpilih",
+          "h": 32,
+          "line": 16,
+          "ratio": 2,
+          "slab": false
+        },
+        {
+          "id": "",
+          "text": "Coba siaran kanal saat ini",
+          "h": 32,
+          "line": 16,
+          "ratio": 2,
+          "slab": false
+        },
+        {
+          "id": "",
+          "text": "Coba siaran kanal saat ini",
+          "h": 32,
+          "line": 16,
+          "ratio": 2,
+          "slab": false
+        },
+        {
+          "id": "",
+          "text": "Bambu-Apus-001-MP-601170_2 · Jl. PPA no 26",
+          "h": 44,
+          "line": 34,
+          "ratio": 1.29,
+          "slab": false
+        },
+        {
+          "id": "",
+          "text": "Bambu-Apus-001-MP-601170_3 · Jl. PPA no 26",
+          "h": 44,
+          "line": 34,
+          "ratio": 1.29,
+          "slab": false
+        },
+        {
+          "id": "",
+          "text": "Bangka-004-705098_2 · Jl. Kemang Dalam Vi (Perem",
+          "h": 44,
+          "line": 34,
+          "ratio": 1.29,
+          "slab": false
+        }
+      ]
+    },
+    {
+      "lens": "air",
+      "controls": 4,
+      "slabs": [],
+      "tallest": [
+        {
+          "id": "wind-play",
+          "text": "Putar medan angin",
+          "h": 32,
+          "line": 16,
+          "ratio": 2,
+          "slab": false
+        },
+        {
+          "id": "",
+          "text": "Sekarang",
+          "h": 32,
+          "line": 16,
+          "ratio": 2,
+          "slab": false
+        },
+        {
+          "id": "air-transport-button",
+          "text": "Mulai transpor · 1 dtk = 1 jam, hingga 6 jam",
+          "h": 44,
+          "line": 34,
+          "ratio": 1.29,
+          "slab": false
+        },
+        {
+          "id": "",
+          "text": "Linimasa model CAMS 48 jam",
+          "h": 18,
+          "line": 17,
+          "ratio": 1.07,
+          "slab": false
+        }
+      ]
+    }
+  ]
+}
