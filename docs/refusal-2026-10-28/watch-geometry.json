@@ -1,0 +1,50 @@
+[
+  {
+    "width": 390,
+    "height": 844,
+    "before": {
+      "height": 245.15625,
+      "width": 360,
+      "pageWidth": 390,
+      "reason": "Permintaan dibatasi. Jeda coba ulang dari server: 47 detik. Belum ada pembacaan baru yang diterima."
+    },
+    "after": {
+      "height": 195.5625,
+      "width": 360,
+      "pageWidth": 390,
+      "reason": "Permintaan dibatasi. Jeda coba ulang dari server: 47 detik. Belum ada pembacaan baru yang diterima."
+    }
+  },
+  {
+    "width": 1024,
+    "height": 768,
+    "before": {
+      "height": 292.65625,
+      "width": 360,
+      "pageWidth": 1024,
+      "reason": "Permintaan dibatasi. Jeda coba ulang dari server: 47 detik. Belum ada pembacaan baru yang diterima."
+    },
+    "after": {
+      "height": 195.53125,
+      "width": 360,
+      "pageWidth": 1024,
+      "reason": "Permintaan dibatasi. Jeda coba ulang dari server: 47 detik. Belum ada pembacaan baru yang diterima."
+    }
+  },
+  {
+    "width": 1440,
+    "height": 900,
+    "before": {
+      "height": 292.65625,
+      "width": 360,
+      "pageWidth": 1440,
+      "reason": "Permintaan dibatasi. Jeda coba ulang dari server: 47 detik. Belum ada pembacaan baru yang diterima."
+    },
+    "after": {
+      "height": 195.53125,
+      "width": 360,
+      "pageWidth": 1440,
+      "reason": "Permintaan dibatasi. Jeda coba ulang dari server: 47 detik. Belum ada pembacaan baru yang diterima."
+    }
+  }
+]
