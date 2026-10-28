@@ -42,9 +42,15 @@ await page.evaluate(()=>window.independentHaze.clear());
 mode='all429';await page.goto(base+'/atlas?lang=en&lens=city',{waitUntil:'domcontentloaded'});
 await page.waitForFunction(()=>document.getElementById('atlas-watch-request-status')?.textContent.includes('rate limited'));
 await page.locator('#atlas-watch-shell > summary').click();
+assert.equal(await page.locator('#atlas-watch-request-status').isVisible(),true,'shared reason is visible beside readings');
 const watch=await page.evaluate(()=>({status:document.getElementById('atlas-watch-request-status').textContent,values:[...document.querySelectorAll('.atlas-watch-grid strong')].map(n=>n.textContent)}));
 assert.match(watch.status,/47/);assert.deepEqual(watch.values,Array(4).fill('Not retrieved'),'one shared failure reason, four compact values');
-console.log('PASS city watch: one shared request reason, no fourfold error copy');
+const aligned=await page.evaluate(()=>{const p=document.getElementById('atlas-watch-request-status');const label=document.querySelector('.atlas-watch-grid small');return Math.abs(p.getBoundingClientRect().left+parseFloat(getComputedStyle(p).paddingLeft)-label.getBoundingClientRect().left)<=1;});
+assert.equal(aligned,true,'request reason shares the values reading edge');
+await page.locator('#atlas-language').selectOption('id');
+await page.waitForFunction(()=>document.getElementById('atlas-watch-request-status')?.textContent.includes('Permintaan dibatasi'));
+assert.deepEqual(await page.locator('.atlas-watch-grid strong').allInnerTexts(),Array(4).fill('Belum diambil'));
+console.log('PASS city watch: one visible aligned request reason, four compact values, bilingual repaint');
 assert.deepEqual(errors,[]);console.log('PASS browser page errors:0');
 await context.close();
 }

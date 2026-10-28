@@ -876,3 +876,6 @@ body:has(#atlas-lens-evidence[open]) .preparedness-selection { display:none; }
    `> button` rule above. Touch keeps its 32px via the coarse block. */
 #atlas-lens-body .lens-row--button { min-height:0; margin:0; padding:4px 0; }
 @media (pointer: coarse) { #atlas-lens-body .lens-row--button { min-height:32px; } }
+
+/* Shared request state follows the watch grid's reading edge, once. */
+#atlas-watch-request-status { margin: 0; padding: 6px 10px; }
