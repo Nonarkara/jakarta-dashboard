@@ -13,7 +13,8 @@ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const num=(n,d=0)=>typeof n==='number'&&Number.isFinite(n)?n.toLocaleString(lang==='id'?'id-ID':'en-GB',{maximumFractionDigits:d}):'—';
 const date=(v)=>v&&Number.isFinite(Date.parse(v))?new Date(v).toLocaleString(lang==='id'?'id-ID':'en-GB',{timeZone:'Asia/Jakarta',dateStyle:'medium',timeStyle:'short'})+' WIB':t('Waktu tidak tersedia','Time unavailable');
 const stale=(v,age)=>!v||!Number.isFinite(Date.parse(v))||Date.now()-Date.parse(v)>age||Date.parse(v)>Date.now()+300000;
-const unavailable=()=>'<p class="note">'+t('Data tidak tersedia atau tidak lolos pemeriksaan.','Data unavailable or did not pass validation.')+'</p>';
+const unavailable=(endpoint)=>'<p class="note">'+esc((endpoint&&feedRefusals.has(endpoint)&&refusalModule?refusalModule.refusalMessage(feedRefusals.get(endpoint),(en,id)=>t(id,en)):null)||t('Data tidak tersedia atau tidak lolos pemeriksaan.','Data unavailable or did not pass validation.'))+'</p>';
+const alertsUrl=()=>'/api/jakarta/alerts';
 const evidence=(source,tier,stamp,label)=>'<p class="meta">'+esc(source)+' · '+esc(tier)+'<br>'+esc(label||t('Berlaku','Valid'))+': '+esc(date(stamp))+'</p>';
 const pendingMapMessages=[];
 function send(message){
@@ -28,8 +29,34 @@ function send(message){
  $('city-map').contentWindow?.postMessage(message,location.origin);
 }
 function showOverlay(data,label){document.querySelector('dialog[open]')?.close();selectedOverlay={data,label};$('selection-status').hidden=false;$('selection-status').textContent=label;send({type:'atlas:dashboardOverlay',data});}
+// A refused request (HTTP 429) is not a broken source and not an empty one.
+// The dashboard is a classic script, so the shared reader arrives as a module —
+// the same file the atlas lenses import, so there is one rule for both pages.
+let refusalModule=null,refusalModulePromise=null;
+function loadRefusalModule(){return refusalModulePromise||=import('/refusal.js').then(m=>(refusalModule=m)).catch(e=>{refusalModulePromise=null;throw e;});}
+// Used only if the shared reader cannot be loaded at all. It fails closed: a
+// response that is not OK is an error, never a payload.
+async function fallbackRead(response){if(response.ok)return await response.json();throw new Error('source '+response.status);}
+const feedRefusals=new Map();
 async function get(path){
- try{const r=await fetch(path,{signal:AbortSignal.timeout(25000)});const d=await r.json();return d;}catch{return null;}
+ let mod=null;
+ // Keyed by path, not by URL: the alerts feed carries the language in its
+ // query, and a language switch must still find the refusal it was told.
+ const key=path.split('?')[0];
+ try{
+  mod=await loadRefusalModule().catch(()=>null);
+  const r=await fetch(path,{signal:AbortSignal.timeout(25000)});
+  const d=mod?await mod.readJson(r):await fallbackRead(r);
+  if(d===null||d===undefined)return null;
+  feedRefusals.delete(key);
+  return d;
+ }catch(e){
+  // A refused request is remembered with its retry window, so the panel that
+  // asked can say what happened instead of reporting a broken source.
+  feedRefusals.delete(key);
+  if(mod&&mod.isRefusalError(e)){feedRefusals.set(key,e.retryAfterSeconds);}
+  return null;
+ }
 }
 function applyLanguage(){
  document.documentElement.lang=lang;$('language').value=lang;
@@ -48,7 +75,7 @@ function applyLanguage(){
 }
 function renderWeather(){
  const points=weatherData?.points?.filter(p=>p.available)||[];
- $('weather-summary').innerHTML=points.length?points.map(p=>{const row=p.forecast.find(r=>Date.parse(r.validAt)>=Date.now())||p.forecast.at(-1);return '<div class="reading"><div class="reading-top"><strong>'+esc(p.name)+'</strong><strong>'+num(row.temperatureC)+' °C</strong></div><p>'+esc(window.CivicLanguage.admin(p.kota,lang))+' · '+esc(lang==='id'?row.conditionId:row.conditionEn)+'</p>'+evidence('BMKG',t('prakiraan resmi','official forecast'),row.validAt)+'<p>'+t('Terbit','Issued')+': '+esc(date(row.issuedAt))+'</p></div>';}).join(''):unavailable();
+ $('weather-summary').innerHTML=points.length?points.map(p=>{const row=p.forecast.find(r=>Date.parse(r.validAt)>=Date.now())||p.forecast.at(-1);return '<div class="reading"><div class="reading-top"><strong>'+esc(p.name)+'</strong><strong>'+num(row.temperatureC)+' °C</strong></div><p>'+esc(window.CivicLanguage.admin(p.kota,lang))+' · '+esc(lang==='id'?row.conditionId:row.conditionEn)+'</p>'+evidence('BMKG',t('prakiraan resmi','official forecast'),row.validAt)+'<p>'+t('Terbit','Issued')+': '+esc(date(row.issuedAt))+'</p></div>';}).join(''):unavailable('/api/jakarta/weather');
  const value=$('forecast-location').value;
  $('forecast-location').innerHTML=points.map(p=>'<option value="'+esc(p.code)+'">'+esc(p.name+' · '+window.CivicLanguage.admin(p.kota,lang))+'</option>').join('');
  if(points.some(p=>p.code===value))$('forecast-location').value=value;
@@ -56,7 +83,7 @@ function renderWeather(){
 }
 function renderForecast(){
  const p=weatherData?.points?.find(p=>p.code===$('forecast-location').value&&p.available);
- if(!p){$('forecast-chart').innerHTML=unavailable();$('forecast-table').innerHTML='';return;}
+ if(!p){$('forecast-chart').innerHTML=unavailable('/api/jakarta/weather');$('forecast-table').innerHTML='';return;}
  const rows=p.forecast;
  $('forecast-caption').textContent='BMKG · '+p.name+' · '+t('terbit','issued')+' '+date(p.issuedAt);
  $('forecast-chart').innerHTML='<p class="chart-title">'+t('Suhu prakiraan 24 jam ke depan · °C · sumbu 0–50 °C','Forecast temperature for the next 24 hours · °C · axis 0–50 °C')+'</p><div class="forecast-bars" role="img" aria-label="'+esc(t('Grafik suhu prakiraan; rincian lengkap pada tabel di bawah','Forecast temperature chart; full details in the table below'))+'">'+rows.filter(r=>Date.parse(r.validAt)>=Date.now()).slice(0,8).map(r=>'<div class="forecast-bar"><span>'+num(r.temperatureC)+'°</span><i style="--height:'+Math.max(0,(r.temperatureC??0)*2)+'px"></i><span>'+esc(new Date(r.validAt).toLocaleTimeString('en-GB',{timeZone:'Asia/Jakarta',hour:'2-digit',minute:'2-digit'}))+'</span></div>').join('')+'</div>';
@@ -64,7 +91,7 @@ function renderForecast(){
 }
 function renderAir(){
  const rows=Array.isArray(airData)?airData:[];
- $('air-summary').innerHTML=rows.length?rows.map(p=>'<div class="reading"><div class="reading-top"><span>'+esc(lang==='id'?p.label_id:p.label)+'</span><strong>'+num(p.aqi)+' US AQI</strong></div><p>PM2.5 '+num(p.pm25,1)+' µg/m³ · '+esc(stale(p.observedAt,3*3600000)?t('kedaluwarsa','stale'):t('perkiraan model','model estimate'))+'</p>'+evidence('CAMS / Open-Meteo',t('model','modeled'),p.observedAt)+'</div>').join(''):unavailable();
+ $('air-summary').innerHTML=rows.length?rows.map(p=>'<div class="reading"><div class="reading-top"><span>'+esc(lang==='id'?p.label_id:p.label)+'</span><strong>'+num(p.aqi)+' US AQI</strong></div><p>PM2.5 '+num(p.pm25,1)+' µg/m³ · '+esc(stale(p.observedAt,3*3600000)?t('kedaluwarsa','stale'):t('perkiraan model','model estimate'))+'</p>'+evidence('CAMS / Open-Meteo',t('model','modeled'),p.observedAt)+'</div>').join(''):unavailable('/api/atlas/air-quality');
 }
 function renderIspu(){
  const d=ispuData;
@@ -77,17 +104,17 @@ function renderIspu(){
 }
 function renderAlerts(){
  const d=alertsData;
- if(!d){$('alerts').innerHTML=unavailable();return;}
+ if(!d){$('alerts').innerHTML=unavailable(alertsUrl());return;}
  const active=(d.alerts||[]).filter(a=>!stale(a.sent,12*3600000)&&Date.parse(a.expires)>Date.now());
- $('alerts').innerHTML=(!d.available?unavailable():'')+(active.length?active.map(a=>'<article class="warning"><h3>'+esc(a.headline)+'</h3><p>'+esc(a.description)+'</p><p>'+esc(a.instruction)+'</p><p class="meta">'+esc([a.severity,a.urgency,a.certainty].filter(Boolean).map(v=>window.CivicLanguage.alert(v,lang)).join(' · '))+'<br>'+t('Berakhir','Expires')+': '+esc(date(a.expires))+'</p><a href="'+esc(a.sourceUrl)+'" target="_blank" rel="noopener">BMKG CAP ↗</a><button class="alert-map" data-alert="'+esc(a.id)+'">'+t('Lihat wilayah','Show affected area')+'</button></article>').join(''):d.available?'<p>'+t('Tidak ada peringatan aktif yang dikembalikan untuk DKI, Jawa Barat dan Banten.','No active warnings returned for DKI, West Java and Banten.')+'</p>':'')+evidence('BMKG',t('buletin resmi','official bulletin'),d.publishedAt,t('Buletin','Bulletin'))+'<a href="https://www.bmkg.go.id/cuaca/peringatan-dini-cuaca" target="_blank" rel="noopener">'+t('Periksa BMKG ↗','Check BMKG ↗')+'</a>';
+ $('alerts').innerHTML=(!d.available?unavailable(alertsUrl()):'')+(active.length?active.map(a=>'<article class="warning"><h3>'+esc(a.headline)+'</h3><p>'+esc(a.description)+'</p><p>'+esc(a.instruction)+'</p><p class="meta">'+esc([a.severity,a.urgency,a.certainty].filter(Boolean).map(v=>window.CivicLanguage.alert(v,lang)).join(' · '))+'<br>'+t('Berakhir','Expires')+': '+esc(date(a.expires))+'</p><a href="'+esc(a.sourceUrl)+'" target="_blank" rel="noopener">BMKG CAP ↗</a><button class="alert-map" data-alert="'+esc(a.id)+'">'+t('Lihat wilayah','Show affected area')+'</button></article>').join(''):d.available?'<p>'+t('Tidak ada peringatan aktif yang dikembalikan untuk DKI, Jawa Barat dan Banten.','No active warnings returned for DKI, West Java and Banten.')+'</p>':'')+evidence('BMKG',t('buletin resmi','official bulletin'),d.publishedAt,t('Buletin','Bulletin'))+'<a href="https://www.bmkg.go.id/cuaca/peringatan-dini-cuaca" target="_blank" rel="noopener">'+t('Periksa BMKG ↗','Check BMKG ↗')+'</a>';
 }
 function renderFlood(){
  const d=floodData;
- $('flood-reports').innerHTML=d?.available?'<strong>'+num(d.reportCount)+' '+t('laporan dalam satu jam terakhir','reports in the last hour')+'</strong><p class="note">'+t('Tidak ada laporan bukan berarti jalan kering. Cakupan laporan warga tidak merata.','No reports does not mean dry streets. Citizen-report coverage is uneven.')+'</p>'+evidence('PetaBencana',t('laporan warga','crowdsourced'),d.fetchedAt,t('Diambil','Retrieved'))+'<a href="https://petabencana.id/" target="_blank" rel="noopener">PetaBencana ↗</a>':unavailable();
+ $('flood-reports').innerHTML=d?.available?'<strong>'+num(d.reportCount)+' '+t('laporan dalam satu jam terakhir','reports in the last hour')+'</strong><p class="note">'+t('Tidak ada laporan bukan berarti jalan kering. Cakupan laporan warga tidak merata.','No reports does not mean dry streets. Citizen-report coverage is uneven.')+'</p>'+evidence('PetaBencana',t('laporan warga','crowdsourced'),d.fetchedAt,t('Diambil','Retrieved'))+'<a href="https://petabencana.id/" target="_blank" rel="noopener">PetaBencana ↗</a>':unavailable('/api/jakarta/flood-reports');
 }
 function renderQuake(){
  const d=quakeData,q=d?.event;
- $('earthquake').innerHTML=q?'<strong>M '+num(q.magnitude,1)+' · '+num(q.depthKm)+' km</strong><p>'+esc(q.region)+'</p><p>'+esc(q.felt)+'</p>'+evidence('BMKG',t('kejadian resmi · Indonesia','official event · Indonesia'),q.observedAt,t('Pengamatan','Observed'))+'<p class="note">'+t('Kejadian terakhir di Indonesia; belum tentu dekat Jakarta.','Latest event in Indonesia; may be far from Jakarta.')+'</p>':unavailable();
+ $('earthquake').innerHTML=q?'<strong>M '+num(q.magnitude,1)+' · '+num(q.depthKm)+' km</strong><p>'+esc(q.region)+'</p><p>'+esc(q.felt)+'</p>'+evidence('BMKG',t('kejadian resmi · Indonesia','official event · Indonesia'),q.observedAt,t('Pengamatan','Observed'))+'<p class="note">'+t('Kejadian terakhir di Indonesia; belum tentu dekat Jakarta.','Latest event in Indonesia; may be far from Jakarta.')+'</p>':unavailable('/api/jakarta/earthquake');
 }
 function renderTransit(){
  if(!transit){$('route-results').innerHTML=unavailable();return;}

@@ -1,0 +1,43 @@
+import assert from 'node:assert/strict';
+export async function auditRefusalSessions(browser,base){
+const context=await browser.newContext({viewport:{width:390,height:844}});
+let mode='primary429';
+const now=Date.now(),hour=Math.floor(now/3600000)*3600000;
+const hours=Array.from({length:30},(_,i)=>new Date(hour+i*3600000).toISOString());
+const model={available:true,checkedAt:new Date(now).toISOString(),requestedPoints:6,cellCount:6,spacingKm:150,hours,cells:[-8,-6,-4].flatMap(lat=>[104,108].map(lng=>({lat,lng,hours:hours.map(validAt=>({validAt,mslpHpa:1008,wind850Ms:8,wind850FromDeg:90}))})))};
+const fires={type:'FeatureCollection',windowHours:24,fetchedAt:new Date(now).toISOString(),features:[]};
+const page=await context.newPage(); const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+await page.route('**/api/**',async route=>{const path=new URL(route.request().url()).pathname;
+ if((mode==='primary429'&&path.endsWith('/synoptic'))||(mode==='aux429'&&path.endsWith('/haze-receptors'))||(mode==='fire429'&&path.endsWith('/fires')))return route.fulfill({status:429,headers:{'retry-after':'47','content-type':'application/json'},body:JSON.stringify({retryAfterSeconds:47})});
+ if(mode==='ordinary503'&&path.endsWith('/synoptic'))return route.fulfill({status:503,contentType:'application/json',body:'{}'});
+ return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(path.endsWith('/synoptic')?model:path.endsWith('/fires')?fires:{available:false})});});
+await page.goto(base+'/research?lang=en',{waitUntil:'domcontentloaded'});
+await page.waitForFunction(()=>document.querySelector('#live-caption')?.textContent.includes('rate limited'));
+assert.match(await page.locator('#live-caption').innerText(),/47/);
+mode='ordinary503'; await page.locator('#field-refresh').click();
+await page.waitForFunction(()=>document.querySelector('#live-caption')?.textContent.includes('did not answer'));
+assert.doesNotMatch(await page.locator('#live-caption').innerText(),/rate limited|47/);
+mode='fire429';await page.locator('#field-refresh').click();
+await page.waitForFunction(()=>document.querySelector('#live-caption')?.textContent.includes('Thermal detections'));
+assert.equal(await page.locator('#field').isVisible(),true);
+assert.match(await page.locator('#live-caption').innerText(),/rate limited/);
+await page.locator('#lang').click();
+await page.waitForFunction(()=>document.querySelector('#live-caption')?.textContent.includes('Permintaan dibatasi'));
+assert.doesNotMatch(await page.locator('#live-caption').innerText(),/FIRMS tidak tersedia/);
+console.log('PASS Research: primary429 → ordinary503 clears stale refusal; auxiliary fire429 preserves field and survives Bahasa switch');
+mode='aux429';
+await page.evaluate(async()=>{
+ const {createHazeTransport}=await import('/haze-transport.js');
+ const layers=new Map(),sources=new Map();
+ const map={getLayer:id=>layers.get(id),getSource:id=>sources.get(id),addLayer:l=>layers.set(l.id,l),addSource:(id,s)=>sources.set(id,s),removeLayer:id=>layers.delete(id),removeSource:id=>sources.delete(id),getZoom:()=>10,fitBounds(){},on(){},off(){},setLayoutProperty(){}};
+ const host=document.createElement('div');host.id='independent-haze';document.body.append(host);
+ window.independentHaze=createHazeTransport(map,{text:en=>en,active:()=> 'haze',buildTag:'independent'});window.independentHaze.show(host);
+});
+await page.waitForFunction(()=>document.querySelector('#independent-haze')?.textContent.includes('Request rate limited'));
+let text=await page.locator('#independent-haze').innerText();assert.match(text,/0 detections/);assert.match(text,/Each line is the path/);assert.doesNotMatch(text,/wind model returned no usable field|Official measured receptor feed unavailable/);
+mode='healthy';await page.locator('#independent-haze').getByRole('button',{name:'Refresh evidence',exact:true}).click();
+await page.waitForFunction(()=>document.querySelector('#independent-haze')?.textContent.includes('Each line is the path')&&!document.querySelector('#independent-haze')?.textContent.includes('rate limited'));
+console.log('PASS Haze: auxiliary receptor429 preserves wind paths and valid fire count; refresh clears refusal');
+await page.evaluate(()=>window.independentHaze.clear());assert.deepEqual(errors,[]);console.log('PASS browser page errors:0');
+await context.close();
+}

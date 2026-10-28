@@ -1,8 +1,9 @@
 import {createPreparedness} from './polder-preparedness.js';
 import {rainForBoundary,waterBudget,stormProfile,MAX_ACCOUNT_M3} from './polder-budget-model.js';
+import {readJson,isRefusalError,refusalMessage} from './refusal.js';
 
 export function createPolderBudget(map,{text:t,isCurrent,state,buildTag}) {
- let disposed=false,parent=null,context=null,polygons=null,rain=null,loading=false,lastAttempt=0,clock=null,abort=null,view=null,opening=false;
+ let disposed=false,parent=null,context=null,polygons=null,rain=null,loading=false,lastAttempt=0,clock=null,abort=null,view=null,opening=false,rainRefusal=null;
  const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
  const n=(v,d=0)=>typeof v==='number'&&Number.isFinite(v)?v.toLocaleString(t('en-GB','id-ID'),{maximumFractionDigits:d}):'—';
  const time=v=>new Date(v).toLocaleString(t('en-GB','id-ID'),{timeZone:'Asia/Jakarta',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})+' WIB';
@@ -49,7 +50,7 @@ export function createPolderBudget(map,{text:t,isCurrent,state,buildTag}) {
   const result=forcing?.mm&&runoff!==null&&pump!==null&&initial!==null?waterBudget({areaM2:row.areaM2,rainMm:forcing.mm,runoffFraction:runoff/100,pumpM3s:pump,initialM3:initial,freeStorageM3:space}):null;
   view.output.replaceChildren();view.plot.replaceChildren();view.table.replaceChildren();
   view.source.textContent=manual?t('TEST STORM · uniform rain in the first 3 h, then 21 h dry. No weather forecast.','HUJAN UJI · hujan merata pada 3 jam pertama, lalu 21 jam tanpa hujan. Bukan prakiraan cuaca.'):
-   forecast?t('Uniform forcing from returned model cell ','Hujan merata diasumsikan dari sel model ')+forecast.modelLocation[1].toFixed(4)+', '+forecast.modelLocation[0].toFixed(4)+' · '+n(forecast.distanceKm,1)+' km · '+time(forecast.from)+' → '+time(forecast.to)+t(' · retrieved ',' · diambil ')+time(forecast.fetchedAt):loading?t('Loading current hourly rain…','Memuat hujan per jam terkini…'):t('No complete current rain profile within 20 km. Nothing is filled with zero. Retry or choose an explicit test storm.','Tidak ada profil hujan terkini lengkap dalam 20 km. Tidak diisi nol. Coba lagi atau pilih hujan uji secara eksplisit.');
+   forecast?t('Uniform forcing from returned model cell ','Hujan merata diasumsikan dari sel model ')+forecast.modelLocation[1].toFixed(4)+', '+forecast.modelLocation[0].toFixed(4)+' · '+n(forecast.distanceKm,1)+' km · '+time(forecast.from)+' → '+time(forecast.to)+t(' · retrieved ',' · diambil ')+time(forecast.fetchedAt):rainRefusal?refusalMessage(rainRefusal.retryAfterSeconds,t):loading?t('Loading current hourly rain…','Memuat hujan per jam terkini…'):t('No complete current rain profile within 20 km. Nothing is filled with zero. Retry or choose an explicit test storm.','Tidak ada profil hujan terkini lengkap dalam 20 km. Tidak diisi nol. Coba lagi atau pilih hujan uji secara eksplisit.');
   view.runoffLabel.textContent=t('Runoff assumption ','Asumsi limpasan ')+state.runoff+'%';view.stormField.hidden=!manual;
   view.forecastButton.setAttribute('aria-pressed',String(!manual));view.stormButton.setAttribute('aria-pressed',String(manual));
   view.exportButton.disabled=!result;
@@ -96,7 +97,7 @@ export function createPolderBudget(map,{text:t,isCurrent,state,buildTag}) {
  }
  async function refreshRain(){
   if(!live()||loading)return;loading=true;updateBusy();lastAttempt=Date.now();recompute();
-  try{const response=await fetch('/api/atlas/rainfall',{cache:'no-store',signal:AbortSignal.any([abort.signal,AbortSignal.timeout(20000)])});rain=response.ok?await response.json():null;}catch{rain=null;}finally{loading=false;updateBusy();if(live()){recompute();locate();}}
+  try{const response=await fetch('/api/atlas/rainfall',{cache:'no-store',signal:AbortSignal.any([abort.signal,AbortSignal.timeout(20000)])});rain=await readJson(response);rainRefusal=null;}catch(error){rain=null;rainRefusal=isRefusalError(error)?error:null;}finally{loading=false;updateBusy();if(live()){recompute();locate();}}
  }
  const updateBusy=()=>parent?.setAttribute('aria-busy',String(!disposed&&(opening||loading)));
  const visibility=()=>{if(!document.hidden&&live())void refreshRain();};

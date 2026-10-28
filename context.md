@@ -363,3 +363,7 @@ Readiness guard refinements before deployment: controlled virtual timer polls re
 
 
 Settled-controls release complete: `jakarta-atlas-20261026-1792989605-923553b`, final guard `923553b`, stamp `79efdef`, Worker `ebfdbd4e-5177-4195-b6ce-66029d7069eb`. Canonical exit0: typecheck,13 checks,53 testcommands,6timing/8lens/11design/4reason mutants, unchanged208 spatial measurements, both-host byte convergence,37 API checks and117/117live rendered checks passed. Earlier local55viewport/lens combinations and independent six-image review passed; final release uses the tightened readiness helper. Actual production EN/ID traffic and nested Pluit references verified, busy states cleared,24px phone header/no sideways overflow. Source, stamps and receipts pushed; own local resources cleaned and viewport reset. Shared two first-action falsifier fixture gaps remain documented, not claimed green. Full receipt docs/PANEL-READINESS-AUDIT-2026-10-26.md.
+
+## 28 October2026 · MiniMax request-state audit
+
+Reviewed uncommitted refusal integration; closed pressure/wind loading precedence, Research/haze stale retries, independent auxiliary feeds, source-point reason copy, dashboard language/air rows and rainfall fast-source race. Added actual-controller429→503 checks, HTTP-date retry parsing, compact four-line refusal budget with old-copy falsification and canonical browser Research/haze recovery. No maps/scientific data/typography/CSS removed or changed. Canonical release pending; docs/REFUSAL-STATE-AUDIT-2026-10-28.md records scope and limits.

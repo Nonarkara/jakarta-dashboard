@@ -2,6 +2,7 @@
 // plus a user-started uniform-wind transport illustration. Every figure is
 // model output; the moving marker is speed × elapsed time along one bearing —
 // never a concentration, plume or smoke attribution.
+import {readJson,isRefusalError,refusalMessage} from './refusal.js';
 export function windTransportPoint(start, windFromDeg, speedMs, elapsedS) {
   if (!Array.isArray(start) || start.length < 2 || !Number.isFinite(start[0]) || !Number.isFinite(start[1])
     || !Number.isFinite(windFromDeg) || !Number.isFinite(speedMs) || speedMs < 0
@@ -49,6 +50,7 @@ export function transportWindow(rows, validAt, limit = 6) {
 
 export function createAirTimeline(map, {text: t, active, buildTag}) {
   let data = null, load = null, epoch = 0;
+  let refusal = null;
   let timer = null, startedAt = 0, anchor = null, hiddenListener = null, locationNode = null;
   const pending = new Set();
   async function get(path) {
@@ -57,8 +59,10 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
     pending.add(c);
     try {
       const response = await fetch(path, { headers: { accept: 'application/json' }, signal: c.signal });
-      if (!response.ok) throw new Error('source ' + response.status);
-      return await response.json();
+      // One reader for every API payload. A refused request throws a refusal
+      // that carries its retry window, so the panel below can say what
+      // happened instead of calling the model unavailable.
+      return await readJson(response);
     } finally { clearTimeout(timeout); pending.delete(c); }
   }
   const el = (tag, content, cls) => { const node = document.createElement(tag); if (content !== undefined) node.textContent = content; if (cls) node.className = cls; return node; };
@@ -72,6 +76,7 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
   }
   function clear() {
     epoch++;
+    refusal = null;
     stopTransport();
     for (const c of pending) c.abort(new Error('lens closed'));
     pending.clear();
@@ -146,6 +151,13 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
       section.append(el('p', t('Loading the model timeline…', 'Memuat linimasa model…'), 'note'));
       body.append(section); return;
     }
+    // A refused request was never measured. It is not an unavailable model
+    // and not an invalid one, and the panel says which it is.
+    if (refusal) {
+      section.append(el('p', refusalMessage(refusal.retryAfterSeconds, t), 'note'));
+      const retry=el('button',t('Retry model timeline','Coba lagi linimasa model'));retry.type='button';retry.addEventListener('click',()=>show(body));section.append(retry);
+      body.append(section); return;
+    }
     if (!data.available) {
       section.append(el('p', t('The model timeline is unavailable or failed validation. Nothing is shown as zero.', 'Linimasa model tidak tersedia atau gagal validasi. Tidak ada yang ditampilkan sebagai nol.'), 'note'));
       const retry=el('button',t('Retry model timeline','Coba lagi linimasa model'));retry.type='button';retry.addEventListener('click',()=>show(body));section.append(retry);
@@ -186,7 +198,13 @@ export function createAirTimeline(map, {text: t, active, buildTag}) {
     data=null;render(body);
     load = get('/api/atlas/air-timeline')
       .then(d => { if(myEpoch === epoch) data = d; return d; })
-      .catch(() => { if(myEpoch === epoch) data = {available:false}; return null; });
+      .catch((error) => {
+        if(myEpoch === epoch){
+          refusal = isRefusalError(error) ? error : null;
+          data = {available:false};
+        }
+        return null;
+      });
     load.then(() => { if (myEpoch === epoch) render(body); });
   }
   return { show, clear, render };

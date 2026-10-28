@@ -63,6 +63,53 @@ let flyoverTimer = null;
 let inspectFeature = null;
 const liveCache = new Map();
 const liveRequests = new Map();
+// A refused request (HTTP 429) is not a broken source and not an empty one.
+// The atlas client is a classic script, so the shared reader arrives as a
+// module — the very file the lens modules import, so there is one rule and
+// one instance of it in the browser.
+const liveRefusals = new Map();
+let refusalModule = null;
+let refusalModulePromise = null;
+function loadRefusalModule() {
+  return refusalModulePromise ||= import("/refusal.js").then((module) => (refusalModule = module)).catch(error => { refusalModulePromise = null; throw error; });
+}
+// Used only if the shared reader cannot be loaded at all. It fails closed: a
+// response that is not OK is an error, never a payload. A rule about how a
+// failure is reported must never cost the reader their data, and it must
+// never hand them a refusal's error body as if it were data either.
+async function fallbackRead(response) {
+  if (response.ok) return await response.json();
+  throw new Error("source " + response.status);
+}
+// A static file is not rate limited, so a missing file is a missing file and
+// never a refusal. It is read through a named helper rather than an inline
+// conditional, so no response in this client is read the old way.
+async function readStatic(response) {
+  if (response.ok) return await response.json();
+  return null;
+}
+// Read a response through the shared rule. The module is loaded by the first
+// live request; if it has not arrived yet, it is asked for.
+async function readApi(response) {
+  const mod = refusalModule || await loadRefusalModule().catch(() => null);
+  return mod ? await mod.readJson(response) : await fallbackRead(response);
+}
+// A fallback that was refused must not be reported as an outage either. The
+// primary's own window is kept when there is one.
+function noteRefusal(endpoint, error) {
+  if (!error || error.refused !== true) return;
+  if (!liveRefusals.has(endpoint)) liveRefusals.set(endpoint, error.retryAfterSeconds);
+}
+// The refusal for an endpoint, in the reader's language, or null when the
+// request was not refused. The shared reader is loaded before any request is
+// made, so its copy is available by the time a refusal is recorded.
+function refusalFor(endpoint, form) {
+  if (!liveRefusals.has(endpoint) || !refusalModule) return null;
+  const seconds = liveRefusals.get(endpoint);
+  return form === "label"
+    ? refusalModule.refusalLabel(seconds, (en, id) => lensText(en, id))
+    : refusalModule.refusalMessage(seconds, (en, id) => lensText(en, id));
+}
 let lastAirQuality = [];
 
 // Jakarta/Palette 267: coastal blue structure with warm pointers. Hazard and
@@ -572,7 +619,8 @@ async function refreshFires(force) {
   if (!firesData && !refreshFires.retry) refreshFires.retry = setTimeout(() => { refreshFires.retry = null; refreshFires(true); }, 60000);
   const src = mapInstance && mapInstance.getSource("jkt-fires-src");
   if (src) src.setData(firesData || { type: "FeatureCollection", features: [] });
-  setToggleLabel("atlas-fires-label", firesData ? lensText("Thermal detections · admitted 24 h", "Deteksi termal · lolos 24 jam") : lensText("Thermal detections · unavailable", "Deteksi termal · tidak tersedia"));
+  const refused = refusalFor("/api/atlas/fires", "label");
+  setToggleLabel("atlas-fires-label", firesData ? lensText("Thermal detections · admitted 24 h", "Deteksi termal · lolos 24 jam") : refused ? lensText("Thermal detections · ", "Deteksi termal · ") + refused : lensText("Thermal detections · unavailable", "Deteksi termal · tidak tersedia"));
   if (activeLens === "haze") renderLensEvidence();
 }
 
@@ -737,8 +785,7 @@ async function fetchBrowserAirQuality() {
   ];
   try {
     const response = await fetch("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=" + points.map(p => p.lat).join(",") + "&longitude=" + points.map(p => p.lng).join(",") + "&current=pm2_5,us_aqi&hourly=pm2_5,us_aqi&forecast_days=3&timezone=UTC", { signal: AbortSignal.timeout(8000) });
-    if (!response.ok) return null;
-    const rows = await response.json();
+    const rows = await readApi(response);
     if (!Array.isArray(rows) || rows.length !== points.length) return null;
     const category = aqi => aqi <= 50 ? "Good" : aqi <= 100 ? "Moderate" : aqi <= 150 ? "Unhealthy for Sensitive Groups" : aqi <= 200 ? "Unhealthy" : aqi <= 300 ? "Very Unhealthy" : "Hazardous";
     const out = points.flatMap((p, i) => {
@@ -749,10 +796,14 @@ async function fetchBrowserAirQuality() {
       return aqi == null ? [] : [{ ...p, aqi, pm25, category: category(aqi), observedAt: stamp, forecast: browserAirForecast(row, near), provenance: { source: "Open-Meteo / CAMS", tier: "model-estimate" } }];
     });
     return out.length ? out : null;
-  } catch (e) { return null; }
+  } catch (e) { if (e && e.refused) throw e; return null; }
 }
 async function refreshAirQuality() {
-  const data = await fetchLive("/api/atlas/air-quality", 300) || await fetchBrowserAirQuality();
+  let data = await fetchLive("/api/atlas/air-quality", 300);
+  if (!data) {
+    try { data = await fetchBrowserAirQuality(); }
+    catch (e) { noteRefusal("/api/atlas/air-quality", e); }
+  }
   const available = Array.isArray(data);
   if (available) lastAirQuality = data.filter(function (p) {
     return p && Number.isFinite(p.lng) && Number.isFinite(p.lat) && Number.isFinite(p.aqi) && p.aqi >= 0;
@@ -767,15 +818,16 @@ async function refreshAirQuality() {
   });
   const src = mapInstance && mapInstance.getSource("jkt-aqi-src");
   if (src) src.setData({ type: "FeatureCollection", features: features });
+  const refused = refusalFor("/api/atlas/air-quality");
   const el = document.getElementById("atlas-aqi-rows");
   if (el) el.innerHTML = rows.length ? rows.map(function (p) {
     const modeled = /open-meteo|cams/i.test(p.source || p.provenance?.source || "");
     const tier = !available ? "last retrieved / unavailable" : observationStale(p.observedAt, 3 * 3600000) ? "stale" : modeled ? "modeled" : p.provenance?.tier || "unverified";
     const pm25 = Number.isFinite(p.pm25) && p.pm25 >= 0 ? " · PM2.5 " + fmtNum(p.pm25, 1) + " µg/m³" : " · PM2.5 unavailable";
     return '<tr><th scope="row">' + escapeHtml((uiLanguage() === "id" ? p.label_id : p.label) || p.label || "Unnamed location") + '</th><td>' + escapeHtml(Math.round(p.aqi) + " AQI" + pm25) + '<small>' + escapeHtml(p.category || "Category unknown") + '</small></td><td>' + evidenceCell(p.provenance?.source || p.source, tier, p.observedAt) + '</td></tr>';
-  }).join("") : '<tr><td colspan="3">No valid air-quality values available.</td></tr>';
+  }).join("") : '<tr><td colspan="3">' + escapeHtml(refused || "No valid air-quality values available.") + '</td></tr>';
   setToggleLabel("atlas-aqi-label", available && rows.length ? "Air quality · model" : "Air quality · unavailable");
-  setToggleLabel("atlas-aqi-status", available && rows.length ? "Model estimates retrieved. Valid time and source appear with each value." : "Air-quality feed unavailable or invalid. Retained values, if any, are marked last retrieved.");
+  setToggleLabel("atlas-aqi-status", available && rows.length ? "Model estimates retrieved. Valid time and source appear with each value." : refused || "Air-quality feed unavailable or invalid. Retained values, if any, are marked last retrieved.");
   if (activeLens === "haze") renderLensEvidence();
 }
 async function loadReferenceText() {
@@ -801,15 +853,28 @@ async function fetchLive(endpoint, ttl) {
   if (cached && cached.expires > Date.now()) return cached.value;
   if (liveRequests.has(endpoint)) return liveRequests.get(endpoint);
   const pending = (async function () {
+    let mod = null;
     try {
       const r = await fetch(ATLAS_BASE + endpoint, {
         headers: { accept: "application/json" }, signal: AbortSignal.timeout(endpoint.startsWith("/api/") ? 35000 : 8000), // Worker routes can parse a provider on a cold edge (FIRMS ~0.8 MB CSV); 8 s aborted them
       });
-      if (!r.ok) return null;
-      const data = await r.json();
+      // One reader for every API payload. The shared reader is loaded first so
+      // that a refusal is reported as a refusal — but if it cannot be loaded
+      // the payload is still read, because a rule about how a failure is
+      // reported must never cost the reader their data.
+      mod = await loadRefusalModule().catch(() => null);
+      const data = mod ? await mod.readJson(r) : await fallbackRead(r);
+      if (!data) return null;
       liveCache.set(endpoint, { value: data, expires: Date.now() + (ttl || 60) * 1000 });
+      liveRefusals.delete(endpoint);
       return data;
-    } catch (e) { return null; }
+    } catch (e) {
+      // A refused request is remembered with its retry window, so the surface
+      // that asked can say what happened instead of reporting a broken source.
+      liveRefusals.delete(endpoint);
+      if (mod && mod.isRefusalError(e)) liveRefusals.set(endpoint, e.retryAfterSeconds);
+      return null;
+    }
   })();
   liveRequests.set(endpoint, pending);
   try { return await pending; } finally { liveRequests.delete(endpoint); }
@@ -1274,7 +1339,7 @@ window.addEventListener("message", function (e) {
 });
 
 // Environmental products remain separate from unsurveyed flood reference sketches.
-let environmentData = null, rainfallData = null;
+let environmentData = null, rainfallData = null, rainfallRefusalText = null;
 let environmentRequest = 0;
 let environmentTileError = false;
 function uiLanguage() { return window.AtlasLanguage?.language() || 'en'; }
@@ -1391,9 +1456,12 @@ async function refreshEnvironment(force) {
   renderRadarFrames(false);
   const dates = document.getElementById('atlas-satellite-date');
   if (dates) dates.dataset.product = '';
-  if (!environmentData) { setToggleLabel('atlas-environment-status', 'Environmental sources unavailable. Reload or refresh to retry.'); }
+  // A refused request was never measured. It is not an unavailable source, and
+  // the status must not tell the reader to reload a request that was refused.
+  const refused = refusalFor('/api/atlas/environment');
+  if (!environmentData) { setToggleLabel('atlas-environment-status', refused || 'Environmental sources unavailable. Reload or refresh to retry.'); }
   await applyEnvironmentOverlay();
-  if (!environmentData) setToggleLabel('atlas-environment-status', 'Environmental sources unavailable. Reload or refresh to retry.');
+  if (!environmentData) setToggleLabel('atlas-environment-status', refused || 'Environmental sources unavailable. Reload or refresh to retry.');
   if (watchData) renderCityWatch();
 }
 function updateRainfallPoints() {
@@ -1410,18 +1478,25 @@ function updateRainfallPoints() {
 function renderRainfall() {
   const rows = document.getElementById('atlas-rainfall-rows');
   if (!rows) return;
-  rows.innerHTML = rainfallData?.points?.length ? rainfallData.points.map(p => '<tr><th scope="row"><button type="button" class="atlas-rain-location" data-rain-point="' + escapeHtml(p.id) + '">' + escapeHtml(uiLanguage() === 'id' ? p.name_id : p.name) + '</button></th><td>' + escapeHtml(p.available && Number.isFinite(p.precipitationMm) ? fmtNum(p.precipitationMm, 1) + ' mm / ' + (p.intervalSeconds ? p.intervalSeconds / 60 + ' min' : 'interval unknown') : 'unavailable') + '</td><td>' + escapeHtml(Number.isFinite(p.next24hMm) ? fmtNum(p.next24hMm, 1) + ' mm' : 'unavailable') + '<small>' + escapeHtml(formatLocal(p.forecastFromUtc) + ' → ' + formatLocal(p.forecastToUtc)) + '</small></td><td>' + escapeHtml(formatLocal(p.validAt)) + '</td></tr>').join('') : '<tr><td colspan="4">Rainfall data unavailable. No zero rainfall is assumed.</td></tr>';
+  rows.innerHTML = rainfallData?.points?.length ? rainfallData.points.map(p => '<tr><th scope="row"><button type="button" class="atlas-rain-location" data-rain-point="' + escapeHtml(p.id) + '">' + escapeHtml(uiLanguage() === 'id' ? p.name_id : p.name) + '</button></th><td>' + escapeHtml(p.available && Number.isFinite(p.precipitationMm) ? fmtNum(p.precipitationMm, 1) + ' mm / ' + (p.intervalSeconds ? p.intervalSeconds / 60 + ' min' : 'interval unknown') : 'unavailable') + '</td><td>' + escapeHtml(Number.isFinite(p.next24hMm) ? fmtNum(p.next24hMm, 1) + ' mm' : 'unavailable') + '<small>' + escapeHtml(formatLocal(p.forecastFromUtc) + ' → ' + formatLocal(p.forecastToUtc)) + '</small></td><td>' + escapeHtml(formatLocal(p.validAt)) + '</td></tr>').join('') : '<tr><td colspan="4">' + escapeHtml(rainfallRefusalText || 'Rainfall data unavailable. No zero rainfall is assumed.') + '</td></tr>';
   if (mapInstance) styleReady.then(updateRainfallPoints);
-  setToggleLabel('atlas-rainfall-status', rainfallData ? rainfallData.source + ' · ' + rainfallData.tier + ' · Retrieved (WIB): ' + formatLocal(rainfallData.fetchedAt) : 'Rainfall data unavailable. No zero rainfall is assumed.');
+  setToggleLabel('atlas-rainfall-status', rainfallData ? rainfallData.source + ' · ' + rainfallData.tier + ' · Retrieved (WIB): ' + formatLocal(rainfallData.fetchedAt) : rainfallRefusalText || 'Rainfall data unavailable. No zero rainfall is assumed.');
 }
 async function refreshRainfall(force) {
   if (force) liveCache.delete('/api/atlas/rainfall');
   const usable = data => { if (!data?.points?.some(p => p.available)) throw new Error('Forecast unavailable'); return data; };
-  try { rainfallData = await Promise.any([fetchLive('/api/atlas/rainfall', 600).then(usable), fetchBrowserRainfall().then(usable)]); }
-  catch { rainfallData = null; }
+  try { rainfallData = await Promise.any([
+    fetchLive('/api/atlas/rainfall', 600).then(usable),
+    fetchBrowserRainfall().catch(error=>{noteRefusal('/api/atlas/rainfall',error);throw error;}).then(usable),
+  ]); } catch { rainfallData = null; }
+  // A refused request was never measured. The table must not say the data is
+  // unavailable, and the status must not invite a reload that will be refused
+  // again while the window is open.
+  rainfallRefusalText = rainfallData ? null : refusalFor('/api/atlas/rainfall');
   renderRainfall();
   renderCityWatch();
 }
+
 function applyMapLanguage() {
   if (!mapInstance) return;
   // Jakarta landmarks and stations carry their Indonesian names in OSM;
@@ -1439,7 +1514,7 @@ function stopMapMotion() {
   button?.setAttribute('aria-pressed', 'false'); if (button) button.textContent = 'Enable orbit';
   mapInstance?.stop();
 }
-let watchData = null;
+let watchData = null, watchRefusalText = null;
 function watchValue(id, text) { setToggleLabel(id, text); }
 function watchPlace(topic) {
   const places = watchData?.places || [];
@@ -1454,7 +1529,10 @@ function watchPlace(topic) {
 function renderCityWatch() {
   const action = document.getElementById("atlas-watch-action");
   if (!watchData) {
-    ["atlas-watch-flood-value", "atlas-watch-air-value", "atlas-watch-wind-value", "atlas-watch-traffic-value"].forEach(id => watchValue(id, "Open data unavailable. No all-clear is assumed."));
+    // A refused request is not an open-data outage. The two read very
+    // differently to a reader deciding whether the city is quiet.
+    const text = watchRefusalText || "Open data unavailable. No all-clear is assumed.";
+    ["atlas-watch-flood-value", "atlas-watch-air-value", "atlas-watch-wind-value", "atlas-watch-traffic-value"].forEach(id => watchValue(id, text));
     if (action) { action.hidden = true; action.textContent = ""; }
     return;
   }
@@ -1496,8 +1574,7 @@ async function fillWatchAir() {
   let rows;
   try {
     const response = await fetch("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=" + points.map(p => p.lat).join(",") + "&longitude=" + points.map(p => p.lng).join(",") + "&current=pm2_5,pm10,us_aqi&timezone=UTC", { signal: AbortSignal.timeout(8000) });
-    if (!response.ok) return;
-    rows = await response.json();
+    rows = await readApi(response);
   } catch (e) { return; }
   if (!Array.isArray(rows)) return;
   points.forEach((point, i) => {
@@ -1519,6 +1596,7 @@ async function refreshCityWatch(force) {
   if (force) liveCache.delete("/api/atlas/watch");
   const data = await fetchLive("/api/atlas/watch", 120);
   watchData = data && Array.isArray(data.places) && Array.isArray(data.notices) ? data : null;
+  watchRefusalText = watchData ? null : refusalFor("/api/atlas/watch");
   await fillWatchAir();
   renderCityWatch();
 }
@@ -1866,7 +1944,7 @@ async function renderExposureLens(request) {
   if (request !== lensRequest || !data) return null;
   const rows = data.exposure.kelurahan;
   const cuts = quantileBands(rows.map(r => r.exposureScore), 0.25);
-  const geo = await fetch(insightAsset('risk'), { headers: { accept: 'application/json' } }).then(r => r.ok ? r.json() : null).catch(() => null);
+  const geo = await fetch(insightAsset('risk'), { headers: { accept: 'application/json' } }).then(readStatic).catch(() => null);
   if (request !== lensRequest) return null;
   if (!geo) { showToast(lensText('Flood-risk geometry is unavailable. See Data & sources.', 'Geometri rawan banjir tidak tersedia. Lihat Data & sumber.')); return null; }
   // The published geometry writes the neighbourhood code as 31.71.03.1008 while
@@ -1889,7 +1967,7 @@ async function renderExposureLens(request) {
   return { cuts };}
 
 async function loadGreenGeometry(request) {
-  const geo = await fetch(insightAsset('green'), { headers: { accept: 'application/json' } }).then(r => r.ok ? r.json() : null).catch(() => null);
+  const geo = await fetch(insightAsset('green'), { headers: { accept: 'application/json' } }).then(readStatic).catch(() => null);
   if (request !== lensRequest || !geo) return false;
   dropInsightLayer('insight-green');
   mapInstance.addSource('insight-green', { type: 'geojson', data: geo });
@@ -1902,7 +1980,7 @@ async function loadGreenGeometry(request) {
 
 async function loadStationGeometry(request) {
   const files = ['awlr', 'arr', 'pumps'];
-  const parts = await Promise.all(files.map(f => fetch(insightAsset(f), { headers: { accept: 'application/json' } }).then(r => r.ok ? r.json() : null).catch(() => null)));
+  const parts = await Promise.all(files.map(f => fetch(insightAsset(f), { headers: { accept: 'application/json' } }).then(readStatic).catch(() => null)));
   if (request !== lensRequest) return false;
   stationGeometryState = files.filter((file, i) => !parts[i]?.features);
   const data = { type: 'FeatureCollection', features: parts.flatMap((part, i) => (part?.features ? part.features.map(f => ({ ...f, properties: { ...f.properties, __kind: i < 2 ? i : ({'Pompa':2,'Pintu Air':3,'Waduk & Embung':4}[f.properties.kind] ?? 5) } })) : [])) };
@@ -2192,7 +2270,7 @@ function renderHazeEvidence(body) {
 let ispuReference = null, ispuReferenceLoad = null;
 function loadIspuReference() {
   if (!ispuReferenceLoad) ispuReferenceLoad = fetch(insightAsset('ispu-reference', 'json'), { headers: { accept: 'application/json' } })
-    .then(r => r.ok ? r.json() : null)
+    .then(readStatic)
     .then(d => { if (!d || !Array.isArray(d.monthly)) { ispuReferenceLoad = null; return null; } ispuReference = d; if (activeLens === 'haze') renderLensEvidence(); return d; })
     .catch(() => { ispuReferenceLoad = null; return null; });
   return ispuReferenceLoad;
@@ -2515,8 +2593,8 @@ const waterState = { hours: 0, factor: 1, station: 0, levelCm: 100, riseCmH: 10 
 let waterRouteAssets = null, waterRouteLoad = null;
 function loadWaterRoute() {
   if (!waterRouteLoad) waterRouteLoad = Promise.all([
-    fetch(insightAsset('ciliwung-route'), { headers: { accept: 'application/json' } }).then(r => r.ok ? r.json() : null),
-    fetch(insightAsset('ciliwung-manifest', 'json'), { headers: { accept: 'application/json' } }).then(r => r.ok ? r.json() : null)
+    fetch(insightAsset('ciliwung-route'), { headers: { accept: 'application/json' } }).then(readStatic),
+    fetch(insightAsset('ciliwung-manifest', 'json'), { headers: { accept: 'application/json' } }).then(readStatic)
   ]).then(([route, manifest]) => {
     if (!route || !manifest || !Array.isArray(route.features) || !Array.isArray(manifest.segments)) { waterRouteLoad = null; return null; }
     waterRouteAssets = { route, manifest };
@@ -2575,7 +2653,7 @@ function openLensEvidenceOnDesktop() {
 }
 async function showWaterScenario(request) {
   if (!waterScenarioLoad) waterScenarioLoad = fetch('/data/jakarta-v1/water-scenario.json?v=' + encodeURIComponent(ATLAS_BUILD_TAG))
-    .then(r => r.ok ? r.json() : null).then(d => { waterScenario = d; if (!d) waterScenarioLoad = null; return d; })
+    .then(readStatic).then(d => { waterScenario = d; if (!d) waterScenarioLoad = null; return d; })
     .catch(() => { waterScenarioLoad = null; return null; });
   const [data] = await Promise.all([waterScenarioLoad, loadWaterRoute()]);
   if (request !== lensRequest || !data || !mapInstance) { if(request === lensRequest) renderWaterScenario(); return; }
@@ -2704,8 +2782,7 @@ async function fetchBrowserRainfall() {
     url.searchParams.set('hourly','precipitation,precipitation_probability');
     url.searchParams.set('forecast_days','3'); url.searchParams.set('timezone','UTC');
     const response = await fetch(url, {signal:AbortSignal.timeout(20000)});
-    if (!response.ok) return null;
-    const rows = await response.json();
+    const rows = await readApi(response);
     if (!Array.isArray(rows) || rows.length !== points.length) return null;
     const stamp = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?$/.test(value) ? value+'Z' : null;
     const validNumber = value => typeof value === 'number' && Number.isFinite(value) && value >= 0;
@@ -2720,5 +2797,5 @@ async function fetchBrowserRainfall() {
       const complete=forecast.length===24 && forecast.every((hour,index)=>Date.parse(hour.validAt)===start+(index+1)*3600000);
       return {...point,available,validAt:available?validAt:null,intervalSeconds:row?.current?.interval??null,precipitationMm:available&&validNumber(row.current.precipitation)?row.current.precipitation:null,forecast,next24hMm:complete?forecast.reduce((sum,hour)=>sum+hour.precipitationMm,0):null,forecastFromUtc:available?new Date(start).toISOString():null,forecastToUtc:available?new Date(start+24*3600000).toISOString():null};
     })};
-  } catch { return null; }
+  } catch (e) { if (e && e.refused) throw e; return null; }
 }

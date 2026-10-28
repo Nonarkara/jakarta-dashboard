@@ -43,6 +43,7 @@ function fieldBounds(cells) {
 }
 
 import { admitModel, currentHourIndex, admissionMessage } from './temporal-admission.js';
+import { readJson, isRefusalError, refusalMessage } from './refusal.js';
 import { researchFires, createResearchSession } from './research-session.js';
 import { createHazeEvidence } from './haze-evidence.js';
 
@@ -144,7 +145,8 @@ export function fireOrigins(features, bounds = null) {
 }
 
 export function createHazeTransport(map, { text: t, active, buildTag, flow, onFires }) {
-  let synoptic = null, fires = null, epoch = 0, refusal = null, session = null, receptors = null, sessionState = null;
+  let synoptic = null, fires = null, epoch = 0, refusal = null, session = null, receptors = null, sessionState = null, httpRefusal = null;
+  let auxiliaryRefusals = {};
   const desk=createHazeEvidence(map,{text:t,refresh:()=>session?.refresh(),onFilter:onFires});
   let source = null, pathLayer = null, seedLayer = null, hourLayer = null, lastBody = null, fitted = false;
   const state = { origins: 'jakarta', hours: 24 };
@@ -263,12 +265,19 @@ export function createHazeTransport(map, { text: t, active, buildTag, flow, onFi
     if (active() !== 'haze' || !lastBody) return;
     if(synoptic){const admission=admitModel(synoptic);if(!admission.ok){refusal=admission.reason;synoptic=null;hide();}}
     fires=researchFires(fires);
-    desk.render(lastBody,{fires,receptors,wind:synoptic,status:sessionState});
+    desk.render(lastBody,{fires,receptors,wind:synoptic,status:sessionState,refusals:auxiliaryRefusals});
     const host = slot(lastBody);
     const el = (tag, content, cls) => { const n = document.createElement(tag); if (content !== undefined) n.textContent = content; if (cls) n.className = cls; return n; };
     const section = el('section', undefined, 'transport-panel');
     section.append(el('strong', t('Where the wind would carry it', 'Ke mana angin akan membawanya'), 'synoptic-title'));
 
+    // A refused request was never measured. It is not a dead provider and not
+    // a stale model, and the panel must not draw a path from it.
+    if (httpRefusal) {
+      section.append(el('p', refusalMessage(httpRefusal.retryAfterSeconds, t), 'synoptic-note'));
+      host.append(section);
+      return;
+    }
     // A dead provider keeps this lens's own wording, which names the wind and the
     // path. Staleness and gaps get the shared reason, which names the clock.
     if (refusal === 'unavailable') {
@@ -343,14 +352,20 @@ export function createHazeTransport(map, { text: t, active, buildTag, flow, onFi
     clear();lastBody=body;renderPanel();
     const tag=buildTag?'?v='+encodeURIComponent(buildTag):'';
     session=createResearchSession({
-      load:signal=>{const get=(url,ms=20000)=>fetch(url+tag,{headers:{accept:'application/json'},signal:AbortSignal.any([signal,AbortSignal.timeout(ms)])}).then(r=>r.ok?r.json():null).catch(()=>null);return Promise.all([get('/api/atlas/synoptic',50000),get('/api/atlas/fires'),get('/api/atlas/haze-receptors')]);},
-      status:state=>{sessionState=state;synoptic=null;fires=null;receptors=null;refusal=state==='unavailable'?'unavailable':null;hide();onFires?.(null);if(state==='paused')refusal='expired';renderPanel();},
+      load:signal=>{const get=(url,ms=20000)=>fetch(url+tag,{headers:{accept:'application/json'},signal:AbortSignal.any([signal,AbortSignal.timeout(ms)])}).then(r=>readJson(r)).catch(error=>{
+        if(isRefusalError(error)&&!signal.aborted){
+          if(url.endsWith('/synoptic'))httpRefusal=error;
+          else auxiliaryRefusals[url.endsWith('/fires')?'fires':'receptors']=error;
+        }
+        return null;
+      });return Promise.all([get('/api/atlas/synoptic',50000),get('/api/atlas/fires'),get('/api/atlas/haze-receptors')]);},
+      status:state=>{if(state==='loading'){httpRefusal=null;auxiliaryRefusals={};}sessionState=state;synoptic=null;fires=null;receptors=null;refusal=state==='unavailable'?'unavailable':null;hide();onFires?.(null);if(state==='paused')refusal='expired';renderPanel();},
       render:([s,f,r])=>{if(active()!=='haze')return;sessionState='loaded';const admission=admitModel(s);synoptic=admission.ok?s:null;refusal=admission.ok?null:admission.reason;fires=researchFires(f);receptors=r;onFires?.(fires);draw();fit();renderPanel();return ()=>{hide();desk.clear();};}
     });
   }
 
   function clear() {
-    session?.clear();session=null;epoch++;synoptic=null;fires=null;receptors=null;fitted=false;refusal=null;lastBody=null;
+    session?.clear();session=null;epoch++;synoptic=null;fires=null;receptors=null;fitted=false;refusal=null;httpRefusal=null;auxiliaryRefusals={};lastBody=null;
     hide();desk.clear();
   }
 

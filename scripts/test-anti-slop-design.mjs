@@ -7,7 +7,10 @@ import {labelPosition} from '../public/research-labels.js';
 // research.js imports the atlas synoptic module; the sandbox strips import
 // statements, so the real module is injected here rather than stubbed. Without
 // it, drawing the shared contour interval throws ISOBAR_STEP_HPA is not defined.
+// The shared refusal reader is injected for the same reason: the sandbox has
+// no module loader, and a stripped import must not read as a failed source.
 import * as synoptic from '../public/synoptic.js';
+import {readJson,isRefusalError,refusalMessage} from '../public/refusal.js';
 const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const html=read('public/research.html'), css=read('public/jakarta-design.css'), js=read('public/research.js');
 const style=html.match(/<style>([\s\S]*?)<\/style>/)[1];
@@ -64,7 +67,7 @@ const source=js.replace(/^import .* from .*;\n/gm,'');
 const meta=node();
 const doc={documentElement:root,getElementById:get,querySelectorAll:()=>links,querySelector:s=>s==='meta[name="description"]'?meta:null,createElement:()=>node(),createTextNode:text=>({textContent:text}),addEventListener(){}};
 const fixture={count:123,height:{estimated:123}};
-const context=vm.createContext({...synoptic,document:doc,currentResearchField,createResearchSession,researchFires,researchFires,location:{search:'?lang=en',href:'https://jakarta.nonarkara.org/research?lang=en'},localStorage:{getItem(){return null},setItem(){}},URL,URLSearchParams,AbortSignal,Date,console,window:{addEventListener(){}},getComputedStyle:()=>({getPropertyValue:()=> '#123747'}),fetch:async url=> {
+const context=vm.createContext({...synoptic,readJson,isRefusalError,refusalMessage,document:doc,currentResearchField,createResearchSession,researchFires,researchFires,location:{search:'?lang=en',href:'https://jakarta.nonarkara.org/research?lang=en'},localStorage:{getItem(){return null},setItem(){}},URL,URLSearchParams,AbortSignal,Date,console,window:{addEventListener(){}},getComputedStyle:()=>({getPropertyValue:()=> '#123747'}),fetch:async url=> {
  if(url.includes('transit'))return new Promise(()=>{});
  return {ok:!url.includes('source-catalog'),json:async()=>url.includes('buildings-stats')?fixture:null};
 }});

@@ -1,13 +1,15 @@
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
+import {readJson as readApi} from '../public/refusal.js';
 import {readFileSync} from 'node:fs';
+import {readJson} from '../public/refusal.js';
 const source=readFileSync(new URL('../public/app.js',import.meta.url),'utf8');
 const fallback=source.slice(source.indexOf('async function fetchBrowserRainfall()'));
 const current=new Date().toISOString().slice(0,16);
 const start=Math.ceil(Date.parse(current+'Z')/3600000)*3600000;
 let rows;
 const reset=()=>{rows=Array.from({length:5},()=>({latitude:-6.18,longitude:106.83,utc_offset_seconds:0,current_units:{precipitation:'mm'},hourly_units:{precipitation:'mm'},current:{time:current,precipitation:0,interval:900},hourly:{time:Array.from({length:24},(_,i)=>new Date(start+(i+1)*3600000).toISOString().slice(0,16)),precipitation:Array(24).fill(0),precipitation_probability:Array(24).fill(0)}}));};
-const context=vm.createContext({URL,AbortSignal,fetch:async()=>Response.json(rows)});
+const context=vm.createContext({URL,AbortSignal,readApi:readJson,fetch:async()=>Response.json(rows)});
 vm.runInContext(fallback,context);
 const read=()=>vm.runInContext('fetchBrowserRainfall()',context);
 reset();let result=await read();assert.equal(result.points[0].next24hMm,0,'complete zero forecast remains zero');

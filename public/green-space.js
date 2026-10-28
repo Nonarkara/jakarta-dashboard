@@ -16,6 +16,7 @@
 //
 // Nothing here measures green space area from the imagery, and the three
 // sources are never added together.
+import {readJson,isRefusalError,refusalMessage} from './refusal.js';
 
 const NDVI_LAYER = 'VIIRS_NOAA20_NDVI_8Day';
 const NDVI_TMS = 'GoogleMapsCompatible_Level8';
@@ -65,6 +66,7 @@ export function ndviBandSwatches() {
 
 export function createGreenSpace(map, { text: t, active, buildTag }) {
   let cover = null, dates = [], epoch = 0;
+  let refusal = null;
   let ndviSource = null, coverSource = null, siteLayer = null;
   let mode = 'ndvi', hiddenListener = null;
 
@@ -78,8 +80,9 @@ export function createGreenSpace(map, { text: t, active, buildTag }) {
     const to = setTimeout(() => c.abort(new Error('timeout')), 15000);
     try {
       const r = await fetch(path, { headers: { accept: 'application/json' }, signal: c.signal });
-      if (!r.ok) throw new Error('source ' + r.status);
-      return await r.json();
+      // One reader for every API payload: a refused request throws a refusal
+      // carrying its retry window instead of a bare status.
+      return await readJson(r);
     } finally { clearTimeout(to); }
   }
 
@@ -90,6 +93,7 @@ export function createGreenSpace(map, { text: t, active, buildTag }) {
 
   function clear() {
     epoch++;
+    refusal = null;
     // `insight-green` is owned by the atlas and carries its own click handling,
     // so this module hides it rather than removing it.
     if (map.getLayer('insight-green')) map.setLayoutProperty('insight-green', 'visibility', 'none');
@@ -237,6 +241,13 @@ export function createGreenSpace(map, { text: t, active, buildTag }) {
     }
     section.append(bar);
 
+    // A refused request for the live NDVI dates is not a missing product and
+    // not an empty one. The two static sources below still answer, so the
+    // panel says what was refused instead of quietly offering fewer dates.
+    if (refusal) {
+      section.append(el('p', refusalMessage(refusal.retryAfterSeconds, t), 'note'));
+    }
+
     const readout = el('p', '', 'meta'); readout.dataset.greenReadout = '1'; section.append(readout);
 
     if (mode === 'ndvi' && dates.length) {
@@ -291,7 +302,7 @@ export function createGreenSpace(map, { text: t, active, buildTag }) {
         if (p?.dates?.length) dates = p.dates;
         if (myEpoch === epoch) render(body);
       })
-      .catch(() => {});
+      .catch((error) => { if (myEpoch === epoch && isRefusalError(error)) { refusal = error; render(body); } });
     hiddenListener = () => { /* the NDVI layer is static per date; nothing to stop */ };
     document.addEventListener('visibilitychange', hiddenListener);
   }

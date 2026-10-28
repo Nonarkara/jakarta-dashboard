@@ -19,6 +19,7 @@ const TAU = Math.PI * 2;
 // Arrowhead at the TOWARD end: the data stays FROM-bearing (meteorological
 // convention); only the drawing points where the air is going.
 import { admitModel, currentHourIndex, admissionMessage, scrubGapMessage } from './temporal-admission.js';
+import { readJson, isRefusalError, refusalMessage } from './refusal.js';
 
 export function arrowHead(shaft) {
   const [[x0, y0], [x1, y1]] = shaft.geometry.coordinates;
@@ -87,7 +88,7 @@ export function sampleField(cells, lng, lat) {
 }
 
 export function createWindField(map, { text: t, active, buildTag, flow }) {
-  let wind = null, air = null, epoch = 0, refusal = null;
+  let wind = null, air = null, epoch = 0, refusal = null, httpRefusal = null;
   let timer = null, source = null, layer = null, markers = null, frameNodes = [];
   let reduced = false, hiddenListener = null;
   const panel = { playing: false, index: 0 };
@@ -268,6 +269,12 @@ export function createWindField(map, { text: t, active, buildTag, flow }) {
     body.querySelector('#wind-field-section')?.remove();
     const section = el('div', undefined, 'air-timeline wind-field');
     section.id = 'wind-field-section';
+    // A refused request was never measured. It is neither a dead provider nor
+    // a stale model, and the panel says which one it is.
+    if (httpRefusal) {
+      section.append(el('p', refusalMessage(httpRefusal.retryAfterSeconds, t), 'note'));
+      body.append(section); return;
+    }
     // A refusal is stated, not left to look like a pending load.
     // A dead provider keeps this lens's own wording, which names the wind and the
     // calm it refuses to imply. Staleness and gaps get the shared reason, which
@@ -326,28 +333,35 @@ export function createWindField(map, { text: t, active, buildTag, flow }) {
   function show(body) {
     hide();
     const myEpoch = ++epoch;
-    wind = null; refusal = null; render(body);
-    const pending = [
-      fetch('/api/atlas/wind-field' + (buildTag ? '?v=' + encodeURIComponent(buildTag) : ''), { headers: { accept: 'application/json' }, signal: AbortSignal.timeout(12000) })
-        .then((r) => (r.ok ? r.json() : { available: false })).catch(() => ({ available: false })),
-      fetch('/api/atlas/air-timeline' + (buildTag ? '?v=' + encodeURIComponent(buildTag) : ''), { headers: { accept: 'application/json' }, signal: AbortSignal.timeout(12000) })
-        .then((r) => (r.ok ? r.json() : null)).catch(() => null),
-    ];
-    Promise.all(pending).then(([w, a]) => {
+    wind = null; refusal = null; httpRefusal = null; render(body);
+    const windFetch = fetch('/api/atlas/wind-field' + (buildTag ? '?v=' + encodeURIComponent(buildTag) : ''), { headers: { accept: 'application/json' }, signal: AbortSignal.timeout(12000) })
+      .then((r) => readJson(r));
+    // The air timeline is a second feed for this panel's readout. Its own lens
+    // reports a refusal of that feed; a refusal here must not blank the wind.
+    const airFetch = fetch('/api/atlas/air-timeline' + (buildTag ? '?v=' + encodeURIComponent(buildTag) : ''), { headers: { accept: 'application/json' }, signal: AbortSignal.timeout(12000) })
+      .then((r) => readJson(r)).catch(() => null);
+    Promise.allSettled([windFetch, airFetch]).then(([w, a]) => {
       if (myEpoch !== epoch) return;
+      if (w.status === 'rejected') {
+        // The request was refused, not answered badly. Nothing was measured.
+        if (isRefusalError(w.reason)) httpRefusal = w.reason;
+        wind = null; air = null; refusal = httpRefusal ? null : 'unavailable';
+        render(body);
+        return;
+      }
       // Same admission the synoptic and research lenses apply. A stale envelope
       // must not draw a wind field that reads as describing this hour.
-      const admission = admitModel(w);
-      wind = admission.ok ? w : null;
+      const admission = admitModel(w.value);
+      wind = admission.ok ? w.value : null;
       refusal = admission.ok ? null : admission.reason;
-      air = a;
+      air = a.status === 'fulfilled' ? a.value : null;
       render(body);
     });
   }
 
   function clear() {
     epoch++;
-    wind = null; air = null; refusal = null;
+    wind = null; air = null; refusal = null; httpRefusal = null;
     stop();
     hide();
     if (hiddenListener) { document.removeEventListener('visibilitychange', hiddenListener); hiddenListener = null; }

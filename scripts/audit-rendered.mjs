@@ -19,6 +19,7 @@
 
 import { createRequire } from 'node:module';
 import { mkdirSync } from 'node:fs';
+import {auditRefusalSessions} from './refusal-session-audit.mjs';
 import {panelReadiness} from './panel-readiness.mjs';
 
 const BASE = process.env.ATLAS_URL || 'https://jakarta.nonarkara.org';
@@ -376,6 +377,48 @@ const LENS_AUDIT = () => {
   return out;
 };
 
+const REFUSAL_AUDIT = () => {
+  const text = document.getElementById('atlas-lens-body')?.innerText || '';
+  const reason=[...document.querySelectorAll('#atlas-lens-body p')].find(p=>/rate limited|permintaan dibatasi/i.test(p.textContent));
+  const reasonLines=reason?reason.getBoundingClientRect().height/parseFloat(getComputedStyle(reason).lineHeight):Infinity;
+  return {reasonLines,refused:/rate limited|permintaan dibatasi/i.test(text),window:/\b47\b/.test(text),
+    claimsLevels:/current levels|without a usable level|kept as dated evidence/i.test(text),
+    width:document.documentElement.scrollWidth};
+};
+for (const [w, h] of [[1440, 900], [1024, 768], [390, 844]]) {
+  const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+  const page = await ctx.newPage();
+  const where = `atlas-refusal@${w}`;
+  page.on('pageerror', (e) => record(where, 'page error', false, String(e).slice(0, 100)));
+  await page.route('**/api/**', route => route.fulfill({status:429,
+    headers:{'content-type':'application/json','retry-after':'47'},
+    body:JSON.stringify({error:'Too many requests',retryAfterSeconds:47})}));
+  await page.goto(BASE + '/atlas?lens=waterways&lang=en', {waitUntil:'domcontentloaded',timeout:90000});
+  await page.waitForSelector('#atlas-lens-evidence', {timeout:30000});
+  await page.evaluate(() => { document.getElementById('atlas-lens-evidence').open=true; });
+  const ready=await page.evaluate(panelReadiness,{expand:true,timeoutMs:45000});
+  record(where,'refused panel reaches a terminal state',ready.ready,JSON.stringify(ready));
+  const panel=await page.evaluate(REFUSAL_AUDIT);
+  record(where,'a refused request is stated as rate limited',panel.refused,'explicit request state');
+  record(where,'the refusal names the retry window',panel.window,'47 seconds');
+  record(where,'a refusal prints no count of levels',!panel.claimsLevels,'no invented gauge count');
+  record(where,'refusal stays within four reading lines',panel.reasonLines<=4.1,`${panel.reasonLines} lines`);
+  record(where,'refusal fits viewport',panel.width===w,`${panel.width}/${w}`);
+  if(SHOTS)await page.screenshot({path:`${SHOTS}/atlas-refusal-${w}.png`});
+  // Restore the discarded wordy reason on this local browser fixture. The same
+  // four-line budget must reject the extra reading cost without shrinking type.
+  await page.evaluate(() => {const p=[...document.querySelectorAll('#atlas-lens-body p')].find(n=>/rate limited|permintaan dibatasi/i.test(n.textContent));p.dataset.original=p.textContent;p.textContent='Request rate limited. This address sent too many requests, so the server refused this one. Nothing was measured and nothing is missing — the same reading can be fetched again in about 47 seconds.';});
+  const wordy=await page.evaluate(REFUSAL_AUDIT);
+  record(where,'refusal reading budget bites',wordy.reasonLines>4.1,`${wordy.reasonLines} old-copy lines`);
+  await page.evaluate(() => {const p=document.querySelector('[data-original]');p.textContent=p.dataset.original;delete p.dataset.original;});
+  // Inject the old false claim into this refused fixture; the same checker must see it.
+  await page.evaluate(() => { const p=document.createElement('p');p.id='refusal-mutant';p.textContent='0 current levels · 58 without a usable level';document.getElementById('atlas-lens-body').append(p); });
+  const mutated=await page.evaluate(REFUSAL_AUDIT);
+  record(where,'refusal claim detector bites',mutated.claimsLevels,'injected false gauge count detected');
+  await page.evaluate(() => document.getElementById('refusal-mutant').remove());
+  await ctx.close();
+}
+
 for (const [w, h] of [[1440, 900], [1024, 768]]) {
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
   const page = await ctx.newPage();
@@ -510,6 +553,8 @@ for(const width of [1440,390]){
  await ctx.close();
 }
 
+await auditRefusalSessions(browser,BASE);
+record('refusal sessions','Research/haze recovery and independent feeds',true,'actual controllers, current synthetic fixtures, EN/ID and no page errors');
 await browser.close();
 
 const failed = results.filter((r) => !r.ok);

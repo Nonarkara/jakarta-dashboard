@@ -1,6 +1,7 @@
 import {waterOverlayAnchor} from './water-layer-order.js';
 import {createPolderBudget} from './polder-budget.js';
 import {createWaterContext} from './water-context.js?v=coastal-worldcover-v1';
+import {RefusalError,refusalSeconds,isRefusalError,refusalMessage} from './refusal.js';
 // Lazy map lenses: mapped hydrography, dated gauges/model flow, public traffic-camera references.
 export function volumeM3(dischargeM3s,hours) {
   return Number.isFinite(dischargeM3s)&&dischargeM3s>=0&&Number.isFinite(hours)&&hours>0&&hours<=168?dischargeM3s*hours*3600:null;
@@ -23,6 +24,9 @@ export function isDatedHydrologyEnvelope(data) {
       s.tier==='publisher-gauge-level' && s.sourceUrl==='https://ewscilicis.id');
 }
 export async function readObservationResponse(response,path) {
+  // A refusal is not a broken source and not an empty one. It is a request the
+  // server did not measure, and it must never be mistaken for a reading.
+  if(response.status===429){const body=await response.json().catch(()=>null);throw new RefusalError(refusalSeconds(response,body));}
   if(response.ok)return response.json();
   if(path==='/api/atlas/hydrology' && response.status===503){const data=await response.json();if(isDatedHydrologyEnvelope(data))return data;}
   throw new Error('source '+response.status);
@@ -211,7 +215,14 @@ export function createController(map,{text:t,active,buildTag}) {
     const measure=section(body,'Incoming water · gauges & volume','Air masuk · pos & volume');
     measure.append(el('p',t('Loading publisher readings…','Memuat pembacaan penerbit…')));
     comparison(section(body,'Satellite & model comparison','Perbandingan satelit & model'),token).catch(()=>{});
-    try {hydrology=await get('/api/atlas/hydrology');}catch{hydrology={stations:[],predictions:[],available:false};}
+    // A refused request is not a reading. The static reference below carries
+    // gauge POSITIONS, and a position without a level still ends up counted as
+    // "0 current levels · 58 without a usable level" — a claim about the
+    // city's water made from a request the server never answered. So a
+    // refusal stops here, before the fallback, and says what happened.
+    let refusal=null;
+    try {hydrology=await get('/api/atlas/hydrology');}catch(error){if(isRefusalError(error))refusal=error;else hydrology={stations:[],predictions:[],available:false};}
+    if(refusal){if(token!==epoch)return;measure.replaceChildren();measure.append(el('p',refusalMessage(refusal.retryAfterSeconds,t),'note'));return;}
     if(!hydrology.stations?.length){let reference;try{reference=await get('/data/jakarta-v1/hydrology-reference.json?v='+buildTag);}catch{reference={stations:[],checkedAt:null};}hydrology={...hydrology,stations:reference.stations.map(s=>({...s,levelM:null,observedAt:null,levelState:'unknown',sourceUrl:reference.sourceUrl})),checkedAt:hydrology.checkedAt||reference.checkedAt,predictions:hydrology.predictions||[]};}if(token!==epoch)return;
     measure.replaceChildren();
     const fresh=hydrology.stations.filter(s=>gaugeState(s)==='fresh').length;

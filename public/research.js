@@ -8,6 +8,7 @@ import { trajectory } from './haze-transport.js';
 import { makeSampler, stepLngLat } from './flow-canvas.js';
 import { labelPosition } from './research-labels.js';
 import {currentResearchField,createResearchSession,researchFires} from './research-session.js';
+import {readJson,isRefusalError,refusalMessage} from './refusal.js';
 
 const JAKARTA = { lng: 106.8272, lat: -6.1754 };
 const root = document.documentElement;
@@ -19,7 +20,10 @@ try {
 const t = (en, id) => (lang === 'en' ? en : id);
 const fmt = (n, d = 0) => (Number.isFinite(n) ? n.toLocaleString(lang === 'en' ? 'en-GB' : 'id-ID', { maximumFractionDigits: d, minimumFractionDigits: d }) : '—');
 const css = (name) => getComputedStyle(root).getPropertyValue(name).trim();
-const json = (url) => fetch(url, { signal: AbortSignal.timeout(35000) }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+// One reader for every response. A refused request throws a refusal that
+// carries its retry window, so the page below can say what happened instead
+// of calling the model unavailable.
+const json = (url) => fetch(url, { signal: AbortSignal.timeout(35000) }).then((r) => readJson(r)).catch(() => null);
 const renders = [];
 function applyLang() {
   root.lang = lang; root.dataset.lang = lang;
@@ -309,7 +313,7 @@ function renderField([syn, fires]) {
       t('grid step', 'langkah kisi') + ' ' + fmt(syn.spacingKm) + ' km',
       low ? (low.isLow ? t('closed low', 'pusat rendah tertutup') : t('lowest (open, not a closed low)', 'terendah (terbuka, bukan pusat tertutup)')) + ' ' + fmt(low.mslpHpa) + ' hPa' : null,
       run ? t('Jakarta parcel', 'parsel Jakarta') + ' ' + run.hours + ' h' + (run.stopped ? ' (' + ({ 'left-field': t('left the data', 'keluar dari data'), 'forecast-ends': t('forecast ends', 'prakiraan berakhir'), 'no-wind': t('no wind cell', 'tanpa sel angin') }[run.stopped] || run.stopped) + ')' : '') : null,
-      fires?.count != null ? fmt(fires.count) + ' ' + t('FIRMS detections in 24 h (region)', 'deteksi FIRMS dalam 24 jam (wilayah)') : t('FIRMS unavailable', 'FIRMS tidak tersedia'),
+      fires?.count != null ? fmt(fires.count) + ' ' + t('FIRMS detections in 24 h (region)', 'deteksi FIRMS dalam 24 jam (wilayah)') : fireRefusal ? t('Thermal detections','Deteksi termal')+' · '+refusalMessage(fireRefusal.retryAfterSeconds,t) : t('FIRMS unavailable', 'FIRMS tidak tersedia'),
       'Open-Meteo · ' + t('model estimate', 'estimasi model'),
     ];
     caption.textContent = parts.filter(Boolean).join(' · ');
@@ -325,16 +329,22 @@ function renderField([syn, fires]) {
   };
 }
 let sessionStatus=null;
+let httpRefusal=null,fireRefusal=null;
 const statusText=state=>{
   sessionStatus=state;
+  if(state==='loading'){httpRefusal=null;fireRefusal=null;}
   refreshButton.disabled=state==='loading';
-  showField(false, state==='paused'?t('The field is paused.','Medan dijeda.'):state==='unavailable'?t('The model field is unavailable.','Medan model tidak tersedia.'):t('Loading the model field…','Memuat medan model…'));
+  // A refused request was never measured. It is not an unavailable model, and
+  // the page says which one it is.
+  const refused=state==='unavailable'&&httpRefusal;
+  const refusalText=refused?refusalMessage(httpRefusal.retryAfterSeconds,t):null;
+  showField(false, refusalText??(state==='paused'?t('The field is paused.','Medan dijeda.'):state==='unavailable'?t('The model field is unavailable.','Medan model tidak tersedia.'):t('Loading the model field…','Memuat medan model…')));
   motion.hidden=true;
-  caption.textContent=state==='paused'?t('View paused. Returning checks the model again before playback.', 'Tampilan dijeda. Saat kembali, model diperiksa lagi sebelum pemutaran.'):state==='unavailable'?t('Model field unavailable. Retry to check the source again.', 'Medan model tidak tersedia. Coba lagi untuk memeriksa sumber.'):t('Refreshing the model field… Last view is paused; no current field is implied.', 'Memperbarui medan model… Tampilan terakhir dijeda; tidak menyiratkan medan terkini.');
+  caption.textContent=refusalText??(state==='paused'?t('View paused. Returning checks the model again before playback.', 'Tampilan dijeda. Saat kembali, model diperiksa lagi sebelum pemutaran.'):state==='unavailable'?t('Model field unavailable. Retry to check the source again.', 'Medan model tidak tersedia. Coba lagi untuk memeriksa sumber.'):t('Refreshing the model field… Last view is paused; no current field is implied.', 'Memperbarui medan model… Tampilan terakhir dijeda; tidak menyiratkan medan terkini.'));
 };
 const session=createResearchSession({document,
-  load: signal=>Promise.all(['/api/atlas/synoptic','/api/atlas/fires'].map(url=>fetch(url,{signal:AbortSignal.any([signal,AbortSignal.timeout(url.endsWith('synoptic')?50000:20000)]),headers:{accept:'application/json'}}).then(r=>r.ok?r.json():null).catch(()=>null))),
-  render:value=>{sessionStatus=null;refreshButton.disabled=false;return renderField(value);},status:statusText,
+  load: signal=>Promise.all(['/api/atlas/synoptic','/api/atlas/fires'].map(url=>fetch(url,{signal:AbortSignal.any([signal,AbortSignal.timeout(url.endsWith('synoptic')?50000:20000)]),headers:{accept:'application/json'}}).then(r=>readJson(r)).catch(error=>{if(isRefusalError(error)&&!signal.aborted){if(url.endsWith('/synoptic')){httpRefusal=error;return null;}fireRefusal=error;}return null;}))),
+  render:value=>{if(httpRefusal){statusText('unavailable');return;}sessionStatus=null;refreshButton.disabled=false;return renderField(value);},status:statusText,
 });
 renders.push(()=>{if(sessionStatus)statusText(sessionStatus);});
 refreshButton.addEventListener('click',()=>session.refresh());

@@ -96,6 +96,7 @@ function clusterBy(values, tol) {
 }
 
 import { admitModel, currentHourIndex, admissionMessage, scrubGapMessage } from './temporal-admission.js';
+import { readJson, isRefusalError, refusalMessage } from './refusal.js';
 
 export function gridOf(cells) {
   const usable = (cells || []).filter((c) => Number.isFinite(c?.lat) && Number.isFinite(c?.lng) && Number.isFinite(c.mslpHpa));
@@ -253,7 +254,7 @@ export function createSynoptic(map, { text: t, active, buildTag, flow }) {
   const activeIsOneOf = () => PAINTS_ON.includes(active());
   let data = null, epoch = 0;
   let source = null, isoLayer = null, windLayer = null, lowLayer = null, lowLabelLayer = null;
-  const state = { index: 0, isobars: true, wind850: true, admission: null };
+  const state = { index: 0, isobars: true, wind850: true, admission: null, httpRefusal: null };
   let lastBody = null, drawnLastRender = null, zoomListener = null;
 
   const el = (tag, content, cls) => { const n = document.createElement(tag); if (content !== undefined) n.textContent = content; if (cls) n.className = cls; return n; };
@@ -382,6 +383,12 @@ export function createSynoptic(map, { text: t, active, buildTag, flow }) {
     // module, because renderLensEvidence() clears this body wholesale.
     const repaint = () => render(body.parentElement?.querySelector('#atlas-lens-body') || body);
     const host = slot(body);
+    // A refused request was never measured. It is not a model that returned no
+    // usable field, and the panel must not blame the model for it.
+    if (state.httpRefusal) {
+      host.append(el('p', refusalMessage(state.httpRefusal.retryAfterSeconds, t), 'synoptic-note'));
+      return;
+    }
     if (!data) { host.append(el('p', t('Loading the pressure model…', 'Memuat model tekanan…'), 'synoptic-note')); return; }
     if (!data.available) {
       host.append(el('p', t('The pressure model returned no usable field. No isobar is drawn and no low is implied.', 'Model tekanan tidak mengembalikan medan yang dapat dipakai. Tidak ada isobar yang digambar dan tidak ada rendah yang diasumsikan.'), 'synoptic-note'));
@@ -480,7 +487,7 @@ export function createSynoptic(map, { text: t, active, buildTag, flow }) {
   function show(body) {
     hide();
     const myEpoch = ++epoch;
-    data = null; state.index = 0; state.isobars = true; state.wind850 = true; state.admission = null;
+    data = null; state.index = 0; state.isobars = true; state.wind850 = true; state.admission = null; state.httpRefusal = null;
     lastBody = body;
     if (!zoomListener) {
       // The note that says the field is not drawn has to follow the camera.
@@ -498,8 +505,8 @@ export function createSynoptic(map, { text: t, active, buildTag, flow }) {
     }
     render(body);
     fetch('/api/atlas/synoptic' + (buildTag ? '?v=' + encodeURIComponent(buildTag) : ''), { headers: { accept: 'application/json' }, signal: AbortSignal.timeout(20000) })
-      .then((r) => (r.ok ? r.json() : { available: false }))
-      .catch(() => ({ available: false }))
+      .then((r) => readJson(r))
+      .catch((error) => { if (isRefusalError(error)) throw error; return { available: false }; })
       .then((d) => {
         if (myEpoch !== epoch) return;
         data = d;
@@ -510,11 +517,19 @@ export function createSynoptic(map, { text: t, active, buildTag, flow }) {
         state.index = admission.ok ? admission.index : Math.max(0, currentIndex());
         draw();
         render(body);
+      })
+      .catch((error) => {
+        // The request was refused, not answered badly. Nothing was measured,
+        // so the panel says so instead of blaming the model.
+        if (myEpoch !== epoch) return;
+        state.httpRefusal = isRefusalError(error) ? error : null;
+        data = { available: false };
+        render(body);
       });
   }
 
   function clear() {
-    epoch++; data = null; state.index = 0; lastBody = null; drawnLastRender = null;
+    epoch++; data = null; state.index = 0; state.admission = null; state.httpRefusal = null; lastBody = null; drawnLastRender = null;
     if (zoomListener) { map.off('zoomend', zoomListener); zoomListener = null; }
     hide();
   }
