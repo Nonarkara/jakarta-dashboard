@@ -402,14 +402,14 @@ for (const [w, h] of [[1440, 900], [1024, 768], [390, 844]]) {
   record(where,'a refused request is stated as rate limited',panel.refused,'explicit request state');
   record(where,'the refusal names the retry window',panel.window,'47 seconds');
   record(where,'a refusal prints no count of levels',!panel.claimsLevels,'no invented gauge count');
-  record(where,'refusal stays within four reading lines',panel.reasonLines<=4.1,`${panel.reasonLines} lines`);
+  record(where,'refusal stays within three reading lines',panel.reasonLines<=3.1,`${panel.reasonLines} lines`);
   record(where,'refusal fits viewport',panel.width===w,`${panel.width}/${w}`);
   if(SHOTS)await page.screenshot({path:`${SHOTS}/atlas-refusal-${w}.png`});
   // Restore the discarded wordy reason on this local browser fixture. The same
-  // four-line budget must reject the extra reading cost without shrinking type.
+  // three-line budget must reject the extra reading cost without shrinking type.
   await page.evaluate(() => {const p=[...document.querySelectorAll('#atlas-lens-body p')].find(n=>/rate limited|permintaan dibatasi/i.test(n.textContent));p.dataset.original=p.textContent;p.textContent='Request rate limited. This address sent too many requests, so the server refused this one. Nothing was measured and nothing is missing — the same reading can be fetched again in about 47 seconds.';});
   const wordy=await page.evaluate(REFUSAL_AUDIT);
-  record(where,'refusal reading budget bites',wordy.reasonLines>4.1,`${wordy.reasonLines} old-copy lines`);
+  record(where,'refusal reading budget bites',wordy.reasonLines>3.1,`${wordy.reasonLines} old-copy lines`);
   await page.evaluate(() => {const p=document.querySelector('[data-original]');p.textContent=p.dataset.original;delete p.dataset.original;});
   // Inject the old false claim into this refused fixture; the same checker must see it.
   await page.evaluate(() => { const p=document.createElement('p');p.id='refusal-mutant';p.textContent='0 current levels · 58 without a usable level';document.getElementById('atlas-lens-body').append(p); });
