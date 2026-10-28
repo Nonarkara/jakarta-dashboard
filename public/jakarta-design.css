@@ -168,6 +168,23 @@ body[data-surface="jakarta-dashboard"] .map-heading h2 { margin: 0; }
   .city-controls { grid-column: 2; grid-row: 1; }
 }
 
+/* Thin top bar: live clock and feed pulse. Chrome earns its pixels — label
+   plus padding, no radius, no gradient, one accent. */
+.top-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 12px;
+  font-size: var(--type-note);
+  font-family: var(--font-mono);
+  color: var(--dim);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-strong);
+}
+.top-bar-clock { color: var(--ink); font-variant-numeric: tabular-nums; }
+.top-bar-sep { color: var(--line); }
+.top-bar-vibes { color: var(--accent); }
+
 body[data-surface="jakarta-atlas"] .atlas-title::before {
   content: ''; display: inline-block; vertical-align: middle; margin-right: 8px;
   width: 32px; height: 30px;
