@@ -8,7 +8,7 @@ const model={available:true,checkedAt:new Date(now).toISOString(),requestedPoint
 const fires={type:'FeatureCollection',windowHours:24,fetchedAt:new Date(now).toISOString(),features:[]};
 const page=await context.newPage(); const errors=[];page.on('pageerror',e=>errors.push(String(e)));
 await page.route('**/api/**',async route=>{const path=new URL(route.request().url()).pathname;
- if((mode==='primary429'&&path.endsWith('/synoptic'))||(mode==='aux429'&&path.endsWith('/haze-receptors'))||(mode==='fire429'&&path.endsWith('/fires')))return route.fulfill({status:429,headers:{'retry-after':'47','content-type':'application/json'},body:JSON.stringify({retryAfterSeconds:47})});
+ if(mode==='all429'||(mode==='primary429'&&path.endsWith('/synoptic'))||(mode==='aux429'&&path.endsWith('/haze-receptors'))||(mode==='fire429'&&path.endsWith('/fires')))return route.fulfill({status:429,headers:{'retry-after':'47','content-type':'application/json'},body:JSON.stringify({retryAfterSeconds:47})});
  if(mode==='ordinary503'&&path.endsWith('/synoptic'))return route.fulfill({status:503,contentType:'application/json',body:'{}'});
  return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(path.endsWith('/synoptic')?model:path.endsWith('/fires')?fires:{available:false})});});
 await page.goto(base+'/research?lang=en',{waitUntil:'domcontentloaded'});
@@ -38,6 +38,13 @@ let text=await page.locator('#independent-haze').innerText();assert.match(text,/
 mode='healthy';await page.locator('#independent-haze').getByRole('button',{name:'Refresh evidence',exact:true}).click();
 await page.waitForFunction(()=>document.querySelector('#independent-haze')?.textContent.includes('Each line is the path')&&!document.querySelector('#independent-haze')?.textContent.includes('rate limited'));
 console.log('PASS Haze: auxiliary receptor429 preserves wind paths and valid fire count; refresh clears refusal');
-await page.evaluate(()=>window.independentHaze.clear());assert.deepEqual(errors,[]);console.log('PASS browser page errors:0');
+await page.evaluate(()=>window.independentHaze.clear());
+mode='all429';await page.goto(base+'/atlas?lang=en&lens=city',{waitUntil:'domcontentloaded'});
+await page.waitForFunction(()=>document.getElementById('atlas-watch-request-status')?.textContent.includes('rate limited'));
+await page.locator('#atlas-watch-shell > summary').click();
+const watch=await page.evaluate(()=>({status:document.getElementById('atlas-watch-request-status').textContent,values:[...document.querySelectorAll('.atlas-watch-grid strong')].map(n=>n.textContent)}));
+assert.match(watch.status,/47/);assert.deepEqual(watch.values,Array(4).fill('Not retrieved'),'one shared failure reason, four compact values');
+console.log('PASS city watch: one shared request reason, no fourfold error copy');
+assert.deepEqual(errors,[]);console.log('PASS browser page errors:0');
 await context.close();
 }

@@ -29,3 +29,5 @@ Existing shared first-action falsifier gaps from the previous receipt remain sep
 ## Production
 
 Pending canonical release and final production browser verification. Earlier local captures are development evidence; final live captures and exact release result will be appended.
+
+Pre-deploy refinement: stopped the first canonical attempt at its spatial stage (exit143, before deployment; lock cleared) after finding the same shared watch error repeated in four value rows. It now has one visible shared reason inside City watch, with four short `Not retrieved` / `Belum diambil` values. Healthy data hides the failure reason. An actual-browser all429 scenario protects this composition; no map/bar styling changed. The complete canonical chain restarts below.

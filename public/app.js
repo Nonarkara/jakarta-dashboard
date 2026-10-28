@@ -1514,7 +1514,7 @@ function stopMapMotion() {
   button?.setAttribute('aria-pressed', 'false'); if (button) button.textContent = 'Enable orbit';
   mapInstance?.stop();
 }
-let watchData = null, watchRefusalText = null;
+let watchData = null;
 function watchValue(id, text) { setToggleLabel(id, text); }
 function watchPlace(topic) {
   const places = watchData?.places || [];
@@ -1528,10 +1528,12 @@ function watchPlace(topic) {
 }
 function renderCityWatch() {
   const action = document.getElementById("atlas-watch-action");
+  const requestStatus=document.getElementById("atlas-watch-request-status");
+  if(requestStatus){requestStatus.hidden=!!watchData;requestStatus.textContent=watchData?"":refusalFor("/api/atlas/watch")||lensText("Open data unavailable. No all-clear is assumed.","Data terbuka tidak tersedia. Kondisi aman tidak disimpulkan.");}
   if (!watchData) {
     // A refused request is not an open-data outage. The two read very
     // differently to a reader deciding whether the city is quiet.
-    const text = watchRefusalText || "Open data unavailable. No all-clear is assumed.";
+    const text = lensText("Not retrieved","Belum diambil");
     ["atlas-watch-flood-value", "atlas-watch-air-value", "atlas-watch-wind-value", "atlas-watch-traffic-value"].forEach(id => watchValue(id, text));
     if (action) { action.hidden = true; action.textContent = ""; }
     return;
@@ -1596,7 +1598,6 @@ async function refreshCityWatch(force) {
   if (force) liveCache.delete("/api/atlas/watch");
   const data = await fetchLive("/api/atlas/watch", 120);
   watchData = data && Array.isArray(data.places) && Array.isArray(data.notices) ? data : null;
-  watchRefusalText = watchData ? null : refusalFor("/api/atlas/watch");
   await fillWatchAir();
   renderCityWatch();
 }
