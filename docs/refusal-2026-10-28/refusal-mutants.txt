@@ -1,0 +1,14 @@
+PASS clean reduced fixture: scripts/test-refusal.mjs
+KILL  the shared reader stops throwing on a refusal (the shipped defect)
+KILL  the retry window is dropped from the header
+KILL  a refusal stops being recognisable
+KILL  the copy stops naming the window
+KILL  the copy stops naming the cause
+KILL  the water lens falls through to the static reference (the shipped false claim)
+KILL  the air lens reports a refusal as an invalid model
+KILL  the atlas client stops using the shared reader
+KILL  a client stops importing the shared rule
+KILL  pressure drops the refused request state
+KILL  wind leaves an ordinary failed request loading
+
+11/11 killed
