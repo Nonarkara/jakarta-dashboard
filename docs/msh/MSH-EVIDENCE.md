@@ -1,6 +1,6 @@
 # MSH evidence — the deployed site
 
-**Build:** `jakarta-atlas-20261026-1793000157-d6a17fc` — read from the deployed `app.js` at https://jakarta.nonarkara.org.
+**Build:** `jakarta-atlas-20261029-1793280342-c4b3364` — read from the deployed `app.js` at https://jakarta.nonarkara.org.
 **Method:** a real browser at the three widths the law names — 390 × 844, 1024 × **900** (the height used at 1024), 1440 × 900 — on every route.
 **Screenshots:** `docs/msh/` — the pixels these numbers were read from.
 
@@ -10,9 +10,9 @@ The law's five questions, asked of each viewport.
 
 | Viewport | Chrome cost | Task visibility | Geometry failures | Hierarchy | Preservation |
 |---|---|---|---|---|---|
-| 390 × 844 — the law's phone size | 23px top (2.7%), 1 band(s) stacked; 0px bottom, 0 band(s) stacked | first action at 0px — **in the first screen**; the title is at 10px | no sideways scroll, nothing past the edge | title 20px, loudest 18px (span.city-brand-wordmark), ratio 1.11, 1 peer(s) at 3.3% of the text | 17 controls, 1 under 24px, 0 canvas(es), main present, title present |
+| 390 × 844 — the law's phone size | 23px top (2.7%), 1 band(s) stacked; 0px bottom, 0 band(s) stacked | first action at 0px — **in the first screen**; the title is at 10px | no sideways scroll; 3 element(s) past the edge: nav.sections, a., button. | title 20px, loudest 18px (span.city-brand-wordmark), ratio 1.11, 1 peer(s) at 1.9% of the text | 17 controls, 1 under 24px, 0 canvas(es), main present, title present |
 | 1024 × 900 — the intermediate width; height 900 used | 38px top (4.2%), 1 band(s) stacked; 0px bottom, 0 band(s) stacked | first action at 0px — **in the first screen**; the title is at 18px | no sideways scroll, nothing past the edge | title 20px, loudest 22px (span.city-brand-wordmark), ratio 0.91, 0 peer(s) at 0% of the text | 17 controls, 0 under 24px, 0 canvas(es), main present, title present |
-| 1440 × 900 — the law's desktop size | 38px top (4.2%), 1 band(s) stacked; 0px bottom, 0 band(s) stacked | first action at 0px — **in the first screen**; the title is at 18px | no sideways scroll, nothing past the edge | title 20px, loudest 22px (span.city-brand-wordmark), ratio 0.91, 0 peer(s) at 0% of the text | 21 controls, 0 under 24px, 0 canvas(es), main present, title present |
+| 1440 × 900 — the law's desktop size | 38px top (4.2%), 1 band(s) stacked; 0px bottom, 0 band(s) stacked | first action at 0px — **in the first screen**; the title is at 18px | no sideways scroll, nothing past the edge | title 20px, loudest 22px (span.city-brand-wordmark), ratio 0.91, 0 peer(s) at 0% of the text | 18 controls, 0 under 24px, 0 canvas(es), main present, title present |
 
 ## atlas — `/atlas`
 
