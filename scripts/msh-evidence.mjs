@@ -131,7 +131,27 @@ async function openBrowser() {
   };
 }
 
-let { browser, close } = await openBrowser();
+/**
+ * The browser is launched with a real Chrome over a debugging port, and
+ * macOS sometimes refuses the first connection — the port opens and the
+ * handshake does not finish. That is a launch race, not a measurement, so it
+ * is retried rather than reported as a failure of the record.
+ */
+async function openBrowserWithRetry(attempts = 3) {
+  let last = null;
+  for (let i = 1; i <= attempts; i++) {
+    try {
+      return await openBrowser();
+    } catch (e) {
+      last = e;
+      console.error(`  · the browser did not connect (attempt ${i}/${attempts}); trying again`);
+      await new Promise((r) => setTimeout(r, 2000));
+    }
+  }
+  throw last;
+}
+
+let { browser, close } = await openBrowserWithRetry();
 let ctx = browser.contexts()[0] ?? (await browser.newContext());
 let page = await ctx.newPage();
 
@@ -140,7 +160,7 @@ let page = await ctx.newPage();
 async function ensureBrowser() {
   if (browser.isConnected()) return;
   console.error("  · the browser died; starting another");
-  ({ browser, close } = await openBrowser());
+  ({ browser, close } = await openBrowserWithRetry());
   ctx = browser.contexts()[0] ?? (await browser.newContext());
   page = await ctx.newPage();
 }
@@ -262,6 +282,17 @@ async function measure() {
     const spill = [];
     for (const el of document.querySelectorAll("body *")) {
       if (!visible(el)) continue;
+      // A closed <details> hides its content with content-visibility, not with
+      // display:none. The box is still laid out and still has a rect, so the
+      // checks above pass while the reader sees nothing at all — and a closed
+      // drawer that hangs off the left edge was being counted as a geometry
+      // failure on a page that is not failing. checkVisibility is what knows
+      // the difference between a box that is painted and a box that is only
+      // laid out. The page says "no sideways scroll" in the same breath as
+      // listing elements past the edge, which is how a reader learns that one
+      // of the two statements is about a drawer and not about the page.
+      if (typeof el.checkVisibility === "function" &&
+          !el.checkVisibility({ contentVisibilityAuto: true, opacityProperty: true, visibilityProperty: true })) continue;
       const r = el.getBoundingClientRect();
       if (r.width === 0) continue;
       if (r.right > vw + 1 || r.left < -1) {

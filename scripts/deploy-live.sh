@@ -104,13 +104,30 @@ ATLAS_URL="$ATLAS_URL" node scripts/audit-rendered.mjs
 # be captured before the deploy, and a record that names an older build is a
 # receipt for a page that is not there: the last one went stale for two days
 # and nobody noticed, because nothing said so. So it is captured here, against
-# what just shipped, and committed with a pathspec so the next release starts
-# from a clean tree.
-node scripts/msh-evidence.mjs "$ATLAS_URL" docs/msh
-if ! git diff --quiet HEAD -- docs/msh; then
+# what just shipped.
+#
+# It is captured into a scratch directory and only moved into docs/msh when
+# the capture completes: a browser that dies half way through must not leave a
+# half-written record behind, and must not leave the tree dirty for the next
+# release. If it cannot be captured at all, the release says so loudly and
+# fails — a record that is stale is a record that is a lie, and the build it
+# names is printed so nobody has to guess which one.
+MSH_SCRATCH="$(mktemp -d)/msh"
+if node scripts/msh-evidence.mjs "$ATLAS_URL" "$MSH_SCRATCH"; then
+  rm -rf docs/msh
+  mkdir -p docs/msh
+  cp -R "$MSH_SCRATCH/." docs/msh/
   git add -- docs/msh
   git commit -q -m "docs: record the MSH evidence for the deployed build" -m "Agent: ${RELEASE_AGENT:-unattributed-release}" -- docs/msh
+else
+  echo "FAIL — the MSH record could not be captured." >&2
+  echo "  It still names an older build than the one that just shipped." >&2
+  echo "  Shipped build: $(node --input-type=module -e 'import {readFileSync} from "node:fs"; console.log(readFileSync("public/app.js", "utf8").match(/const ATLAS_BUILD_TAG = "([^"]+)"/)[1])')" >&2
+  echo "  The record names: $(grep -m1 -o 'jakarta-atlas-[0-9a-z-]*' docs/msh/MSH-EVIDENCE.md || echo nothing)" >&2
+  rm -rf "$(dirname "$MSH_SCRATCH")"
+  exit 1
 fi
+rm -rf "$(dirname "$MSH_SCRATCH")"
 node scripts/release-snapshot.mjs check "$LOCK/inputs.json"
 
 echo "released ${EXPECTED_BUILD}; working tree:"
