@@ -51,6 +51,13 @@ check_clean
 # runs on the committed tree, before the stamp, so what it measures is what
 # ships.
 npm run audit:spatial
+# The chrome census: the spatial instrument can only name the bands it knows
+# (fixed, sticky, or a <header> at the top), so a band that is not a <header>
+# can hide from it — and a re-baseline would then record a blind spot as an
+# improvement. The census measures the same chrome a second way and makes the
+# receipt answer for the page. It runs on the committed tree, before the
+# stamp, so what it measures is what ships.
+npm run audit:chrome
 npm run stamp
 node scripts/release-snapshot.mjs write "$LOCK/inputs.json"
 npx wrangler deploy

@@ -70,7 +70,7 @@ function applyLanguage(){
  document.title=t('Pantau Jakarta','Jakarta city watch');
  $('city-map').title=t('Atlas 3D Jakarta','Jakarta 3D atlas');
  document.querySelector('.sections').setAttribute('aria-label',t('Navigasi bagian','Section navigation'));
- send({type:'atlas:setLanguage',language:lang});renderWeather();renderAir();renderIspu();renderAlerts();renderQuake();renderFlood();renderTransit();renderCivic();renderSources();renderCrmViewerStatus();renderExplorePlaces();renderBuildingView();clock();document.dispatchEvent(new Event('dashboard:language'));
+ send({type:'atlas:setLanguage',language:lang});renderWeather();renderAir();renderIspu();renderAlerts();renderQuake();renderFlood();renderTransit();renderCivic();renderSources();renderSourceStatus();renderCrmViewerStatus();renderExplorePlaces();renderBuildingView();clock();document.dispatchEvent(new Event('dashboard:language'));
  $('release').textContent='v'+DASHBOARD_VERSION+' · '+DASHBOARD_BUILD;
 }
 function renderWeather(){
@@ -91,7 +91,7 @@ function renderForecast(){
 }
 function renderAir(){
  const rows=Array.isArray(airData)?airData:[];
- $('air-summary').innerHTML=rows.length?rows.map(p=>'<div class="reading"><div class="reading-top"><span>'+esc(lang==='id'?p.label_id:p.label)+'</span><strong>'+num(p.aqi)+' US AQI</strong></div><p>PM2.5 '+num(p.pm25,1)+' µg/m³ · '+esc(stale(p.observedAt,3*3600000)?t('kedaluwarsa','stale'):t('perkiraan model','model estimate'))+'</p>'+evidence('CAMS / Open-Meteo',t('model','modeled'),p.observedAt)+'</div>').join(''):unavailable('/api/atlas/air-quality');
+ $('air-summary').innerHTML=rows.length?rows.map(p=>'<div class="reading"><div class="reading-top"><span>'+esc(lang==='id'?p.label_id:p.label)+'</span><strong>'+num(p.aqi)+' US AQI</strong></div><p>PM2.5 '+num(p.pm25,1)+' µg/m³ · '+esc(stale(p.observedAt,SOURCE_RULES.air.maxAgeMs)?t('kedaluwarsa','stale'):t('perkiraan model','model estimate'))+'</p>'+evidence('CAMS / Open-Meteo',t('model','modeled'),p.observedAt)+'</div>').join(''):unavailable('/api/atlas/air-quality');
 }
 function renderIspu(){
  const d=ispuData;
@@ -105,7 +105,7 @@ function renderIspu(){
 function renderAlerts(){
  const d=alertsData;
  if(!d){$('alerts').innerHTML=unavailable(alertsUrl());return;}
- const active=(d.alerts||[]).filter(a=>!stale(a.sent,12*3600000)&&Date.parse(a.expires)>Date.now());
+ const active=(d.alerts||[]).filter(a=>!stale(a.sent,SOURCE_RULES.alerts.maxAgeMs)&&Date.parse(a.expires)>Date.now());
  $('alerts').innerHTML=(!d.available?unavailable(alertsUrl()):'')+(active.length?active.map(a=>'<article class="warning"><h3>'+esc(a.headline)+'</h3><p>'+esc(a.description)+'</p><p>'+esc(a.instruction)+'</p><p class="meta">'+esc([a.severity,a.urgency,a.certainty].filter(Boolean).map(v=>window.CivicLanguage.alert(v,lang)).join(' · '))+'<br>'+t('Berakhir','Expires')+': '+esc(date(a.expires))+'</p><a href="'+esc(a.sourceUrl)+'" target="_blank" rel="noopener">BMKG CAP ↗</a><button class="alert-map" data-alert="'+esc(a.id)+'">'+t('Lihat wilayah','Show affected area')+'</button></article>').join(''):d.available?'<p>'+t('Tidak ada peringatan aktif yang dikembalikan untuk DKI, Jawa Barat dan Banten.','No active warnings returned for DKI, West Java and Banten.')+'</p>':'')+evidence('BMKG',t('buletin resmi','official bulletin'),d.publishedAt,t('Buletin','Bulletin'))+'<a href="https://www.bmkg.go.id/cuaca/peringatan-dini-cuaca" target="_blank" rel="noopener">'+t('Periksa BMKG ↗','Check BMKG ↗')+'</a>';
 }
 function renderFlood(){
@@ -189,6 +189,100 @@ const ledger=[
  ['Udara Jakarta / BPS / BIG','https://udara.jakarta.go.id/','Sumber lanjutan','Further sources','Statistik kota belum terhubung; prakiraan pasang surut BMKG Priok kini di panel air; ISPU resmi sebagai referensi bulanan','City statistics are not yet connected; BMKG Priok tide forecasts now ship in the water panel; official ISPU ships as a monthly reference','Akses atau izin tambahan','Additional access or permission']
 ];
 function renderSources(){ $('source-ledger').innerHTML=ledger.map(r=>'<tr><td><a href="'+r[1]+'" target="_blank" rel="noopener">'+esc(r[0])+' ↗</a></td><td>'+esc(lang==='id'?r[2]:r[3])+'</td><td>'+esc(lang==='id'?r[4]:r[5])+'</td><td>'+esc(lang==='id'?r[6]:r[7])+'</td></tr>').join(''); }
+
+// ── the source status ─────────────────────────────────────────────────────
+//
+// One line per source: the publisher, the tier the publisher stamped, the
+// time the publisher stamped, how old that is, and — where the product
+// already has a rule for that kind of source — whether it is inside that
+// rule.
+//
+// Every value here is the value the panel already shows. A status view that
+// disagreed with the panel it describes would be a second opinion, and a
+// second opinion is not evidence — so the freshness limits live in
+// SOURCE_RULES and the panels read the same numbers.
+const SOURCE_RULES = {
+  // The model's observation window: the same three hours the air panel has
+  // always used before it calls a model sample stale.
+  air: { maxAgeMs: 3 * 3600000, limit: ['batas 3 jam', '3-hour limit'] },
+  // A warning stays current for half a day: the same twelve hours the
+  // alerts panel has always used before it drops one.
+  alerts: { maxAgeMs: 12 * 3600000, limit: ['batas 12 jam', '12-hour limit'] },
+};
+const sourceAge=(stamp,now)=>{const s=stamp&&Number.isFinite(Date.parse(stamp))?Date.parse(stamp):NaN;return Number.isFinite(s)?Math.max(0,now-s):null;};
+const ago=(ms)=>ms===null?'—':ms<60000?t('baru saja','just now'):ms<3600000?Math.floor(ms/60000)+' '+t('menit lalu','minutes ago'):ms<86400000?Math.floor(ms/3600000)+' '+t('jam lalu','hours ago'):Math.floor(ms/86400000)+' '+t('hari lalu','days ago');
+const clockTime=(at)=>new Date(at).toLocaleTimeString(lang==='id'?'id-ID':'en-GB',{timeZone:'Asia/Jakarta',hour:'2-digit',minute:'2-digit'})+' WIB';
+// Inside the rule, or outside it — said in the source's own words.
+const verdictWord={fresh:['segar','fresh'],stale:['kedaluwarsa','stale'],current:['berlaku','current'],expired:['berakhir','expired']};
+// The five sources this page reads at runtime. Each one is described by the
+// publisher's own tier and by the stamp the publisher put on it.
+const SOURCE_DESCRIPTORS=[
+  {id:'weather',endpoint:'/api/jakarta/weather',name:['BMKG cuaca','BMKG weather'],tier:['prakiraan resmi','official forecast'],label:['Berlaku','Valid'],
+   read:()=>weatherData,
+   stamp:(d,now)=>{const hour=Math.floor(now/3600000)*3600000;const row=(d?.points||[]).flatMap(p=>p.forecast||[]).find(f=>Number.isFinite(Date.parse(f.validAt))&&Math.floor(Date.parse(f.validAt)/3600000)*3600000===hour);return row?row.validAt:null;},
+   // The forecast's own test: it covers the hour being read, or it does not.
+   verdict:(d,now)=>{const hour=Math.floor(now/3600000)*3600000;const covers=(d?.points||[]).some(p=>(p.forecast||[]).some(f=>Number.isFinite(Date.parse(f.validAt))&&Math.floor(Date.parse(f.validAt)/3600000)*3600000===hour));return covers?'current':'expired';}},
+  {id:'air',endpoint:'/api/atlas/air-quality',name:['CAMS / Open-Meteo','CAMS / Open-Meteo'],tier:['perkiraan model','model estimate'],label:['Berlaku','Valid'],
+   read:()=>Array.isArray(airData)?airData:null,
+   stamp:d=>(d||[]).map(p=>p.observedAt).filter(Boolean).sort().pop()||null,
+   verdict:d=>stale((d||[]).map(p=>p.observedAt).filter(Boolean).sort().pop(),SOURCE_RULES.air.maxAgeMs)?'stale':'fresh',rule:'air'},
+  {id:'alerts',endpoint:'/api/jakarta/alerts',name:['BMKG peringatan','BMKG warnings'],tier:['buletin resmi','official bulletin'],label:['Buletin','Bulletin'],
+   read:()=>alertsData,
+   stamp:d=>d?.publishedAt||null,
+   verdict:d=>stale(d?.publishedAt,SOURCE_RULES.alerts.maxAgeMs)?'stale':'fresh',rule:'alerts'},
+  {id:'quake',endpoint:'/api/jakarta/earthquake',name:['BMKG gempa','BMKG earthquakes'],tier:['kejadian resmi','official event'],label:['Pengamatan','Observed'],
+   read:()=>quakeData,
+   stamp:d=>d?.event?.observedAt||null,
+   // An event's age is the event's nature, not a staleness. The feed either
+   // answered or it did not; the panel says which.
+   verdict:()=>null,scope:['kejadian Indonesia terakhir','Indonesia\'s latest event']},
+  {id:'flood',endpoint:'/api/jakarta/flood-reports',name:['PetaBencana','PetaBencana'],tier:['laporan warga','crowdsourced reports'],label:['Diambil','Retrieved'],
+   read:()=>floodData,
+   stamp:d=>d?.fetchedAt||null,
+   verdict:()=>null,scope:['jendela satu jam','one-hour window']},
+];
+function sourceStatusRows(now){
+  return SOURCE_DESCRIPTORS.map(descriptor=>{
+    const data=descriptor.read();
+    const refused=feedRefusals.has(descriptor.endpoint);
+    const state=data?'ok':refused?'refused':'none';
+    const stamp=data?descriptor.stamp(data,now):null;
+    const verdict=state==='ok'?descriptor.verdict(data,now):null;
+    return {id:descriptor.id,name:descriptor.name,tier:descriptor.tier,label:descriptor.label,scope:descriptor.scope||null,endpoint:descriptor.endpoint,state,stamp,age:sourceAge(stamp,now),verdict,rule:descriptor.rule||null,retry:refused?feedRefusals.get(descriptor.endpoint):null};
+  });
+}
+function renderSourceStatus(){
+  const now=Date.now(),rows=sourceStatusRows(now);
+  const answered=rows.filter(r=>r.state==='ok').length,refused=rows.filter(r=>r.state==='refused').length,staleCount=rows.filter(r=>r.verdict==='stale'||r.verdict==='expired').length;
+  const parts=[answered+'/'+rows.length+' '+t('sumber menjawab','sources answered')];
+  if(refused)parts.push(refused+' '+t('ditolak','refused'));
+  if(staleCount)parts.push(staleCount+' '+t('di luar batas','outside their limit'));
+  const summary=parts.join(' · ')+' · '+t('diperiksa','checked')+' '+clockTime(now);
+  const attention=refused>0||staleCount>0||answered<rows.length;
+  $('source-status-line').textContent=summary;
+  $('source-status-live').textContent=summary;
+  $('source-status').classList.toggle('source-status--attention',attention);
+  $('source-status-rows').innerHTML=rows.map(r=>{
+    const state=r.state==='ok'?null:r.state==='refused'?t('ditolak','refused'):t('tidak menjawab','no answer');
+    const rule=r.rule?esc(lang==='id'?SOURCE_RULES[r.rule].limit[0]:SOURCE_RULES[r.rule].limit[1]):null;
+    const verdict=r.verdict?esc(lang==='id'?verdictWord[r.verdict][0]:verdictWord[r.verdict][1]):null;
+    const scope=r.scope?esc(lang==='id'?r.scope[0]:r.scope[1]):null;
+    const refusal=r.state==='refused'&&r.retry?esc(t('coba lagi dalam','retry in')+' '+r.retry+' '+t('detik','seconds')):null;
+    return '<li class="source-status-row'+(r.verdict==='stale'||r.verdict==='expired'||r.state!=='ok'?' source-status-row--attention':'')+'">'+
+      '<strong>'+esc(lang==='id'?r.name[0]:r.name[1])+'</strong>'+
+      '<span>'+esc(lang==='id'?r.tier[0]:r.tier[1])+'</span>'+
+      '<span>'+esc(lang==='id'?r.label[0]:r.label[1])+': '+(r.stamp?esc(date(r.stamp)):'—')+'</span>'+
+      '<span>'+esc(ago(r.age))+'</span>'+
+      (verdict?'<span class="source-status-verdict">'+verdict+'</span>':'')+
+      (rule?'<span class="source-status-rule">'+rule+'</span>':'')+
+      (scope?'<span>'+scope+'</span>':'')+
+      (state?'<span class="source-status-verdict">'+esc(state)+'</span>':'')+
+      (refusal?'<span>'+refusal+'</span>':'')+
+      '</li>';
+  }).join('');
+  $('feed-status').textContent=summary;
+}
+
 function clock(){ $('clock').textContent=new Date().toLocaleString(lang==='id'?'id-ID':'en-GB',{timeZone:'Asia/Jakarta',weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+' WIB'; }
 async function refresh(){
  const id=++refreshId;$('refresh').disabled=true;$('feed-status').textContent=t('Memeriksa data terbitan…','Checking published feeds…');
@@ -196,7 +290,8 @@ async function refresh(){
  await Promise.all(jobs.map(async([url,render])=>{const d=await get(url);if(id===refreshId)render(d);}));
  if(id!==refreshId)return;
  const count=[weatherData?.points?.some(p=>p.available),Array.isArray(airData),alertsData?.available,quakeData?.available,floodData?.available].filter(Boolean).length;
- $('feed-status').textContent=t('Sumber tersedia','Sources available')+' '+count+'/5 · '+t('diperiksa','checked')+' '+date(new Date().toISOString());$('refresh').disabled=false;
+ $('refresh').disabled=false;
+ renderSourceStatus();
 }
 document.addEventListener('click',event=>{if(event.target.closest('[data-language-switch]')){document.querySelector('.city-controls').open=false;changeLanguage(lang==='id'?'en':'id');}});
 function changeLanguage(value){lang=value;try{localStorage.setItem('jakarta-dashboard-lang',lang);localStorage.setItem('jakarta-atlas-language',lang);}catch{}const u=new URL(location.href);u.searchParams.set('lang',lang);history.replaceState(null,'',u);applyLanguage();refresh();}
