@@ -370,21 +370,24 @@ async function census(build) {
           : Array.isArray(topSels)
             ? topSels.length
             : (topSels ? 1 : 0);
-        // A receipt that claims no top chrome on a page that has some is the
-        // exact failure this gate exists for.
-        if (Math.abs(c.chrome - saidTop) > 2) {
-          failures.push(
-            `${route} @${w}px — the receipt says ${saidTop}px of top chrome; the page has ${c.chrome}px ` +
-              `(${c.blocks} block(s): ${c.details.join(" | ") || "none"}). ` +
-              (c.chrome > saidTop
-                ? "The receipt describes a page with less furniture than the page has. The instrument cannot see it; the reader can."
-                : "The receipt describes furniture the page no longer has."),
-          );
-        } else if (c.blocks !== saidTopBands) {
-          failures.push(
-            `${route} @${w}px — the receipt says ${saidTopBands} band(s) of chrome; the page has ${c.blocks} ` +
-              `(${c.details.join(" | ") || "none"}).`,
-          );
+        // ONE rule, and it is the rule the falsifier proves: the same function
+        // decides here and decides there. A second copy of the comparison — the
+        // kind that is written once for the gate and once for its own test —
+        // is how a tested module stops being the code that runs, and the
+        // tolerance of the gate drifts away from the tolerance under test
+        // without anything going red.
+        try {
+          if (chromeDifference(receipt, c)) {
+            failures.push(
+              `${route} @${w}px — the receipt says ${saidTop}px of top chrome in ${saidTopBands} band(s); the page has ${c.chrome}px in ${c.blocks} ` +
+                `(${c.details.join(" | ") || "none"}). ` +
+                (c.chrome > saidTop
+                  ? "The receipt describes a page with less furniture than the page has. The instrument cannot see it; the reader can."
+                  : "The receipt describes furniture the page no longer has."),
+            );
+          }
+        } catch (e) {
+          failures.push(`${route} @${w}px — the chrome could not be compared with the receipt: ${e.message}`);
         }
       }
       process.stdout.write(`  · ${route} done\n`);
