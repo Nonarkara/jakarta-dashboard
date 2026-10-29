@@ -249,12 +249,12 @@ body[data-surface="jakarta-dashboard"] .map-heading h2 { margin: 0; }
 .masthead-clock .tz[data-local] .tz-city,
 .masthead-clock .tz[data-local] .tz-time { color: var(--accent); font-weight: 650; }
 
-/* Phone: show the range ends and the local time; hide the middle zones so
-   nothing wraps, bleeds, or grows the masthead onto a second line. */
-@media (max-width: 700px) {
-  .masthead-clock .tz:not([data-tz="Asia/Kolkata"]):not([data-tz="Asia/Jakarta"]):not([data-tz="Pacific/Auckland"]) {
-    display: none;
-  }
+/* Phone and tablet: show only the local time (Jakarta) in the masthead —
+   the masthead row is already at capacity, so the other range zones are
+   hidden here to avoid sideways bleeding. Desktop keeps the full
+   India→New Zealand range. */
+@media (max-width: 1000px) {
+  .masthead-clock .tz:not([data-local]) { display: none; }
 }
 
 body[data-surface="jakarta-atlas"] .atlas-title::before {
