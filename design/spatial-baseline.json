@@ -120,7 +120,7 @@
   },
   "exempt": [],
   "provenance": {
-    "measuredAt": "2026-10-28T09:25:53.071Z",
+    "measuredAt": "2026-10-29T08:30:16.065Z",
     "measurements": 208,
     "routes": 4,
     "widths": 52,
@@ -137,17 +137,17 @@
         },
         "chrome": {
           "vh": 844,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.7,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -161,17 +161,17 @@
         },
         "chrome": {
           "vh": 844,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.7,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -185,17 +185,17 @@
         },
         "chrome": {
           "vh": 844,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.7,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -209,17 +209,17 @@
         },
         "chrome": {
           "vh": 844,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.7,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -233,17 +233,17 @@
         },
         "chrome": {
           "vh": 844,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.7,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -257,17 +257,17 @@
         },
         "chrome": {
           "vh": 844,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.7,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -281,17 +281,17 @@
         },
         "chrome": {
           "vh": 844,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.7,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -305,17 +305,17 @@
         },
         "chrome": {
           "vh": 844,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.7,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -329,17 +329,17 @@
         },
         "chrome": {
           "vh": 844,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.7,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -353,17 +353,17 @@
         },
         "chrome": {
           "vh": 844,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.7,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -377,17 +377,17 @@
         },
         "chrome": {
           "vh": 844,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.7,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -401,17 +401,17 @@
         },
         "chrome": {
           "vh": 844,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.7,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -425,17 +425,17 @@
         },
         "chrome": {
           "vh": 844,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.7,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -449,17 +449,17 @@
         },
         "chrome": {
           "vh": 844,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.7,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -473,17 +473,17 @@
         },
         "chrome": {
           "vh": 844,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.7,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -497,17 +497,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.3,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -521,17 +521,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.3,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -545,17 +545,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.3,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -569,17 +569,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.3,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -593,17 +593,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.3,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -617,17 +617,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 23,
+          "topPct": 2.3,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 12,
+          "largest": 14,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -641,17 +641,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -665,17 +665,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -689,17 +689,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -713,17 +713,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -737,17 +737,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -761,17 +761,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -785,17 +785,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -809,17 +809,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -833,17 +833,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -857,17 +857,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -881,17 +881,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -905,17 +905,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -929,17 +929,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -953,17 +953,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -977,17 +977,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -1001,17 +1001,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -1025,17 +1025,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -1049,17 +1049,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -1073,17 +1073,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -1097,17 +1097,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -1121,17 +1121,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -1145,17 +1145,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -1169,17 +1169,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -1193,17 +1193,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -1217,17 +1217,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -1241,17 +1241,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -1265,17 +1265,17 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 3.8,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
           "h1": 0,
-          "largest": 11,
+          "largest": 13,
           "ratio": null,
           "peers": 0,
           "share": 0
@@ -1289,12 +1289,12 @@
         },
         "chrome": {
           "vh": 900,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 4.2,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
@@ -1313,12 +1313,12 @@
         },
         "chrome": {
           "vh": 900,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 4.2,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
@@ -1337,12 +1337,12 @@
         },
         "chrome": {
           "vh": 900,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 4.2,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
@@ -1361,12 +1361,12 @@
         },
         "chrome": {
           "vh": 900,
-          "top": 0,
-          "topPct": 0,
+          "top": 38,
+          "topPct": 4.2,
           "bottom": 0,
           "bottomPct": 0,
-          "stacked": 0,
-          "topSel": null,
+          "stacked": 1,
+          "topSel": "header.masthead",
           "bottomSel": null
         },
         "hierarchy": {
@@ -6355,7 +6355,7 @@
           "h1": 26,
           "largest": 38.535,
           "ratio": 0.67,
-          "peers": 4,
+          "peers": 0,
           "share": 0
         }
       },
@@ -6403,7 +6403,7 @@
           "h1": 27.577,
           "largest": 41.965,
           "ratio": 0.66,
-          "peers": 4,
+          "peers": 0,
           "share": 0
         }
       },

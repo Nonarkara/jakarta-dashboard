@@ -115,12 +115,13 @@ function load(payloads, refusals = new Map()) {
 }
 
 const NOW = Date.now();
+const hourStart = new Date(Math.floor(NOW / 3600000) * 3600000).toISOString();
 const hourAgo = new Date(NOW - 3600000).toISOString();
 const fourHoursAgo = new Date(NOW - 4 * 3600000).toISOString();
 const thirtyMinutesAgo = new Date(NOW - 30 * 60000).toISOString();
 
 const good = {
-  weather: {points: [{issuedAt: new Date(NOW - 6 * 3600000).toISOString(), forecast: [{validAt: new Date(NOW - 600000).toISOString()}]}]},
+  weather: {points: [{issuedAt: new Date(NOW - 6 * 3600000).toISOString(), forecast: [{validAt: hourStart}]}]},
   air: [{observedAt: hourAgo, aqi: 58}],
   alerts: {available: true, publishedAt: thirtyMinutesAgo, alerts: [{sent: thirtyMinutesAgo}]},
   quake: {available: true, event: {observedAt: new Date(NOW - 2 * 3600000).toISOString(), magnitude: 4.1}},

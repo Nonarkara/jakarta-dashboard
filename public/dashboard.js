@@ -268,17 +268,17 @@ function renderSourceStatus(){
     const verdict=r.verdict?esc(lang==='id'?verdictWord[r.verdict][0]:verdictWord[r.verdict][1]):null;
     const scope=r.scope?esc(lang==='id'?r.scope[0]:r.scope[1]):null;
     const refusal=r.state==='refused'&&r.retry?esc(t('coba lagi dalam','retry in')+' '+r.retry+' '+t('detik','seconds')):null;
-    return '<li class="source-status-row'+(r.verdict==='stale'||r.verdict==='expired'||r.state!=='ok'?' source-status-row--attention':'')+'">'+
-      '<strong>'+esc(lang==='id'?r.name[0]:r.name[1])+'</strong>'+
-      '<span>'+esc(lang==='id'?r.tier[0]:r.tier[1])+'</span>'+
-      '<span>'+esc(lang==='id'?r.label[0]:r.label[1])+': '+(r.stamp?esc(date(r.stamp)):'—')+'</span>'+
-      '<span>'+esc(ago(r.age))+'</span>'+
-      (verdict?'<span class="source-status-verdict">'+verdict+'</span>':'')+
-      (rule?'<span class="source-status-rule">'+rule+'</span>':'')+
-      (scope?'<span>'+scope+'</span>':'')+
-      (state?'<span class="source-status-verdict">'+esc(state)+'</span>':'')+
-      (refusal?'<span>'+refusal+'</span>':'')+
-      '</li>';
+    return '<li class="source-status-row'+(r.verdict==='stale'||r.verdict==='expired'||r.state!=='ok'?' source-status-row--attention':'')+'"><span>'+
+      '<strong>'+esc(lang==='id'?r.name[0]:r.name[1])+'</strong> '+
+      '<span>'+esc(lang==='id'?r.tier[0]:r.tier[1])+'</span> '+
+      '<span>'+esc(lang==='id'?r.label[0]:r.label[1])+': '+(r.stamp?esc(date(r.stamp)):'—')+'</span> '+
+      '<span>'+esc(ago(r.age))+'</span> '+
+      (verdict?'<span class="source-status-verdict">'+verdict+'</span> ':'')+
+      (rule?'<span class="source-status-rule">'+rule+'</span> ':'')+
+      (scope?'<span>'+scope+'</span> ':'')+
+      (state?'<span class="source-status-verdict">'+esc(state)+'</span> ':'')+
+      (refusal?'<span>'+refusal+'</span> ':'')+
+      '</span></li>';
   }).join('');
   $('feed-status').textContent=summary;
 }

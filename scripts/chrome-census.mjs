@@ -135,8 +135,11 @@ const CENSUS = () => {
     if (inDialog(el)) continue;
     // Content is content. The one exception is furniture that LIES ON the
     // content — a fixed or sticky band inside the page's own flow — because
-    // that takes the reader's pixels just as much.
-    if (inMain(el) && !(fixed || sticky) && r.top > 1) continue;
+    // that takes the reader's pixels just as much. Everything else inside
+    // <main> is the page's own content, including a full-screen map or view
+    // that starts at the top edge: that is not furniture, and the spatial
+    // instrument does not count it as chrome either.
+    if (inMain(el) && !(fixed || sticky)) continue;
     // Furniture is either a block in the flow, which pushes the content
     // down, or something pinned to the top edge, which lies over it. A
     // positioned block floating in the middle of the page is an overlay the
@@ -336,7 +339,17 @@ async function census(build, options = {}) {
           continue;
         }
         const saidTop = Number(receipt.top || 0);
-        const saidBands = Number(receipt.stacked || 0);
+        // The receipt's band count only describes real TOP furniture when the
+        // receipt actually records top chrome (topSel names the bands it sees).
+        // A `stacked` count can include a bottom band or be a phantom (null
+        // selector, zero height), so comparing top blocks against it misfires.
+        // topSel may be a string (one band), an array, or null.
+        const topSels = receipt.topSel;
+        const saidTopBands = topSels == null
+          ? 0
+          : Array.isArray(topSels)
+            ? topSels.length
+            : (topSels ? 1 : 0);
         // A receipt that claims no top chrome on a page that has some is the
         // exact failure this gate exists for.
         if (Math.abs(c.chrome - saidTop) > 2) {
@@ -347,9 +360,9 @@ async function census(build, options = {}) {
                 ? "The receipt describes a page with less furniture than the page has. The instrument cannot see it; the reader can."
                 : "The receipt describes furniture the page no longer has."),
           );
-        } else if (c.blocks !== saidBands) {
+        } else if (c.blocks !== saidTopBands) {
           failures.push(
-            `${route} @${w}px — the receipt says ${saidBands} band(s) of chrome; the page has ${c.blocks} ` +
+            `${route} @${w}px — the receipt says ${saidTopBands} band(s) of chrome; the page has ${c.blocks} ` +
               `(${c.details.join(" | ") || "none"}).`,
           );
         }
