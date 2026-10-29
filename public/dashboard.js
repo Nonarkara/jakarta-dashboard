@@ -12,7 +12,7 @@ const t=(id,en)=>lang==='id'?id:en;
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=(n,d=0)=>typeof n==='number'&&Number.isFinite(n)?n.toLocaleString(lang==='id'?'id-ID':'en-GB',{maximumFractionDigits:d}):'—';
 const date=(v)=>v&&Number.isFinite(Date.parse(v))?new Date(v).toLocaleString(lang==='id'?'id-ID':'en-GB',{timeZone:'Asia/Jakarta',dateStyle:'medium',timeStyle:'short'})+' WIB':t('Waktu tidak tersedia','Time unavailable');
-const stale=(v,age)=>!v||!Number.isFinite(Date.parse(v))||Date.now()-Date.parse(v)>age||Date.parse(v)>Date.now()+300000;
+const stale=(v,age,now=Date.now())=>!v||!Number.isFinite(Date.parse(v))||now-Date.parse(v)>age||Date.parse(v)>now+300000;
 const unavailable=(endpoint)=>'<p class="note">'+esc((endpoint&&feedRefusals.has(endpoint)&&refusalModule?refusalModule.refusalMessage(feedRefusals.get(endpoint),(en,id)=>t(id,en)):null)||t('Data tidak tersedia atau tidak lolos pemeriksaan.','Data unavailable or did not pass validation.'))+'</p>';
 const alertsUrl=()=>'/api/jakarta/alerts';
 const evidence=(source,tier,stamp,label)=>'<p class="meta">'+esc(source)+' · '+esc(tier)+'<br>'+esc(label||t('Berlaku','Valid'))+': '+esc(date(stamp))+'</p>';
@@ -37,24 +37,24 @@ function loadRefusalModule(){return refusalModulePromise||=import('/refusal.js')
 // Used only if the shared reader cannot be loaded at all. It fails closed: a
 // response that is not OK is an error, never a payload.
 async function fallbackRead(response){if(response.ok)return await response.json();throw new Error('source '+response.status);}
-const feedRefusals=new Map();
+const feedRefusals=new Map(),feedRequestIds=new Map();
+let sourceCheckedAt=null,sourceChecking=false;
 async function get(path){
  let mod=null;
  // Keyed by path, not by URL: the alerts feed carries the language in its
  // query, and a language switch must still find the refusal it was told.
- const key=path.split('?')[0];
+ const key=path.split('?')[0],token=Symbol();feedRequestIds.set(key,token);
  try{
   mod=await loadRefusalModule().catch(()=>null);
   const r=await fetch(path,{signal:AbortSignal.timeout(25000)});
   const d=mod?await mod.readJson(r):await fallbackRead(r);
   if(d===null||d===undefined)return null;
-  feedRefusals.delete(key);
+  if(feedRequestIds.get(key)===token)feedRefusals.delete(key);
   return d;
  }catch(e){
   // A refused request is remembered with its retry window, so the panel that
   // asked can say what happened instead of reporting a broken source.
-  feedRefusals.delete(key);
-  if(mod&&mod.isRefusalError(e)){feedRefusals.set(key,e.retryAfterSeconds);}
+  if(feedRequestIds.get(key)===token){feedRefusals.delete(key);if(mod&&mod.isRefusalError(e))feedRefusals.set(key,e.retryAfterSeconds);}
   return null;
  }
 }
@@ -75,7 +75,7 @@ function applyLanguage(){
 }
 function renderWeather(){
  const points=weatherData?.points?.filter(p=>p.available)||[];
- $('weather-summary').innerHTML=points.length?points.map(p=>{const row=p.forecast.find(r=>Date.parse(r.validAt)>=Date.now())||p.forecast.at(-1);return '<div class="reading"><div class="reading-top"><strong>'+esc(p.name)+'</strong><strong>'+num(row.temperatureC)+' °C</strong></div><p>'+esc(window.CivicLanguage.admin(p.kota,lang))+' · '+esc(lang==='id'?row.conditionId:row.conditionEn)+'</p>'+evidence('BMKG',t('prakiraan resmi','official forecast'),row.validAt)+'<p>'+t('Terbit','Issued')+': '+esc(date(row.issuedAt))+'</p></div>';}).join(''):unavailable('/api/jakarta/weather');
+ $('weather-summary').innerHTML=points.length?points.map(p=>{const row=nextWeatherPoint(p,Date.now())||p.forecast.at(-1);return '<div class="reading"><div class="reading-top"><strong>'+esc(p.name)+'</strong><strong>'+num(row.temperatureC)+' °C</strong></div><p>'+esc(window.CivicLanguage.admin(p.kota,lang))+' · '+esc(lang==='id'?row.conditionId:row.conditionEn)+'</p>'+evidence('BMKG',t('prakiraan resmi','official forecast'),row.validAt)+'<p>'+t('Terbit','Issued')+': '+esc(date(row.issuedAt))+'</p></div>';}).join(''):unavailable('/api/jakarta/weather');
  const value=$('forecast-location').value;
  $('forecast-location').innerHTML=points.map(p=>'<option value="'+esc(p.code)+'">'+esc(p.name+' · '+window.CivicLanguage.admin(p.kota,lang))+'</option>').join('');
  if(points.some(p=>p.code===value))$('forecast-location').value=value;
@@ -105,7 +105,7 @@ function renderIspu(){
 function renderAlerts(){
  const d=alertsData;
  if(!d){$('alerts').innerHTML=unavailable(alertsUrl());return;}
- const active=(d.alerts||[]).filter(a=>!stale(a.sent,SOURCE_RULES.alerts.maxAgeMs)&&Date.parse(a.expires)>Date.now());
+ const active=activeWarnings(d,Date.now());
  $('alerts').innerHTML=(!d.available?unavailable(alertsUrl()):'')+(active.length?active.map(a=>'<article class="warning"><h3>'+esc(a.headline)+'</h3><p>'+esc(a.description)+'</p><p>'+esc(a.instruction)+'</p><p class="meta">'+esc([a.severity,a.urgency,a.certainty].filter(Boolean).map(v=>window.CivicLanguage.alert(v,lang)).join(' · '))+'<br>'+t('Berakhir','Expires')+': '+esc(date(a.expires))+'</p><a href="'+esc(a.sourceUrl)+'" target="_blank" rel="noopener">BMKG CAP ↗</a><button class="alert-map" data-alert="'+esc(a.id)+'">'+t('Lihat wilayah','Show affected area')+'</button></article>').join(''):d.available?'<p>'+t('Tidak ada peringatan aktif yang dikembalikan untuk DKI, Jawa Barat dan Banten.','No active warnings returned for DKI, West Java and Banten.')+'</p>':'')+evidence('BMKG',t('buletin resmi','official bulletin'),d.publishedAt,t('Buletin','Bulletin'))+'<a href="https://www.bmkg.go.id/cuaca/peringatan-dini-cuaca" target="_blank" rel="noopener">'+t('Periksa BMKG ↗','Check BMKG ↗')+'</a>';
 }
 function renderFlood(){
@@ -209,66 +209,64 @@ const SOURCE_RULES = {
   // alerts panel has always used before it drops one.
   alerts: { maxAgeMs: 12 * 3600000, limit: ['batas 12 jam', '12-hour limit'] },
 };
-const sourceAge=(stamp,now)=>{const s=stamp&&Number.isFinite(Date.parse(stamp))?Date.parse(stamp):NaN;return Number.isFinite(s)?Math.max(0,now-s):null;};
-const ago=(ms)=>ms===null?'—':ms<60000?t('baru saja','just now'):ms<3600000?Math.floor(ms/60000)+' '+t('menit lalu','minutes ago'):ms<86400000?Math.floor(ms/3600000)+' '+t('jam lalu','hours ago'):Math.floor(ms/86400000)+' '+t('hari lalu','days ago');
+// Forecast points are discrete publisher values: show the next published time,
+// never invent a validity interval between samples.
+const nextWeatherPoint=(p,now)=>p?.available===true?(p.forecast||[]).filter(f=>Number.isFinite(Date.parse(f.validAt))&&Date.parse(f.validAt)>=now).sort((a,b)=>Date.parse(a.validAt)-Date.parse(b.validAt))[0]||null:null;
+const activeWarnings=(d,now)=>(d?.available===true&&Array.isArray(d.alerts)?d.alerts:[]).filter(a=>!stale(a.sent,SOURCE_RULES.alerts.maxAgeMs,now)&&Date.parse(a.expires)>now);
+const airSamples=d=>Array.isArray(d)?d.filter(p=>Number.isFinite(p?.aqi)&&p.aqi>=0&&Number.isFinite(Date.parse(p.observedAt))):[];
+const airVerdict=(d,now)=>{const rows=airSamples(d),old=rows.filter(p=>stale(p.observedAt,SOURCE_RULES.air.maxAgeMs,now)).length;return old===0?'fresh':old===rows.length?'stale':'mixed';};
+const sourceAge=(stamp,now)=>stamp&&Number.isFinite(Date.parse(stamp))?now-Date.parse(stamp):null;
+const ago=(ms)=>ms===null?'—':ms<0?t('dalam ','in ')+Math.ceil(-ms/60000)+' '+t('menit','minutes'):ms<60000?t('baru saja','just now'):ms<3600000?Math.floor(ms/60000)+' '+t('menit lalu','minutes ago'):ms<86400000?Math.floor(ms/3600000)+' '+t('jam lalu','hours ago'):Math.floor(ms/86400000)+' '+t('hari lalu','days ago');
 const clockTime=(at)=>new Date(at).toLocaleTimeString(lang==='id'?'id-ID':'en-GB',{timeZone:'Asia/Jakarta',hour:'2-digit',minute:'2-digit'})+' WIB';
-// Inside the rule, or outside it — said in the source's own words.
-const verdictWord={fresh:['segar','fresh'],stale:['kedaluwarsa','stale'],current:['berlaku','current'],expired:['berakhir','expired']};
-// The five sources this page reads at runtime. Each one is described by the
-// publisher's own tier and by the stamp the publisher put on it.
+const verdictWord={fresh:['segar','fresh'],stale:['kedaluwarsa','stale'],mixed:['sebagian kedaluwarsa','partly stale'],upcoming:['prakiraan mendatang','upcoming forecast'],expired:['tanpa prakiraan mendatang','no upcoming forecast']};
 const SOURCE_DESCRIPTORS=[
-  {id:'weather',endpoint:'/api/jakarta/weather',name:['BMKG cuaca','BMKG weather'],tier:['prakiraan resmi','official forecast'],label:['Berlaku','Valid'],
-   read:()=>weatherData,
-   stamp:(d,now)=>{const hour=Math.floor(now/3600000)*3600000;const row=(d?.points||[]).flatMap(p=>p.forecast||[]).find(f=>Number.isFinite(Date.parse(f.validAt))&&Math.floor(Date.parse(f.validAt)/3600000)*3600000===hour);return row?row.validAt:null;},
-   // The forecast's own test: it covers the hour being read, or it does not.
-   verdict:(d,now)=>{const hour=Math.floor(now/3600000)*3600000;const covers=(d?.points||[]).some(p=>(p.forecast||[]).some(f=>Number.isFinite(Date.parse(f.validAt))&&Math.floor(Date.parse(f.validAt)/3600000)*3600000===hour));return covers?'current':'expired';}},
-  {id:'air',endpoint:'/api/atlas/air-quality',name:['CAMS / Open-Meteo','CAMS / Open-Meteo'],tier:['perkiraan model','model estimate'],label:['Berlaku','Valid'],
-   read:()=>Array.isArray(airData)?airData:null,
-   stamp:d=>(d||[]).map(p=>p.observedAt).filter(Boolean).sort().pop()||null,
-   verdict:d=>stale((d||[]).map(p=>p.observedAt).filter(Boolean).sort().pop(),SOURCE_RULES.air.maxAgeMs)?'stale':'fresh',rule:'air'},
+  {id:'weather',endpoint:'/api/jakarta/weather',name:['BMKG cuaca','BMKG weather'],tier:['prakiraan resmi','official forecast'],label:['Prakiraan berikutnya','Next forecast'],
+   read:()=>weatherData,hasData:d=>d?.points?.some(p=>p.available===true&&Array.isArray(p.forecast)&&p.forecast.some(f=>Number.isFinite(Date.parse(f.validAt)))),
+   stamp:(d,now)=>(d.points||[]).map(p=>nextWeatherPoint(p,now)).filter(Boolean).sort((a,b)=>Date.parse(a.validAt)-Date.parse(b.validAt))[0]?.validAt||null,
+   verdict:(d,now)=>d.points.some(p=>nextWeatherPoint(p,now))?'upcoming':'expired'},
+  {id:'air',endpoint:'/api/atlas/air-quality',name:['CAMS / Open-Meteo','CAMS / Open-Meteo'],tier:['perkiraan model','model estimate'],label:['Pembacaan tertua','Oldest reading'],
+   read:()=>airData,hasData:d=>airSamples(d).length>0,
+   stamp:d=>airSamples(d).map(p=>p.observedAt).sort((a,b)=>Date.parse(a)-Date.parse(b))[0]||null,
+   verdict:airVerdict,rule:'air'},
   {id:'alerts',endpoint:'/api/jakarta/alerts',name:['BMKG peringatan','BMKG warnings'],tier:['buletin resmi','official bulletin'],label:['Buletin','Bulletin'],
-   read:()=>alertsData,
-   stamp:d=>d?.publishedAt||null,
-   verdict:d=>stale(d?.publishedAt,SOURCE_RULES.alerts.maxAgeMs)?'stale':'fresh',rule:'alerts'},
+   read:()=>alertsData,hasData:d=>d?.available===true&&Array.isArray(d.alerts),
+   stamp:d=>d.publishedAt||null,
+   verdict:(d,now)=>stale(d.publishedAt,SOURCE_RULES.alerts.maxAgeMs,now)?'stale':'fresh',rule:'alerts'},
   {id:'quake',endpoint:'/api/jakarta/earthquake',name:['BMKG gempa','BMKG earthquakes'],tier:['kejadian resmi','official event'],label:['Pengamatan','Observed'],
-   read:()=>quakeData,
-   stamp:d=>d?.event?.observedAt||null,
-   // An event's age is the event's nature, not a staleness. The feed either
-   // answered or it did not; the panel says which.
-   verdict:()=>null,scope:['kejadian Indonesia terakhir','Indonesia\'s latest event']},
+   read:()=>quakeData,hasData:d=>d?.available===true&&!!d.event&&Number.isFinite(Date.parse(d.event.observedAt)),
+   stamp:d=>d.event.observedAt,verdict:()=>null,scope:['kejadian Indonesia terakhir',"Indonesia's latest event"]},
   {id:'flood',endpoint:'/api/jakarta/flood-reports',name:['PetaBencana','PetaBencana'],tier:['laporan warga','crowdsourced reports'],label:['Diambil','Retrieved'],
-   read:()=>floodData,
-   stamp:d=>d?.fetchedAt||null,
-   verdict:()=>null,scope:['jendela satu jam','one-hour window']},
+   read:()=>floodData,hasData:d=>d?.available===true&&Number.isInteger(d.reportCount)&&d.reportCount>=0,
+   stamp:d=>d.fetchedAt||null,verdict:()=>null,scope:['jendela laporan satu jam; lihat usia pengambilan','one-hour report window; check retrieval age']},
 ];
 function sourceStatusRows(now){
-  return SOURCE_DESCRIPTORS.map(descriptor=>{
-    const data=descriptor.read();
-    const refused=feedRefusals.has(descriptor.endpoint);
-    const state=data?'ok':refused?'refused':'none';
-    const stamp=data?descriptor.stamp(data,now):null;
-    const verdict=state==='ok'?descriptor.verdict(data,now):null;
-    return {id:descriptor.id,name:descriptor.name,tier:descriptor.tier,label:descriptor.label,scope:descriptor.scope||null,endpoint:descriptor.endpoint,state,stamp,age:sourceAge(stamp,now),verdict,rule:descriptor.rule||null,retry:refused?feedRefusals.get(descriptor.endpoint):null};
-  });
+ return SOURCE_DESCRIPTORS.map(descriptor=>{
+  const data=descriptor.read(),refused=feedRefusals.has(descriptor.endpoint);
+  const state=refused?'refused':descriptor.hasData(data)?'ok':data?'unavailable':'none';
+  const stamp=state==='ok'?descriptor.stamp(data,now):null;
+  return {id:descriptor.id,name:descriptor.name,tier:descriptor.tier,label:descriptor.label,scope:descriptor.scope||null,endpoint:descriptor.endpoint,state,stamp,age:sourceAge(stamp,now),verdict:state==='ok'?descriptor.verdict(data,now):null,rule:descriptor.rule||null,retry:refused?feedRefusals.get(descriptor.endpoint):null};
+ });
 }
+let sourceAnnouncement=null;
 function renderSourceStatus(){
   const now=Date.now(),rows=sourceStatusRows(now);
-  const answered=rows.filter(r=>r.state==='ok').length,refused=rows.filter(r=>r.state==='refused').length,staleCount=rows.filter(r=>r.verdict==='stale'||r.verdict==='expired').length;
-  const parts=[answered+'/'+rows.length+' '+t('sumber menjawab','sources answered')];
+  const answered=rows.filter(r=>r.state==='ok').length,refused=rows.filter(r=>r.state==='refused').length,staleCount=rows.filter(r=>r.verdict==='stale'||r.verdict==='mixed'||r.verdict==='expired').length;
+  const parts=[answered+'/'+rows.length+' '+t('sumber mengembalikan data','sources returned data')];
   if(refused)parts.push(refused+' '+t('ditolak','refused'));
   if(staleCount)parts.push(staleCount+' '+t('di luar batas','outside their limit'));
-  const summary=parts.join(' · ')+' · '+t('diperiksa','checked')+' '+clockTime(now);
+  const summary=(t('Data ','Data ')+answered+'/'+rows.length+(refused?' · '+refused+' '+t('ditolak','refused'):'')+(staleCount?' · '+staleCount+' '+t('di luar batas','outside limit'):''))+(sourceChecking?' · '+t('memperbarui','refreshing'):sourceCheckedAt?' · '+t('diperiksa','checked')+' '+clockTime(sourceCheckedAt):'');
   const attention=refused>0||staleCount>0||answered<rows.length;
   $('source-status-line').textContent=summary;
-  $('source-status-live').textContent=summary;
+  const announcement=lang+'|'+rows.map(r=>r.id+':'+r.state+':'+r.verdict).join('|');
+  if(announcement!==sourceAnnouncement){$('source-status-live').textContent=parts.join(' · ');sourceAnnouncement=announcement;}
   $('source-status').classList.toggle('source-status--attention',attention);
   $('source-status-rows').innerHTML=rows.map(r=>{
-    const state=r.state==='ok'?null:r.state==='refused'?t('ditolak','refused'):t('tidak menjawab','no answer');
+    const state=r.state==='ok'?null:r.state==='refused'?t('ditolak','refused'):r.state==='unavailable'?t('data tidak tersedia','data unavailable'):t('tidak menjawab','no answer');
     const rule=r.rule?esc(lang==='id'?SOURCE_RULES[r.rule].limit[0]:SOURCE_RULES[r.rule].limit[1]):null;
     const verdict=r.verdict?esc(lang==='id'?verdictWord[r.verdict][0]:verdictWord[r.verdict][1]):null;
     const scope=r.scope?esc(lang==='id'?r.scope[0]:r.scope[1]):null;
-    const refusal=r.state==='refused'&&r.retry?esc(t('coba lagi dalam','retry in')+' '+r.retry+' '+t('detik','seconds')):null;
-    return '<li class="source-status-row'+(r.verdict==='stale'||r.verdict==='expired'||r.state!=='ok'?' source-status-row--attention':'')+'"><span>'+
+    const refusal=r.state==='refused'&&r.retry?esc(t('jeda coba ulang server','server retry interval')+' '+r.retry+' '+t('detik','seconds')):null;
+    return '<li data-source="'+r.id+'" class="source-status-row'+(r.verdict==='stale'||r.verdict==='mixed'||r.verdict==='expired'||r.state!=='ok'?' source-status-row--attention':'')+'"><span>'+
       '<strong>'+esc(lang==='id'?r.name[0]:r.name[1])+'</strong> '+
       '<span>'+esc(lang==='id'?r.tier[0]:r.tier[1])+'</span> '+
       '<span>'+esc(lang==='id'?r.label[0]:r.label[1])+': '+(r.stamp?esc(date(r.stamp)):'—')+'</span> '+
@@ -281,29 +279,56 @@ function renderSourceStatus(){
       '</span></li>';
   }).join('');
   $('feed-status').textContent=summary;
+  scheduleTemporalDeadline();
 }
 
+function zoneClock(tz,at){
+ const parts=new Intl.DateTimeFormat(tz==='Pacific/Auckland'?'en-NZ':'en-AU',{timeZone:tz,hour:'2-digit',minute:'2-digit',hourCycle:'h23',timeZoneName:'short'}).formatToParts(at);
+ return {time:parts.filter(p=>p.type==='hour'||p.type==='minute').map(p=>p.value).join(':'),zone:({'Asia/Kolkata':'IST','Asia/Jakarta':'WIB','Asia/Singapore':'SGT','Asia/Tokyo':'JST'})[tz]||parts.find(p=>p.type==='timeZoneName')?.value||tz};
+}
 function clockZones(){
-  document.querySelectorAll('.masthead-clock .tz').forEach(function(el){
-    var tz = el.getAttribute('data-tz');
-    var time = el.querySelector('.tz-time');
-    if(!time)return;
-    time.textContent = new Date().toLocaleTimeString('en-GB',{timeZone:tz,hour:'2-digit',minute:'2-digit'});
-  });
-  // Refresh the source-status line's "checked" stamp so it stays beside the clock.
-  renderSourceStatus();
+ const now=Date.now(),provenance=t('Jam perangkat · zona IANA','Device clock · IANA time zones');
+ document.querySelectorAll('.masthead-clock').forEach(el=>{el.setAttribute('aria-label',provenance);el.title=provenance;});
+ document.querySelectorAll('.tz[data-tz]').forEach(el=>{
+  const tz=el.getAttribute('data-tz'),value=zoneClock(tz,now),time=el.querySelector('.tz-time'),zone=el.querySelector('.tz-zone');
+  if(time&&time.textContent!==value.time)time.textContent=value.time;
+  if(zone&&zone.textContent!==value.zone)zone.textContent=value.zone;
+  el.title=new Date(now).toLocaleDateString(lang==='id'?'id-ID':'en-GB',{timeZone:tz,dateStyle:'medium'})+' · '+provenance;
+ });
+}
+let temporalSignature=null,temporalDeadline=null;
+function scheduleTemporalDeadline(){
+ clearTimeout(temporalDeadline);temporalDeadline=null;if(document.hidden)return;
+ const now=Date.now(),deadlines=[];
+ for(const p of weatherData?.points||[])for(const row of p.forecast||[])deadlines.push(Date.parse(row.validAt)+1);
+ for(const p of airSamples(airData))deadlines.push(Date.parse(p.observedAt)+SOURCE_RULES.air.maxAgeMs+1);
+ for(const a of activeWarnings(alertsData,now))deadlines.push(Date.parse(a.expires),Date.parse(a.sent)+SOURCE_RULES.alerts.maxAgeMs+1);
+ deadlines.push(Date.parse(alertsData?.publishedAt)+SOURCE_RULES.alerts.maxAgeMs+1);
+ const next=deadlines.filter(at=>Number.isFinite(at)&&at>now).sort((a,b)=>a-b)[0];
+ if(next)temporalDeadline=setTimeout(refreshTemporalStatus,Math.min(next-now,2147483647));
+}
+function refreshTemporalStatus(){
+ if(document.hidden)return;
+ const now=Date.now(),signature=JSON.stringify([(weatherData?.points||[]).map(p=>nextWeatherPoint(p,now)?.validAt||null),sourceStatusRows(now).map(r=>[r.id,r.state,r.verdict]),activeWarnings(alertsData,now).map(a=>a.id)]);
+ if(signature!==temporalSignature){temporalSignature=signature;renderWeather();renderAir();renderAlerts();}
+ renderSourceStatus();
 }
 async function refresh(){
- const id=++refreshId;$('refresh').disabled=true;$('feed-status').textContent=t('Memeriksa data terbitan…','Checking published feeds…');
+ const id=++refreshId;sourceChecking=true;renderSourceStatus();$('refresh').disabled=true;$('feed-status').textContent=t('Memeriksa data terbitan…','Checking published feeds…');
  const jobs=[['/api/jakarta/weather',d=>{weatherData=d;renderWeather();}],['/api/atlas/air-quality',d=>{airData=d;renderAir();}],['/api/jakarta/alerts?lang='+lang,d=>{alertsData=d;renderAlerts();}],['/api/jakarta/earthquake',d=>{quakeData=d;renderQuake();}],['/api/jakarta/flood-reports',d=>{floodData=d;renderFlood();}]];
  await Promise.all(jobs.map(async([url,render])=>{const d=await get(url);if(id===refreshId)render(d);}));
  if(id!==refreshId)return;
- const count=[weatherData?.points?.some(p=>p.available),Array.isArray(airData),alertsData?.available,quakeData?.available,floodData?.available].filter(Boolean).length;
+ sourceChecking=false;sourceCheckedAt=Date.now();
  $('refresh').disabled=false;
  renderSourceStatus();
 }
 clockZones();
-setInterval(clockZones, 1000);
+function scheduleClockTick(){
+ setTimeout(()=>{if(!document.hidden)clockZones();scheduleClockTick();},60000-Date.now()%60000+10);
+}
+scheduleClockTick();
+setInterval(refreshTemporalStatus,60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){clockZones();refreshTemporalStatus();}});
 document.addEventListener('click',event=>{if(event.target.closest('[data-language-switch]')){document.querySelector('.city-controls').open=false;changeLanguage(lang==='id'?'en':'id');}});
 function changeLanguage(value){lang=value;try{localStorage.setItem('jakarta-dashboard-lang',lang);localStorage.setItem('jakarta-atlas-language',lang);}catch{}const u=new URL(location.href);u.searchParams.set('lang',lang);history.replaceState(null,'',u);applyLanguage();refresh();}
 $('language').addEventListener('change',()=>changeLanguage($('language').value)); // axiom-audit-ignore honesty -- Optional local preference persistence; current controls and source values remain available with explicit defaults.
@@ -397,7 +422,7 @@ function initDetailDialogs() {
  if(initial?.tagName==='DIALOG') initial.showModal();
 }
 initDetailDialogs();
-applyLanguage();refresh();setInterval(refresh,5*60000);
+applyLanguage();refresh();setInterval(()=>{if(!document.hidden)void refresh();},5*60000);
 get('/data/jakarta-v1/transit.json?v='+DASHBOARD_BUILD).then(d=>{transit=d;renderTransit();});get('/data/jakarta-v1/civic.json?v='+DASHBOARD_BUILD).then(d=>{civic=d;});get('/data/jakarta-v1/ispu-reference.json?v='+DASHBOARD_BUILD).then(d=>{ispuData=d;renderIspu();});loadCivic();
 
 // Phone navigation uses one masthead row; native details keeps keyboard focus.

@@ -190,7 +190,7 @@ body[data-surface="jakarta-dashboard"] .map-heading h2 { margin: 0; }
 }
 /* A finger is a finger: where the pointer is coarse the disclosure is a
    touch target, and it is as tall as every other control on the page. */
-@media (pointer: coarse) { .source-status > summary { min-height: 44px; } }
+@media (pointer: coarse) { .source-status > summary { min-height: 32px; } }
 .source-status > summary::-webkit-details-marker { display: none; }.source-status > summary::before {
   content: '';
   flex: none;
@@ -971,3 +971,7 @@ body:has(#atlas-lens-evidence[open]) .preparedness-selection { display:none; }
 
 /* Shared request state follows the watch grid's reading edge, once. */
 #atlas-watch-request-status { margin: 0; padding: 6px 10px; }
+
+/* Full regional reference is reachable in Controls at every viewport. */
+.regional-times-list { display:grid; gap:4px; padding-block:4px; }
+.regional-times-list .tz { display:grid; grid-template-columns:1fr auto auto; gap:8px; font-variant-numeric:tabular-nums; }

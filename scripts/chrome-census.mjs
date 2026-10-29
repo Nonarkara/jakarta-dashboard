@@ -42,6 +42,7 @@
  *   node scripts/chrome-census.mjs            # the census, against the receipt
  *   node scripts/chrome-census.mjs --falsify  # prove the census can still fail
  */
+import {chromeDifference,plantedBandDetected} from './chrome-verdict.mjs';
 import { spawn, spawnSync } from "node:child_process";
 import { existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
@@ -234,21 +235,36 @@ function heightFor(w) {
  * so rather than going green.
  */
 async function falsify() {
-  console.log("\n· falsifying the census — a planted band must be caught");
-  const build = await prepareBuild(FALSIFY_BUILD);
-  const planted = plantBand(build);
-  if (!planted) {
-    console.error("\nFAIL — the falsifier could not plant its defect.\n");
-    process.exit(1);
+ console.log('Falsifier scope: healthy and planted root at360,1024,1440; exact24px delta required.');
+ const build=await prepareBuild(FALSIFY_BUILD),baseline=JSON.parse(readFileSync(BASELINE,'utf8'));
+ const server=spawn(process.execPath,[path.join(ROOT,'scripts','serve-route-site.mjs'),build,'0'],{cwd:ROOT,stdio:['ignore','pipe','inherit']});
+ let browser;
+ try{
+  const port=await new Promise((resolve,reject)=>{
+   const timeout=setTimeout(()=>reject(Error('route server did not start')),15000);
+   server.once('error',e=>{clearTimeout(timeout);reject(e);});
+   server.stdout.on('data',d=>{const m=/http:\/\/127\.0\.0\.1:(\d+)/.exec(String(d));if(m){clearTimeout(timeout);resolve(Number(m[1]));}});
+  });
+  browser=await chromium.launch({executablePath:CHROME,headless:true,args:['--hide-scrollbars']});
+  const widths=[360,1024,1440],controls=[];
+  for(const w of widths){
+   const ctx=await browser.newContext(),page=await ctx.newPage();
+   try{const value=await measureCensus(page,`http://127.0.0.1:${port}/`,w,heightFor(w));
+    const receipt=baseline.routes?.['/']?.[String(w)]?.chrome;
+    if(chromeDifference(receipt,value))throw Error(`healthy control differs at${w}`);
+    controls.push({w,value,receipt});
+   }finally{await ctx.close();}
   }
-  const caught = await census(build, { falsify: true });
-  console.log(
-    caught
-      ? "  · the census caught the planted band"
-      : "  · the census did NOT catch the planted band — the census is not measuring what it claims",
-  );
-  rmSync(FALSIFY_BUILD, { recursive: true, force: true });
-  process.exit(caught ? 0 : 1);
+  if(!plantBand(build))throw Error('could not plant band');
+  for(const {w,value,receipt} of controls){
+   const ctx=await browser.newContext(),page=await ctx.newPage();
+   try{const planted=await measureCensus(page,`http://127.0.0.1:${port}/`,w,heightFor(w));
+    if(!plantedBandDetected(receipt,value,planted))throw Error(`specific24px band not proved at${w}: `+JSON.stringify({control:value,planted}));
+    console.log(`PASS planted band @${w}: ${value.chrome} → ${planted.chrome}px`);
+   }finally{await ctx.close();}
+  }
+  console.log('PASS3/3 healthy controls and3/3 exact planted deltas; no skipped measurements');
+ }finally{await browser?.close();server.kill();rmSync(FALSIFY_BUILD,{recursive:true,force:true});}
 }
 
 async function prepareBuild(dir) {
@@ -279,11 +295,14 @@ function plantBand(build) {
 /**
  * The census, run over the build, compared against the receipt.
  */
-async function census(build, options = {}) {
+async function census(build) {
   const baseline = JSON.parse(readFileSync(BASELINE, "utf8"));
   const widths = baseline.measuredWidths || baseline.widths || [];
   const routes = ONLY ? [ONLY] : ROUTES;
+  if(!Array.isArray(widths)||widths.length===0||new Set(widths).size!==widths.length||widths.some(w=>!Number.isInteger(w)||w<320))throw Error('invalid or empty census widths');
+  if(ONLY&&!ROUTES.includes(ONLY))throw Error('unknown census route');
   const failures = [];
+  let compared=0;
   let measured = 0;
 
   const server = spawn(process.execPath, [path.join(ROOT, "scripts", "serve-route-site.mjs"), build, "0"], {
@@ -334,11 +353,12 @@ async function census(build, options = {}) {
         measured++;
         const receipt = baseline.routes?.[route]?.[String(w)]?.chrome;
         if (!receipt) {
-          // The receipt has no numbers for this width. That is the spatial
-          // gate's business to notice, not a lie to be caught here.
+          failures.push(`${route} @${w}px — missing receipt`);
           continue;
         }
-        const saidTop = Number(receipt.top || 0);
+        if(!Number.isFinite(receipt.top)||!Number.isFinite(c.chrome)){failures.push(`${route} @${w}px — invalid numeric receipt/measurement`);continue;}
+        compared++;
+        const saidTop = receipt.top;
         // The receipt's band count only describes real TOP furniture when the
         // receipt actually records top chrome (topSel names the bands it sees).
         // A `stacked` count can include a bottom band or be a phantom (null
@@ -374,13 +394,7 @@ async function census(build, options = {}) {
     server.kill();
   }
 
-  if (options.falsify) {
-    // The falsifier asks a different question: did the census see MORE
-    // furniture than the receipt on the planted build?
-    const plantedChrome = failures.length > 0;
-    console.log(`  · ${measured} measurement(s) on the planted build`);
-    return plantedChrome;
-  }
+  if(measured!==routes.length*widths.length||compared!==routes.length*widths.length)failures.push(`incomplete census: measured${measured}, compared${compared}, expected${routes.length*widths.length}`);
 
   console.log(`\n· the census measured ${measured} page(s) and compared them with the receipt`);
   if (failures.length) {

@@ -88,7 +88,7 @@ const block = js.slice(blockStart, blockEnd);
 // alerts panel likewise. A status view with its own limits is a second
 // opinion, and a second opinion is not evidence.
 assert.ok(js.includes('stale(p.observedAt,SOURCE_RULES.air.maxAgeMs)'), 'the air panel reads the shared limit');
-assert.ok(js.includes('stale(a.sent,SOURCE_RULES.alerts.maxAgeMs)'), 'the alerts panel reads the shared limit');
+assert.ok(js.includes('stale(a.sent,SOURCE_RULES.alerts.maxAgeMs,now)'), 'the alerts panel reads the shared limit');
 assert.ok(!/stale\(p\.observedAt,\s*\d/.test(js), 'the air panel does not carry a limit of its own');
 assert.ok(!/stale\(a\.sent,\s*\d/.test(js), 'the alerts panel does not carry a limit of its own');
 
@@ -103,7 +103,8 @@ function load(payloads, refusals = new Map()) {
     return elements.get(id);
   };
   const context = {
-    $, lang: 'en', feedRefusals: refusals,
+    $, lang: 'en', feedRefusals: refusals, scheduleTemporalDeadline(){},
+    sourceCheckedAt: Date.now()-300000, sourceChecking:false,
     weatherData: payloads.weather ?? null,
     airData: payloads.air ?? null,
     alertsData: payloads.alerts ?? null,
@@ -112,7 +113,7 @@ function load(payloads, refusals = new Map()) {
     t: (id, en) => context.lang === 'id' ? id : en,
     esc: (v) => String(v ?? ''),
     date: (v) => (v && Number.isFinite(Date.parse(v)) ? new Date(v).toISOString() : 'Time unavailable'),
-    stale: (v, age) => !v || !Number.isFinite(Date.parse(v)) || Date.now() - Date.parse(v) > age || Date.parse(v) > Date.now() + 300000,
+    stale: (v, age, now=Date.now()) => !v || !Number.isFinite(Date.parse(v)) || now-Date.parse(v)>age || Date.parse(v)>now+300000,
   };
   vm.createContext(context);
   vm.runInContext(block, context);
@@ -126,7 +127,7 @@ const fourHoursAgo = new Date(NOW - 4 * 3600000).toISOString();
 const thirtyMinutesAgo = new Date(NOW - 30 * 60000).toISOString();
 
 const good = {
-  weather: {points: [{issuedAt: new Date(NOW - 6 * 3600000).toISOString(), forecast: [{validAt: hourStart}]}]},
+  weather: {points: [{available:true,issuedAt: new Date(NOW - 6 * 3600000).toISOString(), forecast: [{validAt: new Date(NOW+3600000).toISOString()}]}]},
   air: [{observedAt: hourAgo, aqi: 58}],
   alerts: {available: true, publishedAt: thirtyMinutesAgo, alerts: [{sent: thirtyMinutesAgo}]},
   quake: {available: true, event: {observedAt: new Date(NOW - 2 * 3600000).toISOString(), magnitude: 4.1}},
@@ -140,7 +141,7 @@ const good = {
   assert.equal(rows.length, 5, 'one line per source the page reads at runtime');
   assert.deepEqual([...rows.map((r) => r.id)].sort(), ['air', 'alerts', 'flood', 'quake', 'weather']);
   assert.ok(rows.every((r) => r.state === 'ok'), 'a source that answered is reported as answered');
-  assert.ok(rows.every((r) => r.age !== null && r.age >= 0), 'every row carries the age of what it says');
+  assert.ok(rows.every((r) => r.age !== null && Number.isFinite(r.age)), 'every row carries the age of what it says');
 }
 
 // The freshness limits are the product's own, and the view uses them.
@@ -160,8 +161,8 @@ const good = {
 {
   const {context} = load(good);
   const weather = context.sourceStatusRows(NOW).filter((r) => r.id === 'weather')[0];
-  assert.equal(weather.verdict, 'current', 'a forecast that covers the hour being read is current');
-  const expired = load({...good, weather: {points: [{issuedAt: new Date(NOW - 6 * 3600000).toISOString(), forecast: [{validAt: new Date(NOW - 5 * 3600000).toISOString()}]}]}});
+  assert.equal(weather.verdict, 'upcoming', 'a forecast that covers the hour being read is current');
+  const expired = load({...good, weather: {points: [{available:true,issuedAt: new Date(NOW - 6 * 3600000).toISOString(), forecast: [{validAt: new Date(NOW - 5 * 3600000).toISOString()}]}]}});
   const expiredRow = expired.context.sourceStatusRows(NOW).filter((r) => r.id === 'weather')[0];
   assert.equal(expiredRow.verdict, 'expired', 'a forecast that no longer covers this hour has expired');
 }
@@ -192,7 +193,7 @@ const good = {
   const {context, $} = load({...good, air: null}, new Map([['/api/atlas/air-quality', 47]]));
   context.renderSourceStatus();
   const line = $('source-status-line').textContent;
-  assert.match(line, /4\/5 sources answered/, 'the summary counts the sources that answered');
+  assert.match(line, /Data 4\/5/, 'the summary counts the sources that answered');
   assert.match(line, /1 refused/, 'the summary names the refusal');
   assert.match(line, /checked/, 'the summary says when the check happened');
   assert.ok(!/0 sources/.test(line), 'the summary never reports a refusal as zero');
@@ -229,3 +230,35 @@ assert.ok(census.includes('--falsify'), 'the census can be asked to prove it sti
 assert.ok(read('scripts/deploy-live.sh').includes('audit:chrome'), 'the release runs the census before it ships');
 
 console.log('source status: one line per source, one rule for both pages.');
+
+// The underlying availability/records matter, not a truthy response object.
+for(const [id,payload] of [['weather',{points:[]}],['air',[]],['alerts',{available:false,alerts:[]}],['quake',{available:false,event:null}],['flood',{available:false,reportCount:0}]]){
+ const state=load({...good,[id]:payload}).context.sourceStatusRows(NOW).find(r=>r.id===id);
+ assert.equal(state.state,'unavailable',id+' outage/empty data is not a usable answer');
+}
+assert.equal(load({...good,flood:{...good.flood,reportCount:0}}).context.sourceStatusRows(NOW).find(r=>r.id==='flood').state,'ok','genuine zero reports remain data');
+const mixed=load({...good,air:[{aqi:10,observedAt:hourAgo},{aqi:90,observedAt:fourHoursAgo}]}).context.sourceStatusRows(NOW).find(r=>r.id==='air');
+assert.equal(mixed.verdict,'mixed','a new location cannot mask an old one');assert.equal(mixed.stamp,fourHoursAgo,'oldest sample is named explicitly');
+const between=load({...good,weather:{points:[{available:true,forecast:[{validAt:hourAgo},{validAt:new Date(NOW+3600000).toISOString()}]}]}}).context.sourceStatusRows(NOW).find(r=>r.id==='weather');
+assert.equal(between.verdict,'upcoming','between samples, describe the next actual forecast rather than invent an interval');
+assert.ok(between.age<0,'a future forecast has a lead time, not an age of zero');
+{
+ const {context,$}=load(good);let writes=0;const live=$('source-status-live');let value='';
+ Object.defineProperty(live,'textContent',{get:()=>value,set:v=>{writes++;value=v}});
+ context.renderSourceStatus();const checked=$('source-status-line').textContent;
+ context.renderSourceStatus();context.renderSourceStatus();
+ assert.equal(writes,1,'unchanged assessments do not mutate the live region');assert.equal($('source-status-line').textContent,checked,'a render is not a new request');
+ context.airData=null;context.renderSourceStatus();assert.equal(writes,2,'a meaningful availability change is announced');
+}
+{
+ const {context}=load(good);
+ assert.match(context.zoneClock('Australia/Sydney',Date.UTC(2026,5,1)).zone,/AEST|GMT\+10/);
+ assert.match(context.zoneClock('Pacific/Auckland',Date.UTC(2026,5,1)).zone,/NZST|GMT\+12/);
+ assert.match(context.zoneClock('Australia/Sydney',Date.UTC(2026,11,1)).zone,/AEDT|GMT\+11/);
+ assert.match(context.zoneClock('Pacific/Auckland',Date.UTC(2026,11,1)).zone,/NZDT|GMT\+13/);
+}
+const clockBlock=js.slice(js.indexOf('function clockZones(){'),js.indexOf('let temporalSignature'));
+assert.doesNotMatch(clockBlock,/renderSourceStatus|source-status/,'clock ticks cannot write a source assessment');
+assert.match(js,/setInterval\(refreshTemporalStatus,60000\)/,'source ageing has its own minute assessment');
+assert.match(html,/Device clock|Jam perangkat|jam perangkat/,'clock provenance is explicit');
+console.log('PASS availability vs zero, mixed sample ages, upcoming slots, stable announcements and winter/summer zones');
