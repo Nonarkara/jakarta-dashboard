@@ -429,5 +429,20 @@ lines.push("");
 writeFileSync(path.join(OUT, "MSH-EVIDENCE.md"), lines.join("\n"));
 console.log(`\n  · record written to ${path.join(OUT, "MSH-EVIDENCE.md")}`);
 
+// A record with an unverified row is not a record. The law says: if the
+// rendering was not available, report unverified — and a run that measured
+// three routes and lost nine is not a receipt for the deployed site. The
+// exit code says so, so a caller that copies the record on success cannot
+// copy a partial one over a complete one.
+const unverified = rows.filter((r) => r.unverified);
+if (unverified.length) {
+  console.error(
+    `\nFAIL — ${unverified.length} of ${rows.length} measurements could not be taken:\n` +
+      unverified.map((r) => `  ✗ ${r.route} @${r.w}×${r.h} — ${r.unverified}`).join("\n") +
+      "\n  The law says: report unverified. This record is not a receipt for the deployed site.\n"
+  );
+  process.exitCode = 1;
+}
+
 await page.close();
 await close();
