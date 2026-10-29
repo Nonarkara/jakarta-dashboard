@@ -56,10 +56,11 @@ for (const [name, text] of [['page', html], ['client', js]]) {
 // tested; the page carries none.
 const inlineScripts = [...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>/g)];
 assert.equal(inlineScripts.length, 0, 'the page carries no inline script: a script with no src cannot be translated or tested');
-// Time now lives once, in the live-clock-bar at the top edge of the page.
-// It is a real <header> the spatial instrument can see — not a <div> blind
-// spot — and the footer no longer carries a second clock for the same time.
-assert.ok(/<header class="live-clock-bar"/.test(html), 'the live clock bar is a header at the top edge');
+// Time now lives once, inside the masthead header — the single top band
+// the spatial instrument can see and count — not a <div> blind spot, and
+// the footer no longer carries a second clock for the same time.
+assert.ok(/<header class="masthead">/.test(html), 'the masthead header is the single top band');
+assert.ok(html.includes('masthead-clock'), 'the live clock is inside the masthead header');
 assert.ok(!html.includes('id="clock"'), 'the footer no longer carries a duplicate clock');
 assert.ok(html.includes('data-tz="Asia/Kolkata"'), 'India time is shown');
 assert.ok(html.includes('data-tz="Asia/Jakarta"'), 'Jakarta local time is shown');
