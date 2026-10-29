@@ -180,15 +180,18 @@ body[data-surface="jakarta-dashboard"] .map-heading h2 { margin: 0; }
 }
 .source-status > summary {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 10px;
-  padding: 4px 12px;
+  min-height: 24px;
+  padding: 3px 12px;
   cursor: pointer;
   color: var(--dim);
   list-style: none;
 }
-.source-status > summary::-webkit-details-marker { display: none; }
-.source-status > summary::before {
+/* A finger is a finger: where the pointer is coarse the disclosure is a
+   touch target, and it is as tall as every other control on the page. */
+@media (pointer: coarse) { .source-status > summary { min-height: 44px; } }
+.source-status > summary::-webkit-details-marker { display: none; }.source-status > summary::before {
   content: '';
   flex: none;
   width: 6px; height: 6px;
@@ -205,12 +208,15 @@ body[data-surface="jakarta-dashboard"] .map-heading h2 { margin: 0; }
 .source-status-rows {
   list-style: none;
   margin: 0;
-  padding: 0 12px 8px;
+  padding: 0 12px;
   display: grid;
   gap: 2px;
   font-family: var(--font-mono);
   color: var(--dim);
 }
+/* The closed list is a box with no content: it costs the page nothing. */
+.source-status:not([open]) .source-status-rows { display: none; }
+.source-status[open] .source-status-rows { padding-bottom: 8px; }
 .source-status-row {
   display: flex;
   flex-wrap: wrap;
@@ -222,6 +228,34 @@ body[data-surface="jakarta-dashboard"] .map-heading h2 { margin: 0; }
 .source-status-row .source-status-verdict { color: var(--ink); }
 .source-status-row .source-status-rule { color: var(--dim); }
 .source-status-row--attention .source-status-verdict { color: var(--signal-alert); }
+
+/* Live time-zone band inside the masthead: a single top band the spatial
+   instrument can see and count, so the receipt matches the page. The clock
+   earns its place in the masthead — it is the operator's "now" telemetry
+   from India to New Zealand — and adds no second band of chrome. */
+.masthead-clock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  font-size: var(--type-note);
+  font-family: var(--font-mono);
+  color: var(--dim);
+}
+.masthead-clock .tz { display: flex; align-items: baseline; gap: 5px; white-space: nowrap; }
+.masthead-clock .tz-city { color: var(--dim); }
+.masthead-clock .tz-time { color: var(--ink); font-variant-numeric: tabular-nums; }
+.masthead-clock .tz-zone { color: var(--accent); }
+.masthead-clock .tz[data-local] .tz-city,
+.masthead-clock .tz[data-local] .tz-time { color: var(--accent); font-weight: 650; }
+
+/* Phone: show the range ends and the local time; hide the middle zones so
+   nothing wraps, bleeds, or grows the masthead onto a second line. */
+@media (max-width: 700px) {
+  .masthead-clock .tz:not([data-tz="Asia/Kolkata"]):not([data-tz="Asia/Jakarta"]):not([data-tz="Pacific/Auckland"]) {
+    display: none;
+  }
+}
 
 body[data-surface="jakarta-atlas"] .atlas-title::before {
   content: ''; display: inline-block; vertical-align: middle; margin-right: 8px;
@@ -368,24 +402,10 @@ body[data-surface="jakarta-dashboard"] .modal-content > .panel { height: auto; m
 @media(max-width:1199px) {
   body[data-surface="jakarta-dashboard"] .workspace { grid-template-columns: minmax(0, 1fr); }
   body[data-surface="jakarta-dashboard"] footer > span { display: none; }
-  body[data-surface="jakarta-dashboard"] footer > #clock { display: block; }
-  /* Below the console width the page is a document, not a fixed pane.
-     The console layout gives every panel a percentage of a definite height;
-     in a single column that percentage resolves against an indefinite row,
-     so the panels below the map were laid out at ZERO height — and because
-     the body does not scroll, the phone showed a map and nothing else. No
-     weather, no air quality, no official warnings: the readings were not
-     off-screen, they were not drawn at all. */
-  body[data-surface="jakarta-dashboard"] { height: auto; min-height: 100svh; overflow: visible; }
-  body[data-surface="jakarta-dashboard"] > main { flex: none; }
-  body[data-surface="jakarta-dashboard"] .workspace { flex: none; height: auto; }
-  body[data-surface="jakarta-dashboard"] .workspace > .panel { height: auto; overflow: visible; }
-  body[data-surface="jakarta-dashboard"] .workspace > .map-panel { height: auto; }
-  /* The panels are numbered 01, 02 and 03. The page now reads in that
-     order, so the number in front of a panel is the order it is read in. */
-  body[data-surface="jakarta-dashboard"] .observations { order: 1; }
-  body[data-surface="jakarta-dashboard"] .map-panel { order: 2; }
-  body[data-surface="jakarta-dashboard"] .decisions { order: 3; }
+  /* The clock bar stands above the masthead above the map, so give that
+     room back — otherwise the footer and the last of the map fall off the
+     bottom of the phone. The bar is roughly 20px of thin top chrome. */
+  body[data-surface="jakarta-dashboard"] #city-map { height: clamp(360px, calc(100svh - 184px), 820px); }
 }
 @media(pointer:coarse) { .modal-toolbar button { min-height: 44px; } }
 

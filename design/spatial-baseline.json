@@ -120,7 +120,7 @@
   },
   "exempt": [],
   "provenance": {
-    "measuredAt": "2026-10-29T08:30:16.065Z",
+    "measuredAt": "2026-10-29T12:54:38.890Z",
     "measurements": 208,
     "routes": 4,
     "widths": 52,
@@ -130,7 +130,14 @@
   "routes": {
     "/": {
       "339": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 169,
+            "detail": "the page scrolls sideways by 169px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -154,7 +161,14 @@
         }
       },
       "340": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 168,
+            "detail": "the page scrolls sideways by 168px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -178,7 +192,14 @@
         }
       },
       "341": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 167,
+            "detail": "the page scrolls sideways by 167px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -202,7 +223,14 @@
         }
       },
       "360": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 148,
+            "detail": "the page scrolls sideways by 148px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -226,7 +254,14 @@
         }
       },
       "379": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 129,
+            "detail": "the page scrolls sideways by 129px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -250,7 +285,14 @@
         }
       },
       "380": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 128,
+            "detail": "the page scrolls sideways by 128px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -274,7 +316,14 @@
         }
       },
       "381": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 127,
+            "detail": "the page scrolls sideways by 127px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -298,7 +347,14 @@
         }
       },
       "429": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 79,
+            "detail": "the page scrolls sideways by 79px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -322,7 +378,14 @@
         }
       },
       "430": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 78,
+            "detail": "the page scrolls sideways by 78px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -346,7 +409,14 @@
         }
       },
       "431": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 77,
+            "detail": "the page scrolls sideways by 77px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -370,7 +440,14 @@
         }
       },
       "449": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 59,
+            "detail": "the page scrolls sideways by 59px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -394,7 +471,14 @@
         }
       },
       "450": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 58,
+            "detail": "the page scrolls sideways by 58px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -418,7 +502,14 @@
         }
       },
       "451": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 57,
+            "detail": "the page scrolls sideways by 57px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -442,7 +533,14 @@
         }
       },
       "479": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 29,
+            "detail": "the page scrolls sideways by 29px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -466,7 +564,14 @@
         }
       },
       "480": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 28,
+            "detail": "the page scrolls sideways by 28px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -490,7 +595,14 @@
         }
       },
       "481": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 27,
+            "detail": "the page scrolls sideways by 27px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -706,7 +818,14 @@
         }
       },
       "701": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 107,
+            "detail": "the page scrolls sideways by 107px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -730,7 +849,14 @@
         }
       },
       "702": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 106,
+            "detail": "the page scrolls sideways by 106px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -754,7 +880,14 @@
         }
       },
       "759": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 49,
+            "detail": "the page scrolls sideways by 49px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -778,7 +911,14 @@
         }
       },
       "760": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 48,
+            "detail": "the page scrolls sideways by 48px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -802,7 +942,14 @@
         }
       },
       "761": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 47,
+            "detail": "the page scrolls sideways by 47px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -826,7 +973,14 @@
         }
       },
       "768": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 40,
+            "detail": "the page scrolls sideways by 40px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -850,7 +1004,14 @@
         }
       },
       "799": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 9,
+            "detail": "the page scrolls sideways by 9px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -874,7 +1035,14 @@
         }
       },
       "800": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 8,
+            "detail": "the page scrolls sideways by 8px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -898,7 +1066,14 @@
         }
       },
       "801": {
-        "findings": [],
+        "findings": [
+          {
+            "kind": "overflow",
+            "sel": "details.city-controls",
+            "metric": 7,
+            "detail": "the page scrolls sideways by 7px"
+          }
+        ],
         "firstAction": {
           "y": null,
           "sel": null
@@ -6355,7 +6530,7 @@
           "h1": 26,
           "largest": 38.535,
           "ratio": 0.67,
-          "peers": 0,
+          "peers": 4,
           "share": 0
         }
       },
@@ -6403,7 +6578,7 @@
           "h1": 27.577,
           "largest": 41.965,
           "ratio": 0.66,
-          "peers": 0,
+          "peers": 4,
           "share": 0
         }
       },

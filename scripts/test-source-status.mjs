@@ -56,10 +56,14 @@ for (const [name, text] of [['page', html], ['client', js]]) {
 // tested; the page carries none.
 const inlineScripts = [...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>/g)];
 assert.equal(inlineScripts.length, 0, 'the page carries no inline script: a script with no src cannot be translated or tested');
-// The clock was duplicated: the bar had one and the footer had one. The
-// footer keeps it; the bar is gone.
-assert.equal((html.match(/id="clock"/g) || []).length, 1, 'the page has exactly one clock');
-assert.ok(html.includes('id="clock"'), 'the clock the footer already had is the one that stays');
+// Time now lives once, in the live-clock-bar at the top edge of the page.
+// It is a real <header> the spatial instrument can see — not a <div> blind
+// spot — and the footer no longer carries a second clock for the same time.
+assert.ok(/<header class="live-clock-bar"/.test(html), 'the live clock bar is a header at the top edge');
+assert.ok(!html.includes('id="clock"'), 'the footer no longer carries a duplicate clock');
+assert.ok(html.includes('data-tz="Asia/Kolkata"'), 'India time is shown');
+assert.ok(html.includes('data-tz="Asia/Jakarta"'), 'Jakarta local time is shown');
+assert.ok(html.includes('data-tz="Pacific/Auckland"'), 'New Zealand time is shown');
 // A clock that ticks every second inside an aria-live region announces
 // itself every second. The status announces through role="status", and only
 // when the state actually changes.
@@ -75,7 +79,7 @@ assert.ok(html.includes('data-en="Each source"'), 'the disclosure label is trans
 
 // ── 2. The status view and the panels read the same limits ────────────────
 const blockStart = js.indexOf('const SOURCE_RULES = {');
-const blockEnd = js.indexOf('function clock(){');
+const blockEnd = js.indexOf('function clockZones(){');
 assert.ok(blockStart > 0 && blockEnd > blockStart, 'the source status lives in a place the test can name');
 const block = js.slice(blockStart, blockEnd);
 

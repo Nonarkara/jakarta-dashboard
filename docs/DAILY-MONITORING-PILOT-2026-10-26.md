@@ -9,7 +9,7 @@
 | A daily monitor must… | Now | Gap |
 |---|---|---|
 | Be up, and say so when it is not | `/api/health` checks the tile archive only. Releases are gated and verified live | **Nobody is told about an outage.** A watcher must run *outside* the Worker, on a schedule, and alert a named person |
-| Show whether each source is fresh | Each lens shows its own source, tier and age, and stale gauges are kept as dated evidence, not counted as current | **No single "are my sources fresh" view.** A morning check should not need eight lenses |
+| Show whether each source is fresh | Each lens shows its own source, tier and age, and stale gauges are kept as dated evidence, not counted as current | **Closed 29 October 2026.** The source status: one line per source the page reads at runtime — publisher, tier, stamped time, age, and whether it is inside the freshness rule the product already applies to that kind of source. The rules live once and the panels read the same numbers |
 | Hold up when an office shares one address | Native rate limit bound at 600/min per IP. A page load makes 4–9 API calls and does not poll | None. Revisit if the agency puts a wall screen on auto-refresh |
 | Read on a phone in Bahasa Indonesia | Indonesian first. The geometry audit covers 5 screen sizes and 11 lenses | Not yet seen by an administrator |
 | Keep agency data off the public site | Public sources only | **No private path, by design.** It is built only when there is data and written terms (below) |
@@ -18,7 +18,7 @@
 ## Order of work
 
 1. **Your friend runs the walkthrough** (below) and returns the five answers. Everything after this is shaped by what they say. Building first would be guessing.
-2. **Source-status view:** one line per source (name, last observation, age, inside or outside its own freshness rule). It comes from the same admission rules the lenses already use, not a new judgement.
+2. **Source-status view:** one line per source (name, last observation, age, inside or outside its own freshness rule). It comes from the same admission rules the lenses already use, not a new judgement. — **Done, 29 October 2026.** It stands at the top of the city dashboard, inside the page's own flow: the reader sees the verdict on the first screen, and one tap opens every source. A refused source is a refusal, not a zero and not a silence; a source that did not answer is named as such.
 3. **Outage watcher:** a scheduled check from outside Cloudflare covering the site, `/api/health` and the source-status view, alerting by Telegram or LINE. That needs to know who receives it, which is a question for your friend.
 4. **Agency data, only with terms.** Before any non-public feed (pumps, gauges, CCTV, reports) is touched:
    - written permission naming the feed and its allowed use;

@@ -70,7 +70,7 @@ function applyLanguage(){
  document.title=t('Pantau Jakarta','Jakarta city watch');
  $('city-map').title=t('Atlas 3D Jakarta','Jakarta 3D atlas');
  document.querySelector('.sections').setAttribute('aria-label',t('Navigasi bagian','Section navigation'));
- send({type:'atlas:setLanguage',language:lang});renderWeather();renderAir();renderIspu();renderAlerts();renderQuake();renderFlood();renderTransit();renderCivic();renderSources();renderSourceStatus();renderCrmViewerStatus();renderExplorePlaces();renderBuildingView();clock();document.dispatchEvent(new Event('dashboard:language'));
+ send({type:'atlas:setLanguage',language:lang});renderWeather();renderAir();renderIspu();renderAlerts();renderQuake();renderFlood();renderTransit();renderCivic();renderSources();renderSourceStatus();renderCrmViewerStatus();renderExplorePlaces();renderBuildingView();clockZones();document.dispatchEvent(new Event('dashboard:language'));
  $('release').textContent='v'+DASHBOARD_VERSION+' · '+DASHBOARD_BUILD;
 }
 function renderWeather(){
@@ -283,7 +283,16 @@ function renderSourceStatus(){
   $('feed-status').textContent=summary;
 }
 
-function clock(){ $('clock').textContent=new Date().toLocaleString(lang==='id'?'id-ID':'en-GB',{timeZone:'Asia/Jakarta',weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+' WIB'; }
+function clockZones(){
+  document.querySelectorAll('.masthead-clock .tz').forEach(function(el){
+    var tz = el.getAttribute('data-tz');
+    var time = el.querySelector('.tz-time');
+    if(!time)return;
+    time.textContent = new Date().toLocaleTimeString('en-GB',{timeZone:tz,hour:'2-digit',minute:'2-digit'});
+  });
+  // Refresh the source-status line's "checked" stamp so it stays beside the clock.
+  renderSourceStatus();
+}
 async function refresh(){
  const id=++refreshId;$('refresh').disabled=true;$('feed-status').textContent=t('Memeriksa data terbitan…','Checking published feeds…');
  const jobs=[['/api/jakarta/weather',d=>{weatherData=d;renderWeather();}],['/api/atlas/air-quality',d=>{airData=d;renderAir();}],['/api/jakarta/alerts?lang='+lang,d=>{alertsData=d;renderAlerts();}],['/api/jakarta/earthquake',d=>{quakeData=d;renderQuake();}],['/api/jakarta/flood-reports',d=>{floodData=d;renderFlood();}]];
@@ -293,6 +302,8 @@ async function refresh(){
  $('refresh').disabled=false;
  renderSourceStatus();
 }
+clockZones();
+setInterval(clockZones, 1000);
 document.addEventListener('click',event=>{if(event.target.closest('[data-language-switch]')){document.querySelector('.city-controls').open=false;changeLanguage(lang==='id'?'en':'id');}});
 function changeLanguage(value){lang=value;try{localStorage.setItem('jakarta-dashboard-lang',lang);localStorage.setItem('jakarta-atlas-language',lang);}catch{}const u=new URL(location.href);u.searchParams.set('lang',lang);history.replaceState(null,'',u);applyLanguage();refresh();}
 $('language').addEventListener('change',()=>changeLanguage($('language').value)); // axiom-audit-ignore honesty -- Optional local preference persistence; current controls and source values remain available with explicit defaults.
@@ -386,7 +397,7 @@ function initDetailDialogs() {
  if(initial?.tagName==='DIALOG') initial.showModal();
 }
 initDetailDialogs();
-applyLanguage();refresh();setInterval(refresh,5*60000);setInterval(clock,60000);
+applyLanguage();refresh();setInterval(refresh,5*60000);
 get('/data/jakarta-v1/transit.json?v='+DASHBOARD_BUILD).then(d=>{transit=d;renderTransit();});get('/data/jakarta-v1/civic.json?v='+DASHBOARD_BUILD).then(d=>{civic=d;});get('/data/jakarta-v1/ispu-reference.json?v='+DASHBOARD_BUILD).then(d=>{ispuData=d;renderIspu();});loadCivic();
 
 // Phone navigation uses one masthead row; native details keeps keyboard focus.

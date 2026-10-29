@@ -98,6 +98,19 @@ npm run smoke:dashboard
 # control which renders correctly and swallows its own clicks, or a chart whose
 # bars no longer track their values.
 ATLAS_URL="$ATLAS_URL" node scripts/audit-rendered.mjs
+
+# The MSH record is measured on the DEPLOYED build — it names that build, and
+# the law asks for the pixels at 390, 1024 and 1440 on every route. It cannot
+# be captured before the deploy, and a record that names an older build is a
+# receipt for a page that is not there: the last one went stale for two days
+# and nobody noticed, because nothing said so. So it is captured here, against
+# what just shipped, and committed with a pathspec so the next release starts
+# from a clean tree.
+node scripts/msh-evidence.mjs "$ATLAS_URL" docs/msh
+if ! git diff --quiet HEAD -- docs/msh; then
+  git add -- docs/msh
+  git commit -q -m "docs: record the MSH evidence for the deployed build" -m "Agent: ${RELEASE_AGENT:-unattributed-release}" -- docs/msh
+fi
 node scripts/release-snapshot.mjs check "$LOCK/inputs.json"
 
 echo "released ${EXPECTED_BUILD}; working tree:"
