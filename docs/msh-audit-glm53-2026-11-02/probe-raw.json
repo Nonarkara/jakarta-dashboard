@@ -1,0 +1,3013 @@
+[
+  {
+    "route": "dashboard",
+    "w": 390,
+    "h": 844,
+    "theme": "dark(default)",
+    "vw": 390,
+    "vh": 844,
+    "overflowX": false,
+    "scrollW": 390,
+    "clientW": 390,
+    "voids": [],
+    "tapTargets": {
+      "total": 5,
+      "under32": [
+        {
+          "sel": "a.city-brand",
+          "h": 21,
+          "w": 55,
+          "y": 0,
+          "text": "JKTx"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 21,
+          "w": 40,
+          "y": 0,
+          "text": "Menu"
+        },
+        {
+          "sel": "button#language-toggle",
+          "h": 21,
+          "w": 51,
+          "y": 0,
+          "text": "English"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 21,
+          "w": 53,
+          "y": 0,
+          "text": "Kontrol"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 24,
+          "w": 390,
+          "y": 23,
+          "text": "Data 5/5 · diperiksa 01.43 W"
+        }
+      ]
+    },
+    "boxfit": [],
+    "clipped": [
+      {
+        "sel": "h1.visually-hidden",
+        "scrollH": 26,
+        "clientH": 1,
+        "text": "Pantau Jakarta"
+      },
+      {
+        "sel": "h1.visually-hidden",
+        "scrollW": 125,
+        "clientW": 1,
+        "text": "Pantau Jakarta"
+      },
+      {
+        "sel": "p#source-status-live",
+        "scrollH": 19,
+        "clientH": 1,
+        "text": "5/5 sumber mengembalikan data"
+      },
+      {
+        "sel": "p#source-status-live",
+        "scrollW": 193,
+        "clientW": 1,
+        "text": "5/5 sumber mengembalikan data"
+      }
+    ],
+    "bands": {
+      "masthead": {
+        "y": 0,
+        "h": 23,
+        "pos": "static",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "sourceStatus": {
+        "y": 23,
+        "h": 25,
+        "pos": "static",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "map": {
+        "y": 66,
+        "h": 776,
+        "pos": "static",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "mapPanel": {
+        "y": 48,
+        "h": 796,
+        "pos": "relative",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "mastheadToStatusGap": 0
+    },
+    "clock": {
+      "present": true,
+      "zonesVisible": 1,
+      "zonesFull": [
+        "JAKARTA"
+      ],
+      "overflow": false,
+      "sample": [
+        "JAKARTA01:44WIB",
+        "JAKARTA"
+      ]
+    },
+    "mapShare": 0.92,
+    "lang": "id",
+    "slopWords": [],
+    "contrast": [
+      {
+        "sel": "h2#map-heading",
+        "ratio": 11.81,
+        "text": "Jakarta, blok demi blok"
+      },
+      {
+        "sel": "span#map-status",
+        "ratio": 7.21,
+        "text": "Memuat atlas"
+      },
+      {
+        "sel": "p#source-status-live",
+        "ratio": 11.81,
+        "text": "5/5 sumber mengembalikan"
+      },
+      {
+        "sel": "a.skip",
+        "ratio": 5.54,
+        "text": "Langsung ke peta kota"
+      }
+    ],
+    "sizes": [
+      {
+        "px": 20,
+        "chars": 14
+      },
+      {
+        "px": 18,
+        "chars": 4
+      },
+      {
+        "px": 14,
+        "chars": 50
+      },
+      {
+        "px": 12,
+        "chars": 85
+      },
+      {
+        "px": 11,
+        "chars": 23
+      }
+    ],
+    "iframe": {
+      "tapUnder32": 10,
+      "zones": 0,
+      "voids": 0,
+      "overflowX": false,
+      "boxfit": [
+        {
+          "sel": "summary.undefined",
+          "boxH": 30,
+          "textH": 16,
+          "hr": 1.88,
+          "boxW": 112,
+          "textW": 85,
+          "wr": 1.31,
+          "text": "Data dan sumber"
+        }
+      ],
+      "tapUnder32Detail": [
+        {
+          "sel": "summary.undefined",
+          "h": 24,
+          "w": 67,
+          "y": 1,
+          "text": "Lihat bukti"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 53,
+          "y": 1,
+          "text": "Kota 3D"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 113,
+          "y": 1,
+          "text": "Alur air & air masuk"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 106,
+          "y": 1,
+          "text": "Kamera lalu lintas"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 106,
+          "y": 1,
+          "text": "Kerentanan banjir"
+        },
+        {
+          "sel": "summary.atlas-panel-summary",
+          "h": 24,
+          "w": 64,
+          "y": 35,
+          "text": "Lapisan"
+        },
+        {
+          "sel": "summary.atlas-panel-summary",
+          "h": 24,
+          "w": 150,
+          "y": 719,
+          "text": "Lompat cepat\n            12 "
+        },
+        {
+          "sel": "button#place-open",
+          "h": 26,
+          "w": 81,
+          "y": 719,
+          "text": "Sekitar sini"
+        },
+        {
+          "sel": "a.atlas-research-link",
+          "h": 30,
+          "w": 91,
+          "y": 34,
+          "text": "Riset & metode"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 30,
+          "w": 112,
+          "y": 34,
+          "text": "Data dan sumber"
+        }
+      ]
+    },
+    "focus": {
+      "focused": "a.skip",
+      "outline": "solid 2px",
+      "boxShadow": "none",
+      "ring": true
+    }
+  },
+  {
+    "route": "dashboard",
+    "w": 1024,
+    "h": 900,
+    "theme": "dark(default)",
+    "vw": 1024,
+    "vh": 900,
+    "overflowX": false,
+    "scrollW": 1024,
+    "clientW": 1024,
+    "voids": [],
+    "tapTargets": {
+      "total": 15,
+      "under32": [
+        {
+          "sel": "summary.undefined",
+          "h": 24,
+          "w": 1024,
+          "y": 38,
+          "text": "Data 5/5 · diperiksa 01.44 W"
+        },
+        {
+          "sel": "button#language-toggle",
+          "h": 30,
+          "w": 47,
+          "y": 3,
+          "text": "English"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 30,
+          "w": 50,
+          "y": 3,
+          "text": "Kontrol"
+        }
+      ]
+    },
+    "boxfit": [
+      {
+        "sel": "button.undefined",
+        "boxH": 34,
+        "textH": 15,
+        "hr": 2.27,
+        "boxW": 41,
+        "textW": 29,
+        "wr": 1.42,
+        "text": "Cuaca"
+      },
+      {
+        "sel": "button.undefined",
+        "boxH": 34,
+        "textH": 15,
+        "hr": 2.27,
+        "boxW": 40,
+        "textW": 28,
+        "wr": 1.42,
+        "text": "Banjir"
+      },
+      {
+        "sel": "button.undefined",
+        "boxH": 34,
+        "textH": 15,
+        "hr": 2.27,
+        "boxW": 71,
+        "textW": 59,
+        "wr": 1.2,
+        "text": "Transportasi"
+      },
+      {
+        "sel": "button.undefined",
+        "boxH": 34,
+        "textH": 15,
+        "hr": 2.27,
+        "boxW": 73,
+        "textW": 61,
+        "wr": 1.2,
+        "text": "Fasilitas kota"
+      },
+      {
+        "sel": "button.undefined",
+        "boxH": 34,
+        "textH": 15,
+        "hr": 2.27,
+        "boxW": 83,
+        "textW": 71,
+        "wr": 1.17,
+        "text": "Layanan warga"
+      },
+      {
+        "sel": "button.undefined",
+        "boxH": 34,
+        "textH": 15,
+        "hr": 2.27,
+        "boxW": 36,
+        "textW": 24,
+        "wr": 1.51,
+        "text": "Riset"
+      },
+      {
+        "sel": "button.undefined",
+        "boxH": 34,
+        "textH": 15,
+        "hr": 2.27,
+        "boxW": 97,
+        "textW": 85,
+        "wr": 1.14,
+        "text": "Sumber & metode"
+      },
+      {
+        "sel": "button.undefined",
+        "boxH": 34,
+        "textH": 15,
+        "hr": 2.27,
+        "boxW": 63,
+        "textW": 51,
+        "wr": 1.23,
+        "text": "Peringatan"
+      },
+      {
+        "sel": "summary.undefined",
+        "boxH": 30,
+        "textH": 15,
+        "hr": 2,
+        "boxW": 50,
+        "textW": 36,
+        "wr": 1.39,
+        "text": "Kontrol"
+      }
+    ],
+    "clipped": [
+      {
+        "sel": "h1.visually-hidden",
+        "scrollH": 26,
+        "clientH": 1,
+        "text": "Pantau Jakarta"
+      },
+      {
+        "sel": "h1.visually-hidden",
+        "scrollW": 125,
+        "clientW": 1,
+        "text": "Pantau Jakarta"
+      },
+      {
+        "sel": "p#source-status-live",
+        "scrollH": 18,
+        "clientH": 1,
+        "text": "5/5 sumber mengembalikan data"
+      },
+      {
+        "sel": "p#source-status-live",
+        "scrollW": 179,
+        "clientW": 1,
+        "text": "5/5 sumber mengembalikan data"
+      }
+    ],
+    "bands": {
+      "masthead": {
+        "y": 0,
+        "h": 38,
+        "pos": "static",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "sourceStatus": {
+        "y": 38,
+        "h": 25,
+        "pos": "static",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "map": {
+        "y": 81,
+        "h": 817,
+        "pos": "static",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "mapPanel": {
+        "y": 63,
+        "h": 837,
+        "pos": "relative",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "mastheadToStatusGap": 0
+    },
+    "clock": {
+      "present": true,
+      "zonesVisible": 6,
+      "zonesFull": [
+        "DELHI",
+        "JAKARTA",
+        "SINGAPORE",
+        "TOKYO",
+        "SYDNEY",
+        "AUCKLAND"
+      ],
+      "overflow": false,
+      "sample": [
+        "DELHI00:14IST",
+        "DELHI",
+        "JAKARTA01:44WIB",
+        "JAKARTA",
+        "SINGAPORE02:44SGT",
+        "SINGAPORE",
+        "TOKYO03:44JST",
+        "TOKYO",
+        "SYDNEY05:44AEDT",
+        "SYDNEY"
+      ]
+    },
+    "mapShare": 0.91,
+    "lang": "id",
+    "slopWords": [],
+    "contrast": [
+      {
+        "sel": "h2#map-heading",
+        "ratio": 11.81,
+        "text": "Jakarta, blok demi blok"
+      },
+      {
+        "sel": "span#map-status",
+        "ratio": 7.21,
+        "text": "Atlas siap"
+      },
+      {
+        "sel": "p#source-status-live",
+        "ratio": 11.81,
+        "text": "5/5 sumber mengembalikan"
+      },
+      {
+        "sel": "a.skip",
+        "ratio": 5.54,
+        "text": "Langsung ke peta kota"
+      }
+    ],
+    "sizes": [
+      {
+        "px": 22,
+        "chars": 4
+      },
+      {
+        "px": 20,
+        "chars": 14
+      },
+      {
+        "px": 13,
+        "chars": 50
+      },
+      {
+        "px": 11,
+        "chars": 294
+      }
+    ],
+    "iframe": {
+      "tapUnder32": 14,
+      "zones": 0,
+      "voids": 0,
+      "overflowX": false,
+      "boxfit": [
+        {
+          "sel": "summary.undefined",
+          "boxH": 30,
+          "textH": 16,
+          "hr": 1.88,
+          "boxW": 112,
+          "textW": 85,
+          "wr": 1.31,
+          "text": "Data dan sumber"
+        }
+      ],
+      "tapUnder32Detail": [
+        {
+          "sel": "summary.undefined",
+          "h": 24,
+          "w": 67,
+          "y": 1,
+          "text": "Lihat bukti"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 53,
+          "y": 1,
+          "text": "Kota 3D"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 113,
+          "y": 1,
+          "text": "Alur air & air masuk"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 106,
+          "y": 1,
+          "text": "Kamera lalu lintas"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 106,
+          "y": 1,
+          "text": "Kerentanan banjir"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 99,
+          "y": 1,
+          "text": "Keyakinan tinggi"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 74,
+          "y": 1,
+          "text": "Ruang hijau"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 138,
+          "y": 1,
+          "text": "Skenario kedatangan air"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 111,
+          "y": 1,
+          "text": "Pemantauan banjir"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 135,
+          "y": 1,
+          "text": "Hujan · 24 jam ke depan"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 76,
+          "y": 1,
+          "text": "Radar hujan"
+        },
+        {
+          "sel": "summary.maplibregl-ctrl-attrib-button",
+          "h": 24,
+          "w": 24,
+          "y": 779,
+          "text": ""
+        },
+        {
+          "sel": "summary.atlas-panel-summary",
+          "h": 24,
+          "w": 64,
+          "y": 35,
+          "text": "Lapisan"
+        },
+        {
+          "sel": "summary.atlas-panel-summary",
+          "h": 24,
+          "w": 149,
+          "y": 760,
+          "text": "Lompat cepat\n            12 "
+        }
+      ]
+    },
+    "focus": {
+      "focused": "a.skip",
+      "outline": "solid 2px",
+      "boxShadow": "none",
+      "ring": true
+    }
+  },
+  {
+    "route": "dashboard",
+    "w": 1440,
+    "h": 900,
+    "theme": "dark(default)",
+    "vw": 1440,
+    "vh": 900,
+    "overflowX": false,
+    "scrollW": 1440,
+    "clientW": 1440,
+    "voids": [],
+    "tapTargets": {
+      "total": 18,
+      "under32": [
+        {
+          "sel": "a.undefined",
+          "h": 17,
+          "w": 85,
+          "y": 192,
+          "text": "Periksa BMKG ↗"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 17,
+          "w": 82,
+          "y": 337,
+          "text": "PetaBencana ↗"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 24,
+          "w": 1440,
+          "y": 38,
+          "text": "Data 5/5 · diperiksa 01.46 W"
+        },
+        {
+          "sel": "button#language-toggle",
+          "h": 30,
+          "w": 47,
+          "y": 3,
+          "text": "English"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 30,
+          "w": 50,
+          "y": 3,
+          "text": "Kontrol"
+        }
+      ]
+    },
+    "boxfit": [
+      {
+        "sel": "button.undefined",
+        "boxH": 34,
+        "textH": 15,
+        "hr": 2.27,
+        "boxW": 41,
+        "textW": 29,
+        "wr": 1.42,
+        "text": "Cuaca"
+      },
+      {
+        "sel": "button.undefined",
+        "boxH": 34,
+        "textH": 15,
+        "hr": 2.27,
+        "boxW": 40,
+        "textW": 28,
+        "wr": 1.42,
+        "text": "Banjir"
+      },
+      {
+        "sel": "button.undefined",
+        "boxH": 34,
+        "textH": 15,
+        "hr": 2.27,
+        "boxW": 71,
+        "textW": 59,
+        "wr": 1.2,
+        "text": "Transportasi"
+      },
+      {
+        "sel": "button.undefined",
+        "boxH": 34,
+        "textH": 15,
+        "hr": 2.27,
+        "boxW": 73,
+        "textW": 61,
+        "wr": 1.2,
+        "text": "Fasilitas kota"
+      },
+      {
+        "sel": "button.undefined",
+        "boxH": 34,
+        "textH": 15,
+        "hr": 2.27,
+        "boxW": 83,
+        "textW": 71,
+        "wr": 1.17,
+        "text": "Layanan warga"
+      },
+      {
+        "sel": "button.undefined",
+        "boxH": 34,
+        "textH": 15,
+        "hr": 2.27,
+        "boxW": 36,
+        "textW": 24,
+        "wr": 1.51,
+        "text": "Riset"
+      },
+      {
+        "sel": "button.undefined",
+        "boxH": 34,
+        "textH": 15,
+        "hr": 2.27,
+        "boxW": 97,
+        "textW": 85,
+        "wr": 1.14,
+        "text": "Sumber & metode"
+      },
+      {
+        "sel": "button.undefined",
+        "boxH": 34,
+        "textH": 15,
+        "hr": 2.27,
+        "boxW": 63,
+        "textW": 51,
+        "wr": 1.23,
+        "text": "Peringatan"
+      },
+      {
+        "sel": "summary.undefined",
+        "boxH": 30,
+        "textH": 15,
+        "hr": 2,
+        "boxW": 50,
+        "textW": 36,
+        "wr": 1.39,
+        "text": "Kontrol"
+      },
+      {
+        "sel": "span.eyebrow",
+        "boxH": 15,
+        "textH": 15,
+        "hr": 1,
+        "boxW": 83,
+        "textW": 21,
+        "wr": 3.98,
+        "text": "01 / Pengamatan"
+      },
+      {
+        "sel": "p.meta",
+        "boxH": 30,
+        "textH": 15,
+        "hr": 1.98,
+        "boxW": 203,
+        "textW": 246,
+        "wr": 0.82,
+        "text": "BMKG · prakiraan resmiBe"
+      },
+      {
+        "sel": "p.meta",
+        "boxH": 30,
+        "textH": 15,
+        "hr": 1.98,
+        "boxW": 203,
+        "textW": 246,
+        "wr": 0.82,
+        "text": "BMKG · prakiraan resmiBe"
+      },
+      {
+        "sel": "p.meta",
+        "boxH": 30,
+        "textH": 15,
+        "hr": 1.98,
+        "boxW": 203,
+        "textW": 246,
+        "wr": 0.82,
+        "text": "BMKG · prakiraan resmiBe"
+      },
+      {
+        "sel": "p.meta",
+        "boxH": 30,
+        "textH": 15,
+        "hr": 1.98,
+        "boxW": 203,
+        "textW": 246,
+        "wr": 0.82,
+        "text": "BMKG · prakiraan resmiBe"
+      },
+      {
+        "sel": "p.meta",
+        "boxH": 30,
+        "textH": 15,
+        "hr": 1.98,
+        "boxW": 203,
+        "textW": 246,
+        "wr": 0.82,
+        "text": "BMKG · prakiraan resmiBe"
+      },
+      {
+        "sel": "p.meta",
+        "boxH": 30,
+        "textH": 15,
+        "hr": 1.98,
+        "boxW": 203,
+        "textW": 268,
+        "wr": 0.76,
+        "text": "CAMS / Open-Meteo · mode"
+      },
+      {
+        "sel": "p.meta",
+        "boxH": 30,
+        "textH": 15,
+        "hr": 1.98,
+        "boxW": 203,
+        "textW": 268,
+        "wr": 0.76,
+        "text": "CAMS / Open-Meteo · mode"
+      },
+      {
+        "sel": "p.meta",
+        "boxH": 30,
+        "textH": 15,
+        "hr": 1.98,
+        "boxW": 203,
+        "textW": 268,
+        "wr": 0.76,
+        "text": "CAMS / Open-Meteo · mode"
+      },
+      {
+        "sel": "p.meta",
+        "boxH": 30,
+        "textH": 15,
+        "hr": 1.98,
+        "boxW": 203,
+        "textW": 268,
+        "wr": 0.76,
+        "text": "CAMS / Open-Meteo · mode"
+      },
+      {
+        "sel": "p.meta",
+        "boxH": 30,
+        "textH": 15,
+        "hr": 1.98,
+        "boxW": 203,
+        "textW": 268,
+        "wr": 0.76,
+        "text": "CAMS / Open-Meteo · mode"
+      }
+    ],
+    "clipped": [
+      {
+        "sel": "h1.visually-hidden",
+        "scrollH": 26,
+        "clientH": 1,
+        "text": "Pantau Jakarta"
+      },
+      {
+        "sel": "h1.visually-hidden",
+        "scrollW": 125,
+        "clientW": 1,
+        "text": "Pantau Jakarta"
+      },
+      {
+        "sel": "p#source-status-live",
+        "scrollH": 18,
+        "clientH": 1,
+        "text": "5/5 sumber mengembalikan data"
+      },
+      {
+        "sel": "p#source-status-live",
+        "scrollW": 179,
+        "clientW": 1,
+        "text": "5/5 sumber mengembalikan data"
+      }
+    ],
+    "bands": {
+      "masthead": {
+        "y": 0,
+        "h": 38,
+        "pos": "static",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "sourceStatus": {
+        "y": 38,
+        "h": 25,
+        "pos": "static",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "map": {
+        "y": 81,
+        "h": 802,
+        "pos": "static",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "mapPanel": {
+        "y": 63,
+        "h": 822,
+        "pos": "relative",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "mastheadToStatusGap": 0
+    },
+    "clock": {
+      "present": true,
+      "zonesVisible": 6,
+      "zonesFull": [
+        "DELHI",
+        "JAKARTA",
+        "SINGAPORE",
+        "TOKYO",
+        "SYDNEY",
+        "AUCKLAND"
+      ],
+      "overflow": false,
+      "sample": [
+        "DELHI00:16IST",
+        "DELHI",
+        "JAKARTA01:46WIB",
+        "JAKARTA",
+        "SINGAPORE02:46SGT",
+        "SINGAPORE",
+        "TOKYO03:46JST",
+        "TOKYO",
+        "SYDNEY05:46AEDT",
+        "SYDNEY"
+      ]
+    },
+    "mapShare": 0.59,
+    "lang": "id",
+    "slopWords": [],
+    "contrast": [
+      {
+        "sel": "h2#obs-heading",
+        "ratio": 11.81,
+        "text": "Cuaca & udara"
+      },
+      {
+        "sel": "p.meta",
+        "ratio": 7.21,
+        "text": "BMKG · prakiraan resmiBe"
+      },
+      {
+        "sel": "p#source-status-live",
+        "ratio": 11.81,
+        "text": "5/5 sumber mengembalikan"
+      },
+      {
+        "sel": "a.skip",
+        "ratio": 5.54,
+        "text": "Langsung ke peta kota"
+      }
+    ],
+    "sizes": [
+      {
+        "px": 22,
+        "chars": 4
+      },
+      {
+        "px": 20,
+        "chars": 14
+      },
+      {
+        "px": 13,
+        "chars": 778
+      },
+      {
+        "px": 11,
+        "chars": 2965
+      }
+    ],
+    "iframe": {
+      "tapUnder32": 14,
+      "zones": 0,
+      "voids": 0,
+      "overflowX": false,
+      "boxfit": [
+        {
+          "sel": "summary.undefined",
+          "boxH": 30,
+          "textH": 16,
+          "hr": 1.88,
+          "boxW": 112,
+          "textW": 85,
+          "wr": 1.31,
+          "text": "Data dan sumber"
+        }
+      ],
+      "tapUnder32Detail": [
+        {
+          "sel": "summary.undefined",
+          "h": 24,
+          "w": 67,
+          "y": 1,
+          "text": "Lihat bukti"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 53,
+          "y": 1,
+          "text": "Kota 3D"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 113,
+          "y": 1,
+          "text": "Alur air & air masuk"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 106,
+          "y": 1,
+          "text": "Kamera lalu lintas"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 106,
+          "y": 1,
+          "text": "Kerentanan banjir"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 99,
+          "y": 1,
+          "text": "Keyakinan tinggi"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 74,
+          "y": 1,
+          "text": "Ruang hijau"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 138,
+          "y": 1,
+          "text": "Skenario kedatangan air"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 111,
+          "y": 1,
+          "text": "Pemantauan banjir"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 135,
+          "y": 1,
+          "text": "Hujan · 24 jam ke depan"
+        },
+        {
+          "sel": "summary.maplibregl-ctrl-attrib-button",
+          "h": 24,
+          "w": 24,
+          "y": 764,
+          "text": ""
+        },
+        {
+          "sel": "summary.atlas-panel-summary",
+          "h": 24,
+          "w": 64,
+          "y": 35,
+          "text": "Lapisan"
+        },
+        {
+          "sel": "summary.atlas-panel-summary",
+          "h": 24,
+          "w": 149,
+          "y": 745,
+          "text": "Lompat cepat\n            12 "
+        },
+        {
+          "sel": "button#place-open",
+          "h": 26,
+          "w": 77,
+          "y": 745,
+          "text": "Sekitar sini"
+        }
+      ]
+    },
+    "focus": {
+      "focused": "a.skip",
+      "outline": "solid 2px",
+      "boxShadow": "none",
+      "ring": true
+    }
+  },
+  {
+    "route": "atlas",
+    "w": 390,
+    "h": 844,
+    "theme": "dark(default)",
+    "vw": 390,
+    "vh": 844,
+    "overflowX": false,
+    "scrollW": 390,
+    "clientW": 390,
+    "voids": [],
+    "tapTargets": {
+      "total": 17,
+      "under32": [
+        {
+          "sel": "select#atlas-language",
+          "h": 22,
+          "w": 115,
+          "y": 1,
+          "text": "Bahasa IndonesiaEnglish"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 22,
+          "w": 60,
+          "y": 1,
+          "text": "Kontrol"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 24,
+          "w": 67,
+          "y": 25,
+          "text": "Lihat bukti"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 53,
+          "y": 25,
+          "text": "Kota 3D"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 113,
+          "y": 25,
+          "text": "Alur air & air masuk"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 106,
+          "y": 25,
+          "text": "Kamera lalu lintas"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 106,
+          "y": 25,
+          "text": "Kerentanan banjir"
+        },
+        {
+          "sel": "summary.maplibregl-ctrl-attrib-button",
+          "h": 24,
+          "w": 24,
+          "y": 806,
+          "text": ""
+        },
+        {
+          "sel": "summary.atlas-panel-summary",
+          "h": 24,
+          "w": 64,
+          "y": 59,
+          "text": "Lapisan"
+        },
+        {
+          "sel": "summary.atlas-panel-summary",
+          "h": 24,
+          "w": 150,
+          "y": 787,
+          "text": "Lompat cepat\n            12 "
+        },
+        {
+          "sel": "button#place-open",
+          "h": 26,
+          "w": 81,
+          "y": 787,
+          "text": "Sekitar sini"
+        },
+        {
+          "sel": "button.maplibregl-ctrl-zoom-in",
+          "h": 28,
+          "w": 28,
+          "y": 701,
+          "text": ""
+        },
+        {
+          "sel": "button.maplibregl-ctrl-zoom-out",
+          "h": 28,
+          "w": 28,
+          "y": 729,
+          "text": ""
+        },
+        {
+          "sel": "button.maplibregl-ctrl-compass",
+          "h": 28,
+          "w": 28,
+          "y": 757,
+          "text": ""
+        }
+      ]
+    },
+    "boxfit": [
+      {
+        "sel": "summary.undefined",
+        "boxH": 30,
+        "textH": 16,
+        "hr": 1.88,
+        "boxW": 91,
+        "textW": 73,
+        "wr": 1.25,
+        "text": "Pantauan kota"
+      },
+      {
+        "sel": "summary.undefined",
+        "boxH": 30,
+        "textH": 16,
+        "hr": 1.88,
+        "boxW": 112,
+        "textW": 85,
+        "wr": 1.31,
+        "text": "Data dan sumber"
+      }
+    ],
+    "clipped": [],
+    "bands": {
+      "masthead": {
+        "y": 0,
+        "h": 24,
+        "pos": "static",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "sourceStatus": null,
+      "map": {
+        "y": 50,
+        "h": 794,
+        "pos": "absolute",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "mapPanel": null
+    },
+    "clock": {
+      "present": false,
+      "zonesVisible": 0,
+      "zonesFull": [],
+      "overflow": false,
+      "sample": []
+    },
+    "mapShare": 0.94,
+    "lang": "id",
+    "slopWords": [],
+    "contrast": [
+      {
+        "sel": "h2.atlas-data-heading",
+        "ratio": 11.81,
+        "text": "Klik bangunan mana pun"
+      },
+      {
+        "sel": "p#atlas-watch-request-status",
+        "ratio": 11.81,
+        "text": ""
+      },
+      {
+        "sel": "p.atlas-maturity",
+        "ratio": 5.82,
+        "text": "Demo publik · peta refer"
+      },
+      {
+        "sel": "a.atlas-skip",
+        "ratio": 11.81,
+        "text": "Langsung ke kontrol peta"
+      }
+    ],
+    "sizes": [
+      {
+        "px": 14,
+        "chars": 46
+      },
+      {
+        "px": 12,
+        "chars": 327
+      },
+      {
+        "px": 11,
+        "chars": 9
+      }
+    ],
+    "iframe": null,
+    "focus": {
+      "focused": "a.atlas-skip",
+      "outline": "solid 2px",
+      "boxShadow": "none",
+      "ring": true
+    }
+  },
+  {
+    "route": "atlas",
+    "w": 1024,
+    "h": 900,
+    "theme": "dark(default)",
+    "vw": 1024,
+    "vh": 900,
+    "overflowX": false,
+    "scrollW": 1024,
+    "clientW": 1024,
+    "voids": [],
+    "tapTargets": {
+      "total": 23,
+      "under32": [
+        {
+          "sel": "select#atlas-language",
+          "h": 24,
+          "w": 115,
+          "y": 2,
+          "text": "Bahasa IndonesiaEnglish"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 24,
+          "w": 68,
+          "y": 2,
+          "text": "Kontrol"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 24,
+          "w": 67,
+          "y": 30,
+          "text": "Lihat bukti"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 53,
+          "y": 30,
+          "text": "Kota 3D"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 113,
+          "y": 30,
+          "text": "Alur air & air masuk"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 106,
+          "y": 30,
+          "text": "Kamera lalu lintas"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 106,
+          "y": 30,
+          "text": "Kerentanan banjir"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 99,
+          "y": 30,
+          "text": "Keyakinan tinggi"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 74,
+          "y": 30,
+          "text": "Ruang hijau"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 138,
+          "y": 30,
+          "text": "Skenario kedatangan air"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 111,
+          "y": 30,
+          "text": "Pemantauan banjir"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 135,
+          "y": 30,
+          "text": "Hujan · 24 jam ke depan"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 76,
+          "y": 30,
+          "text": "Radar hujan"
+        },
+        {
+          "sel": "summary.maplibregl-ctrl-attrib-button",
+          "h": 24,
+          "w": 24,
+          "y": 862,
+          "text": ""
+        }
+      ]
+    },
+    "boxfit": [
+      {
+        "sel": "summary.undefined",
+        "boxH": 30,
+        "textH": 16,
+        "hr": 1.88,
+        "boxW": 91,
+        "textW": 73,
+        "wr": 1.25,
+        "text": "Pantauan kota"
+      },
+      {
+        "sel": "summary.undefined",
+        "boxH": 30,
+        "textH": 16,
+        "hr": 1.88,
+        "boxW": 112,
+        "textW": 85,
+        "wr": 1.31,
+        "text": "Data dan sumber"
+      }
+    ],
+    "clipped": [],
+    "bands": {
+      "masthead": {
+        "y": 0,
+        "h": 29,
+        "pos": "static",
+        "mt": "0px",
+        "pt": "2px",
+        "bt": "0px"
+      },
+      "sourceStatus": null,
+      "map": {
+        "y": 55,
+        "h": 845,
+        "pos": "absolute",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "mapPanel": null
+    },
+    "clock": {
+      "present": false,
+      "zonesVisible": 0,
+      "zonesFull": [],
+      "overflow": false,
+      "sample": []
+    },
+    "mapShare": 0.94,
+    "lang": "id",
+    "slopWords": [],
+    "contrast": [
+      {
+        "sel": "h2.atlas-data-heading",
+        "ratio": 11.81,
+        "text": "Klik bangunan mana pun"
+      },
+      {
+        "sel": "p#atlas-watch-request-status",
+        "ratio": 11.81,
+        "text": ""
+      },
+      {
+        "sel": "p.atlas-maturity",
+        "ratio": 5.82,
+        "text": "Demo publik · peta refer"
+      },
+      {
+        "sel": "a.atlas-skip",
+        "ratio": 11.81,
+        "text": "Langsung ke kontrol peta"
+      }
+    ],
+    "sizes": [
+      {
+        "px": 14,
+        "chars": 23
+      },
+      {
+        "px": 13,
+        "chars": 36
+      },
+      {
+        "px": 12,
+        "chars": 327
+      },
+      {
+        "px": 11,
+        "chars": 9
+      }
+    ],
+    "iframe": null,
+    "focus": {
+      "focused": "a.atlas-skip",
+      "outline": "solid 2px",
+      "boxShadow": "none",
+      "ring": true
+    }
+  },
+  {
+    "route": "atlas",
+    "w": 1440,
+    "h": 900,
+    "theme": "dark(default)",
+    "vw": 1440,
+    "vh": 900,
+    "overflowX": false,
+    "scrollW": 1440,
+    "clientW": 1440,
+    "voids": [],
+    "tapTargets": {
+      "total": 27,
+      "under32": [
+        {
+          "sel": "select#atlas-language",
+          "h": 24,
+          "w": 115,
+          "y": 2,
+          "text": "Bahasa IndonesiaEnglish"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 24,
+          "w": 68,
+          "y": 2,
+          "text": "Kontrol"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 24,
+          "w": 67,
+          "y": 30,
+          "text": "Lihat bukti"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 53,
+          "y": 30,
+          "text": "Kota 3D"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 113,
+          "y": 30,
+          "text": "Alur air & air masuk"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 106,
+          "y": 30,
+          "text": "Kamera lalu lintas"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 106,
+          "y": 30,
+          "text": "Kerentanan banjir"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 99,
+          "y": 30,
+          "text": "Keyakinan tinggi"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 74,
+          "y": 30,
+          "text": "Ruang hijau"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 138,
+          "y": 30,
+          "text": "Skenario kedatangan air"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 111,
+          "y": 30,
+          "text": "Pemantauan banjir"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 135,
+          "y": 30,
+          "text": "Hujan · 24 jam ke depan"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 76,
+          "y": 30,
+          "text": "Radar hujan"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 94,
+          "y": 30,
+          "text": "Awan Himawari"
+        }
+      ]
+    },
+    "boxfit": [
+      {
+        "sel": "summary.undefined",
+        "boxH": 30,
+        "textH": 16,
+        "hr": 1.88,
+        "boxW": 91,
+        "textW": 73,
+        "wr": 1.25,
+        "text": "Pantauan kota"
+      },
+      {
+        "sel": "summary.undefined",
+        "boxH": 30,
+        "textH": 16,
+        "hr": 1.88,
+        "boxW": 112,
+        "textW": 85,
+        "wr": 1.31,
+        "text": "Data dan sumber"
+      }
+    ],
+    "clipped": [],
+    "bands": {
+      "masthead": {
+        "y": 0,
+        "h": 29,
+        "pos": "static",
+        "mt": "0px",
+        "pt": "2px",
+        "bt": "0px"
+      },
+      "sourceStatus": null,
+      "map": {
+        "y": 55,
+        "h": 845,
+        "pos": "absolute",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "mapPanel": null
+    },
+    "clock": {
+      "present": false,
+      "zonesVisible": 0,
+      "zonesFull": [],
+      "overflow": false,
+      "sample": []
+    },
+    "mapShare": 0.94,
+    "lang": "id",
+    "slopWords": [],
+    "contrast": [
+      {
+        "sel": "h2.atlas-data-heading",
+        "ratio": 11.81,
+        "text": "Klik bangunan mana pun"
+      },
+      {
+        "sel": "p#atlas-watch-request-status",
+        "ratio": 11.81,
+        "text": ""
+      },
+      {
+        "sel": "p.atlas-maturity",
+        "ratio": 5.82,
+        "text": "Demo publik · peta refer"
+      },
+      {
+        "sel": "a.atlas-skip",
+        "ratio": 11.81,
+        "text": "Langsung ke kontrol peta"
+      }
+    ],
+    "sizes": [
+      {
+        "px": 14,
+        "chars": 23
+      },
+      {
+        "px": 13,
+        "chars": 36
+      },
+      {
+        "px": 12,
+        "chars": 327
+      },
+      {
+        "px": 11,
+        "chars": 9
+      }
+    ],
+    "iframe": null,
+    "focus": {
+      "focused": "a.atlas-skip",
+      "outline": "solid 2px",
+      "boxShadow": "none",
+      "ring": true
+    }
+  },
+  {
+    "route": "atlas-waterways",
+    "w": 390,
+    "h": 844,
+    "theme": "dark(default)",
+    "vw": 390,
+    "vh": 844,
+    "overflowX": false,
+    "scrollW": 390,
+    "clientW": 390,
+    "voids": [],
+    "tapTargets": {
+      "total": 17,
+      "under32": [
+        {
+          "sel": "select#atlas-language",
+          "h": 22,
+          "w": 115,
+          "y": 1,
+          "text": "Bahasa IndonesiaEnglish"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 22,
+          "w": 60,
+          "y": 1,
+          "text": "Kontrol"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 24,
+          "w": 67,
+          "y": 25,
+          "text": "Lihat bukti"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 53,
+          "y": 25,
+          "text": "Kota 3D"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 113,
+          "y": 25,
+          "text": "Alur air & air masuk"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 106,
+          "y": 25,
+          "text": "Kamera lalu lintas"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 106,
+          "y": 25,
+          "text": "Kerentanan banjir"
+        },
+        {
+          "sel": "summary.maplibregl-ctrl-attrib-button",
+          "h": 24,
+          "w": 24,
+          "y": 806,
+          "text": ""
+        },
+        {
+          "sel": "summary.atlas-panel-summary",
+          "h": 24,
+          "w": 64,
+          "y": 59,
+          "text": "Lapisan"
+        },
+        {
+          "sel": "summary.atlas-panel-summary",
+          "h": 24,
+          "w": 150,
+          "y": 787,
+          "text": "Lompat cepat\n            12 "
+        },
+        {
+          "sel": "button#place-open",
+          "h": 26,
+          "w": 81,
+          "y": 787,
+          "text": "Sekitar sini"
+        },
+        {
+          "sel": "button.maplibregl-ctrl-zoom-in",
+          "h": 28,
+          "w": 28,
+          "y": 701,
+          "text": ""
+        },
+        {
+          "sel": "button.maplibregl-ctrl-zoom-out",
+          "h": 28,
+          "w": 28,
+          "y": 729,
+          "text": ""
+        },
+        {
+          "sel": "button.maplibregl-ctrl-compass",
+          "h": 28,
+          "w": 28,
+          "y": 757,
+          "text": ""
+        }
+      ]
+    },
+    "boxfit": [
+      {
+        "sel": "summary.undefined",
+        "boxH": 30,
+        "textH": 16,
+        "hr": 1.88,
+        "boxW": 91,
+        "textW": 73,
+        "wr": 1.25,
+        "text": "Pantauan kota"
+      },
+      {
+        "sel": "summary.undefined",
+        "boxH": 30,
+        "textH": 16,
+        "hr": 1.88,
+        "boxW": 112,
+        "textW": 85,
+        "wr": 1.31,
+        "text": "Data dan sumber"
+      }
+    ],
+    "clipped": [],
+    "bands": {
+      "masthead": {
+        "y": 0,
+        "h": 24,
+        "pos": "static",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "sourceStatus": null,
+      "map": {
+        "y": 50,
+        "h": 794,
+        "pos": "absolute",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "mapPanel": null
+    },
+    "clock": {
+      "present": false,
+      "zonesVisible": 0,
+      "zonesFull": [],
+      "overflow": false,
+      "sample": []
+    },
+    "mapShare": 0.94,
+    "lang": "id",
+    "slopWords": [],
+    "contrast": [
+      {
+        "sel": "h2.atlas-data-heading",
+        "ratio": 11.81,
+        "text": "Klik bangunan mana pun"
+      },
+      {
+        "sel": "p.meta",
+        "ratio": 11.81,
+        "text": "Tanggal sumber tidak dik"
+      },
+      {
+        "sel": "p.atlas-maturity",
+        "ratio": 5.82,
+        "text": "Demo publik · peta refer"
+      },
+      {
+        "sel": "a.atlas-skip",
+        "ratio": 11.81,
+        "text": "Langsung ke kontrol peta"
+      }
+    ],
+    "sizes": [
+      {
+        "px": 14,
+        "chars": 46
+      },
+      {
+        "px": 12,
+        "chars": 327
+      },
+      {
+        "px": 11,
+        "chars": 9
+      }
+    ],
+    "iframe": null,
+    "focus": {
+      "focused": "a.atlas-skip",
+      "outline": "solid 2px",
+      "boxShadow": "none",
+      "ring": true
+    }
+  },
+  {
+    "route": "atlas-waterways",
+    "w": 1024,
+    "h": 900,
+    "theme": "dark(default)",
+    "vw": 1024,
+    "vh": 900,
+    "overflowX": false,
+    "scrollW": 1024,
+    "clientW": 1024,
+    "voids": [],
+    "tapTargets": {
+      "total": 31,
+      "under32": [
+        {
+          "sel": "a.undefined",
+          "h": 17,
+          "w": 76,
+          "y": 580,
+          "text": "OSM / ODbL ↗"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 18,
+          "w": 214,
+          "y": 453,
+          "text": "Alur air / pos terpilih"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 18,
+          "w": 214,
+          "y": 471,
+          "text": "Hujan → neraca air polder"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 18,
+          "w": 214,
+          "y": 489,
+          "text": "Drainase resmi & polder"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 18,
+          "w": 214,
+          "y": 507,
+          "text": "Prakiraan pasang surut pesis"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 18,
+          "w": 214,
+          "y": 526,
+          "text": "Tutupan lahan · WorldCover 2"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 18,
+          "w": 214,
+          "y": 544,
+          "text": "Air masuk · pos & volume"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 18,
+          "w": 214,
+          "y": 562,
+          "text": "Perbandingan satelit & model"
+        },
+        {
+          "sel": "select#atlas-language",
+          "h": 24,
+          "w": 115,
+          "y": 2,
+          "text": "Bahasa IndonesiaEnglish"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 24,
+          "w": 68,
+          "y": 2,
+          "text": "Kontrol"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 24,
+          "w": 67,
+          "y": 30,
+          "text": "Lihat bukti"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 53,
+          "y": 30,
+          "text": "Kota 3D"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 113,
+          "y": 30,
+          "text": "Alur air & air masuk"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 106,
+          "y": 30,
+          "text": "Kamera lalu lintas"
+        }
+      ]
+    },
+    "boxfit": [
+      {
+        "sel": "summary.undefined",
+        "boxH": 30,
+        "textH": 16,
+        "hr": 1.88,
+        "boxW": 91,
+        "textW": 73,
+        "wr": 1.25,
+        "text": "Pantauan kota"
+      },
+      {
+        "sel": "summary.undefined",
+        "boxH": 30,
+        "textH": 16,
+        "hr": 1.88,
+        "boxW": 112,
+        "textW": 85,
+        "wr": 1.31,
+        "text": "Data dan sumber"
+      }
+    ],
+    "clipped": [],
+    "bands": {
+      "masthead": {
+        "y": 0,
+        "h": 29,
+        "pos": "static",
+        "mt": "0px",
+        "pt": "2px",
+        "bt": "0px"
+      },
+      "sourceStatus": null,
+      "map": {
+        "y": 55,
+        "h": 845,
+        "pos": "absolute",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "mapPanel": null
+    },
+    "clock": {
+      "present": false,
+      "zonesVisible": 0,
+      "zonesFull": [],
+      "overflow": false,
+      "sample": []
+    },
+    "mapShare": 0.94,
+    "lang": "id",
+    "slopWords": [],
+    "contrast": [
+      {
+        "sel": "h2.atlas-data-heading",
+        "ratio": 11.81,
+        "text": "Klik bangunan mana pun"
+      },
+      {
+        "sel": "p.meta",
+        "ratio": 11.81,
+        "text": "Tanggal sumber tidak dik"
+      },
+      {
+        "sel": "p.atlas-maturity",
+        "ratio": 5.82,
+        "text": "Demo publik · peta refer"
+      },
+      {
+        "sel": "a.atlas-skip",
+        "ratio": 11.81,
+        "text": "Langsung ke kontrol peta"
+      }
+    ],
+    "sizes": [
+      {
+        "px": 14,
+        "chars": 23
+      },
+      {
+        "px": 13,
+        "chars": 554
+      },
+      {
+        "px": 12,
+        "chars": 496
+      },
+      {
+        "px": 11,
+        "chars": 9
+      }
+    ],
+    "iframe": null,
+    "focus": {
+      "focused": "a.atlas-skip",
+      "outline": "solid 2px",
+      "boxShadow": "none",
+      "ring": true
+    }
+  },
+  {
+    "route": "atlas-waterways",
+    "w": 1440,
+    "h": 900,
+    "theme": "dark(default)",
+    "vw": 1440,
+    "vh": 900,
+    "overflowX": false,
+    "scrollW": 1440,
+    "clientW": 1440,
+    "voids": [],
+    "tapTargets": {
+      "total": 35,
+      "under32": [
+        {
+          "sel": "a.undefined",
+          "h": 17,
+          "w": 76,
+          "y": 580,
+          "text": "OSM / ODbL ↗"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 18,
+          "w": 214,
+          "y": 453,
+          "text": "Alur air / pos terpilih"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 18,
+          "w": 214,
+          "y": 471,
+          "text": "Hujan → neraca air polder"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 18,
+          "w": 214,
+          "y": 489,
+          "text": "Drainase resmi & polder"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 18,
+          "w": 214,
+          "y": 507,
+          "text": "Prakiraan pasang surut pesis"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 18,
+          "w": 214,
+          "y": 526,
+          "text": "Tutupan lahan · WorldCover 2"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 18,
+          "w": 214,
+          "y": 544,
+          "text": "Air masuk · pos & volume"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 18,
+          "w": 214,
+          "y": 562,
+          "text": "Perbandingan satelit & model"
+        },
+        {
+          "sel": "select#atlas-language",
+          "h": 24,
+          "w": 115,
+          "y": 2,
+          "text": "Bahasa IndonesiaEnglish"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 24,
+          "w": 68,
+          "y": 2,
+          "text": "Kontrol"
+        },
+        {
+          "sel": "summary.undefined",
+          "h": 24,
+          "w": 67,
+          "y": 30,
+          "text": "Lihat bukti"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 53,
+          "y": 30,
+          "text": "Kota 3D"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 113,
+          "y": 30,
+          "text": "Alur air & air masuk"
+        },
+        {
+          "sel": "button.undefined",
+          "h": 24,
+          "w": 106,
+          "y": 30,
+          "text": "Kamera lalu lintas"
+        }
+      ]
+    },
+    "boxfit": [
+      {
+        "sel": "summary.undefined",
+        "boxH": 30,
+        "textH": 16,
+        "hr": 1.88,
+        "boxW": 91,
+        "textW": 73,
+        "wr": 1.25,
+        "text": "Pantauan kota"
+      },
+      {
+        "sel": "summary.undefined",
+        "boxH": 30,
+        "textH": 16,
+        "hr": 1.88,
+        "boxW": 112,
+        "textW": 85,
+        "wr": 1.31,
+        "text": "Data dan sumber"
+      }
+    ],
+    "clipped": [],
+    "bands": {
+      "masthead": {
+        "y": 0,
+        "h": 29,
+        "pos": "static",
+        "mt": "0px",
+        "pt": "2px",
+        "bt": "0px"
+      },
+      "sourceStatus": null,
+      "map": {
+        "y": 55,
+        "h": 845,
+        "pos": "absolute",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "mapPanel": null
+    },
+    "clock": {
+      "present": false,
+      "zonesVisible": 0,
+      "zonesFull": [],
+      "overflow": false,
+      "sample": []
+    },
+    "mapShare": 0.94,
+    "lang": "id",
+    "slopWords": [],
+    "contrast": [
+      {
+        "sel": "h2.atlas-data-heading",
+        "ratio": 11.81,
+        "text": "Klik bangunan mana pun"
+      },
+      {
+        "sel": "p.meta",
+        "ratio": 11.81,
+        "text": "Tanggal sumber tidak dik"
+      },
+      {
+        "sel": "p.atlas-maturity",
+        "ratio": 5.82,
+        "text": "Demo publik · peta refer"
+      },
+      {
+        "sel": "a.atlas-skip",
+        "ratio": 11.81,
+        "text": "Langsung ke kontrol peta"
+      }
+    ],
+    "sizes": [
+      {
+        "px": 14,
+        "chars": 23
+      },
+      {
+        "px": 13,
+        "chars": 554
+      },
+      {
+        "px": 12,
+        "chars": 496
+      },
+      {
+        "px": 11,
+        "chars": 9
+      }
+    ],
+    "iframe": null,
+    "focus": {
+      "focused": "a.atlas-skip",
+      "outline": "solid 2px",
+      "boxShadow": "none",
+      "ring": true
+    }
+  },
+  {
+    "route": "research",
+    "w": 390,
+    "h": 844,
+    "theme": "dark(default)",
+    "vw": 390,
+    "vh": 844,
+    "overflowX": false,
+    "scrollW": 390,
+    "clientW": 390,
+    "voids": [],
+    "tapTargets": {
+      "total": 12,
+      "under32": [
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 171,
+          "y": 465,
+          "text": "Diagram kerjaWorking diagram"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 171,
+          "y": 465,
+          "text": "ProsesProcess"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 171,
+          "y": 490,
+          "text": "SatelitSatellites"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 171,
+          "y": 490,
+          "text": "KabutHaze"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 171,
+          "y": 515,
+          "text": "TinggiHeights"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 171,
+          "y": 515,
+          "text": "PerhitunganCalculations"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 171,
+          "y": 540,
+          "text": "AturanRules"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 171,
+          "y": 540,
+          "text": "SumberSources"
+        },
+        {
+          "sel": "a.brand",
+          "h": 30,
+          "w": 51,
+          "y": 3,
+          "text": "JKTx"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 30,
+          "w": 49,
+          "y": 3,
+          "text": "DasborDashboard"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 30,
+          "w": 37,
+          "y": 3,
+          "text": "Atlas"
+        },
+        {
+          "sel": "button#lang",
+          "h": 30,
+          "w": 52,
+          "y": 3,
+          "text": "EnglishBahasa"
+        }
+      ]
+    },
+    "boxfit": [
+      {
+        "sel": "button#field-motion",
+        "boxH": 29,
+        "textH": 16,
+        "hr": 1.82,
+        "boxW": 76,
+        "textW": 58,
+        "wr": 1.31,
+        "text": "Putar angin"
+      }
+    ],
+    "clipped": [],
+    "bands": {
+      "masthead": {
+        "y": 0,
+        "h": 37,
+        "pos": "sticky",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "sourceStatus": null,
+      "map": {
+        "y": 641,
+        "h": 362,
+        "pos": "absolute",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "mapPanel": null
+    },
+    "clock": {
+      "present": false,
+      "zonesVisible": 0,
+      "zonesFull": [],
+      "overflow": false,
+      "sample": []
+    },
+    "mapShare": 0.39,
+    "lang": "id",
+    "slopWords": [],
+    "contrast": [
+      {
+        "sel": "h2#h-live",
+        "ratio": 11.81,
+        "text": "Matematika yang sedang b"
+      },
+      {
+        "sel": "p.eyebrow",
+        "ratio": 7.21,
+        "text": "Riset · metodeResearch ·"
+      },
+      {
+        "sel": "a.brand",
+        "ratio": 11.81,
+        "text": "JKTx"
+      }
+    ],
+    "sizes": [
+      {
+        "px": 32,
+        "chars": 9
+      },
+      {
+        "px": 26,
+        "chars": 21
+      },
+      {
+        "px": 19,
+        "chars": 212
+      },
+      {
+        "px": 15,
+        "chars": 7032
+      },
+      {
+        "px": 12,
+        "chars": 2152
+      }
+    ],
+    "iframe": null,
+    "focus": {
+      "focused": "a.brand",
+      "outline": "solid 2px",
+      "boxShadow": "none",
+      "ring": true
+    }
+  },
+  {
+    "route": "research",
+    "w": 1024,
+    "h": 900,
+    "theme": "dark(default)",
+    "vw": 1024,
+    "vh": 900,
+    "overflowX": false,
+    "scrollW": 1024,
+    "clientW": 1024,
+    "voids": [],
+    "tapTargets": {
+      "total": 12,
+      "under32": [
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 70,
+          "y": 322,
+          "text": "Diagram kerjaWorking diagram"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 33,
+          "y": 322,
+          "text": "ProsesProcess"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 32,
+          "y": 322,
+          "text": "SatelitSatellites"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 30,
+          "y": 322,
+          "text": "KabutHaze"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 31,
+          "y": 322,
+          "text": "TinggiHeights"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 62,
+          "y": 322,
+          "text": "PerhitunganCalculations"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 33,
+          "y": 322,
+          "text": "AturanRules"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 40,
+          "y": 322,
+          "text": "SumberSources"
+        },
+        {
+          "sel": "a.brand",
+          "h": 30,
+          "w": 55,
+          "y": 3,
+          "text": "JKTx"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 30,
+          "w": 53,
+          "y": 3,
+          "text": "DasborDashboard"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 30,
+          "w": 41,
+          "y": 3,
+          "text": "Atlas"
+        },
+        {
+          "sel": "button#lang",
+          "h": 30,
+          "w": 56,
+          "y": 3,
+          "text": "EnglishBahasa"
+        }
+      ]
+    },
+    "boxfit": [
+      {
+        "sel": "button#field-motion",
+        "boxH": 29,
+        "textH": 16,
+        "hr": 1.82,
+        "boxW": 76,
+        "textW": 58,
+        "wr": 1.31,
+        "text": "Putar angin"
+      }
+    ],
+    "clipped": [],
+    "bands": {
+      "masthead": {
+        "y": 0,
+        "h": 37,
+        "pos": "sticky",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "sourceStatus": null,
+      "map": {
+        "y": 431,
+        "h": 632,
+        "pos": "absolute",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "mapPanel": null
+    },
+    "clock": {
+      "present": false,
+      "zonesVisible": 0,
+      "zonesFull": [],
+      "overflow": false,
+      "sample": []
+    },
+    "mapShare": 0.43,
+    "lang": "id",
+    "slopWords": [],
+    "contrast": [
+      {
+        "sel": "h2#h-live",
+        "ratio": 11.81,
+        "text": "Matematika yang sedang b"
+      },
+      {
+        "sel": "p.eyebrow",
+        "ratio": 7.21,
+        "text": "Riset · metodeResearch ·"
+      },
+      {
+        "sel": "a.brand",
+        "ratio": 11.81,
+        "text": "JKTx"
+      }
+    ],
+    "sizes": [
+      {
+        "px": 35.84,
+        "chars": 9
+      },
+      {
+        "px": 26,
+        "chars": 21
+      },
+      {
+        "px": 19,
+        "chars": 212
+      },
+      {
+        "px": 15,
+        "chars": 7032
+      },
+      {
+        "px": 12,
+        "chars": 2152
+      }
+    ],
+    "iframe": null,
+    "focus": {
+      "focused": "a.brand",
+      "outline": "solid 2px",
+      "boxShadow": "none",
+      "ring": true
+    }
+  },
+  {
+    "route": "research",
+    "w": 1440,
+    "h": 900,
+    "theme": "dark(default)",
+    "vw": 1440,
+    "vh": 900,
+    "overflowX": false,
+    "scrollW": 1440,
+    "clientW": 1440,
+    "voids": [],
+    "tapTargets": {
+      "total": 12,
+      "under32": [
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 70,
+          "y": 329,
+          "text": "Diagram kerjaWorking diagram"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 33,
+          "y": 329,
+          "text": "ProsesProcess"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 32,
+          "y": 329,
+          "text": "SatelitSatellites"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 30,
+          "y": 329,
+          "text": "KabutHaze"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 31,
+          "y": 329,
+          "text": "TinggiHeights"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 62,
+          "y": 329,
+          "text": "PerhitunganCalculations"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 33,
+          "y": 329,
+          "text": "AturanRules"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 19,
+          "w": 40,
+          "y": 329,
+          "text": "SumberSources"
+        },
+        {
+          "sel": "a.brand",
+          "h": 30,
+          "w": 55,
+          "y": 3,
+          "text": "JKTx"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 30,
+          "w": 53,
+          "y": 3,
+          "text": "DasborDashboard"
+        },
+        {
+          "sel": "a.undefined",
+          "h": 30,
+          "w": 41,
+          "y": 3,
+          "text": "Atlas"
+        },
+        {
+          "sel": "button#lang",
+          "h": 30,
+          "w": 56,
+          "y": 3,
+          "text": "EnglishBahasa"
+        }
+      ]
+    },
+    "boxfit": [
+      {
+        "sel": "button#field-motion",
+        "boxH": 29,
+        "textH": 16,
+        "hr": 1.82,
+        "boxW": 76,
+        "textW": 58,
+        "wr": 1.31,
+        "text": "Putar angin"
+      }
+    ],
+    "clipped": [],
+    "bands": {
+      "masthead": {
+        "y": 0,
+        "h": 37,
+        "pos": "sticky",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "sourceStatus": null,
+      "map": {
+        "y": 441,
+        "h": 716,
+        "pos": "absolute",
+        "mt": "0px",
+        "pt": "0px",
+        "bt": "0px"
+      },
+      "mapPanel": null
+    },
+    "clock": {
+      "present": false,
+      "zonesVisible": 0,
+      "zonesFull": [],
+      "overflow": false,
+      "sample": []
+    },
+    "mapShare": 0.39,
+    "lang": "id",
+    "slopWords": [],
+    "contrast": [
+      {
+        "sel": "h2#h-live",
+        "ratio": 11.81,
+        "text": "Matematika yang sedang b"
+      },
+      {
+        "sel": "p.eyebrow",
+        "ratio": 7.21,
+        "text": "Riset · metodeResearch ·"
+      },
+      {
+        "sel": "a.brand",
+        "ratio": 11.81,
+        "text": "JKTx"
+      }
+    ],
+    "sizes": [
+      {
+        "px": 48,
+        "chars": 9
+      },
+      {
+        "px": 32,
+        "chars": 21
+      },
+      {
+        "px": 21,
+        "chars": 212
+      },
+      {
+        "px": 15,
+        "chars": 7032
+      },
+      {
+        "px": 12,
+        "chars": 2152
+      }
+    ],
+    "iframe": null,
+    "focus": {
+      "focused": "a.brand",
+      "outline": "solid 2px",
+      "boxShadow": "none",
+      "ring": true
+    }
+  }
+]

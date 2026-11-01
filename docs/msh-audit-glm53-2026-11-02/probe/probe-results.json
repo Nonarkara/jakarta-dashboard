@@ -1,0 +1,620 @@
+{
+  "dashboard": {
+    "390": {
+      "vw": 390,
+      "vh": 844,
+      "pageScrollX": 0,
+      "spill": [],
+      "taps": {
+        "total": 27,
+        "under24": 5,
+        "under32": 6
+      },
+      "firstScreen": {
+        "blocks": [
+          {
+            "sel": "header.masthead",
+            "top": 0,
+            "bottom": 23,
+            "coversPct": 3
+          },
+          {
+            "sel": "details#source-status",
+            "top": 23,
+            "bottom": 48,
+            "coversPct": 3
+          },
+          {
+            "sel": "p#source-status-live",
+            "top": 29,
+            "bottom": 30,
+            "coversPct": 0
+          },
+          {
+            "sel": "div#workspace",
+            "top": 48,
+            "bottom": 844,
+            "coversPct": 94
+          },
+          {
+            "sel": "section.map-panel",
+            "top": 48,
+            "bottom": 844,
+            "coversPct": 94
+          }
+        ]
+      }
+    },
+    "1024": {
+      "vw": 1024,
+      "vh": 1000,
+      "pageScrollX": 0,
+      "spill": [],
+      "taps": {
+        "total": 26,
+        "under24": 1,
+        "under32": 8
+      },
+      "firstScreen": {
+        "blocks": [
+          {
+            "sel": "header.masthead",
+            "top": 0,
+            "bottom": 38,
+            "coversPct": 4
+          },
+          {
+            "sel": "details#source-status",
+            "top": 38,
+            "bottom": 63,
+            "coversPct": 3
+          },
+          {
+            "sel": "p#source-status-live",
+            "top": 44,
+            "bottom": 45,
+            "coversPct": 0
+          },
+          {
+            "sel": "div#workspace",
+            "top": 63,
+            "bottom": 1000,
+            "coversPct": 94
+          },
+          {
+            "sel": "section.map-panel",
+            "top": 63,
+            "bottom": 1000,
+            "coversPct": 94
+          }
+        ]
+      }
+    },
+    "1440": {
+      "vw": 1440,
+      "vh": 900,
+      "pageScrollX": 0,
+      "spill": [],
+      "taps": {
+        "total": 30,
+        "under24": 3,
+        "under32": 8
+      },
+      "firstScreen": {
+        "blocks": [
+          {
+            "sel": "header.masthead",
+            "top": 0,
+            "bottom": 38,
+            "coversPct": 4
+          },
+          {
+            "sel": "details#source-status",
+            "top": 38,
+            "bottom": 63,
+            "coversPct": 3
+          },
+          {
+            "sel": "p#source-status-live",
+            "top": 44,
+            "bottom": 45,
+            "coversPct": 0
+          },
+          {
+            "sel": "div#workspace",
+            "top": 63,
+            "bottom": 885,
+            "coversPct": 91
+          },
+          {
+            "sel": "section.panel",
+            "top": 63,
+            "bottom": 885,
+            "coversPct": 91
+          },
+          {
+            "sel": "section.map-panel",
+            "top": 63,
+            "bottom": 885,
+            "coversPct": 91
+          },
+          {
+            "sel": "section#alerts-panel",
+            "top": 63,
+            "bottom": 885,
+            "coversPct": 91
+          },
+          {
+            "sel": "div.reference-grid",
+            "top": 885,
+            "bottom": 885,
+            "coversPct": 0
+          }
+        ]
+      }
+    }
+  },
+  "atlas": {
+    "390": {
+      "vw": 390,
+      "vh": 844,
+      "pageScrollX": 0,
+      "spill": [
+        {
+          "sel": "button",
+          "maxRight": 1653,
+          "w": 106
+        }
+      ],
+      "taps": {
+        "total": 70,
+        "under24": 2,
+        "under32": 27
+      },
+      "firstScreen": {
+        "blocks": [
+          {
+            "sel": "header.atlas-header",
+            "top": 0,
+            "bottom": 24,
+            "coversPct": 3
+          },
+          {
+            "sel": "nav.atlas-lenses",
+            "top": 24,
+            "bottom": 50,
+            "coversPct": 3
+          },
+          {
+            "sel": "div.atlas-map-wrap",
+            "top": 50,
+            "bottom": 844,
+            "coversPct": 94
+          },
+          {
+            "sel": "section#atlas-areas",
+            "top": 786,
+            "bottom": 814,
+            "coversPct": 3
+          },
+          {
+            "sel": "section#atlas-watch",
+            "top": 58,
+            "bottom": 88,
+            "coversPct": 4
+          }
+        ]
+      }
+    },
+    "1024": {
+      "vw": 1024,
+      "vh": 1000,
+      "pageScrollX": 0,
+      "spill": [
+        {
+          "sel": "button",
+          "maxRight": 1653,
+          "w": 76
+        }
+      ],
+      "taps": {
+        "total": 70,
+        "under24": 0,
+        "under32": 29
+      },
+      "firstScreen": {
+        "blocks": [
+          {
+            "sel": "header.atlas-header",
+            "top": 0,
+            "bottom": 29,
+            "coversPct": 3
+          },
+          {
+            "sel": "nav.atlas-lenses",
+            "top": 29,
+            "bottom": 55,
+            "coversPct": 3
+          },
+          {
+            "sel": "div.atlas-map-wrap",
+            "top": 55,
+            "bottom": 1000,
+            "coversPct": 95
+          },
+          {
+            "sel": "section#atlas-areas",
+            "top": 942,
+            "bottom": 970,
+            "coversPct": 3
+          },
+          {
+            "sel": "section#atlas-watch",
+            "top": 63,
+            "bottom": 93,
+            "coversPct": 3
+          }
+        ]
+      }
+    },
+    "1440": {
+      "vw": 1440,
+      "vh": 900,
+      "pageScrollX": 0,
+      "spill": [
+        {
+          "sel": "button",
+          "maxRight": 1653,
+          "w": 114
+        }
+      ],
+      "taps": {
+        "total": 70,
+        "under24": 0,
+        "under32": 29
+      },
+      "firstScreen": {
+        "blocks": [
+          {
+            "sel": "header.atlas-header",
+            "top": 0,
+            "bottom": 29,
+            "coversPct": 3
+          },
+          {
+            "sel": "nav.atlas-lenses",
+            "top": 29,
+            "bottom": 55,
+            "coversPct": 3
+          },
+          {
+            "sel": "div.atlas-map-wrap",
+            "top": 55,
+            "bottom": 900,
+            "coversPct": 94
+          },
+          {
+            "sel": "section#atlas-areas",
+            "top": 842,
+            "bottom": 870,
+            "coversPct": 3
+          },
+          {
+            "sel": "section#atlas-watch",
+            "top": 63,
+            "bottom": 93,
+            "coversPct": 3
+          }
+        ]
+      }
+    }
+  },
+  "atlas-waterways": {
+    "390": {
+      "vw": 390,
+      "vh": 844,
+      "pageScrollX": 0,
+      "spill": [
+        {
+          "sel": "button",
+          "maxRight": 1653,
+          "w": 106
+        }
+      ],
+      "taps": {
+        "total": 154,
+        "under24": 19,
+        "under32": 31
+      },
+      "firstScreen": {
+        "blocks": [
+          {
+            "sel": "header.atlas-header",
+            "top": 0,
+            "bottom": 24,
+            "coversPct": 3
+          },
+          {
+            "sel": "nav.atlas-lenses",
+            "top": 24,
+            "bottom": 50,
+            "coversPct": 3
+          },
+          {
+            "sel": "div.atlas-map-wrap",
+            "top": 50,
+            "bottom": 844,
+            "coversPct": 94
+          },
+          {
+            "sel": "section#atlas-areas",
+            "top": 786,
+            "bottom": 814,
+            "coversPct": 3
+          },
+          {
+            "sel": "section#atlas-watch",
+            "top": 58,
+            "bottom": 88,
+            "coversPct": 4
+          }
+        ]
+      }
+    },
+    "1024": {
+      "vw": 1024,
+      "vh": 1000,
+      "pageScrollX": 0,
+      "spill": [
+        {
+          "sel": "button",
+          "maxRight": 1653,
+          "w": 76
+        }
+      ],
+      "taps": {
+        "total": 154,
+        "under24": 19,
+        "under32": 33
+      },
+      "firstScreen": {
+        "blocks": [
+          {
+            "sel": "header.atlas-header",
+            "top": 0,
+            "bottom": 29,
+            "coversPct": 3
+          },
+          {
+            "sel": "nav.atlas-lenses",
+            "top": 29,
+            "bottom": 55,
+            "coversPct": 3
+          },
+          {
+            "sel": "div.atlas-map-wrap",
+            "top": 55,
+            "bottom": 1000,
+            "coversPct": 95
+          },
+          {
+            "sel": "section#atlas-areas",
+            "top": 942,
+            "bottom": 970,
+            "coversPct": 3
+          },
+          {
+            "sel": "section#atlas-watch",
+            "top": 63,
+            "bottom": 93,
+            "coversPct": 3
+          }
+        ]
+      }
+    },
+    "1440": {
+      "vw": 1440,
+      "vh": 900,
+      "pageScrollX": 0,
+      "spill": [
+        {
+          "sel": "button",
+          "maxRight": 1653,
+          "w": 114
+        }
+      ],
+      "taps": {
+        "total": 154,
+        "under24": 19,
+        "under32": 33
+      },
+      "firstScreen": {
+        "blocks": [
+          {
+            "sel": "header.atlas-header",
+            "top": 0,
+            "bottom": 29,
+            "coversPct": 3
+          },
+          {
+            "sel": "nav.atlas-lenses",
+            "top": 29,
+            "bottom": 55,
+            "coversPct": 3
+          },
+          {
+            "sel": "div.atlas-map-wrap",
+            "top": 55,
+            "bottom": 900,
+            "coversPct": 94
+          },
+          {
+            "sel": "section#atlas-areas",
+            "top": 842,
+            "bottom": 870,
+            "coversPct": 3
+          },
+          {
+            "sel": "section#atlas-watch",
+            "top": 63,
+            "bottom": 93,
+            "coversPct": 3
+          }
+        ]
+      }
+    }
+  },
+  "research": {
+    "390": {
+      "vw": 390,
+      "vh": 844,
+      "pageScrollX": 0,
+      "spill": [
+        {
+          "sel": "th",
+          "maxRight": 576,
+          "w": 232
+        },
+        {
+          "sel": "span",
+          "maxRight": 557,
+          "w": 89
+        },
+        {
+          "sel": "td",
+          "maxRight": 576,
+          "w": 232
+        }
+      ],
+      "taps": {
+        "total": 26,
+        "under24": 18,
+        "under32": 6
+      },
+      "firstScreen": {
+        "blocks": [
+          {
+            "sel": "header.bar",
+            "top": 0,
+            "bottom": 37,
+            "coversPct": 4
+          },
+          {
+            "sel": "section.hero",
+            "top": 37,
+            "bottom": 316,
+            "coversPct": 33
+          },
+          {
+            "sel": "div#figures",
+            "top": 316,
+            "bottom": 449,
+            "coversPct": 16
+          },
+          {
+            "sel": "nav.contents",
+            "top": 449,
+            "bottom": 560,
+            "coversPct": 13
+          },
+          {
+            "sel": "section",
+            "top": 560,
+            "bottom": 844,
+            "coversPct": 34
+          }
+        ]
+      }
+    },
+    "1024": {
+      "vw": 1024,
+      "vh": 1000,
+      "pageScrollX": 0,
+      "spill": [],
+      "taps": {
+        "total": 26,
+        "under24": 20,
+        "under32": 6
+      },
+      "firstScreen": {
+        "blocks": [
+          {
+            "sel": "header.bar",
+            "top": 0,
+            "bottom": 37,
+            "coversPct": 4
+          },
+          {
+            "sel": "section.hero",
+            "top": 37,
+            "bottom": 228,
+            "coversPct": 19
+          },
+          {
+            "sel": "div#figures",
+            "top": 228,
+            "bottom": 306,
+            "coversPct": 8
+          },
+          {
+            "sel": "nav.contents",
+            "top": 306,
+            "bottom": 341,
+            "coversPct": 4
+          },
+          {
+            "sel": "section",
+            "top": 341,
+            "bottom": 1000,
+            "coversPct": 66
+          }
+        ]
+      }
+    },
+    "1440": {
+      "vw": 1440,
+      "vh": 900,
+      "pageScrollX": 0,
+      "spill": [],
+      "taps": {
+        "total": 26,
+        "under24": 20,
+        "under32": 6
+      },
+      "firstScreen": {
+        "blocks": [
+          {
+            "sel": "header.bar",
+            "top": 0,
+            "bottom": 37,
+            "coversPct": 4
+          },
+          {
+            "sel": "section.hero",
+            "top": 37,
+            "bottom": 235,
+            "coversPct": 22
+          },
+          {
+            "sel": "div#figures",
+            "top": 235,
+            "bottom": 313,
+            "coversPct": 9
+          },
+          {
+            "sel": "nav.contents",
+            "top": 313,
+            "bottom": 349,
+            "coversPct": 4
+          },
+          {
+            "sel": "section",
+            "top": 349,
+            "bottom": 900,
+            "coversPct": 61
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+  · dashboard @390×844 — chrome 23px/2.7% top, first action 0px
+  · dashboard @1024×900 — chrome 38px/4.2% top, first action 0px
+  · dashboard @1440×900 — chrome 38px/4.2% top, first action 0px
+  · atlas @390×844 — chrome 48px/5.7% top, first action 1px
+  · atlas @1024×900 — chrome 46px/5.1% top, first action 2px
+  · atlas @1440×900 — chrome 46px/5.1% top, first action 2px
+  · atlas-waterways @390×844 — chrome 48px/5.7% top, first action 1px
+  · atlas-waterways @1024×900 — chrome 46px/5.1% top, first action 2px
+  · atlas-waterways @1440×900 — chrome 46px/5.1% top, first action 2px
+  · research @390×844 — chrome 37px/4.4% top, first action 3px
+  · research @1024×900 — chrome 37px/4.1% top, first action 3px
+  · research @1440×900 — chrome 37px/4.1% top, first action 3px
+
+  · record written to docs/msh-audit-glm53-2026-11-02/evidence/MSH-EVIDENCE.md
+EVIDENCE_EXIT: 0

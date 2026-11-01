@@ -1,0 +1,293 @@
+{
+  "atlasEdgeButtons": [
+    {
+      "sel": "button.",
+      "text": "Kerentanan banjir",
+      "left": 338,
+      "right": 444,
+      "w": 106,
+      "pos": "static",
+      "ariaLabel": null
+    },
+    {
+      "sel": "button.",
+      "text": "Keyakinan tinggi",
+      "left": 444,
+      "right": 543,
+      "w": 99,
+      "pos": "static",
+      "ariaLabel": null
+    },
+    {
+      "sel": "button.",
+      "text": "Ruang hijau",
+      "left": 543,
+      "right": 617,
+      "w": 74,
+      "pos": "static",
+      "ariaLabel": null
+    },
+    {
+      "sel": "button.",
+      "text": "Skenario kedatangan air",
+      "left": 617,
+      "right": 756,
+      "w": 138,
+      "pos": "static",
+      "ariaLabel": null
+    },
+    {
+      "sel": "button.",
+      "text": "Pemantauan banjir",
+      "left": 756,
+      "right": 867,
+      "w": 111,
+      "pos": "static",
+      "ariaLabel": null
+    },
+    {
+      "sel": "button.",
+      "text": "Hujan · 24 jam ke depan",
+      "left": 867,
+      "right": 1002,
+      "w": 135,
+      "pos": "static",
+      "ariaLabel": null
+    },
+    {
+      "sel": "button.",
+      "text": "Radar hujan",
+      "left": 1002,
+      "right": 1078,
+      "w": 76,
+      "pos": "static",
+      "ariaLabel": null
+    },
+    {
+      "sel": "button.",
+      "text": "Awan Himawari",
+      "left": 1078,
+      "right": 1172,
+      "w": 94,
+      "pos": "static",
+      "ariaLabel": null
+    },
+    {
+      "sel": "button.",
+      "text": "Air teramati",
+      "left": 1172,
+      "right": 1245,
+      "w": 74,
+      "pos": "static",
+      "ariaLabel": null
+    },
+    {
+      "sel": "button.",
+      "text": "Cahaya malam",
+      "left": 1245,
+      "right": 1335,
+      "w": 89,
+      "pos": "static",
+      "ariaLabel": null
+    },
+    {
+      "sel": "button.",
+      "text": "Genangan berulang",
+      "left": 1335,
+      "right": 1449,
+      "w": 114,
+      "pos": "static",
+      "ariaLabel": null
+    },
+    {
+      "sel": "button.",
+      "text": "Udara & angin",
+      "left": 1449,
+      "right": 1534,
+      "w": 86,
+      "pos": "static",
+      "ariaLabel": null
+    },
+    {
+      "sel": "button.",
+      "text": "Kabut asap kawasan",
+      "left": 1534,
+      "right": 1653,
+      "w": 119,
+      "pos": "static",
+      "ariaLabel": null
+    }
+  ],
+  "atlasLensRow": {
+    "count": 16,
+    "buttons": [
+      {
+        "text": "Kota 3D",
+        "left": 67,
+        "right": 119,
+        "h": 24
+      },
+      {
+        "text": "Alur air & air masuk",
+        "left": 119,
+        "right": 233,
+        "h": 24
+      },
+      {
+        "text": "Kamera lalu lintas",
+        "left": 233,
+        "right": 338,
+        "h": 24
+      },
+      {
+        "text": "Kerentanan banjir",
+        "left": 338,
+        "right": 444,
+        "h": 24
+      },
+      {
+        "text": "Keyakinan tinggi",
+        "left": 444,
+        "right": 543,
+        "h": 24
+      },
+      {
+        "text": "Ruang hijau",
+        "left": 543,
+        "right": 617,
+        "h": 24
+      },
+      {
+        "text": "Skenario kedatangan ",
+        "left": 617,
+        "right": 756,
+        "h": 24
+      },
+      {
+        "text": "Pemantauan banjir",
+        "left": 756,
+        "right": 867,
+        "h": 24
+      },
+      {
+        "text": "Hujan · 24 jam ke de",
+        "left": 867,
+        "right": 1002,
+        "h": 24
+      },
+      {
+        "text": "Radar hujan",
+        "left": 1002,
+        "right": 1078,
+        "h": 24
+      },
+      {
+        "text": "Awan Himawari",
+        "left": 1078,
+        "right": 1172,
+        "h": 24
+      },
+      {
+        "text": "Air teramati",
+        "left": 1172,
+        "right": 1245,
+        "h": 24
+      },
+      {
+        "text": "Cahaya malam",
+        "left": 1245,
+        "right": 1335,
+        "h": 24
+      },
+      {
+        "text": "Genangan berulang",
+        "left": 1335,
+        "right": 1449,
+        "h": 24
+      },
+      {
+        "text": "Udara & angin",
+        "left": 1449,
+        "right": 1534,
+        "h": 24
+      },
+      {
+        "text": "Kabut asap kawasan",
+        "left": 1534,
+        "right": 1653,
+        "h": 24
+      }
+    ],
+    "gaps": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "researchTable": {
+    "present": true,
+    "tableW": 560,
+    "tableRight": 576,
+    "vw": 390,
+    "scroller": {
+      "sel": "div.table",
+      "overflowX": "auto",
+      "clientW": 358,
+      "scrollW": 560,
+      "box": {
+        "x": 16,
+        "y": 2704.578125,
+        "width": 358,
+        "height": 888,
+        "top": 2704.578125,
+        "right": 374,
+        "bottom": 3592.578125,
+        "left": 16
+      },
+      "boxTop": 2705,
+      "boxH": 888
+    },
+    "canScroll": true
+  },
+  "chipRow": [],
+  "theme-light-390": {
+    "theme": "light",
+    "ratios": {
+      "h2": 11.81,
+      "bodyText": 10.85
+    }
+  },
+  "theme-contrast-390": {
+    "theme": "contrast",
+    "ratios": {
+      "h2": 18.43,
+      "bodyText": 14.27
+    }
+  },
+  "theme-light-1440": {
+    "theme": "light",
+    "ratios": {
+      "h2": 11.81,
+      "bodyText": 10.85
+    }
+  },
+  "theme-contrast-1440": {
+    "theme": "contrast",
+    "ratios": {
+      "h2": 18.43,
+      "bodyText": 14.27
+    }
+  }
+}

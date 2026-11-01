@@ -1,0 +1,571 @@
+{
+  "iframe": {
+    "vw": 390,
+    "pageScrollX": 0,
+    "lenses": {
+      "scrollWidth": 1679,
+      "clientWidth": 390,
+      "hiddenPct": 77,
+      "doors": 16,
+      "fullyVisible": 3,
+      "sliced": 1,
+      "slicedNames": [
+        "Kerentanan banjir"
+      ],
+      "scrollbarVisible": true
+    },
+    "canvas": {
+      "w": 390,
+      "h": 750,
+      "shareOfFramePct": 100
+    },
+    "pageTools": {
+      "top": 34,
+      "h": 30
+    },
+    "overlapToolsVsLenses": 0,
+    "layers": {
+      "top": 34,
+      "h": 26,
+      "w": 74
+    },
+    "overlapLayersVsTools": 26,
+    "watch": {
+      "top": 0,
+      "h": 0
+    },
+    "overlapWatchVsLenses": 0
+  },
+  "taps": {
+    "research": {
+      "under32": 24,
+      "controlsUnder32": 3,
+      "inlineLinksUnder32": 8,
+      "summary": [
+        {
+          "tag": "a",
+          "cls": "brand",
+          "h": 30,
+          "text": "JKTx",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "a",
+          "cls": null,
+          "h": 30,
+          "text": "DasborDashboard",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "a",
+          "cls": null,
+          "h": 30,
+          "text": "Atlas",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "a",
+          "cls": null,
+          "h": 19,
+          "text": "Diagram kerjaWorking diagram",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "a",
+          "cls": null,
+          "h": 19,
+          "text": "ProsesProcess",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "a",
+          "cls": null,
+          "h": 19,
+          "text": "SatelitSatellites",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "a",
+          "cls": null,
+          "h": 19,
+          "text": "KabutHaze",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "a",
+          "cls": null,
+          "h": 19,
+          "text": "TinggiHeights",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "a",
+          "cls": null,
+          "h": 19,
+          "text": "PerhitunganCalculations",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "a",
+          "cls": null,
+          "h": 19,
+          "text": "AturanRules",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "a",
+          "cls": null,
+          "h": 19,
+          "text": "SumberSources",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "a",
+          "cls": null,
+          "h": 19,
+          "text": "Buka di peta ↗Open on the ma",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "summary",
+          "cls": null,
+          "h": 19,
+          "text": "Teks lisensi yang lolos atur",
+          "isControl": false,
+          "inProse": false
+        }
+      ],
+      "controls": [
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 30,
+          "text": "EnglishBahasa",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 29,
+          "text": "Perbarui dataRefresh data",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 29,
+          "text": "Putar angin",
+          "isControl": true,
+          "inProse": false
+        }
+      ]
+    },
+    "atlas-waterways": {
+      "under32": 48,
+      "controlsUnder32": 28,
+      "inlineLinksUnder32": 0,
+      "summary": [
+        {
+          "tag": "summary",
+          "cls": null,
+          "h": 22,
+          "text": "Kontrol",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "summary",
+          "cls": null,
+          "h": 24,
+          "text": "Lihat bukti",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "summary",
+          "cls": null,
+          "h": 20,
+          "text": "Alur air / pos terpilih",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "summary",
+          "cls": null,
+          "h": 20,
+          "text": "Hujan → neraca air polder",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "summary",
+          "cls": null,
+          "h": 20,
+          "text": "Drainase resmi & polder",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "summary",
+          "cls": null,
+          "h": 20,
+          "text": "Tutupan lahan · WorldCover 2",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "a",
+          "cls": null,
+          "h": 20,
+          "text": "ESA WorldCover ↗",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "a",
+          "cls": null,
+          "h": 20,
+          "text": "Manifest sumber ↗",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "summary",
+          "cls": null,
+          "h": 20,
+          "text": "Air masuk · pos & volume",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "summary",
+          "cls": null,
+          "h": 20,
+          "text": "Posisi pos & pembacaan",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "summary",
+          "cls": null,
+          "h": 20,
+          "text": "Perbandingan satelit & model",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "a",
+          "cls": null,
+          "h": 20,
+          "text": "NASA product ↗",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "a",
+          "cls": null,
+          "h": 20,
+          "text": "JAXA documentation ↗",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "a",
+          "cls": null,
+          "h": 19,
+          "text": "OSM / ODbL ↗",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "summary",
+          "cls": "maplibregl-ctrl-attrib-button",
+          "h": 24,
+          "text": "",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "summary",
+          "cls": "atlas-panel-summary",
+          "h": 24,
+          "text": "Lapisan",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "summary",
+          "cls": "atlas-panel-summary",
+          "h": 24,
+          "text": "Lompat cepat\n            12 ",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "summary",
+          "cls": null,
+          "h": 30,
+          "text": "Pantauan kota",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "a",
+          "cls": "atlas-research-link",
+          "h": 30,
+          "text": "Riset & metode",
+          "isControl": false,
+          "inProse": false
+        },
+        {
+          "tag": "summary",
+          "cls": null,
+          "h": 30,
+          "text": "Data dan sumber",
+          "isControl": false,
+          "inProse": false
+        }
+      ],
+      "controls": [
+        {
+          "tag": "select",
+          "cls": null,
+          "h": 22,
+          "text": "Bahasa IndonesiaEnglish",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "input",
+          "cls": null,
+          "h": 13,
+          "text": "on",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "input",
+          "cls": null,
+          "h": 13,
+          "text": "on",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "input",
+          "cls": null,
+          "h": 13,
+          "text": "on",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "select",
+          "cls": null,
+          "h": 31,
+          "text": "Masukkan asumsi debit",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "input",
+          "cls": null,
+          "h": 32,
+          "text": "",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "input",
+          "cls": null,
+          "h": 32,
+          "text": "1",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "select",
+          "cls": null,
+          "h": 31,
+          "text": "Jaringan terpetakan sajaNASA",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 24,
+          "text": "Kota 3D",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 24,
+          "text": "Alur air & air masuk",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 24,
+          "text": "Kamera lalu lintas",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 24,
+          "text": "Kerentanan banjir",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 24,
+          "text": "Keyakinan tinggi",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 24,
+          "text": "Ruang hijau",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 24,
+          "text": "Skenario kedatangan air",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 24,
+          "text": "Pemantauan banjir",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 24,
+          "text": "Hujan · 24 jam ke depan",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 24,
+          "text": "Radar hujan",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 24,
+          "text": "Awan Himawari",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 24,
+          "text": "Air teramati",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 24,
+          "text": "Cahaya malam",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 24,
+          "text": "Genangan berulang",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 24,
+          "text": "Udara & angin",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": null,
+          "h": 24,
+          "text": "Kabut asap kawasan",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": "maplibregl-ctrl-zoom-in",
+          "h": 28,
+          "text": "",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": "maplibregl-ctrl-zoom-out",
+          "h": 28,
+          "text": "",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": "maplibregl-ctrl-compass",
+          "h": 28,
+          "text": "",
+          "isControl": true,
+          "inProse": false
+        },
+        {
+          "tag": "button",
+          "cls": "place-open",
+          "h": 26,
+          "text": "Sekitar sini",
+          "isControl": true,
+          "inProse": false
+        }
+      ]
+    }
+  }
+}
