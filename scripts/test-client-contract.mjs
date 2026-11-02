@@ -159,4 +159,17 @@ async function scenario(mode) {
   }
 }
 for (const mode of ['normal', 'missing-libraries', 'webgl-failure']) await scenario(mode);
+// The map runs on this origin alone. An office network that blocks a public
+// CDN (many government networks do) must not lose the map, so no page loads
+// a script from another host, and the CSP does not permit one.
+for (const page of ['index.html', 'dashboard.html', 'research.html']) {
+  let html = '';
+  try { html = readFileSync(new URL('../public/' + page, import.meta.url), 'utf8'); } catch { continue; }
+  const foreign = [...html.matchAll(/<script[^>]*\ssrc=["'](https?:)?\/\/[^"']+/gi)].map(m => m[0]);
+  assert.deepEqual(foreign, [], `${page} loads no script from another host`);
+}
+const worker = readFileSync(new URL('../src/index.ts', import.meta.url), 'utf8');
+const scriptSrc = /script-src ([^;"]+)/.exec(worker)?.[1] || '';
+assert.equal(scriptSrc.trim(), "'self'", 'the CSP permits scripts from this origin only');
+
 console.log('PASS client contract: map bootstrap, grouped layers, rail, provenance text, zero values, escaping, WebGL/CDN fallback, feature selection, bridge and reduced motion');

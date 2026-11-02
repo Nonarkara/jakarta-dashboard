@@ -614,7 +614,7 @@ body[data-surface="jakarta-dashboard"] footer { padding:1px 8px; font-size:11px;
  body.atlas-workbench { --atlas-header-row:24px; --atlas-lenses-row:24px; }
  body.atlas-workbench .atlas-header { padding:0 4px; }
  body.atlas-workbench .atlas-header-nav > .atlas-theme-control select,
- body.atlas-workbench .atlas-menu > summary { min-height:22px; padding:0 4px; line-height:20px; }
+ body.atlas-workbench .atlas-menu > summary { min-height:24px; padding:0 4px; line-height:22px; } /* 24px: the WCAG 2.2 floor, and the header row's own height */
  body.atlas-workbench .atlas-title::before { width:16px; height:20px; }
 }
 
