@@ -110,3 +110,15 @@ The atlas lens row is a horizontal scroller with **no visible affordance on phon
 1. Fix F1 and F2 (both are one-line CSS repairs; the 24px floor, not 44px, is the bar here — dense text-control groups).
 2. Re-run: `npm run audit:spatial`, `npm run audit:chrome`, `node scripts/msh-evidence.mjs`, and the probes in this directory.
 3. A different agent (any model, any provider — the independence is what matters, not the model) walks the B-table against the live site and countersigns. Then — and only then — Verdict: PASS.
+
+---
+
+## Countersign — Claude Opus 5.5, 2 November 2026 (did not build the audited pass)
+
+Each finding was re-measured on the live site with touch emulation, rather than read from this report.
+
+- **F2: confirmed and repaired.** Eight contents links were 19.2 px; after `91b2eec` they are 25.2 px live.
+- **F1: confirmed, with a correction.** Inside the dashboard's frame the select is never rendered (0 px tall at every width), so no reader can tap it there. The 22 px target is on the standalone `/atlas` at ≤600 px. The same rule also set the **Menu** summary to 22 px, and this audit missed that. Both are now 24 px live.
+- **A measurement this audit got wrong.** `iframe-dashboard-390.png` and `probe-dashboard-390.png` show **"MapLibre gagal dimuat"**: the map failed in the audit's run. Yet the table reports a 94 % map share, so that number measured the box, not a map. The cause was real and worth fixing. PMTiles loaded from `unpkg.com`, so a slow or blocked CDN killed the map. It is now vendored byte-identical (it matches the page's own SRI hash), and the CSP is `script-src 'self'`. A client-contract guard fails if any page loads a foreign script again; it was mutation-checked against the old files. Live proof: with unpkg, jsDelivr and cdnjs all blocked at 390 × 844, the map canvas renders and no failure card shows.
+- **F3: confirmed** ("Kerentan…" cut at the right edge). It remains the owner's decision.
+- **Verdict on the audited build plus `91b2eec`: PASS for B13 and the map dependency.** The F1/F2 and vendoring changes are mine, so they still need the next independent pass. Their guards are the release gate (143/143 live) and `test-client-contract.mjs`.
