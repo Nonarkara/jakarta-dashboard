@@ -140,6 +140,11 @@ body[data-surface="jakarta-dashboard"] .masthead {
   flex: none; font: 800 26px/1 var(--font-sans);
   letter-spacing: -.055em; color: var(--ink);
 }
+.city-version {
+  flex: none; font: 600 9px/1 var(--font-sans);
+  letter-spacing: .04em; color: var(--dim);
+  margin-top: 1px;
+}
 .city-brand { text-decoration: none; }
 body[data-surface="jakarta-dashboard"] .sections { border: 0; padding: 0; min-width: 0; }
 body[data-surface="jakarta-dashboard"] .sections a { padding: 8px; font-size: var(--type-note); display: flex; align-items: center; }
