@@ -131,26 +131,6 @@ body[data-surface="jakarta-dashboard"] .masthead {
   padding: 2px 12px; gap: 4px 12px; align-items: center;
   display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
 }
-
-/* Source status lives inside the masthead header as a single compact inline row —
-   no separate bar, no extra height. */
-body[data-surface="jakarta-dashboard"] .masthead .source-status {
-  flex: none;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  font-size: var(--type-note);
-  align-items: center;
-}
-body[data-surface="jakarta-dashboard"] .masthead .source-status > summary {
-  min-height: auto;
-  padding: 0;
-}
-body[data-surface="jakarta-dashboard"] .masthead .source-status-rows {
-  padding: 0;
-  gap: 0;
-}
 .city-brand { display: flex; align-items: center; gap: 6px; height: 44px; }
 .city-brand-icon {
   display: inline-block; width: 32px; height: 36px; flex: none;
