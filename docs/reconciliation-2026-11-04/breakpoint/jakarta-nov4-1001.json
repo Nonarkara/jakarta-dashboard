@@ -1,0 +1,58 @@
+{
+  "measurements": [
+    {
+      "route": "/atlas",
+      "w": 1001,
+      "findings": [
+        {
+          "kind": "dead",
+          "sel": "aside.atlas-layers",
+          "metric": 882,
+          "detail": "aside.atlas-layers leaves 882px empty beneath it in a 974px row"
+        },
+        {
+          "kind": "dead",
+          "sel": "div.atlas-page-tools",
+          "metric": 936,
+          "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+        }
+      ],
+      "hierarchy": {
+        "h1": 14,
+        "h1Count": 1,
+        "largest": 22,
+        "largestInfo": {
+          "tag": "span",
+          "cls": "visually-hidden",
+          "size": 22,
+          "text": "JKTx"
+        },
+        "ratio": 0.64,
+        "peers": 0,
+        "share": 0,
+        "ramp": {
+          "11": 324,
+          "12": 318,
+          "13": 262,
+          "22": 4
+        }
+      },
+      "chars": 908,
+      "containers": [],
+      "chrome": {
+        "vh": 1000,
+        "top": 0,
+        "topPct": 0,
+        "bottom": 0,
+        "bottomPct": 0,
+        "stacked": 1,
+        "topSel": null,
+        "bottomSel": null
+      },
+      "firstAction": {
+        "y": 1,
+        "sel": "button"
+      }
+    }
+  ]
+}

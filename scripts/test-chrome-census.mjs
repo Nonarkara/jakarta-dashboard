@@ -1,3 +1,4 @@
+import {censusDeadline} from './census-deadline.mjs';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import path from 'node:path';
@@ -23,3 +24,38 @@ async function run(mode){
 assert.equal(await run('positive'),6,'three healthy controls plus three planted readings');
 for(const mode of ['timeout','unrelated','survived'])await assert.rejects(()=>run(mode),/timeout|differs|not proved/,'the actual falsifier cannot pass '+mode);
 console.log('PASS actual chrome falsifier: positive control, navigation failure, unrelated mismatch, surviving band and cleanup');
+
+// Exercise the shipped reader, not a parallel approximation of its timeout.
+const reader=source.slice(source.indexOf('async function measureCensus(page,'),source.indexOf('\nfunction heightFor('));
+async function read(mode){
+ let calls=0;
+ const page={setViewportSize:async()=>{},goto:async()=>{},waitForFunction:async()=>{},waitForTimeout:ms=>new Promise(r=>setTimeout(r,ms)),evaluate:async()=>{
+  calls++;
+  if(mode==='font-stall'&&calls===1 || mode==='geometry-stall'&&calls>1)return new Promise(()=>{});
+  if(mode==='font-reject'&&calls===1)throw Error('font load rejected');
+  return {chrome:27,blocks:1,details:['header']};
+ }};
+ const context={censusDeadline,CENSUS_MEASUREMENT_TIMEOUT_MS:mode==='healthy'?1000:30,CENSUS:()=>{},Date};
+ const fn=vm.runInNewContext(reader+'\nmeasureCensus',context);
+ let watchdog;
+ try{return await Promise.race([fn(page,'http://fixture/atlas',390,844),new Promise((_,reject)=>{watchdog=setTimeout(()=>reject(Error('test watchdog: reader did not reject its stalled measurement')),1500);})]);}
+ finally{clearTimeout(watchdog);}
+}
+assert.equal((await read('healthy')).chrome,27);
+for(const [mode,stage] of [['font-stall','font readiness'],['geometry-stall','geometry settling']])await assert.rejects(()=>read(mode),e=>e.code==='CENSUS_TIMEOUT'&&e.message.includes(stage)&&e.message.includes('@390px'));
+await assert.rejects(()=>read('font-reject'),/font load rejected/,'font errors cannot be silently accepted');
+console.log('PASS actual census reader: healthy geometry, bounded pending font/geometry, rejected font and route/width/stage diagnostics');
+
+const sweep=source.slice(source.indexOf('async function census(build) {'),source.lastIndexOf('\nif (FALSIFY) {'));
+let sweepReads=0,sweepClosed=0,sweepStopped=0;
+const diagnostics=[];
+const sweepContext={console:{log(){},error:s=>diagnostics.push(s)},ONLY:null,ROUTES:['/'],BASELINE:'/baseline',ROOT:'/repo',CHROME:'/chrome',process:{execPath:process.execPath,stdout:{write(){}},exit(){throw Error('unexpected process exit');}},path,setTimeout,clearTimeout,
+ readFileSync:()=>JSON.stringify({widths:[390,1440],routes:{}}),heightFor:()=>900,
+ spawn:()=>({stdout:{on(_event,cb){queueMicrotask(()=>cb('http://127.0.0.1:12345'));}},once(){},kill(){sweepStopped++;}}),
+ chromium:{launch:async()=>({newContext:async()=>({newPage:async()=>({})}),close:async()=>{sweepClosed++;}})},
+ measureCensus:async()=>{sweepReads++;throw Object.assign(Error('census timeout at font readiness'),{code:'CENSUS_TIMEOUT'});},chromeDifference};
+await assert.rejects(()=>vm.runInNewContext(sweep+'\ncensus("/fixture")',sweepContext),e=>e.code==='CENSUS_TIMEOUT');
+assert.equal(sweepReads,1,'unreadable measurement aborts, never reuses the timed-out page');
+assert.equal(sweepClosed,1);assert.equal(sweepStopped,1,'browser and route server close after timeout');
+assert.ok(diagnostics.some(s=>s.includes('0/2 measurements')),'failure names the unverified denominator');
+console.log('PASS actual census sweep: unreadable state fails with denominator and closes browser/server');

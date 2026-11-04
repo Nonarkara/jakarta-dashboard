@@ -1,0 +1,214 @@
+{
+  "fonts": "loaded",
+  "width": 1001,
+  "scrollWidth": 1001,
+  "build": "jakarta-atlas-20261104-1793802938-492ace9",
+  "buildings": 43011,
+  "items": [
+    {
+      "selector": ".atlas-lenses",
+      "rects": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 1001,
+          "height": 26,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "13px",
+          "display": "flex"
+        }
+      ]
+    },
+    {
+      "selector": ".atlas-lenses>button",
+      "rects": [
+        {
+          "x": 97.84375,
+          "y": 1,
+          "width": 61.640625,
+          "height": 24,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "12px",
+          "display": "block"
+        },
+        {
+          "x": 159.484375,
+          "y": 1,
+          "width": 114.3125,
+          "height": 24,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "12px",
+          "display": "block"
+        },
+        {
+          "x": 273.796875,
+          "y": 1,
+          "width": 91.234375,
+          "height": 24,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "12px",
+          "display": "block"
+        },
+        {
+          "x": 365.03125,
+          "y": 1,
+          "width": 92.015625,
+          "height": 24,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "12px",
+          "display": "block"
+        },
+        {
+          "x": 457.046875,
+          "y": 1,
+          "width": 106.25,
+          "height": 24,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "12px",
+          "display": "block"
+        },
+        {
+          "x": 563.296875,
+          "y": 1,
+          "width": 75.5,
+          "height": 24,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "12px",
+          "display": "block"
+        },
+        {
+          "x": 638.796875,
+          "y": 1,
+          "width": 125,
+          "height": 24,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "12px",
+          "display": "block"
+        },
+        {
+          "x": 763.796875,
+          "y": 1,
+          "width": 102.5625,
+          "height": 24,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "12px",
+          "display": "block"
+        },
+        {
+          "x": 866.359375,
+          "y": 1,
+          "width": 90.4375,
+          "height": 24,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "12px",
+          "display": "block"
+        },
+        {
+          "x": 956.796875,
+          "y": 1,
+          "width": 66.28125,
+          "height": 24,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "12px",
+          "display": "block"
+        },
+        {
+          "x": 1023.078125,
+          "y": 1,
+          "width": 99.46875,
+          "height": 24,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "12px",
+          "display": "block"
+        },
+        {
+          "x": 1122.546875,
+          "y": 1,
+          "width": 94.421875,
+          "height": 24,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "12px",
+          "display": "block"
+        },
+        {
+          "x": 1216.96875,
+          "y": 1,
+          "width": 72.40625,
+          "height": 24,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "12px",
+          "display": "block"
+        },
+        {
+          "x": 1289.375,
+          "y": 1,
+          "width": 95.296875,
+          "height": 24,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "12px",
+          "display": "block"
+        },
+        {
+          "x": 1384.671875,
+          "y": 1,
+          "width": 65.390625,
+          "height": 24,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "12px",
+          "display": "block"
+        },
+        {
+          "x": 1450.0625,
+          "y": 1,
+          "width": 84.640625,
+          "height": 24,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "12px",
+          "display": "block"
+        }
+      ]
+    },
+    {
+      "selector": ".atlas-layers",
+      "rects": [
+        {
+          "x": 12,
+          "y": 34,
+          "width": 67.21875,
+          "height": 26,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "11px",
+          "display": "block"
+        }
+      ]
+    },
+    {
+      "selector": ".atlas-page-tools",
+      "rects": [
+        {
+          "x": 697.09375,
+          "y": 34,
+          "width": 295.90625,
+          "height": 30,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "13px",
+          "display": "flex"
+        }
+      ]
+    },
+    {
+      "selector": ".atlas-watch-grid",
+      "rects": [
+        {
+          "x": 409.171875,
+          "y": 65,
+          "width": 358,
+          "height": 101.15625,
+          "font": "\"Source Sans 3\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "fontSize": "13px",
+          "display": "grid"
+        }
+      ]
+    }
+  ]
+}

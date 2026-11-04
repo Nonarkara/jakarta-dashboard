@@ -43,6 +43,8 @@
  *   node scripts/chrome-census.mjs --falsify  # prove the census can still fail
  */
 import {chromeDifference,plantedBandDetected} from './chrome-verdict.mjs';
+import {censusDeadline} from './census-deadline.mjs';
+const CENSUS_MEASUREMENT_TIMEOUT_MS=30000;
 import { spawn, spawnSync } from "node:child_process";
 import { existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
@@ -189,15 +191,22 @@ const CENSUS = () => {
  * has stopped changing.
  */
 async function measureCensus(page, url, w, h) {
+  let stage='viewport';
+  return censusDeadline(measureCensusStages(page,url,w,h,value=>{stage=value;}),CENSUS_MEASUREMENT_TIMEOUT_MS,()=>`${url} @${w}px, stage=${stage}`);
+}
+async function measureCensusStages(page, url, w, h, onStage) {
   await page.setViewportSize({ width: Math.max(w, 320), height: Math.max(h, 400) });
+  onStage("navigation");
   await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
+  onStage("parsed document");
   // Wait for the document to have parsed and its fonts to be ready.
   await page.waitForFunction(
     () => document.readyState !== "loading" && !!document.querySelector("main, body"),
     undefined,
     { timeout: 30000 },
   );
-  await page.evaluate(() => document.fonts && document.fonts.ready).catch(() => {});
+  onStage("font readiness");
+  await page.evaluate(() => document.fonts && document.fonts.ready);
   // Settle: the FURNITURE has to have stopped changing. The whole page never
   // stops changing — the map animates — so the watch is on the furniture
   // alone, which is what the census is about.
@@ -205,6 +214,7 @@ async function measureCensus(page, url, w, h) {
   let stable = 0;
   const deadline = Date.now() + 6000;
   while (Date.now() < deadline) {
+    onStage("geometry settling");
     const c = await page.evaluate(CENSUS);
     const sig = c.chrome + "|" + c.blocks + "|" + c.details.join(";");
     if (sig === last) {
@@ -216,6 +226,7 @@ async function measureCensus(page, url, w, h) {
     }
     await page.waitForTimeout(50);
   }
+  onStage("final geometry");
   return await page.evaluate(CENSUS);
 }
 
@@ -344,11 +355,16 @@ async function census(build) {
       for (const w of widths) {
         const url = `http://127.0.0.1:${port}${route}`;
         let c;
+        console.log(`  · census ${route} @${w}px START`);
         try {
           c = await measureCensus(page, url, w, heightFor(w));
+          console.log(`  · census ${route} @${w}px OK ${c.chrome}px`);
         } catch (e) {
           failures.push(`${route} @${w}px — the census could not measure the page: ${e.message}`);
-          continue;
+          console.error(`FAIL — incomplete census: ${measured}/${routes.length*widths.length} measurements; ${failures.at(-1)}`);
+          // Abort and close this browser in finally. Reusing a page whose
+          // evaluation timed out would contaminate the next width's reading.
+          throw e;
         }
         measured++;
         const receipt = baseline.routes?.[route]?.[String(w)]?.chrome;
