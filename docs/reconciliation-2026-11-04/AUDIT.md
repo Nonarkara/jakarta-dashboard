@@ -25,3 +25,9 @@ Independent reviewer november_independent_review rejected the first popup placem
 This pass does not exhaust public Jakarta data, calibrate a flood/haze forecast, certify street access, or prove every possible map/panel state. Existing shared first-action instrument gaps remain documented in earlier receipts. A source outage remains an outage. The clock uses device time with IANA zones; it is not an atomic/NTP clock. Zero known dependency advisories is not a complete security certification.
 
 Release result and final independent height review are appended after canonical deployment.
+
+### First deployment and upstream outage
+
+Build `jakarta-atlas-20261104-1793802938-492ace9` reached both hostnames with exact bytes. Independent live paint/footprint checks and the real-map header/open/enlarged check passed. The canonical chain then stopped at35/37 API checks: NASA catalogue products and Himawari were unavailable. The live response had null selected dates, empty tiles and no capabilities fetch timestamp; a direct20s capabilities probe also timed out with0bytes. This was not reported as a successful full release.
+
+The repair separates **contract health** from **imagery availability**. The Worker now names the factual refusal stage. The smoke hard-checks all10 unique products, attribution, exact calendar dates, past timestamps, selected-date GIBS tiles and valid unavailable envelopes. Missing/null/duplicate products, fabricated tiles, future/invalid dates and contradictory outages fail. Availability remains separately counted as degraded, never as a pass. Valid catalogue history/fetch provenance may remain even when a particular frame is unavailable; that provenance is not an observation time. Fixtures use the same classifier the live smoke imports. A second complete canonical release is required; the first stopped run and response are retained here.

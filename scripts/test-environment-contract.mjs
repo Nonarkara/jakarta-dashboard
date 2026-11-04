@@ -1,3 +1,4 @@
+import {validImageryCatalogue,ENVIRONMENT_IDS} from './environment-smoke-contract.mjs';
 import { workerModuleUrl } from './worker-test-module.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -111,6 +112,17 @@ try {
   radar.host='https://evil.test'; capabilities='<Capabilities/>';
   data=await (await request('/api/atlas/environment')).json();
   assert.equal(data.radar.available,false); assert.ok(data.products.every(p=>!p.available && p.tiles.length===0 && p.date===null));
+  assert.equal(validImageryCatalogue(200,data.products),true,'complete honest outages remain valid contracts, not live imagery');
+  assert.equal(data.products.length,ENVIRONMENT_IDS.length);
+  for(const broken of [null,{},[null,...data.products.slice(1)],data.products.slice(1),[...data.products,data.products[0]],data.products.map((p,i)=>i?p:{...p,date:'2026-01-01'}),data.products.map((p,i)=>i?p:{...p,tiles:['https://gibs.earthdata.nasa.gov/fake.png']}),data.products.map((p,i)=>i?p:{...p,available:true})])assert.equal(validImageryCatalogue(200,broken),false,'missing/duplicate identities or contradictory outage envelopes fail hard');
+  assert.equal(validImageryCatalogue(503,data.products),false,'HTTP errors are not hidden by availability reporting');
+  const healthy=data.products.map(p=>({...p,available:true,date:p.id==='himawari'?frame:date,dates:[p.id==='himawari'?frame:date],tiles:[`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/${p.layer}/default/${p.id==='himawari'?frame:date}/GoogleMapsCompatible_Level${p.maxzoom}/{z}/{y}/{x}.png`],fetchedAt:new Date(now).toISOString(),availabilityReason:null}));
+  assert.equal(validImageryCatalogue(200,healthy),true);
+  for(const part of ['/WRONG_LAYER/default/','/GoogleMapsCompatible_Level0/'])assert.equal(validImageryCatalogue(200,healthy.map((p,i)=>i?p:{...p,tiles:[p.tiles[0].replace(part.includes('WRONG')?'/'+p.layer+'/default/':'/GoogleMapsCompatible_Level'+p.maxzoom+'/',part)]})),false,'tile must bind layer, selected date and matrix');
+  for(const patch of [{date:'2099-01-01'},{date:'2026-02-31'},{fetchedAt:'2099-01-01T00:00:00Z'},{source:''},{tier:''},{tiles:['https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/fake/default/1999-01-01/{z}/{y}/{x}.png']}])assert.equal(validImageryCatalogue(200,healthy.map((p,i)=>i?p:{...p,...patch})),false,'unusable healthy claims fail hard');
+  assert.equal(validImageryCatalogue(200,data.products.map((p,i)=>i?p:{...p,availabilityReason:null})),false,'a silent unavailable product fails');
+
+
   r=await request('/api/atlas/rainfall'); data=await r.json();
   assert.equal(r.status,200); assert.equal(data.points[0].precipitationMm,0); assert.equal(data.points[0].next24hMm,24);
   assert.ok(data.points[0].validAt.endsWith('Z'));

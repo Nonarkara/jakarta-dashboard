@@ -6,6 +6,8 @@
 //   node scripts/smoke-atlas-api.mjs                  # live atlas
 //   ATLAS_URL=http://localhost:8787 node scripts/smoke-atlas-api.mjs  # local
 
+import {validImageryCatalogue} from './environment-smoke-contract.mjs';
+
 const ATLAS_URL = (process.env.ATLAS_URL || "https://jakarta.nonarkara.org").replace(/\/$/, "");
 
 const CHECKS = [];
@@ -86,16 +88,12 @@ async function get(path) {
 
   {
     const r = await get("/api/atlas/environment");
-    const satellite = r.body?.products ?? [];
-    // Assert the identity of the catalogue, not a count: a new product should
-    // make this check name itself rather than fail on an arithmetic mismatch.
-    check("NASA products expose usable dated imagery",
-      r.status === 200
-      && ['surface-water','aerosol','satellite-rain','himawari','true-colour','night-lights','aerosol-viirs','aerosol-index','night-lights-2016','ndvi'].every(id => satellite.some(p => p.id === id))
-      && satellite.filter(p => p.id !== "himawari").every(p => p.available && /^\d{4}-\d{2}-\d{2}$/.test(p.date) && p.tiles?.length === 1 && p.dates?.includes(p.date)),
-      `${r.status} products=${satellite.length} ids=${satellite.map(p => p.id).join(',')}`);
-    const himawari = r.body?.products?.find(p => p.id === 'himawari');
-    check("Himawari exposes a dated infrared frame", himawari?.available && himawari.date?.includes('T') && himawari.tiles?.length === 1, himawari?.date || 'unavailable');
+    const rawProducts = r.body?.products;
+    const satellite = Array.isArray(rawProducts) ? rawProducts.filter(p=>p&&typeof p==='object') : [];
+    check("satellite catalogue preserves identities, dates and explicit outages", validImageryCatalogue(r.status,rawProducts), `${r.status} products=${satellite.length}`);
+    const daily=satellite.filter(p=>p.id!=='himawari'),himawari=satellite.find(p=>p.id==='himawari');
+    CHECKS.push({name:'NASA dated imagery availability',ok:daily.length===9&&daily.every(p=>p.available),soft:true,detail:`available=${daily.filter(p=>p.available).length}/9; unavailable=${daily.filter(p=>!p.available).map(p=>p.id).join(',')||'none'}`});
+    CHECKS.push({name:'Himawari dated infrared availability',ok:himawari?.available===true,soft:true,detail:himawari?.date||'explicitly unavailable; no imagery claimed'});
     check("radar exposes past observations", r.status === 200 && r.body?.radar?.available && r.body.radar.frames?.length > 0 && r.body.radar.frames.every(f => Number.isFinite(Date.parse(f.observedAt))), `frames=${r.body?.radar?.frames?.length}`);
   }
   {

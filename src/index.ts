@@ -478,6 +478,11 @@ async function handleEnvironment(): Promise<Response> {
       legendUrl: product.legend ? `https://gibs.earthdata.nasa.gov/legends/${product.legend}_H.svg` : null,
       sourceUrl: product.documentation || "https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/" };
   });
+  // A catalogue fetch time is not an image observation time. Keep that
+  // provenance even when a published frame cannot be admitted.
+  const admittedProducts = products.map(product => ({ ...product,
+    availabilityReason: product.available ? null : !capabilities ? 'catalog_unavailable' : !product.latestAvailableDate ? 'layer_time_unavailable' : 'no_usable_published_frame',
+  }));
   const radarBody = radar?.body;
   const frames = radarBody?.host === "https://tilecache.rainviewer.com" && Array.isArray(radarBody?.radar?.past)
     ? radarBody.radar.past.filter((f: any) => f && typeof f.time === "number" && Number.isFinite(f.time)
@@ -487,7 +492,7 @@ async function handleEnvironment(): Promise<Response> {
         observedAt: new Date(f.time * 1000).toISOString(),
         tiles: [`https://tilecache.rainviewer.com${f.path}/256/{z}/{x}/{y}/2/0_0.png`],
       })) : [];
-  return jsonResponse({ products, radar: { available: frames.length > 0, frames, maxzoom: 7,
+  return jsonResponse({ products: admittedProducts, radar: { available: frames.length > 0, frames, maxzoom: 7,
     source: "RainViewer radar composite", tier: "radar-observation", fetchedAt: radar?.fetchedAt ?? null,
     coverageTiles: ["https://tilecache.rainviewer.com/v2/coverage/0/256/{z}/{x}/{y}/0/0_0.png"],
     sourceUrl: "https://www.rainviewer.com", termsUrl: "https://www.rainviewer.com/api.html" },
