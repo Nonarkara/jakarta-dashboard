@@ -37,7 +37,7 @@ The waterways evidence panel now includes an independent BMKG Tanjung Priok coas
 The map carries four lenses beside the weather and satellite ones, each one tap from the page people land on. All four compute from assets already baked here — `npm run prepare:insight` makes no network call, so a new view never becomes a new claim.
 
 - **Flood exposure** — the 260 flood-mapped neighbourhoods shaded by the share of their own land in the heavy class, listed by residents on severe land. A neighbourhood counts its residents once no matter how many risk polygons it has, and no city-wide total is offered. Top of the list: Kapuk, Duri Kosambi, Pejagalan, Rawa Buaya, Tegal Alur, Semanan.
-- **Height confidence** — the building extrusion recoloured by height *source* instead of height, with the share of buildings on screen in each tier. Bright is tagged or published; dim is a type default with no measurement and no satellite signal.
+- **Height confidence** — the building extrusion recoloured by height *source* instead of height, with the share of buildings on screen in each tier. Bright is tagged or published; unknown heights remain flat footprints.
 - **Green space** — reference polygons aggregated per borough, with the area labelled as computed from published geometry rather than a publisher total. Rows that name no borough and no neighbourhood are counted, not spread.
 - **Flood monitoring** — published stations, gauges and pumps, and the gap beside them: 106 of the 260 mapped neighbourhoods have a published pump. Water-level and rain records publish no neighbourhood, so they are never attributed to one by inference.
 
@@ -83,7 +83,7 @@ clouds, Open-Meteo rain and air quality, GDACS storms).
 | Layer | Source | Script |
 |---|---|---|
 | Building footprints | Overture Maps (Microsoft ML, Google Open Buildings, OSM) | `scripts/bake-buildings.py extract` |
-| Building heights | OSM tags → floor count × 3.3 m → Google Open Buildings 2.5D (2023, per building) → GHSL (2018, 100 m average) → type default | `scripts/bake-buildings.py heights` + `bake` |
+| Building heights | OSM tags → floor count × 3.3 m → Google Open Buildings 2.5D (2023, per building) → GHSL (2018, 100 m average) → unknown: flat footprint | `scripts/bake-buildings.py heights` + `bake` |
 | Landmarks | OSM outline / parts, published heights (Autograph Tower, Monas) | `scripts/curate-landmarks.py` |
 | Rail | OSM route relations: MRT, LRT Jakarta, LRT Jabodebek, KRL | `scripts/bake-osm-layers.py rail` |
 | Rivers and canals | OSM `waterway=river|canal` | `scripts/bake-osm-layers.py waterways` |
