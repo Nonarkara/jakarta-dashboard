@@ -177,6 +177,7 @@ async function measure() {
       return { x: Math.round(r.x), y: Math.round(r.y), w: Math.round(r.width), h: Math.round(r.height) };
     };
     const visible = (el) => {
+      if (typeof el.checkVisibility === "function" && !el.checkVisibility({ contentVisibilityAuto: true, opacityProperty: true, visibilityProperty: true })) return false;
       const cs = getComputedStyle(el);
       if (cs.display === "none" || cs.visibility === "hidden" || cs.opacity === "0") return false;
       const r = el.getBoundingClientRect();
@@ -380,7 +381,7 @@ lines.push(
     : `**Build:** UNVERIFIED — the build tag could not be read from the deployed \`app.js\` at ${BASE}.`,
 );
 lines.push(`**Method:** a real browser at the three widths the law names — 390 × 844, 1024 × **900** (the height used at 1024), 1440 × 900 — on every route.`);
-lines.push(`**Screenshots:** \`${OUT}/\` — the pixels these numbers were read from.`);
+lines.push('**Screenshots:** ' + rows.filter(r => !r.unverified).map(r => `[${r.route} ${r.w}px](${path.basename(r.shot)})`).join(' · ') + ' — beside this record, so links survive relocation.');
 lines.push("");
 lines.push("The law's five questions, asked of each viewport.");
 lines.push("");
@@ -419,10 +420,10 @@ lines.push("");
 lines.push("Every row is a measurement, and every measurement can be repeated:");
 lines.push("");
 lines.push("```");
-lines.push(`node scripts/msh-evidence.mjs ${BASE} ${OUT}`);
+lines.push(`node scripts/msh-evidence.mjs ${BASE} docs/msh`);
 lines.push("```");
 lines.push("");
-lines.push("The screenshots in `" + OUT + "/` are the pixels. The chrome, task, hierarchy and");
+lines.push("The linked screenshots beside this record are the pixels. The chrome, task, hierarchy and");
 lines.push("preservation numbers are read from the same rendered page, at the same widths.");
 lines.push("");
 

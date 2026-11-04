@@ -1,5 +1,20 @@
 # Jakarta reconciliation · 4 November 2026
 
+## Final result
+
+**Live:** `jakarta-atlas-20261104-1793808764-29566bc` at https://jakarta.nonarkara.org. Source29566bc, stamp e90f2fb; Worker version `0f7e1988-ed38-48f1-ab16-0cd1ac0e4e6a`.
+
+Canonical `RELEASE_AGENT=codex npm run release` exited0: typecheck,13local verification checks,59test commands,208spatial cases,208chrome comparisons,38/38API checks and145/145rendered checks, with0browser page errors. Three consecutive exact-byte probes passed on each hostname. Independent final-tag live paint/footprint review passed. All10 satellite products and radar were available at verification; this is catalogue availability, not a promise of clear pixels over every Jakarta location.
+
+Final root screenshots cover390×844,1024×900 and1440×900 in normal/open-ledger/doubled-type states, with actual rendered buildings and0page errors. Phone top chrome56→27px, desktop38px; opening the ledger changes map height by0px. The old version/Menu collision and negative-left popup clip are gone. Unknown heights remain flat and their footprints retained.
+
+The final12-view MSH record is [here](../msh/MSH-EVIDENCE.md), with portable sibling-image links. After the canonical release, only the private evidence exporter and its targeted regression were corrected: closed-disclosure rectangles are no longer counted as painted controls, and links survive capture-directory relocation. That exporter was syntax-checked, independently reviewed and rerun successfully against the same exact live build. No public asset, Worker source, dependency or deployment configuration changed after the verified release.
+
+The exporter still reports bounds outside the viewport for the scrollable lens rail and the560px Research table inside its358px phone scroller. A separate live probe confirms both are contained scrolling, with page width390. Its three old13px checkbox warnings came from hidden disclosure content (`checkVisibility:false`), not painted controls; the actual-reader regression falsifies the old count. Root canvas counts cover only the parent document; the canonical real-map check separately enters the iframe and requires rendered building features. These measurement limits are explicit, not waived product defects.
+
+PR9 merged; PR8 superseded by audited Wrangler4.157.0. TypeScript5.9.3 preserved. No open PRs at final reconciliation. Temporary dependency checkout removed after package/lock equality; retired repository and other agents' services preserved. Stopped attempts and their correction evidence remain below.
+
+
 ## What changed
 
 The supplied masthead report described41bd55b, already reverted by4f2d851 after startup/source reachability repairs. Main ecc8936 was clean, with no stashes or uncommitted agent work. The remaining wind branch is already merged (PR6); it is not another feature to reapply. The retired Jakarta repository remains read-only.
@@ -24,7 +39,7 @@ Independent reviewer november_independent_review rejected the first popup placem
 
 This pass does not exhaust public Jakarta data, calibrate a flood/haze forecast, certify street access, or prove every possible map/panel state. Existing shared first-action instrument gaps remain documented in earlier receipts. A source outage remains an outage. The clock uses device time with IANA zones; it is not an atomic/NTP clock. Zero known dependency advisories is not a complete security certification.
 
-Release result and final independent height review are appended after canonical deployment.
+The final verified result is above; the stopped attempts below preserve how it was reached.
 
 ### First deployment and upstream outage
 

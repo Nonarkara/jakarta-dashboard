@@ -31,19 +31,19 @@
     "opened": {
       "popover": {
         "x": 8,
-        "y": 31,
+        "y": 40,
         "width": 374,
         "height": 255.875,
         "right": 382,
-        "bottom": 286.875
+        "bottom": 295.875
       },
       "publisher": {
         "x": 17,
-        "y": 82,
+        "y": 91,
         "width": 76.359375,
         "height": 16,
         "right": 93.359375,
-        "bottom": 98
+        "bottom": 107
       },
       "width": 390,
       "pageWidth": 390,
@@ -109,7 +109,7 @@
       "mastheads": 1
     },
     "map": {
-      "styleLoaded": false,
+      "styleLoaded": true,
       "renderedBuildings": 9257
     },
     "errors": []
@@ -146,19 +146,19 @@
     "opened": {
       "popover": {
         "x": 8,
-        "y": 42,
+        "y": 40,
         "width": 560,
         "height": 242.4375,
         "right": 568,
-        "bottom": 284.4375
+        "bottom": 282.4375
       },
       "publisher": {
         "x": 17,
-        "y": 92,
+        "y": 90,
         "width": 70,
         "height": 15,
         "right": 87,
-        "bottom": 107
+        "bottom": 105
       },
       "width": 1024,
       "pageWidth": 1024,
@@ -260,20 +260,20 @@
     },
     "opened": {
       "popover": {
-        "x": 166.4375,
-        "y": 42,
+        "x": 8,
+        "y": 40,
         "width": 560,
         "height": 242.4375,
-        "right": 726.4375,
-        "bottom": 284.4375
+        "right": 568,
+        "bottom": 282.4375
       },
       "publisher": {
-        "x": 175.4375,
-        "y": 92,
+        "x": 17,
+        "y": 90,
         "width": 70,
         "height": 15,
-        "right": 245.4375,
-        "bottom": 107
+        "right": 87,
+        "bottom": 105
       },
       "width": 1440,
       "pageWidth": 1440,

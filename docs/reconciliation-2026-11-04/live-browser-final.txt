@@ -1,0 +1,2 @@
+PASS source/clock browser: passive stability, minute ageing, warning expiry, real check stamp, unavailable envelopes and six reachable zones
+PASS dashboard chrome: three viewports, real buildings, overlap/hit checks, source action, enlarged text and original-fault falsifiers

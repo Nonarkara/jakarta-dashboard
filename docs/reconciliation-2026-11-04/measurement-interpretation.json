@@ -1,0 +1,331 @@
+[
+  {
+    "path": "/atlas?lens=waterways",
+    "reading": {
+      "pageWidth": 390,
+      "small": [
+        {
+          "tag": "INPUT",
+          "id": "",
+          "type": "checkbox",
+          "text": "",
+          "width": 214,
+          "height": 13,
+          "left": 25,
+          "right": 239,
+          "visible": false,
+          "clip": {
+            "tag": "NAV",
+            "cls": "atlas-lenses",
+            "overflow": "auto",
+            "scrollWidth": 1679,
+            "clientWidth": 390
+          },
+          "label": "60.714 garis saluran mikro resmi · zoom 11+"
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "type": "checkbox",
+          "text": "",
+          "width": 214,
+          "height": 13,
+          "left": 25,
+          "right": 239,
+          "visible": false,
+          "clip": {
+            "tag": "NAV",
+            "cls": "atlas-lenses",
+            "overflow": "auto",
+            "scrollWidth": 1679,
+            "clientWidth": 390
+          },
+          "label": "65 batas polder penerbit"
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "type": "checkbox",
+          "text": "",
+          "width": 13,
+          "height": 13,
+          "left": 25,
+          "right": 38,
+          "visible": false,
+          "clip": {
+            "tag": "NAV",
+            "cls": "atlas-lenses",
+            "overflow": "auto",
+            "scrollWidth": 1679,
+            "clientWidth": 390
+          },
+          "label": "Tampilkan WorldCover 2021"
+        }
+      ],
+      "spill": [
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "type": "submit",
+          "text": "Kerentanan banjir",
+          "width": 105.84375,
+          "height": 24,
+          "left": 338.25,
+          "right": 444.09375,
+          "visible": true,
+          "clip": {
+            "tag": "NAV",
+            "cls": "atlas-lenses",
+            "overflow": "auto",
+            "scrollWidth": 1679,
+            "clientWidth": 390
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "type": "submit",
+          "text": "Keyakinan tinggi",
+          "width": 99.203125,
+          "height": 24,
+          "left": 444.09375,
+          "right": 543.296875,
+          "visible": true,
+          "clip": {
+            "tag": "NAV",
+            "cls": "atlas-lenses",
+            "overflow": "auto",
+            "scrollWidth": 1679,
+            "clientWidth": 390
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "type": "submit",
+          "text": "Ruang hijau",
+          "width": 74.171875,
+          "height": 24,
+          "left": 543.296875,
+          "right": 617.46875,
+          "visible": true,
+          "clip": {
+            "tag": "NAV",
+            "cls": "atlas-lenses",
+            "overflow": "auto",
+            "scrollWidth": 1679,
+            "clientWidth": 390
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "type": "submit",
+          "text": "Skenario kedatangan air",
+          "width": 138.078125,
+          "height": 24,
+          "left": 617.46875,
+          "right": 755.546875,
+          "visible": true,
+          "clip": {
+            "tag": "NAV",
+            "cls": "atlas-lenses",
+            "overflow": "auto",
+            "scrollWidth": 1679,
+            "clientWidth": 390
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "type": "submit",
+          "text": "Pemantauan banjir",
+          "width": 111.375,
+          "height": 24,
+          "left": 755.546875,
+          "right": 866.921875,
+          "visible": true,
+          "clip": {
+            "tag": "NAV",
+            "cls": "atlas-lenses",
+            "overflow": "auto",
+            "scrollWidth": 1679,
+            "clientWidth": 390
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "type": "submit",
+          "text": "Hujan · 24 jam ke depan",
+          "width": 135.21875,
+          "height": 24,
+          "left": 866.921875,
+          "right": 1002.140625,
+          "visible": true,
+          "clip": {
+            "tag": "NAV",
+            "cls": "atlas-lenses",
+            "overflow": "auto",
+            "scrollWidth": 1679,
+            "clientWidth": 390
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "type": "submit",
+          "text": "Radar hujan",
+          "width": 75.5,
+          "height": 24,
+          "left": 1002.140625,
+          "right": 1077.640625,
+          "visible": true,
+          "clip": {
+            "tag": "NAV",
+            "cls": "atlas-lenses",
+            "overflow": "auto",
+            "scrollWidth": 1679,
+            "clientWidth": 390
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "type": "submit",
+          "text": "Awan Himawari",
+          "width": 93.859375,
+          "height": 24,
+          "left": 1077.640625,
+          "right": 1171.5,
+          "visible": true,
+          "clip": {
+            "tag": "NAV",
+            "cls": "atlas-lenses",
+            "overflow": "auto",
+            "scrollWidth": 1679,
+            "clientWidth": 390
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "type": "submit",
+          "text": "Air teramati",
+          "width": 73.890625,
+          "height": 24,
+          "left": 1171.5,
+          "right": 1245.390625,
+          "visible": true,
+          "clip": {
+            "tag": "NAV",
+            "cls": "atlas-lenses",
+            "overflow": "auto",
+            "scrollWidth": 1679,
+            "clientWidth": 390
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "type": "submit",
+          "text": "Cahaya malam",
+          "width": 89.15625,
+          "height": 24,
+          "left": 1245.390625,
+          "right": 1334.546875,
+          "visible": true,
+          "clip": {
+            "tag": "NAV",
+            "cls": "atlas-lenses",
+            "overflow": "auto",
+            "scrollWidth": 1679,
+            "clientWidth": 390
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "type": "submit",
+          "text": "Genangan berulang",
+          "width": 113.96875,
+          "height": 24,
+          "left": 1334.546875,
+          "right": 1448.515625,
+          "visible": true,
+          "clip": {
+            "tag": "NAV",
+            "cls": "atlas-lenses",
+            "overflow": "auto",
+            "scrollWidth": 1679,
+            "clientWidth": 390
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "type": "submit",
+          "text": "Udara & angin",
+          "width": 85.640625,
+          "height": 24,
+          "left": 1448.515625,
+          "right": 1534.15625,
+          "visible": true,
+          "clip": {
+            "tag": "NAV",
+            "cls": "atlas-lenses",
+            "overflow": "auto",
+            "scrollWidth": 1679,
+            "clientWidth": 390
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "type": "submit",
+          "text": "Kabut asap kawasan",
+          "width": 118.703125,
+          "height": 24,
+          "left": 1534.15625,
+          "right": 1652.859375,
+          "visible": true,
+          "clip": {
+            "tag": "NAV",
+            "cls": "atlas-lenses",
+            "overflow": "auto",
+            "scrollWidth": 1679,
+            "clientWidth": 390
+          }
+        }
+      ],
+      "tables": []
+    }
+  },
+  {
+    "path": "/research",
+    "reading": {
+      "pageWidth": 390,
+      "small": [],
+      "spill": [],
+      "tables": [
+        {
+          "tag": "TABLE",
+          "id": "",
+          "text": "ProdukProductWahana · sensorPlatform · sensorResolusiResolutionYang ditunjukkanWhat it sho",
+          "width": 560,
+          "height": 887,
+          "left": 16,
+          "right": 576,
+          "visible": true,
+          "clip": {
+            "tag": "DIV",
+            "cls": "table",
+            "overflow": "auto",
+            "scrollWidth": 560,
+            "clientWidth": 358
+          }
+        }
+      ]
+    }
+  }
+]

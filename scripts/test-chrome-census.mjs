@@ -59,3 +59,18 @@ assert.equal(sweepReads,1,'unreadable measurement aborts, never reuses the timed
 assert.equal(sweepClosed,1);assert.equal(sweepStopped,1,'browser and route server close after timeout');
 assert.ok(diagnostics.some(s=>s.includes('0/2 measurements')),'failure names the unverified denominator');
 console.log('PASS actual census sweep: unreadable state fails with denominator and closes browser/server');
+
+// The MSH exporter must count painted controls, not retained rectangles in
+// closed disclosures (three real13px checkboxes triggered this regression).
+const msh=readFileSync(new URL('./msh-evidence.mjs',import.meta.url),'utf8');
+const visibility=msh.slice(msh.indexOf('    const visible = (el) => {'),msh.indexOf('    // ---- chrome cost'));
+assert.ok(visibility.includes('checkVisibility'),'visibility extraction cannot silently go stale');
+const guard='      if (typeof el.checkVisibility === "function" && !el.checkVisibility({ contentVisibilityAuto: true, opacityProperty: true, visibilityProperty: true })) return false;\n';
+const oldVisibility=visibility.replace(guard,'');assert.notEqual(oldVisibility,visibility,'original hidden-control defect remains falsifiable');
+const getComputedStyle=()=>({display:'block',visibility:'visible',opacity:'1'});
+const classify=code=>vm.runInNewContext(code+'\nvisible',{getComputedStyle});
+const hidden={checkVisibility:()=>false,getBoundingClientRect:()=>({width:214,height:13})};
+assert.equal(classify(visibility)(hidden),false,'retained hidden rectangles are not painted targets');
+assert.equal(classify(oldVisibility)(hidden),true,'the original defect is detected');
+assert.equal(classify(visibility)({...hidden,checkVisibility:()=>true}),true,'painted controls remain counted');
+console.log('PASS actual MSH target reader: closed-disclosure rectangles excluded; original defect falsified');
