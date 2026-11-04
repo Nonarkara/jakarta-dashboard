@@ -45,6 +45,10 @@
 import {chromeDifference,plantedBandDetected} from './chrome-verdict.mjs';
 import {censusDeadline} from './census-deadline.mjs';
 const CENSUS_MEASUREMENT_TIMEOUT_MS=30000;
+// The full census and falsifier must use the same browser backend. The
+// former software-only flags were absent from the falsifier, so it was not
+// proving the same configuration. Both now use the platform default.
+const CENSUS_BROWSER_ARGS = ['--no-sandbox','--disable-setuid-sandbox','--disable-dev-shm-usage','--hide-scrollbars'];
 import { spawn, spawnSync } from "node:child_process";
 import { existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
@@ -203,7 +207,7 @@ async function measureCensusStages(page, url, w, h, onStage) {
   await page.waitForFunction(
     () => document.readyState !== "loading" && !!document.querySelector("main, body"),
     undefined,
-    { timeout: 30000 },
+    { timeout: 30000, polling: 100 },
   );
   onStage("font readiness");
   await page.evaluate(() => document.fonts && document.fonts.ready);
@@ -256,7 +260,7 @@ async function falsify() {
    server.once('error',e=>{clearTimeout(timeout);reject(e);});
    server.stdout.on('data',d=>{const m=/http:\/\/127\.0\.0\.1:(\d+)/.exec(String(d));if(m){clearTimeout(timeout);resolve(Number(m[1]));}});
   });
-  browser=await chromium.launch({executablePath:CHROME,headless:true,args:['--hide-scrollbars']});
+  browser=await chromium.launch({executablePath:CHROME,headless:true,args: CENSUS_BROWSER_ARGS});
   const widths=[360,1024,1440],controls=[];
   for(const w of widths){
    const ctx=await browser.newContext(),page=await ctx.newPage();
@@ -336,16 +340,7 @@ async function census(build) {
   const browser = await chromium.launch({
     executablePath: CHROME,
     headless: true,
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--disable-dev-shm-usage",
-      "--hide-scrollbars",
-      "--use-gl=angle",
-      "--use-angle=swiftshader",
-      "--enable-unsafe-swiftshader",
-      "--ignore-gpu-blocklist",
-    ],
+    args: CENSUS_BROWSER_ARGS,
   });
 
   try {

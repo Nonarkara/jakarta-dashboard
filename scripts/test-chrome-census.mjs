@@ -9,10 +9,10 @@ const implementation=source.slice(source.indexOf('async function falsify() {'),s
 async function run(mode){
  let reads=0,killed=0,closed=0;
  const baseline={routes:{'/':Object.fromEntries([360,1024,1440].map(w=>[w,{chrome:{top:w===360?23:38,topSel:'header'}}]))}};
- const context={console:{log(){}},FALSIFY_BUILD:'/fixture',BASELINE:'/baseline',ROOT:'/repo',CHROME:'/chrome',process,path,setTimeout,clearTimeout,
+ const context={CENSUS_BROWSER_ARGS:[],console:{log(){}},FALSIFY_BUILD:'/fixture',BASELINE:'/baseline',ROOT:'/repo',CHROME:'/chrome',process,path,setTimeout,clearTimeout,
   prepareBuild:async()=>'/fixture',plantBand:()=>true,rmSync(){},readFileSync:()=>JSON.stringify(baseline),heightFor:()=>900,chromeDifference,plantedBandDetected,
   spawn:()=>({stdout:{on(_name,callback){queueMicrotask(()=>callback('http://127.0.0.1:12345'));}},once(){},kill(){killed++;}}),
-  chromium:{launch:async()=>({newContext:async()=>({newPage:async()=>({}),close:async()=>{}}),close:async()=>{closed++;}})},
+  chromium:{launch:async options=>{assert.equal(options.args,context.CENSUS_BROWSER_ARGS,"falsifier uses the shared browser backend");return {newContext:async()=>({newPage:async()=>({}),close:async()=>{}}),close:async()=>{closed++;}};}},
   measureCensus:async(_page,_url,w)=>{reads++;if(mode==='timeout')throw Error('navigation timeout');const base=w===360?23:38;
    if(mode==='unrelated')return {chrome:base,blocks:2};
    return {chrome:base+(reads>3&&mode==='positive'?24:0),blocks:reads>3&&mode==='positive'?2:1};},
@@ -49,10 +49,10 @@ console.log('PASS actual census reader: healthy geometry, bounded pending font/g
 const sweep=source.slice(source.indexOf('async function census(build) {'),source.lastIndexOf('\nif (FALSIFY) {'));
 let sweepReads=0,sweepClosed=0,sweepStopped=0;
 const diagnostics=[];
-const sweepContext={console:{log(){},error:s=>diagnostics.push(s)},ONLY:null,ROUTES:['/'],BASELINE:'/baseline',ROOT:'/repo',CHROME:'/chrome',process:{execPath:process.execPath,stdout:{write(){}},exit(){throw Error('unexpected process exit');}},path,setTimeout,clearTimeout,
+const sweepContext={CENSUS_BROWSER_ARGS:[],console:{log(){},error:s=>diagnostics.push(s)},ONLY:null,ROUTES:['/'],BASELINE:'/baseline',ROOT:'/repo',CHROME:'/chrome',process:{execPath:process.execPath,stdout:{write(){}},exit(){throw Error('unexpected process exit');}},path,setTimeout,clearTimeout,
  readFileSync:()=>JSON.stringify({widths:[390,1440],routes:{}}),heightFor:()=>900,
  spawn:()=>({stdout:{on(_event,cb){queueMicrotask(()=>cb('http://127.0.0.1:12345'));}},once(){},kill(){sweepStopped++;}}),
- chromium:{launch:async()=>({newContext:async()=>({newPage:async()=>({})}),close:async()=>{sweepClosed++;}})},
+ chromium:{launch:async options=>{assert.equal(options.args,sweepContext.CENSUS_BROWSER_ARGS,"full sweep uses the same shared browser backend");return {newContext:async()=>({newPage:async()=>({})}),close:async()=>{sweepClosed++;}};}},
  measureCensus:async()=>{sweepReads++;throw Object.assign(Error('census timeout at font readiness'),{code:'CENSUS_TIMEOUT'});},chromeDifference};
 await assert.rejects(()=>vm.runInNewContext(sweep+'\ncensus("/fixture")',sweepContext),e=>e.code==='CENSUS_TIMEOUT');
 assert.equal(sweepReads,1,'unreadable measurement aborts, never reuses the timed-out page');

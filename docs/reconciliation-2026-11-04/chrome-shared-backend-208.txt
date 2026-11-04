@@ -1,0 +1,429 @@
+  · route site built at /Users/nonarkara/Projects/dashboards/Jakarta-dashboard/out/route-site
+  · routes: / -> index.html (dashboard), /atlas -> atlas.html, /research -> research.html
+  · breakpoint source: 3 stylesheet(s) + inline <style> from 3 pages
+  · falsifier copy at /Users/nonarkara/Projects/dashboards/Jakarta-dashboard/out/route-site-falsify (the atlas at the root and as a top-level page, so the first action exists and the root does not clip)
+  · 22.6 MB
+  · census / @339px START
+  · census / @339px OK 27px
+  · census / @340px START
+  · census / @340px OK 27px
+  · census / @341px START
+  · census / @341px OK 27px
+  · census / @360px START
+  · census / @360px OK 27px
+  · census / @379px START
+  · census / @379px OK 27px
+  · census / @380px START
+  · census / @380px OK 27px
+  · census / @381px START
+  · census / @381px OK 27px
+  · census / @429px START
+  · census / @429px OK 27px
+  · census / @430px START
+  · census / @430px OK 27px
+  · census / @431px START
+  · census / @431px OK 27px
+  · census / @449px START
+  · census / @449px OK 27px
+  · census / @450px START
+  · census / @450px OK 27px
+  · census / @451px START
+  · census / @451px OK 27px
+  · census / @479px START
+  · census / @479px OK 27px
+  · census / @480px START
+  · census / @480px OK 27px
+  · census / @481px START
+  · census / @481px OK 27px
+  · census / @519px START
+  · census / @519px OK 27px
+  · census / @520px START
+  · census / @520px OK 27px
+  · census / @521px START
+  · census / @521px OK 27px
+  · census / @599px START
+  · census / @599px OK 27px
+  · census / @600px START
+  · census / @600px OK 27px
+  · census / @601px START
+  · census / @601px OK 38px
+  · census / @699px START
+  · census / @699px OK 38px
+  · census / @700px START
+  · census / @700px OK 38px
+  · census / @701px START
+  · census / @701px OK 38px
+  · census / @702px START
+  · census / @702px OK 38px
+  · census / @759px START
+  · census / @759px OK 38px
+  · census / @760px START
+  · census / @760px OK 38px
+  · census / @761px START
+  · census / @761px OK 38px
+  · census / @768px START
+  · census / @768px OK 38px
+  · census / @799px START
+  · census / @799px OK 38px
+  · census / @800px START
+  · census / @800px OK 38px
+  · census / @801px START
+  · census / @801px OK 38px
+  · census / @838px START
+  · census / @838px OK 38px
+  · census / @839px START
+  · census / @839px OK 38px
+  · census / @840px START
+  · census / @840px OK 38px
+  · census / @899px START
+  · census / @899px OK 38px
+  · census / @900px START
+  · census / @900px OK 38px
+  · census / @901px START
+  · census / @901px OK 38px
+  · census / @999px START
+  · census / @999px OK 38px
+  · census / @1000px START
+  · census / @1000px OK 38px
+  · census / @1001px START
+  · census / @1001px OK 38px
+  · census / @1024px START
+  · census / @1024px OK 38px
+  · census / @1099px START
+  · census / @1099px OK 38px
+  · census / @1100px START
+  · census / @1100px OK 38px
+  · census / @1101px START
+  · census / @1101px OK 38px
+  · census / @1198px START
+  · census / @1198px OK 38px
+  · census / @1199px START
+  · census / @1199px OK 38px
+  · census / @1200px START
+  · census / @1200px OK 38px
+  · census / @1201px START
+  · census / @1201px OK 38px
+  · census / @1440px START
+  · census / @1440px OK 38px
+  · census / @1920px START
+  · census / @1920px OK 38px
+  · / done
+  · census /atlas @339px START
+  · census /atlas @339px OK 0px
+  · census /atlas @340px START
+  · census /atlas @340px OK 0px
+  · census /atlas @341px START
+  · census /atlas @341px OK 0px
+  · census /atlas @360px START
+  · census /atlas @360px OK 0px
+  · census /atlas @379px START
+  · census /atlas @379px OK 0px
+  · census /atlas @380px START
+  · census /atlas @380px OK 0px
+  · census /atlas @381px START
+  · census /atlas @381px OK 0px
+  · census /atlas @429px START
+  · census /atlas @429px OK 0px
+  · census /atlas @430px START
+  · census /atlas @430px OK 0px
+  · census /atlas @431px START
+  · census /atlas @431px OK 0px
+  · census /atlas @449px START
+  · census /atlas @449px OK 0px
+  · census /atlas @450px START
+  · census /atlas @450px OK 0px
+  · census /atlas @451px START
+  · census /atlas @451px OK 0px
+  · census /atlas @479px START
+  · census /atlas @479px OK 0px
+  · census /atlas @480px START
+  · census /atlas @480px OK 0px
+  · census /atlas @481px START
+  · census /atlas @481px OK 0px
+  · census /atlas @519px START
+  · census /atlas @519px OK 0px
+  · census /atlas @520px START
+  · census /atlas @520px OK 0px
+  · census /atlas @521px START
+  · census /atlas @521px OK 0px
+  · census /atlas @599px START
+  · census /atlas @599px OK 0px
+  · census /atlas @600px START
+  · census /atlas @600px OK 0px
+  · census /atlas @601px START
+  · census /atlas @601px OK 0px
+  · census /atlas @699px START
+  · census /atlas @699px OK 0px
+  · census /atlas @700px START
+  · census /atlas @700px OK 0px
+  · census /atlas @701px START
+  · census /atlas @701px OK 0px
+  · census /atlas @702px START
+  · census /atlas @702px OK 0px
+  · census /atlas @759px START
+  · census /atlas @759px OK 0px
+  · census /atlas @760px START
+  · census /atlas @760px OK 0px
+  · census /atlas @761px START
+  · census /atlas @761px OK 0px
+  · census /atlas @768px START
+  · census /atlas @768px OK 0px
+  · census /atlas @799px START
+  · census /atlas @799px OK 0px
+  · census /atlas @800px START
+  · census /atlas @800px OK 0px
+  · census /atlas @801px START
+  · census /atlas @801px OK 0px
+  · census /atlas @838px START
+  · census /atlas @838px OK 0px
+  · census /atlas @839px START
+  · census /atlas @839px OK 0px
+  · census /atlas @840px START
+  · census /atlas @840px OK 0px
+  · census /atlas @899px START
+  · census /atlas @899px OK 0px
+  · census /atlas @900px START
+  · census /atlas @900px OK 0px
+  · census /atlas @901px START
+  · census /atlas @901px OK 0px
+  · census /atlas @999px START
+  · census /atlas @999px OK 0px
+  · census /atlas @1000px START
+  · census /atlas @1000px OK 0px
+  · census /atlas @1001px START
+  · census /atlas @1001px OK 0px
+  · census /atlas @1024px START
+  · census /atlas @1024px OK 0px
+  · census /atlas @1099px START
+  · census /atlas @1099px OK 0px
+  · census /atlas @1100px START
+  · census /atlas @1100px OK 0px
+  · census /atlas @1101px START
+  · census /atlas @1101px OK 0px
+  · census /atlas @1198px START
+  · census /atlas @1198px OK 0px
+  · census /atlas @1199px START
+  · census /atlas @1199px OK 0px
+  · census /atlas @1200px START
+  · census /atlas @1200px OK 0px
+  · census /atlas @1201px START
+  · census /atlas @1201px OK 0px
+  · census /atlas @1440px START
+  · census /atlas @1440px OK 0px
+  · census /atlas @1920px START
+  · census /atlas @1920px OK 0px
+  · /atlas done
+  · census /atlas-open @339px START
+  · census /atlas-open @339px OK 0px
+  · census /atlas-open @340px START
+  · census /atlas-open @340px OK 0px
+  · census /atlas-open @341px START
+  · census /atlas-open @341px OK 0px
+  · census /atlas-open @360px START
+  · census /atlas-open @360px OK 0px
+  · census /atlas-open @379px START
+  · census /atlas-open @379px OK 0px
+  · census /atlas-open @380px START
+  · census /atlas-open @380px OK 0px
+  · census /atlas-open @381px START
+  · census /atlas-open @381px OK 0px
+  · census /atlas-open @429px START
+  · census /atlas-open @429px OK 0px
+  · census /atlas-open @430px START
+  · census /atlas-open @430px OK 0px
+  · census /atlas-open @431px START
+  · census /atlas-open @431px OK 0px
+  · census /atlas-open @449px START
+  · census /atlas-open @449px OK 0px
+  · census /atlas-open @450px START
+  · census /atlas-open @450px OK 0px
+  · census /atlas-open @451px START
+  · census /atlas-open @451px OK 0px
+  · census /atlas-open @479px START
+  · census /atlas-open @479px OK 0px
+  · census /atlas-open @480px START
+  · census /atlas-open @480px OK 0px
+  · census /atlas-open @481px START
+  · census /atlas-open @481px OK 0px
+  · census /atlas-open @519px START
+  · census /atlas-open @519px OK 0px
+  · census /atlas-open @520px START
+  · census /atlas-open @520px OK 0px
+  · census /atlas-open @521px START
+  · census /atlas-open @521px OK 0px
+  · census /atlas-open @599px START
+  · census /atlas-open @599px OK 0px
+  · census /atlas-open @600px START
+  · census /atlas-open @600px OK 0px
+  · census /atlas-open @601px START
+  · census /atlas-open @601px OK 0px
+  · census /atlas-open @699px START
+  · census /atlas-open @699px OK 0px
+  · census /atlas-open @700px START
+  · census /atlas-open @700px OK 0px
+  · census /atlas-open @701px START
+  · census /atlas-open @701px OK 0px
+  · census /atlas-open @702px START
+  · census /atlas-open @702px OK 0px
+  · census /atlas-open @759px START
+  · census /atlas-open @759px OK 0px
+  · census /atlas-open @760px START
+  · census /atlas-open @760px OK 0px
+  · census /atlas-open @761px START
+  · census /atlas-open @761px OK 0px
+  · census /atlas-open @768px START
+  · census /atlas-open @768px OK 0px
+  · census /atlas-open @799px START
+  · census /atlas-open @799px OK 0px
+  · census /atlas-open @800px START
+  · census /atlas-open @800px OK 0px
+  · census /atlas-open @801px START
+  · census /atlas-open @801px OK 0px
+  · census /atlas-open @838px START
+  · census /atlas-open @838px OK 0px
+  · census /atlas-open @839px START
+  · census /atlas-open @839px OK 0px
+  · census /atlas-open @840px START
+  · census /atlas-open @840px OK 0px
+  · census /atlas-open @899px START
+  · census /atlas-open @899px OK 0px
+  · census /atlas-open @900px START
+  · census /atlas-open @900px OK 0px
+  · census /atlas-open @901px START
+  · census /atlas-open @901px OK 0px
+  · census /atlas-open @999px START
+  · census /atlas-open @999px OK 0px
+  · census /atlas-open @1000px START
+  · census /atlas-open @1000px OK 0px
+  · census /atlas-open @1001px START
+  · census /atlas-open @1001px OK 0px
+  · census /atlas-open @1024px START
+  · census /atlas-open @1024px OK 0px
+  · census /atlas-open @1099px START
+  · census /atlas-open @1099px OK 0px
+  · census /atlas-open @1100px START
+  · census /atlas-open @1100px OK 0px
+  · census /atlas-open @1101px START
+  · census /atlas-open @1101px OK 0px
+  · census /atlas-open @1198px START
+  · census /atlas-open @1198px OK 0px
+  · census /atlas-open @1199px START
+  · census /atlas-open @1199px OK 0px
+  · census /atlas-open @1200px START
+  · census /atlas-open @1200px OK 0px
+  · census /atlas-open @1201px START
+  · census /atlas-open @1201px OK 0px
+  · census /atlas-open @1440px START
+  · census /atlas-open @1440px OK 0px
+  · census /atlas-open @1920px START
+  · census /atlas-open @1920px OK 0px
+  · /atlas-open done
+  · census /research @339px START
+  · census /research @339px OK 37px
+  · census /research @340px START
+  · census /research @340px OK 37px
+  · census /research @341px START
+  · census /research @341px OK 37px
+  · census /research @360px START
+  · census /research @360px OK 37px
+  · census /research @379px START
+  · census /research @379px OK 37px
+  · census /research @380px START
+  · census /research @380px OK 37px
+  · census /research @381px START
+  · census /research @381px OK 37px
+  · census /research @429px START
+  · census /research @429px OK 37px
+  · census /research @430px START
+  · census /research @430px OK 37px
+  · census /research @431px START
+  · census /research @431px OK 37px
+  · census /research @449px START
+  · census /research @449px OK 37px
+  · census /research @450px START
+  · census /research @450px OK 37px
+  · census /research @451px START
+  · census /research @451px OK 37px
+  · census /research @479px START
+  · census /research @479px OK 37px
+  · census /research @480px START
+  · census /research @480px OK 37px
+  · census /research @481px START
+  · census /research @481px OK 37px
+  · census /research @519px START
+  · census /research @519px OK 37px
+  · census /research @520px START
+  · census /research @520px OK 37px
+  · census /research @521px START
+  · census /research @521px OK 37px
+  · census /research @599px START
+  · census /research @599px OK 37px
+  · census /research @600px START
+  · census /research @600px OK 37px
+  · census /research @601px START
+  · census /research @601px OK 37px
+  · census /research @699px START
+  · census /research @699px OK 37px
+  · census /research @700px START
+  · census /research @700px OK 37px
+  · census /research @701px START
+  · census /research @701px OK 37px
+  · census /research @702px START
+  · census /research @702px OK 37px
+  · census /research @759px START
+  · census /research @759px OK 37px
+  · census /research @760px START
+  · census /research @760px OK 37px
+  · census /research @761px START
+  · census /research @761px OK 37px
+  · census /research @768px START
+  · census /research @768px OK 37px
+  · census /research @799px START
+  · census /research @799px OK 37px
+  · census /research @800px START
+  · census /research @800px OK 37px
+  · census /research @801px START
+  · census /research @801px OK 37px
+  · census /research @838px START
+  · census /research @838px OK 37px
+  · census /research @839px START
+  · census /research @839px OK 37px
+  · census /research @840px START
+  · census /research @840px OK 37px
+  · census /research @899px START
+  · census /research @899px OK 37px
+  · census /research @900px START
+  · census /research @900px OK 37px
+  · census /research @901px START
+  · census /research @901px OK 37px
+  · census /research @999px START
+  · census /research @999px OK 37px
+  · census /research @1000px START
+  · census /research @1000px OK 37px
+  · census /research @1001px START
+  · census /research @1001px OK 37px
+  · census /research @1024px START
+  · census /research @1024px OK 37px
+  · census /research @1099px START
+  · census /research @1099px OK 37px
+  · census /research @1100px START
+  · census /research @1100px OK 37px
+  · census /research @1101px START
+  · census /research @1101px OK 37px
+  · census /research @1198px START
+  · census /research @1198px OK 37px
+  · census /research @1199px START
+  · census /research @1199px OK 37px
+  · census /research @1200px START
+  · census /research @1200px OK 37px
+  · census /research @1201px START
+  · census /research @1201px OK 37px
+  · census /research @1440px START
+  · census /research @1440px OK 37px
+  · census /research @1920px START
+  · census /research @1920px OK 37px
+  · /research done
+
+· the census measured 208 page(s) and compared them with the receipt
+  · the receipt describes the page: every measurement of top chrome agrees with it
+
