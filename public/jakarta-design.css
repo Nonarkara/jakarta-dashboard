@@ -996,3 +996,32 @@ body:has(#atlas-lens-evidence[open]) .preparedness-selection { display:none; }
 /* Full regional reference is reachable in Controls at every viewport. */
 .regional-times-list { display:grid; gap:4px; padding-block:4px; }
 .regional-times-list .tz { display:grid; grid-template-columns:1fr auto auto; gap:8px; font-variant-numeric:tabular-nums; }
+
+/* Modular map workspace: one compact source instrument in the existing header. */
+body[data-surface="jakarta-dashboard"] .masthead .source-status { position:relative; flex:none; border:0; margin:0; background:transparent; }
+body[data-surface="jakarta-dashboard"] .masthead .source-status > summary { min-height:24px; padding:2px 4px; gap:4px; white-space:nowrap; line-height:19px; }
+body[data-surface="jakarta-dashboard"] .masthead .source-status-more { display:none; }
+body[data-surface="jakarta-dashboard"] .source-status-popover { box-sizing:border-box; position:fixed; top:var(--source-popup-top,40px); left:var(--source-popup-left,8px); right:auto; z-index:90; width:min(560px,calc(100vw - 16px)); max-height:60svh; overflow:auto; padding:8px; background:var(--bg); border:1px solid var(--line); }
+body[data-surface="jakarta-dashboard"] .source-status:not([open]) .source-status-popover { display:none; }
+body[data-surface="jakarta-dashboard"] .source-status-toolbar { display:flex; align-items:baseline; flex-wrap:wrap; gap:8px; }
+body[data-surface="jakarta-dashboard"] #source-status-overview { flex:1; min-width:12ch; margin:0; max-width:65ch; }
+body[data-surface="jakarta-dashboard"] .source-status-toolbar #refresh { min-height:32px; padding:4px 8px; line-height:1.4; }
+body[data-surface="jakarta-dashboard"] .source-status-rows { padding:8px 0 0; }
+body[data-surface="jakarta-dashboard"] .source-status-row { max-width:65ch; }
+@media(max-width:1000px) {
+ body[data-surface="jakarta-dashboard"] .masthead { grid-template-columns:auto auto minmax(0,1fr); }
+ body[data-surface="jakarta-dashboard"] .city-preferences { justify-content:flex-end; flex-wrap:wrap; gap:4px; max-width:100%; }
+ body[data-surface="jakarta-dashboard"] .city-navigation { justify-self:start; }
+ body[data-surface="jakarta-dashboard"] .masthead-clock .tz-city { display:none; }
+ body[data-surface="jakarta-dashboard"] .source-status-popover { position:fixed; }
+}
+@media(max-width:600px) {
+ body[data-surface="jakarta-dashboard"] .language-toggle,
+ body[data-surface="jakarta-dashboard"] .city-controls > summary,
+ body[data-surface="jakarta-dashboard"] .city-navigation > summary { height:auto; min-height:24px; padding:2px 4px; }
+}
+
+body[data-surface="jakarta-dashboard"] .masthead #source-status-line { display:inline-block; min-inline-size:8ch; }
+
+body[data-surface="jakarta-dashboard"] .city-preferences { flex-wrap:wrap; justify-content:flex-end; }
+body[data-surface="jakarta-dashboard"] .masthead-clock { flex-wrap:wrap; min-width:0; flex-shrink:1; }

@@ -1,0 +1,197 @@
+
+> jakarta-dashboard@1.0.0 typecheck
+> tsc --noEmit
+
+
+> jakarta-dashboard@1.0.0 verify
+> node scripts/verify-local.mjs
+
+  ✓ package.json parses
+  ✓ wrangler.toml parses
+  ✓ tsconfig.json parses
+  ✓ public/index.html present + has expected markers
+  ✓ public/jakarta-areas.json parses + 12 areas
+  ✓ public/style.css parses + has root tokens
+  ✓ public/app.js parses as JS (basic syntax)
+  ✓ public/atlas-layout.js is loaded before the deferred client
+  ✓ building heights are real metres (no multiplier)
+  ✓ city layers wait on a style promise armed at map construction
+  ✓ landmarks use real OSM footprints with a cited height
+  ✓ index.html does not preload whole PMTiles archives
+  ✓ src/index.ts parses + has key handlers
+
+13/13 passed
+
+> jakarta-dashboard@1.0.0 test
+> node scripts/test-release-contract.mjs && node scripts/test-client-contract.mjs && node scripts/test-dashboard-boot.mjs && node scripts/test-theme-contract.mjs && node scripts/test-environment-contract.mjs && node scripts/test-i18n-contract.mjs && node scripts/test-browser-forecast.mjs && node scripts/test-jakarta-contract.mjs && node scripts/test-localized-design.mjs && node scripts/test-popup-contract.mjs && node scripts/test-building-filter.mjs && node scripts/test-official-data.mjs && node scripts/test-flood-network.mjs && node scripts/test-insight-views.mjs && node scripts/test-insight-runtime.mjs && node scripts/test-research-paper.mjs && node scripts/test-water-traffic.mjs && node scripts/test-water-recovery.mjs && node scripts/test-lens-evidence.mjs && node scripts/test-panel-readiness.mjs && node scripts/mutate-panel-readiness.mjs && node scripts/test-mutation-fixture.mjs && node scripts/mutate-lens-evidence.mjs && node scripts/test-refusal.mjs && node scripts/mutate-refusal.mjs && node scripts/test-source-status.mjs && node scripts/test-chrome-verdict.mjs && node scripts/test-chrome-census.mjs && node scripts/test-ciliwung-route.mjs && node scripts/test-air-timeline.mjs && node scripts/test-fires-air-forecast.mjs && node scripts/test-source-catalog.mjs && node scripts/test-release-snapshot.mjs && node scripts/test-place-context.mjs && node scripts/test-city-tools.mjs && node scripts/test-official-networks.mjs && node scripts/test-official-drainage.mjs && node scripts/test-phone-menu-overflow.mjs && node scripts/test-coastal.mjs && node scripts/test-worldcover-reference.mjs && node scripts/test-water-context.mjs && node scripts/test-wind-field.mjs && node scripts/test-green-space.mjs && node scripts/test-synoptic.mjs && node scripts/test-haze-transport.mjs && node scripts/test-flow-canvas.mjs && node scripts/test-research-page.mjs && node scripts/test-rate-limit.mjs && node scripts/test-worker-bundle.mjs && node scripts/test-temporal-admission.mjs && node scripts/test-spatial-reasons.mjs && node scripts/mutate-spatial-reasons.mjs && npm run audit:design && node scripts/mutate-anti-slop.mjs && node scripts/test-open-session.mjs && node scripts/test-haze-evidence.mjs && node scripts/test-polder-budget.mjs && node scripts/test-polder-preparedness.mjs && node scripts/test-polder-preparedness-runtime.mjs
+
+PASS release contract: input validation, bbox, air-quality truth, nearest-sample honesty, retired feeds, HEAD, Range, health, headers, release identity and dedication
+PASS client contract: map bootstrap, grouped layers, rail, provenance text, zero values, escaping, WebGL/CDN fallback, feature selection, bridge and reduced motion
+PASS dashboard boot: the client runs top to bottom, and an undefined name is refused
+dark body 15.83 secondary 10.21
+light body 11.81 secondary 7.21
+contrast body 18.43 secondary 15.49
+PASS theme contract: all text/control contrasts, three theme choices, preference persistence, invalid preference, inaccessible storage, system high contrast
+PASS environment contract: provider dates, product matrices, fixed radar host/paths, stale/future frames, UTC, complete forecast sums, zero and missing data
+PASS bilingual contract: complete static catalog, default Indonesian, reversible English, dynamic outage updates and accessible names
+PASS native research: bilingual costs/documents/status/types, unchanged unknown values, visible switch, accessible attributes and state preservation
+PASS browser forecast: zero, complete hours, stale time, units, coordinates and count
+PASS Jakarta: forecast identity/age/null, CAP cancellation/expiry/coordinates, quake coordinates, upstream failures, empty reports, transit geometry and selected civic fields
+PASS local identity: three-theme contrast including green fields, licensed font, shared assets, rain semantics, CRM consent-to-load/close/focus and truthful viewer state
+PASS popup contract: explicit opening, closing/focus, preserved sections and responsive panel docking
+PASS building filters: bounds, unknowns, height provenance, grouped tags and landmark-part semantics
+PASS cold-load bridge: queued camera commands retain final user intent
+PASS official data: proposal identity/units/coordinate quarantine, annual-period totals, geometry/field allowlist, historical facts and future targets
+PASS civic loading: search during pending fetch, request deduplication, failed response and successful empty reference
+PASS live-overlay bridge: imported MultiPolygon reaches source/camera; out-of-region multipart geometry rejected
+PASS flood network overlays: allowlists, DKI bounds, SIAGA band parsing and closed geometry
+PASS risk reference and population: class domain, closure, joinable codes and kota-consistent WNI totals
+PASS flood desk summary: reconciled counts, upstream listing, exposure join and explicit access states
+PASS flood desk client: dialog, overlay kinds, coupling script and evidence export wired
+PASS dated BPBD observations: source time, twelve stations, seven hourly levels, signed changes and separate datums
+PASS insight views: derived provenance, exposure counted once and joined, green area with every unplaced row counted, coverage never reporting absence as zero, confidence vocabulary, and four bilingual lenses that clean up after themselves
+PASS insight runtime: four lenses build their real layers, paint from theme tokens, state their source and date, and clear themselves on exit
+PASS water scenario: exact station endpoints, variable travel time, independent gauge datum, map layers, limitations and cleanup
+PASS map sizing: initial canvas setup, live-reading stability and responsive resize
+PASS regional haze: meaningful regional zoom, source limits and direct-exit cleanup
+PASS air evidence refresh: controller delegation preserves the model timeline
+PASS research paper: paper/legal/about panes bilingual, figures computed from shipped data, builder identity with non-affiliation, house presentation rules kept
+PASS water/traffic: source coverage, coordinates, future gauge rejection, predicted-flow tiers, volume arithmetic, cleanup order, camera access boundaries and fixed JAXA proxy
+PASS water recovery: independent mount, scoped/single retry, preserved edits, late-layer order, no camera reset, exit guard, malformed input and Bahasa
+PASS lens evidence: the water lens opens its own evidence, and the legend is the count’s own breakdown — adjacent, labelled, and never an empty line
+PASS panel readiness: unchanged pending sources, terminal timeout, recursive lazy controls, equal-length changes and missing panel
+KILL start quiet time before pending work ends
+KILL ignore plain loading text
+KILL ignore trailing loading text
+KILL ignore unchanged in-flight requests
+KILL expand only the original disclosure
+KILL compare only text length
+PASS panel readiness mutants: 6/6 killed, no missing anchors
+PASS mutation execution: normal assertion exit, clean exit, actual buffer failure, signals and timeout classification
+PASS clean reduced fixture: scripts/test-lens-evidence.mjs
+KILL  the water lens stops opening its own evidence (the shipped defect)
+KILL  the legend goes back to its shipped place, below four unrelated sections
+KILL  the legend holds a line of space while the count has not arrived
+KILL  the legend fills but never appears
+KILL  the panel control floor goes back to 44px (the shipped defect)
+KILL  the traffic lens leaves the sweep (the shipped blindness)
+KILL  the rail rule reaches the panel again (the shipped leak)
+KILL  the audit stops opening the disclosures, so the controls stay unseen
+
+8/8 killed
+PASS refusal: one reader, the retry window kept, the water and air lenses state a refusal instead of a claim, and every client goes through the shared rule
+PASS clean reduced fixture: scripts/test-refusal.mjs
+KILL  the shared reader stops throwing on a refusal (the shipped defect)
+KILL  the retry window is dropped from the header
+KILL  a refusal stops being recognisable
+KILL  the copy stops naming the window
+KILL  the copy stops naming the cause
+KILL  the water lens falls through to the static reference (the shipped false claim)
+KILL  the air lens reports a refusal as an invalid model
+KILL  the atlas client stops using the shared reader
+KILL  a client stops importing the shared rule
+KILL  pressure drops the refused request state
+KILL  wind leaves an ordinary failed request loading
+
+11/11 killed
+source status: one line per source, one rule for both pages.
+PASS availability vs zero, mixed sample ages, upcoming slots, stable announcements and winter/summer zones
+PASS chrome verdict: exact positive delta, healthy control, missing/error/timeout outcomes and unrelated mismatches
+PASS actual chrome falsifier: positive control, navigation failure, unrelated mismatch, surviving band and cleanup
+PASS ciliwung route: published anchors, admission gates recomputed, connector-free geometry, raw evidence retained
+PASS air timeline: UTC/grid/unit/timestamp-join validation, outage and null honesty, piecewise wind-trajectory transport math
+PASS fractional transport and time-anchored wind gaps
+PASS NASA fires and air forecast: bounded CSV/schema, dates, unknown power, 24h observations, ordered bounded model hours
+source catalog: JSON/CSV parity, statuses, dates and asset hashes verified
+PASS release snapshot: unchanged bytes pass; late mutation and deletion fail
+Place context: distance, real reference joins, boundary validation, partial failure, retry and abort passed.
+PASS 3D place handoff: actual tower footprint replaces the ground-plane click.
+PASS city tools: bilingual local search, exact dedup, CRS/coordinate gates, viewport export, source states, zero/null and immutable source geometry.
+PASS official drainage: source count reconciliation, geometry/reference limits, actual map layers, separate OSM, Range route and complete exit cleanup.
+PASS official drainage: every source page/digest, count reconciliation, honest metadata, archive hash/header, polder invalid-shape flags
+PASS phone menu drawer: trailing-edge anchor and viewport-capped width keep the 390px drawer inside the viewport
+PASS BMKG coastal forecast: identity, bounded dates/rows/bytes, strict numbers, zero/negative tides, sorted deduplication, unknown datum, cache revalidation and explicit outages
+PASS WorldCover native class reconciliation, provenance, bounds, SHA256 and every nearest-neighbour display pixel
+PASS water context: actual source contracts, explicit datum/history, cell shares, opt-in image bounds, nearest categories, independent failures, retry and late-response guard
+PASS wind field: bearing conversion, bounded interpolation, the no-concentration law, lifecycle and endpoint validation
+PASS wind arrowheads, open panel and AOD pixel note
+PASS air lens slim panel, folded CAMS, phone chip, ID/EN AOD note
+PASS wind compass: vector mean, calm, compass points, km/h, valid time
+PASS wind controller refuses a stale or future check without drawing
+PASS green space: NDVI tile/classification, the never-summed law, own dates, baked-overlay pattern and zoom scale
+test-synoptic: ok
+test-haze-transport: ok
+PASS flow canvas: exact uniform reads, no wind past the grid reach, 36 km/h easterly moves 36 km west, cos(lat) longitude scaling
+test-research-page: ok
+  · killed: the limit stops limiting
+  · killed: the native binding is ignored
+  · killed: a fault in the limiter blocks the data
+  · killed: the counter is never incremented
+PASS rate limit: native binding preferred, in-isolate fallback, a limiter fault never blocks the publisher, and every mutant is killed
+  · the shipped bundler bundles the Worker, refuses a missing dependency by name, and resolves nested imports
+  · killed: a missing dependency is ignored
+  · killed: a bare specifier in an inlined module is ignored
+  · killed: a nested relative import is dropped
+PASS worker bundle: the import graph is resolved by the bundler, a missing dependency is refused by name, and every mutant is killed
+PASS temporal admission: exact-hour anchor, no neighbour borrow, one shared rule across every live lens
+PASS stale reason: a reason with nothing under it is named
+PASS stale reason: a reason with a decision under it is kept
+PASS stale reason: a narrowed sweep judges nothing and says so
+PASS stale reason: a sweep missing a recorded width is not complete
+PASS stale reason: the kind is part of the decision
+PASS stale reason: overflow is not a decision
+PASS stale reason: the decision key is kind and selector
+PASS stale reason: the gate calls the rule
+
+PASS spatial reasons: a reason with nothing under it is named, and a narrowed sweep judges nothing
+PASS clean reduced fixture: scripts/test-spatial-reasons.mjs
+KILL  the rule never finds a stale reason
+KILL  the rule judges a narrowed sweep
+KILL  the rule compares the selector but not the kind
+KILL  the gate stops consulting the rule
+
+4/4 killed
+
+> jakarta-dashboard@1.0.0 audit:design
+> node scripts/test-anti-slop-design.mjs
+
+PASS anti-slop contracts, preserved visuals, independent loading, truthful unknowns, motion and language continuity
+PASS no ancestor of the fixed lens panel establishes a containing block
+PASS evidence rail states an order (14 / 13 / 12 / 11), labels below their values
+PASS research index reaches all 8 sections, bilingual
+PASS the atlas mounts a research door beside the evidence drawer, in both languages
+PASS a review verdict is answered: 10 findings dispositioned, none left unanswered, and its numbers still match the source
+PASS clean reduced fixture: scripts/test-anti-slop-design.mjs
+KILL  research index drops a section again (the shipped defect)
+KILL  contents nav links to a section that does not exist
+KILL  a contents entry loses its English half
+KILL  the atlas drops the research door entirely
+KILL  the research door is buried inside the collapsed drawer
+KILL  the research door points somewhere else
+KILL  the research door loses its Indonesian name
+KILL  the page adopts a second name for the research page
+KILL  the review disposition receipt is deleted
+KILL  a finding is left unanswered
+KILL  the lede goes back to a measure that is 80 characters wide
+
+11/11 killed
+PASS open-session expiry, visibility refresh, abort/late replies, cleanup and live gauge ageing
+PASS real FIRMS FeatureCollection/fetchedAt and24h detection age
+PASS haze evidence: time/confidence bins, zero vs outage, bounds, numeric receptors, exact expiry, fixed raster allowlist and signature/byte limits
+PASS polder budget: raw hashes, exclusions, native cells, exact rain intervals, actual-cell distance, unknowns and water conservation
+PASS preparedness: source hashes, duplicate reconciliation, all boundary lists, unknowns, malformed assets and spreadsheet-injection protection
+PASS actual preparedness controller: paging/search, precise map/readout, reference export scope, cache, retry, boundary cleanup and late response disposal
+
+ ⛅️ wrangler 4.157.0
+────────────────────
+
+Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
+✨ Read 343 files from the assets directory /private/tmp/jakarta-pr-review.Xia9f1/public
+Total Upload: 240.75 KiB / gzip: 63.10 KiB
+Your Worker has access to the following bindings:
+Binding                                   Resource        
+env.JAKARTA_TILES (jakarta-tiles)         R2 Bucket       
+env.RATE_LIMITER (600 requests/60s)       Rate Limit      
+env.ASSETS                                Assets          
+
+--dry-run: exiting now.

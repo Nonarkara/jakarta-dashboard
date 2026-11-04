@@ -99,7 +99,7 @@ const ALERTS_FRESH_MS = 12 * 3600000;
 function load(payloads, refusals = new Map()) {
   const elements = new Map();
   const $ = (id) => {
-    if (!elements.has(id)) elements.set(id, {textContent: '', innerHTML: '', classList: {toggle() {}}, dataset: {}});
+    if (!elements.has(id)) elements.set(id, {textContent: '', innerHTML: '', classList: {toggle() {}}, dataset: {}, querySelector:()=>({setAttribute(){}})});
     return elements.get(id);
   };
   const context = {
@@ -192,7 +192,7 @@ const good = {
 {
   const {context, $} = load({...good, air: null}, new Map([['/api/atlas/air-quality', 47]]));
   context.renderSourceStatus();
-  const line = $('source-status-line').textContent;
+  const line = $('source-status-overview').textContent;
   assert.match(line, /Data 4\/5/, 'the summary counts the sources that answered');
   assert.match(line, /1 refused/, 'the summary names the refusal');
   assert.match(line, /checked/, 'the summary says when the check happened');
@@ -245,9 +245,9 @@ assert.ok(between.age<0,'a future forecast has a lead time, not an age of zero')
 {
  const {context,$}=load(good);let writes=0;const live=$('source-status-live');let value='';
  Object.defineProperty(live,'textContent',{get:()=>value,set:v=>{writes++;value=v}});
- context.renderSourceStatus();const checked=$('source-status-line').textContent;
+ context.renderSourceStatus();const checked=$('source-status-overview').textContent;
  context.renderSourceStatus();context.renderSourceStatus();
- assert.equal(writes,1,'unchanged assessments do not mutate the live region');assert.equal($('source-status-line').textContent,checked,'a render is not a new request');
+ assert.equal(writes,1,'unchanged assessments do not mutate the live region');assert.equal($('source-status-overview').textContent,checked,'a render is not a new request');
  context.airData=null;context.renderSourceStatus();assert.equal(writes,2,'a meaningful availability change is announced');
 }
 {
@@ -262,3 +262,5 @@ assert.doesNotMatch(clockBlock,/renderSourceStatus|source-status/,'clock ticks c
 assert.match(js,/setInterval\(refreshTemporalStatus,60000\)/,'source ageing has its own minute assessment');
 assert.match(html,/Device clock|Jam perangkat|jam perangkat/,'clock provenance is explicit');
 console.log('PASS availability vs zero, mixed sample ages, upcoming slots, stable announcements and winter/summer zones');
+
+{const {context,$}=load({});context.sourceChecking=true;context.sourceCheckedAt=null;context.renderSourceStatus();assert.match($('source-status-line').textContent,/…/);assert.ok(context.sourceStatusRows(NOW).every(r=>r.state==='loading'),'pending requests are not failed sources');}

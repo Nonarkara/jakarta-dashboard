@@ -10,7 +10,7 @@ real metres, and says where that height came from:
               per-pixel building_height inside this footprint
   ghsl      = GHSL built-up height (EU JRC, 2018): the average building
               height of the footprint's 100 m cell (where Google has none)
-  estimated = class default (no satellite signal)
+  estimated = unknown height, flat footprint (legacy tier name)
 Satellite heights are capped at max(6 m, 4 × sqrt(footprint area)) so a
 3×3 m sliver can't stand 30 m tall.
 No multiplier. A 7 m kampung house is drawn 7 m tall.
@@ -55,17 +55,6 @@ GHSL_TILE = "GHS_BUILT_H_ANBH_E2018_GLOBE_R2023A_4326_3ss_V1_0_R10_C29"  # 100�
 GHSL_URL = ("https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_BUILT_H_GLOBE_R2023A/"
             f"GHS_BUILT_H_ANBH_E2018_GLOBE_R2023A_4326_3ss/V1-0/tiles/{GHSL_TILE}.zip")
 
-# Heights for footprints no source measured. Jakarta's fabric is mostly
-# one- and two-storey kampung houses and ruko shophouses.
-CLASS_HEIGHT = {
-    "apartments": 30, "hotel": 30, "office": 30, "commercial": 15, "retail": 10,
-    "hospital": 20, "university": 18, "college": 18, "school": 12,
-    "industrial": 10, "warehouse": 10, "house": 10, "residential": 10,
-    "detached": 8, "terrace": 12, "religious": 15, "temple": 15, "pagoda": 18,
-    "church": 20, "cathedral": 36, "garage": 4, "shed": 4, "roof": 5,
-    "parking": 12, "stadium": 25, "train_station": 15, "transportation": 12,
-}
-DEFAULT_HEIGHT = 7.0
 SRC_CODE = {"OpenStreetMap": "osm", "Microsoft ML Buildings": "ms", "Google Open Buildings": "google"}
 
 
@@ -257,7 +246,6 @@ def bake():
     meas = df.height.values.astype(float)
     flo = df.num_floors.values.astype(float) * 3.3
     cap = np.maximum(6.0, 4.0 * np.sqrt(area))
-    cls_default = np.array([CLASS_HEIGHT.get(c or "", DEFAULT_HEIGHT) for c in df["class"].values], float)
     h = np.where((meas >= 1) & (meas <= 500), meas, np.nan)
     hs = np.where(~np.isnan(h), "measured", "").astype(object)  # object: fixed-width <U8 truncated "estimated"
     use = np.isnan(h) & (flo >= 3) & (flo <= 400)
@@ -267,7 +255,7 @@ def bake():
     use = np.isnan(h) & (sat >= 3)
     h[use], hs[use] = np.minimum(np.minimum(sat[use], 60.0), cap[use]), "ghsl"
     use = np.isnan(h)
-    h[use], hs[use] = np.minimum(cls_default[use], cap[use]), "estimated"
+    h[use], hs[use] = 0.0, "estimated"
     h = np.round(h, 1)
     base = df.base.values.astype(float)
     base = np.where((base > 0) & (base < h), np.round(base, 1), 0)

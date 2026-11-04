@@ -37,7 +37,7 @@ HEIGHT_SOURCES = {
     'google': 'Satellite-derived height for this individual footprint, 2023.',
     'floors': 'Floor count multiplied by 3.3 m; the count is observed, the per-floor height is assumed.',
     'ghsl': 'Built-up height averaged over the surrounding 100 m cell, 2018; not this building.',
-    'estimated': 'A default for this building type; no measurement and no satellite signal.',
+    'estimated': 'Unknown height, rendered flat. Legacy archive records retain a class default, not a measurement or satellite signal.',
 }
 RISK_CLASSES = ['Berat', 'Sedang', 'Ringan']
 INPUTS = ('risk.geojson', 'green.geojson', 'awlr.geojson', 'arr.geojson',

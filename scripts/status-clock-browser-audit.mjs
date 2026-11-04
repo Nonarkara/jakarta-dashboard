@@ -18,10 +18,10 @@ export async function auditStatusClock(browser,base){
  });
  try{
   await page.goto(base+'/?lang=en',{waitUntil:'domcontentloaded'});
-  await page.waitForFunction(()=>document.querySelector('#source-status-line')?.textContent.includes('Data 4/5')&&!document.querySelector('#source-status-line')?.textContent.includes('refreshing'));
+  await page.waitForFunction(()=>document.querySelector('#source-status-overview')?.textContent.includes('Data 4/5')&&!document.querySelector('#source-status-overview')?.textContent.includes('refreshing'));
   await page.locator('#source-status > summary').click();
   assert.match(await page.locator('[data-source="weather"]').innerText(),/upcoming forecast/);
-  const checked=await page.locator('#source-status-line').innerText();
+  const checked=await page.locator('#source-status-overview').textContent();
   await page.evaluate(()=>{window.clockMutations={live:0,rows:0};for(const [id,key] of [['source-status-live','live'],['source-status-rows','rows']])new MutationObserver(list=>window.clockMutations[key]+=list.length).observe(document.getElementById(id),{childList:true,subtree:true,characterData:true});});
   const requests=apiCalls;await page.clock.runFor(5000);
   assert.deepEqual(await page.evaluate(()=>window.clockMutations),{live:0,rows:0},'clock ticks do not rewrite status or rows');
@@ -30,11 +30,18 @@ export async function auditStatusClock(browser,base){
   assert.match(await page.locator('[data-source="air"]').innerText(),/partly stale/);
   assert.match(await page.locator('#air-summary').textContent(),/stale/,'panel ages with the source verdict');
   assert.doesNotMatch(await page.locator('#alerts').textContent(),/Expires shortly/,'expired warning retires without another fetch');
-  assert.equal(await page.locator('#source-status-line').innerText().then(s=>s.split('checked')[1]),checked.split('checked')[1],'assessment is not a new fetch timestamp');
+  assert.equal(await page.locator('#source-status-overview').textContent().then(s=>s.split('checked')[1]),checked.split('checked')[1],'assessment is not a new fetch timestamp');
   assert.equal(apiCalls,requests,'minute ageing reuses actual evidence');
   mode='empty';await page.locator('#refresh').evaluate(b=>b.click());
-  await page.waitForFunction(()=>document.querySelector('#source-status-line')?.textContent.includes('Data 0/5')&&!document.querySelector('#source-status-line')?.textContent.includes('refreshing'));
+  await page.waitForFunction(()=>document.querySelector('#source-status-overview')?.textContent.includes('Data 0/5')&&!document.querySelector('#source-status-overview')?.textContent.includes('refreshing'));
   assert.doesNotMatch(await page.locator('#source-status-rows').innerText(),/NaN|undefined/);
+  const beforeHide=apiCalls;
+  await page.evaluate(()=>{window.auditHidden=true;Object.defineProperty(document,'hidden',{configurable:true,get:()=>window.auditHidden});document.dispatchEvent(new Event('visibilitychange'));});
+  await page.clock.runFor(360000);
+  assert.equal(apiCalls,beforeHide,'hidden tabs do not poll');
+  await page.evaluate(()=>{window.auditHidden=false;document.dispatchEvent(new Event('visibilitychange'));});
+  await page.waitForFunction(()=>!document.getElementById('source-status-overview').textContent.includes('refreshing'));
+  assert.ok(apiCalls>=beforeHide+5,'returning after six minutes refreshes all five feeds immediately');
   // All zones remain reachable on a phone; the header still shows only Jakarta.
   await page.locator('.city-controls > summary').click();await page.locator('.regional-times > summary').click();
   assert.equal(await page.locator('.regional-times-list .tz').count(),6);

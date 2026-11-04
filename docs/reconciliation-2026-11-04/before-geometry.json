@@ -1,0 +1,389 @@
+[
+  {
+    "width": 390,
+    "height": 844,
+    "closed": {
+      "root": {
+        "pageWidth": 390,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 23
+        },
+        "source": {
+          "x": 0,
+          "y": 23,
+          "width": 390,
+          "height": 33
+        },
+        "summary": {
+          "x": 0,
+          "y": 23,
+          "width": 390,
+          "height": 32
+        },
+        "map": {
+          "x": 0,
+          "y": 74,
+          "width": 390,
+          "height": 768
+        },
+        "status": "Data 5/5 · checked 20:49 WIB",
+        "mastheads": 1
+      },
+      "frame": {
+        "canvas": true,
+        "styleLoaded": true,
+        "zoom": 15.2,
+        "renderedBuildings": 9452,
+        "dimensions": {
+          "width": 390,
+          "height": 768
+        }
+      }
+    },
+    "open": {
+      "root": {
+        "pageWidth": 390,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 23
+        },
+        "source": {
+          "x": 0,
+          "y": 23,
+          "width": 390,
+          "height": 230.875
+        },
+        "summary": {
+          "x": 0,
+          "y": 23,
+          "width": 390,
+          "height": 32
+        },
+        "map": {
+          "x": 0,
+          "y": 271.875,
+          "width": 390,
+          "height": 570.125
+        },
+        "status": "Data 5/5 · checked 20:49 WIB",
+        "mastheads": 1
+      },
+      "frame": {
+        "canvas": true,
+        "styleLoaded": true,
+        "zoom": 15.2,
+        "renderedBuildings": 7105,
+        "dimensions": {
+          "width": 390,
+          "height": 570
+        }
+      }
+    },
+    "enlarged": {
+      "root": {
+        "pageWidth": 664,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 34.40625
+        },
+        "source": {
+          "x": 0,
+          "y": 34.40625,
+          "width": 390,
+          "height": 658.71875
+        },
+        "summary": {
+          "x": 0,
+          "y": 34.40625,
+          "width": 390,
+          "height": 70.8125
+        },
+        "map": {
+          "x": 0,
+          "y": 711.125,
+          "width": 390,
+          "height": 130.875
+        },
+        "status": "Data 5/5 · checked 20:49 WIB",
+        "mastheads": 1
+      },
+      "frame": {
+        "canvas": true,
+        "styleLoaded": true,
+        "zoom": 15.2,
+        "renderedBuildings": 1125,
+        "dimensions": {
+          "width": 390,
+          "height": 131
+        }
+      }
+    },
+    "errors": [],
+    "blockedForeignScripts": []
+  },
+  {
+    "width": 1024,
+    "height": 900,
+    "closed": {
+      "root": {
+        "pageWidth": 1024,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 38
+        },
+        "source": {
+          "x": 0,
+          "y": 38,
+          "width": 1024,
+          "height": 25
+        },
+        "summary": {
+          "x": 0,
+          "y": 38,
+          "width": 1024,
+          "height": 24
+        },
+        "map": {
+          "x": 0,
+          "y": 81,
+          "width": 1024,
+          "height": 817
+        },
+        "status": "Data 5/5 · checked 20:49 WIB",
+        "mastheads": 1
+      },
+      "frame": {
+        "canvas": true,
+        "styleLoaded": true,
+        "zoom": 15.2,
+        "renderedBuildings": 33775,
+        "dimensions": {
+          "width": 1024,
+          "height": 817
+        }
+      }
+    },
+    "open": {
+      "root": {
+        "pageWidth": 1024,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 38
+        },
+        "source": {
+          "x": 0,
+          "y": 38,
+          "width": 1024,
+          "height": 135.21875
+        },
+        "summary": {
+          "x": 0,
+          "y": 38,
+          "width": 1024,
+          "height": 24
+        },
+        "map": {
+          "x": 0,
+          "y": 191.21875,
+          "width": 1024,
+          "height": 706.78125
+        },
+        "status": "Data 5/5 · checked 20:49 WIB",
+        "mastheads": 1
+      },
+      "frame": {
+        "canvas": true,
+        "styleLoaded": true,
+        "zoom": 15.2,
+        "renderedBuildings": 29066,
+        "dimensions": {
+          "width": 1024,
+          "height": 707
+        }
+      }
+    },
+    "enlarged": {
+      "root": {
+        "pageWidth": 1589,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 41.703125
+        },
+        "source": {
+          "x": 0,
+          "y": 41.703125,
+          "width": 1024,
+          "height": 250.921875
+        },
+        "summary": {
+          "x": 0,
+          "y": 41.703125,
+          "width": 1024,
+          "height": 35.703125
+        },
+        "map": {
+          "x": 0,
+          "y": 310.625,
+          "width": 1024,
+          "height": 587.375
+        },
+        "status": "Data 5/5 · checked 20:49 WIB",
+        "mastheads": 1
+      },
+      "frame": {
+        "canvas": true,
+        "styleLoaded": true,
+        "zoom": 15.2,
+        "renderedBuildings": 22412,
+        "dimensions": {
+          "width": 1024,
+          "height": 587
+        }
+      }
+    },
+    "errors": [],
+    "blockedForeignScripts": []
+  },
+  {
+    "width": 1440,
+    "height": 900,
+    "closed": {
+      "root": {
+        "pageWidth": 1440,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 38
+        },
+        "source": {
+          "x": 0,
+          "y": 38,
+          "width": 1440,
+          "height": 25
+        },
+        "summary": {
+          "x": 0,
+          "y": 38,
+          "width": 1440,
+          "height": 24
+        },
+        "map": {
+          "x": 220,
+          "y": 81,
+          "width": 950,
+          "height": 801.8125
+        },
+        "status": "Data 5/5 · checked 20:49 WIB",
+        "mastheads": 1
+      },
+      "frame": {
+        "canvas": true,
+        "styleLoaded": true,
+        "zoom": 15.2,
+        "renderedBuildings": 30120,
+        "dimensions": {
+          "width": 950,
+          "height": 802
+        }
+      }
+    },
+    "open": {
+      "root": {
+        "pageWidth": 1440,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 38
+        },
+        "source": {
+          "x": 0,
+          "y": 38,
+          "width": 1440,
+          "height": 135.21875
+        },
+        "summary": {
+          "x": 0,
+          "y": 38,
+          "width": 1440,
+          "height": 24
+        },
+        "map": {
+          "x": 220,
+          "y": 191.21875,
+          "width": 950,
+          "height": 691.59375
+        },
+        "status": "Data 5/5 · checked 20:49 WIB",
+        "mastheads": 1
+      },
+      "frame": {
+        "canvas": true,
+        "styleLoaded": true,
+        "zoom": 15.2,
+        "renderedBuildings": 26079,
+        "dimensions": {
+          "width": 950,
+          "height": 692
+        }
+      }
+    },
+    "enlarged": {
+      "root": {
+        "pageWidth": 1589,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 41.703125
+        },
+        "source": {
+          "x": 0,
+          "y": 41.703125,
+          "width": 1440,
+          "height": 221.21875
+        },
+        "summary": {
+          "x": 0,
+          "y": 41.703125,
+          "width": 1440,
+          "height": 35.703125
+        },
+        "map": {
+          "x": 220,
+          "y": 280.921875,
+          "width": 950,
+          "height": 550.265625
+        },
+        "status": "Data 5/5 · checked 20:49 WIB",
+        "mastheads": 1
+      },
+      "frame": {
+        "canvas": true,
+        "styleLoaded": true,
+        "zoom": 15.2,
+        "renderedBuildings": 18784,
+        "dimensions": {
+          "width": 950,
+          "height": 550
+        }
+      }
+    },
+    "errors": [],
+    "blockedForeignScripts": []
+  }
+]

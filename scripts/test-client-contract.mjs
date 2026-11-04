@@ -118,7 +118,37 @@ async function scenario(mode) {
     handler({ features: [{ id: 7, properties: { h: 10, hs: 'estimated' } }], lngLat: { lng: 106.83, lat: -6.18 } });
     assert.equal(map.states.at(-1).target.sourceLayer, 'buildings');
     assert.match(get('atlas-inspect-props').innerHTML, /unknown/);
-    assert.match(get('atlas-inspect-props').innerHTML, /no measurement/);
+    assert.match(get('atlas-inspect-props').innerHTML, /footprint only/);
+    assert.doesNotMatch(get('atlas-inspect-props').innerHTML, /10.0 m/);
+    for (const [props, expected] of [[{},0],[{h:10,hs:'estimated'},0],[{h:10},0],[{h:501,hs:'measured'},0],[{h:132,hs:'measured'},132],[{h:7.5,hs:'ghsl'},7.5]]) {
+      context.heightFixture=props;
+      assert.equal(vm.runInContext('supportedBuildingHeight(heightFixture)',context),expected);
+    }
+    assert.equal(map.getLayer('jkt-buildings').paint['fill-extrusion-height'].at(-1),0,'unsupported heights are flat in the actual layer');
+    function heightExpression(node,props){
+      if(!Array.isArray(node))return node;
+      const [op,...args]=node;
+      if(op==='get')return props[args[0]];
+      if(op==='literal')return args[0];
+      const v=args.map(n=>heightExpression(n,props));
+      if(op==='to-number'){const n=Number(v[0]);return Number.isFinite(n)?n:v[1];}
+      if(op==='coalesce')return v.find(x=>x!=null);
+      if(op==='in')return v[1].includes(v[0]);
+      if(op==='all')return v.every(Boolean);
+      if(op==='>=')return v[0]>=v[1];
+      if(op==='<=')return v[0]<=v[1];
+      if(op==='max')return Math.max(...v);
+      if(op==='case')return v[0]?v[1]:v[2];
+      throw Error('unhandled height expression '+op);
+    }
+    const landmarkPaint=map.getLayer('jkt-landmarks-3d').paint;
+    for(const props of [{},{base_height:20},{height:600,base_height:20},{height:'bad',base_height:20}]){
+      assert.equal(heightExpression(landmarkPaint['fill-extrusion-height'],props),0);
+      assert.equal(heightExpression(landmarkPaint['fill-extrusion-base'],props),0,'unknown/invalid height cannot float on a guessed base');
+    }
+    assert.equal(heightExpression(landmarkPaint['fill-extrusion-height'],{height:132}),132);
+    for(const [base,expected] of [[6,6],[-1,0],[132,0],[150,0]])assert.equal(heightExpression(landmarkPaint['fill-extrusion-base'],{height:132,base_height:base}),expected);
+    for(const [props,expected] of [[{},0],[{h:10,hs:'estimated'},0],[{h:10},0],[{h:501,hs:'measured'},0],[{h:132,hs:'measured'},132],[{h:7.5,hs:'ghsl'},7.5]])assert.equal(heightExpression(map.getLayer('jkt-buildings').paint['fill-extrusion-height'],props),expected);
     const ready = messages.find(m => m.event === 'ready');
     assert.ok(ready?.buildingsPresent);
     const visibility = map.getLayoutProperty('jkt-buildings', 'visibility');

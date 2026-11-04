@@ -1,0 +1,14 @@
+
+> jakarta-dashboard@1.0.0 audit:chrome:falsify
+> node scripts/chrome-census.mjs --falsify
+
+Falsifier scope: healthy and planted root at360,1024,1440; exact24px delta required.
+  · route site built at /Users/nonarkara/Projects/dashboards/Jakarta-dashboard/out/route-site-census-falsify
+  · routes: / -> index.html (dashboard), /atlas -> atlas.html, /research -> research.html
+  · breakpoint source: 3 stylesheet(s) + inline <style> from 3 pages
+  · falsifier copy at /Users/nonarkara/Projects/dashboards/Jakarta-dashboard/out/route-site-falsify (the atlas at the root and as a top-level page, so the first action exists and the root does not clip)
+  · 22.6 MB
+PASS planted band @360: 27 → 51px
+PASS planted band @1024: 38 → 62px
+PASS planted band @1440: 38 → 62px
+PASS3/3 healthy controls and3/3 exact planted deltas; no skipped measurements

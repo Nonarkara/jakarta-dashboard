@@ -16,6 +16,7 @@ function evaluate(node,p){
  const values=args.map(n=>evaluate(n,p));
  if(op==='coalesce')return values.find(v=>v!=null);
  if(op==='to-number'){const n=Number(values[0]);return Number.isFinite(n)?n:values[1];}
+ if(op==='case')return values[0]?values[1]:values[2];
  if(op==='all')return values.every(Boolean);
  if(op==='any')return values.some(Boolean);
  if(op==='in')return values[1].includes(values[0]);
@@ -25,7 +26,9 @@ function evaluate(node,p){
  throw Error('unexpected expression '+op);
 }
 const range={...base,min:50,max:150,unknown:false};
-for(const [h,pass] of [[0,false],[49,false],[50,true],[150,true],[151,false]])assert.equal(evaluate(expr(range),{h}),pass);
+for(const [h,pass] of [[0,false],[49,false],[50,true],[150,true],[151,false]])assert.equal(evaluate(expr(range),{h,hs:'measured'}),pass);
+assert.equal(evaluate(expr(range),{h:100,hs:'estimated'}),false,'class defaults cannot pass height ranges');
+assert.equal(evaluate(expr({...range,unknown:true}),{h:100,hs:'estimated'}),true,'legacy defaults remain unknown');
 assert.equal(evaluate(expr({...range,unknown:true}),{}),true,'unknown source heights are an explicit choice');
 assert.equal(evaluate(expr({...range,kind:'housing',source:'measured'}),{h:100,cls:'house',hs:'measured'}),true);
 assert.equal(evaluate(expr({...range,kind:'housing',source:'measured'}),{h:100,cls:'house',hs:'google'}),false,'satellite heights cannot pass a tagged-height filter');

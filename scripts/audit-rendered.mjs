@@ -19,6 +19,7 @@
 
 import { createRequire } from 'node:module';
 import { mkdirSync } from 'node:fs';
+import {auditDashboardChrome} from './dashboard-chrome-audit.mjs';
 import {auditStatusClock} from './status-clock-browser-audit.mjs';
 import {auditRefusalSessions} from './refusal-session-audit.mjs';
 import {panelReadiness} from './panel-readiness.mjs';
@@ -558,6 +559,8 @@ await auditRefusalSessions(browser,BASE);
 record('refusal sessions','Research/haze recovery and independent feeds',true,'actual controllers, current synthetic fixtures, EN/ID and no page errors');
 await auditStatusClock(browser,BASE);
 record('source-clock','time-driven evidence and accessible stable status',true,'controlled real page, no clock-driven status writes, expiry, unavailable feeds and reachable zones');
+await auditDashboardChrome(browser,BASE);
+record('dashboard composition','real map, compact accessible header, ledger actions and enlarged text',true,'three viewports and original-fault falsifiers');
 await browser.close();
 
 const failed = results.filter((r) => !r.ok);

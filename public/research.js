@@ -138,7 +138,7 @@ function renderFiles([buildings, transit, catalog, flood]) {
     const parts = [['google', t('Google 2.5D satellite, p75', 'satelit Google 2.5D, p75'), css('--accent')],
       ['ghsl', t('GHSL area average', 'rata-rata area GHSL'), css('--ink')],
       ['floors', t('floors × 3.3 m', 'lantai × 3,3 m'), css('--lacquer')],
-      ['estimated', t('type default', 'nilai bawaan tipe'), css('--line')],
+      ['estimated', t('unknown height · flat', 'tinggi tidak diketahui · datar'), css('--line')],
       ['measured', t('tagged (OSM / survey)', 'bertag (OSM / survei)'), css('--dim')]];
     barChart(document.getElementById('height-bars'), parts.map(([k, label, colour]) => ({ label, value: h[k] || 0, colour })));
   };

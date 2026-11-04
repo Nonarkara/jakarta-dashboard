@@ -38,7 +38,7 @@ function loadRefusalModule(){return refusalModulePromise||=import('/refusal.js')
 // response that is not OK is an error, never a payload.
 async function fallbackRead(response){if(response.ok)return await response.json();throw new Error('source '+response.status);}
 const feedRefusals=new Map(),feedRequestIds=new Map();
-let sourceCheckedAt=null,sourceChecking=false;
+let sourceCheckedAt=null,sourceChecking=true;
 async function get(path){
  let mod=null;
  // Keyed by path, not by URL: the alerts feed carries the language in its
@@ -62,7 +62,7 @@ function applyLanguage(){
  document.documentElement.lang=lang;$('language').value=lang;
  document.querySelectorAll('[data-en]').forEach(el=>{if(!el.dataset.id)el.dataset.id=el.textContent;el.textContent=lang==='en'?el.dataset.en:el.dataset.id;});
  for(const attribute of ['aria-label','title','placeholder'])document.querySelectorAll('[data-en-'+attribute+']').forEach(el=>{const key='data-id-'+attribute;if(!el.hasAttribute(key))el.setAttribute(key,el.getAttribute(attribute)||'');el.setAttribute(attribute,lang==='en'?el.getAttribute('data-en-'+attribute):el.getAttribute(key));});
- document.querySelectorAll('[data-language-switch]').forEach(button=>{button.innerHTML='<span lang="'+(lang==='id'?'en':'id')+'">'+(lang==='id'?'English':'Bahasa Indonesia')+'</span>';button.lang=lang;button.setAttribute('aria-label',t('Ganti bahasa ke Inggris','Switch to Bahasa Indonesia'));});
+ document.querySelectorAll('[data-language-switch]').forEach(button=>{button.innerHTML='<span lang="'+(lang==='id'?'en':'id')+'">'+(button.id==='language-toggle'?(lang==='id'?'EN':'ID'):(lang==='id'?'English':'Bahasa Indonesia'))+'</span>';button.title=lang==='id'?'English':'Bahasa Indonesia';button.lang=lang;button.setAttribute('aria-label',t('Ganti bahasa ke Inggris','Switch to Bahasa Indonesia'));});
  document.querySelector('.city-brand').setAttribute('aria-label',t('JKTx · Pantau Jakarta','JKTx · Jakarta city watch'));
  document.querySelectorAll('a[href^="/atlas"]').forEach(a=>{const u=new URL(a.href,location.origin);u.searchParams.set('lang',lang);a.href=u.pathname+u.search+u.hash;});
  if(selectedOverlay)$('selection-status').textContent=window.CivicLanguage.status(selectedOverlay.label,lang);
@@ -242,7 +242,7 @@ const SOURCE_DESCRIPTORS=[
 function sourceStatusRows(now){
  return SOURCE_DESCRIPTORS.map(descriptor=>{
   const data=descriptor.read(),refused=feedRefusals.has(descriptor.endpoint);
-  const state=refused?'refused':descriptor.hasData(data)?'ok':data?'unavailable':'none';
+  const state=refused?'refused':descriptor.hasData(data)?'ok':sourceChecking?'loading':data?'unavailable':'none';
   const stamp=state==='ok'?descriptor.stamp(data,now):null;
   return {id:descriptor.id,name:descriptor.name,tier:descriptor.tier,label:descriptor.label,scope:descriptor.scope||null,endpoint:descriptor.endpoint,state,stamp,age:sourceAge(stamp,now),verdict:state==='ok'?descriptor.verdict(data,now):null,rule:descriptor.rule||null,retry:refused?feedRefusals.get(descriptor.endpoint):null};
  });
@@ -255,18 +255,21 @@ function renderSourceStatus(){
   if(refused)parts.push(refused+' '+t('ditolak','refused'));
   if(staleCount)parts.push(staleCount+' '+t('di luar batas','outside their limit'));
   const summary=(t('Data ','Data ')+answered+'/'+rows.length+(refused?' · '+refused+' '+t('ditolak','refused'):'')+(staleCount?' · '+staleCount+' '+t('di luar batas','outside limit'):''))+(sourceChecking?' · '+t('memperbarui','refreshing'):sourceCheckedAt?' · '+t('diperiksa','checked')+' '+clockTime(sourceCheckedAt):'');
-  const attention=refused>0||staleCount>0||answered<rows.length;
-  $('source-status-line').textContent=summary;
+  const attention=refused>0||staleCount>0||(!sourceChecking&&answered<rows.length);
+  $('source-status-line').textContent='Data '+(sourceChecking&&sourceCheckedAt===null?'…':answered)+'/'+rows.length+(attention?' !':'');
+  $('source-status').querySelector('summary').setAttribute('aria-label',summary);
+  $('source-status').querySelector('summary').title=summary;
+  $('source-status-overview').textContent=summary;
   const announcement=lang+'|'+rows.map(r=>r.id+':'+r.state+':'+r.verdict).join('|');
   if(announcement!==sourceAnnouncement){$('source-status-live').textContent=parts.join(' · ');sourceAnnouncement=announcement;}
   $('source-status').classList.toggle('source-status--attention',attention);
   $('source-status-rows').innerHTML=rows.map(r=>{
-    const state=r.state==='ok'?null:r.state==='refused'?t('ditolak','refused'):r.state==='unavailable'?t('data tidak tersedia','data unavailable'):t('tidak menjawab','no answer');
+    const state=r.state==='ok'?null:r.state==='refused'?t('ditolak','refused'):r.state==='unavailable'?t('data tidak tersedia','data unavailable'):r.state==='loading'?t('memuat','loading'):t('tidak menjawab','no answer');
     const rule=r.rule?esc(lang==='id'?SOURCE_RULES[r.rule].limit[0]:SOURCE_RULES[r.rule].limit[1]):null;
     const verdict=r.verdict?esc(lang==='id'?verdictWord[r.verdict][0]:verdictWord[r.verdict][1]):null;
     const scope=r.scope?esc(lang==='id'?r.scope[0]:r.scope[1]):null;
     const refusal=r.state==='refused'&&r.retry?esc(t('jeda coba ulang server','server retry interval')+' '+r.retry+' '+t('detik','seconds')):null;
-    return '<li data-source="'+r.id+'" class="source-status-row'+(r.verdict==='stale'||r.verdict==='mixed'||r.verdict==='expired'||r.state!=='ok'?' source-status-row--attention':'')+'"><span>'+
+    return '<li data-source="'+r.id+'" class="source-status-row'+(r.verdict==='stale'||r.verdict==='mixed'||r.verdict==='expired'||(r.state!=='ok'&&r.state!=='loading')?' source-status-row--attention':'')+'"><span>'+
       '<strong>'+esc(lang==='id'?r.name[0]:r.name[1])+'</strong> '+
       '<span>'+esc(lang==='id'?r.tier[0]:r.tier[1])+'</span> '+
       '<span>'+esc(lang==='id'?r.label[0]:r.label[1])+': '+(r.stamp?esc(date(r.stamp)):'—')+'</span> '+
@@ -328,7 +331,7 @@ function scheduleClockTick(){
 }
 scheduleClockTick();
 setInterval(refreshTemporalStatus,60000);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden){clockZones();refreshTemporalStatus();}});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){clockZones();refreshTemporalStatus();if(!sourceChecking&&(sourceCheckedAt===null||Date.now()-sourceCheckedAt>=5*60000))void refresh();}});
 document.addEventListener('click',event=>{if(event.target.closest('[data-language-switch]')){document.querySelector('.city-controls').open=false;changeLanguage(lang==='id'?'en':'id');}});
 function changeLanguage(value){lang=value;try{localStorage.setItem('jakarta-dashboard-lang',lang);localStorage.setItem('jakarta-atlas-language',lang);}catch{}const u=new URL(location.href);u.searchParams.set('lang',lang);history.replaceState(null,'',u);applyLanguage();refresh();}
 $('language').addEventListener('change',()=>changeLanguage($('language').value)); // axiom-audit-ignore honesty -- Optional local preference persistence; current controls and source values remain available with explicit defaults.
@@ -432,4 +435,19 @@ get('/data/jakarta-v1/transit.json?v='+DASHBOARD_BUILD).then(d=>{transit=d;rende
  const dockNavigation=()=>{if(navigation)navigation.open=!narrow.matches;};
  dockNavigation();narrow.addEventListener?.('change',dockNavigation);
  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&navigation?.open&&narrow.matches&&!document.querySelector('dialog[open]')){navigation.open=false;navigation.querySelector('summary')?.focus();}});
+}
+
+// Source details stay beside their trigger; ordinary map interaction retires the popup.
+document.addEventListener('pointerdown',event=>{const status=$('source-status');if(status.open&&!status.contains(event.target))status.open=false;});
+document.addEventListener('keydown',event=>{const status=$('source-status');if(event.key==='Escape'&&status.open){status.open=false;status.querySelector('summary').focus();}});
+
+{
+ const status=$('source-status'),header=document.querySelector('.masthead');
+ const place=()=>{
+  const popup=status.querySelector('.source-status-popover'),width=popup.getBoundingClientRect().width,anchor=status.querySelector('summary').getBoundingClientRect();
+  document.documentElement.style.setProperty('--source-popup-top',(header.getBoundingClientRect().bottom+4)+'px');
+  document.documentElement.style.setProperty('--source-popup-left',Math.max(8,Math.min(anchor.right-width,innerWidth-width-8))+'px');
+ };
+ status.addEventListener('toggle',()=>{if(status.open)place();});
+ new ResizeObserver(()=>{if(status.open)place();}).observe(header);
 }

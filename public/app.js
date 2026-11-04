@@ -340,21 +340,24 @@ const styleReady = new Promise(function (resolve) {
 });
 
 // ── Building height + paint ────────────────────────────────────────────────
-// Real metres, no multiplier. Same clamp as bkk-3d-atlas: heights outside
-// 1-500 m are corrupt tags and fall back to 10 m.
-// Density is what makes the city read in 3D, not inflated heights -- the
-// v2 PMTiles carries Overture's OSM + Microsoft + Google footprints, with
-// unmeasured buildings at their GHSL satellite cell height.
-// Properties from scripts/bake-buildings.py: h, b, hs, src, cls, name.
+// Real metres, no multiplier. Unsupported or corrupt heights stay flat.
+// Legacy PMTiles use hs=estimated for class defaults; retain their footprints
+// without presenting those guesses as observed urban form.
 const HEIGHT_RAW = ["to-number", ["coalesce", ["get", "h"], ["get", "render_height"], ["get", "height"]], 0];
-// Real metres. Heights outside 1-500 m are corrupt tags -> 10 m.
-// Never multiply this: inflated heights were the "vertical spaghetti"
-// that hcmc-3d-atlas shipped and had to revert in 2026-10.
-const HEIGHT_GET = ["case", [">=", HEIGHT_RAW, 1], ["case", ["<=", HEIGHT_RAW, 500], HEIGHT_RAW, 10], 10];
+const HEIGHT_KNOWN = ["all", ["in", ["get", "hs"], ["literal", ["measured", "floors", "google", "ghsl", "satellite"]]], [">=", HEIGHT_RAW, 1], ["<=", HEIGHT_RAW, 500]];
+const HEIGHT_GET = ["case", HEIGHT_KNOWN, HEIGHT_RAW, 0];
+function supportedBuildingHeight(props) {
+  const value = Number(props.h ?? props.render_height ?? props.height ?? 0);
+  return ['measured','floors','google','ghsl','satellite'].includes(props.hs) && Number.isFinite(value) && value >= 1 && value <= 500 ? value : 0;
+}
 // Base must stay strictly below height -- base >= height makes MapLibre
 // emit degenerate roof triangles that read as sawteeth.
 const BASE_RAW = ["to-number", ["coalesce", ["get", "b"], ["get", "render_min_height"], ["get", "min_height"]], 0];
 const BASE_GET = ["case", [">=", BASE_RAW, HEIGHT_GET], 0, ["max", 0, BASE_RAW]];
+const LANDMARK_HEIGHT_RAW = ["to-number", ["get", "height"], 0];
+const LANDMARK_HEIGHT_GET = ["case", ["all", [">=", LANDMARK_HEIGHT_RAW, 1], ["<=", LANDMARK_HEIGHT_RAW, 500]], LANDMARK_HEIGHT_RAW, 0];
+const LANDMARK_BASE_RAW = ["to-number", ["get", "base_height"], 0];
+const LANDMARK_BASE_GET = ["case", [">=", LANDMARK_BASE_RAW, LANDMARK_HEIGHT_GET], 0, ["max", 0, LANDMARK_BASE_RAW]];
 
 // One neutral body; height only lifts the value a little so towers catch
 // light. The single amber belongs to landmarks and selection.
@@ -376,7 +379,7 @@ const HEIGHT_SOURCE_LABEL = {
   google: "satellite, this building (Google Open Buildings 2.5D, 2023)",
   ghsl: "satellite, 100 m area average (GHSL, 2018)",
   satellite: "satellite, 100 m area average (GHSL, 2018)",
-  estimated: "type default; no measurement; date unverified",
+  estimated: "unknown height; footprint only",
 };
 
 const FOOTPRINT_SOURCE_LABEL = {
@@ -673,8 +676,8 @@ async function addHeroLandmarks() {
     minzoom: 11,
     paint: {
       "fill-extrusion-color": ["match", ["get", "category"], "civic", "#e0a33a", "#f59e0b"],
-      "fill-extrusion-height": ["coalesce", ["get", "height"], 12],
-      "fill-extrusion-base": ["coalesce", ["get", "base_height"], 0],
+      "fill-extrusion-height": LANDMARK_HEIGHT_GET,
+      "fill-extrusion-base": LANDMARK_BASE_GET,
       "fill-extrusion-opacity": 1,
       "fill-extrusion-vertical-gradient": true,
     },
@@ -1093,7 +1096,7 @@ function setupInspect() {
     const f = e.features && e.features[0];
     if (!f) return;
     const props = f.properties || {};
-    const h = Number(props.h || props.render_height || props.height || 0);
+    const h = supportedBuildingHeight(props);
     const hs = props.hs || null;
     const bldg = props.cls || props.building || "building";
     const card = document.getElementById("atlas-inspect-card");
@@ -1270,7 +1273,9 @@ function normalizeBuildingFilter(input) {
  return {min:input.min,max:input.max,kind:input.kind,source:input.source,unknown:input.unknown};
 }
 function buildingFilterExpression(filter) {
- const h=['to-number',['coalesce',['get','exploreHeight'],['get','h'],['get','render_height'],['get','height']],0];
+ const raw=['to-number',['coalesce',['get','exploreHeight'],['get','h'],['get','render_height'],['get','height']],0];
+ const known=['in',['coalesce',['get','exploreSource'],['get','hs'],''],['literal',['measured','floors','google','ghsl','satellite','landmark']]];
+ const h=['case',['all',known,['>=',raw,1],['<=',raw,500]],raw,0];
  const tests=['all'];
  if(filter.min!==0 || filter.max!==500 || !filter.unknown) {
   const range=['all',['>',h,0],['>=',h,filter.min],['<=',h,filter.max]];
@@ -2238,7 +2243,7 @@ function renderConfidencePanel(data, share) {
     google: ['Satellite, per building', 'Satelit, per bangunan'],
     floors: ['Floor count × 3.3 m', 'Jumlah lantai × 3,3 m'],
     ghsl: ['100 m area average', 'Rata-rata area 100 m'],
-    estimated: ['Type default', 'Nilai bawaan jenis'],
+    estimated: ['Unknown height · flat footprint', 'Tinggi tidak diketahui · tapak datar'],
   };
   const table = lensTable();
   for (const key of data.confidence.order) {
@@ -2325,7 +2330,7 @@ function renderLensEvidence() {
     night: ['Corrected Black Marble radiance with its product date. Open Layer settings to compare the 2016 composite, VIIRS aerosol or OMPS index. These products do not quantify city growth.', 'Radiansi Black Marble terkoreksi dengan tanggal produk. Buka Pengaturan lapisan untuk membandingkan komposit 2016, aerosol VIIRS atau indeks OMPS. Produk ini tidak mengukur pertumbuhan kota.'],
     haze: ['Satellite visible imagery and dated thermal detections. A hot pixel is not a confirmed fire or proof of Jakarta pollution.', 'Citra satelit tampak dan deteksi termal bertanggal. Piksel panas bukan kebakaran terkonfirmasi atau bukti polusi Jakarta.'],
     exposure: ['Jakarta Satu flood-risk classes · shaded by weighted risk-class mix (Ringan 1, Sedang 3, Berat 6). Population figures are area-weighted proxies, not located residents.', 'Kelas rawan banjir Jakarta Satu · diarsir menurut campuran kelas berbobot (Ringan 1, Sedang 3, Berat 6). Angka penduduk adalah proksi berbobot luas, bukan penduduk yang terlokasi.'],
-    confidence: ['Overture footprints · coloured by height source. Bright is tagged or published; dim is a type default with no measurement and no satellite signal.', 'Tapak Overture · diwarnai menurut asal tinggi. Terang berarti bertag atau terpublikasi; redup berarti nilai bawaan jenis tanpa pengukuran dan tanpa sinyal satelit.'],
+    confidence: ['Overture footprints · coloured by height source. Bright is tagged or published; unmeasured defaults remain flat footprints.', 'Tapak Overture · diwarnai menurut asal tinggi. Terang berarti bertag atau terpublikasi; tinggi tanpa sumber tetap berupa tapak datar.'],
     green: ['Jakarta Satu green-space reference · area computed from the published polygons. This is not every park, and not an official green-space total.', 'Referensi ruang hijau Jakarta Satu · luas dihitung dari poligon yang dipublikasikan. Ini bukan semua taman, dan bukan total resmi ruang hijau.'],
     coverage: ['Jakarta Satu monitoring network · stations, gauges and pumps as published. An area with none published is not a cleared area.', 'Jaringan pemantauan Jakarta Satu · stasiun, alat ukur dan pompa sesuai yang dipublikasikan. Area tanpa satupun yang dipublikasikan bukan area yang aman.']
   };
@@ -2420,7 +2425,7 @@ function renderLensEvidence() {
     if (!rainfallData?.points?.length) body.append(document.createTextNode(lensText('Rainfall unavailable. No zero rainfall is assumed.', 'Data hujan tidak tersedia. Tidak diasumsikan hujan nol.')));
   } else {
     const product = selectedEnvironmentProduct();
-    body.textContent = activeLens === 'city' ? lensText('Building heights mix tagged measurements, satellite estimates and defaults. Explore Data & sources below.', 'Tinggi bangunan memadukan pengukuran bertag, perkiraan satelit, dan nilai bawaan. Lihat Data & sumber di bawah.') : (product?.source || 'NASA GIBS') + ' · ' + lensText('See the observation time and legend in the map evidence panel.', 'Lihat waktu pengamatan dan legenda di panel bukti peta.');
+    body.textContent = activeLens === 'city' ? lensText('Building heights mix tagged measurements and derived estimates. Unknown heights stay flat. Explore Data & sources below.', 'Tinggi bangunan memadukan pengukuran bertag dan perkiraan turunan. Tinggi yang tidak diketahui tetap datar. Lihat Data & sumber di bawah.') : (product?.source || 'NASA GIBS') + ' · ' + lensText('See the observation time and legend in the map evidence panel.', 'Lihat waktu pengamatan dan legenda di panel bukti peta.');
   }
 }
 const ALL_LENSES = ['city','waterways','traffic','arrival','exposure','confidence','green','coverage','rain','radar','cloud','water','recurring','air','haze','night'];
