@@ -116,10 +116,24 @@ try {
   assert.equal(data.products.length,ENVIRONMENT_IDS.length);
   for(const broken of [null,{},[null,...data.products.slice(1)],data.products.slice(1),[...data.products,data.products[0]],data.products.map((p,i)=>i?p:{...p,date:'2026-01-01'}),data.products.map((p,i)=>i?p:{...p,tiles:['https://gibs.earthdata.nasa.gov/fake.png']}),data.products.map((p,i)=>i?p:{...p,available:true})])assert.equal(validImageryCatalogue(200,broken),false,'missing/duplicate identities or contradictory outage envelopes fail hard');
   assert.equal(validImageryCatalogue(503,data.products),false,'HTTP errors are not hidden by availability reporting');
-  const healthy=data.products.map(p=>({...p,available:true,date:p.id==='himawari'?frame:date,dates:[p.id==='himawari'?frame:date],tiles:[`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/${p.layer}/default/${p.id==='himawari'?frame:date}/GoogleMapsCompatible_Level${p.maxzoom}/{z}/{y}/{x}.png`],fetchedAt:new Date(now).toISOString(),availabilityReason:null}));
+  const healthy=data.products.map(p=>({...p,available:true,date:p.id==='himawari'?frame:date,dates:[p.id==='himawari'?frame:date],tiles:[`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/${p.layer}/default/${p.id==='himawari'?frame:date}/GoogleMapsCompatible_Level${p.maxzoom}/{z}/{y}/{x}.${p.ext||'png'}`],fetchedAt:new Date(now).toISOString(),availabilityReason:null}));
   assert.equal(validImageryCatalogue(200,healthy),true);
+  assert.ok(healthy.find(p=>p.id==='true-colour').tiles[0].endsWith('.jpg'),'JPEG metadata is preserved in positive fixtures');
+  {
+    const saved=capabilities;
+    capabilities='<Capabilities>'+data.products.map(p=>{
+      const at=p.id==='himawari'?frame:p.id==='night-lights-2016'?'2016-01-01':date;
+      return `<Layer><ows:Identifier>${p.layer}</ows:Identifier><Dimension><Default>${at}</Default><Value>${at}</Value></Dimension><TileMatrixSet>GoogleMapsCompatible_Level${p.maxzoom}</TileMatrixSet></Layer>`;
+    }).join('')+'</Capabilities>';
+    const actual=await (await request('/api/atlas/environment')).json();
+    assert.equal(validImageryCatalogue(200,actual.products),true,'validate actual Worker output for all ten healthy products, not a separately constructed tile schema');
+    assert.ok(actual.products.every(p=>p.available));
+    assert.ok(actual.products.find(p=>p.id==='true-colour').tiles[0].endsWith('.jpg'),'real Worker JPEG must pass the same live classifier');
+    capabilities=saved;
+  }
+
   for(const part of ['/WRONG_LAYER/default/','/GoogleMapsCompatible_Level0/'])assert.equal(validImageryCatalogue(200,healthy.map((p,i)=>i?p:{...p,tiles:[p.tiles[0].replace(part.includes('WRONG')?'/'+p.layer+'/default/':'/GoogleMapsCompatible_Level'+p.maxzoom+'/',part)]})),false,'tile must bind layer, selected date and matrix');
-  for(const patch of [{date:'2099-01-01'},{date:'2026-02-31'},{fetchedAt:'2099-01-01T00:00:00Z'},{source:''},{tier:''},{tiles:['https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/fake/default/1999-01-01/{z}/{y}/{x}.png']}])assert.equal(validImageryCatalogue(200,healthy.map((p,i)=>i?p:{...p,...patch})),false,'unusable healthy claims fail hard');
+  for(const patch of [{ext:'svg'},{date:'2099-01-01'},{date:'2026-02-31'},{fetchedAt:'2099-01-01T00:00:00Z'},{source:''},{tier:''},{tiles:['https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/fake/default/1999-01-01/{z}/{y}/{x}.png']}])assert.equal(validImageryCatalogue(200,healthy.map((p,i)=>i?p:{...p,...patch})),false,'unusable healthy claims fail hard');
   assert.equal(validImageryCatalogue(200,data.products.map((p,i)=>i?p:{...p,availabilityReason:null})),false,'a silent unavailable product fails');
 
 

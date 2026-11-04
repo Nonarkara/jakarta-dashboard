@@ -1,0 +1,465 @@
+{
+  "products": [
+    {
+      "id": "surface-water",
+      "layer": "MODIS_Combined_Flood_3-Day",
+      "maxzoom": 9,
+      "resolution": "250 m",
+      "units": "classification",
+      "legend": "MODIS_Flood",
+      "tier": "satellite-observation",
+      "available": true,
+      "source": "NASA GIBS / LANCE",
+      "date": "2026-11-03",
+      "latestAvailableDate": "2026-11-04",
+      "dates": [
+        "2026-11-04",
+        "2026-11-03",
+        "2026-11-02",
+        "2026-11-01",
+        "2026-10-31",
+        "2026-10-30",
+        "2026-10-29"
+      ],
+      "fetchedAt": "2026-11-04T16:08:52.987Z",
+      "timePrecision": "day",
+      "windowDays": 3,
+      "tiles": [
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Combined_Flood_3-Day/default/2026-11-03/GoogleMapsCompatible_Level9/{z}/{y}/{x}.png"
+      ],
+      "legendUrl": "https://gibs.earthdata.nasa.gov/legends/MODIS_Flood_H.svg",
+      "sourceUrl": "https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/",
+      "availabilityReason": null
+    },
+    {
+      "id": "aerosol",
+      "layer": "MODIS_Terra_Aerosol",
+      "maxzoom": 6,
+      "resolution": "10 km",
+      "units": "AOD (unitless)",
+      "legend": "MODIS_VIIRS_AOD",
+      "tier": "satellite-observation",
+      "available": true,
+      "source": "NASA GIBS / LANCE",
+      "date": "2026-11-03",
+      "latestAvailableDate": "2026-11-04",
+      "dates": [
+        "2026-11-04",
+        "2026-11-03",
+        "2026-11-02",
+        "2026-11-01",
+        "2026-10-31",
+        "2026-10-30",
+        "2026-10-29"
+      ],
+      "fetchedAt": "2026-11-04T16:08:52.987Z",
+      "timePrecision": "day",
+      "windowDays": 1,
+      "tiles": [
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Aerosol/default/2026-11-03/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png"
+      ],
+      "legendUrl": "https://gibs.earthdata.nasa.gov/legends/MODIS_VIIRS_AOD_H.svg",
+      "sourceUrl": "https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/",
+      "availabilityReason": null
+    },
+    {
+      "id": "satellite-rain",
+      "layer": "IMERG_Precipitation_Rate",
+      "maxzoom": 6,
+      "resolution": "0.1°",
+      "units": "mm/h",
+      "legend": "GPM_Precipitation_Rate",
+      "tier": "satellite-estimate",
+      "available": true,
+      "source": "NASA GIBS / LANCE",
+      "date": "2026-11-03",
+      "latestAvailableDate": "2026-11-03",
+      "dates": [
+        "2026-11-03",
+        "2026-11-02",
+        "2026-11-01",
+        "2026-10-31",
+        "2026-10-30",
+        "2026-10-29",
+        "2026-10-28"
+      ],
+      "fetchedAt": "2026-11-04T16:08:52.987Z",
+      "timePrecision": "day",
+      "windowDays": 1,
+      "tiles": [
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/IMERG_Precipitation_Rate/default/2026-11-03/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png"
+      ],
+      "legendUrl": "https://gibs.earthdata.nasa.gov/legends/GPM_Precipitation_Rate_H.svg",
+      "sourceUrl": "https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/",
+      "availabilityReason": null
+    },
+    {
+      "id": "himawari",
+      "layer": "Himawari_AHI_Band13_Clean_Infrared",
+      "maxzoom": 6,
+      "resolution": "2 km",
+      "units": "K",
+      "legend": "Clean_Longwave_Infrared_Window_Band",
+      "tier": "satellite-observation",
+      "available": true,
+      "source": "JMA Himawari AHI / NASA GIBS",
+      "date": "2026-11-04T15:30:00Z",
+      "latestAvailableDate": "2026-11-04T15:30:00Z",
+      "dates": [
+        "2026-11-04T15:30:00Z",
+        "2026-11-04T15:20:00Z",
+        "2026-11-04T15:10:00Z",
+        "2026-11-04T15:00:00Z",
+        "2026-11-04T14:50:00Z",
+        "2026-11-04T14:30:00Z",
+        "2026-11-04T14:20:00Z",
+        "2026-11-04T14:10:00Z",
+        "2026-11-04T14:00:00Z",
+        "2026-11-04T13:50:00Z",
+        "2026-11-04T13:40:00Z"
+      ],
+      "fetchedAt": "2026-11-04T16:08:52.987Z",
+      "timePrecision": "10 minutes",
+      "windowDays": null,
+      "tiles": [
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/Himawari_AHI_Band13_Clean_Infrared/default/2026-11-04T15:30:00Z/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png"
+      ],
+      "legendUrl": "https://gibs.earthdata.nasa.gov/legends/Clean_Longwave_Infrared_Window_Band_H.svg",
+      "sourceUrl": "https://www.jma.go.jp/jma/jma-eng/jma-center/nowcasting/index.html",
+      "availabilityReason": null
+    },
+    {
+      "id": "true-colour",
+      "layer": "VIIRS_NOAA20_CorrectedReflectance_TrueColor",
+      "maxzoom": 9,
+      "ext": "jpg",
+      "resolution": "375 m",
+      "units": "visible imagery",
+      "legend": null,
+      "tier": "satellite-observation",
+      "available": true,
+      "source": "NASA GIBS / LANCE",
+      "date": "2026-11-03",
+      "latestAvailableDate": "2026-11-04",
+      "dates": [
+        "2026-11-04",
+        "2026-11-03",
+        "2026-11-02",
+        "2026-11-01",
+        "2026-10-31",
+        "2026-10-30",
+        "2026-10-29"
+      ],
+      "fetchedAt": "2026-11-04T16:08:52.987Z",
+      "timePrecision": "day",
+      "windowDays": 1,
+      "tiles": [
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2026-11-03/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg"
+      ],
+      "legendUrl": null,
+      "sourceUrl": "https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/",
+      "availabilityReason": null
+    },
+    {
+      "id": "night-lights",
+      "layer": "VIIRS_NOAA20_GapFilled_BRDF_Corrected_DayNightBand_Radiance",
+      "maxzoom": 8,
+      "resolution": "750 m sensor / 500 m imagery",
+      "units": "nW/(cm² sr), log10 visualization",
+      "legend": "VIIRS_DayNightBand_At_Sensor_Radiance",
+      "tier": "satellite-corrected-gap-filled",
+      "documentation": "https://doi.org/10.5067/VIIRS/VJ146A2_NRT.002",
+      "available": true,
+      "source": "NASA GIBS / LANCE",
+      "date": "2026-11-02",
+      "latestAvailableDate": "2026-11-02",
+      "dates": [
+        "2026-11-02",
+        "2026-11-01",
+        "2026-10-31",
+        "2026-10-30",
+        "2026-10-29",
+        "2026-10-28",
+        "2026-10-27"
+      ],
+      "fetchedAt": "2026-11-04T16:08:52.987Z",
+      "timePrecision": "day",
+      "windowDays": 1,
+      "tiles": [
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_GapFilled_BRDF_Corrected_DayNightBand_Radiance/default/2026-11-02/GoogleMapsCompatible_Level8/{z}/{y}/{x}.png"
+      ],
+      "legendUrl": "https://gibs.earthdata.nasa.gov/legends/VIIRS_DayNightBand_At_Sensor_Radiance_H.svg",
+      "sourceUrl": "https://doi.org/10.5067/VIIRS/VJ146A2_NRT.002",
+      "availabilityReason": null
+    },
+    {
+      "id": "aerosol-viirs",
+      "layer": "VIIRS_NOAA20_AOD_Deep_Blue_Land_Ocean",
+      "maxzoom": 6,
+      "resolution": "6 km retrieval / 2 km imagery",
+      "units": "AOD (unitless)",
+      "legend": "MODIS_VIIRS_AOD",
+      "tier": "satellite-observation",
+      "documentation": "https://cmr.earthdata.nasa.gov/search/concepts/C2600305692-LAADS.html",
+      "available": true,
+      "source": "NASA GIBS / LANCE",
+      "date": "2026-11-03",
+      "latestAvailableDate": "2026-11-04",
+      "dates": [
+        "2026-11-04",
+        "2026-11-03",
+        "2026-11-02",
+        "2026-11-01",
+        "2026-10-31",
+        "2026-10-30",
+        "2026-10-29"
+      ],
+      "fetchedAt": "2026-11-04T16:08:52.987Z",
+      "timePrecision": "day",
+      "windowDays": 1,
+      "tiles": [
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_AOD_Deep_Blue_Land_Ocean/default/2026-11-03/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png"
+      ],
+      "legendUrl": "https://gibs.earthdata.nasa.gov/legends/MODIS_VIIRS_AOD_H.svg",
+      "sourceUrl": "https://cmr.earthdata.nasa.gov/search/concepts/C2600305692-LAADS.html",
+      "availabilityReason": null
+    },
+    {
+      "id": "aerosol-index",
+      "layer": "OMPS_NOAA20_NadirMapper_AerosolIndex_380",
+      "maxzoom": 6,
+      "resolution": "12 × 17 km at nadir",
+      "units": "UV aerosol index (unitless)",
+      "legend": "OMPS_Aerosol_Index",
+      "tier": "satellite-observation",
+      "documentation": "https://cmr.earthdata.nasa.gov/search/concepts/C3307847314-OMINRT.html",
+      "available": true,
+      "source": "NASA GIBS / LANCE",
+      "date": "2026-11-03",
+      "latestAvailableDate": "2026-11-04",
+      "dates": [
+        "2026-11-04",
+        "2026-11-03",
+        "2026-11-02",
+        "2026-11-01",
+        "2026-10-31",
+        "2026-10-30",
+        "2026-10-29"
+      ],
+      "fetchedAt": "2026-11-04T16:08:52.987Z",
+      "timePrecision": "day",
+      "windowDays": 1,
+      "tiles": [
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/OMPS_NOAA20_NadirMapper_AerosolIndex_380/default/2026-11-03/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png"
+      ],
+      "legendUrl": "https://gibs.earthdata.nasa.gov/legends/OMPS_Aerosol_Index_H.svg",
+      "sourceUrl": "https://cmr.earthdata.nasa.gov/search/concepts/C3307847314-OMINRT.html",
+      "availabilityReason": null
+    },
+    {
+      "id": "night-lights-2016",
+      "layer": "VIIRS_Night_Lights",
+      "maxzoom": 8,
+      "resolution": "500 m imagery",
+      "units": "visual annual composite",
+      "legend": null,
+      "tier": "satellite-historical-composite",
+      "documentation": "https://earthobservatory.nasa.gov/features/NightLights",
+      "available": true,
+      "source": "NASA GIBS / LANCE",
+      "date": "2016-01-01",
+      "latestAvailableDate": "2016-01-01",
+      "dates": [
+        "2016-01-01"
+      ],
+      "fetchedAt": "2026-11-04T16:08:52.987Z",
+      "timePrecision": "annual composite",
+      "windowDays": null,
+      "tiles": [
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_Night_Lights/default/2016-01-01/GoogleMapsCompatible_Level8/{z}/{y}/{x}.png"
+      ],
+      "legendUrl": null,
+      "sourceUrl": "https://earthobservatory.nasa.gov/features/NightLights",
+      "availabilityReason": null
+    },
+    {
+      "id": "ndvi",
+      "layer": "VIIRS_NOAA20_NDVI_8Day",
+      "maxzoom": 8,
+      "dateWindow": 60,
+      "resolution": "~450 m",
+      "units": "NDVI (unitless index)",
+      "legend": "MODIS_NDVI",
+      "tier": "satellite-observation",
+      "documentation": "https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/",
+      "available": true,
+      "source": "NASA GIBS / LANCE",
+      "date": "2026-11-03",
+      "latestAvailableDate": "2026-11-03",
+      "dates": [
+        "2026-11-03",
+        "2026-11-02",
+        "2026-11-01",
+        "2026-10-31",
+        "2026-10-30",
+        "2026-10-29",
+        "2026-10-28",
+        "2026-10-27",
+        "2026-10-26",
+        "2026-10-25",
+        "2026-10-24",
+        "2026-10-23",
+        "2026-10-22",
+        "2026-10-21",
+        "2026-10-20",
+        "2026-10-19",
+        "2026-10-18",
+        "2026-10-17",
+        "2026-10-16",
+        "2026-10-15",
+        "2026-10-14",
+        "2026-10-13",
+        "2026-10-12",
+        "2026-10-11",
+        "2026-10-10",
+        "2026-10-09",
+        "2026-10-08",
+        "2026-10-07",
+        "2026-10-06",
+        "2026-10-05",
+        "2026-10-04",
+        "2026-10-03",
+        "2026-10-02",
+        "2026-10-01",
+        "2026-09-30",
+        "2026-09-29",
+        "2026-09-28",
+        "2026-09-27",
+        "2026-09-26",
+        "2026-09-25",
+        "2026-09-24",
+        "2026-09-23",
+        "2026-09-22",
+        "2026-09-21",
+        "2026-09-20",
+        "2026-09-19",
+        "2026-09-18",
+        "2026-09-17",
+        "2026-09-16",
+        "2026-09-15",
+        "2026-09-14",
+        "2026-09-13",
+        "2026-09-12",
+        "2026-09-11",
+        "2026-09-10",
+        "2026-09-09",
+        "2026-09-08",
+        "2026-09-07",
+        "2026-09-06",
+        "2026-09-05"
+      ],
+      "fetchedAt": "2026-11-04T16:08:52.987Z",
+      "timePrecision": "day",
+      "windowDays": 1,
+      "tiles": [
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_NDVI_8Day/default/2026-11-03/GoogleMapsCompatible_Level8/{z}/{y}/{x}.png"
+      ],
+      "legendUrl": "https://gibs.earthdata.nasa.gov/legends/MODIS_NDVI_H.svg",
+      "sourceUrl": "https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/",
+      "availabilityReason": null
+    }
+  ],
+  "radar": {
+    "available": true,
+    "frames": [
+      {
+        "observedAt": "2026-11-04T14:00:00.000Z",
+        "tiles": [
+          "https://tilecache.rainviewer.com/v2/radar/d68cfda90527/256/{z}/{x}/{y}/2/0_0.png"
+        ]
+      },
+      {
+        "observedAt": "2026-11-04T14:10:00.000Z",
+        "tiles": [
+          "https://tilecache.rainviewer.com/v2/radar/8788fd8e921e/256/{z}/{x}/{y}/2/0_0.png"
+        ]
+      },
+      {
+        "observedAt": "2026-11-04T14:20:00.000Z",
+        "tiles": [
+          "https://tilecache.rainviewer.com/v2/radar/e06816b23c8c/256/{z}/{x}/{y}/2/0_0.png"
+        ]
+      },
+      {
+        "observedAt": "2026-11-04T14:30:00.000Z",
+        "tiles": [
+          "https://tilecache.rainviewer.com/v2/radar/87539ea257fe/256/{z}/{x}/{y}/2/0_0.png"
+        ]
+      },
+      {
+        "observedAt": "2026-11-04T14:40:00.000Z",
+        "tiles": [
+          "https://tilecache.rainviewer.com/v2/radar/ee83cb00b988/256/{z}/{x}/{y}/2/0_0.png"
+        ]
+      },
+      {
+        "observedAt": "2026-11-04T14:50:00.000Z",
+        "tiles": [
+          "https://tilecache.rainviewer.com/v2/radar/a6fd1e4f8aa3/256/{z}/{x}/{y}/2/0_0.png"
+        ]
+      },
+      {
+        "observedAt": "2026-11-04T15:00:00.000Z",
+        "tiles": [
+          "https://tilecache.rainviewer.com/v2/radar/b8153e929c0d/256/{z}/{x}/{y}/2/0_0.png"
+        ]
+      },
+      {
+        "observedAt": "2026-11-04T15:10:00.000Z",
+        "tiles": [
+          "https://tilecache.rainviewer.com/v2/radar/15c098c470d0/256/{z}/{x}/{y}/2/0_0.png"
+        ]
+      },
+      {
+        "observedAt": "2026-11-04T15:20:00.000Z",
+        "tiles": [
+          "https://tilecache.rainviewer.com/v2/radar/5720e6e8fdc5/256/{z}/{x}/{y}/2/0_0.png"
+        ]
+      },
+      {
+        "observedAt": "2026-11-04T15:30:00.000Z",
+        "tiles": [
+          "https://tilecache.rainviewer.com/v2/radar/c82d764dce2e/256/{z}/{x}/{y}/2/0_0.png"
+        ]
+      },
+      {
+        "observedAt": "2026-11-04T15:40:00.000Z",
+        "tiles": [
+          "https://tilecache.rainviewer.com/v2/radar/844ac79c8000/256/{z}/{x}/{y}/2/0_0.png"
+        ]
+      },
+      {
+        "observedAt": "2026-11-04T15:50:00.000Z",
+        "tiles": [
+          "https://tilecache.rainviewer.com/v2/radar/0b23e65997fc/256/{z}/{x}/{y}/2/0_0.png"
+        ]
+      },
+      {
+        "observedAt": "2026-11-04T16:00:00.000Z",
+        "tiles": [
+          "https://tilecache.rainviewer.com/v2/radar/6f81fe9e7e22/256/{z}/{x}/{y}/2/0_0.png"
+        ]
+      }
+    ],
+    "maxzoom": 7,
+    "source": "RainViewer radar composite",
+    "tier": "radar-observation",
+    "fetchedAt": "2026-11-04T16:08:43.672Z",
+    "coverageTiles": [
+      "https://tilecache.rainviewer.com/v2/coverage/0/256/{z}/{x}/{y}/0/0_0.png"
+    ],
+    "sourceUrl": "https://www.rainviewer.com",
+    "termsUrl": "https://www.rainviewer.com/api.html"
+  },
+  "fetchedAt": "2026-11-04T16:08:53.243Z"
+}

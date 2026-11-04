@@ -9,8 +9,10 @@ function validStamp(value) {
 }
 export function validImageryProduct(p) {
  if(!p || typeof p.available!=='boolean' || !Array.isArray(p.tiles) || !Array.isArray(p.dates) || typeof p.source!=='string' || !p.source.trim() || typeof p.tier!=='string' || !p.tier.trim())return false;
+ const ext=p.ext??'png';
+ if(!['png','jpg'].includes(ext))return false;
  if(!p.available)return p.date===null && p.tiles.length===0 && p.dates.every(validStamp) && ['catalog_unavailable','layer_time_unavailable','no_usable_published_frame'].includes(p.availabilityReason) && (p.fetchedAt===null || validStamp(p.fetchedAt));
- return validStamp(p.date) && p.availabilityReason===null && p.dates.every(validStamp) && p.dates.includes(p.date) && p.tiles.length===1 && typeof p.tiles[0]==='string' && /^https:\/\/gibs\.earthdata\.nasa\.gov\/wmts\/epsg3857\/best\//.test(p.tiles[0]) && p.tiles[0]===`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/${p.layer}/default/${p.date}/GoogleMapsCompatible_Level${p.maxzoom}/{z}/{y}/{x}.png` && validStamp(p.fetchedAt) && (p.id==='himawari'?p.date.includes('T')&&Date.now()-Date.parse(p.date)<=3*3600000:/^\d{4}-\d{2}-\d{2}$/.test(p.date));
+ return validStamp(p.date) && p.availabilityReason===null && p.dates.every(validStamp) && p.dates.includes(p.date) && p.tiles.length===1 && typeof p.tiles[0]==='string' && /^https:\/\/gibs\.earthdata\.nasa\.gov\/wmts\/epsg3857\/best\//.test(p.tiles[0]) && p.tiles[0]===`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/${p.layer}/default/${p.date}/GoogleMapsCompatible_Level${p.maxzoom}/{z}/{y}/{x}.${ext}` && validStamp(p.fetchedAt) && (p.id==='himawari'?p.date.includes('T')&&Date.now()-Date.parse(p.date)<=3*3600000:/^\d{4}-\d{2}-\d{2}$/.test(p.date));
 }
 export function validImageryCatalogue(status,products) {
  return status===200 && Array.isArray(products) && products.length===ENVIRONMENT_IDS.length && ENVIRONMENT_IDS.every(id=>products.filter(p=>p?.id===id).length===1) && products.every(validImageryProduct);

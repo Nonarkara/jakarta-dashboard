@@ -1,0 +1,767 @@
+
+> jakarta-dashboard@1.0.0 release
+> bash scripts/deploy-live.sh
+
+
+> jakarta-dashboard@1.0.0 typecheck
+> tsc --noEmit
+
+
+> jakarta-dashboard@1.0.0 verify
+> node scripts/verify-local.mjs
+
+  ✓ package.json parses
+  ✓ wrangler.toml parses
+  ✓ tsconfig.json parses
+  ✓ public/index.html present + has expected markers
+  ✓ public/jakarta-areas.json parses + 12 areas
+  ✓ public/style.css parses + has root tokens
+  ✓ public/app.js parses as JS (basic syntax)
+  ✓ public/atlas-layout.js is loaded before the deferred client
+  ✓ building heights are real metres (no multiplier)
+  ✓ city layers wait on a style promise armed at map construction
+  ✓ landmarks use real OSM footprints with a cited height
+  ✓ index.html does not preload whole PMTiles archives
+  ✓ src/index.ts parses + has key handlers
+
+13/13 passed
+
+> jakarta-dashboard@1.0.0 test
+> node scripts/test-release-contract.mjs && node scripts/test-client-contract.mjs && node scripts/test-dashboard-boot.mjs && node scripts/test-theme-contract.mjs && node scripts/test-environment-contract.mjs && node scripts/test-i18n-contract.mjs && node scripts/test-browser-forecast.mjs && node scripts/test-jakarta-contract.mjs && node scripts/test-localized-design.mjs && node scripts/test-popup-contract.mjs && node scripts/test-building-filter.mjs && node scripts/test-official-data.mjs && node scripts/test-flood-network.mjs && node scripts/test-insight-views.mjs && node scripts/test-insight-runtime.mjs && node scripts/test-research-paper.mjs && node scripts/test-water-traffic.mjs && node scripts/test-water-recovery.mjs && node scripts/test-lens-evidence.mjs && node scripts/test-panel-readiness.mjs && node scripts/mutate-panel-readiness.mjs && node scripts/test-mutation-fixture.mjs && node scripts/mutate-lens-evidence.mjs && node scripts/test-refusal.mjs && node scripts/mutate-refusal.mjs && node scripts/test-source-status.mjs && node scripts/test-chrome-verdict.mjs && node scripts/test-chrome-census.mjs && node scripts/test-ciliwung-route.mjs && node scripts/test-air-timeline.mjs && node scripts/test-fires-air-forecast.mjs && node scripts/test-source-catalog.mjs && node scripts/test-release-snapshot.mjs && node scripts/test-place-context.mjs && node scripts/test-city-tools.mjs && node scripts/test-official-networks.mjs && node scripts/test-official-drainage.mjs && node scripts/test-phone-menu-overflow.mjs && node scripts/test-coastal.mjs && node scripts/test-worldcover-reference.mjs && node scripts/test-water-context.mjs && node scripts/test-wind-field.mjs && node scripts/test-green-space.mjs && node scripts/test-synoptic.mjs && node scripts/test-haze-transport.mjs && node scripts/test-flow-canvas.mjs && node scripts/test-research-page.mjs && node scripts/test-rate-limit.mjs && node scripts/test-worker-bundle.mjs && node scripts/test-temporal-admission.mjs && node scripts/test-spatial-reasons.mjs && node scripts/mutate-spatial-reasons.mjs && npm run audit:design && node scripts/mutate-anti-slop.mjs && node scripts/test-open-session.mjs && node scripts/test-haze-evidence.mjs && node scripts/test-polder-budget.mjs && node scripts/test-polder-preparedness.mjs && node scripts/test-polder-preparedness-runtime.mjs
+
+PASS release contract: input validation, bbox, air-quality truth, nearest-sample honesty, retired feeds, HEAD, Range, health, headers, release identity and dedication
+PASS client contract: map bootstrap, grouped layers, rail, provenance text, zero values, escaping, WebGL/CDN fallback, feature selection, bridge and reduced motion
+PASS dashboard boot: the client runs top to bottom, and an undefined name is refused
+dark body 15.83 secondary 10.21
+light body 11.81 secondary 7.21
+contrast body 18.43 secondary 15.49
+PASS theme contract: all text/control contrasts, three theme choices, preference persistence, invalid preference, inaccessible storage, system high contrast
+PASS environment contract: provider dates, product matrices, fixed radar host/paths, stale/future frames, UTC, complete forecast sums, zero and missing data
+PASS bilingual contract: complete static catalog, default Indonesian, reversible English, dynamic outage updates and accessible names
+PASS native research: bilingual costs/documents/status/types, unchanged unknown values, visible switch, accessible attributes and state preservation
+PASS browser forecast: zero, complete hours, stale time, units, coordinates and count
+PASS Jakarta: forecast identity/age/null, CAP cancellation/expiry/coordinates, quake coordinates, upstream failures, empty reports, transit geometry and selected civic fields
+PASS local identity: three-theme contrast including green fields, licensed font, shared assets, rain semantics, CRM consent-to-load/close/focus and truthful viewer state
+PASS popup contract: explicit opening, closing/focus, preserved sections and responsive panel docking
+PASS building filters: bounds, unknowns, height provenance, grouped tags and landmark-part semantics
+PASS cold-load bridge: queued camera commands retain final user intent
+PASS official data: proposal identity/units/coordinate quarantine, annual-period totals, geometry/field allowlist, historical facts and future targets
+PASS civic loading: search during pending fetch, request deduplication, failed response and successful empty reference
+PASS live-overlay bridge: imported MultiPolygon reaches source/camera; out-of-region multipart geometry rejected
+PASS flood network overlays: allowlists, DKI bounds, SIAGA band parsing and closed geometry
+PASS risk reference and population: class domain, closure, joinable codes and kota-consistent WNI totals
+PASS flood desk summary: reconciled counts, upstream listing, exposure join and explicit access states
+PASS flood desk client: dialog, overlay kinds, coupling script and evidence export wired
+PASS dated BPBD observations: source time, twelve stations, seven hourly levels, signed changes and separate datums
+PASS insight views: derived provenance, exposure counted once and joined, green area with every unplaced row counted, coverage never reporting absence as zero, confidence vocabulary, and four bilingual lenses that clean up after themselves
+PASS insight runtime: four lenses build their real layers, paint from theme tokens, state their source and date, and clear themselves on exit
+PASS water scenario: exact station endpoints, variable travel time, independent gauge datum, map layers, limitations and cleanup
+PASS map sizing: initial canvas setup, live-reading stability and responsive resize
+PASS regional haze: meaningful regional zoom, source limits and direct-exit cleanup
+PASS air evidence refresh: controller delegation preserves the model timeline
+PASS research paper: paper/legal/about panes bilingual, figures computed from shipped data, builder identity with non-affiliation, house presentation rules kept
+PASS water/traffic: source coverage, coordinates, future gauge rejection, predicted-flow tiers, volume arithmetic, cleanup order, camera access boundaries and fixed JAXA proxy
+PASS water recovery: independent mount, scoped/single retry, preserved edits, late-layer order, no camera reset, exit guard, malformed input and Bahasa
+PASS lens evidence: the water lens opens its own evidence, and the legend is the count’s own breakdown — adjacent, labelled, and never an empty line
+PASS panel readiness: unchanged pending sources, terminal timeout, recursive lazy controls, equal-length changes and missing panel
+KILL start quiet time before pending work ends
+KILL ignore plain loading text
+KILL ignore trailing loading text
+KILL ignore unchanged in-flight requests
+KILL expand only the original disclosure
+KILL compare only text length
+PASS panel readiness mutants: 6/6 killed, no missing anchors
+PASS mutation execution: normal assertion exit, clean exit, actual buffer failure, signals and timeout classification
+PASS clean reduced fixture: scripts/test-lens-evidence.mjs
+KILL  the water lens stops opening its own evidence (the shipped defect)
+KILL  the legend goes back to its shipped place, below four unrelated sections
+KILL  the legend holds a line of space while the count has not arrived
+KILL  the legend fills but never appears
+KILL  the panel control floor goes back to 44px (the shipped defect)
+KILL  the traffic lens leaves the sweep (the shipped blindness)
+KILL  the rail rule reaches the panel again (the shipped leak)
+KILL  the audit stops opening the disclosures, so the controls stay unseen
+
+8/8 killed
+PASS refusal: one reader, the retry window kept, the water and air lenses state a refusal instead of a claim, and every client goes through the shared rule
+PASS clean reduced fixture: scripts/test-refusal.mjs
+KILL  the shared reader stops throwing on a refusal (the shipped defect)
+KILL  the retry window is dropped from the header
+KILL  a refusal stops being recognisable
+KILL  the copy stops naming the window
+KILL  the copy stops naming the cause
+KILL  the water lens falls through to the static reference (the shipped false claim)
+KILL  the air lens reports a refusal as an invalid model
+KILL  the atlas client stops using the shared reader
+KILL  a client stops importing the shared rule
+KILL  pressure drops the refused request state
+KILL  wind leaves an ordinary failed request loading
+
+11/11 killed
+source status: one line per source, one rule for both pages.
+PASS availability vs zero, mixed sample ages, upcoming slots, stable announcements and winter/summer zones
+PASS chrome verdict: exact positive delta, healthy control, missing/error/timeout outcomes and unrelated mismatches
+PASS actual chrome falsifier: positive control, navigation failure, unrelated mismatch, surviving band and cleanup
+PASS actual census reader: healthy geometry, bounded pending font/geometry, rejected font and route/width/stage diagnostics
+PASS actual census sweep: unreadable state fails with denominator and closes browser/server
+PASS ciliwung route: published anchors, admission gates recomputed, connector-free geometry, raw evidence retained
+PASS air timeline: UTC/grid/unit/timestamp-join validation, outage and null honesty, piecewise wind-trajectory transport math
+PASS fractional transport and time-anchored wind gaps
+PASS NASA fires and air forecast: bounded CSV/schema, dates, unknown power, 24h observations, ordered bounded model hours
+source catalog: JSON/CSV parity, statuses, dates and asset hashes verified
+PASS release snapshot: unchanged bytes pass; late mutation and deletion fail
+Place context: distance, real reference joins, boundary validation, partial failure, retry and abort passed.
+PASS 3D place handoff: actual tower footprint replaces the ground-plane click.
+PASS city tools: bilingual local search, exact dedup, CRS/coordinate gates, viewport export, source states, zero/null and immutable source geometry.
+PASS official drainage: source count reconciliation, geometry/reference limits, actual map layers, separate OSM, Range route and complete exit cleanup.
+PASS official drainage: every source page/digest, count reconciliation, honest metadata, archive hash/header, polder invalid-shape flags
+PASS phone menu drawer: trailing-edge anchor and viewport-capped width keep the 390px drawer inside the viewport
+PASS BMKG coastal forecast: identity, bounded dates/rows/bytes, strict numbers, zero/negative tides, sorted deduplication, unknown datum, cache revalidation and explicit outages
+PASS WorldCover native class reconciliation, provenance, bounds, SHA256 and every nearest-neighbour display pixel
+PASS water context: actual source contracts, explicit datum/history, cell shares, opt-in image bounds, nearest categories, independent failures, retry and late-response guard
+PASS wind field: bearing conversion, bounded interpolation, the no-concentration law, lifecycle and endpoint validation
+PASS wind arrowheads, open panel and AOD pixel note
+PASS air lens slim panel, folded CAMS, phone chip, ID/EN AOD note
+PASS wind compass: vector mean, calm, compass points, km/h, valid time
+PASS wind controller refuses a stale or future check without drawing
+PASS green space: NDVI tile/classification, the never-summed law, own dates, baked-overlay pattern and zoom scale
+test-synoptic: ok
+test-haze-transport: ok
+PASS flow canvas: exact uniform reads, no wind past the grid reach, 36 km/h easterly moves 36 km west, cos(lat) longitude scaling
+test-research-page: ok
+  · killed: the limit stops limiting
+  · killed: the native binding is ignored
+  · killed: a fault in the limiter blocks the data
+  · killed: the counter is never incremented
+PASS rate limit: native binding preferred, in-isolate fallback, a limiter fault never blocks the publisher, and every mutant is killed
+  · the shipped bundler bundles the Worker, refuses a missing dependency by name, and resolves nested imports
+  · killed: a missing dependency is ignored
+  · killed: a bare specifier in an inlined module is ignored
+  · killed: a nested relative import is dropped
+PASS worker bundle: the import graph is resolved by the bundler, a missing dependency is refused by name, and every mutant is killed
+PASS temporal admission: exact-hour anchor, no neighbour borrow, one shared rule across every live lens
+PASS stale reason: a reason with nothing under it is named
+PASS stale reason: a reason with a decision under it is kept
+PASS stale reason: a narrowed sweep judges nothing and says so
+PASS stale reason: a sweep missing a recorded width is not complete
+PASS stale reason: the kind is part of the decision
+PASS stale reason: overflow is not a decision
+PASS stale reason: the decision key is kind and selector
+PASS stale reason: the gate calls the rule
+
+PASS spatial reasons: a reason with nothing under it is named, and a narrowed sweep judges nothing
+PASS clean reduced fixture: scripts/test-spatial-reasons.mjs
+KILL  the rule never finds a stale reason
+KILL  the rule judges a narrowed sweep
+KILL  the rule compares the selector but not the kind
+KILL  the gate stops consulting the rule
+
+4/4 killed
+
+> jakarta-dashboard@1.0.0 audit:design
+> node scripts/test-anti-slop-design.mjs
+
+PASS anti-slop contracts, preserved visuals, independent loading, truthful unknowns, motion and language continuity
+PASS no ancestor of the fixed lens panel establishes a containing block
+PASS evidence rail states an order (14 / 13 / 12 / 11), labels below their values
+PASS research index reaches all 8 sections, bilingual
+PASS the atlas mounts a research door beside the evidence drawer, in both languages
+PASS a review verdict is answered: 10 findings dispositioned, none left unanswered, and its numbers still match the source
+PASS clean reduced fixture: scripts/test-anti-slop-design.mjs
+KILL  research index drops a section again (the shipped defect)
+KILL  contents nav links to a section that does not exist
+KILL  a contents entry loses its English half
+KILL  the atlas drops the research door entirely
+KILL  the research door is buried inside the collapsed drawer
+KILL  the research door points somewhere else
+KILL  the research door loses its Indonesian name
+KILL  the page adopts a second name for the research page
+KILL  the review disposition receipt is deleted
+KILL  a finding is left unanswered
+KILL  the lede goes back to a measure that is 80 characters wide
+
+11/11 killed
+PASS open-session expiry, visibility refresh, abort/late replies, cleanup and live gauge ageing
+PASS real FIRMS FeatureCollection/fetchedAt and24h detection age
+PASS haze evidence: time/confidence bins, zero vs outage, bounds, numeric receptors, exact expiry, fixed raster allowlist and signature/byte limits
+PASS polder budget: raw hashes, exclusions, native cells, exact rain intervals, actual-cell distance, unknowns and water conservation
+PASS preparedness: source hashes, duplicate reconciliation, all boundary lists, unknowns, malformed assets and spreadsheet-injection protection
+PASS actual preparedness controller: paging/search, precise map/readout, reference export scope, cache, retry, boundary cleanup and late response disposal
+
+> jakarta-dashboard@1.0.0 audit:spatial
+> node scripts/spatial-gate.mjs
+
+· building the route site
+  · route site built at /Users/nonarkara/Projects/dashboards/Jakarta-dashboard/out/route-site
+  · routes: / -> index.html (dashboard), /atlas -> atlas.html, /research -> research.html
+  · breakpoint source: 3 stylesheet(s) + inline <style> from 3 pages
+  · falsifier copy at /Users/nonarkara/Projects/dashboards/Jakarta-dashboard/out/route-site-falsify (the atlas at the root and as a top-level page, so the first action exists and the root does not clip)
+  · 22.6 MB
+  · the vendored instrument matches its recorded hash
+· sweeping 52 widths across 4 routes
+  · 1/4 routes
+  · 2/4 routes
+  · 3/4 routes
+
+NOTES (1) — seen, recorded, and not a failure:
+  · stale reasons were not checked — the run was told which routes to measure
+  · spatial: 208 measurements across 4 routes and 52 widths — every hole, orphan, scattered pair and wrap is either fixed or written down   · spatial: every measurement was a fresh load at the width measured, on a real clock — the chrome of each page is recorded, and a chrome that changed is a change the receipt cannot hide
+  · every reason in the baseline still has a decision under it
+
+> jakarta-dashboard@1.0.0 audit:chrome
+> node scripts/chrome-census.mjs
+
+  · route site built at /Users/nonarkara/Projects/dashboards/Jakarta-dashboard/out/route-site
+  · routes: / -> index.html (dashboard), /atlas -> atlas.html, /research -> research.html
+  · breakpoint source: 3 stylesheet(s) + inline <style> from 3 pages
+  · falsifier copy at /Users/nonarkara/Projects/dashboards/Jakarta-dashboard/out/route-site-falsify (the atlas at the root and as a top-level page, so the first action exists and the root does not clip)
+  · 22.6 MB
+  · census / @339px START
+  · census / @339px OK 27px
+  · census / @340px START
+  · census / @340px OK 27px
+  · census / @341px START
+  · census / @341px OK 27px
+  · census / @360px START
+  · census / @360px OK 27px
+  · census / @379px START
+  · census / @379px OK 27px
+  · census / @380px START
+  · census / @380px OK 27px
+  · census / @381px START
+  · census / @381px OK 27px
+  · census / @429px START
+  · census / @429px OK 27px
+  · census / @430px START
+  · census / @430px OK 27px
+  · census / @431px START
+  · census / @431px OK 27px
+  · census / @449px START
+  · census / @449px OK 27px
+  · census / @450px START
+  · census / @450px OK 27px
+  · census / @451px START
+  · census / @451px OK 27px
+  · census / @479px START
+  · census / @479px OK 27px
+  · census / @480px START
+  · census / @480px OK 27px
+  · census / @481px START
+  · census / @481px OK 27px
+  · census / @519px START
+  · census / @519px OK 27px
+  · census / @520px START
+  · census / @520px OK 27px
+  · census / @521px START
+  · census / @521px OK 27px
+  · census / @599px START
+  · census / @599px OK 27px
+  · census / @600px START
+  · census / @600px OK 27px
+  · census / @601px START
+  · census / @601px OK 38px
+  · census / @699px START
+  · census / @699px OK 38px
+  · census / @700px START
+  · census / @700px OK 38px
+  · census / @701px START
+  · census / @701px OK 38px
+  · census / @702px START
+  · census / @702px OK 38px
+  · census / @759px START
+  · census / @759px OK 38px
+  · census / @760px START
+  · census / @760px OK 38px
+  · census / @761px START
+  · census / @761px OK 38px
+  · census / @768px START
+  · census / @768px OK 38px
+  · census / @799px START
+  · census / @799px OK 38px
+  · census / @800px START
+  · census / @800px OK 38px
+  · census / @801px START
+  · census / @801px OK 38px
+  · census / @838px START
+  · census / @838px OK 38px
+  · census / @839px START
+  · census / @839px OK 38px
+  · census / @840px START
+  · census / @840px OK 38px
+  · census / @899px START
+  · census / @899px OK 38px
+  · census / @900px START
+  · census / @900px OK 38px
+  · census / @901px START
+  · census / @901px OK 38px
+  · census / @999px START
+  · census / @999px OK 38px
+  · census / @1000px START
+  · census / @1000px OK 38px
+  · census / @1001px START
+  · census / @1001px OK 38px
+  · census / @1024px START
+  · census / @1024px OK 38px
+  · census / @1099px START
+  · census / @1099px OK 38px
+  · census / @1100px START
+  · census / @1100px OK 38px
+  · census / @1101px START
+  · census / @1101px OK 38px
+  · census / @1198px START
+  · census / @1198px OK 38px
+  · census / @1199px START
+  · census / @1199px OK 38px
+  · census / @1200px START
+  · census / @1200px OK 38px
+  · census / @1201px START
+  · census / @1201px OK 38px
+  · census / @1440px START
+  · census / @1440px OK 38px
+  · census / @1920px START
+  · census / @1920px OK 38px
+  · / done
+  · census /atlas @339px START
+  · census /atlas @339px OK 0px
+  · census /atlas @340px START
+  · census /atlas @340px OK 0px
+  · census /atlas @341px START
+  · census /atlas @341px OK 0px
+  · census /atlas @360px START
+  · census /atlas @360px OK 0px
+  · census /atlas @379px START
+  · census /atlas @379px OK 0px
+  · census /atlas @380px START
+  · census /atlas @380px OK 0px
+  · census /atlas @381px START
+  · census /atlas @381px OK 0px
+  · census /atlas @429px START
+  · census /atlas @429px OK 0px
+  · census /atlas @430px START
+  · census /atlas @430px OK 0px
+  · census /atlas @431px START
+  · census /atlas @431px OK 0px
+  · census /atlas @449px START
+  · census /atlas @449px OK 0px
+  · census /atlas @450px START
+  · census /atlas @450px OK 0px
+  · census /atlas @451px START
+  · census /atlas @451px OK 0px
+  · census /atlas @479px START
+  · census /atlas @479px OK 0px
+  · census /atlas @480px START
+  · census /atlas @480px OK 0px
+  · census /atlas @481px START
+  · census /atlas @481px OK 0px
+  · census /atlas @519px START
+  · census /atlas @519px OK 0px
+  · census /atlas @520px START
+  · census /atlas @520px OK 0px
+  · census /atlas @521px START
+  · census /atlas @521px OK 0px
+  · census /atlas @599px START
+  · census /atlas @599px OK 0px
+  · census /atlas @600px START
+  · census /atlas @600px OK 0px
+  · census /atlas @601px START
+  · census /atlas @601px OK 0px
+  · census /atlas @699px START
+  · census /atlas @699px OK 0px
+  · census /atlas @700px START
+  · census /atlas @700px OK 0px
+  · census /atlas @701px START
+  · census /atlas @701px OK 0px
+  · census /atlas @702px START
+  · census /atlas @702px OK 0px
+  · census /atlas @759px START
+  · census /atlas @759px OK 0px
+  · census /atlas @760px START
+  · census /atlas @760px OK 0px
+  · census /atlas @761px START
+  · census /atlas @761px OK 0px
+  · census /atlas @768px START
+  · census /atlas @768px OK 0px
+  · census /atlas @799px START
+  · census /atlas @799px OK 0px
+  · census /atlas @800px START
+  · census /atlas @800px OK 0px
+  · census /atlas @801px START
+  · census /atlas @801px OK 0px
+  · census /atlas @838px START
+  · census /atlas @838px OK 0px
+  · census /atlas @839px START
+  · census /atlas @839px OK 0px
+  · census /atlas @840px START
+  · census /atlas @840px OK 0px
+  · census /atlas @899px START
+  · census /atlas @899px OK 0px
+  · census /atlas @900px START
+  · census /atlas @900px OK 0px
+  · census /atlas @901px START
+  · census /atlas @901px OK 0px
+  · census /atlas @999px START
+  · census /atlas @999px OK 0px
+  · census /atlas @1000px START
+  · census /atlas @1000px OK 0px
+  · census /atlas @1001px START
+  · census /atlas @1001px OK 0px
+  · census /atlas @1024px START
+  · census /atlas @1024px OK 0px
+  · census /atlas @1099px START
+  · census /atlas @1099px OK 0px
+  · census /atlas @1100px START
+  · census /atlas @1100px OK 0px
+  · census /atlas @1101px START
+  · census /atlas @1101px OK 0px
+  · census /atlas @1198px START
+  · census /atlas @1198px OK 0px
+  · census /atlas @1199px START
+  · census /atlas @1199px OK 0px
+  · census /atlas @1200px START
+  · census /atlas @1200px OK 0px
+  · census /atlas @1201px START
+  · census /atlas @1201px OK 0px
+  · census /atlas @1440px START
+  · census /atlas @1440px OK 0px
+  · census /atlas @1920px START
+  · census /atlas @1920px OK 0px
+  · /atlas done
+  · census /atlas-open @339px START
+  · census /atlas-open @339px OK 0px
+  · census /atlas-open @340px START
+  · census /atlas-open @340px OK 0px
+  · census /atlas-open @341px START
+  · census /atlas-open @341px OK 0px
+  · census /atlas-open @360px START
+  · census /atlas-open @360px OK 0px
+  · census /atlas-open @379px START
+  · census /atlas-open @379px OK 0px
+  · census /atlas-open @380px START
+  · census /atlas-open @380px OK 0px
+  · census /atlas-open @381px START
+  · census /atlas-open @381px OK 0px
+  · census /atlas-open @429px START
+  · census /atlas-open @429px OK 0px
+  · census /atlas-open @430px START
+  · census /atlas-open @430px OK 0px
+  · census /atlas-open @431px START
+  · census /atlas-open @431px OK 0px
+  · census /atlas-open @449px START
+  · census /atlas-open @449px OK 0px
+  · census /atlas-open @450px START
+  · census /atlas-open @450px OK 0px
+  · census /atlas-open @451px START
+  · census /atlas-open @451px OK 0px
+  · census /atlas-open @479px START
+  · census /atlas-open @479px OK 0px
+  · census /atlas-open @480px START
+  · census /atlas-open @480px OK 0px
+  · census /atlas-open @481px START
+  · census /atlas-open @481px OK 0px
+  · census /atlas-open @519px START
+  · census /atlas-open @519px OK 0px
+  · census /atlas-open @520px START
+  · census /atlas-open @520px OK 0px
+  · census /atlas-open @521px START
+  · census /atlas-open @521px OK 0px
+  · census /atlas-open @599px START
+  · census /atlas-open @599px OK 0px
+  · census /atlas-open @600px START
+  · census /atlas-open @600px OK 0px
+  · census /atlas-open @601px START
+  · census /atlas-open @601px OK 0px
+  · census /atlas-open @699px START
+  · census /atlas-open @699px OK 0px
+  · census /atlas-open @700px START
+  · census /atlas-open @700px OK 0px
+  · census /atlas-open @701px START
+  · census /atlas-open @701px OK 0px
+  · census /atlas-open @702px START
+  · census /atlas-open @702px OK 0px
+  · census /atlas-open @759px START
+  · census /atlas-open @759px OK 0px
+  · census /atlas-open @760px START
+  · census /atlas-open @760px OK 0px
+  · census /atlas-open @761px START
+  · census /atlas-open @761px OK 0px
+  · census /atlas-open @768px START
+  · census /atlas-open @768px OK 0px
+  · census /atlas-open @799px START
+  · census /atlas-open @799px OK 0px
+  · census /atlas-open @800px START
+  · census /atlas-open @800px OK 0px
+  · census /atlas-open @801px START
+  · census /atlas-open @801px OK 0px
+  · census /atlas-open @838px START
+  · census /atlas-open @838px OK 0px
+  · census /atlas-open @839px START
+  · census /atlas-open @839px OK 0px
+  · census /atlas-open @840px START
+  · census /atlas-open @840px OK 0px
+  · census /atlas-open @899px START
+  · census /atlas-open @899px OK 0px
+  · census /atlas-open @900px START
+  · census /atlas-open @900px OK 0px
+  · census /atlas-open @901px START
+  · census /atlas-open @901px OK 0px
+  · census /atlas-open @999px START
+  · census /atlas-open @999px OK 0px
+  · census /atlas-open @1000px START
+  · census /atlas-open @1000px OK 0px
+  · census /atlas-open @1001px START
+  · census /atlas-open @1001px OK 0px
+  · census /atlas-open @1024px START
+  · census /atlas-open @1024px OK 0px
+  · census /atlas-open @1099px START
+  · census /atlas-open @1099px OK 0px
+  · census /atlas-open @1100px START
+  · census /atlas-open @1100px OK 0px
+  · census /atlas-open @1101px START
+  · census /atlas-open @1101px OK 0px
+  · census /atlas-open @1198px START
+  · census /atlas-open @1198px OK 0px
+  · census /atlas-open @1199px START
+  · census /atlas-open @1199px OK 0px
+  · census /atlas-open @1200px START
+  · census /atlas-open @1200px OK 0px
+  · census /atlas-open @1201px START
+  · census /atlas-open @1201px OK 0px
+  · census /atlas-open @1440px START
+  · census /atlas-open @1440px OK 0px
+  · census /atlas-open @1920px START
+  · census /atlas-open @1920px OK 0px
+  · /atlas-open done
+  · census /research @339px START
+  · census /research @339px OK 37px
+  · census /research @340px START
+  · census /research @340px OK 37px
+  · census /research @341px START
+  · census /research @341px OK 37px
+  · census /research @360px START
+  · census /research @360px OK 37px
+  · census /research @379px START
+  · census /research @379px OK 37px
+  · census /research @380px START
+  · census /research @380px OK 37px
+  · census /research @381px START
+  · census /research @381px OK 37px
+  · census /research @429px START
+  · census /research @429px OK 37px
+  · census /research @430px START
+  · census /research @430px OK 37px
+  · census /research @431px START
+  · census /research @431px OK 37px
+  · census /research @449px START
+  · census /research @449px OK 37px
+  · census /research @450px START
+  · census /research @450px OK 37px
+  · census /research @451px START
+  · census /research @451px OK 37px
+  · census /research @479px START
+  · census /research @479px OK 37px
+  · census /research @480px START
+  · census /research @480px OK 37px
+  · census /research @481px START
+  · census /research @481px OK 37px
+  · census /research @519px START
+  · census /research @519px OK 37px
+  · census /research @520px START
+  · census /research @520px OK 37px
+  · census /research @521px START
+  · census /research @521px OK 37px
+  · census /research @599px START
+  · census /research @599px OK 37px
+  · census /research @600px START
+  · census /research @600px OK 37px
+  · census /research @601px START
+  · census /research @601px OK 37px
+  · census /research @699px START
+  · census /research @699px OK 37px
+  · census /research @700px START
+  · census /research @700px OK 37px
+  · census /research @701px START
+  · census /research @701px OK 37px
+  · census /research @702px START
+  · census /research @702px OK 37px
+  · census /research @759px START
+  · census /research @759px OK 37px
+  · census /research @760px START
+  · census /research @760px OK 37px
+  · census /research @761px START
+  · census /research @761px OK 37px
+  · census /research @768px START
+  · census /research @768px OK 37px
+  · census /research @799px START
+  · census /research @799px OK 37px
+  · census /research @800px START
+  · census /research @800px OK 37px
+  · census /research @801px START
+  · census /research @801px OK 37px
+  · census /research @838px START
+  · census /research @838px OK 37px
+  · census /research @839px START
+  · census /research @839px OK 37px
+  · census /research @840px START
+  · census /research @840px OK 37px
+  · census /research @899px START
+  · census /research @899px OK 37px
+  · census /research @900px START
+  · census /research @900px OK 37px
+  · census /research @901px START
+  · census /research @901px OK 37px
+  · census /research @999px START
+  · census /research @999px OK 37px
+  · census /research @1000px START
+  · census /research @1000px OK 37px
+  · census /research @1001px START
+  · census /research @1001px OK 37px
+  · census /research @1024px START
+  · census /research @1024px OK 37px
+  · census /research @1099px START
+  · census /research @1099px OK 37px
+  · census /research @1100px START
+  · census /research @1100px OK 37px
+  · census /research @1101px START
+  · census /research @1101px OK 37px
+  · census /research @1198px START
+  · census /research @1198px OK 37px
+  · census /research @1199px START
+  · census /research @1199px OK 37px
+  · census /research @1200px START
+  · census /research @1200px OK 37px
+  · census /research @1201px START
+  · census /research @1201px OK 37px
+  · census /research @1440px START
+  · census /research @1440px OK 37px
+  · census /research @1920px START
+  · census /research @1920px OK 37px
+  · /research done
+
+· the census measured 208 page(s) and compared them with the receipt
+  · the receipt describes the page: every measurement of top chrome agrees with it
+
+
+> jakarta-dashboard@1.0.0 stamp
+> node scripts/stamp-build-id.mjs
+
+[stamp-build-id] wrote jakarta-atlas-20261104-1793808151-e80b3fe into index.html and app.js
+
+ ⛅️ wrangler 4.157.0
+────────────────────
+
+Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
+🌀 Building list of assets...
+✨ Read 343 files from the assets directory /Users/nonarkara/Projects/dashboards/Jakarta-dashboard/public
+🌀 Starting asset upload...
+🌀 Found 5 new or modified static assets to upload. Proceeding with upload...
++ /index.html
++ /dashboard.html
++ /research.html
++ /app.js
++ /dashboard.js
+Uploaded 1 of 5 assets
+Uploaded 3 of 5 assets
+Uploaded 5 of 5 assets
+✨ Success! Uploaded 5 files (329 already uploaded) (2.22 sec)
+
+Total Upload: 241.01 KiB / gzip: 63.19 KiB
+Worker Startup Time: 3 ms
+Your Worker has access to the following bindings:
+Binding                                   Resource        
+env.JAKARTA_TILES (jakarta-tiles)         R2 Bucket       
+env.RATE_LIMITER (600 requests/60s)       Rate Limit      
+env.ASSETS                                Assets          
+
+Uploaded jakarta-3d-atlas (20.02 sec)
+Deployed jakarta-3d-atlas triggers (16.39 sec)
+  https://jakarta-3d-atlas.drnon.workers.dev
+  jakarta.nonarkara.org (custom domain)
+Current Version ID: 6f1702ea-5e14-49f4-860d-e1086a406d56
+Waiting for jakarta-3d-atlas.drnon.workers.dev: The operation was aborted due to timeout, fetch failed
+Waiting for jakarta-3d-atlas.drnon.workers.dev: The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout
+Waiting for jakarta-3d-atlas.drnon.workers.dev: The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout
+Waiting for jakarta-3d-atlas.drnon.workers.dev: The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout
+Waiting for jakarta-3d-atlas.drnon.workers.dev: The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout
+Waiting for jakarta-3d-atlas.drnon.workers.dev: The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, fetch failed, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout
+Waiting for jakarta-3d-atlas.drnon.workers.dev: The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, fetch failed, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, fetch failed
+Waiting for jakarta-3d-atlas.drnon.workers.dev: The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, fetch failed, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout
+Waiting for jakarta-3d-atlas.drnon.workers.dev: The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout
+Waiting for jakarta-3d-atlas.drnon.workers.dev: The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout
+Waiting for jakarta-3d-atlas.drnon.workers.dev: The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout
+Waiting for jakarta-3d-atlas.drnon.workers.dev: The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout
+Waiting for jakarta-3d-atlas.drnon.workers.dev: The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout, The operation was aborted due to timeout
+PASS three consecutive matching byte probes: https://jakarta-3d-atlas.drnon.workers.dev · jakarta-atlas-20261104-1793808151-e80b3fe
+PASS three consecutive matching byte probes: https://jakarta.nonarkara.org · jakarta-atlas-20261104-1793808151-e80b3fe
+
+> jakarta-dashboard@1.0.0 smoke
+> node scripts/smoke-atlas.mjs
+
+Smoke-testing https://jakarta.nonarkara.org
+  PASS  index.html references app.js with cache-buster
+  PASS  index.html loads the atlas client as a load-blocking script
+  PASS  index.html references style.css with cache-buster
+  PASS  index.html does not preload PMTiles
+  PASS  app.js declares ATLAS_BUILD_TAG
+  PASS  deployed build matches HTML and release stamp
+  PASS  app.js adds layers on style.load, not after every tile
+  PASS  app.js adds the buildings layer (jkt-buildings)
+  PASS  app.js adds the waterways layer
+  PASS  app.js calls applyAllLayers() from onMapReady
+  PASS  app.js posts a ready handshake with version + sources
+  PASS  app.js has a fail-loud self-test for missing buildings
+  PASS  /jakarta-buildings.pmtiles responds with Range support
+  PASS  /jakarta-waterways.pmtiles responds with Range support
+  PASS  /jakarta-buildings.pmtiles has CORS for the dashboard origin
+
+ALL PASS
+PASS official network live: 206 Range, PMTiles header, complete archive SHA256 and 65 polder references
+PASS live BMKG Priok forecast: 40 dated points; issued 2026-11-03T12:00:00Z; datum unknown
+PASS exact water-context client and WorldCover manifest/image hashes
+
+> jakarta-dashboard@1.0.0 smoke:api
+> node scripts/smoke-atlas-api.mjs
+
+JKTx 3D Atlas smoke · https://jakarta.nonarkara.org
+  ✓ atlas.areas returns the 12 places  200 count=12
+  ✓ atlas.districts lists the five kota  200 count=5
+  ✓ atlas.at-this-point locates Sudirman–Thamrin  200 nearest=sudirman-thamrin
+  ✓ atlas.at-this-point names its model sample  sample=pusat
+  ✓ atlas.buildings points to PMTiles  200 sizeMb=124.65325355529785
+  ✓ air quality returns model AQI with valid time  200 rows=5
+  ✓ city watch answers with five places  200 places=5
+  ✓ health sees the building archive  200 ok=true
+  ✓ atlas.at-this-point rejects out-of-bbox  400 error=out_of_jakarta_bbox
+  ✓ atlas.at-this-point rejects invalid input  400 error=invalid_coordinates
+  ✗ satellite catalogue preserves identities, dates and explicit outages  200 products=10
+  ✓ NASA dated imagery availability  available=9/9; unavailable=none
+  ✓ Himawari dated infrared availability  2026-11-04T15:30:00Z
+  ✓ radar exposes past observations  frames=13
+  ✓ rainfall exposes five valid model samples  200 points=5
+  ✓ thermal detections are bounded and dated, or explicitly unavailable  HTTP 200 admitted=1621
+  ✓ air timeline exposes validated model hours or a bounded outage  HTTP 200 hours=48
+  ✓ a route with no current reading is an explicit outage, not an empty 200  HTTP 200 available=true
+  ✓ hydrology states a freshness window and its gauge states match the contract  200 fresh=50/60 window=3h states=fresh=50 stale=8 unknown=2
+  ✓ no prediction outside the window claims to be current  predictions=5 current=5
+  ✓ coastal forecast exposes published BMKG points or an explicit outage  HTTP 200 points=40
+  ✓ coastal points are sorted, deduplicated and strictly increasing  first=2026-11-04T00:00:00Z last=2026-11-06T21:00:00Z rows=40
+  ✓ coastal states its vertical datum is unpublished  BMKG port JSON does not publish the vertical datum. Tide for
+  ✓ coastal issuance is not from the future  issuedAt=2026-11-03T12:00:00Z
+  ✓ jaxa-tile rejects a date outside its 4-day window  400
+  ✓ jaxa-tile rejects an unknown product  400
+  ✓ jaxa-water answers with a bounded model run or an explicit outage  HTTP 200 validAt=2026-11-04T12:00:00Z
+  ✓ synoptic field exposes the provider grid, or an explicit outage  HTTP 200 cells=25 of 25 requested
+  ✓ synoptic cells are the provider cells, deduplicated  unique=25 of 25
+  ✓ every synoptic pressure stays inside a real sea-level observation  out-of-range hPa
+  ✓ synoptic wind stays a valid bearing and speed  bad wind
+  ✓ synoptic states 850 hPa is model wind, not a Himawari product  850 hPa is roughly 1.5 km up, not the ground. This is model 
+  ✓ synoptic carries no rainfall or cloud claim  available,contract,checkedAt,requestedPoints,cellCount,spacingKm,extentKm,bbox,hours,cells,source,sourceUrl,tier,units,freshnessPolicy,windNote,isobarNote,note
+  ✓ wind field exposes the provider model cells, or an explicit outage  HTTP 200 cells=8 of 11 requested
+  ✓ wind cells are the provider cells, deduplicated  unique=8 of 8
+  ✓ every wind cell keeps only validated hours  bad=0
+  ✓ wind field carries no concentration or plume field  available,contract,checkedAt,requestedPoints,cellCount,cellNote,spacingKm,hours,cells,source,sourceUrl,tier,units,freshnessPolicy,note
+  ✓ wind cells are inside the Jakarta rectangle  outside
+
+37/38 passed
+release FAILED after the bytes went live at jakarta-atlas-20261104-1793808151-e80b3fe.
+The stamp commit records what reached the edge; it is not a verdict.
+Fix the failing check, then release again — do not redeploy by hand.
