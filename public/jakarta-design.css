@@ -128,10 +128,14 @@ button:disabled { opacity: .65; cursor: wait; }
   clip-path: inset(50%); white-space: nowrap;
 }
 body[data-surface="jakarta-dashboard"] .masthead {
-  padding: 2px 12px; gap: 4px 12px; align-items: center;
-  display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
+  padding: 2px 12px; gap: 8px; align-items: center;
+  display: flex;
 }
-.city-brand { display: flex; align-items: center; gap: 6px; height: 44px; }
+.city-brand { flex: none; }
+.map-heading { flex: 1; text-align: center; }
+.city-navigation { flex: none; }
+.city-preferences { flex: none; }
+.city-brand { flex: none; gap: 6px; height: 44px; }
 .city-brand-icon {
   display: inline-block; width: 32px; height: 36px; flex: none;
   background: url('/brand/jktx-symbol.png') center / auto 44px no-repeat;
@@ -166,8 +170,26 @@ body[data-surface="jakarta-dashboard"] .status-strip { padding: 6px 0; border: 0
 body[data-surface="jakarta-dashboard"] .map-heading { padding: 4px 12px; }
 body[data-surface="jakarta-dashboard"] .map-heading > div { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
 body[data-surface="jakarta-dashboard"] .map-heading h2 { margin: 0; }
+body[data-surface="jakarta-dashboard"] .masthead .map-heading {
+  flex: none;
+  margin: 0 8px;
+  padding: 0;
+}
+body[data-surface="jakarta-dashboard"] .masthead .map-heading > div {
+  display: flex; flex-direction: column; align-items: center; gap: 1px;
+}
+body[data-surface="jakarta-dashboard"] .masthead .map-heading h2 {
+  margin: 0; font-size: var(--type-note); line-height: 1.2;
+}
+body[data-surface="jakarta-dashboard"] .masthead .map-heading .eyebrow {
+  font-size: 11px; letter-spacing: 1px; color: var(--dim);
+}
+body[data-surface="jakarta-dashboard"] .masthead .map-status {
+  font-size: var(--type-note); color: var(--dim);
+}
 @media (max-width: 1000px) {
-  body[data-surface="jakarta-dashboard"] .masthead { grid-template-columns: minmax(0, 1fr) auto; gap: 0; }
+  body[data-surface="jakarta-dashboard"] .masthead { flex-direction: column; gap: 4px; padding: 2px 8px; }
+  body[data-surface="jakarta-dashboard"] .masthead .map-heading { order: 2; width: 100%; text-align: left; }
   body[data-surface="jakarta-dashboard"] .sections { grid-column: 1 / -1; grid-row: 2; }
   body[data-surface="jakarta-dashboard"] .sections a { padding-block: 6px; }
   .city-controls { grid-column: 2; grid-row: 1; }
