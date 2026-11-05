@@ -8,6 +8,10 @@ export async function auditDashboardChrome(browser,base,{shots='',archiveBase=''
   if(archiveBase)await page.route('**/*.pmtiles*',r=>r.fetch({url:archiveBase+new URL(r.request().url()).pathname+new URL(r.request().url()).search}).then(response=>r.fulfill({response})));
   try{
    await page.goto(base+'/?lang=en',{waitUntil:'domcontentloaded',timeout:90000});
+   for(const id of ['language','source-status','source-status-line','source-status-overview','source-status-rows','map-status','map-heading','basemap','clear-overlay'])assert.equal(await page.locator('#'+id).count(),1,'controller node retained: '+id);
+   assert.equal(await page.locator('#city-navigation').evaluate(e=>e.tagName),'DETAILS','Menu retains native disclosure behavior');
+   assert.equal(await page.locator('#city-navigation').evaluate(e=>!!e.closest('header.masthead')),true,'navigation shares the compact band');
+
    await page.waitForFunction(()=>document.getElementById('map-status')?.textContent.includes('ready'),null,{timeout:90000});
    const frame=page.frames().find(f=>f.url().includes('/atlas?'));
    assert.ok(frame,'the dashboard mounts its map');
@@ -27,6 +31,25 @@ export async function auditDashboardChrome(browser,base,{shots='',archiveBase=''
    assert.ok(normal.sourceVisible&&normal.sourceHittable,'source trigger is visible and hittable');
    assert.ok(normal.header.height<=(width===390?28:40),'content-sized masthead');
    assert.ok(normal.map.height>=height*.6,'map remains the first-screen task');
+   assert.ok(normal.map.y-normal.header.bottom<=2,'no repeated identity strip between masthead and map');
+   await page.evaluate(()=>{const panel=document.querySelector('.map-panel'),frame=document.getElementById('city-map');window.savedMapEntry={panel:panel.style.cssText,frame:frame.style.cssText};document.querySelector('.map-heading').classList.remove('visually-hidden');panel.style.setProperty('grid-template-rows','18px minmax(0,1fr)','important');frame.style.setProperty('grid-row','2','important');});
+   const extraStrip=await inspect();assert.ok(extraStrip.map.y-extraStrip.header.bottom>2,'restoring the old18px strip must fail the map-entry budget');
+   await page.evaluate(()=>{document.querySelector('.map-heading').classList.add('visually-hidden');document.querySelector('.map-panel').style.cssText=window.savedMapEntry.panel;document.getElementById('city-map').style.cssText=window.savedMapEntry.frame;});
+   if(width===390){
+    await page.locator('#city-navigation > summary').click();
+    await page.locator('#city-navigation [data-open="weather-detail-dialog"]').click();
+    assert.equal(await page.locator('#weather-detail-dialog').isVisible(),true,'Menu opens weather');
+    await page.keyboard.press('Escape');
+    if(await page.locator('#city-navigation').getAttribute('open')!==null)await page.locator('#city-navigation > summary').click();
+   }
+   await page.locator('.city-controls > summary').click();
+   for(const id of ['language','atlas-theme','basemap','clear-overlay'])assert.equal(await page.locator('#'+id).isVisible(),true,'retained control is reachable: '+id);
+   const originalPitch=await frame.evaluate(()=>mapInstance.getPitch());
+   await page.locator('.map-actions [data-view="2d"]').click();await frame.waitForFunction(()=>currentView==='2d'&&!mapInstance.isMoving()&&mapInstance.getPitch()===0,null,{polling:100});
+   await page.locator('.map-actions [data-view="3d"]').click();await frame.waitForFunction(()=>currentView==='3d'&&!mapInstance.isMoving()&&mapInstance.getPitch()>=30,null,{polling:100});
+   assert.ok(Math.abs(await frame.evaluate(()=>mapInstance.getPitch())-originalPitch)<.1,'3D control restores the actual camera pitch');
+   await page.locator('.city-controls > summary').click();
+
    if(shots)await page.screenshot({path:shots+'/after-'+width+'.png'});
    await page.locator('#source-status > summary').focus();await page.keyboard.press('Enter');
    assert.equal(await page.locator('#source-status-rows').isVisible(),true,'complete ledger is reachable');
@@ -56,10 +79,10 @@ export async function auditDashboardChrome(browser,base,{shots='',archiveBase=''
    assert.ok(enlarged.map.height>=height*.6,'source reading cannot steal map height at enlarged text');
    assert.equal(await page.locator('#refresh').isVisible(),true,'refresh remains reachable with enlarged text');
    if(shots)await page.screenshot({path:shots+'/after-enlarged-'+width+'.png'});
-   records.push({width,height,normal,opened,enlarged,map:await frame.evaluate(()=>({styleLoaded:mapInstance.isStyleLoaded(),renderedBuildings:mapInstance.queryRenderedFeatures({layers:['jkt-buildings']}).length})),errors});
+   records.push({width,height,normal,opened,enlarged,map:await frame.evaluate(()=>({styleLoaded:mapInstance.isStyleLoaded(),pitch:mapInstance.getPitch(),renderedBuildings:mapInstance.queryRenderedFeatures({layers:['jkt-buildings']}).length})),errors});
    assert.deepEqual(errors,[]);
   }finally{if(archiveBase)await page.unrouteAll({behavior:"wait"});await context.close();}
  }
- console.log('PASS dashboard chrome: three viewports, real buildings, overlap/hit checks, source action, enlarged text and original-fault falsifiers');
+ console.log('PASS dashboard chrome: three viewports, real buildings, overlap/hit checks, Menu/map controls, source action, enlarged text and original-fault/map-entry falsifiers');
  return records;
 }

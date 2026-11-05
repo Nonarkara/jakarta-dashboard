@@ -131,11 +131,7 @@ body[data-surface="jakarta-dashboard"] .masthead {
   padding: 2px 12px; gap: 4px 12px; align-items: center;
   display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
 }
-.city-brand { grid-column: 1; gap: 6px; height: 44px; }
-.map-heading { grid-column: 2; text-align: center; }
-.masthead-right { grid-column: 3; display: flex; gap: 8px; align-items: center; }
-.city-navigation { flex: none; }
-.city-preferences { flex: none; }
+.city-brand { display: flex; align-items: center; gap: 6px; height: 44px; }
 .city-brand-icon {
   display: inline-block; width: 32px; height: 36px; flex: none;
   background: url('/brand/jktx-symbol.png') center / auto 44px no-repeat;
@@ -170,26 +166,8 @@ body[data-surface="jakarta-dashboard"] .status-strip { padding: 6px 0; border: 0
 body[data-surface="jakarta-dashboard"] .map-heading { padding: 4px 12px; }
 body[data-surface="jakarta-dashboard"] .map-heading > div { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
 body[data-surface="jakarta-dashboard"] .map-heading h2 { margin: 0; }
-body[data-surface="jakarta-dashboard"] .masthead .map-heading {
-  flex: none;
-  margin: 0 8px;
-  padding: 0;
-}
-body[data-surface="jakarta-dashboard"] .masthead .map-heading > div {
-  display: flex; flex-direction: column; align-items: center; gap: 1px;
-}
-body[data-surface="jakarta-dashboard"] .masthead .map-heading h2 {
-  margin: 0; font-size: var(--type-note); line-height: 1.2;
-}
-body[data-surface="jakarta-dashboard"] .masthead .map-heading .eyebrow {
-  font-size: 11px; letter-spacing: 1px; color: var(--dim);
-}
-body[data-surface="jakarta-dashboard"] .masthead .map-status {
-  font-size: var(--type-note); color: var(--dim);
-}
 @media (max-width: 1000px) {
-  body[data-surface="jakarta-dashboard"] .masthead { flex-direction: column; gap: 4px; padding: 2px 8px; }
-  body[data-surface="jakarta-dashboard"] .masthead .map-heading { order: 2; width: 100%; text-align: left; }
+  body[data-surface="jakarta-dashboard"] .masthead { grid-template-columns: minmax(0, 1fr) auto; gap: 0; }
   body[data-surface="jakarta-dashboard"] .sections { grid-column: 1 / -1; grid-row: 2; }
   body[data-surface="jakarta-dashboard"] .sections a { padding-block: 6px; }
   .city-controls { grid-column: 2; grid-row: 1; }
@@ -580,6 +558,7 @@ body[data-surface="jakarta-dashboard"] .map-heading .eyebrow { display:none; }
 body[data-surface="jakarta-dashboard"] .map-panel > .note { position:absolute; top:62px; left:130px; right:60px; z-index:12; background:var(--bg-raised); border:1px solid var(--line); padding:4px 6px; }
 body[data-surface="jakarta-dashboard"] .map-panel > .note[hidden] { display:none; }
 @media(max-width:1000px) {
+ body[data-surface="jakarta-dashboard"] .masthead { grid-template-columns:auto minmax(0,1fr) auto; }
  .city-navigation { grid-column:2; grid-row:1; position:relative; justify-self:end; }
  .city-navigation > summary { display:block; min-height:36px; padding:8px; cursor:pointer; }
  /* Anchor the drawer to the trigger's trailing edge and cap it with the inline
@@ -1030,6 +1009,7 @@ body[data-surface="jakarta-dashboard"] .source-status-toolbar #refresh { min-hei
 body[data-surface="jakarta-dashboard"] .source-status-rows { padding:8px 0 0; }
 body[data-surface="jakarta-dashboard"] .source-status-row { max-width:65ch; }
 @media(max-width:1000px) {
+ body[data-surface="jakarta-dashboard"] .masthead { grid-template-columns:auto auto minmax(0,1fr); }
  body[data-surface="jakarta-dashboard"] .city-preferences { justify-content:flex-end; flex-wrap:wrap; gap:4px; max-width:100%; }
  body[data-surface="jakarta-dashboard"] .city-navigation { justify-self:start; }
  body[data-surface="jakarta-dashboard"] .masthead-clock .tz-city { display:none; }
@@ -1045,3 +1025,9 @@ body[data-surface="jakarta-dashboard"] .masthead #source-status-line { display:i
 
 body[data-surface="jakarta-dashboard"] .city-preferences { flex-wrap:wrap; justify-content:flex-end; }
 body[data-surface="jakarta-dashboard"] .masthead-clock { flex-wrap:wrap; min-width:0; flex-shrink:1; }
+
+/* The city is already named in the masthead. Preserve its accessible map
+   heading/readiness without making a second strip above the map. */
+body[data-surface="jakarta-dashboard"] .map-panel { grid-template-rows:minmax(0,1fr); }
+body[data-surface="jakarta-dashboard"] .map-panel > .map-heading.visually-hidden { padding:0; }
+body[data-surface="jakarta-dashboard"] #city-map { grid-row:1; }

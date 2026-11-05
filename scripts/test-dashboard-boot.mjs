@@ -36,3 +36,19 @@ let bite = null;
 try { vm.runInContext(source + '\nnew MutationObserver(dedupeMasthead);', vm.createContext({ ...globals }), { filename: 'mutant.js' }); } catch (e) { bite = e; }
 assert.equal(bite && bite.name, 'ReferenceError', 'the boot check refuses an undefined top-level name');
 console.log('PASS dashboard boot: the client runs top to bottom, and an undefined name is refused');
+
+// The controller also needs real nodes: permissive browser stand-ins cannot
+// detect a repair that deletes its inputs or breaks a disclosure's tag.
+const html=readFileSync(new URL('../public/dashboard.html',import.meta.url),'utf8');
+function dashboardMarkup(markup){
+ const required=['language','atlas-theme','city-navigation','source-status','source-status-line','source-status-overview','source-status-rows','refresh','map-heading','map-status','city-map','basemap','clear-overlay'];
+ for(const id of required)assert.equal((markup.match(new RegExp(' id="'+id+'"','g'))||[]).length,1,'one required controller node: '+id);
+ assert.equal((markup.match(/<header\b[^>]*class="masthead"/g)||[]).length,1,'one source-owned masthead');
+ assert.match(markup,/<details id="city-navigation"/,'Menu is a native disclosure');
+ assert.doesNotMatch(markup,/<span class="city-version"/,'build identity stays in the existing footer');
+}
+dashboardMarkup(html);
+for(const id of ['language','source-status','map-status'])assert.throws(()=>dashboardMarkup(html.replace(' id="'+id+'"','')),/required controller node/,'deleted controller node must fail');
+assert.throws(()=>dashboardMarkup(html.replace('<details id="city-navigation"','<nav id="city-navigation"')),/native disclosure/);
+assert.throws(()=>dashboardMarkup(html.replace('<main>','<header class="masthead"></header><main>')),/source-owned masthead/,'a real duplicate is refused at its source, not deleted at runtime');
+console.log('PASS dashboard DOM contract: single header, valid Menu and all controller/source/map controls retained; original removals falsified');
