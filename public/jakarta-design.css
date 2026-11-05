@@ -587,7 +587,6 @@ body[data-surface="jakarta-dashboard"] .map-heading .eyebrow { display:none; }
 body[data-surface="jakarta-dashboard"] .map-panel > .note { position:absolute; top:62px; left:130px; right:60px; z-index:12; background:var(--bg-raised); border:1px solid var(--line); padding:4px 6px; }
 body[data-surface="jakarta-dashboard"] .map-panel > .note[hidden] { display:none; }
 @media(max-width:1000px) {
- body[data-surface="jakarta-dashboard"] .masthead { grid-template-columns:auto minmax(0,1fr) auto; }
  .city-navigation { grid-column:2; grid-row:1; position:relative; justify-self:end; }
  .city-navigation > summary { display:block; min-height:36px; padding:8px; cursor:pointer; }
  /* Anchor the drawer to the trigger's trailing edge and cap it with the inline
@@ -1038,7 +1037,6 @@ body[data-surface="jakarta-dashboard"] .source-status-toolbar #refresh { min-hei
 body[data-surface="jakarta-dashboard"] .source-status-rows { padding:8px 0 0; }
 body[data-surface="jakarta-dashboard"] .source-status-row { max-width:65ch; }
 @media(max-width:1000px) {
- body[data-surface="jakarta-dashboard"] .masthead { grid-template-columns:auto auto minmax(0,1fr); }
  body[data-surface="jakarta-dashboard"] .city-preferences { justify-content:flex-end; flex-wrap:wrap; gap:4px; max-width:100%; }
  body[data-surface="jakarta-dashboard"] .city-navigation { justify-self:start; }
  body[data-surface="jakarta-dashboard"] .masthead-clock .tz-city { display:none; }
