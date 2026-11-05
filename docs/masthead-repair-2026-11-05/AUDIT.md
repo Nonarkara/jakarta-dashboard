@@ -1,5 +1,16 @@
 # Masthead repair · 5 November 2026
 
+## Final result
+
+**Live:** `jakarta-atlas-20261105-1793856771-f1c28cb`, Worker `42e532ec-63fd-4796-9b16-96a7d6b831d9`, at https://jakarta.nonarkara.org. Source f1c28cb; stamp f5ff573.
+
+Canonical release exited0: typecheck,13local checks,59test commands,208spatial cases,208chrome measurements,38/38API checks and145/145rendered checks,0browserpageerrors. Three consecutive exact-byte probes passed on both hostnames. No baseline was changed. The final12-view MSH record is [here](../msh/MSH-EVIDENCE.md).
+
+Independent final live checks passed390px Bahasa/English and1440px Bahasa, using normal production requests and no fixtures or archive forwarding. Header27px phone/38px desktop; map starts immediately underneath. Menu→Weather/Escape, source ledger with5rows, Controls/language and map-mode actions work. Final normal/open/enlarged captures at390/1024/1440 and actual-camera round trips pass with real rendered buildings and0errors. Full map area is815px on390×844,860px at1024×900,844.8px at1440×900; opening sources does not shrink it.
+
+GLM's one-header count was true but its claimed working thin-bar fix was not. The repaired implementation has one compact functional header, no destructive observer, complete earned controls and no repeated visible map-title strip. Palette, type, data and geography remain intact. The retired checkout and shared services were preserved; the owned8895preview was stopped.
+
+
 ## Finding
 
 GLM's f0c6ebc tree was clean and pushed, but its report was not a release verification. Only dashboard HTML/JS/design CSS changed after95c3613. Independent normal live visits confirmed the actual regression: `dedupeMasthead is not defined` aborts startup, followed by `$ is not defined`; source/language/readiness nodes are absent, and Menu is a NAV with a SUMMARY and mismatched closing DETAILS. There was one masthead element, but that count did not prove one compact working band. Its rendered height grew to56px phone/74px desktop. The added deletion observer had no identified duplicate producer and its callback existed only inside a named IIFE.
@@ -25,4 +36,4 @@ Grid: column/modular map-edge instruments. Map remains first visual entry. Palet
 - Preview only forwards production Range archives to the local server; no preview byte is proof of deployment. Final edge checks follow canonical release.
 - Non-Slop scanner0unallowed points,5existing scoped scientific/typographic allowances,19existing meaningful qualification sentences reviewed. No new waiver or baseline change.
 
-Final release result is appended after deployment.
+The final result is above. Preview archive forwarding is not used as deployment evidence.
