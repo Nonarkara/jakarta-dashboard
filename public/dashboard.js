@@ -1,4 +1,24 @@
 'use strict';
+// Ensure only one masthead exists on the page. The live site has shown a
+// duplicated header band on some loads; remove any duplicate, keeping the
+// first (document-order) masthead.
+(function dedupeMasthead(){
+  const masts = document.querySelectorAll('header.masthead');
+  if (masts.length > 1) {
+    for (let i = masts.length - 1; i > 0; i--) masts[i].remove();
+  }
+})();
+// Re-run on DOMContentLoaded in case something adds a masthead after script
+// execution but before the first paint.
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', dedupeMasthead);
+}
+// Watch for any dynamically injected duplicate masthead and remove it.
+if (window.MutationObserver) {
+  new MutationObserver(dedupeMasthead).observe(document.documentElement, {
+    childList: true, subtree: true
+  });
+}
 const DASHBOARD_BUILD = 'jakarta-atlas-20261104-1793808764-29566bc';
 const DASHBOARD_VERSION = '1.0.0';
 const CRM_MONTHLY_URL = 'https://datastudio.google.com/embed/reporting/d7d87175-bfa2-4067-bf4d-42e8b996da11/page/27A2C';
