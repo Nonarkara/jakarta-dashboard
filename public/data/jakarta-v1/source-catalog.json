@@ -1511,6 +1511,31 @@
    ],
    "recordCount": 1990,
    "assetSha256": "f0d56af16f7dc4b5442513a4be35550f3e8b3c60a7a4bf3b2edf897fc6655e4c"
+  },
+  {
+   "id": "terrain-tiles-elevation",
+   "name": "Terrain height model",
+   "category": "terrain",
+   "publisher": "Terrain Tiles (elevation-tiles-prod)",
+   "status": "integrated",
+   "sourceUrl": "https://github.com/tilezen/joerd/blob/master/docs/attribution.md",
+   "endpoint": "/api/ground-elevation",
+   "license": "Open elevation tiles; attribution to the source datasets (SRTM, NED, ETOPO)",
+   "dataAsOf": null,
+   "checkedAt": null,
+   "access": "anonymous; on-demand tile through the Worker edge",
+   "verification": "existing-source-contract",
+   "tier": "modeled-height",
+   "useCase": "Ground height at a place, in the place context",
+   "limitations": "Raster elevation model at about 19 m per pixel over Jakarta; not a survey, and not comparable with a gauge reading because a gauge reads against its own datum",
+   "assets": [],
+   "recordCount": null,
+   "assetSha256": null,
+   "providerEndpoint": null,
+   "nameEn": "Terrain height model",
+   "nameId": "Model ketinggian tanah",
+   "limitationsEn": "Raster elevation model at about 19 m per pixel over Jakarta; not a survey, and not comparable with a gauge reading because a gauge reads against its own datum",
+   "limitationsId": "Model elevasi raster sekitar 19 meter per piksel di Jakarta; bukan survei, dan tidak dapat dibandingkan dengan pembacaan pos sebab pos mengukur terhadap datumnya sendiri"
   }
  ],
  "auditScope": "15 October 2026 bounded follow-up: 57 contracts; BMKG Priok and a bounded WorldCover 2021 crop admitted; actual Copernicus Jakarta access verified; BBWS timestamp contradiction recorded as a new candidate. Not all public data and not calibrated hydraulics."

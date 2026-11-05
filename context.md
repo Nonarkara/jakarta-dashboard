@@ -408,3 +408,31 @@ Clean pushed f0c6ebc changedonly3files after95c3613 but liveboot failsundefinedd
 
 
 5November verifiedcloseout: `jakarta-atlas-20261105-1793856771-f1c28cb` live, Worker42e532ec-63fd-4796-9b16-96a7d6b831d9,stampf5ff573. Canonicalexit0 type/verify13/59commands/spatial208/census208/API38of38/rendered145of145,0errors,bothhost3byteprobes; baselineunchanged. Independentnormal-liveID/EN390+ID1440PASSoneheader27/38,mapYsame,Menu/weather/source5rows/Controlsallwork. Fullnormal/source-open/enlarged3widths actual3Dcamera60PASS; phoneiframe815px. MSH12viewsrecordcurrent. Own8895stopped, retiredrepo/sharedservicespreserved. Fullreceipt docs/masthead-repair-2026-11-05/AUDIT.md. Oneheadercountaloneisnotstartuporfunctional/spatialproof; canonicalmustnotbebypassed.
+
+## 5 November 2026 · The walkthrough layer, and the axis the receipt could not hold
+
+A location scout (Rokehan, by MIYADAIKU) was pointed at: a browser tool that renders any real place
+as a 3D line-art plate from OpenStreetMap geometry and elevation, in seven seconds, with a "stand
+here" camera at eye level and a "make this the near area" rebuild. The tool itself is out — its terms
+forbid copying, reposting and redistributing the programme, its screens, its text and its data, and
+embedding a third-party tool on a Jakarta public site is not a trade an agent can make on the owner's
+behalf. But what it is *built from* is open, and one of those ingredients we did not have: elevation.
+Everything else it does, our atlas already does at a larger scale.
+
+So the walkthrough layer is the descent it demonstrates, built on our own data and our own gates: the
+place context gains **"Berdiri di sini"** (the camera stands on the spot), the 25 AWLR stations join
+the references it already loads (so the walkthrough's gauge is one click away, with its publisher, its
+SIAGA bands and its dates — and, said plainly in both languages, *no live reading*), and the ground
+under the place is read from Terrain Tiles through our own edge, because the bucket sends no CORS
+header and the public site still talks only to itself. It is reported with its source and its
+resolution, and it is never subtracted from a gauge level: a gauge reads against its own datum, and
+the project's own words are that heights cannot be transferred between station datums.
+
+Looking at a location scout also found a defect that no gate could see, on the live site, that day.
+The seven-zone world clock took 610px of the masthead and pushed the last two navigation links out of
+the bar — one cut mid-word ("At") — at every width from 1001px to 1599px. The spatial gate passed.
+The chrome census passed. The MSH evidence said "no sideways scroll, nothing past the edge". All three
+were right, and all three were blind: they measured how *tall* a chrome band is and never asked
+whether the band's *content fits inside it*. The clock now yields to the navigation below 1600px,
+the navigation takes a row of its own below 1100px, and the census grew that axis — which caught the
+defect on its first run, in exactly the widths where the navigation was being cut.

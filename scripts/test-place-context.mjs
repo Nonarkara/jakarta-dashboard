@@ -21,7 +21,7 @@ assert.equal(nearby([120,-6.2],dataset).length,0);
 let count=0;
 const fakeFetch=async url=>{count++;if(url.includes('schools'))throw Error('outage');return Response.json(dataset);};
 const results=await loadReferences(fakeFetch,new AbortController().signal,'test');
-assert.equal(results.filter(r=>r.data).length,3,'failed provider does not hide others');
+assert.equal(results.filter(r=>r.data).length,4,'failed provider does not hide others');
 assert.equal(results.find(r=>r.id==='schools').data,null,'missing is not zero');
 count=0;await loadReferences(fakeFetch,new AbortController().signal,'test',results);assert.equal(count,1,'retry retains valid datasets');
 const invalid=await loadReferences(async()=>Response.json({...dataset,crs:'EPSG:3857'}),new AbortController().signal,'test');assert.ok(invalid.every(r=>r.data===null));
@@ -32,9 +32,9 @@ const partial=loadReferences(async url=>{
  return Response.json(dataset);
 },slowController.signal,'test');
 await new Promise(resolve=>setTimeout(resolve,10));slowController.abort();
-assert.equal((await partial).filter(r=>r.data).length,3,'one timed-out source preserves completed references');
+assert.equal((await partial).filter(r=>r.data).length,4,'one timed-out source preserves completed references');
 assert.deepEqual(nearby(p,{features:[null,{geometry:null}]}),[],'malformed feature rows cannot crash the place view');
-for(const id of ['waterways','pumps','health','schools']){
+for(const id of ['waterways','pumps','awlr','health','schools']){
  const real=JSON.parse(readFileSync(new URL('../public/data/jakarta-v1/'+id+'.geojson',import.meta.url)));
  const rows=nearby(p,real);assert.ok(rows.length>0,id+' real nearby references');assert.ok(rows.every(r=>r.distance>=0&&r.distance<=5000));
 }

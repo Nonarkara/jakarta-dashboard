@@ -90,6 +90,7 @@
     1000,
     1001,
     1024,
+    1098,
     1099,
     1100,
     1101,
@@ -98,6 +99,9 @@
     1200,
     1201,
     1440,
+    1598,
+    1599,
+    1600,
     1920
   ],
   "limits": {
@@ -120,10 +124,10 @@
   },
   "exempt": [],
   "provenance": {
-    "measuredAt": "2026-11-04T14:08:19.344Z",
-    "measurements": 208,
+    "measuredAt": "2026-11-05T15:57:54.338Z",
+    "measurements": 224,
     "routes": 4,
-    "widths": 52,
+    "widths": 56,
     "measuredTogether": true,
     "carriedOver": []
   },
@@ -1121,8 +1125,8 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 38,
-          "topPct": 3.8,
+          "top": 78,
+          "topPct": 7.8,
           "bottom": 0,
           "bottomPct": 0,
           "stacked": 1,
@@ -1145,8 +1149,32 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 38,
-          "topPct": 3.8,
+          "top": 78,
+          "topPct": 7.8,
+          "bottom": 0,
+          "bottomPct": 0,
+          "stacked": 1,
+          "topSel": "header.masthead",
+          "bottomSel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 13,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1098": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "chrome": {
+          "vh": 1000,
+          "top": 78,
+          "topPct": 7.8,
           "bottom": 0,
           "bottomPct": 0,
           "stacked": 1,
@@ -1169,8 +1197,8 @@
         },
         "chrome": {
           "vh": 1000,
-          "top": 38,
-          "topPct": 3.8,
+          "top": 78,
+          "topPct": 7.8,
           "bottom": 0,
           "bottomPct": 0,
           "stacked": 1,
@@ -1330,6 +1358,78 @@
         }
       },
       "1440": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "chrome": {
+          "vh": 900,
+          "top": 38,
+          "topPct": 4.2,
+          "bottom": 0,
+          "bottomPct": 0,
+          "stacked": 1,
+          "topSel": "header.masthead",
+          "bottomSel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 13,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1598": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "chrome": {
+          "vh": 900,
+          "top": 38,
+          "topPct": 4.2,
+          "bottom": 0,
+          "bottomPct": 0,
+          "stacked": 1,
+          "topSel": "header.masthead",
+          "bottomSel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 13,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1599": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "chrome": {
+          "vh": 900,
+          "top": 38,
+          "topPct": 4.2,
+          "bottom": 0,
+          "bottomPct": 0,
+          "stacked": 1,
+          "topSel": "header.masthead",
+          "bottomSel": null
+        },
+        "hierarchy": {
+          "h1": 0,
+          "largest": 13,
+          "ratio": null,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1600": {
         "findings": [],
         "firstAction": {
           "y": null,
@@ -2982,6 +3082,43 @@
           "share": 0
         }
       },
+      "1098": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 882,
+            "detail": "aside.atlas-layers leaves 882px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "chrome": {
+          "vh": 1000,
+          "top": 0,
+          "topPct": 0,
+          "bottom": 0,
+          "bottomPct": 0,
+          "stacked": 1,
+          "topSel": null,
+          "bottomSel": null
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
       "1099": {
         "findings": [
           {
@@ -3242,6 +3379,117 @@
         }
       },
       "1440": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 782,
+            "detail": "aside.atlas-layers leaves 782px empty beneath it in a 874px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 836,
+            "detail": "div.atlas-page-tools leaves 836px empty beneath it in a 874px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "chrome": {
+          "vh": 900,
+          "top": 0,
+          "topPct": 0,
+          "bottom": 0,
+          "bottomPct": 0,
+          "stacked": 1,
+          "topSel": null,
+          "bottomSel": null
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1598": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 782,
+            "detail": "aside.atlas-layers leaves 782px empty beneath it in a 874px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 836,
+            "detail": "div.atlas-page-tools leaves 836px empty beneath it in a 874px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "chrome": {
+          "vh": 900,
+          "top": 0,
+          "topPct": 0,
+          "bottom": 0,
+          "bottomPct": 0,
+          "stacked": 1,
+          "topSel": null,
+          "bottomSel": null
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1599": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 782,
+            "detail": "aside.atlas-layers leaves 782px empty beneath it in a 874px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 836,
+            "detail": "div.atlas-page-tools leaves 836px empty beneath it in a 874px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "chrome": {
+          "vh": 900,
+          "top": 0,
+          "topPct": 0,
+          "bottom": 0,
+          "bottomPct": 0,
+          "stacked": 1,
+          "topSel": null,
+          "bottomSel": null
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1600": {
         "findings": [
           {
             "kind": "dead",
@@ -4920,6 +5168,43 @@
           "share": 0
         }
       },
+      "1098": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 882,
+            "detail": "aside.atlas-layers leaves 882px empty beneath it in a 974px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 936,
+            "detail": "div.atlas-page-tools leaves 936px empty beneath it in a 974px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "chrome": {
+          "vh": 1000,
+          "top": 0,
+          "topPct": 0,
+          "bottom": 0,
+          "bottomPct": 0,
+          "stacked": 1,
+          "topSel": null,
+          "bottomSel": null
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
       "1099": {
         "findings": [
           {
@@ -5180,6 +5465,117 @@
         }
       },
       "1440": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 782,
+            "detail": "aside.atlas-layers leaves 782px empty beneath it in a 874px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 836,
+            "detail": "div.atlas-page-tools leaves 836px empty beneath it in a 874px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "chrome": {
+          "vh": 900,
+          "top": 0,
+          "topPct": 0,
+          "bottom": 0,
+          "bottomPct": 0,
+          "stacked": 1,
+          "topSel": null,
+          "bottomSel": null
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1598": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 782,
+            "detail": "aside.atlas-layers leaves 782px empty beneath it in a 874px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 836,
+            "detail": "div.atlas-page-tools leaves 836px empty beneath it in a 874px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "chrome": {
+          "vh": 900,
+          "top": 0,
+          "topPct": 0,
+          "bottom": 0,
+          "bottomPct": 0,
+          "stacked": 1,
+          "topSel": null,
+          "bottomSel": null
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1599": {
+        "findings": [
+          {
+            "kind": "dead",
+            "sel": "aside.atlas-layers",
+            "metric": 782,
+            "detail": "aside.atlas-layers leaves 782px empty beneath it in a 874px row"
+          },
+          {
+            "kind": "dead",
+            "sel": "div.atlas-page-tools",
+            "metric": 836,
+            "detail": "div.atlas-page-tools leaves 836px empty beneath it in a 874px row"
+          }
+        ],
+        "firstAction": {
+          "y": 1,
+          "sel": "button"
+        },
+        "chrome": {
+          "vh": 900,
+          "top": 0,
+          "topPct": 0,
+          "bottom": 0,
+          "bottomPct": 0,
+          "stacked": 1,
+          "topSel": null,
+          "bottomSel": null
+        },
+        "hierarchy": {
+          "h1": 14,
+          "largest": 22,
+          "ratio": 0.64,
+          "peers": 0,
+          "share": 0
+        }
+      },
+      "1600": {
         "findings": [
           {
             "kind": "dead",
@@ -6287,6 +6683,30 @@
           "share": 0
         }
       },
+      "1098": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "chrome": {
+          "vh": 1000,
+          "top": 37,
+          "topPct": 3.7,
+          "bottom": 0,
+          "bottomPct": 0,
+          "stacked": 1,
+          "topSel": "header.bar",
+          "bottomSel": null
+        },
+        "hierarchy": {
+          "h1": 26,
+          "largest": 38.43,
+          "ratio": 0.68,
+          "peers": 4,
+          "share": 0
+        }
+      },
       "1099": {
         "findings": [],
         "firstAction": {
@@ -6456,6 +6876,78 @@
         }
       },
       "1440": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "chrome": {
+          "vh": 900,
+          "top": 37,
+          "topPct": 4.1,
+          "bottom": 0,
+          "bottomPct": 0,
+          "stacked": 1,
+          "topSel": "header.bar",
+          "bottomSel": null
+        },
+        "hierarchy": {
+          "h1": 32,
+          "largest": 48,
+          "ratio": 0.67,
+          "peers": 4,
+          "share": 0
+        }
+      },
+      "1598": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "chrome": {
+          "vh": 900,
+          "top": 37,
+          "topPct": 4.1,
+          "bottom": 0,
+          "bottomPct": 0,
+          "stacked": 1,
+          "topSel": "header.bar",
+          "bottomSel": null
+        },
+        "hierarchy": {
+          "h1": 32,
+          "largest": 48,
+          "ratio": 0.67,
+          "peers": 4,
+          "share": 0
+        }
+      },
+      "1599": {
+        "findings": [],
+        "firstAction": {
+          "y": null,
+          "sel": null
+        },
+        "chrome": {
+          "vh": 900,
+          "top": 37,
+          "topPct": 4.1,
+          "bottom": 0,
+          "bottomPct": 0,
+          "stacked": 1,
+          "topSel": "header.bar",
+          "bottomSel": null
+        },
+        "hierarchy": {
+          "h1": 32,
+          "largest": 48,
+          "ratio": 0.67,
+          "peers": 4,
+          "share": 0
+        }
+      },
+      "1600": {
         "findings": [],
         "firstAction": {
           "y": null,

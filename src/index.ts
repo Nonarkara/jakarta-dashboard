@@ -1050,8 +1050,50 @@ function gridStepKm(cells: { lat: number; lng: number }[]): number | null {
 
 // ── /api/health — quick liveness probe ────────────────────────────────────
 
-async function handleHealth(env: Env): Promise<Response> {
-  const head = await env.JAKARTA_TILES.head(PMTILES_R2_KEY).catch(() => null);
+// The ground under a place.
+//
+// The elevation tiles are public, but the bucket sends no CORS header, so a
+// browser cannot read them: we fetch the tile and hand the bytes on. It is
+// the same pattern as every other upstream here — this Worker is the network
+// edge, and nothing on the public site talks to a third party directly.
+const ELEVATION_TILE = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png";
+async function handleGroundElevation(request: Request): Promise<Response> {
+  const url = new URL(request.url);
+  const z = Number(url.searchParams.get("z"));
+  const x = Number(url.searchParams.get("x"));
+  const y = Number(url.searchParams.get("y"));
+  if (!Number.isInteger(z) || !Number.isInteger(x) || !Number.isInteger(y) || z < 0 || z > 15) {
+    return jsonResponse({ error: "invalid elevation tile" }, { status: 400 });
+  }
+  const n = 2 ** z;
+  if (x < 0 || y < 0 || x >= n || y >= n) {
+    return jsonResponse({ error: "invalid elevation tile" }, { status: 400 });
+  }
+  const tileUrl = ELEVATION_TILE.replace("{z}", String(z)).replace("{x}", String(x)).replace("{y}", String(y));
+  const cache = (caches as unknown as { default: Cache }).default;
+  const cacheKey = new Request(tileUrl, { method: "GET" });
+  const hit = await cache.match(cacheKey);
+  if (hit) return hit;
+  let upstream: Response;
+  try {
+    upstream = await fetch(tileUrl, { headers: { accept: "image/png" } });
+  } catch {
+    return jsonResponse({ error: "elevation tile unavailable" }, { status: 502 });
+  }
+  if (!upstream.ok) return jsonResponse({ error: "elevation tile unavailable" }, { status: 502 });
+  const tile = new Response(upstream.body, {
+    status: 200,
+    headers: { "content-type": "image/png", "cache-control": "public, max-age=604800" },
+  });
+  try {
+    await cache.put(cacheKey, tile.clone());
+  } catch {
+    // A cache that refuses the tile is not a reason to refuse the reader.
+  }
+  return tile;
+}
+
+async function handleHealth(env: Env): Promise<Response> {  const head = await env.JAKARTA_TILES.head(PMTILES_R2_KEY).catch(() => null);
   return jsonResponse({
     tool: "health",
     version: ATLAS_VERSION,
@@ -1151,6 +1193,7 @@ async function routeRequest(request: Request, env: Env): Promise<Response> {
   if (path === "/api/atlas/at-this-point") return handleAtThisPoint(request, env);
   if (path === "/api/atlas/buildings") return handleBuildings(request, env);
   if (path === "/api/health") return handleHealth(env);
+  if (path === "/api/ground-elevation") return handleGroundElevation(request);
 
   const asset = await env.ASSETS.fetch(request);
   const headers = new Headers(asset.headers);

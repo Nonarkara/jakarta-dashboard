@@ -43,6 +43,7 @@ export function nearby(p, data, radius=5000) {
 const SOURCES = [
   ['waterways','Mapped waterways','Aliran air terpetakan'],
   ['pumps','Flood infrastructure','Infrastruktur banjir'],
+  ['awlr','Water-level stations','Stasiun tinggi air'],
   ['health','Health facilities','Fasilitas kesehatan'],
   ['schools','Schools','Sekolah']
 ];
@@ -65,6 +66,7 @@ export function createPlaceContext(map, options) {
   const dialog=document.getElementById('place-dialog'), body=document.getElementById('place-body');
   const text=(en,id)=>options.language()==='id'?id:en;
   let location=null, references=null, epoch=0, pending=null, previousFocus=null;
+  let groundValue=null, groundState='idle';
   const el=(tag,content,parent=body)=>{const node=document.createElement(tag);if(content!==undefined)node.textContent=content;parent.append(node);return node;};
   function marker(features) {
     const id='place-context';
@@ -87,7 +89,23 @@ export function createPlaceContext(map, options) {
     for(const [lens,en,id] of [['waterways','Check river readings','Periksa tinggi air'],['water','Compare satellite water','Bandingkan air satelit'],['air','Read air & wind','Lihat udara & angin']]) {
       const button=el('button',text(en,id),actions);button.type='button';button.onclick=()=>{dialog.close();options.lens(lens);document.getElementById('atlas-lens-evidence').open=true;};
     }
+    // Stand here: the descent from the city to the place. The map is a model
+    // of a city; a morning check is about a street. This is the same move a
+    // location scout makes, and it is the one our lenses cannot make — they
+    // are all city-scale.
+    const stand=el('button',text('Stand here','Berdiri di sini'),actions);stand.type='button';
+    stand.onclick=()=>{dialog.close();map.flyTo({center:location,zoom:18.5,pitch:68,bearing:map.getBearing(),duration:matchMedia('(prefers-reduced-motion: reduce)').matches?0:600});};
+    el('p',text('Standing here puts the camera at eye level on this spot. There is no walking route here: the distances above are straight lines.','Berdiri di sini menempatkan kamera setinggi mata di titik ini. Tidak ada rute berjalan kaki di sini: jarak di atas adalah garis lurus.'),actions).className='place-source';
     el('p',text('These views have different dates and resolutions. Air models and satellite pixels cannot measure conditions at this exact address.','Tampilan ini berbeda tanggal dan resolusinya. Model udara dan piksel satelit tidak mengukur kondisi tepat di alamat ini.'));
+    // The ground under the place. Our map is flat, so this is the only way a
+    // reader learns whether the street sits in a dip. It is a raster model
+    // with its own source and resolution, and it is never compared with a
+    // gauge reading: a gauge reads against its own datum, and the project's
+    // own words are that heights cannot be transferred between station datums.
+    const ground=el('p');ground.className='place-source';
+    if(groundState==='loading')ground.textContent=text('Reading the ground height…','Membaca ketinggian tanah…');
+    else if(groundState==='ready'&&groundValue)ground.textContent=text('Ground height here','Ketinggian tanah di sini')+' '+groundValue.metres.toFixed(0)+' m '+text('above sea level','di atas permukaan laut')+' · '+groundValue.source.attribution+' · ~'+Math.round(groundValue.resolutionMetres)+' m/pixel · '+text('retrieved','diambil')+' '+groundValue.retrievedAt.slice(0,10)+' · '+text('a raster model, not a survey','model raster, bukan survei');
+    else ground.textContent=text('The ground height here is unknown.','Ketinggian tanah di sini tidak diketahui.');
     if(!references) {el('p',text('Loading public references…','Memuat referensi publik…')).setAttribute('role','status');return;}
     for(const source of references) {
       const section=el('section');el('h3',text(source.en,source.idText),section);
@@ -108,10 +126,14 @@ export function createPlaceContext(map, options) {
       const data=source.data, date=data.sourceAsOf||data.observedAt;
       const note=source.id==='waterways'?text('OpenStreetMap · mapped reference','OpenStreetMap · referensi peta'):text('Jakarta Satu · public reference','Jakarta Satu · referensi publik');
       el('p',note+' · '+(date?text('Source date ','Tanggal sumber ')+date.slice(0,10):text('Observation date unknown','Tanggal pengamatan tidak diketahui'))+' · '+text('Retrieved ','Diambil ')+(data.retrievedAt||data.checkedAt||'').slice(0,10),section).className='place-source';
+      // The stations publish their SIAGA alert bands per station. The dataset
+      // carries no live reading, and a reader who is looking for a number has
+      // to be told that before they go looking for it.
+      if(source.id==='awlr')el('p',text('Each station publishes its SIAGA 1–4 alert bands in cm as published. This dataset carries no live reading: the level shown in the scenario is an assumption you set.','Setiap pos menerbitkan pita peringatan SIAGA 1–4 dalam cm sesuai penerbitnya. Dataset ini tidak memuat pembacaan langsung: angka pada skenario adalah asumsi yang Anda tetapkan.'),section).className='place-source';
       const url=data.sourceUrl||data.source;
       if(typeof url==='string'&&url.startsWith('https://')) {const a=el('a',text('Publisher source ↗','Sumber penerbit ↗'),section);a.href=url;a.target='_blank';a.rel='noopener noreferrer';}
     }
-    el('p',text('Proximity does not establish drainage connections, protection, opening hours, available beds, or school access. Waterway direction is not measured. This is a public-data research twin, still a Pilot.','Kedekatan tidak membuktikan koneksi drainase, perlindungan, jam buka, ketersediaan tempat tidur, atau akses sekolah. Arah aliran belum diukur. Ini adalah kembaran kota berbasis data publik untuk riset, masih tahap percontohan.'));
+    el('p',text('Proximity does not establish drainage connections, protection, opening hours, available beds, or school access. Waterway direction is not measured. The ground height is a raster model on its own reference: it is not comparable with a gauge reading, because a gauge reads against its own datum. This is a public-data research twin, still a Pilot.','Kedekatan tidak membuktikan koneksi drainase, perlindungan, jam buka, ketersediaan tempat tidur, atau akses sekolah. Arah aliran belum diukur. Ketinggian tanah adalah model raster pada acuan sendiri: tidak dapat dibandingkan dengan pembacaan pos, sebab pos mengukur terhadap datumnya sendiri. Ini adalah kembaran kota berbasis data publik untuk riset, masih tahap percontohan.'));
     if(references.some(source=>!source.data)) {const retry=el('button',text('Retry missing sources','Coba lagi sumber yang gagal'));retry.onclick=()=>load();}
   }
   async function load() {
@@ -125,16 +147,47 @@ export function createPlaceContext(map, options) {
       if(request===epoch&&dialog.open){references=SOURCES.map(([id,en,idText])=>({id,en,idText,data:null}));render();}
     } finally {clearTimeout(timeout);}
   }
+  // The ground height, read from an open elevation raster. It is fetched only
+  // when a place is opened, and it is never a number without its source: the
+  // reader is told what it is, where it came from and how coarse it is.
+  let groundPending=null;
+  async function loadGround() {
+    groundPending?.abort();
+    const controller=new AbortController();
+    groundPending=controller;
+    groundState='loading';groundValue=null;render();
+    try {
+      const module=await import('/ground-elevation.js?v='+encodeURIComponent(options.build));
+      const result=await module.groundElevation({lat:location[1],lng:location[0],zoom:13,fetch:window.fetch.bind(window),signal:controller.signal,decodeImage:decodePng});
+      groundValue=result;groundState=result?'ready':'unknown';
+    } catch(error) {
+      groundValue=null;groundState='unknown';
+    } finally {
+      if(groundPending===controller)groundPending=null;
+    }
+    if(dialog.open)render();
+  }
+  async function decodePng(blob) {
+    const bitmap=await createImageBitmap(blob);
+    const canvas=document.createElement('canvas');
+    canvas.width=bitmap.width;canvas.height=bitmap.height;
+    const context=canvas.getContext('2d',{willReadFrequently:true});
+    context.drawImage(bitmap,0,0);
+    const image=context.getImageData(0,0,bitmap.width,bitmap.height);
+    if(bitmap.close)bitmap.close();
+    return {data:image.data,width:bitmap.width,height:bitmap.height};
+  }
   function show(point) {
     location=[Number(point.lng),Number(point.lat)];
     if(!validPlace(location)) {options.toast(text('Choose a place within mainland Jakarta.','Pilih lokasi di daratan Jakarta.'));return;}
     previousFocus=document.activeElement;
     if(!dialog.open)dialog.showModal();
     marker([]);if(references)render();else load();
+    loadGround();
     document.getElementById('place-close').focus();
   }
   document.getElementById('place-close').addEventListener('click',()=>dialog.close());
-  dialog.addEventListener('close',()=>{epoch++;pending?.abort();previousFocus?.focus();});
+  dialog.addEventListener('close',()=>{epoch++;pending?.abort();groundPending?.abort();previousFocus?.focus();});
   window.addEventListener('atlas:language',()=>{if(dialog.open)render();});
   window.addEventListener('atlas:theme',()=>{for(const [id,property] of [['place-context-line','line-color'],['place-context-point','circle-color']])if(map.getLayer(id))map.setPaintProperty(id,property,options.accent());if(map.getLayer('place-context-point'))map.setPaintProperty('place-context-point','circle-stroke-color',options.ground());});
   return {show};
