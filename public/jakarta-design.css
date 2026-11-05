@@ -128,21 +128,14 @@ button:disabled { opacity: .65; cursor: wait; }
   clip-path: inset(50%); white-space: nowrap;
 }
 body[data-surface="jakarta-dashboard"] .masthead {
-  padding: 2px 12px; gap: 8px; align-items: center;
-  display: flex;
+  padding: 2px 12px; gap: 4px 12px; align-items: center;
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
 }
-.city-brand { flex: none; }
-.map-heading { flex: 1; text-align: center; }
-.city-navigation { flex: none; max-width: 600px; overflow: hidden; }
+.city-brand { grid-column: 1; gap: 6px; height: 44px; }
+.map-heading { grid-column: 2; text-align: center; }
+.masthead-right { grid-column: 3; display: flex; gap: 8px; align-items: center; }
+.city-navigation { flex: none; }
 .city-preferences { flex: none; }
-.city-brand { flex: none; gap: 6px; height: 44px; }
-.city-navigation .sections {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  gap: 4px;
-  align-items: center;
-}
 .city-brand-icon {
   display: inline-block; width: 32px; height: 36px; flex: none;
   background: url('/brand/jktx-symbol.png') center / auto 44px no-repeat;
