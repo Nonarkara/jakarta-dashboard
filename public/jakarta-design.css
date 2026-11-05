@@ -262,11 +262,31 @@ body[data-surface="jakarta-dashboard"] .map-heading h2 { margin: 0; }
 .masthead-clock .tz[data-local] .tz-city,
 .masthead-clock .tz[data-local] .tz-time { color: var(--accent); font-weight: 650; }
 
-/* Phone and tablet: show only the local time (Jakarta) in the masthead —
-   the masthead row is already at capacity, so the other range zones are
-   hidden here to avoid sideways bleeding. Desktop keeps the full
-   India→New Zealand range. */
-@media (max-width: 1000px) {
+/* The navigation sits in the masthead's first row only when that row can
+   hold it. Measured: the links need 733px (English) and the brand, the local
+   clock and the controls need 339px more, so the first row can carry the
+   navigation from 1072px up. Between 1001px and 1100px it could not, and
+   the last two links were pushed out of the bar, one of them cut mid-word
+   ("At"). Below that width the navigation takes a row of its own — the same
+   treatment the phone gives it — so it is never cut. */
+@media (max-width: 1099px) {
+  body[data-surface="jakarta-dashboard"] .masthead { grid-template-columns: minmax(0, 1fr) auto; gap: 0; }
+  body[data-surface="jakarta-dashboard"] .sections { grid-column: 1 / -1; grid-row: 2; }
+  body[data-surface="jakarta-dashboard"] .city-preferences { grid-column: 2; grid-row: 1; }
+}
+
+/* The clock yields to the navigation.
+   The world clock is a delight for the agency's international audience, and
+   the navigation is the product. Measured on the live build: the navigation
+   needs 733px (English) and the seven zones take 610px, so from 1001px to
+   1599px the masthead could not hold both — the nav column was left 576px
+   at 1440 and 336px at 1200, and the last two links were pushed out of the
+   bar, one of them cut mid-word ("At"). The zone bar scrolls, so the links
+   were reachable, but nothing said so.
+   So the range zones show only where the bar can carry them AND the whole
+   navigation: 1600px and up. Below that, the local time stays in the
+   masthead and the full range is one tap away in Controls. */
+@media (max-width: 1599px) {
   .masthead-clock .tz:not([data-local]) { display: none; }
 }
 

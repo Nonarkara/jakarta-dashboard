@@ -176,11 +176,53 @@ const CENSUS = () => {
   const outer = inRun.filter((b) => !inRun.some((o) => o !== b && o.el.contains(b.el)));
   const sels = outer.map((b) => b.sel);
 
+  // Does the band's CONTENT fit inside the band?
+  //
+  // The census measures how TALL a chrome band is and how many blocks stand
+  // in it. It does not ask whether the things inside it are visible. A
+  // masthead can be exactly the right height, one single band, the correct
+  // height in the receipt — and still eat its own navigation: the world clock
+  // took 610px, the nav column was left 576px for 721px of links, and the
+  // last two were pushed out of the bar, one cut mid-word. Every other
+  // measurement said the page was fine, because none of them looked at the
+  // band's content.
+  //
+  // So: inside a chrome band, text that reaches past the edge of the
+  // container that clips it is a failure. A scroller OUTSIDE the chrome (a
+  // row of lens doors in the map) is a deliberate choice and is not this
+  // gate's business — but furniture that clips itself is never deliberate.
+  const clipped = [];
+  for (const band of outer) {
+    for (const el of band.el.querySelectorAll('*')) {
+      const text = (el.textContent || '').trim();
+      if (!text) continue;
+      if (el.children.length && !Array.from(el.childNodes).some((n) => n.nodeType === 3 && n.textContent.trim())) continue;
+      const cs = win.getComputedStyle(el);
+      if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+      if (typeof el.checkVisibility === 'function' && !el.checkVisibility({ contentVisibilityAuto: true, opacityProperty: true, visibilityProperty: true })) continue;
+      const r = el.getBoundingClientRect();
+      if (!r.width || !r.height) continue;
+      // the nearest ancestor that clips
+      let clipper = null;
+      for (let anc = el.parentElement; anc && anc !== document.body; anc = anc.parentElement) {
+        const acs = win.getComputedStyle(anc);
+        if (acs.overflowX !== 'visible' || acs.overflowY !== 'visible') { clipper = anc; break; }
+      }
+      if (!clipper) continue;
+      const cr = clipper.getBoundingClientRect();
+      if (r.right > cr.right + 1 || r.left < cr.left - 1) {
+        const key = label(el) + ' in ' + label(clipper);
+        if (!clipped.some((c) => c.key === key)) clipped.push({ key, text: text.slice(0, 40) });
+      }
+    }
+  }
+
   return {
     vh,
     chrome,
     blocks: outer.length,
     sels,
+    clipped,
     details: outer.map((b) => b.sel + " [" + Math.round(b.top) + "→" + Math.round(b.bottom) + "]"),
   };
 };
@@ -389,12 +431,15 @@ async function census(build) {
         // without anything going red.
         try {
           if (chromeDifference(receipt, c)) {
+            const clip = Array.isArray(c.clipped) && c.clipped.length
+              ? ` It also clips its own content: ${c.clipped.map((x) => x.key).join("; ")} — furniture that cuts the reader's own text is not a band, it is a loss.`
+              : '';
             failures.push(
               `${route} @${w}px — the receipt says ${saidTop}px of top chrome in ${saidTopBands} band(s); the page has ${c.chrome}px in ${c.blocks} ` +
                 `(${c.details.join(" | ") || "none"}). ` +
                 (c.chrome > saidTop
                   ? "The receipt describes a page with less furniture than the page has. The instrument cannot see it; the reader can."
-                  : "The receipt describes furniture the page no longer has."),
+                  : "The receipt describes furniture the page no longer has.") + clip,
             );
           }
         } catch (e) {

@@ -11,4 +11,10 @@ for(const candidate of [control,{chrome:23,blocks:2},{chrome:10,blocks:2},{chrom
 assert.equal(plantedBandDetected(receipt,{chrome:0,blocks:0},planted),false,'a broken control is not a baseline');
 assert.equal(plantedBandDetected(null,control,planted),false,'missing receipt cannot pass');
 assert.throws(()=>chromeDifference(null,control));
-console.log('PASS chrome verdict: exact positive delta, healthy control, missing/error/timeout outcomes and unrelated mismatches');
+// A band that clips its own content is a difference, even when its height
+// and its block count are exactly what the receipt says. This is the axis
+// the receipt cannot hold: how tall the chrome is, yes; whether the reader
+// can see what is inside it, no.
+assert.equal(chromeDifference(receipt,{chrome:23,blocks:1,clipped:[{key:'nav.sections in nav.sections',text:'At'}]}),true,'a band that clips its own content differs from the receipt');
+assert.equal(chromeDifference(receipt,{chrome:23,blocks:1,clipped:[]}),false,'a band that clips nothing is unchanged');
+console.log('PASS chrome verdict: exact positive delta, healthy control, missing/error/timeout outcomes, unrelated mismatches and clipped band content');
