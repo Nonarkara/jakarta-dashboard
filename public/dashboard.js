@@ -431,7 +431,11 @@ get('/data/jakarta-v1/transit.json?v='+DASHBOARD_BUILD).then(d=>{transit=d;rende
 // Phone navigation uses one masthead row; native details keeps keyboard focus.
 {
  const navigation=document.getElementById('city-navigation');
- const narrow=matchMedia('(max-width:1000px)');
+ // The navigation moves into the Menu disclosure below 1200px, because that
+// is the width at which the masthead's first row can still carry it (see
+// the masthead rules in jakarta-design.css). The drawer is closed there, so
+// the masthead stays one compact row.
+const narrow=matchMedia('(max-width:1199px)');
  const dockNavigation=()=>{if(navigation)navigation.open=!narrow.matches;};
  dockNavigation();narrow.addEventListener?.('change',dockNavigation);
  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&navigation?.open&&narrow.matches&&!document.querySelector('dialog[open]')){navigation.open=false;navigation.querySelector('summary')?.focus();}});
