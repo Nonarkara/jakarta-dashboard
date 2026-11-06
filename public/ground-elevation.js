@@ -70,6 +70,26 @@ export function sampleElevation(pixels, width, height, lat, lng, zoom) {
 }
 
 /**
+ * Decode a PNG tile into pixels.
+ *
+ * The width and the height are read BEFORE the bitmap is closed: closing
+ * releases its pixels, and its size with them, so a closed bitmap measures
+ * zero and a zero-sized canvas is an empty one. That produced an unknown
+ * height with no error anywhere to say why.
+ */
+export async function decodePng(blob) {
+  const bitmap = await createImageBitmap(blob);
+  const width = bitmap.width, height = bitmap.height;
+  const canvas = document.createElement('canvas');
+  canvas.width = width; canvas.height = height;
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  context.drawImage(bitmap, 0, 0);
+  const image = context.getImageData(0, 0, width, height);
+  if (bitmap.close) bitmap.close();
+  return { data: image.data, width, height };
+}
+
+/**
  * The ground height at a point, in metres above sea level, with its source
  * and its resolution. Null when the tile cannot be read — the caller says
  * "unknown", never "0".

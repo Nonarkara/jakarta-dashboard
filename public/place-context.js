@@ -158,7 +158,7 @@ export function createPlaceContext(map, options) {
     groundState='loading';groundValue=null;render();
     try {
       const module=await import('/ground-elevation.js?v='+encodeURIComponent(options.build));
-      const result=await module.groundElevation({lat:location[1],lng:location[0],zoom:13,fetch:window.fetch.bind(window),signal:controller.signal,decodeImage:decodePng});
+      const result=await module.groundElevation({lat:location[1],lng:location[0],zoom:13,fetch:window.fetch.bind(window),signal:controller.signal,decodeImage:module.decodePng});
       groundValue=result;groundState=result?'ready':'unknown';
     } catch(error) {
       groundValue=null;groundState='unknown';
@@ -166,16 +166,6 @@ export function createPlaceContext(map, options) {
       if(groundPending===controller)groundPending=null;
     }
     if(dialog.open)render();
-  }
-  async function decodePng(blob) {
-    const bitmap=await createImageBitmap(blob);
-    const canvas=document.createElement('canvas');
-    canvas.width=bitmap.width;canvas.height=bitmap.height;
-    const context=canvas.getContext('2d',{willReadFrequently:true});
-    context.drawImage(bitmap,0,0);
-    const image=context.getImageData(0,0,bitmap.width,bitmap.height);
-    if(bitmap.close)bitmap.close();
-    return {data:image.data,width:bitmap.width,height:bitmap.height};
   }
   function show(point) {
     location=[Number(point.lng),Number(point.lat)];

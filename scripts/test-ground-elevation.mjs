@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {tileFor,metresPerPixel,decodeTerrarium,sampleElevation,groundElevation,ELEVATION_SOURCE} from '../public/ground-elevation.js';
+import {tileFor,metresPerPixel,decodeTerrarium,sampleElevation,groundElevation,decodePng,ELEVATION_SOURCE} from '../public/ground-elevation.js';
 
 // The tile that holds a point. Jakarta, at the zoom the place context uses.
 const jakarta = tileFor(-6.2088, 106.8456, 13);
@@ -55,4 +55,19 @@ const failed = await groundElevation({
 assert.equal(failed, null, 'a failed tile is null, not zero');
 assert.equal(await groundElevation({ lat: NaN, lng: 106.8, zoom: 13, fetch: async () => ({ ok: true }) }), null, 'a broken point has no height');
 
+// The decoder reads the size BEFORE it closes the bitmap: closing releases
+// the pixels and the size with them, and a zero-sized canvas is an empty
+// one. The height came back unknown with no error to say why, so the order
+// is asserted here rather than discovered in production.
+{
+  const closed={width:256,height:256,data:new Uint8ClampedArray(256*256*4),close(){this.width=0;this.height=0;}};
+  const canvas={width:0,height:0,getContext:()=>({drawImage(){},getImageData:(x,y,w,h)=>({data:new Uint8ClampedArray(Math.max(0,w)*Math.max(0,h)*4)})})};
+  globalThis.createImageBitmap=async()=>closed;
+  globalThis.document={createElement:()=>canvas};
+  const out=await decodePng('blob');
+  assert.equal(out.width,256,'the decoder keeps the bitmap size it was given');
+  assert.equal(out.height,256);
+  assert.equal(out.data.length,256*256*4,'the decoder reads the pixels');
+  delete globalThis.createImageBitmap;delete globalThis.document;
+}
 console.log('ground elevation: tile maths, terrarium decoding, sampling, resolution and an unavailable tile that stays unknown');
