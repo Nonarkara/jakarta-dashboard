@@ -139,11 +139,13 @@ body[data-surface="jakarta-dashboard"] .masthead {
 .city-brand-wordmark {
   flex: none; font: 800 26px/1 var(--font-sans);
   letter-spacing: -.055em; color: var(--ink);
+  white-space: nowrap;
 }
 .city-version {
   flex: none; font: 600 9px/1 var(--font-sans);
   letter-spacing: .04em; color: var(--dim);
   margin-top: 1px;
+  white-space: nowrap;
 }
 .city-brand { text-decoration: none; }
 body[data-surface="jakarta-dashboard"] .sections { border: 0; padding: 0; min-width: 0; }
