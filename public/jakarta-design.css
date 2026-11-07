@@ -1061,3 +1061,10 @@ body[data-surface="jakarta-dashboard"] .masthead-clock { flex-wrap:wrap; min-wid
 body[data-surface="jakarta-dashboard"] .map-panel { grid-template-rows:minmax(0,1fr); }
 body[data-surface="jakarta-dashboard"] .map-panel > .map-heading.visually-hidden { padding:0; }
 body[data-surface="jakarta-dashboard"] #city-map { grid-row:1; }
+
+/* The thin version chip under JKTX fits on desktop but collapses the masthead
+   at narrow phones (339–341px). Hide it there; the footer already carries the
+   build stamp. */
+@media (max-width: 341px) {
+  body[data-surface="jakarta-dashboard"] .city-version { display:none; }
+}
