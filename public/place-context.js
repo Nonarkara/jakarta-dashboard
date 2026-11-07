@@ -104,7 +104,7 @@ export function createPlaceContext(map, options) {
     // own words are that heights cannot be transferred between station datums.
     const ground=el('p');ground.className='place-source';
     if(groundState==='loading')ground.textContent=text('Reading the ground height…','Membaca ketinggian tanah…');
-    else if(groundState==='ready'&&groundValue)ground.textContent=text('Ground height here','Ketinggian tanah di sini')+' '+groundValue.metres.toFixed(0)+' m '+text('above sea level','di atas permukaan laut')+' · '+groundValue.source.attribution+' · ~'+Math.round(groundValue.resolutionMetres)+' m/pixel · '+text('retrieved','diambil')+' '+groundValue.retrievedAt.slice(0,10)+' · '+text('a raster model, not a survey','model raster, bukan survei');
+    else if(groundState==='ready'&&groundValue)ground.textContent=text('Ground height here','Ketinggian tanah di sini')+' '+Math.abs(groundValue.metres).toFixed(0)+' m '+(groundValue.metres<0?text('below sea level','di bawah permukaan laut'):text('above sea level','di atas permukaan laut'))+' · '+groundValue.source.attribution+' · ~'+Math.round(groundValue.resolutionMetres)+' m/pixel · '+text('retrieved','diambil')+' '+groundValue.retrievedAt.slice(0,10)+' · '+text('a raster model, not a survey: in flat, built-up Jakarta it can be wrong by several metres, so do not use it for flood depth','model raster, bukan survei: di Jakarta yang datar dan padat bangunan bisa meleset beberapa meter, jangan dipakai untuk kedalaman banjir');
     else ground.textContent=text('The ground height here is unknown.','Ketinggian tanah di sini tidak diketahui.');
     if(!references) {el('p',text('Loading public references…','Memuat referensi publik…')).setAttribute('role','status');return;}
     for(const source of references) {
