@@ -45,7 +45,8 @@ function dashboardMarkup(markup){
  for(const id of required)assert.equal((markup.match(new RegExp(' id="'+id+'"','g'))||[]).length,1,'one required controller node: '+id);
  assert.equal((markup.match(/<header\b[^>]*class="masthead"/g)||[]).length,1,'one source-owned masthead');
  assert.match(markup,/<details id="city-navigation"/,'Menu is a native disclosure');
- assert.doesNotMatch(markup,/<span class="city-version"/,'build identity stays in the existing footer: a chip beside the wordmark wraps the phone masthead at 339px');
+ assert.match(markup,/<span class="city-version"/,'version chip beside JKTx');
+ assert.match(readFileSync(new URL('../public/jakarta-design.css',import.meta.url),'utf8'),/max-width:\s*341px\)\s*\{[^}]*\.city-version\s*\{\s*display:\s*none/,'the chip must be hidden at 341px and below, where it wrapped the masthead to 56px');
 }
 dashboardMarkup(html);
 for(const id of ['language','source-status','map-status'])assert.throws(()=>dashboardMarkup(html.replace(' id="'+id+'"','')),/required controller node/,'deleted controller node must fail');
