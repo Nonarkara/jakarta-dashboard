@@ -45,7 +45,7 @@ function dashboardMarkup(markup){
  for(const id of required)assert.equal((markup.match(new RegExp(' id="'+id+'"','g'))||[]).length,1,'one required controller node: '+id);
  assert.equal((markup.match(/<header\b[^>]*class="masthead"/g)||[]).length,1,'one source-owned masthead');
  assert.match(markup,/<details id="city-navigation"/,'Menu is a native disclosure');
- assert.doesNotMatch(markup,/<span class="city-version"/,'build identity stays in the existing footer');
+ assert.match(markup,/<span class="city-version"/,'version number sits next to JKTx at top left');
 }
 dashboardMarkup(html);
 for(const id of ['language','source-status','map-status'])assert.throws(()=>dashboardMarkup(html.replace(' id="'+id+'"','')),/required controller node/,'deleted controller node must fail');
