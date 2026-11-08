@@ -1062,9 +1062,9 @@ body[data-surface="jakarta-dashboard"] .map-panel { grid-template-rows:minmax(0,
 body[data-surface="jakarta-dashboard"] .map-panel > .map-heading.visually-hidden { padding:0; }
 body[data-surface="jakarta-dashboard"] #city-map { grid-row:1; }
 
-/* The thin version chip under JKTX fits on desktop but collapses the masthead
-   at narrow phones (339–341px). Hide it there; the footer already carries the
-   build stamp. */
-@media (max-width: 341px) {
+/* The thin version chip beside JKTX fits on desktop and standard phones (>=346px)
+   but causes the masthead to wrap to 56px at narrow phone widths (320–345px).
+   Hide it there; the footer already carries the build stamp. */
+@media (max-width: 345px) {
   body[data-surface="jakarta-dashboard"] .city-version { display:none; }
 }
