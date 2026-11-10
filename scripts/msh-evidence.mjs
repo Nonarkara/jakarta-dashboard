@@ -126,6 +126,12 @@ async function openBrowser() {
     close: async () => {
       try { await browser.close(); } catch { /* already gone */ }
       try { child.kill("SIGKILL"); } catch { /* already gone */ }
+      // The killed browser can hold the profile for a moment after SIGKILL;
+      // rmSync is not retry-safe mid-release, so give the directory a moment.
+      for (let i = 0; i < 5; i++) {
+        try { rmSync(profile, { recursive: true, force: true }); return; } catch { /* retry */ }
+        await new Promise((r) => setTimeout(r, 200));
+      }
       rmSync(profile, { recursive: true, force: true });
     },
   };
