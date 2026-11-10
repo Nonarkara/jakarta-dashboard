@@ -7,6 +7,12 @@ compatibility_date = "2026-08-26"
 compatibility_flags = ["nodejs_compat"]
 
 # Custom domain; the nonarkara.org zone is on this account.
+# A hand `wrangler deploy` skips the release gate and its lock, and has put
+# ungated bytes on the edge three times. Wrangler runs this before it deploys;
+# only scripts/deploy-live.sh sets RELEASE_GATE=1.
+[build]
+command = "node scripts/require-release-gate.mjs"
+
 [[routes]]
 pattern = "jakarta.nonarkara.org"
 custom_domain = true

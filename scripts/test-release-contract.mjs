@@ -87,4 +87,16 @@ try {
     assert.ok(readFileSync(new URL(file, import.meta.url), 'utf8').includes(marker), 'dedication present in ' + file);
 }
 
+// A hand `wrangler deploy` must be refused; only the release script sets the gate.
+{
+  const toml = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
+  const script = readFileSync(new URL('../scripts/deploy-live.sh', import.meta.url), 'utf8');
+  assert.match(toml, /^\[build\]\s*\ncommand = "node scripts\/require-release-gate\.mjs"/m, 'wrangler.toml must run the release-gate guard');
+  assert.match(script, /RELEASE_GATE=1 npx wrangler deploy/, 'only deploy-live.sh sets RELEASE_GATE');
+  const { spawnSync } = await import('node:child_process');
+  const run = env => spawnSync('node', [new URL('./require-release-gate.mjs', import.meta.url).pathname], { env, encoding: 'utf8' });
+  assert.notEqual(run({ PATH: process.env.PATH }).status, 0, 'a hand deploy is refused');
+  assert.equal(run({ PATH: process.env.PATH, RELEASE_GATE: '1' }).status, 0, 'the release script is allowed');
+}
+
 console.log('PASS release contract: input validation, bbox, air-quality truth, nearest-sample honesty, retired feeds, HEAD, Range, health, headers, release identity and dedication');

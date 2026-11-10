@@ -60,7 +60,7 @@ npm run audit:spatial
 npm run audit:chrome
 npm run stamp
 node scripts/release-snapshot.mjs write "$LOCK/inputs.json"
-npx wrangler deploy
+RELEASE_GATE=1 npx wrangler deploy
 
 # From here on the edge is live: remember the build so a later failure can say so.
 DEPLOYED_BUILD="$(node --input-type=module -e 'import {readFileSync} from "node:fs"; console.log(readFileSync("public/app.js", "utf8").match(/const ATLAS_BUILD_TAG = "([^"]+)"/)[1])')"
