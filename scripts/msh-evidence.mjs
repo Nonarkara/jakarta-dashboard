@@ -361,7 +361,33 @@ for (const route of ROUTES) {
       await ensureBrowser();
       await page.setViewportSize({ width: v.w, height: v.h });
       await page.goto(`${BASE}${route.path}`, { waitUntil: "load", timeout: 60000 }).catch(() => {});
-      await page.waitForTimeout(route.wait ?? (route.path === "/atlas" ? 7000 : 5000));
+      // Atlas route (/atlas, /atlas?lens=...): serves index.html with MapLibre directly.
+      // Wait for the loading overlay (#atlas-map-loading) to be hidden - max 4.5s per app.js.
+      if (route.path.startsWith("/atlas")) {
+        try {
+          await page.waitForFunction(() => {
+            const el = document.getElementById('atlas-map-loading');
+            return !el || el.hidden || el.style.display === 'none' || el.offsetParent === null;
+          }, { timeout: 30000 });
+          // Extra settle time for map render
+          await page.waitForTimeout(3000);
+        } catch {
+          await page.waitForTimeout(10000);
+        }
+      } else if (route.path === "/") {
+        // Dashboard route: map is in iframe #city-map, signals via postMessage
+        try {
+          await page.waitForFunction(() => {
+            const status = document.getElementById('map-status');
+            return status && (status.textContent.includes('ready') || status.textContent.includes('siap'));
+          }, { timeout: 60000 });
+        } catch {
+          await page.waitForSelector('#city-map', { state: 'attached', timeout: 30000 });
+          await page.waitForTimeout(10000);
+        }
+      } else {
+        await page.waitForTimeout(route.wait ?? 5000);
+      }
       const m = await measure();
       const shot = path.join(OUT, `${route.name}-${v.w}.png`);
       // The atlas is a live 3D map on software GL, and the screenshot waits

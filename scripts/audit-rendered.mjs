@@ -227,15 +227,29 @@ for (const [path, label] of PAGES) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1, isMobile, hasTouch: isMobile });
     const page = await ctx.newPage();
     page.on('pageerror', (e) => record(label, 'page error', false, String(e).slice(0, 100)));
-    await page.goto(BASE + path, { waitUntil: 'networkidle', timeout: 90000 });
-    await page.waitForTimeout(3500);
+    // Atlas page: networkidle never fires (MapLibre tile requests). Use domcontentloaded + map-ready wait.
+    const isAtlas = label === 'atlas';
+    await page.goto(BASE + path, { waitUntil: isAtlas ? 'domcontentloaded' : 'networkidle', timeout: 90000 });
+    if (isAtlas) {
+      try {
+        await page.waitForFunction(() => {
+          const el = document.getElementById('atlas-map-loading');
+          return !el || el.hidden || el.style.display === 'none' || el.offsetParent === null;
+        }, { timeout: 30000 });
+        await page.waitForTimeout(3000);
+      } catch {
+        await page.waitForTimeout(10000);
+      }
+    } else {
+      await page.waitForTimeout(3500);
+    }
 
     // The loading veil sits above every control. While it is up, a hit-test
     // failure means nothing — the page simply is not interactive yet. Wait for
     // it to lift, and if it never does, say so once and skip the hit-tests
     // rather than reporting three controls as broken.
     let veilLifted = true;
-    if (label === 'atlas') {
+    if (isAtlas) {
       try {
         await page.waitForFunction(() => {
           const v = document.getElementById('atlas-map-loading');
@@ -397,6 +411,16 @@ for (const [w, h] of [[1440, 900], [1024, 768], [390, 844]]) {
     headers:{'content-type':'application/json','retry-after':'47'},
     body:JSON.stringify({error:'Too many requests',retryAfterSeconds:47})}));
   await page.goto(BASE + '/atlas?lens=waterways&lang=en', {waitUntil:'domcontentloaded',timeout:90000});
+  // Wait for MapLibre loading overlay to hide
+  try {
+    await page.waitForFunction(() => {
+      const el = document.getElementById('atlas-map-loading');
+      return !el || el.hidden || el.style.display === 'none' || el.offsetParent === null;
+    }, { timeout: 30000 });
+    await page.waitForTimeout(3000);
+  } catch {
+    await page.waitForTimeout(10000);
+  }
   await page.waitForSelector('#atlas-lens-evidence', {timeout:30000});
   await page.evaluate(() => { document.getElementById('atlas-lens-evidence').open=true; });
   const ready=await page.evaluate(panelReadiness,{expand:true,timeoutMs:45000});
@@ -427,7 +451,17 @@ for (const [w, h] of [[1440, 900], [1024, 768]]) {
   const page = await ctx.newPage();
   const where = `atlas-waterways@${w}`;
   page.on('pageerror', (e) => record(where, 'page error', false, String(e).slice(0, 100)));
-  await page.goto(BASE + '/atlas?lens=waterways', { waitUntil: 'networkidle', timeout: 90000 });
+  // Atlas page: networkidle never fires (MapLibre tile requests). Use domcontentloaded + map-ready wait.
+  await page.goto(BASE + '/atlas?lens=waterways', { waitUntil: 'domcontentloaded', timeout: 90000 });
+  try {
+    await page.waitForFunction(() => {
+      const el = document.getElementById('atlas-map-loading');
+      return !el || el.hidden || el.style.display === 'none' || el.offsetParent === null;
+    }, { timeout: 30000 });
+    await page.waitForTimeout(3000);
+  } catch {
+    await page.waitForTimeout(10000);
+  }
   // The panel opens when the lens is chosen and the legend fills when the
   // mapped reference arrives. Wait for both, then measure what arrived.
   await page.waitForFunction(() => document.getElementById('atlas-lens-evidence')?.open === true, null, { timeout: 30000 }).catch(() => {});

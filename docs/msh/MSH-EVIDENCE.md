@@ -12,7 +12,7 @@ The law's five questions, asked of each viewport.
 |---|---|---|---|---|---|
 | 390 × 844 — the law's phone size | 27px top (3.2%), 1 band(s) stacked; 0px bottom, 0 band(s) stacked | first action at 2px — **in the first screen**; the title is at 12px | no sideways scroll, nothing past the edge | title 20px, loudest 18px (span.city-brand-wordmark), ratio 1.11, 1 peer(s) at 2.7% of the text | 1 controls, 0 under 24px, 0 canvas(es), main present, title present |
 | 1024 × 900 — the intermediate width; height 900 used | 38px top (4.2%), 1 band(s) stacked; 0px bottom, 0 band(s) stacked | first action at 0px — **in the first screen**; the title is at 18px | no sideways scroll, nothing past the edge | title 20px, loudest 22px (span.city-brand-wordmark), ratio 0.91, 0 peer(s) at 0% of the text | 1 controls, 0 under 24px, 0 canvas(es), main present, title present |
-| 1440 × 900 — the law's desktop size | 38px top (4.2%), 1 band(s) stacked; 0px bottom, 0 band(s) stacked | first action at 0px — **in the first screen**; the title is at 18px | no sideways scroll, nothing past the edge | title 20px, loudest 22px (span.city-brand-wordmark), ratio 0.91, 0 peer(s) at 0% of the text | 10 controls, 0 under 24px, 0 canvas(es), main present, title present |
+| 1440 × 900 — the law's desktop size | 38px top (4.2%), 1 band(s) stacked; 0px bottom, 0 band(s) stacked | first action at 0px — **in the first screen**; the title is at 18px | no sideways scroll, nothing past the edge | title 20px, loudest 22px (span.city-brand-wordmark), ratio 0.91, 0 peer(s) at 0% of the text | 11 controls, 0 under 24px, 0 canvas(es), main present, title present |
 
 ## atlas — `/atlas`
 
