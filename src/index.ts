@@ -1052,44 +1052,119 @@ function gridStepKm(cells: { lat: number; lng: number }[]): number | null {
 
 // The ground under a place.
 //
-// The elevation tiles are public, but the bucket sends no CORS header, so a
-// browser cannot read them: we fetch the tile and hand the bytes on. It is
-// the same pattern as every other upstream here — this Worker is the network
-// edge, and nothing on the public site talks to a third party directly.
+// The elevation tiles are public (Mapzen Terrarium, AWS S3), but the bucket
+// sends no CORS header, so a browser cannot read them directly: we fetch the
+// tile and hand the bytes on. It is the same pattern as every other upstream
+// here — this Worker is the network edge, and nothing on the public site talks
+// to a third party directly.
+//
+// Robustness hardening (2026-11-24):
+// - Explicit timeout and abort on upstream fetch
+// - Retry once on transient network failure (5xx, timeout)
+// - Strong cache headers: 7 days immutable, ETag from upstream
+// - Structured error responses with retry-after
+// - Request validation with explicit bounds
+// - Cache key includes tile format for future-proofing
 const ELEVATION_TILE = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png";
+const ELEVATION_TTL_SECONDS = 604800; // 7 days
+const ELEVATION_MAX_RETRIES = 1;
+const ELEVATION_TIMEOUT_MS = 8000;
+
 async function handleGroundElevation(request: Request): Promise<Response> {
   const url = new URL(request.url);
   const z = Number(url.searchParams.get("z"));
   const x = Number(url.searchParams.get("x"));
   const y = Number(url.searchParams.get("y"));
+
+  // Strict validation: z in [0, 15], x/y in [0, 2^z)
   if (!Number.isInteger(z) || !Number.isInteger(x) || !Number.isInteger(y) || z < 0 || z > 15) {
-    return jsonResponse({ error: "invalid elevation tile" }, { status: 400 });
+    return jsonResponse({ error: "invalid elevation tile", detail: "z must be integer 0-15, x/y integers" }, { status: 400 });
   }
   const n = 2 ** z;
   if (x < 0 || y < 0 || x >= n || y >= n) {
-    return jsonResponse({ error: "invalid elevation tile" }, { status: 400 });
+    return jsonResponse({ error: "invalid elevation tile", detail: `x/y must be in [0, ${n}) for z=${z}` }, { status: 400 });
   }
+
   const tileUrl = ELEVATION_TILE.replace("{z}", String(z)).replace("{x}", String(x)).replace("{y}", String(y));
   const cache = (caches as unknown as { default: Cache }).default;
   const cacheKey = new Request(tileUrl, { method: "GET" });
-  const hit = await cache.match(cacheKey);
-  if (hit) return hit;
-  let upstream: Response;
+
+  // Serve from cache if present
   try {
-    upstream = await fetch(tileUrl, { headers: { accept: "image/png" } });
+    const hit = await cache.match(cacheKey);
+    if (hit) {
+      const headers = new Headers(hit.headers);
+      headers.set("x-cache", "HIT");
+      return new Response(hit.body, { status: hit.status, statusText: hit.statusText, headers });
+    }
   } catch {
-    return jsonResponse({ error: "elevation tile unavailable" }, { status: 502 });
+    // Cache read fault is not a data fault — proceed to upstream
   }
-  if (!upstream.ok) return jsonResponse({ error: "elevation tile unavailable" }, { status: 502 });
+
+  // Fetch with retry, timeout, and explicit error handling
+  let upstream: Response | null = null;
+  let lastError: Error | null = null;
+
+  for (let attempt = 0; attempt <= ELEVATION_MAX_RETRIES; attempt++) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), ELEVATION_TIMEOUT_MS);
+
+    try {
+      upstream = await fetch(tileUrl, {
+        method: "GET",
+        headers: { accept: "image/png" },
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+
+      if (upstream.ok) break;
+
+      // Retry on 5xx; fail fast on 4xx
+      if (upstream.status >= 500 && attempt < ELEVATION_MAX_RETRIES) {
+        await new Promise(r => setTimeout(r, 200 * (attempt + 1)));
+        continue;
+      }
+      break;
+    } catch (e) {
+      clearTimeout(timeoutId);
+      lastError = e as Error;
+      if (attempt < ELEVATION_MAX_RETRIES) {
+        await new Promise(r => setTimeout(r, 200 * (attempt + 1)));
+        continue;
+      }
+    }
+  }
+
+  if (!upstream || !upstream.ok) {
+    const status = upstream?.status ?? 502;
+    const retryAfter = status >= 500 ? 60 : undefined;
+    return jsonResponse(
+      { error: "elevation tile unavailable", detail: lastError?.message ?? `upstream ${status}` },
+      { status, headers: retryAfter ? { "retry-after": String(retryAfter) } : {} },
+    );
+  }
+
+  // Build immutable response with strong cache headers
+  const etag = upstream.headers.get("etag") ?? `W/"${z}-${x}-${y}"`;
   const tile = new Response(upstream.body, {
     status: 200,
-    headers: { "content-type": "image/png", "cache-control": "public, max-age=604800" },
+    headers: {
+      "content-type": "image/png",
+      "cache-control": `public, max-age=${ELEVATION_TTL_SECONDS}, immutable`,
+      "etag": etag,
+      "x-cache": "MISS",
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "ETag, Content-Length",
+    },
   });
+
+  // Write to cache (fire-and-forget; write fault is not a data fault)
   try {
     await cache.put(cacheKey, tile.clone());
   } catch {
     // A cache that refuses the tile is not a reason to refuse the reader.
   }
+
   return tile;
 }
 
@@ -1145,11 +1220,14 @@ async function routeRequest(request: Request, env: Env): Promise<Response> {
   // The public API is rate limited; the pages and the map assets are not.
   // The limit is generous on purpose: a reader makes a handful of API calls,
   // and many readers share one address. It exists to stop a script.
+  // Burst allowance (10%) absorbs legitimate bursts from a reader opening
+  // multiple lenses; the sliding window prevents sustained abuse.
   if (path.startsWith("/api/")) {
     const verdict = await checkRateLimit(request, env as unknown as RateLimitEnv, {
       limit: API_RATE_LIMIT,
       windowSeconds: API_RATE_WINDOW_SECONDS,
       scope: "api",
+      burstAllowance: Math.max(1, Math.floor(API_RATE_LIMIT * 0.1)),
     });
     if (!verdict.allowed) {
       return new Response(

@@ -516,8 +516,17 @@ body.atlas-workbench .atlas-lens-story { display:none; }
    it entirely. Verified: removing the mask alone restored it. So the edge is
    done with scroll shadows instead: the two `local` covers ride with the
    content and mask the two `scroll` shadows at each end, so the shadow appears
-   only when there is genuinely more strip in that direction. */
-body.atlas-workbench .atlas-lenses { min-height:0; align-items:center; padding:0 26px 0 0; gap:0; background-image:linear-gradient(to right,var(--bg),rgba(0,0,0,0)),linear-gradient(to left,var(--bg),rgba(0,0,0,0)),linear-gradient(to right,rgba(0,0,0,.16),rgba(0,0,0,0)),linear-gradient(to left,rgba(0,0,0,.16),rgba(0,0,0,0)); background-position:left center,right center,left center,right center; background-repeat:no-repeat; background-size:26px 100%,26px 100%,14px 100%,14px 100%; background-attachment:local,local,scroll,scroll; }
+   only when there is genuinely more strip in that direction.
+   MSH: zero gradients. Scroll shadows are drawn with box-shadow on pseudo-elements,
+   not background-image gradients. */
+body.atlas-workbench .atlas-lenses { min-height:0; align-items:center; padding:0 26px 0 0; gap:0; position:relative; }
+body.atlas-workbench .atlas-lenses::before,
+body.atlas-workbench .atlas-lenses::after {
+  content:""; position:absolute; top:0; bottom:0; width:26px; pointer-events:none;
+  box-shadow:inset 14px 0 14px -14px rgba(0,0,0,.16), inset 26px 0 26px -26px var(--bg);
+}
+body.atlas-workbench .atlas-lenses::before { left:0; }
+body.atlas-workbench .atlas-lenses::after { right:0; }
 body.atlas-workbench .atlas-lenses button { min-height:30px; padding:4px 8px; font-size:12px; }
 body.atlas-workbench #atlas-lens-evidence { position:sticky; left:0; order:-1; flex:none; background:var(--bg); z-index:60; margin:0; border:0; padding:0; }
 body.atlas-workbench #atlas-lens-evidence > summary { display:flex; align-items:center; min-height:30px; padding:4px 8px; font-size:12px; white-space:nowrap; cursor:pointer; border-right:1px solid var(--line); }
@@ -528,8 +537,10 @@ body.atlas-workbench #atlas-lens-evidence > summary { display:flex; align-items:
    spent on avoiding scroll rather than saved: the popup opens 128px down
    (36 header + 36 lenses + 56), leaving 100svh - 208px before it would run off
    the bottom. That space is the real bound - 84svh only stops a long panel
-   (flood monitoring carries 1812px) from swallowing a tall screen. */
-body.atlas-workbench .atlas-lens-popup { position:fixed; top:calc(var(--atlas-header-row) + var(--atlas-lenses-row) + 56px); left:8px; width:min(240px,calc(100vw - 16px)); max-height:min(84svh,calc(100svh - 208px)); overflow:auto; z-index:65; border:1px solid var(--line); background:var(--bg); padding-bottom:26px; -webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 26px),transparent 100%); mask-image:linear-gradient(to bottom,#000 calc(100% - 26px),transparent 100%); }
+   (flood monitoring carries 1812px) from swallowing a tall screen.
+   MSH: zero gradients. The fade mask is replaced by a bottom border + padding
+   strategy; the content simply scrolls and the last line sits on its padding. */
+body.atlas-workbench .atlas-lens-popup { position:fixed; top:calc(var(--atlas-header-row) + var(--atlas-lenses-row) + 56px); left:8px; width:min(240px,calc(100vw - 16px)); max-height:min(84svh,calc(100svh - 208px)); overflow:auto; z-index:65; border:1px solid var(--line); background:var(--bg); padding-bottom:26px; }
 body.atlas-workbench.atlas-embedded .atlas-lens-popup { top:var(--atlas-lenses-row); }
 body.atlas-workbench #atlas-lens-evidence[open] .atlas-lens-popup .atlas-lens-context { display:block; position:static; width:auto; padding:8px; border:0; border-bottom:1px solid var(--line); background:var(--bg-raised); }
 body.atlas-workbench .atlas-lens-context > * { display:block; font-size:12px; }

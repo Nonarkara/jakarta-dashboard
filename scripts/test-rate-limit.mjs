@@ -20,7 +20,7 @@ async function run(text, label) {
     new Request('https://jakarta.nonarkara.org/api/atlas/environment', {
       headers: { 'cf-connecting-ip': ip },
     });
-  const opts = { limit: 3, windowSeconds: 60, scope: 'api' };
+  const opts = { limit: 3, windowSeconds: 60, scope: 'api', burstAllowance: 0 };
 
   // Under the limit, a reader is served.
   for (let i = 0; i < 3; i++) {
@@ -77,7 +77,7 @@ await run(source, 'shipped');
 const MUTANTS = [
   [
     'the limit stops limiting',
-    source.replace('existing.count > options.limit', 'existing.count > options.limit * 1000'),
+    source.replace('recent.length >= effectiveLimit', 'recent.length >= effectiveLimit * 1000'),
   ],
   [
     'the native binding is ignored',
@@ -86,13 +86,16 @@ const MUTANTS = [
   [
     'a fault in the limiter blocks the data',
     source.replace(
-      '      return { allowed: true, retryAfter: 0, mode: "native" };\n    }\n  }',
-      '      return { allowed: false, retryAfter: 60, mode: "native" };\n    }\n  }',
+      'return { allowed: true, retryAfter: 0, mode: "native", remaining: effectiveLimit };',
+      'return { allowed: false, retryAfter: 60, mode: "native", remaining: 0 };',
+    ).replace(
+      'return { allowed: true, retryAfter: 0, mode: "native", remaining: effectiveLimit };',
+      'return { allowed: false, retryAfter: 60, mode: "native", remaining: 0 };',
     ),
   ],
   [
     'the counter is never incremented',
-    source.replace('  existing.count += 1;', ''),
+    source.replace('recent.push(now);', ''),
   ],
 ];
 
