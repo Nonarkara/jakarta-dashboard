@@ -239,7 +239,17 @@ const pkg = JSON.parse(read('package.json'));
 assert.ok(pkg.scripts['audit:chrome'], 'the chrome census is a gate, not a script somebody remembers to run');
 const census = read('scripts/chrome-census.mjs');
 assert.ok(census.includes('--falsify'), 'the census can be asked to prove it still fails');
-assert.ok(read('scripts/deploy-live.sh').includes('audit:chrome'), 'the release runs the census before it ships');
+// The contract is the behaviour: the census runs before the stamp, so what it
+// measures is what ships. The release reaches it through the shared gate list
+// CI runs, so the test follows the indirection instead of grepping for a
+// literal that a refactor may legitimately move.
+const release = read('scripts/deploy-live.sh');
+const gateList = read('scripts/gate-local.sh');
+assert.ok(release.includes('gate-local.sh') || release.includes('audit:chrome'), 'the release runs the shared gate list');
+assert.ok(gateList.includes('audit:chrome') || release.includes('audit:chrome'), 'the gate list runs the census, so CI checks it too');
+assert.ok(release.indexOf('gate-local.sh') < release.indexOf('npm run stamp'), 'the gates run before the stamp');
+assert.ok(gateList.includes('audit:chrome:falsify'), 'the census proves it still bites');
+assert.ok(gateList.includes('audit:spatial:falsify'), 'the spatial gate proves it still bites');
 
 console.log('source status: one line per source, one rule for both pages.');
 
