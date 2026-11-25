@@ -501,20 +501,22 @@ const BASELINE_RULES = [
     },
   },
   {
-    name: "an absolute limit bites on a page the baseline already knows",
+    name: "an absolute limit catches a buried primary action despite earlier chrome",
     expect: "the first thing you can do is",
+    also: ["sl-absolute-limit"],
     full: true,
     mutate: (b) => {
       b.limits = { ...b.limits, firstAction: 200 };
     },
     site: () => {
-      // Inject a spacer at the top of the home page to push the first actionable
-      // element below the limit. The spacer is mounted by script so it survives
-      // hydration and is measured by the probe.
       const dir = path.join(COPY, "sl-absolute-limit");
       mkdirSync(dir, { recursive: true });
-      const html = readFileSync(path.join(COPY, "index.html"), "utf8");
-      writeFileSync(path.join(dir, "index.html"), inject('<div style="height:2000px"></div>', "top"));
+      writeFileSync(path.join(dir, "index.html"), `<!doctype html><html lang="en">
+        <head><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+        <body data-spatial-primary="#open-map">
+          <header><a href="#open-map" style="background:#1957a7;color:white;padding:10px;display:inline-block">Skip to map</a></header>
+          <main><div style="height:2000px"></div><button id="open-map">Open map</button></main>
+        </body></html>`);
     },
     cleanupSite: () => rmSync(path.join(COPY, "sl-absolute-limit"), { recursive: true, force: true }),
     routes: "/sl-absolute-limit/",

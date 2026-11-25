@@ -1338,6 +1338,9 @@ for (const r of results) {
 
     // --- spatially expensive: the first action moved ---------------------
     const fa = base.firstAction;
+    if (fa?.required && !r.firstAction?.required) {
+      failures.push(`${label} — the primary task selector is no longer declared`);
+    }
     if (fa && fa.y !== null && r.firstAction && r.firstAction.y !== null) {
       const drift = r.firstAction.y - fa.y;
       if (Math.abs(drift) > limits.firstActionTolerance) {
@@ -1389,6 +1392,9 @@ for (const r of results) {
       }
     }
 
+    if (r.firstAction?.required && r.firstAction.y === null) {
+      failures.push(`${label} — the required first action is missing or unreachable`);
+    }
     if (limits.firstAction !== null && r.firstAction && r.firstAction.y !== null && r.firstAction.y > limits.firstAction) {
       absolute(
         "firstAction",

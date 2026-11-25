@@ -687,17 +687,28 @@
     // ---- 6. spatially expensive information --------------------------------
     // How far down the page the first thing you can DO is. A reader who must
     // scroll before they can act is paying for the layout.
-    // Search the entire document body, not just main: some pages put primary
-    // actions in a header/masthead outside main (e.g., dashboard masthead).
-    var acts = d.body.querySelectorAll("a, button, input, select, textarea");
+    // A route can name the controls that start its primary task. For
+    // undeclared routes keep the generic visual heuristic.
+    var primary = d.body.getAttribute("data-spatial-primary");
+    var acts = d.body.querySelectorAll(primary || "a, button, input, select, textarea");
     var firstY = null;
     var firstSel = null;
     for (var ai = 0; ai < acts.length; ai++) {
       var ae = acts[ai];
       if (!visible(ae, win)) continue;
       var ar = ae.getBoundingClientRect();
-      var actable = /^(INPUT|SELECT|TEXTAREA)$/.test(ae.tagName) || loudControl(ae, win);
-      if (!actable) continue;
+      if (primary) {
+        if (ae.matches(":disabled") || ae.closest('[aria-disabled="true"], [aria-hidden="true"], [inert]')) continue;
+        var left = Math.max(0, ar.left);
+        var right = Math.min(vw, ar.right);
+        if (right <= left || ar.bottom <= 0) continue;
+        if (ar.top < vh) {
+          var hit = d.elementFromPoint((left + right) / 2, (Math.max(0, ar.top) + Math.min(vh, ar.bottom)) / 2);
+          if (!hit || !ae.contains(hit)) continue;
+        }
+      } else if (!/^(INPUT|SELECT|TEXTAREA)$/.test(ae.tagName) && !loudControl(ae, win)) {
+        continue;
+      }
       var y = ar.top + (win.scrollY || 0);
       if (firstY === null || y < firstY) {
         firstY = y;
@@ -705,6 +716,7 @@
       }
     }
     rec.firstAction = { y: firstY === null ? null : Math.round(firstY), sel: firstSel };
+    if (primary) rec.firstAction.required = true;
     return rec;
   }
 

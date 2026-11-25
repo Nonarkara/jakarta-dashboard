@@ -1,7 +1,6 @@
 #!/bin/bash
 # The production gate, runnable locally.
-# Mirrors .github/workflows/gate.yml step-for-step so a red tree cannot
-# sit on main unseen. CI edits must make CI cheaper, never heavier.
+# Used by .github/workflows/gate.yml and by local release candidates.
 # Usage: bash scripts/gate-local.sh
 # Exits 0 on full green; non-zero on any failure.
 
@@ -9,16 +8,28 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 echo "=== Jakarta Dashboard Gate Local ==="
+expected_node="$(cat .nvmrc)"
+actual_node="$(node -p 'process.versions.node.split(".")[0]')"
+if [[ "$actual_node" != "$expected_node" ]]; then
+  echo "FAIL: Node $expected_node is required by .nvmrc. Found $(node -v)." >&2
+  exit 1
+fi
 echo "Node: $(node -v)"
 echo "npm:  $(npm -v)"
 echo ""
 
-# 1. Secret scan (tracked tree) — matches gate.yml exactly
+# 1. Secret scan (tracked tree)
 echo "--- 1/6 Secret scan ---"
 PATTERNS='AIza[0-9A-Za-z_-]{30,}|nvapi-[0-9A-Za-z_-]{20,}|sk-ant-[0-9A-Za-z_-]{20,}|sk-proj-[0-9A-Za-z_-]{20,}|gsk_[0-9A-Za-z]{20,}|cfoat_[0-9A-Za-z]{20,}|AKIA[0-9A-Z]{16}|ghp_[0-9A-Za-z]{36}'
 if git grep -IlE "$PATTERNS" -- . ':!*.png' ':!*.jpg' ':!*.pdf' ':!*.woff2'; then
   echo "FAIL: live-key pattern found in tracked files." >&2
   exit 1
+else
+  scan_status=$?
+  if [[ "$scan_status" != 1 ]]; then
+    echo "FAIL: tracked tree scan failed (git grep exit $scan_status)." >&2
+    exit "$scan_status"
+  fi
 fi
 echo "PASS: no live keys in tracked tree"
 echo ""
