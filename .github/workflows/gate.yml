@@ -22,5 +22,12 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python raster test deps
+        run: python3 -m pip install --quiet numpy rasterio pillow
+
       - name: Run production gate
         run: bash scripts/gate-local.sh
