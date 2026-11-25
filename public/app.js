@@ -787,7 +787,7 @@ async function fetchBrowserAirQuality() {
     { label: "East Jakarta", label_id: "Jakarta Timur", lat: -6.23, lng: 106.90 },
   ];
   try {
-    const response = await fetch("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=" + points.map(p => p.lat).join(",") + "&longitude=" + points.map(p => p.lng).join(",") + "&current=pm2_5,us_aqi&hourly=pm2_5,us_aqi&forecast_days=3&timezone=UTC", { signal: AbortSignal.timeout(8000) });
+    const response = await fetch("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=" + points.map(p => p.lat).join(",") + "&longitude=" + points.map(p => p.lng).join(",") + "&current=pm2_5,us_aqi&hourly=pm2_5,us_aqi&forecast_days=3&timezone=UTC", { signal: AbortSignal.timeout(8000), referrerPolicy: "no-referrer" });
     const rows = await readApi(response);
     if (!Array.isArray(rows) || rows.length !== points.length) return null;
     const category = aqi => aqi <= 50 ? "Good" : aqi <= 100 ? "Moderate" : aqi <= 150 ? "Unhealthy for Sensitive Groups" : aqi <= 200 ? "Unhealthy" : aqi <= 300 ? "Very Unhealthy" : "Hazardous";
@@ -1487,13 +1487,26 @@ function renderRainfall() {
   if (mapInstance) styleReady.then(updateRainfallPoints);
   setToggleLabel('atlas-rainfall-status', rainfallData ? rainfallData.source + ' · ' + rainfallData.tier + ' · Retrieved (WIB): ' + formatLocal(rainfallData.fetchedAt) : rainfallRefusalText || 'Rainfall data unavailable. No zero rainfall is assumed.');
 }
+let rainfallRequest = 0;
 async function refreshRainfall(force) {
+  const request = ++rainfallRequest;
   if (force) liveCache.delete('/api/atlas/rainfall');
-  const usable = data => { if (!data?.points?.some(p => p.available)) throw new Error('Forecast unavailable'); return data; };
-  try { rainfallData = await Promise.any([
-    fetchLive('/api/atlas/rainfall', 600).then(usable),
-    fetchBrowserRainfall().catch(error=>{noteRefusal('/api/atlas/rainfall',error);throw error;}).then(usable),
-  ]); } catch { rainfallData = null; }
+  const usable = data => {
+    const now = Date.now();
+    if (!Array.isArray(data?.points)) return false;
+    const fresh = p => p.available === true && now - Date.parse(p.validAt) >= 0 && now - Date.parse(p.validAt) < 3 * 3600000;
+    return data.points.every(p => p && Number.isFinite(p.lat) && Number.isFinite(p.lng) && (p.available === false || fresh(p)))
+      && data.points.some(fresh);
+  };
+  const primary = await fetchLive('/api/atlas/rainfall', 600);
+  if (request !== rainfallRequest) return;
+  let data = primary;
+  if (!usable(primary)) {
+    try { data = await fetchBrowserRainfall(); }
+    catch (error) { if (request === rainfallRequest) noteRefusal('/api/atlas/rainfall', error); }
+  }
+  if (request !== rainfallRequest) return;
+  rainfallData = usable(data) ? data : null;
   // A refused request was never measured. The table must not say the data is
   // unavailable, and the status must not invite a reload that will be refused
   // again while the window is open.
@@ -1580,7 +1593,7 @@ async function fillWatchAir() {
   if (!points.length || points.some(p => p.air?.available)) return;
   let rows;
   try {
-    const response = await fetch("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=" + points.map(p => p.lat).join(",") + "&longitude=" + points.map(p => p.lng).join(",") + "&current=pm2_5,pm10,us_aqi&timezone=UTC", { signal: AbortSignal.timeout(8000) });
+    const response = await fetch("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=" + points.map(p => p.lat).join(",") + "&longitude=" + points.map(p => p.lng).join(",") + "&current=pm2_5,pm10,us_aqi&timezone=UTC", { signal: AbortSignal.timeout(8000), referrerPolicy: "no-referrer" });
     rows = await readApi(response);
   } catch (e) { return; }
   if (!Array.isArray(rows)) return;
@@ -2787,7 +2800,7 @@ async function fetchBrowserRainfall() {
     url.searchParams.set('current','precipitation');
     url.searchParams.set('hourly','precipitation,precipitation_probability');
     url.searchParams.set('forecast_days','3'); url.searchParams.set('timezone','UTC');
-    const response = await fetch(url, {signal:AbortSignal.timeout(20000)});
+    const response = await fetch(url, {signal:AbortSignal.timeout(20000),referrerPolicy:'no-referrer'});
     const rows = await readApi(response);
     if (!Array.isArray(rows) || rows.length !== points.length) return null;
     const stamp = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?$/.test(value) ? value+'Z' : null;

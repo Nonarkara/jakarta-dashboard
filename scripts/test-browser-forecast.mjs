@@ -1,6 +1,5 @@
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
-import {readJson as readApi} from '../public/refusal.js';
 import {readFileSync} from 'node:fs';
 import {readJson} from '../public/refusal.js';
 const source=readFileSync(new URL('../public/app.js',import.meta.url),'utf8');
@@ -19,3 +18,34 @@ reset();rows[0].hourly_units.precipitation='inch';assert.equal((await read()).po
 reset();rows[0].longitude=null;assert.equal((await read()).points[0].available,false,'missing coordinates rejected');
 rows=[];assert.equal(await read(),null,'wrong location count rejected');
 console.log('PASS browser forecast: zero, complete hours, stale time, units, coordinates and count');
+
+const refresh = source.slice(source.indexOf('let rainfallRequest'), source.indexOf('function applyMapLanguage()'));
+let worker, browser, rendered = 0, direct = 0;
+const flow = vm.createContext({
+  liveCache: new Map(),
+  fetchLive: async () => worker,
+  fetchBrowserRainfall: async () => { direct++; return browser; },
+  renderRainfall() { rendered++; },
+  renderCityWatch() {},
+  refusalFor() { return null; },
+  noteRefusal() {},
+});
+vm.runInContext('let rainfallData, rainfallRefusalText;\n' + refresh, flow);
+const request = async () => {
+  await vm.runInContext('refreshRainfall(false)', flow);
+  return vm.runInContext('rainfallData', flow);
+};
+reset();
+const fresh = await read();
+worker = browser = fresh;
+assert.equal(await request(), worker);
+assert.equal(direct, 0, 'fresh Worker data makes no browser-provider request');
+for (const invalid of [null, {points:'invalid'}, {points:[{...fresh.points[0],validAt:'2020-01-01T00:00:00Z'}]}]) {
+  worker = invalid;
+  assert.equal(await request(), browser, 'unavailable, malformed, and stale Worker data each admit one browser fallback');
+}
+browser = null;
+assert.equal(await request(), null);
+assert.equal(direct, 4);
+assert.equal(rendered, 5);
+console.log('PASS rainfall routing: first-party success, unavailable/malformed/stale fallback, honest double failure');

@@ -74,7 +74,7 @@ function applyLanguage(){
  $('release').textContent='v'+DASHBOARD_VERSION+' · '+DASHBOARD_BUILD;
 }
 function renderWeather(){
- const points=weatherData?.points?.filter(p=>p.available)||[];
+ const points=weatherPoints(weatherData);
  $('weather-summary').innerHTML=points.length?points.map(p=>{const row=nextWeatherPoint(p,Date.now())||p.forecast.at(-1);return '<div class="reading"><div class="reading-top"><strong>'+esc(p.name)+'</strong><strong>'+num(row.temperatureC)+' °C</strong></div><p>'+esc(window.CivicLanguage.admin(p.kota,lang))+' · '+esc(lang==='id'?row.conditionId:row.conditionEn)+'</p>'+evidence('BMKG',t('prakiraan resmi','official forecast'),row.validAt)+'<p>'+t('Terbit','Issued')+': '+esc(date(row.issuedAt))+'</p></div>';}).join(''):unavailable('/api/jakarta/weather');
  const value=$('forecast-location').value;
  $('forecast-location').innerHTML=points.map(p=>'<option value="'+esc(p.code)+'">'+esc(p.name+' · '+window.CivicLanguage.admin(p.kota,lang))+'</option>').join('');
@@ -82,7 +82,7 @@ function renderWeather(){
  renderForecast();
 }
 function renderForecast(){
- const p=weatherData?.points?.find(p=>p.code===$('forecast-location').value&&p.available);
+ const p=weatherPoints(weatherData).find(p=>p.code===$('forecast-location').value);
  if(!p){$('forecast-chart').innerHTML=unavailable('/api/jakarta/weather');$('forecast-table').innerHTML='';return;}
  const rows=p.forecast;
  $('forecast-caption').textContent='BMKG · '+p.name+' · '+t('terbit','issued')+' '+date(p.issuedAt);
@@ -90,7 +90,7 @@ function renderForecast(){
  $('forecast-table').innerHTML=rows.map(r=>'<tr><td>'+esc(date(r.validAt))+'</td><td>'+esc(lang==='id'?r.conditionId:r.conditionEn)+'</td><td>'+num(r.temperatureC)+' °C</td><td>'+num(r.humidityPct)+'%</td><td>'+num(r.windKph,1)+' km/h '+esc(r.windDirection||'')+'</td><td>'+num(r.cloudPct)+'%</td></tr>').join('');
 }
 function renderAir(){
- const rows=Array.isArray(airData)?airData:[];
+ const rows=airSamples(airData);
  $('air-summary').innerHTML=rows.length?rows.map(p=>'<div class="reading"><div class="reading-top"><span>'+esc(lang==='id'?p.label_id:p.label)+'</span><strong>'+num(p.aqi)+' US AQI</strong></div><p>PM2.5 '+num(p.pm25,1)+' µg/m³ · '+esc(stale(p.observedAt,SOURCE_RULES.air.maxAgeMs)?t('kedaluwarsa','stale'):t('perkiraan model','model estimate'))+'</p>'+evidence('CAMS / Open-Meteo',t('model','modeled'),p.observedAt)+'</div>').join(''):unavailable('/api/atlas/air-quality');
 }
 function renderIspu(){
@@ -110,7 +110,7 @@ function renderAlerts(){
 }
 function renderFlood(){
  const d=floodData;
- $('flood-reports').innerHTML=d?.available?'<strong>'+num(d.reportCount)+' '+t('laporan dalam satu jam terakhir','reports in the last hour')+'</strong><p class="note">'+t('Tidak ada laporan bukan berarti jalan kering. Cakupan laporan warga tidak merata.','No reports does not mean dry streets. Citizen-report coverage is uneven.')+'</p>'+evidence('PetaBencana',t('laporan warga','crowdsourced'),d.fetchedAt,t('Diambil','Retrieved'))+'<a href="https://petabencana.id/" target="_blank" rel="noopener">PetaBencana ↗</a>':unavailable('/api/jakarta/flood-reports');
+ $('flood-reports').innerHTML=hasFloodReports(d)?'<strong>'+num(d.reportCount)+' '+(stale(d.fetchedAt,SOURCE_RULES.flood.maxAgeMs)?t('laporan pada jendela satu jam saat pengambilan · kedaluwarsa','reports in the one-hour window at retrieval · stale'):t('laporan dalam satu jam terakhir','reports in the last hour'))+'</strong><p class="note">'+t('Tidak ada laporan bukan berarti jalan kering. Cakupan laporan warga tidak merata.','No reports does not mean dry streets. Citizen-report coverage is uneven.')+'</p>'+evidence('PetaBencana',t('laporan warga','crowdsourced'),d.fetchedAt,t('Diambil','Retrieved'))+'<a href="https://petabencana.id/" target="_blank" rel="noopener">PetaBencana ↗</a>':unavailable('/api/jakarta/flood-reports');
 }
 function renderQuake(){
  const d=quakeData,q=d?.event;
@@ -205,12 +205,18 @@ const SOURCE_RULES = {
   // The model's observation window: the same three hours the air panel has
   // always used before it calls a model sample stale.
   air: { maxAgeMs: 3 * 3600000, limit: ['batas 3 jam', '3-hour limit'] },
+  flood: { maxAgeMs: 3600000, limit: ['jendela 1 jam', '1-hour window'] },
   // A warning stays current for half a day: the same twelve hours the
   // alerts panel has always used before it drops one.
   alerts: { maxAgeMs: 12 * 3600000, limit: ['batas 12 jam', '12-hour limit'] },
 };
 // Forecast points are discrete publisher values: show the next published time,
 // never invent a validity interval between samples.
+const weatherPoints=d=>Array.isArray(d?.points)?d.points.flatMap(p=>{
+ const forecast=Array.isArray(p?.forecast)?p.forecast.filter(f=>Number.isFinite(Date.parse(f?.validAt))):[];
+ return p?.available===true&&forecast.length?[{...p,forecast}]:[];
+}):[];
+const hasFloodReports=d=>d?.available===true&&Number.isInteger(d.reportCount)&&d.reportCount>=0&&Number.isFinite(Date.parse(d.fetchedAt));
 const nextWeatherPoint=(p,now)=>p?.available===true?(p.forecast||[]).filter(f=>Number.isFinite(Date.parse(f.validAt))&&Date.parse(f.validAt)>=now).sort((a,b)=>Date.parse(a.validAt)-Date.parse(b.validAt))[0]||null:null;
 const activeWarnings=(d,now)=>(d?.available===true&&Array.isArray(d.alerts)?d.alerts:[]).filter(a=>!stale(a.sent,SOURCE_RULES.alerts.maxAgeMs,now)&&Date.parse(a.expires)>now);
 const airSamples=d=>Array.isArray(d)?d.filter(p=>Number.isFinite(p?.aqi)&&p.aqi>=0&&Number.isFinite(Date.parse(p.observedAt))):[];
@@ -221,9 +227,9 @@ const clockTime=(at)=>new Date(at).toLocaleTimeString(lang==='id'?'id-ID':'en-GB
 const verdictWord={fresh:['segar','fresh'],stale:['kedaluwarsa','stale'],mixed:['sebagian kedaluwarsa','partly stale'],upcoming:['prakiraan mendatang','upcoming forecast'],expired:['tanpa prakiraan mendatang','no upcoming forecast']};
 const SOURCE_DESCRIPTORS=[
   {id:'weather',endpoint:'/api/jakarta/weather',name:['BMKG cuaca','BMKG weather'],tier:['prakiraan resmi','official forecast'],label:['Prakiraan berikutnya','Next forecast'],
-   read:()=>weatherData,hasData:d=>d?.points?.some(p=>p.available===true&&Array.isArray(p.forecast)&&p.forecast.some(f=>Number.isFinite(Date.parse(f.validAt)))),
-   stamp:(d,now)=>(d.points||[]).map(p=>nextWeatherPoint(p,now)).filter(Boolean).sort((a,b)=>Date.parse(a.validAt)-Date.parse(b.validAt))[0]?.validAt||null,
-   verdict:(d,now)=>d.points.some(p=>nextWeatherPoint(p,now))?'upcoming':'expired'},
+   read:()=>weatherData,hasData:d=>weatherPoints(d).length>0,
+   stamp:(d,now)=>weatherPoints(d).map(p=>nextWeatherPoint(p,now)).filter(Boolean).sort((a,b)=>Date.parse(a.validAt)-Date.parse(b.validAt))[0]?.validAt||null,
+   verdict:(d,now)=>weatherPoints(d).some(p=>nextWeatherPoint(p,now))?'upcoming':'expired'},
   {id:'air',endpoint:'/api/atlas/air-quality',name:['CAMS / Open-Meteo','CAMS / Open-Meteo'],tier:['perkiraan model','model estimate'],label:['Pembacaan tertua','Oldest reading'],
    read:()=>airData,hasData:d=>airSamples(d).length>0,
    stamp:d=>airSamples(d).map(p=>p.observedAt).sort((a,b)=>Date.parse(a)-Date.parse(b))[0]||null,
@@ -236,8 +242,8 @@ const SOURCE_DESCRIPTORS=[
    read:()=>quakeData,hasData:d=>d?.available===true&&!!d.event&&Number.isFinite(Date.parse(d.event.observedAt)),
    stamp:d=>d.event.observedAt,verdict:()=>null,scope:['kejadian Indonesia terakhir',"Indonesia's latest event"]},
   {id:'flood',endpoint:'/api/jakarta/flood-reports',name:['PetaBencana','PetaBencana'],tier:['laporan warga','crowdsourced reports'],label:['Diambil','Retrieved'],
-   read:()=>floodData,hasData:d=>d?.available===true&&Number.isInteger(d.reportCount)&&d.reportCount>=0,
-   stamp:d=>d.fetchedAt||null,verdict:()=>null,scope:['jendela laporan satu jam; lihat usia pengambilan','one-hour report window; check retrieval age']},
+   read:()=>floodData,hasData:hasFloodReports,
+   stamp:d=>d.fetchedAt,verdict:(d,now)=>stale(d.fetchedAt,SOURCE_RULES.flood.maxAgeMs,now)?'stale':'fresh',rule:'flood',scope:['jendela laporan satu jam; lihat usia pengambilan','one-hour report window; check retrieval age']},
 ];
 function sourceStatusRows(now){
  return SOURCE_DESCRIPTORS.map(descriptor=>{
@@ -303,17 +309,18 @@ let temporalSignature=null,temporalDeadline=null;
 function scheduleTemporalDeadline(){
  clearTimeout(temporalDeadline);temporalDeadline=null;if(document.hidden)return;
  const now=Date.now(),deadlines=[];
- for(const p of weatherData?.points||[])for(const row of p.forecast||[])deadlines.push(Date.parse(row.validAt)+1);
+ for(const p of weatherPoints(weatherData))for(const row of p.forecast)deadlines.push(Date.parse(row.validAt)+1);
  for(const p of airSamples(airData))deadlines.push(Date.parse(p.observedAt)+SOURCE_RULES.air.maxAgeMs+1);
  for(const a of activeWarnings(alertsData,now))deadlines.push(Date.parse(a.expires),Date.parse(a.sent)+SOURCE_RULES.alerts.maxAgeMs+1);
  deadlines.push(Date.parse(alertsData?.publishedAt)+SOURCE_RULES.alerts.maxAgeMs+1);
+ deadlines.push(Date.parse(floodData?.fetchedAt)+SOURCE_RULES.flood.maxAgeMs+1);
  const next=deadlines.filter(at=>Number.isFinite(at)&&at>now).sort((a,b)=>a-b)[0];
  if(next)temporalDeadline=setTimeout(refreshTemporalStatus,Math.min(next-now,2147483647));
 }
 function refreshTemporalStatus(){
  if(document.hidden)return;
- const now=Date.now(),signature=JSON.stringify([(weatherData?.points||[]).map(p=>nextWeatherPoint(p,now)?.validAt||null),sourceStatusRows(now).map(r=>[r.id,r.state,r.verdict]),activeWarnings(alertsData,now).map(a=>a.id)]);
- if(signature!==temporalSignature){temporalSignature=signature;renderWeather();renderAir();renderAlerts();}
+ const now=Date.now(),signature=JSON.stringify([weatherPoints(weatherData).map(p=>nextWeatherPoint(p,now)?.validAt||null),sourceStatusRows(now).map(r=>[r.id,r.state,r.verdict]),activeWarnings(alertsData,now).map(a=>a.id)]);
+ if(signature!==temporalSignature){temporalSignature=signature;renderWeather();renderAir();renderAlerts();renderFlood();}
  renderSourceStatus();
 }
 async function refresh(){

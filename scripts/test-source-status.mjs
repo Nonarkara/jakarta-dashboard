@@ -167,6 +167,18 @@ const good = {
   assert.equal(expiredRow.verdict, 'expired', 'a forecast that no longer covers this hour has expired');
 }
 
+// Malformed rows never interrupt unrelated feed state, and an old flood count
+// describes the publisher's window at retrieval rather than the current hour.
+{
+  const {context} = load({...good, weather: {points: [null, {available:true,forecast:{}}, {available:true,forecast:[null]}]}, air: [null], flood: {...good.flood,fetchedAt:fourHoursAgo}});
+  const rows = Object.fromEntries(context.sourceStatusRows(NOW).map(row=>[row.id,row]));
+  assert.equal(rows.weather.state, 'unavailable');
+  assert.equal(rows.air.state, 'unavailable');
+  assert.equal(rows.flood.verdict, 'stale');
+  assert.equal(rows.quake.state, 'ok');
+  assert.equal(load({...good,flood:{...good.flood,fetchedAt:null}}).context.sourceStatusRows(NOW).find(row=>row.id==='flood').state,'unavailable');
+}
+
 // A refusal is a refusal. It is not a zero, not a silence, and it does not
 // become a stale reading.
 {
