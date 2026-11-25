@@ -739,6 +739,7 @@ input[type="range"], input[type="checkbox"] { accent-color:var(--accent); }
 #atlas-lens-body table th, #atlas-lens-body table td { text-align:left; vertical-align:top; padding:4px 0; border-bottom:1px solid var(--line); }
 #atlas-lens-body table td:not(:first-child), #atlas-lens-body table th:not(:first-child) { text-align:right; padding-left:6px; font-variant-numeric:tabular-nums; }
 body.atlas-workbench .lens-hours { grid-template-columns:repeat(2,minmax(0,1fr)); gap:4px 8px; font-variant-numeric:tabular-nums; }
+body.atlas-workbench .atlas-lens-popup .lens-table { background:var(--bg-raised); }
 body.atlas-workbench .atlas-lens-popup .lens-row {
   display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline;
   gap:2px 8px; padding:4px 0; border:0; border-bottom:1px solid var(--line);
