@@ -121,12 +121,12 @@
   },
   "reasons": {
     "dead|aside.atlas-layers": "The layer rail is a floating panel ON the map, not a column beside it. It is short on purpose — a rail as tall as the map would cover the city — so the space under it is the map itself. Check it: open /atlas at 1440px; the rail is 74x26 at x=12, y=62..88, and the element under it at 40, 150, 300, 450 and 600px below is canvas.maplibregl-canvas — satellite imagery and 3D blocks, not an empty band. The gate measures that space at 726..882px across the sweep, in a row of 818..974px. It is the map: the product, not a gap.",
-    "wrap|div.atlas-page-tools": "Below 340px the three page-level doors (city watch, Research & method, Data & sources) cannot sit on one row beside the Layers button: they need about 355px at the tightest padding that keeps them legible, and a 320px phone has 320. They wrap, and Data & sources ends up alone on the second row, right-aligned under the others. The alternative is the one that shipped until 22 October 2026: the row ran under Layers and hid its \"+\". A second short row over the map costs a few lines of city; a button covered by its neighbour costs a door. Check it: open /atlas at 339px and see City watch and Research & method on one row, Data & sources below them, and Layers uncovered. Wider than 340px the row is single and this reason does not apply.",
+    "wrap|div.atlas-page-tools": "City watch, Research & method, and Data & sources share the right map edge. On narrow viewports and with enlarged text they wrap when their labels cannot fit in the space beside Layers. Check /atlas at 339px and with 200% text at 390px: Layers can open and close and each tool is reachable.",
     "dead|div.atlas-page-tools": "The three page-level doors — City watch, Research & method, Data & sources — are one right-hand row floating over the map, not a column beside it. The row is 30px tall because each door is a closed disclosure that opens over the map rather than taking a column of its own, so the map keeps every pixel of its height. Check it: open /atlas at 1440px; the row is 306x30 at x=1126, y=62..92, and the element under it at 40, 150, 300, 450 and 600px below is canvas.maplibregl-canvas. The gate measures that space at 689..936px across the sweep, in a row of 818..974px. It is the map."
   },
   "exempt": [],
   "provenance": {
-    "measuredAt": "2026-11-08T07:11:08.046Z",
+    "measuredAt": "2026-11-25T14:19:44.621Z",
     "measurements": 232,
     "routes": 4,
     "widths": 58,
@@ -138,8 +138,9 @@
       "339": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -162,8 +163,9 @@
       "340": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -186,8 +188,9 @@
       "341": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -210,8 +213,9 @@
       "344": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -234,8 +238,9 @@
       "345": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -258,8 +263,9 @@
       "346": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -282,8 +288,9 @@
       "360": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -306,8 +313,9 @@
       "379": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -330,8 +338,9 @@
       "380": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -354,8 +363,9 @@
       "381": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -378,8 +388,9 @@
       "429": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -402,8 +413,9 @@
       "430": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -426,8 +438,9 @@
       "431": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -450,8 +463,9 @@
       "449": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -474,8 +488,9 @@
       "450": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -498,8 +513,9 @@
       "451": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -522,8 +538,9 @@
       "479": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -546,8 +563,9 @@
       "480": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -570,8 +588,9 @@
       "481": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -594,8 +613,9 @@
       "519": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -618,8 +638,9 @@
       "520": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -642,8 +663,9 @@
       "521": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -666,8 +688,9 @@
       "599": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -690,8 +713,9 @@
       "600": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 0,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -714,8 +738,9 @@
       "601": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -738,8 +763,9 @@
       "699": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -762,8 +788,9 @@
       "700": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -786,8 +813,9 @@
       "701": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -810,8 +838,9 @@
       "702": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -834,8 +863,9 @@
       "759": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -858,8 +888,9 @@
       "760": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -882,8 +913,9 @@
       "761": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -906,8 +938,9 @@
       "768": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -930,8 +963,9 @@
       "799": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -954,8 +988,9 @@
       "800": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -978,8 +1013,9 @@
       "801": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -1002,8 +1038,9 @@
       "838": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -1026,8 +1063,9 @@
       "839": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -1050,8 +1088,9 @@
       "840": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -1074,8 +1113,9 @@
       "899": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -1098,8 +1138,9 @@
       "900": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -1122,8 +1163,9 @@
       "901": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -1146,8 +1188,9 @@
       "999": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -1170,8 +1213,9 @@
       "1000": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -1194,8 +1238,9 @@
       "1001": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -1218,8 +1263,9 @@
       "1024": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -1242,8 +1288,9 @@
       "1099": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -1266,8 +1313,9 @@
       "1100": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -1290,8 +1338,9 @@
       "1101": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -1314,8 +1363,9 @@
       "1198": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -1338,8 +1388,9 @@
       "1199": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -1362,8 +1413,9 @@
       "1200": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -1386,8 +1438,9 @@
       "1201": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -1410,8 +1463,9 @@
       "1440": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -1434,8 +1488,9 @@
       "1726": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -1458,8 +1513,9 @@
       "1727": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -1482,8 +1538,9 @@
       "1728": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -1506,8 +1563,9 @@
       "1920": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 3,
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -1552,7 +1610,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -1566,8 +1625,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1595,7 +1654,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -1609,8 +1669,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1626,13 +1686,20 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -1646,8 +1713,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1663,13 +1730,20 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -1683,8 +1757,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1700,13 +1774,20 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -1720,8 +1801,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1737,13 +1818,20 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -1757,8 +1845,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1774,13 +1862,20 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -1794,8 +1889,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1817,7 +1912,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -1831,8 +1927,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1854,7 +1950,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -1868,8 +1965,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1885,13 +1982,20 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -1905,8 +2009,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1928,7 +2032,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -1942,8 +2047,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1965,7 +2070,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -1979,8 +2085,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2002,7 +2108,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -2016,8 +2123,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2039,7 +2146,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -2053,8 +2161,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2076,7 +2184,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -2090,8 +2199,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2113,7 +2222,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -2127,8 +2237,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2150,7 +2260,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -2164,8 +2275,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2187,7 +2298,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -2201,8 +2313,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2224,7 +2336,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2238,8 +2351,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2261,7 +2374,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2275,8 +2389,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2298,7 +2412,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2312,8 +2427,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2335,7 +2450,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2349,8 +2465,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2372,7 +2488,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2386,8 +2503,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2409,7 +2526,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2423,8 +2541,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2446,7 +2564,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2460,8 +2579,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2483,7 +2602,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2497,8 +2617,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2520,7 +2640,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2534,8 +2655,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2557,7 +2678,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2571,8 +2693,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2594,7 +2716,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2608,8 +2731,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2631,7 +2754,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2645,8 +2769,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2668,7 +2792,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2682,8 +2807,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2705,7 +2830,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2719,8 +2845,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2742,7 +2868,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2756,8 +2883,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2779,7 +2906,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2793,8 +2921,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2816,7 +2944,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2830,8 +2959,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2853,7 +2982,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2867,8 +2997,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2890,7 +3020,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2904,8 +3035,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2927,7 +3058,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2941,8 +3073,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2964,7 +3096,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -2978,8 +3111,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3001,7 +3134,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -3015,8 +3149,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3038,7 +3172,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -3052,8 +3187,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3075,7 +3210,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -3089,8 +3225,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3112,7 +3248,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -3126,8 +3263,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3149,7 +3286,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -3163,8 +3301,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3186,7 +3324,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -3200,8 +3339,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3223,7 +3362,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -3237,8 +3377,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3260,7 +3400,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -3274,8 +3415,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3297,7 +3438,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -3311,8 +3453,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3334,7 +3476,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -3348,8 +3491,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3371,7 +3514,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -3385,8 +3529,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3408,7 +3552,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -3422,8 +3567,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3445,7 +3590,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -3459,8 +3605,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3482,7 +3628,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -3496,8 +3643,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3519,7 +3666,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -3533,8 +3681,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3556,7 +3704,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -3570,8 +3719,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3593,7 +3742,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -3607,8 +3757,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3630,7 +3780,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -3644,8 +3795,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3667,7 +3818,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -3681,8 +3833,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3712,7 +3864,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -3755,7 +3908,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -3786,13 +3940,20 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -3823,13 +3984,20 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -3860,13 +4028,20 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -3897,13 +4072,20 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -3934,13 +4116,20 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -3977,7 +4166,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -4014,7 +4204,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -4045,13 +4236,20 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -4088,7 +4286,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -4125,7 +4324,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -4162,7 +4362,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -4199,7 +4400,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -4236,7 +4438,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -4273,7 +4476,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -4310,7 +4514,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -4347,7 +4552,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -4384,7 +4590,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -4421,7 +4628,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -4458,7 +4666,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -4495,7 +4704,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -4532,7 +4742,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -4569,7 +4780,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -4606,7 +4818,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -4643,7 +4856,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -4680,7 +4894,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -4717,7 +4932,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -4754,7 +4970,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -4791,7 +5008,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -4828,7 +5046,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -4865,7 +5084,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -4902,7 +5122,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -4939,7 +5160,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -4976,7 +5198,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -5013,7 +5236,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -5050,7 +5274,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -5087,7 +5312,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -5124,7 +5350,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -5161,7 +5388,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -5198,7 +5426,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -5235,7 +5464,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -5272,7 +5502,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -5309,7 +5540,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -5346,7 +5578,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -5383,7 +5616,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -5420,7 +5654,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -5457,7 +5692,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -5494,7 +5730,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -5531,7 +5768,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -5568,7 +5806,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -5605,7 +5844,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -5642,7 +5882,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -5679,7 +5920,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -5716,7 +5958,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -5753,7 +5996,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -5790,7 +6034,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -5827,7 +6072,8 @@
         ],
         "firstAction": {
           "y": 1,
-          "sel": "button"
+          "sel": "summary",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -5852,8 +6098,9 @@
       "339": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 465,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -5876,8 +6123,9 @@
       "340": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 465,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -5900,8 +6148,9 @@
       "341": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 465,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -5924,8 +6173,9 @@
       "344": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 465,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -5948,8 +6198,9 @@
       "345": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 465,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -5972,8 +6223,9 @@
       "346": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 465,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -5996,8 +6248,9 @@
       "360": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 465,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -6020,8 +6273,9 @@
       "379": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 465,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -6044,8 +6298,9 @@
       "380": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 465,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -6068,8 +6323,9 @@
       "381": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 465,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -6092,8 +6348,9 @@
       "429": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 441,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -6116,8 +6373,9 @@
       "430": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 441,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -6140,8 +6398,9 @@
       "431": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 441,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -6164,8 +6423,9 @@
       "449": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 441,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -6188,8 +6448,9 @@
       "450": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 441,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -6212,8 +6473,9 @@
       "451": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 441,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -6236,8 +6498,9 @@
       "479": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 441,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -6260,8 +6523,9 @@
       "480": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 441,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 844,
@@ -6284,8 +6548,9 @@
       "481": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 441,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6308,8 +6573,9 @@
       "519": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 441,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6332,8 +6598,9 @@
       "520": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 441,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6356,8 +6623,9 @@
       "521": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 441,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6380,8 +6648,9 @@
       "599": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 441,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6404,8 +6673,9 @@
       "600": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 441,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6428,8 +6698,9 @@
       "601": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 451,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6452,8 +6723,9 @@
       "699": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 451,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6476,8 +6748,9 @@
       "700": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 451,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6500,8 +6773,9 @@
       "701": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 451,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6524,8 +6798,9 @@
       "702": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 451,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6548,8 +6823,9 @@
       "759": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 451,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6572,8 +6848,9 @@
       "760": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 379,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6596,8 +6873,9 @@
       "761": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 322,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6620,8 +6898,9 @@
       "768": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 322,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6644,8 +6923,9 @@
       "799": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 322,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6668,8 +6948,9 @@
       "800": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 322,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6692,8 +6973,9 @@
       "801": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 322,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6716,8 +6998,9 @@
       "838": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 322,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6740,8 +7023,9 @@
       "839": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 322,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6764,8 +7048,9 @@
       "840": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 322,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6788,8 +7073,9 @@
       "899": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 322,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6812,8 +7098,9 @@
       "900": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 322,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6836,8 +7123,9 @@
       "901": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 277,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6853,15 +7141,16 @@
           "h1": 26,
           "largest": 32,
           "ratio": 0.81,
-          "peers": 4,
+          "peers": 0,
           "share": 0
         }
       },
       "999": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 322,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6884,8 +7173,9 @@
       "1000": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 322,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6908,8 +7198,9 @@
       "1001": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 322,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6932,8 +7223,9 @@
       "1024": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 322,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6956,8 +7248,9 @@
       "1099": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 322,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -6980,8 +7273,9 @@
       "1100": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 322,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -7004,8 +7298,9 @@
       "1101": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 322,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -7028,8 +7323,9 @@
       "1198": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 324,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -7052,8 +7348,9 @@
       "1199": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 324,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 1000,
@@ -7076,8 +7373,9 @@
       "1200": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 324,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -7100,8 +7398,9 @@
       "1201": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 324,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -7124,8 +7423,9 @@
       "1440": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 329,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -7148,8 +7448,9 @@
       "1726": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 329,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -7172,8 +7473,9 @@
       "1727": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 329,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -7196,8 +7498,9 @@
       "1728": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 329,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 900,
@@ -7220,8 +7523,9 @@
       "1920": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 329,
+          "sel": "a",
+          "required": true
         },
         "chrome": {
           "vh": 900,

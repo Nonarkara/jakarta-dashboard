@@ -86,7 +86,7 @@ if (!CHROME) {
   process.exit(1);
 }
 
-const { chromium } = await import("/Users/nonarkara/Projects/dashboards/HCMC/node_modules/playwright/index.mjs");
+const chromium = await (await import('./playwright-module.mjs')).loadChromium();
 
 /**
  * The census, as it runs inside the page.

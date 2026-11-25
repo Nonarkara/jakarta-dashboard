@@ -14,6 +14,7 @@ const __pmtiles__ = window.pmtiles;
 if (!__maplibregl__ || !__pmtiles__) {
   const el = document.getElementById("atlas-map-loading");
   if (el) {
+    el.classList.add("is-unavailable");
     el.innerHTML =
       '<div class="atlas-map-loading-inner">' +
       '<span class="atlas-map-loading-glyph">Jx</span>' +
@@ -43,7 +44,7 @@ let mapInstance = null;
 // Build tag sent to an embedding page in the `jakarta-atlas` ready
 // postMessage. `scripts/stamp-build-id.mjs` rewrites this on every
 // deploy so the dashboard can detect a stale iframe bundle.
-const ATLAS_BUILD_TAG = "jakarta-atlas-20261110-1794331985-55555eb";
+const ATLAS_BUILD_TAG = "jakarta-atlas-20261125-1795624267-4e637d2";
 // Append a build-tag query string to the PMTiles URLs so every deploy
 // busts Cloudflare's edge cache. Without this, the first GET (which the
 // protocol handler makes without a Range header) gets cached as 200 OK
@@ -274,12 +275,19 @@ mapInstance = new __maplibregl__.Map({
   hash: false,
   attributionControl: { compact: true, customAttribution: "Heights: Google 2.5D / GHSL / OSM / estimates" },
 });
-
+    // MapLibre can return a map shell after failing to create its renderer.
+    // Query the existing canvas, which reuses the map's context on success.
+    const canvas = mapInstance.getCanvas();
+    if (canvas.getContext && !canvas.getContext("webgl2")) throw new Error("WebGL2 unavailable");
   }
 } catch (e) {
+  mapInstance = null;
   console.warn("[atlas] map unavailable:", e.message);
   const el = document.getElementById("atlas-map-loading");
-  if (el) el.textContent = "3D rendering is unavailable on this device. Use Data & sources below.";
+  if (el) {
+    el.textContent = "3D rendering is unavailable on this device. Open Data & sources to continue.";
+    el.classList.add("is-unavailable");
+  }
 }
 
 if (mapInstance) {
@@ -787,7 +795,7 @@ async function fetchBrowserAirQuality() {
     { label: "East Jakarta", label_id: "Jakarta Timur", lat: -6.23, lng: 106.90 },
   ];
   try {
-    const response = await fetch("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=" + points.map(p => p.lat).join(",") + "&longitude=" + points.map(p => p.lng).join(",") + "&current=pm2_5,us_aqi&hourly=pm2_5,us_aqi&forecast_days=3&timezone=UTC", { signal: AbortSignal.timeout(8000) });
+    const response = await fetch("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=" + points.map(p => p.lat).join(",") + "&longitude=" + points.map(p => p.lng).join(",") + "&current=pm2_5,us_aqi&hourly=pm2_5,us_aqi&forecast_days=3&timezone=UTC", { signal: AbortSignal.timeout(8000), referrerPolicy: "no-referrer" });
     const rows = await readApi(response);
     if (!Array.isArray(rows) || rows.length !== points.length) return null;
     const category = aqi => aqi <= 50 ? "Good" : aqi <= 100 ? "Moderate" : aqi <= 150 ? "Unhealthy for Sensitive Groups" : aqi <= 200 ? "Unhealthy" : aqi <= 300 ? "Very Unhealthy" : "Hazardous";
@@ -1487,13 +1495,26 @@ function renderRainfall() {
   if (mapInstance) styleReady.then(updateRainfallPoints);
   setToggleLabel('atlas-rainfall-status', rainfallData ? rainfallData.source + ' · ' + rainfallData.tier + ' · Retrieved (WIB): ' + formatLocal(rainfallData.fetchedAt) : rainfallRefusalText || 'Rainfall data unavailable. No zero rainfall is assumed.');
 }
+let rainfallRequest = 0;
 async function refreshRainfall(force) {
+  const request = ++rainfallRequest;
   if (force) liveCache.delete('/api/atlas/rainfall');
-  const usable = data => { if (!data?.points?.some(p => p.available)) throw new Error('Forecast unavailable'); return data; };
-  try { rainfallData = await Promise.any([
-    fetchLive('/api/atlas/rainfall', 600).then(usable),
-    fetchBrowserRainfall().catch(error=>{noteRefusal('/api/atlas/rainfall',error);throw error;}).then(usable),
-  ]); } catch { rainfallData = null; }
+  const usable = data => {
+    const now = Date.now();
+    if (!Array.isArray(data?.points)) return false;
+    const fresh = p => p.available === true && now - Date.parse(p.validAt) >= 0 && now - Date.parse(p.validAt) < 3 * 3600000;
+    return data.points.every(p => p && Number.isFinite(p.lat) && Number.isFinite(p.lng) && (p.available === false || fresh(p)))
+      && data.points.some(fresh);
+  };
+  const primary = await fetchLive('/api/atlas/rainfall', 600);
+  if (request !== rainfallRequest) return;
+  let data = primary;
+  if (!usable(primary)) {
+    try { data = await fetchBrowserRainfall(); }
+    catch (error) { if (request === rainfallRequest) noteRefusal('/api/atlas/rainfall', error); }
+  }
+  if (request !== rainfallRequest) return;
+  rainfallData = usable(data) ? data : null;
   // A refused request was never measured. The table must not say the data is
   // unavailable, and the status must not invite a reload that will be refused
   // again while the window is open.
@@ -1580,7 +1601,7 @@ async function fillWatchAir() {
   if (!points.length || points.some(p => p.air?.available)) return;
   let rows;
   try {
-    const response = await fetch("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=" + points.map(p => p.lat).join(",") + "&longitude=" + points.map(p => p.lng).join(",") + "&current=pm2_5,pm10,us_aqi&timezone=UTC", { signal: AbortSignal.timeout(8000) });
+    const response = await fetch("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=" + points.map(p => p.lat).join(",") + "&longitude=" + points.map(p => p.lng).join(",") + "&current=pm2_5,pm10,us_aqi&timezone=UTC", { signal: AbortSignal.timeout(8000), referrerPolicy: "no-referrer" });
     rows = await readApi(response);
   } catch (e) { return; }
   if (!Array.isArray(rows)) return;
@@ -1706,7 +1727,20 @@ async function boot() {
   }
   setupInspect();
 
-  function onMapReady() {
+  // "Ready" has to mean the LAYOUT is final, not just that the map is up.
+  // The display faces are served with font-display: swap, so they arrive
+  // after first paint and change the header's text metrics — and the header
+  // wraps, so its height changes by a whole line. A consumer that trusted
+  // "ready" and measured the page then saw one page in the measuring window
+  // and a different page in the next: the spatial gate failed on one run and
+  // passed on the next, on the same commit. So the signal waits for the
+  // faces: the layout that is announced is the layout that stays.
+  async function onMapReady() {
+    try {
+      if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    } catch {
+      /* a browser without the Font Loading API measures what it has */
+    }
     try {
       applyAllLayers();
     } catch (e) {
@@ -2787,7 +2821,7 @@ async function fetchBrowserRainfall() {
     url.searchParams.set('current','precipitation');
     url.searchParams.set('hourly','precipitation,precipitation_probability');
     url.searchParams.set('forecast_days','3'); url.searchParams.set('timezone','UTC');
-    const response = await fetch(url, {signal:AbortSignal.timeout(20000)});
+    const response = await fetch(url, {signal:AbortSignal.timeout(20000),referrerPolicy:'no-referrer'});
     const rows = await readApi(response);
     if (!Array.isArray(rows) || rows.length !== points.length) return null;
     const stamp = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?$/.test(value) ? value+'Z' : null;

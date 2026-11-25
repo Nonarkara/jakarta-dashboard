@@ -1,21 +1,6 @@
-# The vendored spatial instrument.
-#
-# These three files are copied BYTE-IDENTICALLY from the owner's skill
-# package, and the hashes below are the proof of that. The gate verifies them
-# on every run: a hand-edited instrument is a gate that is measuring
-# something other than what the receipt says it measured.
-#
-# The owner is still improving the instrument, so this file is the record of
-# WHICH version the baseline in design/spatial-baseline.json was measured
-# with. When the skill package moves, copy the files again, update the hashes
-# here, and re-baseline — and READ the diff, because a new instrument finds
-# things the old one could not see.
-#
-#   spatial-check.mjs   the gate
-#   spatial-falsify.mjs the proof that the gate bites
-#   spatial-probe.js    the measurement, injected into the page under test
-#
-# sha256  file
-48a4db5b01f8d7abf671e1450b1ae0e835ed4afb36db3c4bcc8b995d279ce7a0  spatial-check.mjs
-27d3ba662d360202e1e6b32931a7bddf71953b896d7d8c3a0e2c2a0b3ba23849  spatial-falsify.mjs
-387ade48e172dbc1511c179ae6ed64c6625a4232c43d82deef35d623ca28f88c  spatial-probe.js
+# Spatial instrument files and their SHA-256 checksums.
+# Jakarta extends the upstream probe with declared primary actions and regression fixtures.
+# Update these hashes and review the receipt whenever the instrument changes.
+9fc4743cabc6325fed56688e07aa4d69fb156cf756e1e5b65829d7f0dc87bf72  spatial-check.mjs
+1d35831315e3050902dea64e9311b86d50cced86a689df246925cdaab31050e0  spatial-falsify.mjs
+8b0d098196c70bf6d72cb02d671cc12efb8edf04cd2a935bd29d3ca7ec3b2dd8  spatial-probe.js

@@ -20,6 +20,7 @@
 import { createRequire } from 'node:module';
 import { mkdirSync } from 'node:fs';
 import {auditDashboardChrome} from './dashboard-chrome-audit.mjs';
+import {auditAtlasTextReflow} from './atlas-text-reflow-audit.mjs';
 import {auditCensusReadiness} from './census-readiness-browser.mjs';
 import {auditStatusClock} from './status-clock-browser-audit.mjs';
 import {auditRefusalSessions} from './refusal-session-audit.mjs';
@@ -27,7 +28,7 @@ import {panelReadiness} from './panel-readiness.mjs';
 
 const BASE = process.env.ATLAS_URL || 'https://jakarta.nonarkara.org';
 const SHOTS = process.env.SHOT_DIR || '';
-const PLAYWRIGHT = process.env.PLAYWRIGHT_PATH || '/Users/nonarkara/Projects/dashboards/HCMC/node_modules/playwright/index.mjs';
+const PLAYWRIGHT = process.env.PLAYWRIGHT_MODULE || process.env.PLAYWRIGHT_PATH || 'playwright-core';
 const CDP = process.env.CHROME_CDP || 'http://127.0.0.1:9656';
 
 let chromium;
@@ -305,19 +306,24 @@ for (const [path, label] of PAGES) {
       document.head.append(style);
       const after = pick(window.__SL_CROPPED__());
       style.remove();
+      const crop = (c) => (c ? +(Math.max(0, c.above) + Math.max(0, c.below)).toFixed(1) : 0);
       return {
         skipped: false,
         beforeAbove: before ? before.above : 0,
+        beforeBelow: before ? before.below : 0,
         afterAbove: after ? after.above : 0,
+        afterBelow: after ? after.below : 0,
+        beforeCrop: crop(before),
+        afterCrop: crop(after),
       };
     });
     if (bite.skipped) {
       record(where, 'the band check bites', true, 'this page has no atlas header band to test');
     } else {
-      record(where, 'the band check bites', bite.afterAbove > bite.beforeAbove,
-        bite.afterAbove > bite.beforeAbove
-          ? `the page as it shipped (a fixed 28px row, a 40px control) was reported ${bite.beforeAbove}px above the band before and ${bite.afterAbove}px after`
-          : `the page as it shipped was not reported (${bite.beforeAbove}px above before, ${bite.afterAbove}px after) — the check is blind`);
+      record(where, 'the band check bites', bite.afterCrop > bite.beforeCrop,
+        bite.afterCrop > bite.beforeCrop
+          ? `the page as it shipped (a fixed 28px row, a 40px control) was reported ${bite.beforeCrop}px cropped (${bite.beforeAbove}px above, ${bite.beforeBelow}px below) before and ${bite.afterCrop}px (${bite.afterAbove}px above, ${bite.afterBelow}px below) after`
+          : `the page as it shipped was not reported (${bite.beforeCrop}px before, ${bite.afterCrop}px after) — the check is blind`);
     }
     if (label === 'atlas' && w >= 1024) {
       record(where, 'the map keeps the viewport', a.mapShare !== null && a.mapShare >= 60,
@@ -596,6 +602,8 @@ await auditStatusClock(browser,BASE);
 record('source-clock','time-driven evidence and accessible stable status',true,'controlled real page, no clock-driven status writes, expiry, unavailable feeds and reachable zones');
 await auditDashboardChrome(browser,BASE);
 record('dashboard composition','real map, compact accessible header, ledger actions and enlarged text',true,'three viewports and original-fault falsifiers');
+await auditAtlasTextReflow(browser,BASE);
+record('atlas at 200% text','all four phone edge controls remain usable',true,'real taps, visible bounds, and original grid overflow falsified');
 await auditCensusReadiness(browser);
 record('census readiness','document arrival independent of animation frames',true,'actual reader and original RAF-dependency falsifier');
 await browser.close();

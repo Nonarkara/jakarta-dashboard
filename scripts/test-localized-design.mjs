@@ -3,6 +3,7 @@ import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 const read=f=>readFileSync(new URL('../'+f,import.meta.url),'utf8');
 const css=read('public/jakarta-design.css');
+assert.match(css,/\.atlas-lens-popup \.lens-table\s*\{[^}]*background:\s*var\(--bg-raised\)/,'transparent evidence rows need the contrast-checked paper behind them');
 const base=Object.fromEntries([...css.slice(css.indexOf(':root {'),css.indexOf(':root[data-theme="light"]')).matchAll(/(--[a-z-]+): (#[0-9a-f]{6});/g)].map(m=>[m[1],m[2]]));
 const luminance=hex=>hex.slice(1).match(/../g).map(v=>parseInt(v,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4).reduce((s,v,i)=>s+v*[.2126,.7152,.0722][i],0);
 const ratio=(a,b)=>{const[x,y]=[luminance(a),luminance(b)].sort((a,b)=>a-b);return (y+.05)/(x+.05);};

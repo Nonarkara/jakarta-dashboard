@@ -17,39 +17,17 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Secret scan (tracked tree)
-        run: |
-          set -e
-          PATTERNS='AIza[0-9A-Za-z_-]{30,}|nvapi-[0-9A-Za-z_-]{20,}|sk-ant-[0-9A-Za-z_-]{20,}|sk-proj-[0-9A-Za-z_-]{20,}|gsk_[0-9A-Za-z]{20,}|cfoat_[0-9A-Za-z]{20,}|AKIA[0-9A-Z]{16}|ghp_[0-9A-Za-z]{36}'
-          if git grep -IlE "$PATTERNS" -- . ':!*.png' ':!*.jpg' ':!*.pdf' ':!*.woff2'; then
-            echo "::error::Live-key pattern found in tracked files. Rotate the key; move it to a Worker secret."
-            exit 1
-          fi
-
-      # Must match the Node major that scripts/deploy-live.sh actually runs on.
-      # A gate that tests a different runtime than the one that ships is not a
-      # mirror of the gate; it is a second, untested one. package.json declares
-      # the same major under engines so a drifting operator is warned at install.
       - uses: actions/setup-node@v7
         with:
-          node-version: 26
+          node-version-file: .nvmrc
           cache: npm
 
-      - run: npm ci --ignore-scripts
-      - run: npm run typecheck
-      - run: npm run verify
-      - run: npm test
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
-      # The spatial gate. A hole in the layout may exist, but not without
-      # somebody having written down why it is there — and a change in the
-      # geometry shows up in the baseline's diff rather than silently.
-      - run: npm run audit:spatial
+      - name: Install Python raster test deps
+        run: python3 -m pip install --quiet numpy rasterio pillow
 
-      # The falsifier. A gate that has never failed protects nothing, so this
-      # injects one real defect per mode of spatial hallucination and requires
-      # the gate above to catch every one of them.
-      - run: npm run audit:spatial:falsify
-
-      # The anti-slop mutation harness runs inside `npm test` above: it
-      # reintroduces each defect that has actually shipped here and requires
-      # the design guard to catch it, so the assertions are known to bite.
+      - name: Run production gate
+        run: bash scripts/gate-local.sh

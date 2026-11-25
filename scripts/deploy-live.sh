@@ -39,25 +39,20 @@ check_clean() {
   fi
 }
 check_clean
-npm run typecheck
-npm run verify
-npm test
+# ONE definition of green. gate-local.sh is what CI runs on every push and
+# what the release runs on every candidate, so a gate cannot live in one and
+# not the other: that drift is how the chrome census went missing from CI
+# while the release still ran it, and how a release could ship with a gate
+# whose own falsifier had never been exercised.
+#
+# It covers, in order: the secret scan, npm ci, typecheck, the local contract
+# checks, the whole test suite, the spatial gate AND its falsifier, the chrome
+# census AND its falsifier.
+bash scripts/gate-local.sh
 # Minutes passed since the first check; a parallel agent may have dirtied the
 # tree meanwhile. The committed-work guarantee must hold at the deploy moment,
 # not only at the gate.
 check_clean
-# The spatial gate: every hole in the layout is either fixed or written down
-# in design/spatial-baseline.json, with a reason a stranger could check. It
-# runs on the committed tree, before the stamp, so what it measures is what
-# ships.
-npm run audit:spatial
-# The chrome census: the spatial instrument can only name the bands it knows
-# (fixed, sticky, or a <header> at the top), so a band that is not a <header>
-# can hide from it — and a re-baseline would then record a blind spot as an
-# improvement. The census measures the same chrome a second way and makes the
-# receipt answer for the page. It runs on the committed tree, before the
-# stamp, so what it measures is what ships.
-npm run audit:chrome
 npm run stamp
 node scripts/release-snapshot.mjs write "$LOCK/inputs.json"
 RELEASE_GATE=1 npx wrangler deploy
@@ -97,7 +92,27 @@ npm run smoke:dashboard
 # Read the deployed page, not its source. This is the only gate that can see a
 # control which renders correctly and swallows its own clicks, or a chart whose
 # bars no longer track their values.
-ATLAS_URL="$ATLAS_URL" node scripts/audit-rendered.mjs
+#
+# It drives the one shared Chrome. Under load that browser can die mid-run —
+# "Target page, context or browser has been closed" — which is a transport
+# death, not a verdict on the page. It has failed two releases that way,
+# after the bytes were already live and correct. So it is tried twice: a
+# browser that dies is restarted and the audit runs again, and only a second
+# failure is a failure.
+run_browser_gate() {
+  local label="$1"; shift
+  local attempt=1
+  while [ "$attempt" -le 2 ]; do
+    if "$@"; then return 0; fi
+    if [ "$attempt" -eq 2 ]; then
+      echo "FAIL — $label failed twice; the second failure is the verdict." >&2
+      return 1
+    fi
+    echo "  · $label: the browser died or the run failed; retrying once." >&2
+    attempt=$((attempt + 1))
+  done
+}
+run_browser_gate "the rendered audit" env ATLAS_URL="$ATLAS_URL" node scripts/audit-rendered.mjs
 
 # The MSH record is measured on the DEPLOYED build — it names that build, and
 # the law asks for the pixels at 390, 1024 and 1440 on every route. It cannot

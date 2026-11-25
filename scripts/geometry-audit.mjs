@@ -42,7 +42,7 @@ const outDir = process.argv[3] ?? 'docs/geometry';
 mkdirSync(outDir, { recursive: true });
 
 let chromium;
-try { ({ chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? process.env.PLAYWRIGHT_PATH ?? '/Users/nonarkara/Projects/dashboards/HCMC/node_modules/playwright/index.mjs')); }
+try { ({ chromium } = await import('./playwright-module.mjs').then(m => m.loadChromium())); }
 catch { console.error('geometry-audit needs Playwright: npm i --no-save playwright, or set PLAYWRIGHT_MODULE'); process.exit(3); }
 function cachedShell() {
   const root = join(homedir(), 'Library', 'Caches', 'ms-playwright');
