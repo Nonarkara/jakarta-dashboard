@@ -20,6 +20,7 @@
 import { createRequire } from 'node:module';
 import { mkdirSync } from 'node:fs';
 import {auditDashboardChrome} from './dashboard-chrome-audit.mjs';
+import {auditAtlasTextReflow} from './atlas-text-reflow-audit.mjs';
 import {auditCensusReadiness} from './census-readiness-browser.mjs';
 import {auditStatusClock} from './status-clock-browser-audit.mjs';
 import {auditRefusalSessions} from './refusal-session-audit.mjs';
@@ -596,6 +597,8 @@ await auditStatusClock(browser,BASE);
 record('source-clock','time-driven evidence and accessible stable status',true,'controlled real page, no clock-driven status writes, expiry, unavailable feeds and reachable zones');
 await auditDashboardChrome(browser,BASE);
 record('dashboard composition','real map, compact accessible header, ledger actions and enlarged text',true,'three viewports and original-fault falsifiers');
+await auditAtlasTextReflow(browser,BASE);
+record('atlas at 200% text','all four phone edge controls remain usable',true,'real taps, visible bounds, and original grid overflow falsified');
 await auditCensusReadiness(browser);
 record('census readiness','document arrival independent of animation frames',true,'actual reader and original RAF-dependency falsifier');
 await browser.close();

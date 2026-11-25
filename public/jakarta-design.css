@@ -509,6 +509,7 @@ body.atlas-workbench .atlas-menu { margin:0; align-self:center; }
 body.atlas-workbench .atlas-menu > summary { min-height:24px; padding:2px 8px; font-size:12px; }
 body.atlas-workbench .atlas-menu-body { z-index:65; width:min(360px,calc(100vw - 16px)); }
 body.atlas-workbench .atlas-lens-story { display:none; }
+.atlas-map-loading.is-unavailable { z-index:1; pointer-events:none; padding:12px; text-align:center; }
 /* The strip scrolls past the viewport edge with no affordance, so the last lens
    was cut mid-word. A mask would be the obvious way to fade it, but the lens
    evidence panel is a position:fixed DESCENDANT of this scroller, and a mask on
@@ -658,7 +659,25 @@ body.atlas-workbench .maplibregl-ctrl-attrib.maplibregl-compact { min-height:24p
 body[data-surface="jakarta-dashboard"] footer { padding:1px 8px; font-size:11px; }
 @media(max-width:600px) {
  body.atlas-workbench { --atlas-header-row:24px; --atlas-lenses-row:24px; }
- body.atlas-workbench .atlas-header { padding:0 4px; }
+ body.atlas-workbench .atlas-page { grid-template-columns:minmax(0,1fr); }
+ body.atlas-workbench .atlas-header { padding:0 4px; flex-wrap:wrap; }
+ body.atlas-workbench .atlas-header-meta { flex-basis:25%; }
+ body.atlas-workbench .atlas-header-nav { max-width:100%; margin-inline-start:auto; }
+ body.atlas-workbench .atlas-header-nav > .atlas-theme-control { min-width:0; }
+ body.atlas-workbench .atlas-menu { flex:none; }
+ body.atlas-workbench .atlas-title { overflow:hidden; text-overflow:ellipsis; }
+ body.atlas-workbench .atlas-page-tools {
+   flex-wrap:wrap; justify-content:flex-end; row-gap:3px;
+   max-width:calc(100% - 88px); pointer-events:none;
+ }
+ body.atlas-workbench .atlas-page-tools > * { pointer-events:auto; }
+ body.atlas-workbench .atlas-layers > details > summary { width:fit-content; }
+ body.atlas-workbench .atlas-layers:has(> details[open]) { z-index:45; }
+ body.atlas-workbench .atlas-quick {
+   flex-wrap:wrap; max-width:calc(100% - 72px);
+ }
+ body.atlas-workbench .atlas-quick .atlas-panel-summary { flex-wrap:wrap; }
+ body.atlas-workbench .atlas-quick .atlas-panel-summary > span { white-space:normal; }
  body.atlas-workbench .atlas-header-nav > .atlas-theme-control select,
  body.atlas-workbench .atlas-menu > summary { min-height:24px; padding:0 4px; line-height:22px; } /* 24px: the WCAG 2.2 floor, and the header row's own height */
  body.atlas-workbench .atlas-title::before { width:16px; height:20px; }
@@ -892,7 +911,6 @@ body.atlas-workbench .atlas-page-tools { align-items:stretch; }
 /* Below 340px the three tools cannot sit beside Layers: they wrap to a second
    row, and the observation card moves down to clear it. */
 @media (max-width: 340px) {
-  body.atlas-workbench .atlas-page-tools { flex-wrap:wrap; justify-content:flex-end; row-gap:3px; max-width:calc(100% - 88px); }
   body.atlas-workbench .atlas-observation-hud { top:86px; }
 }
 /* Touch, under MSH (workspace CLAUDE.md 11.12). Map zoom/rotate are icon buttons

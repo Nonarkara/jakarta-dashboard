@@ -49,7 +49,14 @@ async function scenario(mode) {
   const window = { location: { origin: 'https://atlas.test', href: 'https://atlas.test', search: '' }, parent,
     matchMedia: () => ({ matches: true }), addEventListener: (event, cb) => { listeners[event] = cb; } };
   if (mode !== 'missing-libraries') {
-    window.maplibregl = { Map: mode === 'webgl-failure' ? class { constructor() { throw new Error('No WebGL'); } } : FakeMap, addProtocol() {}, NavigationControl: class {}, ScaleControl: class {} };
+    const maps = {
+      'webgl-failure': class { constructor() { throw new Error('No WebGL'); } },
+      'webgl-shell': class extends FakeMap {
+        getCanvas() { return { getContext: () => null }; }
+        resize() { throw new Error('A map without a renderer cannot resize'); }
+      },
+    };
+    window.maplibregl = { Map: maps[mode] || FakeMap, addProtocol() {}, NavigationControl: class {}, ScaleControl: class {} };
     window.pmtiles = { Protocol: class {} };
   }
   const context = vm.createContext({ window, document: { documentElement: { ...element(), dataset: { theme: "dark" } }, referrer: '', body: element(), getElementById: get,
@@ -77,7 +84,7 @@ async function scenario(mode) {
   assert.equal(door.href, '/research', 'and that door points at the research page');
 
   for (let i = 0; i < 10; i++) await new Promise(resolve => setImmediate(resolve));
-  if (mode !== 'missing-libraries' && mode !== 'webgl-failure') {
+  if (mode === 'normal') {
     vm.runInContext('setMapView("2d")', context);
     assert.equal(vm.runInContext('mapInstance.getLayoutProperty("jkt-buildings", "visibility")', context),'none');
     assert.equal(vm.runInContext('mapInstance.getLayoutProperty("jkt-landmarks-3d", "visibility")', context),'none');
@@ -188,7 +195,7 @@ async function scenario(mode) {
     assert.equal(map.getSource('environment-overlay'),undefined);
   }
 }
-for (const mode of ['normal', 'missing-libraries', 'webgl-failure']) await scenario(mode);
+for (const mode of ['normal', 'missing-libraries', 'webgl-failure', 'webgl-shell']) await scenario(mode);
 // The map runs on this origin alone. An office network that blocks a public
 // CDN (many government networks do) must not lose the map, so no page loads
 // a script from another host, and the CSP does not permit one.

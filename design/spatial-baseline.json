@@ -121,12 +121,12 @@
   },
   "reasons": {
     "dead|aside.atlas-layers": "The layer rail is a floating panel ON the map, not a column beside it. It is short on purpose — a rail as tall as the map would cover the city — so the space under it is the map itself. Check it: open /atlas at 1440px; the rail is 74x26 at x=12, y=62..88, and the element under it at 40, 150, 300, 450 and 600px below is canvas.maplibregl-canvas — satellite imagery and 3D blocks, not an empty band. The gate measures that space at 726..882px across the sweep, in a row of 818..974px. It is the map: the product, not a gap.",
-    "wrap|div.atlas-page-tools": "Below 340px the three page-level doors (city watch, Research & method, Data & sources) cannot sit on one row beside the Layers button: they need about 355px at the tightest padding that keeps them legible, and a 320px phone has 320. They wrap, and Data & sources ends up alone on the second row, right-aligned under the others. The alternative is the one that shipped until 22 October 2026: the row ran under Layers and hid its \"+\". A second short row over the map costs a few lines of city; a button covered by its neighbour costs a door. Check it: open /atlas at 339px and see City watch and Research & method on one row, Data & sources below them, and Layers uncovered. Wider than 340px the row is single and this reason does not apply.",
+    "wrap|div.atlas-page-tools": "City watch, Research & method, and Data & sources share the right map edge. On narrow viewports and with enlarged text they wrap when their labels cannot fit in the space beside Layers. Check /atlas at 339px and with 200% text at 390px: Layers can open and close and each tool is reachable.",
     "dead|div.atlas-page-tools": "The three page-level doors — City watch, Research & method, Data & sources — are one right-hand row floating over the map, not a column beside it. The row is 30px tall because each door is a closed disclosure that opens over the map rather than taking a column of its own, so the map keeps every pixel of its height. Check it: open /atlas at 1440px; the row is 306x30 at x=1126, y=62..92, and the element under it at 40, 150, 300, 450 and 600px below is canvas.maplibregl-canvas. The gate measures that space at 689..936px across the sweep, in a row of 818..974px. It is the map."
   },
   "exempt": [],
   "provenance": {
-    "measuredAt": "2026-11-25T14:04:09.780Z",
+    "measuredAt": "2026-11-25T14:19:44.621Z",
     "measurements": 232,
     "routes": 4,
     "widths": 58,
@@ -1625,8 +1625,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1669,8 +1669,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1686,8 +1686,14 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
@@ -1707,8 +1713,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1724,8 +1730,14 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
@@ -1745,8 +1757,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1762,8 +1774,14 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
@@ -1783,8 +1801,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1800,8 +1818,14 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
@@ -1821,8 +1845,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1838,8 +1862,14 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
@@ -1859,8 +1889,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1897,8 +1927,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1935,8 +1965,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -1952,8 +1982,14 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
@@ -1973,8 +2009,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2011,8 +2047,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2049,8 +2085,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2087,8 +2123,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2125,8 +2161,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2163,8 +2199,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2201,8 +2237,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2239,8 +2275,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2277,8 +2313,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2315,8 +2351,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2353,8 +2389,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2391,8 +2427,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2429,8 +2465,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2467,8 +2503,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2505,8 +2541,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 14,
+          "ratio": 1,
           "peers": 0,
           "share": 0
         }
@@ -2543,8 +2579,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2581,8 +2617,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2619,8 +2655,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2657,8 +2693,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2695,8 +2731,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2733,8 +2769,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2771,8 +2807,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2809,8 +2845,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2847,8 +2883,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2885,8 +2921,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2923,8 +2959,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2961,8 +2997,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -2999,8 +3035,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3037,8 +3073,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3075,8 +3111,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3113,8 +3149,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3151,8 +3187,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3189,8 +3225,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3227,8 +3263,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3265,8 +3301,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3303,8 +3339,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3341,8 +3377,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3379,8 +3415,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3417,8 +3453,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3455,8 +3491,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3493,8 +3529,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3531,8 +3567,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3569,8 +3605,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3607,8 +3643,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3645,8 +3681,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3683,8 +3719,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3721,8 +3757,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3759,8 +3795,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3797,8 +3833,8 @@
         },
         "hierarchy": {
           "h1": 14,
-          "largest": 22,
-          "ratio": 0.64,
+          "largest": 13,
+          "ratio": 1.08,
           "peers": 0,
           "share": 0
         }
@@ -3904,8 +3940,14 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
@@ -3942,8 +3984,14 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
@@ -3980,8 +4028,14 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
@@ -4018,8 +4072,14 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
@@ -4056,8 +4116,14 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {
@@ -4170,8 +4236,14 @@
           {
             "kind": "dead",
             "sel": "div.atlas-page-tools",
-            "metric": 722,
-            "detail": "div.atlas-page-tools leaves 722px empty beneath it in a 818px row"
+            "metric": 689,
+            "detail": "div.atlas-page-tools leaves 689px empty beneath it in a 818px row"
+          },
+          {
+            "kind": "wrap",
+            "sel": "div.atlas-page-tools",
+            "metric": 2,
+            "detail": "div.atlas-page-tools breaks into 2 rows and leaves details.atlas-embedded-drawer alone on the last one"
           }
         ],
         "firstAction": {

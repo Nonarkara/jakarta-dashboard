@@ -14,6 +14,7 @@ const __pmtiles__ = window.pmtiles;
 if (!__maplibregl__ || !__pmtiles__) {
   const el = document.getElementById("atlas-map-loading");
   if (el) {
+    el.classList.add("is-unavailable");
     el.innerHTML =
       '<div class="atlas-map-loading-inner">' +
       '<span class="atlas-map-loading-glyph">Jx</span>' +
@@ -274,12 +275,19 @@ mapInstance = new __maplibregl__.Map({
   hash: false,
   attributionControl: { compact: true, customAttribution: "Heights: Google 2.5D / GHSL / OSM / estimates" },
 });
-
+    // MapLibre can return a map shell after failing to create its renderer.
+    // Query the existing canvas, which reuses the map's context on success.
+    const canvas = mapInstance.getCanvas();
+    if (canvas.getContext && !canvas.getContext("webgl2")) throw new Error("WebGL2 unavailable");
   }
 } catch (e) {
+  mapInstance = null;
   console.warn("[atlas] map unavailable:", e.message);
   const el = document.getElementById("atlas-map-loading");
-  if (el) el.textContent = "3D rendering is unavailable on this device. Use Data & sources below.";
+  if (el) {
+    el.textContent = "3D rendering is unavailable on this device. Open Data & sources to continue.";
+    el.classList.add("is-unavailable");
+  }
 }
 
 if (mapInstance) {
