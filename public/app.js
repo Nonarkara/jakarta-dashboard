@@ -1727,7 +1727,20 @@ async function boot() {
   }
   setupInspect();
 
-  function onMapReady() {
+  // "Ready" has to mean the LAYOUT is final, not just that the map is up.
+  // The display faces are served with font-display: swap, so they arrive
+  // after first paint and change the header's text metrics — and the header
+  // wraps, so its height changes by a whole line. A consumer that trusted
+  // "ready" and measured the page then saw one page in the measuring window
+  // and a different page in the next: the spatial gate failed on one run and
+  // passed on the next, on the same commit. So the signal waits for the
+  // faces: the layout that is announced is the layout that stays.
+  async function onMapReady() {
+    try {
+      if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    } catch {
+      /* a browser without the Font Loading API measures what it has */
+    }
     try {
       applyAllLayers();
     } catch (e) {

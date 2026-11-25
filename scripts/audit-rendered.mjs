@@ -28,7 +28,7 @@ import {panelReadiness} from './panel-readiness.mjs';
 
 const BASE = process.env.ATLAS_URL || 'https://jakarta.nonarkara.org';
 const SHOTS = process.env.SHOT_DIR || '';
-const PLAYWRIGHT = process.env.PLAYWRIGHT_PATH || '/Users/nonarkara/Projects/dashboards/HCMC/node_modules/playwright/index.mjs';
+const PLAYWRIGHT = process.env.PLAYWRIGHT_MODULE || process.env.PLAYWRIGHT_PATH || 'playwright-core';
 const CDP = process.env.CHROME_CDP || 'http://127.0.0.1:9656';
 
 let chromium;

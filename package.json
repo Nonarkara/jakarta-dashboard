@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Bahasa Indonesia\u2013English research atlas for Jakarta: 3D urban form with per-building satellite heights, OSM rail and waterways, dated satellite water and aerosols, Himawari clouds, radar and rainfall models.",
+  "description": "Bahasa Indonesia–English research atlas for Jakarta: 3D urban form with per-building satellite heights, OSM rail and waterways, dated satellite water and aerosols, Himawari clouds, radar and rainfall models.",
   "scripts": {
     "dev": "wrangler dev",
     "stamp": "node scripts/stamp-build-id.mjs",
@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20261023.1",
+    "playwright-core": "^1.64.0",
     "typescript": "5.9.3",
     "wrangler": "4.157.0"
   },

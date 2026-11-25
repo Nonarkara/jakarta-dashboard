@@ -19,7 +19,7 @@
  *
  * Usage: node scripts/msh-evidence.mjs [base-url] [out-dir]
  */
-import { chromium } from "/Users/nonarkara/Projects/dashboards/HCMC/node_modules/playwright/index.mjs";
+import { loadChromium } from './playwright-module.mjs';
 import { spawn } from "node:child_process";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -35,6 +35,17 @@ const VIEWPORTS = [
   { w: 1024, h: 900, note: "the intermediate width; height 900 used" },
   { w: 1440, h: 900, note: "the law's desktop size" },
 ];
+// Playwright comes from one place — scripts/playwright-module.mjs — which
+// prefers this repository's own install over a sibling checkout's.
+let chromium;
+try {
+  chromium = await loadChromium();
+} catch (e) {
+  console.error('FATAL: cannot load Playwright.\n' + e.message +
+    '\nThe record cannot be measured, and it will not report success without measuring.\n');
+  process.exit(2);
+}
+
 const ROUTES = [
   { path: "/", name: "dashboard" },
   { path: "/atlas", name: "atlas" },
