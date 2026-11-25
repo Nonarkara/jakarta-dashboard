@@ -687,7 +687,9 @@
     // ---- 6. spatially expensive information --------------------------------
     // How far down the page the first thing you can DO is. A reader who must
     // scroll before they can act is paying for the layout.
-    var acts = main.querySelectorAll("a, button, input, select, textarea");
+    // Search the entire document body, not just main: some pages put primary
+    // actions in a header/masthead outside main (e.g., dashboard masthead).
+    var acts = d.body.querySelectorAll("a, button, input, select, textarea");
     var firstY = null;
     var firstSel = null;
     for (var ai = 0; ai < acts.length; ai++) {

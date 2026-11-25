@@ -126,7 +126,7 @@
   },
   "exempt": [],
   "provenance": {
-    "measuredAt": "2026-11-08T07:11:08.046Z",
+    "measuredAt": "2026-11-24T16:34:51.830Z",
     "measurements": 232,
     "routes": 4,
     "widths": 58,
@@ -138,8 +138,8 @@
       "339": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 844,
@@ -162,8 +162,8 @@
       "340": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 844,
@@ -186,8 +186,8 @@
       "341": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 844,
@@ -210,8 +210,8 @@
       "344": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 844,
@@ -234,8 +234,8 @@
       "345": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 844,
@@ -258,8 +258,8 @@
       "346": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 844,
@@ -282,8 +282,8 @@
       "360": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 844,
@@ -306,8 +306,8 @@
       "379": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 844,
@@ -330,8 +330,8 @@
       "380": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 844,
@@ -354,8 +354,8 @@
       "381": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 844,
@@ -378,8 +378,8 @@
       "429": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 844,
@@ -402,8 +402,8 @@
       "430": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 844,
@@ -426,8 +426,8 @@
       "431": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 844,
@@ -450,8 +450,8 @@
       "449": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 844,
@@ -474,8 +474,8 @@
       "450": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 844,
@@ -498,8 +498,8 @@
       "451": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 844,
@@ -522,8 +522,8 @@
       "479": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 844,
@@ -546,8 +546,8 @@
       "480": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 844,
@@ -570,8 +570,8 @@
       "481": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -594,8 +594,8 @@
       "519": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -618,8 +618,8 @@
       "520": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -642,8 +642,8 @@
       "521": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -666,8 +666,8 @@
       "599": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -690,8 +690,8 @@
       "600": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 56,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -714,8 +714,8 @@
       "601": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -738,8 +738,8 @@
       "699": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -762,8 +762,8 @@
       "700": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -786,8 +786,8 @@
       "701": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -810,8 +810,8 @@
       "702": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -834,8 +834,8 @@
       "759": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -858,8 +858,8 @@
       "760": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -882,8 +882,8 @@
       "761": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -906,8 +906,8 @@
       "768": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -930,8 +930,8 @@
       "799": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -954,8 +954,8 @@
       "800": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -978,8 +978,8 @@
       "801": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -1002,8 +1002,8 @@
       "838": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -1026,8 +1026,8 @@
       "839": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -1050,8 +1050,8 @@
       "840": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -1074,8 +1074,8 @@
       "899": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -1098,8 +1098,8 @@
       "900": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -1122,8 +1122,8 @@
       "901": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -1146,8 +1146,8 @@
       "999": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -1170,8 +1170,8 @@
       "1000": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -1194,8 +1194,8 @@
       "1001": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -1218,8 +1218,8 @@
       "1024": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -1242,8 +1242,8 @@
       "1099": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -1266,8 +1266,8 @@
       "1100": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -1290,8 +1290,8 @@
       "1101": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -1314,8 +1314,8 @@
       "1198": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -1338,8 +1338,8 @@
       "1199": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 1000,
@@ -1362,8 +1362,8 @@
       "1200": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 900,
@@ -1386,8 +1386,8 @@
       "1201": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 900,
@@ -1410,8 +1410,8 @@
       "1440": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 900,
@@ -1434,8 +1434,8 @@
       "1726": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 900,
@@ -1458,8 +1458,8 @@
       "1727": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 900,
@@ -1482,8 +1482,8 @@
       "1728": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 900,
@@ -1506,8 +1506,8 @@
       "1920": {
         "findings": [],
         "firstAction": {
-          "y": null,
-          "sel": null
+          "y": 97,
+          "sel": "select#language"
         },
         "chrome": {
           "vh": 900,

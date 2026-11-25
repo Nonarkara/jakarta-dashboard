@@ -17,5 +17,5 @@
 #
 # sha256  file
 48a4db5b01f8d7abf671e1450b1ae0e835ed4afb36db3c4bcc8b995d279ce7a0  spatial-check.mjs
-27d3ba662d360202e1e6b32931a7bddf71953b896d7d8c3a0e2c2a0b3ba23849  spatial-falsify.mjs
-387ade48e172dbc1511c179ae6ed64c6625a4232c43d82deef35d623ca28f88c  spatial-probe.js
+4adc119c5bb02f6efaf01302328413f8dd6d3e80a595ce5d242a920169947219  spatial-falsify.mjs
+a4d584b6fda5f8feb849d876c05f628b980ceb36194a6652d7d10bfa840981cb  spatial-probe.js

@@ -369,7 +369,9 @@ const MOUNTER = `<script id="__sl_mounter__">
   var HTML = __HTML__;
   var WHERE = __WHERE__;
   function mount() {
-    var m = document.querySelector("main#content") || document.querySelector("main") || document.body;
+    // For "top" placement, insert at document.body so the fixture sits above
+    // any header/masthead. For "bottom", use the main content area.
+    var m = WHERE === "top" ? document.body : (document.querySelector("main#content") || document.querySelector("main") || document.body);
     if (!m) return;
     var existing = document.getElementById("__sl_fixture__");
     if (existing && existing.parentElement === m) return;
@@ -505,6 +507,17 @@ const BASELINE_RULES = [
     mutate: (b) => {
       b.limits = { ...b.limits, firstAction: 200 };
     },
+    site: () => {
+      // Inject a spacer at the top of the home page to push the first actionable
+      // element below the limit. The spacer is mounted by script so it survives
+      // hydration and is measured by the probe.
+      const dir = path.join(COPY, "sl-absolute-limit");
+      mkdirSync(dir, { recursive: true });
+      const html = readFileSync(path.join(COPY, "index.html"), "utf8");
+      writeFileSync(path.join(dir, "index.html"), inject('<div style="height:2000px"></div>', "top"));
+    },
+    cleanupSite: () => rmSync(path.join(COPY, "sl-absolute-limit"), { recursive: true, force: true }),
+    routes: "/sl-absolute-limit/",
   },
   {
     name: "a page the baseline has never seen, with a long scroll before the action",
